@@ -1,0 +1,74 @@
+CHECKLIST — 56 things the costume editor must do
+=================================================
+
+VECTOR MODE
+-----------
+[ ]  1. Select: click a shape to select it
+[ ]  2. Select: drag to move
+[ ]  3. Select: resize via corner handles
+[ ]  4. Select: rotate via anchor
+[ ]  5. Select: Shift+drag multi-select
+[ ]  6. Select: Shift while rotating snaps 45°
+[ ]  7. Select: Ctrl/Cmd+C, V copy/paste
+[ ]  8. Select: Delete removes selection
+[ ]  9. Select: Ctrl/Cmd+Z undoes a move
+[ ] 10. Reshape: shows path nodes
+[ ] 11. Reshape: drag a node to move it
+[ ] 12. Reshape: click path adds a node
+[ ] 13. Reshape: Delete removes a node
+[ ] 14. Reshape: curved/pointed toggle
+[ ] 15. Brush: freehand drawing
+[ ] 16. Brush: change size
+[ ] 17. Brush: change colour
+[ ] 18. Eraser: Scratch has NO vector eraser
+[ ] 19. Fill: solid colour
+[ ] 20. Fill: gradient (L-R, T-B, radial)
+[ ] 21. Fill: outline width
+[ ] 22. Fill: eyedropper picks a colour
+[ ] 23. Fill: "no fill" (red strikethrough)
+[ ] 24. Text: type text on canvas
+[ ] 25. Text: change font
+[ ] 26. Text: change size
+[ ] 27. Text: change colour
+[ ] 28. Line: drag to draw straight line
+[ ] 29. Line: Shift snaps 45°/90°
+[ ] 30. Oval: drag to draw oval
+[ ] 31. Oval: Shift draws circle
+[ ] 32. Rectangle: drag to draw rectangle
+[ ] 33. Rectangle: Shift draws square
+[ ] 34. Group: select multiple then Group
+[ ] 35. Ungroup: split a group back
+[ ] 36. Forward: one step up
+[ ] 37. Backward: one step down
+[ ] 38. Front: to the top
+[ ] 39. Back: to the bottom
+[ ] 40. Flip horizontal
+[ ] 41. Flip vertical
+[ ] 42. Copy / Paste / Delete
+[ ] 43. Undo (Ctrl+Z)
+[ ] 44. Redo (Ctrl+Y)
+[ ] 45. Rotation centre crosshair
+[ ] 46. Move rotation centre with arrow keys
+[ ] 47. Zoom in / out
+[ ] 48. Convert to Bitmap
+[ ] 49. Convert to Vector
+
+BITMAP MODE
+-----------
+[ ] 50. Brush, Line, Oval, Rectangle
+[ ] 51. Text
+[ ] 52. Fill (solid)
+[ ] 53. Eraser (pixels)
+[ ] 54. Select (no Reshape)
+[ ] 55. No vector tools (Reshape hidden)
+
+COSTUME LIST
+------------
+[ ] 56. Add / Duplicate / Delete / Rename / Reorder
+
+KEYBOARD SHORTCUTS (from Scratch)
+---------------------------------
+S = Select, A = Reshape, B = Brush, E = Eraser, F = Fill,
+T = Text, L = Line, C = Circle.
+Ctrl+Z = Undo, Ctrl+Y = Redo, Ctrl+C/V = Copy/Paste,
+Delete = Remove selection, Shift = constrain shapes.

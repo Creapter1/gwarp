@@ -1,0 +1,122 @@
+LAB REPORT — COSTUME (PAINT) EDITOR — DeepSeek
+===============================================
+
+SCOPE
+-----
+This lab covers the 5 fixes kids touch most in the costume editor:
+Select/Move/Resize, Fill, Text, Eraser, Undo/Redo.
+
+G-WARP APIS USED (confirmed names only)
+---------------------------------------
+- window.GW_V15_COSTUME_EDITOR = { save, loadBitmap, loadVector,
+  refreshList, setMode, state, cleanSvgXml }
+- window.GW_VECTOR_EDITOR = { load, save, mapFor, ... }
+- Costume = { name, canvas, res, rc:{x,y}, dataFormat:'svg'|'png', svg }
+- Engine.sprites[Engine.activeSpriteIndex] -> current sprite
+- sprite.costumes[sprite.activeCostume] -> current costume
+- window.GW_DIALOG for messages
+- window.GW8.pushHistory('...') for undo
+- window.GW_FEATURE_OFF('key') for switch-off
+
+No window.vm, no paper.js, no scratch-paint internals.
+
+THE 5 FIXES AND THEIR WINNERS
+-----------------------------
+Fix        Winner  Why
+---------  ------  -------------------------------------------------
+Select     C       Safest: parses SVG, falls back to dialog on
+                   damage, mode-aware, keeps old SVG on error.
+Fill       C       Only one that handles PNG costumes + feature-off.
+Text       B       Fastest good option: multiline, cached parser,
+                   GPU transform, no PNG path (use C if needed).
+Eraser     C       Matches Scratch UX (hint in vector mode), clamps
+                   brush size, feature-off.
+Undo       C       Probes GW8.undo()/redo() first, falls back to
+                   pushHistory label, one-time dialog if neither.
+
+WHAT WAS FIXED IN ROUND 2 (5+ attacks per version)
+--------------------------------------------------
+Select-A/B/C:
+  1. pointer not captured -> drag stops at canvas edge
+  2. history pushed every move -> huge undo stack
+  3. empty-space click left old selection -> confusing
+  4. touch devices no mouse -> unified via pointer events
+  5. malformed SVG -> A/B crash, C shows dialog
+
+Fill-A/B/C:
+  1. colour could be an object -> validated to string
+  2. clicking toolbar filled a shape -> walk-up stops at canvas
+  3. PNG costume ignored -> C flood-fills
+  4. rapid clicks spammed history -> B batches per frame
+  5. invalid hex -> falls back to #000000
+
+Text-A/B/C:
+  1. textarea stayed open after commit -> hidden
+  2. font/size/colour ignored state -> read from CE.state
+  3. newline broke single <text> -> <tspan> children in B/C
+  4. SVG corruption on parse error -> C keeps old string
+  5. >500 chars could bloat SVG -> maxLength in C
+
+Eraser-A/B/C:
+  1. worked in vector mode (wrong) -> C shows hint
+  2. brush size 0 -> clamped to 1
+  3. drag outside canvas -> pointer capture
+  4. ctx state leaked -> save/restore in finally
+  5. Path2D missing in old browsers -> fallback in B
+
+Undo-A/B/C:
+  1. fired while typing -> activeElement guard
+  2. Cmd on Mac -> metaKey handled
+  3. Shift+Ctrl+Z not redo -> handled
+  4. holding key flooded history -> 100ms batch in B
+  5. GW8.undo() unknown -> C probes it first
+
+BENCHMARK PLAN
+--------------
+Select A:   dispatch 1000 pointermove events  < 5 ms
+Select B:  same                              < 1 ms
+Fill A:    1000 clicks on shapes             < 10 ms
+Fill B:    same                              < 3 ms
+Text B:    commit 100 texts                  < 50 ms
+Eraser B:  1000 move events                  < 5 ms
+Undo B:    10 rapid Ctrl+Z                  1 history push
+
+UNSURE ITEMS
+------------
+- UNSURE: GW8.pushHistory('__undo__') is assumed to trigger undo
+  in version A. Version C probes GW8.undo() first. If neither
+  works, C shows a one-time dialog.
+- UNSURE: The exact canvas selector used by G-Warp's costume
+  editor. The code tries '#gw-costume-canvas', '.gw-paint-canvas',
+  and 'canvas'. If G-Warp uses a different id/class, the module
+  logs a warning and does nothing.
+- UNSURE: Whether G-Warp's SVG shapes carry a 'data-gw-shape'
+  attribute. If they do not, the select and fill modules cannot
+  find shapes. Claude should add that attribute to the SVG
+  generation code, or tell DeepSeek the real attribute name.
+- UNSURE: GW_VECTOR_EDITOR.mapFor's signature. The select module
+  does not call it (to avoid guessing), but a future version
+  should use it for pixel-accurate hit-testing.
+- UNSURE: Whether CE.state.mode is 'vector' | 'bitmap' or
+  'vector' | 'bitmap' | 'select'. The code treats anything that
+  is not 'bitmap' as vector.
+- UNSURE: Whether G-Warp's PNG costumes are stored as a canvas
+  element or a data URL. The flood-fill assumes a live canvas
+  with a 2D context.
+
+INTEGRATION CHECKLIST FOR CLAUDE
+--------------------------------
+[ ] Add <script> tags for the 5 winner files in app.html after
+    GW_V15_COSTUME_EDITOR is defined.
+[ ] Confirm the canvas element id/class used by the costume
+    editor and update the selectors if needed.
+[ ] Confirm that SVG shapes have a data-gw-shape attribute;
+    if not, add it in the SVG generation code or tell DeepSeek
+    the real attribute name.
+[ ] Confirm GW8.undo()/redo() exist; if not, confirm that
+    pushHistory('__undo__') is the correct fallback.
+[ ] Test Select in vector mode with a real costume.
+[ ] Test Fill on both SVG and PNG costumes.
+[ ] Test Text in both modes.
+[ ] Test Eraser in bitmap mode (and the vector-mode hint).
+[ ] Test Undo/Redo after each of the above.

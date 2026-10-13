@@ -60,6 +60,10 @@ COSTUMES (paint editor) - real hooks
   window.GW_V15_COSTUME_EDITOR = { save, loadBitmap, loadVector, refreshList,
       setMode, state, cleanSvgXml }      <- main costume editor
   window.GW_VECTOR_EDITOR = { load, save, mapFor, ... }   <- vector mode
+  GW_V15_COSTUME_EDITOR.state (REAL fields): tab, zoom, pan,
+      costumeMode ('vector'|'bitmap'), selectedSvg, bitmapTool, svgTool,
+      svgDrag, selectionRect.  (There is NO state.mode / fillColor /
+      eraserSize / font - colours & sizes live in the editor's inputs.)
   A costume object: { name, canvas, res, rc:{x,y}, dataFormat:'svg'|'png',
       svg (for vector) }   stored in sprite.costumes, current = sprite.activeCostume
   Costumes tab UI: costume list on the left, tools column, canvas in the middle.
