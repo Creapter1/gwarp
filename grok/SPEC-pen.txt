@@ -1,0 +1,74 @@
+G-WARP SPEC: PEN (Scratch 3.0 extension)
+Source: scratchfoundation/scratch-vm src/extensions/scratch3_pen/index.js
+         + util/math-util wrapClamp / clamp + Color helpers
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+DEFAULT STATE (per sprite)
+=====================================================================
+penDown: false
+color (hue): 66.66   // ~blue
+saturation: 100
+brightness: 100
+transparency: 0
+_shade: 50           // legacy shade only
+penAttributes.diameter: 1
+penAttributes.color4f: derived RGBA
+
+PEN_SIZE_RANGE: min 1, max 1200 (about 2x stage diagonal)
+
+=====================================================================
+COLOUR MODEL
+=====================================================================
+Modern params: color (hue), saturation, brightness, transparency
+  - each conceptually 0..100
+  - COLOR (hue) uses wrapClamp(value, 0, 100)
+    IMPORTANT: wrapClamp range is (max-min)+1 = 101, so hues cycle every
+    101 steps (known Scratch 3 quirk vs ideal period 100). Match Scratch,
+    do not "fix" to 100 unless documenting a compatibility mode.
+  - saturation / brightness / transparency use clamp 0..100
+
+setPenColorToColor(COLOR):
+  RGB (or hex) -> HSV; store h/s/v as 0..100 scale; transparency from alpha
+  if present else 0; legacy _shade = brightness/2.
+
+changePenColorParamBy / setPenColorParamTo:
+  COLOR_PARAM menu: color|saturation|brightness|transparency
+  color: wrap; others: clamp.
+
+Legacy (hideFromPalette, still load from sb2/sb3):
+  setPenHueToNumber / changePenHueBy — number hue path
+  setPenShadeToNumber / changePenShadeBy — shade path
+  Legacy number colour period is also a known off-by-one style quirk.
+
+=====================================================================
+DRAWING
+=====================================================================
+--- clear (erase all) ---
+Clear pen layer skin.
+
+--- stamp ---
+Draw current costume onto pen layer at sprite pose.
+
+--- penDown / penUp ---
+penDown true/false. When down, listen for TARGET_MOVED and draw penLine
+from oldXY to newXY (skip forced/drag moves).
+
+--- changePenSizeBy / setPenSizeTo ---
+Diameter clamped to 1..1200.
+
+Clones copy pen state; if pen was down, clone also listens for move.
+RUNTIME_DISPOSED clears pen layer.
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+- High Quality Pen option improves line rasterisation; colours/size rules
+  stay the same.
+- Match wrapClamp 0..100 inclusive period for hue.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- Pen layer must sit under sprites (StageLayering.PEN_LAYER).
+- Tests for hue: 0, 100, 101 should show the known Scratch period behaviour.
