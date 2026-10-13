@@ -76,9 +76,10 @@ Testing status
 - Static/manual source review: PASS for expected app API names, based on the
   current main branch source cited above.
 - JavaScript syntax: PASS (parsed with the JavaScript Function constructor).
-- Mock-runtime simulation: PASS for 300 clones (no warning), 301 clones (one
-  warning), deleting back to 300 (warning state resets), crossing 300 again
-  (warning appears again), and loading the module twice (no double wrapping).
+- Mock-runtime simulation: PASS for 301 clones (one warning), deleting back to
+  299 (warning state resets), crossing 300 again (warning appears again), and
+  removeAllClones (count resets to zero). Duplicate loading preserved the same
+  create/delete/remove wrappers without stacking another wrapper.
 - Browser verification in G-Warp: NOT RUN here. This file is not active until
   Claude integrates it into app.html. Do not mark the runtime warning as
   browser-verified until tested with Infinite clones enabled, more than 300
