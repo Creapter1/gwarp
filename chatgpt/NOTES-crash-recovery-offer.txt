@@ -63,7 +63,7 @@ Testing status
 --------------
 - API/source review: PASS for existing restore point and restoreTo APIs.
 - JavaScript syntax: PASS after drafting.
-- Mock lifecycle/recovery tests: PASS. Unclean marker detected and cleared; accept opened the latest restore point; cancel did not call restore; clean state did not prompt; active runtime wrote a marker and stopped runtime cleared it.
+- Mock lifecycle/recovery tests: PASS. Unclean marker detected and cleared; accept invoked the existing restoreTo helper with the newest point ID; cancel did not call restore; clean state did not prompt; active runtime wrote a marker and stopped runtime cleared it. Actual restore success is not observable from restoreTo because its current implementation handles errors with its own toast and returns undefined.
 - Browser test on a real crashed/frozen tab: NOT RUN.
 Required tests:
 1. Start project, verify small marker is created; click Stop and verify marker clears.
