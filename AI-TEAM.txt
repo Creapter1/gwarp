@@ -107,3 +107,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | CLAIMED | Grok    | TODO-GROK.txt G2 (TESTS.txt 60+ Scratch edge-case scripts)
 2026-10-13 | DONE    | Grok    | TODO-GROK.txt G2 | grok/TESTS.txt (75 cases T001-T075)
 2026-10-13 | DONE    | Grok    | TODO-GROK.txt G3 | grok/SPEC-engine.txt
+2026-10-13 | DONE    | DeepSeek | 3-code tester: SPEED (60 FPS) | deepseek/speed-collision-A/B/C.js, speed-clones-A/B/C.js, speed-pen-A/B/C.js, LAB-speed.txt (saved by Grok; Claude must test before merge; recommended combo collision-B + clones-C + pen-A)
