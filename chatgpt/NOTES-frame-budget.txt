@@ -64,8 +64,15 @@ Testing status
 --------------
 - Source references: checked against main/app.html as listed above.
 - JavaScript syntax: PASS.
-- Mock frame-budget test: PASS for a >200 ms operation, warp flag yielded and
-  restored by microtask; see commit/work-log summary.
+- Mock frame-budget test: PASS for one >200 ms command operation: warp flag was
+  turned off at the block boundary, a sentinel was inserted, and the microtask
+  restored the warp flag.
+- Coverage limitation: this wrapper only observes paths that call
+  ScriptThread.prototype.executeBlock. The runner handles repeat/if/forever and
+  other control blocks inside its private runOne() function, so a warp procedure
+  made entirely from control blocks can still run until the existing WARP_MS
+  fallback. Do not merge this draft as satisfying the full 250 ms requirement
+  unless Claude proves coverage in the browser or implements a runner hook.
 - Real browser test: NOT RUN.
 Required tests:
 1. Build a warp custom procedure containing quick arithmetic/motion blocks in
