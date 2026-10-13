@@ -125,3 +125,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | UNCLAIMED| DeepSeek | speed A/B/C must be REDONE against window.Engine (see ENGINE-MAP.txt) - DeepSeek's job
 2026-10-13 | DONE    | DeepSeek | speed A/B/C REDONE for window.Engine + pmp-loader.js | deepseek/speed-*-[ABC].js, pmp-loader.js, LAB-speed.txt (saved by Claude; MISSING-pmp-loader.txt removed)
 2026-10-13 | REVIEWED | Claude  | DeepSeek speed v2: well made + safe (bails out if names missing) BUT the guessed names (Engine.touching, stepThread, Engine.pen) don't exist, so all 9 would do nothing. Real hooks now listed in ENGINE-MAP.txt (GW.spritesTouch, ScriptThread.step, pen needs a hook). pmp-loader: ZIP part duplicates what G-Warp already does; only the PROTOBUF part is new and useful.
+2026-10-13 | DONE    | Grok    | TODO-GROK.txt G4 | grok/SPEC-files.txt
