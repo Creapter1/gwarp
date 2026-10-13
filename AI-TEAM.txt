@@ -60,3 +60,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | UPDATED | ChatGPT | frame-budget mock coverage verified for all four hooks; yields via exact retry sentinel before underlying side effects | chatgpt/frame-budget.js, chatgpt/NOTES-frame-budget.txt
 2026-10-13 | UPDATED | ChatGPT | clone cleanup emits event; over-300 warning counter resets immediately on fast cleanup; combined mock passed | chatgpt/stop-clone-cleanup.js, chatgpt/clone-limit.js, corresponding NOTES files
 2026-10-13 | UPDATED | ChatGPT | Stop cleanup avoids needless thread scan when no clone sprites exist; 81k button/block stress mocks still pass | chatgpt/stop-clone-cleanup.js, chatgpt/NOTES-stop-clone-cleanup.txt
+2026-10-13 | UPDATED | ChatGPT | frame budget restricted to active ScriptThread.step context; all 4 hook paths throw retry before side effects; out-of-step helper calls do not | chatgpt/frame-budget.js, chatgpt/NOTES-frame-budget.txt
