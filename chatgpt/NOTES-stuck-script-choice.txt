@@ -41,7 +41,7 @@ Testing
 -------
 - Static source inspection: PASS; the existing alert/API is present in main.
 - JavaScript syntax: PASS after drafting.
-- Mock wording test: pending.
+- Mock wording test: PASS. The original handler still ran and returned its original value; heading and button wording updated; ARIA/title set; duplicate loading did not double-wrap; dispose restored the original handler.
 - Real G-Warp browser test: NOT RUN.
 Required tests:
 1. Run a deliberately slow warp My Block until the current guard opens its alert.
