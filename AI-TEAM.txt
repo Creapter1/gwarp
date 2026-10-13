@@ -72,3 +72,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | NEW ROLE | Gemini  | icons + pictures (3 SVG options each) -> TODO-GEMINI.txt
 2026-10-13 | NEW ROLE | DeepSeek | lab scientist: 3+ versions (A/B/C) per job -> TODO-DEEPSEEK.txt
 2026-10-13 | CLAIMED | Grok    | TODO-GROK.txt G2 (TESTS.txt 60+ Scratch edge-case scripts)
+2026-10-13 | DONE    | Grok    | TODO-GROK.txt G2 | grok/TESTS.txt (75 cases T001-T075)
