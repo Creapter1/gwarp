@@ -33,6 +33,23 @@ OTHER GLOBALS YOU MAY USE
   window.GW_EXT_DANGER      extension danger levels
   window.GW_SCRATCH_LOOK    the optional "Look like Scratch" switch
 
+REAL HOOKS FOR SPEED WORK (checked in app.html - use THESE names)
+  Collision:  GW.spritesTouch(a, b)      <- "touching sprite" check
+              (there is NO Engine.touching / checkTouching / touchingSprite)
+  Threads:    class ScriptThread, each has a  step()  method;
+              the main loop walks Engine.threads. (NO Engine.stepThread /
+              tickThread / updateThread. The "stepThreads" in app.html is
+              only a fake stub for extensions - don't wrap it.)
+  Pen:        pen canvas comes from a private function ensurePenCanvas();
+              there is NO Engine.pen / penDraw / drawPen. Pen code needs
+              Claude to expose a hook first -> write "UNSURE: need pen hook".
+  Renderer:   G-Warp draws with its own 2D canvas code. NO Engine.renderer,
+              NO WebGL drawables, NO isTouchingDrawables.
+  Projects:   G-Warp ALREADY opens .sb3 and ZIP-type .pmp files (More ->
+              Load from your computer, accepts .sb3 .pmp .zip .json) and
+              has fromPenguinMod(id) for PenguinMod links. Only the newer
+              PROTOBUF .pmp files are missing.
+
 IF YOU NEED SOMETHING NOT ON THIS LIST
   Don't invent it. Write "UNSURE: need access to <thing>" in your NOTES
   and Claude will wire it up. Guessing names = code that silently fails.

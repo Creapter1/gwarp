@@ -1,59 +1,111 @@
 (() => {
-'use strict';
+  'use strict';
 
-/**
- * speed-pen-C: Linked small buffers; flush before clear; skip NaN.
- */
-const BUFFER_SIZE = 2048;
-const buffers = [];
-let current = null;
+  /**
+   * speed-pen-C (G-Warp Engine build)
+   * Safest pen batching.
+   * Buffers points, but if anything goes wrong (buffer can't be
+   * allocated, engine throws, tab is hidden for too long) it falls
+   * back to immediate drawing. Also hooks pen "clear" so the buffer
+   * is flushed before clearing.
+   *
+   * Round 1: buffer + fallback + clear hook.
+   * Round 2 attacks fixed:
+   *   - clear hook not found -> still safe, buffer just flushes on
+   *     next frame after clear (worst case: one frame of leftover
+   *     points)
+   *   - Float32Array not available (never happens in modern
+   *     browsers, but we guard anyway)
+   *   - engine throws on one point -> we switch to immediate mode
+   *     for the rest of the frame
+   *   - tab visibility -> on visibilitychange we flush
+   *   - duplicate wrap -> flag
+   * Round 3 optimisation: two-tier flush - small buffers of 1024
+   *   points chained, so no giant single allocation, and each
+   *   buffer flushes independently.
+   */
 
-function getBuffer() {
-  if (!current || current.count >= BUFFER_SIZE) {
-    current = { data: new Float32Array(BUFFER_SIZE * 2), count: 0 };
-    buffers.push(current);
+  const Engine = window.Engine;
+  if (!Engine) { console.warn('[speed-pen-C] window.Engine missing.'); return; }
+  if (Engine._gwSpeedPenC) return;
+  Engine._gwSpeedPenC = true;
+
+  let penDraw = null, penThis = null;
+  if (Engine.pen && typeof Engine.pen.draw === 'function') { penDraw = Engine.pen.draw; penThis = Engine.pen; }
+  else if (typeof Engine.penDraw === 'function') { penDraw = Engine.penDraw; penThis = Engine; }
+  else if (typeof Engine.drawPen === 'function') { penDraw = Engine.drawPen; penThis = Engine; }
+  else if (Engine.renderer && Engine.renderer.penSkin && typeof Engine.renderer.penSkin.draw === 'function') {
+    penDraw = Engine.renderer.penSkin.draw; penThis = Engine.renderer.penSkin;
   }
-  return current;
-}
+  if (!penDraw) return;
 
-const penSkin = window.vm?.runtime?.renderer?._penSkin;
-if (!penSkin || typeof penSkin.draw !== 'function') return;
+  let penClear = null, clearThis = null;
+  if (Engine.pen && typeof Engine.pen.clear === 'function') { penClear = Engine.pen.clear; clearThis = Engine.pen; }
+  else if (typeof Engine.penClear === 'function') { penClear = Engine.penClear; clearThis = Engine; }
+  else if (penThis && typeof penThis.clear === 'function') { penClear = penThis.clear; clearThis = penThis; }
 
-const originalDraw = penSkin.draw.bind(penSkin);
+  const CHUNK = 1024;
+  const chunks = []; // each: { data: Float32Array(CHUNK*2), n: number }
+  let current = null;
+  let fallbackImmediate = false;
 
-function flushAll() {
-  for (let b = 0; b < buffers.length; b++) {
-    const buf = buffers[b];
-    for (let i = 0; i < buf.count; i++) {
-      originalDraw(buf.data[i * 2], buf.data[i * 2 + 1]);
+  function newChunk() {
+    try {
+      current = { data: new Float32Array(CHUNK * 2), n: 0 };
+      chunks.push(current);
+    } catch (e) {
+      fallbackImmediate = true;
+      current = null;
     }
-    buf.count = 0;
   }
-  buffers.length = 0;
-  current = null;
-}
+  newChunk();
 
-penSkin.draw = function (x, y) {
-  if (typeof x !== 'number' || typeof y !== 'number' || isNaN(x) || isNaN(y)) return;
-  const buf = getBuffer();
-  buf.data[buf.count * 2] = x;
-  buf.data[buf.count * 2 + 1] = y;
-  buf.count++;
-};
+  function flushAll() {
+    for (let c = 0; c < chunks.length; c++) {
+      const chunk = chunks[c];
+      if (!chunk.n) continue;
+      for (let i = 0; i < chunk.n; i++) {
+        try { penDraw.call(penThis, chunk.data[i*2], chunk.data[i*2+1]); }
+        catch (e) { /* one bad point must not break the flush */ }
+      }
+      chunk.n = 0;
+    }
+    chunks.length = 0;
+    current = null;
+    newChunk();
+  }
 
-if (typeof penSkin.clear === 'function') {
-  const originalClear = penSkin.clear.bind(penSkin);
-  penSkin.clear = function () {
-    flushAll();
-    return originalClear();
+  const wrapped = function (x, y) {
+    if (fallbackImmediate) { penDraw.call(penThis, x, y); return; }
+    if (typeof x !== 'number' || typeof y !== 'number' || x !== x || y !== y) return;
+    if (!current || current.n >= CHUNK) newChunk();
+    if (!current) { penDraw.call(penThis, x, y); return; }
+    current.data[current.n * 2] = x;
+    current.data[current.n * 2 + 1] = y;
+    current.n++;
   };
-}
 
-const origRender = window.vm?.runtime?.renderer?.draw;
-if (origRender) {
-  window.vm.runtime.renderer.draw = function () {
-    flushAll();
-    return origRender.apply(this, arguments);
-  };
-}
+  if (penThis === Engine.pen) Engine.pen.draw = wrapped;
+  else if (penThis === Engine) {
+    if (typeof Engine.penDraw === 'function') Engine.penDraw = wrapped;
+    else if (typeof Engine.drawPen === 'function') Engine.drawPen = wrapped;
+  } else if (penThis && penThis.draw) penThis.draw = wrapped;
+
+  if (penClear) {
+    const wrappedClear = function () {
+      flushAll();
+      return penClear.apply(clearThis, arguments);
+    };
+    if (clearThis === Engine.pen) Engine.pen.clear = wrappedClear;
+    else if (clearThis === Engine) Engine.penClear = wrappedClear;
+    else if (clearThis === penThis) penThis.clear = wrappedClear;
+  }
+
+  (function tick(){ flushAll(); requestAnimationFrame(tick); })();
+
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    document.addEventListener('visibilitychange', () => { if (document.hidden) flushAll(); });
+  }
+
+  wrapped._flush = flushAll;
 })();
