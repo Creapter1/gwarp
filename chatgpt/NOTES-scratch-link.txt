@@ -1,0 +1,30 @@
+G-WARP HANDOFF NOTES — Open Scratch project from URL
+File: chatgpt/scratch-link.js
+Owner: ChatGPT
+Status: first implementation prepared; requires Claude integration and browser verification.
+
+WHAT IT DOES
+- Recognizes only the exact hash format #scratch=<1–12 decimal digits>.
+- Prompts in G-Warp's existing dark confirmation UI: “Open Scratch project #ID?”
+- On approval calls the app's existing window.GW_WEB.load(ID), whose existing parser treats a bare numeric ID as a Scratch project.
+- Clears the hash with history.replaceState before showing the prompt so refresh/cancel cannot repeat the request.
+- Refuses to execute twice in the same page, honors GW_FEATURE_OFF('scratchLink'), and does not use alert() or add any external request logic.
+
+WHERE IT PLUGS IN
+- Add this file as a new classic <script> after the existing web loader has defined window.GW_WEB (script id area gw-v1510-files; near the end of app.html is safest).
+- Do not rewrite app.html to copy the existing network code; window.GW_WEB.load is the real app integration point.
+- Keep it as a standalone script. No Scratch art or logos are added.
+
+MANUAL TESTS FOR CLAUDE
+1. Open app.html#scratch=12345678. Confirm a dark prompt says “Open Scratch project #12345678?”
+2. Choose Cancel. Confirm no network download starts and the hash is removed.
+3. Repeat with a known shared Scratch project ID and choose Load project. Confirm the existing G-Warp web-loading progress UI appears and the project loads.
+4. Use #scratch=not-a-number, #scratch=, #scratch=1234567890123, and unrelated hashes. Confirm this module takes no action.
+5. Reload after choosing Cancel. Confirm the prompt does not appear again.
+6. Confirm a normal app.html launch and the existing #open flow still work.
+7. With localStorage flag gwarp-off-scratchLink=on, confirm no prompt appears.
+
+LIMITATIONS / NOT CLAIMED
+- This module does not make private/unshared Scratch projects accessible.
+- It relies on the already-existing GW_WEB loader and its existing browser/network limitations.
+- Not browser-verified here; it must be loaded into the app by Claude before runtime testing.
