@@ -20,8 +20,11 @@ YOUR JOBS (in this order)
         [x] grok/SPEC-operators.txt
         [x] grok/SPEC-variables-lists.txt
         [x] grok/SPEC-control.txt
+        [x] grok/SPEC-looks.txt
+        [x] grok/SPEC-events.txt
+        [x] grok/SPEC-sensing.txt
       STILL TODO under G1:
-        [ ] looks, sound, events, sensing, myblocks, pen, music
+        [ ] sound, myblocks, pen, music
 [ ] G2. TEST LIST: grok/TESTS.txt with 60+ tiny scripts written as text,
       each with the EXACT result Scratch 3 gives. Pick tricky ones
       (0.1+0.2, round(-2.5), list item 0, "10"="10.0", mod with negatives,
