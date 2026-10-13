@@ -1,0 +1,99 @@
+=====================================================================
+ G-WARP TO-DO LIST  (shared by the AI team)
+ Owner: Creapter1     Repo: github.com/Creapter1/gwarp
+ Website: https://creapter1.github.io/gwarp/   App: app.html (Beta v15.45.0)
+=====================================================================
+
+HOW THE TEAM WORKS
+- ChatGPT = researcher + first engineer. Reads this file and the code,
+  researches, writes first versions of code, adds new ideas to this list.
+- Claude  = second engineer + fixer. Checks ChatGPT's work, fixes it,
+  tests it, makes it clean, and uploads the new app.html.
+- The owner decides what goes in. Nothing ships without the owner's OK.
+
+RULES FOR EVERY AI (these can NOT be broken)
+1. SAME SAME BUT DIFFERENT: G-Warp works exactly like Scratch / TurboWarp /
+   PenguinMod (same blocks, same results), but keeps ITS OWN LOOK:
+   dark theme, electric C-blocks with the electricity animation, black text
+   on Events and Control blocks, violet #8b5cf6 / electric green #4ade80,
+   G-Spark mascot, Start/Pause/Stop only in the top bar, Music Maker.
+   Never change it to look like Scratch. (A Scratch look is only an option
+   in More -> Settings -> "Look like Scratch".)
+2. THEIRS IS THEIRS, OURS IS OURS: no Scratch art, logos, cat or library
+   pictures. Credit every extension creator and follow their licence.
+3. SAFETY: extensions that read personal info (IP, location, logins) are
+   always marked Dangerous and warned. No accounts. Kids under 13 need a
+   parent's OK before any data is sent. Never run JavaScript blocks.
+4. No cats anywhere in G-Warp's look.
+5. Don't remove or replace features that already exist. Add, don't swap.
+6. Projects people send for bug reports stay private and are deleted after.
+
+HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
+- DO NOT rewrite or re-upload app.html. Never paste the whole file.
+- Put new code in its own file in the folder  chatgpt/  for example:
+    chatgpt/clone-limit.js     (one feature per file)
+    chatgpt/NOTES-clone-limit.txt  (what it does, where it goes, how to test)
+- Each code file = one self-contained <script> module:
+    (() => { 'use strict'; /* what + why */ ... })();
+  It must not break if loaded twice, and must have a switch-off key.
+- Only use websites/functions that already exist in app.html. If you are
+  not sure a function exists, SAY SO in the NOTES file instead of guessing.
+- Mark done items in this file with [x] and your name, e.g.
+    [x] (ChatGPT) researched clone limit -> chatgpt/clone-limit.js
+- Add new ideas at the bottom under "IDEAS", not in the middle.
+
+=====================================================================
+ NOW (most important first)
+=====================================================================
+[ ] 1. FREEZE FIXES (v15.46) - the chaos tester froze the app:
+      [ ] Clone limit 300 like Scratch (it made 81,000 clones; Stop took 45 s)
+          + optional "Infinite clones" setting like TurboWarp, with a warning.
+      [ ] Stop must clear all clones in one fast pass (< 100 ms).
+      [ ] Frame budget: never run scripts for more than ~250 ms without
+          letting the page breathe (turbo mode too).
+      [ ] Stuck-script box: "A script is taking too long - Stop / Keep waiting"
+          in G-Warp's dark style. Idea: TurboWarp's "warp timer".
+      [ ] Text limit (join can't grow forever) and list limit 200,000 items.
+      [ ] Crash recovery: after a freeze, offer to restore the last autosave
+          (use IndexedDB, localStorage is too small for big projects).
+      (Claude has v15.46 mostly built; its Stop test still times out.)
+[ ] 2. "Open in G-Warp" link: app.html#scratch=<number> should ask
+      "Open Scratch project #<number>?" then load it (G-Warp already has
+      More -> "Load from the web..."). Needed for the browser extension.
+[ ] 3. Browser extension "G-Warp Opener" (Chrome/Edge/Firefox): a button on
+      Scratch project pages that opens the project in G-Warp. Draft code
+      exists (from Gemini); needs PNG icons, real G-Spark, no forever timers.
+[ ] 4. Scratch behaviour check: every block must give the SAME result as
+      Scratch 3 (number/text rules, list indexes, rounding, pen colours,
+      clone rules, hat restarts, broadcast order...). Make small test
+      projects with the exact expected result.
+[ ] 5. Make sure .pmp (PenguinMod) files open, including newer ones.
+[ ] 6. TurboWarp / PenguinMod gallery extensions: test that they load on
+      the real website (github.io), list any that fail.
+
+=====================================================================
+ LATER
+=====================================================================
+[ ] GWrap AI: built-in AI helper + "use your own API key" option
+    (kids under 13: parent's OK first; never send data silently).
+[ ] "Power lines": while a project runs, show animated electric lines
+    between broadcast -> when I receive, and my block -> define.
+[ ] Developer mode vs normal mode.
+[ ] 60 FPS or more, even on big projects.
+[ ] Report-a-bug link on the website (GitHub Issues).
+[ ] Short showcase video / GIF of G-Warp for the website.
+[ ] gwarper.com domain (owner + dad).
+
+=====================================================================
+ DONE (latest first)
+=====================================================================
+[x] (Claude) Website + Beta live on GitHub Pages
+[x] (Claude) v15.45.0: Look-like-Scratch is an option only; dark comments
+[x] (Claude) v15.31-v15.44: Bug Hunter, comments, right-click search,
+    duplicate, costume menu, own sprite + backdrop libraries, Stage
+    selection, 191 extensions with safety labels, Song maker, and more.
+
+=====================================================================
+ IDEAS (anyone can add here)
+=====================================================================
+-
