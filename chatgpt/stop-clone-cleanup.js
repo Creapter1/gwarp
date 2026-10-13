@@ -126,11 +126,31 @@
 
   window.addEventListener('click', onStartStopCapture, true);
 
+  // The "stop all" Scratch block uses GW.extraBlock rather than a button click.
+  // Wrap it before the current stop-block dispatcher runs so the expensive
+  // clone/thread arrays are compacted before stopAllLikeScratch visits threads.
+  const originalExtraBlock = typeof GW.extraBlock === 'function' ? GW.extraBlock : null;
+  function extraBlockWithFastStop(th, block) {
+    if (block?.dataset?.type === 'stop') {
+      const option = [...(block.querySelectorAll?.('.block-select') || [])]
+        .find(select => select.closest?.('.scratch-block') === block)?.value || 'all';
+      if (option === 'all') compactClones('stop-block');
+    }
+    return originalExtraBlock.apply(this, arguments);
+  }
+  if (originalExtraBlock) {
+    extraBlockWithFastStop.__gwChatGPTFastStopBlock = true;
+    GW.extraBlock = extraBlockWithFastStop;
+  }
+
   state.removeAllClonesFast = removeAllClonesFast;
   state.dispose = () => {
     window.removeEventListener('click', onStartStopCapture, true);
     if (GW.removeAllClones === removeAllClonesFast) {
       GW.removeAllClones = originalRemoveAllClones;
+    }
+    if (originalExtraBlock && GW.extraBlock === extraBlockWithFastStop) {
+      GW.extraBlock = originalExtraBlock;
     }
     delete window[INSTALL_KEY];
   };
