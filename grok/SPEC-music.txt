@@ -1,0 +1,68 @@
+G-WARP SPEC: MUSIC (Scratch 3.0 extension)
+Source: scratchfoundation/scratch-vm src/extensions/scratch3_music/index.js
+         + sound.js ranges for beats/tempo/MIDI
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+OVERVIEW
+=====================================================================
+Extension id: music
+Plays drum samples and pitched instrument samples via audioEngine.
+Menus are 1-indexed in the UI (value "1" = first drum/instrument).
+
+Related clamps (also listed in sound package):
+  MIDI notes: 36..96 (C2..C7)
+  Beats: 0..100
+  Tempo: 20..500 bpm
+
+=====================================================================
+DRUMS (18)
+=====================================================================
+1 Snare, 2 Bass Drum, 3 Side Stick, 4 Crash Cymbal, 5 Open Hi-Hat,
+6 Closed Hi-Hat, 7 Tambourine, 8 Hand Clap, 9 Claves, 10 Wood Block,
+11 Cowbell, 12 Triangle, 13 Bongo, 14 Conga, 15 Cabasa, 16 Guiro,
+17 Vibraslap, 18 Cuica.
+
+play drum [n] for [beats] beats — sample one-shot; duration tied to tempo.
+
+=====================================================================
+INSTRUMENTS (typical set)
+=====================================================================
+Piano (multi-sample), Electric Piano, Organ, Guitar, Electric Guitar,
+Bass, Pizzicato, Cello, Trombone, Clarinet, Saxophone, Flute,
+Wooden Flute, Bassoon, Choir, Vibraphone, Music Box, Steel Drum,
+Marimba, Synth Lead, Synth Pad, … (full list in INSTRUMENT_INFO).
+
+set instrument to [n]
+play note [MIDI] for [beats] beats — pitch from nearest sample + rate.
+
+=====================================================================
+TEMPO / REST
+=====================================================================
+set tempo to / change tempo by / tempo reporter
+rest for [beats] beats — wait using current tempo.
+Duration in seconds ~= beats * (60 / tempo).
+
+=====================================================================
+CONCURRENCY
+=====================================================================
+Runtime tracks concurrent drum/instrument voices (_concurrencyCounter).
+Stop all / project stop should release buffer sources.
+
+Clones: music state handling follows target-created listener pattern.
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+Same instrument/drum indices for project compatibility.
+Audio latency and polyphony limits may differ by browser.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- G-Warp has its own Music Maker UI; extension blocks must still match
+  Scratch opcodes/results when projects use the official Music extension.
+- Prefer not to ship Scratch drum/instrument *art*; audio samples need
+  proper licensing if bundled (credit / use engine's assets path).
+- If exact instrument count in a local build differs, document it; do not
+  silently renumber menus.
