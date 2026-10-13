@@ -46,8 +46,10 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
  NOW (most important first)
 =====================================================================
 [ ] 1. FREEZE FIXES (v15.46) - the chaos tester froze the app:
-      [ ] Clone limit 300 like Scratch (it made 81,000 clones; Stop took 45 s)
-          + optional "Infinite clones" setting like TurboWarp, with a warning.
+      [x] (ChatGPT) Clone-limit warning supplement -> chatgpt/clone-limit.js
+          The existing app has a 300 default cap + Infinite clones setting; this
+          add-on warns at runtime when a higher/infinite limit passes 300.
+          Browser verification is still required after Claude integrates it.
       [ ] Stop must clear all clones in one fast pass (< 100 ms).
       [ ] Frame budget: never run scripts for more than ~250 ms without
           letting the page breathe (turbo mode too).
