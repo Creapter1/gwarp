@@ -1,0 +1,101 @@
+PMP LOADER NOTES — DeepSeek
+================================
+WHAT IS A .PMP?
+---------------
+PenguinMod Project files (.pmp) come in two kinds:
+1. ZIP kind (the common one)
+   - It is a renamed .sb3: a ZIP archive containing project.json + assets.
+   - First two bytes are 0x50 0x4B ("PK").
+   - JSZip (already in G-Warp) can open it exactly like an .sb3.
+2. Protobuf kind (used by the PenguinMod backend/API)
+   - Not a ZIP. It is a serialized binary (Uint8Array/ArrayBuffer).
+   - To convert it to JSON you need the pmp-protobuf library:
+       https://github.com/PenguinMod/pmp-protobuf
+       https://www.npmjs.com/package/pmp-protobuf
+   - Licence: MIT (as shown on the npm page).
+   - CDN link (UMD build – UNSURE, see below):
+       https://cdn.jsdelivr.net/npm/pmp-protobuf@1.6.0/dist/pmp-protobuf.min.js
+   - The library exposes `protobufToJson(protobufUint8Array)` which returns
+     a plain object (the project.json equivalent).
+   - Source: README.md on GitHub shows the usage:
+       import { protobufToJson } from "pmp-protobuf";
+       const json = protobufToJson(protobuf);
+   - Reference: https://github.com/PenguinMod/pmp-protobuf/blob/main/README.md
+HOW TO TELL THEM APART
+----------------------
+The loader checks the first two bytes:
+- 0x50 0x4B → 'zip'
+- anything else → 'protobuf' (candidate)
+This is the same approach PenguinMod's GUI uses (see project-fetcher-hoc.jsx
+in the penguinmod.github.io repo). We could not find a published magic number
+for the protobuf format, so any non-ZIP buffer is treated as a protobuf
+candidate.
+WHAT PENGUINMOD ADDS TO project.json
+------------------------------------
+Compared to Scratch, PenguinMod adds many extra fields:
+- Extension IDs that are not in Scratch (e.g. looksExpanded, controlExpanded,
+  soundExpanded, motionExpanded, sensingExpanded, operatorsExpanded,
+  eventsExpanded, dataExpanded, proceduresExpanded, argumentExpanded, etc.)
+- Custom-block features: warp, mutation fields beyond Scratch's
+  procedures_definition.
+- Runtime settings: fencing, maxClones, miscLimits,
+  disableOffscreenRendering, disableDirectionClamping, dangerousOptimizations.
+- Asset metadata may use different MIME types.
+A standard Scratch-style loader will not understand these fields, so it may
+fail to load extensions, ignore custom-block behaviours, or throw errors on
+unknown opcodes. Our loader passes the JSON through unchanged; the downstream
+VM must handle the extra fields (or at least not crash).
+HOW PENGUINMOD'S OWN VM LOADS .PMP
+-----------------------------------
+- GUI (penguinmod.github.io): `project-fetcher-hoc.jsx` imports
+  `protobufToJson` from pmp-protobuf, checks the buffer for "PK", and either
+  uses JSZip (ZIP kind) or calls protobufToJson (protobuf kind).
+  File: https://github.com/PenguinMod/penguinmod.github.io/blob/develop/src/lib/project-fetcher-hoc.jsx
+- VM (PenguinMod-Vm): `src/serialization/sb3.js` deserializes the project.json
+  into the runtime and contains PenguinMod-specific logic for extra extensions
+  and block mutations.
+  File: https://github.com/PenguinMod/PenguinMod-Vm/blob/develop/src/serialization/sb3.js
+WHERE THE CODE GOES IN G-WARP
+------------------------------
+1. Save pmp-loader.js as deepseek/pmp-loader.js.
+2. In app.html, after JSZip is loaded and before the project-loading logic,
+   add:
+       <script src="deepseek/pmp-loader.js"></script>
+3. Wherever G-Warp currently handles .sb3 files, add:
+       const kind = window.GW_PMP.detect(arrayBuffer);
+       if (kind === 'zip' || kind === 'protobuf') {
+           const {json, assets} = await window.GW_PMP.toProjectJson(arrayBuffer);
+           // feed json and assets into the existing Scratch-style loader
+       } else {
+           // show a kid-friendly error
+       }
+HOW TO TEST IN THE BROWSER CONSOLE
+----------------------------------
+1. Load a .pmp file (ZIP kind) using the file input.
+2. In the console:
+       const buffer = /* your ArrayBuffer */;
+       console.log(window.GW_PMP.detect(buffer)); // should print "zip"
+       window.GW_PMP.toProjectJson(buffer).then(({json, assets}) => {
+           console.log('Project JSON:', json);
+           console.log('Assets count:', assets.size);
+       });
+3. For a protobuf-kind file, first load the pmp-protobuf library from the CDN
+   above, then repeat the test.
+UNSURE ITEMS
+-------------
+- UNSURE: The exact magic bytes for the PenguinMod protobuf format. The loader
+  currently treats any non-ZIP buffer as a protobuf candidate, which could
+  mis-classify other binary files. A more precise check would require knowing
+  the protobuf's first bytes.
+- UNSURE: Whether the pmp-protobuf library exposes `protobufToJson` on the
+  global `window.pmpProtobuf` object when loaded via CDN. The README shows ES
+  module imports, so a UMD build may need to be confirmed. The CDN link given
+  is a best guess; if it 404s, try another version from
+  https://www.jsdelivr.com/package/npm/pmp-protobuf.
+- UNSURE: How assets are stored inside the protobuf variant. The current
+  loader returns an empty asset map for protobuf projects; a complete solution
+  would need to extract assets from the protobuf structure.
+- UNSURE: The exact set of extra fields in PenguinMod's project.json that a
+  Scratch-style loader would need to handle. The current loader passes the JSON
+  through unchanged, but the downstream VM may still fail on unknown
+  extensions.
