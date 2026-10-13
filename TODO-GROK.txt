@@ -1,0 +1,38 @@
+=====================================================================
+ G-WARP TO-DO LIST FOR GROK
+ First read TODO.txt: its RULES and "HOW TO HAND IN WORK" apply to you too.
+ Put your work in the folder grok/ (NOT chatgpt/, that one is ChatGPT's).
+ ChatGPT is doing NOW items 1 and 2 in TODO.txt. Don't do those.
+=====================================================================
+
+YOUR JOBS (in this order)
+[ ] G1. SCRATCH BEHAVIOUR SPEC (research, big job)
+      Using the real Scratch source (github.com/scratchfoundation/scratch-editor,
+      packages scratch-vm; old repo scratchfoundation/scratch-vm), write
+      grok/SPEC-<category>.txt for: motion, looks, sound, events, control,
+      sensing, operators, variables-lists, myblocks, pen, music.
+      For EVERY block: opcode, what it does, exact edge cases (ranges,
+      wrapping, limits, weird inputs, number vs text rules).
+      Mark where TurboWarp / PenguinMod are different.
+      Explain in your own words (no big copy-paste of their code).
+[ ] G2. TEST LIST: grok/TESTS.txt with 60+ tiny scripts written as text,
+      each with the EXACT result Scratch 3 gives. Pick tricky ones
+      (0.1+0.2, round(-2.5), list item 0, "10"="10.0", mod with negatives,
+      pen colour, clone limit 300, hat restart, broadcast order).
+[ ] G3. ENGINE RULES: grok/SPEC-engine.txt - frame timing (30 FPS),
+      thread order, when loops yield, redraw rule, warp mode, turbo,
+      hats restarting, broadcast and wait, stop blocks, clones.
+[ ] G4. FILE FORMATS: grok/SPEC-files.txt - .sb3 project.json format and
+      what TurboWarp and PenguinMod (.pmp) add or change.
+[ ] G5. EXTENSION LIST CHECK: open app.html, find the TurboWarp and
+      PenguinMod extension gallery lists, and write grok/EXTENSIONS-check.txt
+      with any extension whose link looks wrong, old, or that reads personal
+      data (IP, location, logins) but is NOT marked Dangerous.
+
+WHEN YOU FINISH ONE
+- Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
+- If you can't upload files, give each file in its own code block with the
+  file name above it, and the owner will upload it.
+
+IDEAS (Grok can add here)
+-
