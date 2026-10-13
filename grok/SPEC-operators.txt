@@ -1,0 +1,127 @@
+G-WARP SPEC: OPERATORS (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_operators.js + util/cast.js + util/math-util.js
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+CAST RULES (used by almost every operator)
+=====================================================================
+toNumber(v):
+  - number NaN -> 0; other numbers unchanged
+  - Number(v); if NaN -> 0
+  So "hello" -> 0, "" -> 0, true -> 1, false -> 0
+
+toBoolean(v):
+  - boolean: as-is
+  - string: false only for "", "0", or case-insensitive "false"; every other string is true (including "falsey", " ")
+  - else Boolean(v)
+
+toString(v): String(v)
+
+compare(v1, v2): Scratch equality / ordering
+  - Try Number both sides. Whitespace-only or null that become 0 are treated as NaN for this path.
+  - If either side is NaN: case-insensitive string compare
+  - Infinity == Infinity, -Infinity == -Infinity
+  - else numeric subtract
+  Important: "10" equals 10.0 and 10. "123" equals 123.
+
+isInt(v): true for numeric integers (and NaN treated as int), booleans, or strings without '.'
+
+=====================================================================
+BLOCKS
+=====================================================================
+
+--- operator_add / subtract / multiply / divide ---
+Opcodes: operator_add, operator_subtract, operator_multiply, operator_divide
+Args: NUM1, NUM2
+What: toNumber both, then + - * /
+Edge cases:
+  - divide by 0 -> Infinity or -Infinity or NaN (JS rules); Scratch shows Infinity
+  - "3" + "4" = 7 (not "34")
+  - "hi" + 5 = 5
+
+--- operator_lt / operator_equals / operator_gt ---
+Opcodes: operator_lt, operator_equals, operator_gt
+Args: OPERAND1, OPERAND2
+What: compare(...) < 0, === 0, > 0
+Edge cases:
+  - "10" = "10.0" -> true
+  - "a" < "B" -> case-insensitive
+  - empty string vs 0: whitespace path can make them compare as equal in some cases; follow Cast.compare exactly
+
+--- operator_and / operator_or / operator_not ---
+Opcodes: operator_and, operator_or, operator_not
+Args: OPERAND1/OPERAND2 or OPERAND
+What: toBoolean then && || !
+Edge cases: "false" string is false; "0" is false; "falsey" is true
+
+--- operator_random ---
+Opcode: operator_random
+Args: FROM, TO
+What: inclusive random between the two (order independent)
+How: low/high sorted. If both look like ints (isInt), return integer low..high inclusive. Else continuous float in [low, high).
+Edge cases: FROM==TO -> that value. Non-numbers -> 0.
+
+--- operator_join ---
+Opcode: operator_join
+Args: STRING1, STRING2
+What: toString(STRING1) + toString(STRING2)
+Edge cases: join grows without a hard VM limit in Scratch 3; G-Warp freeze-fix plan may add a safety cap (document if added).
+
+--- operator_letter_of ---
+Opcode: operator_letter_of
+Args: LETTER, STRING
+What: 1-based character of string. Out of range -> ""
+How: index = toNumber(LETTER) - 1; if index < 0 or >= length return ""
+Edge cases: LETTER 0 or negative -> "". Non-integer LETTER is still floored via toNumber path then -1.
+
+--- operator_length ---
+Opcode: operator_length
+Args: STRING
+What: toString(STRING).length
+
+--- operator_contains ---
+Opcode: operator_contains
+Args: STRING1, STRING2
+What: case-insensitive substring: toString both lowercased, includes
+
+--- operator_mod ---
+Opcode: operator_mod
+Args: NUM1, NUM2
+What: floored modulo (Scratch style), NOT JS truncated %
+How: n % modulus; if result/modulus < 0 then result += modulus
+Edge cases:
+  - mod(-4, 3) -> 2 in Scratch (JS %-4%3 is -1)
+  - modulus 0 -> NaN
+
+--- operator_round ---
+Opcode: operator_round
+Args: NUM
+What: Math.round(toNumber(NUM))
+Edge cases: JS half-away-from-zero for .5 on positives; Math.round(-2.5) is -2 in JS (toward +inf). Scratch uses Math.round so same as JS.
+
+--- operator_mathop ---
+Opcode: operator_mathop
+Args: OPERATOR (menu string), NUM
+What: abs, floor, ceiling, sqrt, sin, cos, tan, asin, acos, atan, ln, log, e ^, 10 ^
+Details:
+  - sin/cos: degrees; result toFixed(10) then parseFloat to reduce float noise
+  - tan: MathUtil.tan — special-cases 90/-90/270/-270 to +/- Infinity; else tan with toFixed(10)
+  - asin/acos/atan: return degrees
+  - ln: Math.log; log: log10; e ^: exp; 10 ^: pow(10,n)
+  - unknown operator -> 0
+  - sqrt(negative) -> NaN
+Edge cases: large angles still suffer float error unless reduced mod 360 before trig (known Scratch issue for huge numbers).
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+- Same cast and operator semantics intended for compatibility.
+- TurboWarp compiler must preserve floored mod, string equality, and random int vs float rule.
+- Performance differs; results should not.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- Implement one Cast module and use it everywhere (motion, sensing, lists, etc.).
+- operator_mod must not use raw JS %.
+- equals must use compare, not ===.
