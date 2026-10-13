@@ -43,6 +43,8 @@ What this module does
    - preserves the sprite and thread array object identities,
    - repairs activeSpriteIndex after removing clones,
    - increments GW.__sprEpoch when that existing cache epoch exists.
+- Dispatches the small `gwarp-clones-cleaned` event so the optional clone-limit
+  warning module refreshes its count/state without polling.
 4. Adds a window capture listener for #stopBtn and #greenFlagBtn. It removes
    clones before existing button handlers run, so existing listeners such as
    the animation stop listener do not walk tens of thousands of clone objects.
@@ -71,7 +73,9 @@ Testing status
 - Static source inspection: PASS for the existing names and paths listed above
   at the time of research on main/app.html.
 - JavaScript syntax: PASS (parsed with the JavaScript Function constructor).
-- Mock 81,000-clone stress test: PASS; see result snapshot in the work-log summary.
+- Mock 81,000-clone stress test: PASS on both Stop-button capture and the
+  stop-all block path; both removed 81,000 clone sprites and clone-owned threads
+  in about 5–6 ms in the mock, preserved array identities, and disposed cleanly.
 - Important event-order detail: uses window capture, not document capture. On the event path, the window capture listener runs before document-level capture listeners already registered by app.html.
 - Browser stress test in real G-Warp: NOT RUN here; Claude must integrate and
   verify it before marking this item done.
