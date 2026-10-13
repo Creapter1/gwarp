@@ -1,0 +1,45 @@
+CLOUD AI — PLEASE COMPLETE THE LIVE UI SCREENSHOT DOCUMENTATION
+Date: 2026-10-13
+Repository: Creapter1/gwarp
+Priority: HIGH — documentation follow-up
+Do not rewrite app.html for this task.
+
+WHY THIS NOTE EXISTS
+ChatGPT added the user guide and UI documentation, plus two SVG schematic diagrams. The diagrams are explicitly NOT real screenshots. The live app was not available in ChatGPT's browser environment, so the documentation still needs real, live UI captures and direct interaction verification. Please do this in a browser with the running app.
+
+FILES ALREADY ADDED
+- chatgpt/USER-GUIDE.txt
+- chatgpt/SCREENSHOT-UI-DOCUMENTATION.md
+- chatgpt/README.md
+- chatgpt/images/gwarp-ui-map.svg (schematic)
+- chatgpt/images/gwarp-interactions-map.svg (schematic)
+- chatgpt/UI-AUDIT.txt (existing audit; use it as the test checklist)
+
+YOUR TASK — DO IT LIVE
+1. Read TODO.txt and follow its rules exactly. Read the current app.html, UI-AUDIT.txt, USER-GUIDE.txt, and SCREENSHOT-UI-DOCUMENTATION.md before testing. Confirm the actual app version/commit first; do not assume the documentation's version is current.
+2. Launch the actual app in a browser at the current repository/live deployment. Use a desktop-sized viewport and, if possible, also a narrow viewport.
+3. Capture genuine screenshots from the running app and commit them under chatgpt/images/. At minimum capture:
+   - default editor with category rail, block palette, script workspace, Stage, sprite list, and Code/Costumes/Sounds tabs;
+   - More/project menu open;
+   - right-click on a block;
+   - right-click on empty workspace;
+   - sprite tile/context menu;
+   - Costumes tab with drawing tools and costume list;
+   - Sounds tab with sound list and instrument/music controls;
+   - Extensions menu;
+   - any advanced tool that can be opened reliably (e.g. tilemap, Behavior Designer, diagnostics/restore).
+4. Test behavior live, not just appearance. For each interaction record steps, expected result, actual result, pass/fail, browser, viewport, app commit/version, and screenshot filename. Use UI-AUDIT.txt to prioritize category single-click navigation, block dragging/snapping and nested C-blocks, right-click semantics, Stage click routing, sprite movement, Code/Costumes/Sounds switching, Save/Ctrl+S, import/export, Pause/audio, and narrow-window layout.
+5. Distinguish SOURCE-VERIFIED, LIVE-BROWSER-VERIFIED, FAILED, and NOT TESTED. Never mark a source inference as browser-verified. Do not claim a bug is fixed unless the live test passes.
+6. Update chatgpt/SCREENSHOT-UI-DOCUMENTATION.md so the real screenshots are embedded/linked and each section accurately reflects observed behavior. Keep schematic SVGs if useful, but label them clearly as schematics. Update USER-GUIDE.txt only where live results justify a change.
+7. Add a concise results report, for example chatgpt/LIVE-UI-VERIFICATION.txt, containing environment details, screenshots captured, test table, failures, and follow-up recommendations.
+8. Update AI-TEAM.txt with what you actually completed and any remaining blockers. If you cannot run a browser or capture screenshots, say so plainly and report exactly what was unavailable—do not fabricate screenshots.
+9. Do not make unrelated feature changes. Do not rewrite the entire app. If you discover a real code bug, report a minimal reproducible case and propose a small targeted patch separately; follow TODO.txt's required file/patch workflow.
+
+DONE MEANS
+- Real screenshots captured from the live app, not generated illustrations.
+- At least the core editor/menu/tab interactions tested and results recorded.
+- Documentation linked to the real screenshots.
+- UI-AUDIT and AI-TEAM updated honestly with verification status.
+- No false claims of live testing and no unnecessary app.html rewrite.
+
+Please start with the repository's TODO.txt rules, then do the browser work and commit the documentation/results.
