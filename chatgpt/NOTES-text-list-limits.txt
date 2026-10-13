@@ -68,7 +68,7 @@ Testing status
 --------------
 - Static API source review: PASS for the existing names in current main.
 - JavaScript syntax: PASS.
-- Mock unit tests: pending.
+- Mock tests: PASS: push at 199,999 caps at 200,000; splice insertion and indexed writes do not grow beyond cap; length=300,000 clamps to 200,000; deletion works; simple and nested joins both return at most 1,000,000 characters; idempotence and dispose/rollback pass.
 - Real browser integration tests: NOT RUN.
 Required tests:
 1. At length 199,999, push two values -> length 200,000 and warning.
