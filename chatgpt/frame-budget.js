@@ -1,80 +1,163 @@
 (() => {
   'use strict';
+
+  /*
+   * Shorten uninterrupted warp-script execution using G-Warp's own retry path.
+   *
+   * The v15.8 runner already supports GW.RETRY_BLOCK: throwing that exact
+   * sentinel causes the runner to rewind the current block and return, so it
+   * can resume next animation frame without re-running completed blocks.
+   *
+   * This is a soft block-boundary budget, not an interrupt for synchronous JS.
+   * See NOTES-frame-budget.txt for uncovered control-only and native-block cases.
+   *
+   * Switch off before loading:
+   *   window.GW_DISABLE_CHATGPT_FRAME_BUDGET = true;
+   */
   const DISABLE_KEY = 'GW_DISABLE_CHATGPT_FRAME_BUDGET';
   const INSTALL_KEY = '__GW_CHATGPT_FRAME_BUDGET_V1__';
   const BUDGET_MS = 200;
+
   if (window[DISABLE_KEY] === true || window[INSTALL_KEY]) return;
 
-  let ThreadClass;
+  const GW = window.GW;
+  const Engine = window.Engine;
+  const GW8 = window.GW8;
+  const GW9 = window.GW9;
+  let ThreadClass = null;
   try { ThreadClass = typeof ScriptThread !== 'undefined' ? ScriptThread : null; }
-  catch (_) { ThreadClass = null; }
-  if (!ThreadClass?.prototype || typeof ThreadClass.prototype.executeBlock !== 'function') {
-    console.warn('[G-Warp frame budget] Not installed: expected ScriptThread.prototype.executeBlock.');
+  catch (_) {}
+
+  if (!GW || !Engine || !GW.RETRY_BLOCK ||
+      typeof GW.frameGate !== 'function' ||
+      typeof GW.extraBlock !== 'function' ||
+      typeof GW8?.resolveInput !== 'function' ||
+      typeof GW9?.evalNode !== 'function' ||
+      typeof ThreadClass?.prototype?.step !== 'function' ||
+      typeof ThreadClass?.prototype?.executeBlock !== 'function') {
+    console.warn(
+      '[G-Warp frame budget] Not installed: expected the current runner, ' +
+      'GW.RETRY_BLOCK, frameGate, extraBlock, GW8.resolveInput and GW9.evalNode.'
+    );
     return;
   }
 
-  const originalExecuteBlock = ThreadClass.prototype.executeBlock;
-  const startedAt = new WeakMap();
-  const temporarilyYielded = new WeakSet();
-  const state = { installed:true, budgetMs:BUDGET_MS, yieldCount:0, lastYieldAt:0, lastBlockType:'', dispose:null };
+  const state = {
+    installed: true,
+    budgetMs: BUDGET_MS,
+    checks: 0,
+    yields: 0,
+    lastYieldAt: 0,
+    lastYieldPath: '',
+    lastBlockType: '',
+    dispose: null
+  };
   window[INSTALL_KEY] = state;
-  const now = () => performance.now();
-  const stackOf = thread => Array.isArray(thread?.callStack) ? thread.callStack : [];
-  const managedWarpFrames = thread => stackOf(thread).filter(frame =>
-    frame?.type === 'custom' && (frame.warp === true || temporarilyYielded.has(frame))
-  );
 
-  function forceYield(thread, frames, block) {
-    const live = frames.filter(frame => stackOf(thread).includes(frame) && frame.warp === true);
-    if (!live.length || !window.Engine?.isRunning || thread.finished) return;
-    if (stackOf(thread).some(frame => frame?.__gwChatGPTBudgetYield)) return;
+  let frameStartedAt = 0;
+  const stepStartedAt = new WeakMap();
+  const activeStep = new WeakSet();
+  const wrapped = [];
+
+  const now = () => performance.now();
+  const inWarp = thread =>
+    !!thread?.callStack?.some(frame => frame?.type === 'custom' && frame.warp === true);
+
+  function shouldYield(thread, path, block) {
+    state.checks++;
+    if (!inWarp(thread) || thread.finished || !Engine.isRunning || Engine.isPaused) return false;
 
     const t = now();
-    for (const frame of live) {
-      startedAt.set(frame,t);
-      temporarilyYielded.add(frame);
-      frame.warp = false;
+    const stepStart = stepStartedAt.get(thread);
+    const frameStart = frameStartedAt || stepStart || t;
+    if (t - frameStart < BUDGET_MS && (!stepStart || t - stepStart < BUDGET_MS)) {
+      return false;
     }
 
-    // This one-iteration sentinel makes the interpreter return at its next
-    // internal step boundary. left=2 yields now, and removes itself next step.
-    thread.callStack.push({type:'loop',mode:'repeat',left:2,c:null,cur:null,i:0,__gwChatGPTBudgetYield:true});
-    state.yieldCount++;
-    state.lastYieldAt=t;
-    state.lastBlockType=String(block?.dataset?.type || 'unknown');
-
-    const resume=()=>{
-      for(const frame of live){
-        if(stackOf(thread).includes(frame) && frame.warp===false) frame.warp=true;
-        temporarilyYielded.delete(frame);
-        startedAt.set(frame,now());
-      }
-    };
-    if(typeof window.queueMicrotask==='function') window.queueMicrotask(resume);
-    else Promise.resolve().then(resume);
+    // Do not throw after calling the block: the runner rewinds the current
+    // block when RETRY_BLOCK is thrown. Every hook therefore checks first.
+    state.yields++;
+    state.lastYieldAt = t;
+    state.lastYieldPath = path;
+    state.lastBlockType = String(block?.dataset?.type || 'unknown');
+    return true;
   }
 
-  function budgetedExecuteBlock(block) {
-    const thread=this, before=now(), frames=managedWarpFrames(thread);
-    for(const frame of frames) if(!startedAt.has(frame)) startedAt.set(frame,before);
-    let result;
-    try { result=originalExecuteBlock.apply(thread,arguments); }
-    finally {
-      if(!frames.some(frame=>temporarilyYielded.has(frame))){
-        const after=now();
-        const live=frames.filter(frame=>stackOf(thread).includes(frame)&&frame.warp===true);
-        if(live.length){
-          const start=Math.min(...live.map(frame=>startedAt.get(frame)??before));
-          if(after-start>=BUDGET_MS) forceYield(thread,live,block);
-        }
-      }
+  function beforeBlock(thread, path, block) {
+    if (shouldYield(thread, path, block)) throw GW.RETRY_BLOCK;
+  }
+
+  function wrap(object, key, makeWrapper) {
+    const original = object?.[key];
+    if (typeof original !== 'function') return false;
+    const wrapper = makeWrapper(original);
+    object[key] = wrapper;
+    wrapped.push(() => {
+      if (object[key] === wrapper) object[key] = original;
+    });
+    return true;
+  }
+
+  // frameGate runs before the render loop steps project threads, making its
+  // timestamp a shared budget across threads in the same animation frame.
+  wrap(GW, 'frameGate', original => function () {
+    frameStartedAt = now();
+    return original.apply(this, arguments);
+  });
+
+  // Track each call to ScriptThread.step for cases where the render loop isn't
+  // the caller. These hooks never change block state or runner flags.
+  wrap(ThreadClass.prototype, 'step', original => function () {
+    const thread = this;
+    stepStartedAt.set(thread, now());
+    activeStep.add(thread);
+    try {
+      return original.apply(thread, arguments);
+    } finally {
+      activeStep.delete(thread);
+      stepStartedAt.delete(thread);
     }
-    return result;
-  }
-  budgetedExecuteBlock.__gwChatGPTFrameBudget=true;
-  ThreadClass.prototype.executeBlock=budgetedExecuteBlock;
-  state.dispose=()=>{
-    if(ThreadClass.prototype.executeBlock===budgetedExecuteBlock) ThreadClass.prototype.executeBlock=originalExecuteBlock;
+  });
+
+  // Check before the app's extension/core command dispatcher can cause effects.
+  wrap(GW, 'extraBlock', original => function (thread, block) {
+    beforeBlock(thread, 'GW.extraBlock', block);
+    return original.apply(this, arguments);
+  });
+
+  // Control blocks such as repeat/if evaluate their inputs inside runOne().
+  // Its RETRY_BLOCK catch rewinds that whole current block before re-running.
+  wrap(GW8, 'resolveInput', original => function (thread, block) {
+    beforeBlock(thread, 'GW8.resolveInput', block);
+    return original.apply(this, arguments);
+  });
+
+  // Nested reporter expressions also occur inside control-block conditions.
+  wrap(GW9, 'evalNode', original => function (thread, node, expected, ownerBlock) {
+    beforeBlock(thread, 'GW9.evalNode', ownerBlock || null);
+    return original.apply(this, arguments);
+  });
+
+  // Legacy direct block execution may bypass GW.extraBlock.
+  wrap(ThreadClass.prototype, 'executeBlock', original => function (block) {
+    beforeBlock(this, 'ScriptThread.executeBlock', block);
+    return original.apply(this, arguments);
+  });
+
+  state.getStats = () => ({
+    budgetMs: state.budgetMs,
+    checks: state.checks,
+    yields: state.yields,
+    lastYieldAt: state.lastYieldAt,
+    lastYieldPath: state.lastYieldPath,
+    lastBlockType: state.lastBlockType
+  });
+
+  state.dispose = () => {
+    for (const undo of wrapped.reverse()) {
+      try { undo(); } catch (_) {}
+    }
+    wrapped.length = 0;
     delete window[INSTALL_KEY];
   };
 })();
