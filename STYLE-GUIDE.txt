@@ -1,0 +1,49 @@
+=====================================================================
+ G-WARP STYLE GUIDE - how anything G-Warp looks, sounds and is named
+ Every AI and every contributor follows this. (Claude, 2026-10-13)
+=====================================================================
+
+1. IT'S PART OF G-WARP, NOT A NEW APP
+   - Don't build separate apps or editors with their own name/header
+     (e.g. a stand-alone "XYZ Paint"). Fix or extend the EXISTING G-Warp
+     screens: the Costumes tab, Sounds tab, Code tab, Stage.
+   - The editor is called "Costumes" (or "Costume editor"). No other names.
+   - Use the real hooks in ENGINE-MAP.txt so the work plugs into app.html.
+
+2. COLOURS (dark + electric)
+   background #0b0b14 | panels #141425 / #1b1b31 | lines #2a2a48
+   text #ececf6 | muted #a3a3c2 | violet #8b5cf6 / #a855f7 (main accent)
+   electric green #4ade80 (wires, success, "live") | yellow #facc15 (warnings)
+   red #ef4444 only for danger/delete.
+   NO red/white "game brand" themes, no Scratch orange/blue UI.
+   Events + Control blocks use BLACK text. C-blocks show the electric wire.
+
+3. MASCOT + EXAMPLE ART
+   - Example sprites/costumes use G-Spark (rounded violet square, big white
+     "G", small dark stick arms + legs) or G-Warp's own library sprites
+     (rocket, coin, gem, star, platform...).
+   - NEVER use characters or brands owned by others - not even "just for
+     testing": no Mario/Nintendo, Sonic, Pokemon, Minecraft, Disney,
+     Roblox, Fortnite, Scratch Cat, etc. Not in names, art, screenshots,
+     test files or demos. Invented characters only.
+
+4. WORDS
+   - Short, kid-friendly, no jargon. Buttons: verb first ("Add sprite").
+   - Errors say what happened + what to do ("I can't open this file.
+     Try a .sb3 or .pmp file.").
+   - Never say "official", never imply Scratch/TurboWarp/PenguinMod made it.
+
+5. LAYOUT (same functions as Scratch, own look)
+   - Start / Pause / Stop only in the top bar (no flag/stop above the stage).
+   - Tabs: Code, Costumes, Sounds. Stage on the right. Sprite list under it.
+   - Paint editor: tools on the left, canvas in the middle, colours/outline/
+     size on the right, costume list on the left side of the tab - keep
+     the existing positions; fix behaviour, don't redesign.
+
+6. SOUND
+   - Music should sound teen/adult (not babyish). Only original sounds or
+     sounds with a clear licence. No copyrighted songs or game music.
+
+7. ACCESSIBILITY
+   - Real <button>s, aria-labels, visible focus ring (#4ade80), text
+     contrast readable on dark, works with keyboard where Scratch does.
