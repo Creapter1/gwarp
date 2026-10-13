@@ -163,7 +163,9 @@
     }
 
     try {
-      if (typeof GW.toast === 'function') {
+      // The app toast silently returns when its #toast host is absent.
+      // Check the host first so a missing host falls back to a visible banner.
+      if (typeof GW.toast === 'function' && document.getElementById('toast')) {
         GW.toast('⚠️ ' + message);
         return;
       }
