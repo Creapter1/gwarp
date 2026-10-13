@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="920" viewBox="0 0 1500 920" role="img" aria-labelledby="title desc">
+<title id="title">G-Warp menus and interaction map</title>
+<desc id="desc">Schematic of the different menus opened by right-clicking blocks, the empty workspace, a sprite, and a costume. This is a source-based diagram, not a live screenshot.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0a0d1a"/><stop offset="1" stop-color="#171c31"/></linearGradient><style>.t{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#edf0ff}.m{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#aab5d2}.h{font-size:24px;font-weight:800}.sub{font-size:14px}.panel{fill:#131a2d;stroke:#344061;stroke-width:1.5}.menu{fill:#1e293b;stroke:#64748b;stroke-width:1.5}.item{fill:#1b2337;stroke:#34415f;stroke-width:1}.lab{font-size:16px;font-weight:700}.body{font-size:15px}.num{fill:#7c3aed;stroke:#c4b5fd;stroke-width:1.3}.nt{font-size:15px;font-weight:800;fill:#fff;text-anchor:middle;dominant-baseline:middle}</style></defs>
+<rect width="1500" height="920" rx="24" fill="url(#bg)"/>
+<text x="30" y="40" class="t h">G-Warp — Menu &amp; interaction map</text>
+<text x="30" y="67" class="m sub">Source-based guide to what each context menu is for · menu content can vary by selected object</text>
+<!-- panels -->
+<rect x="30" y="95" width="710" height="370" rx="16" class="panel"/>
+<rect x="760" y="95" width="710" height="370" rx="16" class="panel"/>
+<rect x="30" y="485" width="710" height="370" rx="16" class="panel"/>
+<rect x="760" y="485" width="710" height="370" rx="16" class="panel"/>
+<!-- block -->
+<text x="55" y="131" class="t h">1. Right-click a block</text>
+<text x="55" y="156" class="m sub">Context menu on a script block</text>
+<rect x="58" y="183" width="285" height="58" rx="10" fill="#a16207"/><text x="77" y="219" class="t lab">⚑ when green flag clicked</text><rect x="58" y="244" width="255" height="47" rx="9" fill="#0e7490"/><text x="77" y="273" class="t lab">move 10 steps</text><rect x="58" y="294" width="255" height="47" rx="9" fill="#0e7490"/><text x="77" y="323" class="t lab">turn 15 degrees</text>
+<path d="M319 275 L368 275" stroke="#aab5d2" stroke-width="2" stroke-dasharray="4 5"/><rect x="368" y="183" width="330" height="178" rx="10" class="menu"/><rect x="379" y="194" width="308" height="45" rx="7" class="item"/><text x="397" y="222" class="t body">Duplicate</text><rect x="379" y="245" width="308" height="45" rx="7" class="item"/><text x="397" y="273" class="t body">Delete Block</text><rect x="379" y="296" width="308" height="45" rx="7" class="item"/><text x="397" y="324" class="t body">Delete Full Stack</text>
+<text x="58" y="386" class="m sub">Tip: undo/redo is in More and the empty-workspace menu.</text><text x="58" y="409" class="m sub">Audit warning: duplicate/delete semantics need verification</text><text x="58" y="432" class="m sub">when the clicked block is in the middle of a script.</text>
+<!-- empty workspace -->
+<text x="785" y="131" class="t h">2. Right-click empty workspace</text><text x="785" y="156" class="m sub">Workspace actions and search</text>
+<rect x="787" y="183" width="330" height="178" rx="10" fill="#111827" stroke="#344061"/><path d="M815 218 h62 v-14 h62 v14 h62" fill="none" stroke="#607090" stroke-width="2" stroke-dasharray="4 5"/><rect x="852" y="238" width="92" height="35" rx="5" fill="#1f2b43"/><text x="898" y="260" class="m sub" text-anchor="middle">Workspace</text><rect x="1128" y="183" width="314" height="235" rx="10" class="menu"/><rect x="1138" y="193" width="294" height="36" rx="6" class="item"/><text x="1151" y="216" class="t body">Undo</text><rect x="1138" y="234" width="294" height="36" rx="6" class="item"/><text x="1151" y="257" class="t body">Redo</text><rect x="1138" y="275" width="294" height="36" rx="6" class="item"/><text x="1151" y="298" class="t body">Clean up Blocks</text><rect x="1138" y="316" width="294" height="36" rx="6" class="item"/><text x="1151" y="339" class="t body">Add Comment</text><rect x="1138" y="357" width="294" height="51" rx="6" class="item"/><text x="1151" y="379" class="t body">Delete script(s)</text><text x="1151" y="397" class="m sub">Search blocks to add is at top</text>
+<text x="787" y="442" class="m sub">Search currently presents up to eight result matches.</text>
+<!-- sprite -->
+<text x="55" y="521" class="t h">3. Right-click a sprite tile</text><text x="55" y="546" class="m sub">Sprite manager context menu</text>
+<rect x="58" y="576" width="150" height="174" rx="12" class="item"/><circle cx="133" cy="629" r="28" fill="#a78bfa"/><path d="M90 691 Q133 648 176 691" fill="#a78bfa"/><text x="133" y="727" class="t lab" text-anchor="middle">Sprite1</text>
+<path d="M213 652 L280 652" stroke="#aab5d2" stroke-width="2" stroke-dasharray="4 5"/><rect x="280" y="576" width="390" height="151" rx="10" class="menu"/><rect x="291" y="587" width="368" height="39" rx="6" class="item"/><text x="307" y="612" class="t body">duplicate</text><rect x="291" y="632" width="368" height="39" rx="6" class="item"/><text x="307" y="657" class="t body">find on stage</text><rect x="291" y="677" width="368" height="39" rx="6" class="item"/><text x="307" y="702" class="t body">delete</text>
+<text x="58" y="786" class="m sub">Deletion offers a Restore message; the More → File area</text><text x="58" y="810" class="m sub">also has a Restore Sprite action while an undo is available.</text>
+<!-- costume -->
+<text x="785" y="521" class="t h">4. Right-click a costume</text><text x="785" y="546" class="m sub">Asset context menu</text>
+<rect x="788" y="576" width="150" height="174" rx="12" class="item"/><rect x="817" y="600" width="92" height="95" rx="8" fill="#f1f5f9"/><path d="M845 621 L888 621 L901 672 L832 672Z" fill="#7c3aed"/><text x="863" y="728" class="t lab" text-anchor="middle">Costume 1</text>
+<path d="M943 652 L1002 652" stroke="#aab5d2" stroke-width="2" stroke-dasharray="4 5"/><rect x="1002" y="576" width="440" height="151" rx="10" class="menu"/><rect x="1014" y="587" width="416" height="39" rx="6" class="item"/><text x="1030" y="612" class="t body">duplicate</text><rect x="1014" y="632" width="416" height="39" rx="6" class="item"/><text x="1030" y="657" class="t body">export (SVG or PNG)</text><rect x="1014" y="677" width="416" height="39" rx="6" class="item"/><text x="1030" y="702" class="t body">delete</text>
+<text x="788" y="786" class="m sub">Costume ordering and sound-list context actions are incomplete</text><text x="788" y="810" class="m sub">or need verification; consult the user guide before risky edits.</text>
+<text x="30" y="891" class="m sub">Illustrative diagrams based on app.html source—not pixel captures. This page includes a live app frame separately.</text>
+</svg>
