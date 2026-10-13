@@ -1,0 +1,99 @@
+G-WARP SPEC: LOOKS (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_looks.js (+ Cast, MathUtil)
+Written by: Grok  |  Date: 2026-10-13
+Note: file was partially truncated in fetch; core opcodes and limits below
+are from the VM source that was retrieved. Layer helpers follow Scratch 3 docs.
+
+=====================================================================
+SAY / THINK BUBBLES
+=====================================================================
+SAY_BUBBLE_LIMIT = 330 characters.
+Format rules for bubble text:
+  - number that is non-integer and |n| >= 0.01 -> toFixed(2)
+  - then String and substr(0, 330)
+Empty text clears the bubble. Hidden sprite: bubble not shown.
+Stop all / target removed: bubbles reset.
+
+--- looks_say / looks_think ---
+Emit SAY event with type say|think and message. Does not wait.
+
+--- looks_sayforsecs / looks_thinkforsecs ---
+Show bubble, then Promise timeout SECS*1000. Only clear if usageId still
+matches (another say/think can replace it). SECS uses raw args (caller
+should treat non-numbers carefully; prefer toNumber in G-Warp).
+
+--- looks_show / looks_hide ---
+setVisible true/false and refresh bubble render.
+
+--- looks_hideallsprites ---
+Legacy no-op.
+
+=====================================================================
+COSTUMES / BACKDROPS
+=====================================================================
+Costume index is 0-based internally; user-facing numbers are 1-based.
+
+_setCostume(target, requested, optZeroIndex):
+  - number -> setCostume(index or index-1)
+  - string name match -> that index
+  - "next costume" / "previous costume"
+  - else if numeric string (not pure whitespace) -> Number as index
+  - switch costume never starts hats (even on stage)
+
+_setBackdrop(stage, requested, optZeroIndex):
+  - same number/name/next/previous rules
+  - "random backdrop": pick uniform among costumes excluding current
+    (if only one costume, stays)
+  - after switch: startHats event_whenbackdropswitchesto with new name
+
+Opcodes:
+  looks_switchcostumeto, looks_nextcostume
+  looks_switchbackdropto, looks_switchbackdroptoandwait, looks_nextbackdrop
+
+switchbackdroptoandwait: starts backdrop hats and waits for those threads
+(same family of wait behaviour as broadcast and wait).
+
+=====================================================================
+SIZE / EFFECTS / LAYERS
+=====================================================================
+EFFECT_GHOST_LIMIT: 0..100
+EFFECT_BRIGHTNESS_LIMIT: -100..100
+Other effects (color, fisheye, whirl, pixelate, mosaic) exist on the
+renderer; change/set effect by name and cleargraphiceffects resets all.
+
+--- looks_changesizeby / looks_setsizeto / looks_size ---
+Size is percent (100 = default). Reporter returns current size.
+
+--- looks_gotofrontback ---
+Front or back of sprite layer stack.
+
+--- looks_goforwardbackwardlayers ---
+Move N layers forward or backward.
+
+--- looks_costumenumbername / looks_backdropnumbername ---
+Reporters: number (1-based) or name depending on field.
+
+Legacy no-ops: looks_changestretchby, looks_setstretchto.
+
+=====================================================================
+EDGE CASES
+=====================================================================
+- Say number 1.234 -> bubble shows "1.23"; 0.001 stays full string path
+  unless format rules apply.
+- Switch costume "3" (string) acts as index 3 (1-based -> internal 2).
+- Random backdrop never picks the current one when alternatives exist.
+- Bubble flips side if it would go off-stage, only when the other side fits.
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+- Same costume/backdrop indexing and hat starts.
+- High Quality Pen is separate (pen extension), not looks.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- Keep electric/dark bubble chrome; do not copy Scratch bubble art.
+- Backdrop switch must fire whenbackdropswitchesto hats with the new name.
+- If any looks opcode detail is uncertain in engine code, prefer matching
+  Scratch 3 project tests over guessing.
