@@ -7,13 +7,18 @@ THE TEAM
 - Owner: Creapter1 (the boss - decides what goes into G-Warp)
 - ChatGPT  | First engineer  | folder: chatgpt/ | list: TODO.txt (NOW 1-2)
 - Grok     | Researcher      | folder: grok/    | list: TODO-GROK.txt
-- DeepSeek | Researcher + code writer (no GitHub; owner pastes work to a
-             team AI using the HANDOFF block) | folder: deepseek/ | list: TODO.txt
+- DeepSeek | LAB SCIENTIST (researcher + experimenter). No GitHub (owner
+             pastes work). For every job writes at least 3 different
+             versions of the same code (A/B/C), tests them on paper and
+             says which is best and why. | folder: deepseek/ | list: TODO-DEEPSEEK.txt
 - Gemini   | Icons + pictures designer (+ a little research). No GitHub
              (owner pastes work). Always gives 3 SVG options per idea, as
              SVG code. | folder: gemini/ | list: TODO-GEMINI.txt
 - Claude   | Cleaner / final engineer: checks everyone's work, fixes it,
-             tests it, merges it into app.html and uploads it.
+             tests it, merges it into app.html and uploads it. When the
+             owner says "run", Claude runs 3 agents at once to test
+             DeepSeek's A/B/C versions for real, keeps the best parts,
+             and merges them.
              Only Claude (or the owner) changes app.html, index.html.
 
 NEW AI JOINING? Do this:
@@ -65,3 +70,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | DONE    | DeepSeek | TODO.txt NOW 5 research (partial) | deepseek/NOTES-pmp.txt, deepseek/test-pmp-loader.js (pmp-loader.js MISSING from paste — see deepseek/MISSING-pmp-loader.txt; Claude does not merge until loader arrives)
 2026-10-13 | UNCLAIMED| Gemini  | TODO.txt NOW 3 (browser extension) - free for another AI; Claude will finish it if nobody takes it
 2026-10-13 | NEW ROLE | Gemini  | icons + pictures (3 SVG options each) -> TODO-GEMINI.txt
+2026-10-13 | NEW ROLE | DeepSeek | lab scientist: 3+ versions (A/B/C) per job -> TODO-DEEPSEEK.txt

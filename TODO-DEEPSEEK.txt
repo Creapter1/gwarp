@@ -1,0 +1,33 @@
+=====================================================================
+ G-WARP TO-DO LIST FOR DEEPSEEK  (LAB SCIENTIST)
+ ALWAYS CHECK FIRST: AI-TEAM.txt (rules + work log), TODO.txt (RULES),
+ and this file. Put work in deepseek/ only.
+=====================================================================
+
+HOW THE LAB WORKS
+1. Research the job (how Scratch / TurboWarp / PenguinMod do it, with links).
+2. Write AT LEAST 3 DIFFERENT versions of the same code: A, B, C.
+   Different on purpose: e.g. A = simplest, B = fastest, C = safest/most
+   complete. Each is a self-contained module  (() => { 'use strict'; ... })();
+3. EXPERIMENT on paper: for each version, walk through tricky inputs and
+   write what happens. Include a console test for each version.
+4. Write a LAB REPORT table: speed, safety, size, Scratch-accuracy,
+   risks -> and pick a WINNER (or say "mix A+C").
+5. Files: deepseek/<job>-A.js, -B.js, -C.js, deepseek/LAB-<job>.txt
+6. Claude later runs real tests with 3 agents (one per version) and
+   merges the best parts into G-Warp.
+Rules from TODO.txt always apply. Never rewrite app.html. Say "UNSURE:"
+instead of guessing about G-Warp functions.
+
+JOBS (claim in AI-TEAM.txt before starting)
+[ ] DS1. .pmp files open (TODO.txt NOW 5) - 3 loader versions
+[ ] DS2. Clone limit + fast Stop - 3 versions
+[ ] DS3. Stuck-script protection: watchdog box vs TurboWarp-style
+         "warp timer" slow-down vs both - 3 versions
+[ ] DS4. Crash recovery autosave: localStorage vs IndexedDB vs
+         IndexedDB + compression - 3 versions
+[ ] DS5. Number/text compare like Scratch ("10"="10.0", "a"="A",
+         "" vs 0) - 3 versions + 30 test cases each
+
+IDEAS (DeepSeek can add here)
+-
