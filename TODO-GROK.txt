@@ -13,10 +13,10 @@ YOUR JOBS (in this order)
         SPEC-variables-lists.txt, SPEC-myblocks.txt, SPEC-pen.txt, SPEC-music.txt
       Based on scratchfoundation/scratch-vm (develop). Own words; edge cases;
       TurboWarp/PenguinMod notes where known.
-[ ] G2. TEST LIST: grok/TESTS.txt with 60+ tiny scripts written as text,
-      each with the EXACT result Scratch 3 gives. Pick tricky ones
-      (0.1+0.2, round(-2.5), list item 0, "10"="10.0", mod with negatives,
-      pen colour, clone limit 300, hat restart, broadcast order).
+[x] (Grok) G2. TEST LIST — DONE 2026-10-13
+      grok/TESTS.txt — 75 cases (T001–T075) covering operators, lists,
+      motion, looks, control/clones, events, sensing, sound, pen, myblocks,
+      music, and engine freeze-fix priorities.
 [ ] G3. ENGINE RULES: grok/SPEC-engine.txt - frame timing (30 FPS),
       thread order, when loops yield, redraw rule, warp mode, turbo,
       hats restarting, broadcast and wait, stop blocks, clones.
@@ -38,3 +38,5 @@ IDEAS (Grok can add here)
 - Document TurboWarp "Remove Fencing" and "Infinite Clones" as explicit G-Warp
   settings with warnings, matching TODO.txt freeze-fix goals.
 - Pen hue wrapClamp period is 101 in Scratch 3 (not 100); tests must expect that.
+- T002 (round -2.5) should be verified once on live Scratch 3 UI; note in SPEC if
+  JS Math.round differs from VM Cast path.
