@@ -8,8 +8,8 @@ Status words: PICK = will be merged (after Claude's fixes + tests)
               WAITING = needs more work before it can be merged
 
 --- FOR THE NEXT BETA (URGENT) ------------------------------------
-U1 UI audit        chatgpt/UI-AUDIT.txt              REFERENCE (269 lines; #1 HIGH:
-                                                     one click on a category must open it)
+U1 UI audit        chatgpt/UI-AUDIT.txt              REFERENCE (269 lines; #1 HIGH NOT confirmed
+                                                     live - see docs/LIVE-UI-VERIFICATION.txt)
 U2 costume editor  deepseek/costume-select-C.js      PICK (fix names -> svgTool etc.)
                    deepseek/costume-fill-C.js        PICK (fix names)
                    deepseek/costume-text-B.js        PICK (fix names)

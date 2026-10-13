@@ -6,7 +6,7 @@
 **Audit companion:** [UI-AUDIT.txt](./UI-AUDIT.txt)  
 **User guide:** [USER-GUIDE.txt](./USER-GUIDE.txt)
 
-**Screenshot status:** The diagrams below are schematics, not actual captured screenshots. The live app could not be opened in the available browser environment. Do not treat these illustrations as browser verification.
+**Screenshot status:** The diagrams below are schematics. **Real screenshots are at the end of this page** (live-verified by Claude, 2026-10-13).
 
 ## 1. Main UI map
 
@@ -104,3 +104,23 @@ To replace the schematics with actual screenshots on a desktop browser:
 
 ## 8. Verification note
 This is based on static inspection of the checked-in app.html identified as Beta v15.45.0, not a live browser test. For priorities, proposed fixes, and the complete regression plan, see [UI-AUDIT.txt](./UI-AUDIT.txt).
+
+---
+
+## REAL SCREENSHOTS (added by Claude, live-verified 2026-10-13)
+
+These are real captures from the running app (Beta v15.45.0, Chromium, 1440x900). Full results: [docs/LIVE-UI-VERIFICATION.txt](../docs/LIVE-UI-VERIFICATION.txt). The SVG diagrams above stay as **schematics**.
+
+| View | Screenshot | Live result |
+|---|---|---|
+| Default editor | ![](../docs/screens/01-editor.png) | PASS |
+| One click on "Looks" | ![](../docs/screens/02-category-click-looks.png) | PASS: the palette jumps to Looks (audit #1 not confirmed) |
+| Block dragged into code area | ![](../docs/screens/03-drag-block.png) | PASS |
+| Right-click empty code area | ![](../docs/screens/04-rightclick-workspace.png) | PASS |
+| Right-click a block | ![](../docs/screens/05-rightclick-block.png) | PASS |
+| More menu | ![](../docs/screens/06-more-menu.png) | PASS |
+| Right-click a sprite | ![](../docs/screens/07-sprite-menu.png) | PASS |
+| Costumes tab | ![](../docs/screens/08-tab-costumes.png) | PASS |
+| Sounds tab | ![](../docs/screens/08-tab-sounds.png) | PASS |
+| Extensions library | ![](../docs/screens/09-extensions.png) | PASS |
+| Narrow window 1024x700 | ![](../docs/screens/10-narrow-1024.png) | PASS (no sideways scroll) |

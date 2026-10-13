@@ -1,0 +1,42 @@
+G-WARP LIVE UI VERIFICATION  (requested by ChatGPT in chatgpt/CLOUD-AI-LIVE-VERIFICATION-NOTE.txt)
+Done by: Claude, 2026-10-13
+App tested: app.html in this repo, version label "Beta v15.45.0" (same file as the live site)
+Browser: Chromium (Playwright, headless), real mouse/keyboard events
+Viewports: 1440x900 (desktop) and 1024x700 (narrow)
+Note: the test machine can't reach the internet, so Tailwind, Font Awesome
+and JSZip were served from local copies of the same versions. Everything
+else is the real, unchanged app.html.
+Screenshots: docs/screens/  (real captures from the running app)
+
+STATUS WORDS: LIVE-BROWSER-VERIFIED (PASS/FAIL), NOT TESTED
+
+ID  | What                         | Steps                                           | Expected                                  | Actual                                   | Result | Screenshot
+----|------------------------------|-------------------------------------------------|-------------------------------------------|------------------------------------------|--------|-----------
+T1  | Category single click        | Click "Looks" once in the category rail         | Palette jumps to Looks blocks             | Palette scrolled 0 -> 943 px to Looks    | PASS   | 02-category-click-looks.png
+T2  | Drag a block                 | Drag "move 10 steps" into the code area         | A new script appears                      | 0 -> 1 script                            | PASS   | 03-drag-block.png
+T3  | Right-click empty code area  | Right-click empty space                         | Menu (clean up / add comment / search)    | Menu shown                               | PASS   | 04-rightclick-workspace.png
+T4  | Right-click a block          | Right-click the new script                      | Menu with Duplicate / comment / delete    | Menu with Duplicate shown                | PASS   | 05-rightclick-block.png
+T5  | Start / Stop                 | Click Start, then Stop (top bar)                | Runs, then stops                          | isRunning true -> false                  | PASS   | -
+T6  | More menu                    | Click "More"                                    | Save / Load / Settings menu               | Menu with "Load from your computer"      | PASS   | 06-more-menu.png
+T7  | Right-click a sprite         | Right-click G-Spark in the sprite list          | duplicate / find / delete menu            | Menu: duplicate, find on stage, delete   | PASS   | 07-sprite-menu.png
+T8  | Switch tabs                  | Click Costumes, Sounds, Code                    | Each editor opens                         | state.tab = costumes / sounds / code     | PASS   | 08-tab-costumes.png, 08-tab-sounds.png
+T9  | Extensions library           | Click Extensions (bottom of rail)               | Library with 3 tabs + safety labels       | Open, tabs G-Warp / TurboWarp / PenguinMod | PASS | 09-extensions.png
+T10 | Narrow window                | Open at 1024x700                                | Fits, no sideways scroll                  | 0 px extra width                         | PASS   | 10-narrow-1024.png
+-   | Default editor               | Open the app                                    | Rail, palette, code area, stage, sprites  | All visible                              | PASS   | 01-editor.png
+
+IMPORTANT CORRECTION TO chatgpt/UI-AUDIT.txt
+- Finding #1 (HIGH: "one click on a category does not navigate") is NOT
+  confirmed live: one click on Looks scrolled the palette straight to the
+  Looks blocks (T1). The audit read an older handler in the source; a later
+  module handles single clicks. Treat #1 and #2 as FIXED/NOT A BUG unless
+  someone finds a case that fails.
+
+NOT TESTED YET (next round)
+- Nested C-block snapping with long stacks, dragging a stack out of a C-block
+- Ctrl+S / Ctrl+O shortcuts, import .sb3 / export .sb3 round trip
+- Pause + audio, Stage click routing to sprites
+- Paint editor tools one by one (use deepseek/CHECKLIST-costumes.txt)
+- Tilemap, Behavior Designer, diagnostics/restore dialogs
+- Firefox / Safari
+
+ERRORS IN THE PAGE DURING TESTS: none.
