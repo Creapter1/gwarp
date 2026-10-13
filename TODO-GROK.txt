@@ -7,17 +7,11 @@
 
 YOUR JOBS (in this order)
 [x] (Grok) G1. SCRATCH BEHAVIOUR SPEC — DONE 2026-10-13
-      All category files in grok/:
-        SPEC-motion.txt, SPEC-looks.txt, SPEC-sound.txt, SPEC-events.txt,
-        SPEC-control.txt, SPEC-sensing.txt, SPEC-operators.txt,
-        SPEC-variables-lists.txt, SPEC-myblocks.txt, SPEC-pen.txt, SPEC-music.txt
-[x] (Grok) G2. TEST LIST — DONE 2026-10-13
-      grok/TESTS.txt — 75 cases (T001–T075)
-[x] (Grok) G3. ENGINE RULES — DONE 2026-10-13
-      grok/SPEC-engine.txt — 30/60 TPS, WORK_TIME, WARP_TIME 500ms, turbo,
-      yields, redraw, hats, stop, MAX_CLONES 300, G-Warp freeze-fix notes.
-[ ] G4. FILE FORMATS: grok/SPEC-files.txt - .sb3 project.json format and
-      what TurboWarp and PenguinMod (.pmp) add or change.
+[x] (Grok) G2. TEST LIST — DONE 2026-10-13 — grok/TESTS.txt (75 cases)
+[x] (Grok) G3. ENGINE RULES — DONE 2026-10-13 — grok/SPEC-engine.txt
+[x] (Grok) G4. FILE FORMATS — DONE 2026-10-13
+      grok/SPEC-files.txt — .sb3 ZIP+project.json schema, TurboWarp extras,
+      PenguinMod .pmp ZIP vs protobuf, detection cheat sheet, safety rules.
 [ ] G5. EXTENSION LIST CHECK: open app.html, find the TurboWarp and
       PenguinMod extension gallery lists, and write grok/EXTENSIONS-check.txt
       with any extension whose link looks wrong, old, or that reads personal
