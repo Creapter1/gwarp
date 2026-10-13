@@ -1,0 +1,83 @@
+G-WARP SPEC: CONTROL (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_control.js
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+LOOPS AND WAIT
+=====================================================================
+
+--- control_repeat ---
+Args: TIMES, SUBSTACK
+How: times = round(toNumber(TIMES)). First entry sets loopCounter = times. Each run decrements; while loopCounter >= 0 after decrement, startBranch(1, true).
+Edge: TIMES 2.4 -> 2 iterations. TIMES 0 or negative: body does not run (counter goes negative immediately).
+Yields between iterations (one iteration setup per frame path).
+
+--- control_forever ---
+Always startBranch(1, true). Never ends by itself.
+
+--- control_repeat_until ---
+While condition is FALSE, run body (startBranch true). When TRUE, fall through.
+
+--- control_while ---
+(Scratch 2 leftover still in VM) While condition TRUE, run body.
+
+--- control_for_each ---
+Sets variable to 1..VALUE (Number(VALUE)). INDEX stored on stack frame.
+
+--- control_wait ---
+DURATION seconds (min 0). Uses stack timer; requestRedraw; yield until finished.
+Edge: negative duration -> 0. Non-number -> 0.
+
+--- control_wait_until ---
+Yield while condition is false.
+
+--- control_if / control_if_else ---
+Condition via toBoolean. if: branch 1 once. if_else: branch 1 or 2 once (not looping).
+
+=====================================================================
+STOP
+=====================================================================
+--- control_stop ---
+STOP_OPTION:
+  - "all" -> stopAll()
+  - "other scripts in sprite" / "other scripts in stage" -> stopOtherTargetThreads()
+  - "this script" -> stopThisScript()
+
+=====================================================================
+CLONES
+=====================================================================
+Scratch hard limit: 300 clones total (runtime-enforced outside this file; createClone returns null when full).
+
+--- control_create_clone_of ---
+CLONE_OPTION string. "_myself_" -> current target; else sprite by name.
+makeClone(); addTarget; goBehindOther(original).
+If no target or clone limit hit: no-op.
+
+--- control_delete_this_clone ---
+No-op if target.isOriginal. Else disposeTarget + stopForTarget.
+
+--- control_start_as_clone (hat) ---
+Hat metadata: restartExistingThreads: false (starting a new clone does not restart other clone scripts of same hat by that flag).
+
+=====================================================================
+COUNTER (Scratch 2 compatibility)
+=====================================================================
+control_get_counter / control_incr_counter / control_clear_counter
+Global-ish counter on the block package; cleared on RUNTIME_DISPOSED.
+
+--- control_all_at_once ---
+Runs body once (like if true). Historical Scratch 2 name; not true atomic warp.
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+- Infinite Clones option: disables the 300 limit (projects that rely on the cap may break).
+- Stop all must still clear clones quickly; G-Warp TODO requires <100 ms full clear.
+- Warp / turbo affect how many loop iterations run before yielding; block semantics stay the same.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- Clone limit 300 must match Scratch unless user enables an explicit "Infinite clones" setting with warning (see TODO.txt freeze fixes).
+- delete this clone must never delete the original sprite.
+- stop all must dispose clones in one fast pass.
