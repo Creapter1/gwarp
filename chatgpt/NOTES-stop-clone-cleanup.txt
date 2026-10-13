@@ -38,7 +38,8 @@ What this module does
    Engine.sprites, Engine.threads, and GW.removeAllClones.
 3. Replaces GW.removeAllClones with an in-place stable compaction:
    - one pass over Engine.sprites,
-   - one pass over Engine.threads to remove threads owned by clones,
+   - one pass over Engine.threads to remove threads owned by clones when clones
+     were found (the public GW.removeAllClones API always checks for orphans),
    - no new filtered arrays and no per-clone UI/render calls,
    - preserves the sprite and thread array object identities,
    - repairs activeSpriteIndex after removing clones,
