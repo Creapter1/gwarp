@@ -1,0 +1,63 @@
+G-WARP OPEN SCRATCH LINK — NOTES FOR CLAUDE
+============================================
+
+File
+----
+- chatgpt/open-scratch-link.js
+
+TODO item
+---------
+NOW item 2:
+app.html#scratch=<number> should ask "Open Scratch project #<number>?"
+and then load it. This is needed by the browser extension.
+
+Verified existing APIs (current main/app.html)
+----------------------------------------------
+- window.GW_CONFIRM is assigned near line 11920 and opens G-Warp's styled
+  confirmation dialog. Signature:
+  GW_CONFIRM(title, text, okText = 'OK', cancelText = 'Cancel').
+- window.GW_WEB = { parse, open, load } is assigned near line 15457.
+- GW_WEB.load accepts a Scratch project number string. It uses the normal
+  web loader, import path, source credit/reporting, and error feedback.
+
+Behavior
+--------
+- Accepts only exact #scratch=<positive decimal number>, 1-12 digits.
+- Asks for confirmation before any project download.
+- Cancel clears the handled hash so refreshing doesn't prompt again.
+- Accept calls window.GW_WEB.load(id) with the numeric string.
+- Does not create a second importer/downloader.
+- Uses the existing G-Warp confirmation dialog, with native confirm fallback
+  only if the dialog API is unavailable.
+- Switch-off key, set before load:
+    window.GW_DISABLE_SCRATCH_HASH_OPEN = true
+- Idempotence key prevents duplicate prompt/loader installs.
+- Does not modify app.html or index.html.
+
+Integration
+-----------
+Claude or the owner should add this as a separate script include after all
+existing app.html scripts, before </body>, so GW_CONFIRM and GW_WEB.load exist.
+The current project team rules reserve app.html/index.html changes for Claude
+or the owner, not ChatGPT.
+
+Testing status
+--------------
+- Source/API inspection: PASS.
+- JavaScript syntax: PASS.
+- Mock tests: PASS for accepted link (confirmation once, then loader gets ID),
+  cancelled link (no loader call), invalid #scratch=0 (no prompt), and loading
+  the module twice (same installation state/no duplicate flow).
+- Browser verification on a real shared Scratch project: NOT RUN here.
+- Required browser tests:
+  1. #scratch=<valid shared project ID>: exact confirmation title; no request
+     before accept; then the existing loader opens the real project.
+  2. Cancel: no fetch/import, URL hash cleared, editor remains unchanged.
+  3. Accept: verify assets, source credit and the existing progress/error UI.
+  4. Invalid IDs (0, non-digits, >12 digits, empty) do not prompt.
+  5. Ordinary app.html loads/non-scratch hashes are unchanged.
+  6. If GW_WEB.load is unavailable, warn and leave the hash intact.
+  7. The current path and query string survive clearing the hash.
+  8. Offline/removed/unshared project errors are shown by the existing loader.
+
+No app.html or index.html was changed.
