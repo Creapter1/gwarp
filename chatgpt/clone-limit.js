@@ -243,6 +243,14 @@
     };
   }
 
+  // The fast Stop-cleanup module compacts Engine.sprites in place. Listen for
+  // its event so the warning/count immediately follow that cleanup too.
+  const onClonesCleaned = () => {
+    rebuildCount();
+    maybeWarn();
+  };
+  window.addEventListener('gwarp-clones-cleaned', onClonesCleaned);
+
   // Some projects may already contain more than 300 clones when this loads.
   maybeWarn();
 })();
