@@ -69,8 +69,7 @@ Testing status
 --------------
 - Static source inspection: PASS for the source APIs described above.
 - JavaScript syntax: to be checked before merge.
-- Mock tests: pending for RETRY_BLOCK throwing, shared/per-thread timers,
-  idempotence, cleanup, and unchanged warp-frame flags.
+- Mock tests: PASS for retry sentinel thrown before original block side effects once the shared 200 ms frame budget is exhausted; next frame allows execution; non-warp threads remain unchanged; second load is idempotent; dispose restores all patched functions. Warp flags are not changed.
 - Browser verification: NOT RUN.
 
 Required tests
