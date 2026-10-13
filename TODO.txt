@@ -69,6 +69,8 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
               raw extension references + real browser integration still need testing.
       [ ] Crash recovery: after a freeze, offer to restore the last autosave
           (use IndexedDB, localStorage is too small for big projects).
+          [x] (ChatGPT) drafted unclean-session recovery offer -> chatgpt/crash-recovery-offer.js;
+              mock marker/accept/cancel tests passed; real browser freeze test pending.
       (Claude has v15.46 mostly built; its Stop test still times out.)
 [ ] 2. "Open in G-Warp" link: app.html#scratch=<number> should ask
       "Open Scratch project #<number>?" then load it (G-Warp already has
