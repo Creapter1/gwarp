@@ -10,83 +10,80 @@ TODO item
 NOW 1: "Frame budget: never run scripts for more than ~250 ms without letting
 the page breathe (turbo mode too)."
 
-What current app.html already does
-----------------------------------
-I inspected current main/app.html:
+Existing runtime facts from current app.html
+--------------------------------------------
 - The render loop runs Engine.threads and in Turbo mode repeats for at most
   about 12 ms per render pass (around line 3710).
 - The v15.8 runner uses LIMIT_OPS = 5000, FRAME_MS = 10, WARP_MS = 500
   (around line 10700).
 - Non-warp scripts yield at FRAME_MS after enough operations (around lines
   10897-10901).
-- A warp custom procedure can keep running inside ScriptThread.step until the
-  500 ms WARP_MS safety limit is reached (around lines 10869-10901).
-- GW_WARP_GUARD already attempts to alternate warp and screen-refresh frames
-  and can pause a repeatedly stuck warp procedure (around lines 10719-10761).
-This supplement aims to reduce the 500 ms warp slice, not replace those parts.
+- A warp custom procedure can otherwise run inside ScriptThread.step until the
+  500 ms WARP_MS safety limit is reached.
+- GW.RETRY_BLOCK is an existing sentinel at about line 14385. When the runner
+  catches it, it rewinds the current block and returns so it can retry next
+  frame (around lines 10893-10896). This is safer than adding synthetic frames
+  or toggling the user's custom-block warp flags.
 
-What this module does
----------------------
-- Wraps the current ScriptThread.prototype.executeBlock.
-- Tracks elapsed time for active custom call-stack frames with warp=true.
-- At a block boundary after about 200 ms, it temporarily turns off warp on
-  active custom frames and adds a one-iteration sentinel loop frame. The
-  existing interpreter sees warp as disabled and returns at a safe step
-  boundary; a microtask then restores the warp flags for the next frame.
-- Keeps Turbo mode's current render loop and normal FRAME_MS behavior.
-- Does not replace or rewrite ScriptThread.step or app.html.
-- Switch-off key, set before the script loads:
-    window.GW_DISABLE_CHATGPT_FRAME_BUDGET = true;
-- Idempotence key:
-    window.__GW_CHATGPT_FRAME_BUDGET_V1__
-- dispose() restores the original executeBlock method if no later code wrapped
-  this module's wrapper.
+What this module attempts
+------------------------
+- Uses BUDGET_MS = 200 as a soft block-boundary target.
+- Starts a shared frame clock via the existing GW.frameGate hook, and tracks
+  each ScriptThread.step call as a backup timer.
+- Checks before GW.extraBlock, GW8.resolveInput, GW9.evalNode and the legacy
+  ScriptThread.executeBlock paths. When a warp custom frame has exceeded the
+  budget, it throws the existing GW.RETRY_BLOCK sentinel before the next
+  operation can take effect. The runner catches it, rewinds the current block,
+  and returns to the browser event loop.
+- It does not toggle warp flags, insert synthetic call-stack frames, modify
+  the script itself, or execute a block before deciding to yield.
+- Includes a disable key, an installation key, statistics, and dispose().
 
-Known limitation — important
-----------------------------
-JavaScript cannot forcibly interrupt a single synchronous block while that
-block is still executing. This module can yield after a long warp sequence at
-the next executeBlock boundary. A single block/extension operation that
-itself blocks for longer than 200–250 ms, or infinite recursion inside one
-block handler, needs separate isolation or correction. Do not claim an
-absolute 250 ms hard limit without browser stress tests. The existing WARP_MS
-still serves as a secondary guard.
+Limits and risk cases — do not claim a hard wall-clock guarantee
+----------------------------------------------------------------
+JavaScript cannot interrupt a single synchronous block while that call is
+running. This module only checks at the next one of its instrumented hooks.
+
+A warp procedure made exclusively from control operations that do not call
+GW8.resolveInput, GW9.evalNode, GW.extraBlock, or executeBlock can still run
+until the existing WARP_MS/operation safeguards. The runner handles control
+blocks inside private runOne(), so an extension file cannot hook that function
+directly. Empty FOREVER loops and other pathological control-only scripts need
+real browser verification or a small explicit runner hook approved by Claude.
+
+Also verify:
+- the current final GW.frameGate wrapper and extension VM frame hook still work;
+- global frameStart timing behaves as expected with pause, target FPS and Turbo;
+- multiple warp threads yield cleanly and don't starve ordinary threads;
+- if a block is rewound, input evaluation has no side effects that would repeat;
+- normal/non-warp scripts remain unchanged.
 
 Integration
 -----------
-Load after all current app.html script blocks so the current ScriptThread
-class and final executeBlock wrappers exist. Only Claude or the owner should
-add the script include in app.html/index.html under the team rules.
-Claude should inspect the implementation and ensure the sentinel matches the
-current runner semantics before merging.
+Load after every current inline app.html script so the final runtime wrappers
+already exist. Only Claude or the owner should add the include in app.html.
+This module should not be marked as fulfilling the full frame-budget TODO until
+the required browser tests pass.
 
 Testing status
 --------------
-- Source references: checked against main/app.html as listed above.
-- JavaScript syntax: PASS.
-- Mock frame-budget test: PASS for one >200 ms command operation: warp flag was
-  turned off at the block boundary, a sentinel was inserted, and the microtask
-  restored the warp flag.
-- Coverage limitation: this wrapper only observes paths that call
-  ScriptThread.prototype.executeBlock. The runner handles repeat/if/forever and
-  other control blocks inside its private runOne() function, so a warp procedure
-  made entirely from control blocks can still run until the existing WARP_MS
-  fallback. Do not merge this draft as satisfying the full 250 ms requirement
-  unless Claude proves coverage in the browser or implements a runner hook.
-- Real browser test: NOT RUN.
-Required tests:
-1. Build a warp custom procedure containing quick arithmetic/motion blocks in
-   a repeat/forever loop; it should yield around 200 ms rather than wait for
-   WARP_MS=500 before screen refresh.
-2. Verify the sprite continues moving after each yield and completes when the
-   loop condition eventually becomes true.
-3. Test nested warp custom procedures and calls where only the outer frame has
-   warp=true.
-4. Test Turbo on/off, pause/resume, Stop, delete clone, and stop-all block.
-5. Test a deliberately slow single block and document that one synchronous
-   handler cannot be preempted by this module.
-6. Repeated start/stop runs must not leave sentinel frames or warp=false.
-7. Toggle the module off and compare behavior with the original app.
-8. Ensure performance and existing warp guard diagnostics do not regress.
+- Static source inspection: PASS for the source APIs described above.
+- JavaScript syntax: to be checked before merge.
+- Mock tests: pending for RETRY_BLOCK throwing, shared/per-thread timers,
+  idempotence, cleanup, and unchanged warp-frame flags.
+- Browser verification: NOT RUN.
+
+Required tests
+--------------
+1. A fast repeat/forever warp block should yield on the next hook after about
+   200 ms while leaving position/variable changes already completed intact.
+2. The current block that was refused should run once on the next frame, not
+   twice, and loops should eventually complete if their condition changes.
+3. Nested warp custom procedures and mixed warp/non-warp frames.
+4. Multiple concurrent warp threads and Turbo on/off.
+5. Empty FOREVER / control-only stress case; document any remaining WARP_MS path.
+6. Deliberately slow single synchronous block: it cannot be preempted mid-call.
+7. Pause, resume, Stop, green flag, stop-all block, and repeated cycles.
+8. Module loaded twice; switch-off and dispose must restore original functions.
 
 No app.html or index.html was changed.
