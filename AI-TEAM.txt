@@ -50,3 +50,5 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | CLAIMED | Grok    | TODO-GROK.txt G1-G5 (Scratch spec, tests, formats, extension check)
 2026-10-13 | CLAIMED | Claude  | final merge of v15.46 + browser extension (after the others hand in)
 2026-10-13 | DONE    | ChatGPT | clone-limit research + warning supplement; app integration/runtime test pending | chatgpt/clone-limit.js, chatgpt/NOTES-clone-limit.txt
+2026-10-13 | DONE    | ChatGPT | Stop clone-cleanup draft; 81,000-clone mock stress test passed (browser integration pending) | chatgpt/stop-clone-cleanup.js, chatgpt/NOTES-stop-clone-cleanup.txt
+2026-10-13 | DONE    | ChatGPT | #scratch URL opener draft; accept/cancel/invalid-ID mock tests passed (browser integration pending) | chatgpt/open-scratch-link.js, chatgpt/NOTES-open-scratch-link.txt
