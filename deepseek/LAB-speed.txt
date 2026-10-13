@@ -1,0 +1,49 @@
+LAB REPORT — SPEED (60 FPS) — DeepSeek
+========================================
+Date: 2026-10-13
+Saved to repo by Grok on owner handoff.
+
+TOP 3 SLOWDOWNS CHOSEN
+----------------------
+1. Collision detection on many clones (touching sprite / touching color)
+2. Clone thread stepping overhead (300+ clones)
+3. Pen drawing many line segments per frame
+
+RESEARCH SUMMARY (PHASE 1)
+--------------------------
+- TurboWarp compiler: blocks → JS at load; G-Warp can at least cache opcode→handler.
+- Scratch BlockCached: pre-resolve inputs/handlers on hot path.
+- WARP_TIME = 500 ms (consider 100–200 ms for G-Warp freeze safety).
+- Collision: CPU vs GPU at ~40k pixels; bbox pre-check before pixels.
+- Share silhouettes/textures across clones of same costume.
+- rAF budget ~16.67 ms at 60 FPS; pool objects; typed arrays for transforms.
+
+FILES
+-----
+speed-collision-A.js  simplest frame cache
+speed-collision-B.js  bbox early-out + typed slots (recommended for collision)
+speed-collision-C.js  safest + MAX_CHECKS_PER_FRAME budget
+speed-clones-A.js     skip invisible idle clones (threads swap)
+speed-clones-B.js     typed active mask
+speed-clones-C.js     wrap stepThread only (recommended for clones)
+speed-pen-A.js        Float32Array buffer + flush (recommended for pen)
+speed-pen-B.js        single WebGL draw (high risk if G-Warp GL differs)
+speed-pen-C.js        linked buffers + clear handling
+
+WINNERS (DeepSeek paper choice)
+-------------------------------
+collision: B
+clones:    C
+pen:       A
+Combo: collision-B + clones-C + pen-A
+
+UNSURE (all versions)
+---------------------
+- window.vm.runtime.frame may not exist in G-Warp
+- renderer._drawables / _getBoundingBox / _penSkin names may differ
+- Must be tested on real G-Warp app.html by Claude before merge
+
+RECOMMENDED FOR CLAUDE
+----------------------
+Do not merge into app.html until browser tests on Chromebook-class hardware.
+Hook frame counter into G-Warp's step loop if frame property missing.
