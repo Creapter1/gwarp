@@ -1,0 +1,160 @@
+G-WARP SPEC: FILE FORMATS (.sb3, TurboWarp, PenguinMod .pmp)
+Written by: Grok  |  Date: 2026-10-13
+Sources: Scratch Wiki SB3 format, scratch-parser sb3_schema, TurboWarp docs,
+  PenguinMod wiki Project file, deepseek/NOTES-pmp.txt
+
+=====================================================================
+1. .sb3 — SCRATCH 3 PROJECT FILE
+=====================================================================
+Container: ZIP archive (magic bytes 50 4B = "PK")
+MIME: application/x.scratch.sb3
+
+Contents:
+  project.json          — full program graph
+  {md5}.{ext}           — costume/sound assets (png, svg, wav, mp3, …)
+
+Top-level project.json keys (required):
+  targets[]   — stage first, then sprites (UI order)
+  meta        — at least meta.semver ("3.0.0")
+Optional:
+  monitors[]  — variable/list stage monitors
+  extensions[] — extension id strings used by the project
+
+meta fields:
+  semver   (required) e.g. "3.0.0"
+  vm       optional VM version string
+  agent    optional user-agent
+  origin   optional external origin (e.g. CSFirst)
+
+-----------------------------------------------------------------
+TARGET (stage or sprite)
+-----------------------------------------------------------------
+Common:
+  isStage, name
+  variables { id: [name, value, cloud?] }
+  lists     { id: [name, [values…]] }
+  broadcasts { id: messageName }   (usually only on stage)
+  blocks    { id: BlockObject | compressed reporter array }
+  comments  { id: CommentObject }
+  currentCostume (index)
+  costumes[] , sounds[]
+  volume, layerOrder
+
+Stage-only examples: tempo, videoState, videoTransparency, textToSpeechLanguage
+Sprite-only examples: x, y, size, direction, draggable, rotationStyle, visible
+
+Costume object:
+  assetId, name, md5ext, dataFormat (png|svg|…),
+  rotationCenterX/Y, bitmapResolution
+
+Sound object:
+  assetId, name, md5ext, dataFormat (wav|mp3),
+  rate, sampleCount
+
+-----------------------------------------------------------------
+BLOCK OBJECT
+-----------------------------------------------------------------
+  opcode, next, parent, inputs, fields, shadow, topLevel, x, y
+  mutation (custom procedures: proccode, argumentids, warp, …)
+
+Inputs: shadow/block id references or compressed primitives
+  [type, value] or [type, value, id] forms used by Scratch
+
+Top-level variable/list reporters may be stored as short arrays instead
+of full block objects.
+
+-----------------------------------------------------------------
+G-WARP LOADER RULES FOR .sb3
+-----------------------------------------------------------------
+1. Detect ZIP via first bytes PK.
+2. Unzip with existing JSZip; read project.json as UTF-8 JSON.
+3. Map each asset md5ext → ArrayBuffer/Blob from the zip.
+4. Deserialize targets into engine sprites/stage; unknown opcodes:
+   keep block data, do not crash (show missing-extension UI if needed).
+5. Never require Scratch cloud; cloud vars stay local unless user opts in.
+
+=====================================================================
+2. TURBOWARP ADDITIONS
+=====================================================================
+File extension usually still .sb3 (ZIP + project.json).
+
+Extra / commonly seen fields (may appear in JSON):
+  - extensions[] may list TurboWarp gallery ids / custom URL-backed ids
+  - extensionURLs map (id → URL) for custom extensions
+  - platform { name, url } sometimes set to TurboWarp
+  - custom stage size / runtime hints via extensions (Runtime Options)
+
+Runtime options (not always embedded in file; often editor settings):
+  framerate, interpolation, turbo, highQualityPen,
+  maxClones (default 300; can be raised / infinite),
+  fencing on/off, misc limits
+
+Compiler: TurboWarp can compile blocks to JS at load; the *file* still
+stores the same block graph. G-Warp need not compile to open the file.
+
+Compatibility:
+  - Projects with only Scratch core + official extensions open in Scratch.
+  - Projects with TurboWarp-only extensions will not run on scratch.mit.edu.
+
+G-Warp should:
+  - Load the ZIP/JSON the same as .sb3
+  - Record unknown extension ids; mark network/personal-data ones Dangerous
+  - Optionally read platform.name === "TurboWarp" for diagnostics only
+
+=====================================================================
+3. PENGUINMOD .pmp
+=====================================================================
+Two kinds (see deepseek/NOTES-pmp.txt):
+
+A) ZIP kind (common editor save)
+   - Same structure as .sb3 (PK… + project.json + assets)
+   - Extension is .pmp instead of .sb3
+   - Load path: identical to .sb3 after detect(zip)
+
+B) Protobuf kind (API / backend)
+   - Not ZIP; binary protobuf
+   - Convert with MIT-licensed pmp-protobuf → project.json-like object
+   - Asset extraction from protobuf is UNSURE / incomplete in current notes
+   - CDN UMD global name is UNSURE — verify before shipping
+
+PenguinMod project.json extras (pass through; do not crash):
+  extensions[], extensionURLs, extensionsData
+  platform: { name: "PenguinMod", url, version }
+  Expanded core categories as extension ids, e.g.:
+    looksExpanded, controlExpanded, soundExpanded, motionExpanded,
+    sensingExpanded, operatorsExpanded, eventsExpanded, dataExpanded,
+    proceduresExpanded, argumentExpanded, …
+  Runtime-ish settings may appear (fencing, maxClones, miscLimits,
+    disableOffscreenRendering, disableDirectionClamping,
+    dangerousOptimizations) — treat as optional; map to G-Warp settings
+    only when meaning is clear.
+
+PenguinMod can also open .sb3 from Scratch/TurboWarp.
+
+=====================================================================
+4. DETECTION CHEAT SHEET
+=====================================================================
+Bytes 0–1 == 0x50 0x4B  → ZIP container (.sb3 or .pmp zip-kind)
+  → unzip → require project.json
+Else                     → candidate protobuf .pmp (or unknown)
+  → try pmp-protobuf; on failure show kid-friendly "can't open file"
+
+File name is a hint only; always trust magic bytes + project.json presence.
+
+=====================================================================
+5. WHAT G-WARP MUST NOT DO
+=====================================================================
+- Do not require Scratch login or cloud for local open.
+- Do not execute arbitrary JS from project files.
+- Do not fetch extensionURLs without user consent + Dangerous warning
+  when the extension can see IP/location/logins.
+- Do not strip PenguinMod/TurboWarp fields on load if that would break
+  round-trip; unknown fields should survive a load→save cycle when possible.
+
+=====================================================================
+6. RELATED G-WARP WORK
+=====================================================================
+- deepseek/NOTES-pmp.txt + (missing) pmp-loader.js for ZIP vs protobuf
+- TODO.txt NOW 5: .pmp open
+- G-Warp freeze settings should align with maxClones / fencing options
+  documented in SPEC-engine.txt
