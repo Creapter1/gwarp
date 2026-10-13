@@ -1,0 +1,269 @@
+G-WARP UI BEHAVIOR AUDIT
+Urgent task U1 — compare UI functionality with Scratch 3, TurboWarp, and PenguinMod
+Audit date: 2026-10-13
+Auditor: ChatGPT
+G-Warp target source: app.html, Beta v15.45.0
+Source SHA inspected: 7ce527ca2908c63bbdfe642856ca29fd82178648
+Status: STATIC SOURCE AUDIT COMPLETE; NOT BROWSER-VERIFIED
+
+SCOPE AND RULES
+This audit compares behavior (click, select, drag, drop, right-click, keyboard, tabs, and editor actions), not appearance. It covers primary editor interactions and major controls in the actual app.html source. It does not claim that every extension modal has been exhaustively interaction-tested. G-Warp-specific extras are not defects merely because Scratch lacks them; an item is marked as a bug/difference when it changes a standard editor operation or misleads the user.
+
+Scratch compatibility baseline:
+- Scratch 3 GUI and core interaction: https://scratch.mit.edu/projects/editor/
+- Scratch GUI source and architecture: https://github.com/scratchfoundation/scratch-gui
+- PenguinMod Code Editor reference (blocks, categories, workspace, right-click, comments, stage, sprite list): https://docs.penguinmod.com/codeeditor/
+- PenguinMod Shortcuts reference (some features are addons enabled by default): https://docs.penguinmod.com/shortcuts/
+- TurboWarp editor/addon capabilities: https://turbowarp.org/editor and https://turbowarp.org/addons
+Note: Scratch/TurboWarp/PenguinMod behavior can vary with addons/settings. This audit uses default Scratch behavior unless a difference is explicitly labelled addon-dependent. PenguinMod documents itself as a work in progress.
+
+PRIORITY DEFINITIONS
+HIGH = blocks a basic editing task, runs the wrong script/action, can cause a user to lose control of the editor, or causes a significant compatibility problem.
+MEDIUM = a common editor operation is missing or behaves differently, but a practical workaround exists.
+LOW = minor keyboard/accessibility/consistency gap or a non-core convenience feature.
+
+NUMBERED FINDINGS
+
+CATEGORY RAIL AND PALETTE
+
+1. HIGH — One click on a category does not select/navigate to that category.
+   G-Warp source: the early .cat-btn handler uses double-click for filtering. The later single-click handler only clears an active filter when the clicked category is currently hidden and focuses the GWrap input for GWrap AI. A normal click on Motion/Looks/Sound/etc. otherwise does not select the section or scroll it into view.
+   Expected: clicking a Scratch/PenguinMod category opens that category's blocks; the category rail is navigation, not a double-click-only filter.
+   Fix: on a single click, apply active styling and scroll the matching palette section into view (or use a selected-category palette); preserve the existing filter as an extra option rather than the only working navigation.
+
+2. MEDIUM — Category filtering requires double-click and shows all categories by default.
+   G-Warp source: double-click on .cat-btn invokes GW_V1571_FILTER; the single-click path does not filter to the requested category.
+   Expected: one click should make the requested category immediately usable as in Scratch. Double-click-only discovery is inconsistent and difficult for younger users.
+   Fix: single-click category selection; keep the Show All control to undo filtering. Do not remove existing categories or extensions.
+
+3. MEDIUM — G-Warp's special categories and palette aren't organized like the standard toolbox workflow.
+   G-Warp puts its GWrap AI item on the rail and has a combined long palette with filter behavior, while Scratch separates ordinary categories, Variables/My Blocks, and Add Extension interactions. PenguinMod places extension access at the bottom of the toolbox.
+   Expected: each category and Extensions action should be reachable by one predictable click, and choosing one category should not require hunting through a long mixed palette.
+   Fix: make navigation reliable first; no visual redesign is required. Keep G-Warp's own colors and mascot.
+
+4. LOW — Block-search menu is not reachable by the common keyboard/mouse shortcuts used by PenguinMod/TurboWarp addons.
+   G-Warp source: the block-search prompt is opened by right-clicking empty workspace through the gw-v3500-ws-menu module. There is no matching handler for Ctrl+Space, Shift+Click, or middle-click in the inspected menu module.
+   Expected: PenguinMod's Insert Blocks by Name addon documents Ctrl+Space, Shift+Click, and middle-click on empty workspace. TurboWarp can provide similar addon shortcuts.
+   Fix: optionally add these shortcuts behind a setting; do not change right-click search. This is addon-dependent, so lower priority than broken default interactions.
+
+BLOCK DRAGGING AND SNAPPING
+
+5. HIGH — Pulling a block from the middle of a long script can make it jump to the workspace's top-left instead of staying under the pointer.
+   G-Warp source: the original drag handler detaches blocks into a new .block-stack for a C-body or a middle section of a stack, appends it to workspaceCanvas, but does not set its left/top before measuring the new drag offset. G-Warp's own GW_AI_REPORT lists this as not fixed.
+   Expected: the detached block and its attached tail stay at the pointer and can be dropped accurately, regardless of script length or scroll/zoom.
+   Fix: set the detached stack's left/top from the original block rectangle, workspace rectangle, current zoom, and scroll offsets before computing dragOffset. Regression-test long scripts and nested C-blocks.
+
+6. HIGH — Nested C-block snapping is reported to fail after nested if blocks.
+   G-Warp source: GW_AI_REPORT's not-fixed list says that after nesting if blocks, no more blocks may be added inside the inner if or below/outside the outer if, and snapping is unstable with many if blocks. The drag engine chooses between a nested C-body and a top-level stack in collectSnapCandidate().
+   Expected: blocks can be inserted into any valid nested C-body, below/above valid stack blocks, and outside nested blocks where the pointer indicates. A nested insertion must not corrupt the script tree.
+   Fix: audit collectSnapCandidate and finishDrag with tests for if, if-else, repeat, forever, nested levels 1–5, and insertion both inside and outside each C-body.
+
+7. HIGH — Hat/cap snap rules are explicitly known to be incomplete.
+   G-Warp source: GW_AI_REPORT says hats can accept blocks snapped above them and cap blocks may accept blocks below them; it requests a full audit by shape. The source has gwIsHat/gwIsCap helpers, but the report identifies the actual drag behavior as not fixed.
+   Expected: a hat starts a script and cannot be snapped above another stack or inside a C-body; stop/delete-clone/other cap blocks cannot have a statement snapped underneath; reporter and Boolean blocks snap only into valid input slots.
+   Fix: test every shape class and enforce these rules in candidate collection AND drop commit (not just a visual preview).
+
+8. HIGH — Removing a block from a running loop may not stop that block from executing.
+   G-Warp source: GW_AI_REPORT says a block detached from a running forever/repeat body can continue running because running threads keep a captured list of blocks.
+   Expected: live editing behaves like Scratch: removing a statement from the live script prevents later loop iterations from executing it; moving it back resumes it without requiring Green Flag again.
+   Fix: iterate the live C-body children when each loop iteration begins and ignore blocks no longer connected to the script. Test removing/reinserting a turn/move block inside forever while the project is running.
+
+9. MEDIUM — Pointer cancellation is handled as if the drag ended normally.
+   G-Warp source: pointercancel is bound to finishDrag, the same function as pointerup. That function can commit a snap/delete based on the cancel event's coordinates.
+   Expected: a cancelled touch/pointer gesture should clean up temporary drag visuals and leave the block in a safe, deterministic location; it should not unexpectedly commit a snap or deletion.
+   Fix: use a dedicated pointer-cancel cleanup path, or explicitly distinguish pointercancel from pointerup. Test touch cancellation and lost pointer capture.
+
+10. MEDIUM — Pan mode can conflict with block dragging.
+    G-Warp source: the Pan handler is bound to #workspace pointerdown/move while the core block-drag handler is document-level and does not first check the pan state. If the pointer starts over a block while Pan is enabled, both handlers can respond.
+    Expected: in Pan mode, dragging pans the workspace; it must not also detach or move a block.
+    Fix: when pan mode is active, the block-drag handler should bail out for workspace gestures, and the pan handler should exclude inputs and buttons. Test pan starting on empty space and over a block.
+
+11. MEDIUM — Dragging a statement back to the palette deletes the detached stack, including its attached tail.
+    G-Warp source: finishDrag removes the full dragged stack when dropped over paletteContainer.
+    Expected: dragging a block/stack back to the toolbox is a standard delete gesture in Scratch/PenguinMod. This behavior is broadly correct, but it depends on correct detachment boundaries.
+    Fix/status: no standalone defect claimed here. Keep it covered by drag regression tests because findings 5–7 can make the wrong blocks part of the detached stack.
+
+12. MEDIUM — G-Warp does not implement common modifier-drag block shortcuts documented for PenguinMod addons.
+    G-Warp source: the inspected block drag-start path does not branch on Alt/Ctrl modifier keys to duplicate while dragging or to pull a single block from a stack.
+    Expected: PenguinMod's default-enabled shortcuts include Alt-drag to duplicate and Ctrl-drag to grab a single block (macOS uses Option/Command). TurboWarp provides comparable operations through addons.
+    Fix: optional parity feature, or explicitly document G-Warp's different gestures. Do not treat these addon shortcuts as mandatory Scratch-core behavior.
+
+13. MEDIUM — Right-clicking a statement and choosing Duplicate duplicates the entire top-level stack regardless of which block was clicked.
+    G-Warp source: ctxDuplicate clones ctxTargetStack, not the selected ctxTargetBlock, then offsets the whole stack.
+    Expected: block context actions should operate on the clicked block and the connected tail implied by that block's shape, rather than always duplicating the entire script from its first block.
+    Fix: duplicate from the selected block, preserving only the connected descendants that belong to it; retain the current whole-script operation as a separate explicit action if desired.
+
+14. MEDIUM — Delete Block removes only the clicked DOM block, not necessarily the connected blocks that Scratch's delete operation removes with it.
+    G-Warp source: ctxDeleteBlock calls ctxTargetBlock.remove() and removes the parent stack only if it becomes empty.
+    Expected: deleting a block with connected statements below it should not silently strand those statements as a headless script. If the user intended to remove the block and its attached tail, the tail should go with it or be placed back safely.
+    Fix: follow Scratch's block deletion semantics for attached children; explicitly test deleting a hat, a middle stack block, a C-block, and a cap block.
+
+15. MEDIUM — Block right-click menu is missing the standard Add Comment action.
+    G-Warp source: blockContextMenu contains Duplicate, Delete Block, and Delete Full Stack only. A separate empty-workspace menu includes Add Comment.
+    Expected: right-clicking a block in Scratch can create/attach a comment to that block; the comment follows the block as the script moves.
+    Fix: add block-anchored comments to the block menu and persist their attachment through drag, duplicate, undo/redo, save/load. Keep workspace comments too.
+
+16. MEDIUM — Block context menu can be drawn off-screen and has no dedicated keyboard/focus behavior.
+    G-Warp source: setupContextMenu sets menu.style.left/top directly to e.clientX/e.clientY, without clamping to viewport dimensions. It closes on any document click but does not provide explicit Escape handling or focus placement in this handler.
+    Expected: context menus stay fully visible near viewport edges, focus a menu item, support keyboard activation, and close predictably.
+    Fix: clamp x/y and add keyboard/focus behavior without breaking right-click hit targets. This is an accessibility and reliability issue, not a visual-style request.
+
+17. MEDIUM — Empty-workspace block search displays at most eight matching blocks without a way to expand the results.
+    G-Warp source: gw-v3500-ws-menu stops rendering results after k >= 8.
+    Expected: if more than eight blocks match the query, users should be able to reach all matches by scrolling/paging or refining the search with a clear indication of the result count.
+    Fix: show a scrollable full results list or a "more results" interaction. Do not make rare blocks inaccessible by truncation.
+
+STAGE, SPRITES, AND MONITORS
+
+18. HIGH — Clicking the stage can launch every “when this sprite clicked” script, regardless of which sprite was actually clicked.
+    G-Warp source: the core stageCanvas click handler iterates every workspace stack whose hat is when_clicked and starts each using Engine.sprites[Engine.activeSpriteIndex]. It does not hit-test the visible sprite under the pointer or use the script stack's owner.
+    Expected: Scratch's when-this-sprite-clicked event starts only for the visible target sprite that was clicked; clicking empty stage space should not start every sprite-click script.
+    Fix: hit-test sprites in visible layer order at click coordinates; launch only the matching sprite's hats, and use the original sprite owner for each stack. Add tests for overlapping sprites, hidden sprites, clone targets, and clicking empty space.
+
+19. HIGH — Dragging a sprite on the stage to reposition it in the editor is not implemented in the inspected source.
+    G-Warp source: setupStage binds mousemove for coordinate readout; the other direct stageCanvas binding suppresses contextmenu. The app preserves a draggable property when importing/exporting projects, but no editor pointer drag handler was found to move a sprite with the mouse while stopped.
+    Expected: Scratch/PenguinMod let users drag a sprite on the stage to reposition it in edit mode (unless draggable behavior is disabled by an option/addon).
+    Fix: add edit-mode hit-testing and pointer dragging; do not steal pointer input while the project is running or in a stage tool that owns it. Respect imported sprite draggable settings.
+
+20. HIGH — Green Flag startup does not reset sprite graphic effects in the inspected start function.
+    G-Warp source: startGreenFlagExecution sets isRunning/isPaused, clears threads, and starts flag hats. The separate Green Flag listeners remove clones/reset timer, but the inspected startup path does not reset per-sprite effects.
+    Expected: Scratch resets graphic effects on Green Flag, and PenguinMod's editor reference documents reset of sprite effects and clones.
+    Fix: reset supported effects at Green Flag before starting hats, while preserving costume, variable, and list values. Verify effects clear for every sprite/clone and cannot be changed back by a late listener.
+
+21. HIGH — Pause toggles script execution but does not pause active sounds.
+    G-Warp source: pauseBtn only toggles Engine.isPaused. Audio playback is managed by separate sound/audio sources and there is no pause/resume call in that button handler.
+    Expected: PenguinMod's documented stage controls pause both blocks and sounds. A Pause control that leaves audio playing does not pause the project as users expect.
+    Fix: pause/resume sound sources and timers as well as script stepping; test music, one-shot sounds, looping sounds, wait blocks, and resuming after a long pause.
+
+22. MEDIUM — Stop's core handler does not reset sprite effects.
+    G-Warp source: the top-bar Stop handler sets Engine.isRunning=false, clears Engine.threads, and hides the speech bubble. Other listeners remove clones and stop audio, but the core handler itself does not reset graphic effects.
+    Expected: Scratch/PenguinMod Stop resets effects and removes clones; do not assume clearing threads is equivalent to resetting a project.
+    Fix: centralize Stop cleanup so scripts, clones, speech, sounds, effects, and relevant wait/broadcast state reset in one deterministic path. Regression-test Stop from active and paused state.
+
+23. MEDIUM — Sprite-tile right-click menu lacks Export Sprite.
+    G-Warp source: the sprite tile menu exposes duplicate, find on stage, and delete.
+    Expected: Scratch's sprite context menu includes export as well as duplicate/delete. G-Warp has export for individual costumes but no equivalent item in this sprite menu.
+    Fix: add an export-sprite action using the existing project/SB3 exporter or a documented sprite file format; preserve attribution/extension warnings when exporting.
+
+24. MEDIUM — Sprite List tiles cannot be reordered by dragging in the inspected UI.
+    G-Warp source: renderSpritesGrid creates clickable cards and the later decorator adds a context menu and delete button; no drag/reorder handler is attached to the grid cards.
+    Expected: where the target editor supports sprite-list drag interactions, tile dragging should have a defined result; at minimum G-Warp should not imply that a draggable tile can be reordered if it only selects the sprite.
+    Fix: either implement the intended reorder action safely (including layer/script ownership remapping) or keep cards clearly non-draggable. Verify target parity with the current Scratch/TurboWarp/PenguinMod build before deciding whether this is a strict gap.
+
+25. MEDIUM — Variable/list monitors cannot be dragged to reposition or right-clicked for monitor options.
+    G-Warp source: GW.ensureMonitor creates absolutely positioned monitor elements; the inspected monitor code updates their content/visibility but has no drag interaction or monitor-specific context menu.
+    Expected: PenguinMod documentation says monitors can be dragged around the stage and right-clicked to change monitor appearance or hide them.
+    Fix: add pointer dragging and a context menu for monitor display options; preserve existing visibility controls and save/load their positions if the project format supports it.
+
+26. MEDIUM — Stage click sensing and editor stage dragging are mixed together on one canvas.
+    G-Warp source: the stage canvas has runtime mouse state, a stage click listener for when_clicked hats, and a contextmenu preventDefault handler, but no separate explicit edit-vs-run interaction layer.
+    Expected: stage editor gestures (select/reposition) and runtime sensing (mouse down, click hats, mouse coordinates) must not trigger each other.
+    Fix: route events based on Engine.isRunning and a single stage interaction controller; test click, drag, right-click, mouse-down reporter, and fullscreen/resized stage.
+
+COSTUMES, SOUNDS, AND TABS
+
+27. MEDIUM — Costume list items can be selected by click/keyboard, but cannot be reordered by dragging.
+    G-Warp source: renderCostumeList creates .gw7-cos-item elements with click and Enter/Space selection handlers. No costume list drag/reorder binding was found.
+    Expected: Scratch's costume strip/list allows ordering costumes by dragging; order matters for next costume, costume number, and saved projects.
+    Fix: implement drag reordering, update activeCostume and all costume references consistently, then test next costume/costume number and SB3 export.
+
+28. MEDIUM — Sound list items have no right-click context menu.
+    G-Warp source: the costume menu listens for contextmenu on #costumesSidebar .gw7-cos-item; the sprite list has its own contextmenu handler. No matching contextmenu handler was found for .gw7-snd-item / the sound list.
+    Expected: Scratch has sound-tile context actions, including duplicate/export/delete, and PenguinMod/TurboWarp sound workflows expose contextual operations.
+    Fix: add a sound context menu with duplicate, export, delete and reordering where supported. Test sounds with identical names and generated/recorded/uploaded audio.
+
+29. MEDIUM — Sound list items cannot be reordered by dragging in the inspected Sound Studio.
+    G-Warp source: sound-list rows are role=option elements with click and keyboard selection; their direct interaction code does not implement drag reorder.
+    Expected: the order of sounds/costumes is part of the editor's data model and should be controllable as in the target editor.
+    Fix: implement or explicitly define ordering behavior; test sound dropdown order, SB3 round-trip, and same-named sounds.
+
+30. MEDIUM — Costume right-click menu is less complete than a full Scratch asset context menu.
+    G-Warp source: gw-v3700-costume-menu has duplicate, export, and delete. It is useful parity, but does not expose reorder/move-to-top/bottom operations available in some TurboWarp/PenguinMod addon configurations.
+    Expected: baseline asset operations should be complete; target-specific move-to-top/bottom can be an addon parity option.
+    Fix: add reorder through drag first; consider explicit move-to-top/bottom as optional. Test Stage/backdrop selection separately because the menu listener targets #costumesSidebar .gw7-cos-item.
+
+31. LOW — Main Code/Costumes/Sounds tabs use role=tab and aria-selected but have no arrow-key tab navigation in their switching logic.
+    G-Warp source: setMainTab updates selected state/display and click handlers call it. No Left/Right/Home/End key handler for this tablist was found.
+    Expected: an accessible tablist normally supports arrow-key navigation; at minimum, focus should move to the selected tab predictably.
+    Fix: implement roving tabindex and arrow-key navigation without intercepting keys inside input fields.
+
+32. LOW — Switching to any main tab calls loadActiveCostumeIntoPaintCanvas, even for Code or Sounds.
+    G-Warp source: setMainTab invokes this function regardless of the selected tab.
+    Expected: changing to Code or Sounds should not needlessly reload the costume editor. If the editor has unsaved work, tab navigation must not discard it or reset selection.
+    Fix: load costume state only when entering Costumes or after sprite/costume selection; verify the editor autosaves before tab changes. This is a risk to verify, not proven data loss.
+
+MENUS, BUTTONS, AND KEYBOARD
+
+33. HIGH — Ctrl/Cmd+S has two global save handlers and may perform two different saves.
+    G-Warp source: an early keydown listener calls GW.saveProject(); the newer file menu listener maps Ctrl/Cmd+S to the modern save(false) path. Both listeners are registered globally and preventDefault does not stop the other listener.
+    Expected: one keyboard shortcut should execute one save operation and one save format/path. It must not trigger a legacy G-Warp JSON download and a second SB3 save/dialog.
+    Fix: route all save shortcuts through one canonical save function; preserve Save/Save As/legacy export as distinct explicit menu actions. Browser-verify Ctrl+S, Cmd+S, Ctrl+Shift+S and canceling a save dialog.
+
+34. MEDIUM — The Current Action / Task Status dropdown is an input-looking control whose selection does not control the project.
+    G-Warp source: updateStatus writes status values when Start/Pause/Stop are clicked, but the select has no corresponding change handler that performs actions.
+    Expected: if this is a status indicator, it should be read-only text; if it is meant to be an action selector, selecting Running/Stopped should perform or request the named operation.
+    Fix: make the semantics unambiguous (prefer a non-interactive status display). Do not leave a control that looks actionable but silently does nothing.
+
+35. MEDIUM — The More menu combines file/edit/tools/settings functions in one menu instead of Scratch's separate File/Edit interactions.
+    G-Warp source: buildMenu and the gw-v181 menu grouping put New/Open/Save/Restore, undo/redo, developer tools, and settings in More.
+    Expected: core operations should remain discoverable and map to their expected function even if G-Warp keeps a different menu arrangement.
+    Fix: ensure every standard operation has one visible, accessible path and keyboard equivalent. This is a navigation/discoverability difference, not a request to copy Scratch's appearance.
+
+36. MEDIUM — G-Warp does not provide Scratch/PenguinMod's cross-project Backpack workflow.
+    G-Warp source: no Backpack action or cross-project block/sprite/costume/sound holding area was found in the primary UI. G-Warp has per-project sprite/costume/sound duplicate actions and save/restore tools, but these are not equivalent to quickly transferring assets/scripts between projects.
+    Expected: Scratch/PenguinMod Backpack lets users store and re-use scripts, sprites, costumes, and sounds across projects.
+    Fix: track this as a deliberate missing capability for U1, not a merge blocker if the owner has not requested a Backpack.
+
+37. MEDIUM — Block/context menu operations are not consistently undo-aware by construction.
+    G-Warp source: the old block context menu directly removes the clicked node or stack; other newer actions (workspace clear, empty-workspace menu, sprite delete) explicitly call GW8 history or have observers.
+    Expected: duplicate/delete/move/comment actions should each be reversible once, without missed or duplicate undo steps.
+    Fix: route context menu mutations through the common history API, test undo/redo after each block operation, and avoid duplicate snapshots from MutationObserver plus explicit pushes.
+
+38. LOW — Workspace comments are not attached to the specific block that was right-clicked.
+    G-Warp source: GW_COMMENTS.add places a top-level comment stack at screen/workspace coordinates and assigns the current sprite owner. It can be moved/folded/deleted, but the comment is not attached to a block anchor.
+    Expected: Scratch comments can be attached to a block and follow it when the block/script is moved.
+    Fix: support both workspace comments and block-attached comments, and preserve the anchor when duplicating or moving the script.
+
+39. LOW — Comment resizing differs from Scratch's drag-resize comment box.
+    G-Warp source: the comment textarea uses native vertical resize; the comment widget has no explicit bottom-right resize handle for the full note container.
+    Expected: Scratch comment notes can be resized from their corner and moved from their title bar.
+    Fix: make the comment container resizable with a defined corner handle and store its dimensions; retain the current fold/delete controls.
+
+40. LOW — Right-click behavior is inconsistent across surfaces.
+    G-Warp has separate implementations: blockContextMenu for workspace blocks; gw35Menu for empty workspace; gw28Menu for sprite tiles; gw37Menu for costume items; no sound-list contextmenu handler was found. The old block menu closes on document click and lacks the explicit Escape cleanup used by the sprite menu.
+    Expected: right-clicking each supported object should present that object's relevant actions and close/focus reliably, while the browser context menu is suppressed only where an app context menu is intentionally provided.
+    Fix: define a context-menu contract by surface, test block/empty workspace/sprite/costume/backdrop/sound/monitor/stage separately, and avoid letting a missing app menu produce surprising browser behavior.
+
+41. LOW — Editor-specific double-click has multiple meanings without a consistent affordance.
+    G-Warp source: double-clicking categories filters the palette; double-clicking workspace blocks toggles debugger breakpoints; double-clicking nested expression slots opens expression menus.
+    Expected: custom double-click features are okay, but their effect should be discoverable and must not conflict with common editing gestures (text/input targets are partly excluded).
+    Fix: document/indicate these actions and test that double-clicking category names, blocks, slots, and text inputs does not cause accidental edits or toggles.
+
+42. MEDIUM — The tab/asset editor state needs a deliberate save/selection contract.
+    G-Warp source: the main tab switcher calls the costume load routine on every tab change; costume/sound editors each have their own state and autosave/selection code, while sprite selection is controlled by a separate grid.
+    Expected: switching tabs or selecting another sprite should save pending edits, preserve the intended selection, and never silently apply an edit to a different sprite.
+    Fix: test switching Code → Costumes → Sounds while editing; selecting another sprite with pending paint/audio changes; then round-trip through Save and Load. Promote any reproduced data loss to HIGH.
+
+FUNCTIONALITY PRESENT OR MOSTLY CORRECT (KEEP IT)
+- Start/Pause/Stop are wired; G-Warp deliberately adds Pause even though it is not a base Scratch toolbar control. Do not remove this extra action.
+- Main Code/Costumes/Sounds click switching exists through setMainTab; sprite tiles select a sprite; the selected sprite has a delete control and duplicate/find actions.
+- The empty-workspace menu has Undo, Redo, Clean up Blocks, Add Comment, Delete Blocks, and block search. Keep these functions while fixing search reachability and result truncation.
+- Costume list supports click/keyboard selection and has duplicate/export/delete context actions.
+- Sprite and costume delete support restore/undo paths. Keep them.
+- The editor already has workspace pan/zoom/clean-up tools and a More-menu keyboard navigation implementation. Audit only the interaction defects identified above; do not replace working systems wholesale.
+
+TEST PLAN FOR CLAUDE / U3
+1. Run the app on the actual GitHub Pages build and in a local browser. Record the tested commit SHA and browser.
+2. Use two overlapping sprites with different when-this-sprite-clicked scripts. Click each sprite and empty stage; only the clicked sprite should run.
+3. Stop the project, drag a sprite on the stage, and verify position fields update. Repeat while running and with imported draggable=false/true.
+4. Exercise each block gesture: palette drag, top/bottom snap, C-body insertion, hat/cap restrictions, detach from the middle of a short and long script, pointer cancellation, drag to palette deletion, duplicate/delete selected block, undo/redo.
+5. While a forever loop is running, pull out and replace a statement. Confirm behavior changes immediately without Green Flag.
+6. Test Start/Stop with nonzero ghost/color effects, clones, speech, one-shot sound and looped music. Pause, wait several seconds, and resume; audio and timers should behave consistently.
+7. Test context menus at all four viewport corners. Test keyboard open/focus/Enter/Escape and ensure every menu has the right actions for its surface.
+8. Reorder costume and sound lists by mouse and verify costume # / next costume, sound dropdowns, save/load, and SB3 export preserve order.
+9. Test Ctrl+S exactly once (no duplicate save/download/dialog), Ctrl+Shift+S, Ctrl/Cmd+Z/Y, all three tabs, and text-input focus.
+10. Test category rail one-click navigation, palette scroll/search, Variables/Lists monitors (drag, visibility, context menu), extension rail, Stage selection, Costumes, Sounds, and More-menu actions.
+11. For each test, record PASS / FAIL / NOT TESTED. Do not claim browser verification based only on static source inspection.
+
+AUDIT LIMITATION
+This report is grounded in static inspection of the current checked-in app.html and the linked editor documentation. The browser interaction tests above have not been run in this audit. Findings about missing handlers are source-verified absences in the inspected file; timing/rendering issues and user-visible impact should be reproduced by Claude before any merge. The audit intentionally prioritizes fixes to behavior and preserves G-Warp's own dark/electric styling.
