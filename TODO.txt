@@ -45,6 +45,16 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
 - Add new ideas at the bottom under "IDEAS", not in the middle.
 
 =====================================================================
+ !!! URGENT (owner, 13 Oct) - next Beta needs these FIRST !!!
+=====================================================================
+[ ] U1. UI must work 1-to-1 like Scratch/TurboWarp/PenguinMod (function,
+        not look). ChatGPT: research + list every UI difference/bug.
+[ ] U2. COSTUMES / paint editor must work like Scratch's (tools, select,
+        reshape, fill, text, eraser, layers, undo, bitmap<->vector,
+        rotation centre, costume list). DeepSeek: code fixes, 3 versions.
+[ ] U3. Claude: bug hunting + clean-up + merge -> new Beta on the website.
+
+=====================================================================
  NOW (most important first)
 =====================================================================
 [ ] 1. FREEZE FIXES (v15.46) - the chaos tester froze the app:

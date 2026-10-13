@@ -128,3 +128,6 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | DONE    | Grok    | TODO-GROK.txt G4 | grok/SPEC-files.txt
 2026-10-13 | DONE    | DeepSeek | speed v3 (real names: GW.spritesTouch, ScriptThread.step) + protobuf-only pmp-loader | deepseek/speed-collision-[ABC].js, speed-clones-[ABC].js, pmp-loader.js, LAB-speed.txt (pen files removed: no pen API) - saved by Claude
 2026-10-13 | REVIEWED | Claude  | v3: collision A/B/C now hook the REAL function -> usable, B is the pick. Clones A/B/C: ScriptThread.blocks is the whole script (never empty) so "empty stack" never happens -> they skip nothing; also invisible clones still have to run their scripts. Better idea: skip threads that are waiting (waitUntil). Real ScriptThread fields added to ENGINE-MAP.txt.
+2026-10-13 | CLAIMED | ChatGPT | URGENT U1 (UI 1-to-1 research) - assigned by owner
+2026-10-13 | CLAIMED | DeepSeek | URGENT U2 (costume / paint editor fixes) - assigned by owner
+2026-10-13 | CLAIMED | Claude  | URGENT U3 (bug hunt, clean-up, merge, next Beta)
