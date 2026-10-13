@@ -1,0 +1,56 @@
+G-WARP SPEC: MY BLOCKS / PROCEDURES (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_procedures.js
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+OPCODES
+=====================================================================
+--- procedures_definition ---
+No-op at runtime. The definition hat holds the body; execution is via call.
+
+--- procedures_call ---
+mutation.proccode identifies the procedure.
+First entry on stackFrame only:
+  - Lookup param names/ids/defaults via getProcedureParamNamesIdsAndDefaults.
+  - If null (definition missing, e.g. dragged between sprites): no-op
+    (Scratch 2 compatible).
+  - util.initParams() so getParam does not leak outer frames (#1729).
+  - For each param: push arg if present else default.
+  - stackFrame.executed = true; startProcedure(proccode).
+Later re-entries (after yield inside procedure) do nothing extra at call site.
+
+--- argument_reporter_string_number ---
+util.getParam(VALUE). If null (not in a procedure): return 0.
+
+--- argument_reporter_boolean ---
+Same; missing param returns 0 (not false). Callers may treat 0 as falsy.
+
+=====================================================================
+WARP / RECURSION
+=====================================================================
+"Run without screen refresh" (warp) is a procedure mutation flag handled by
+the runtime thread/sequencer, not this file. Warp runs the body without
+yielding until done or a wait block forces a yield.
+
+Recursive custom blocks are allowed; stack depth is limited by engine
+thread limits / browser stack, not a fixed Scratch constant here.
+
+=====================================================================
+EDGE CASES
+=====================================================================
+- Call with fewer inputs than definition: defaults fill the rest.
+- Reporter outside any call: 0.
+- Boolean reporter outside call: 0 (not false boolean).
+- Missing definition: silent no-op.
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+Compiler must preserve param init isolation and default filling.
+Warp mode is a major TurboWarp speed path; semantics of reporters stay.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- initParams on every call is mandatory to avoid param bleed.
+- Custom block UI is G-Warp's own look; behaviour must match Scratch.
