@@ -58,3 +58,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | DONE    | ChatGPT | crash recovery offer draft using existing IndexedDB restore points; mock marker/accept/cancel tests passed (browser crash test pending) | chatgpt/crash-recovery-offer.js, chatgpt/NOTES-crash-recovery-offer.txt
 2026-10-13 | UPDATED | ChatGPT | frame-budget draft now uses GW.RETRY_BLOCK and documents control-only coverage limitation; mock retry/idempotence/dispose pass | chatgpt/frame-budget.js, chatgpt/NOTES-frame-budget.txt
 2026-10-13 | UPDATED | ChatGPT | frame-budget mock coverage verified for all four hooks; yields via exact retry sentinel before underlying side effects | chatgpt/frame-budget.js, chatgpt/NOTES-frame-budget.txt
+2026-10-13 | UPDATED | ChatGPT | clone cleanup emits event; over-300 warning counter resets immediately on fast cleanup; combined mock passed | chatgpt/stop-clone-cleanup.js, chatgpt/clone-limit.js, corresponding NOTES files
