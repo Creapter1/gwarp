@@ -1,0 +1,86 @@
+G-WARP TEXT + LIST LIMITS — NOTES FOR CLAUDE
+=============================================
+
+File
+----
+- chatgpt/text-list-limits.js
+
+TODO item
+---------
+NOW 1 sub-item:
+"Text limit (join can't grow forever) and list limit 200,000 items."
+
+Research in current app.html
+----------------------------
+I inspected current main/app.html:
+- Shared and sprite-local list resolution uses Engine.lists / the GW_VARS API
+  around lines 13092-13126.
+- GW.list(name) returns Engine.lists[name] and creates a list if missing
+  around line 4197; older core list operations use push/splice and item
+  replacement around lines 4272-4275.
+- The current fast reporter registry assigns op_join through GW9.fastFN around
+  line 13652; GW9.evalNode dispatches reporter nodes through that registry.
+- The runner also uses GW9.evalNode for nested reporter expressions.
+- Existing Bug Hunter notes mention a 200,000-item list scenario, but the
+  source scan did not find a hard 200,000-item mutation cap.
+- The source does not define a maximum join length. This supplement chooses
+  1,000,000 characters as a reviewable starting ceiling, matching the scale
+  of the existing million-character stress scenario.
+
+What this module attempts
+-------------------------
+- Caps join output at 1,000,000 characters and caps the right operand before
+  concatenation on the current fast reporter path, avoiding arbitrarily large
+  output on normal nested-expression joins.
+- Adds a result-level join guard for fallback evaluators and old direct
+  executeBlock reporter paths.
+- Wraps the current Engine.lists accessor with a dictionary proxy that returns
+  protected list arrays while preserving the underlying app-owned getter/setter
+  (shared and active-sprite-local list resolution).
+- Protects push, unshift, splice, direct length growth, and new indexed writes
+  beyond 200,000. String list items are also clipped to the text ceiling.
+- Wraps existing GW.list, GW.createList, GW_VARS global/local list accessors,
+  GW.loadProject and GW8.importSB3 when those APIs exist.
+- Existing over-limit lists are not silently trimmed on install; new growth is
+  blocked until the list is reduced below 200,000. This avoids silent data loss.
+- Provides a switch-off key:
+    window.GW_DISABLE_CHATGPT_TEXT_LIST_LIMITS = true
+  plus an installation key and dispose() rollback helper.
+
+Review cautions — Claude must test
+----------------------------------
+This is a standalone supplement, not integrated into app.html.
+- Extension code that retained raw list arrays before the module loaded, or
+  mutates raw sprite.localLists arrays using direct index/length writes, may
+  bypass a wrapper proxy. Standard G-Warp list blocks should use GW.list.
+- Lists already above 200,000 on import are kept intact to avoid silent loss;
+  decide whether import should instead warn or reject transactionally.
+- Text limit is a 1,000,000-character choice for review, not a documented
+  Scratch/TurboWarp standard. Confirm the product limit desired before merge.
+- The current fast join hook caches the right operand result in a local
+  variable, so it does not deliberately evaluate that expression twice.
+- Do not globally monkeypatch Array.prototype; that could break unrelated UI,
+  project history, asset arrays, extension lists, or rendering systems.
+- Review unload/dispose, undo/redo, list-scope preservation, VM-bridge sync,
+  import semantics and JSON serialization.
+
+Testing status
+--------------
+- Static API source review: PASS for the existing names in current main.
+- JavaScript syntax: PASS.
+- Mock unit tests: pending.
+- Real browser integration tests: NOT RUN.
+Required tests:
+1. At length 199,999, push two values -> length 200,000 and warning.
+2. Splice insert at the cap -> length remains capped; deletions still work.
+3. Attempt length=300,000 and list[250000]='x' -> no growth above 200,000.
+4. Push / insert / replace / delete / clear work normally under the limit.
+5. Empty text, Unicode and nested joins never produce a result above
+   1,000,000 characters.
+6. Global lists, local lists, load, undo/redo, and save/load preserve scope/data.
+7. SB3 import with over-limit list does not silently corrupt or discard data.
+8. A repeated huge join does not freeze the browser.
+9. Test extension APIs that may hold raw list references.
+10. Verify module loaded twice and switch-off/dispose behavior.
+
+No app.html or index.html was changed.
