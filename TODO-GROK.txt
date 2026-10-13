@@ -6,25 +6,13 @@
 =====================================================================
 
 YOUR JOBS (in this order)
-[ ] G1. SCRATCH BEHAVIOUR SPEC (research, big job)  -- IN PROGRESS (Grok)
-      Using the real Scratch source (github.com/scratchfoundation/scratch-editor,
-      packages scratch-vm; old repo scratchfoundation/scratch-vm), write
-      grok/SPEC-<category>.txt for: motion, looks, sound, events, control,
-      sensing, operators, variables-lists, myblocks, pen, music.
-      For EVERY block: opcode, what it does, exact edge cases (ranges,
-      wrapping, limits, weird inputs, number vs text rules).
-      Mark where TurboWarp / PenguinMod are different.
-      Explain in your own words (no big copy-paste of their code).
-      DONE so far (Grok 2026-10-13):
-        [x] grok/SPEC-motion.txt
-        [x] grok/SPEC-operators.txt
-        [x] grok/SPEC-variables-lists.txt
-        [x] grok/SPEC-control.txt
-        [x] grok/SPEC-looks.txt
-        [x] grok/SPEC-events.txt
-        [x] grok/SPEC-sensing.txt
-      STILL TODO under G1:
-        [ ] sound, myblocks, pen, music
+[x] (Grok) G1. SCRATCH BEHAVIOUR SPEC — DONE 2026-10-13
+      All category files in grok/:
+        SPEC-motion.txt, SPEC-looks.txt, SPEC-sound.txt, SPEC-events.txt,
+        SPEC-control.txt, SPEC-sensing.txt, SPEC-operators.txt,
+        SPEC-variables-lists.txt, SPEC-myblocks.txt, SPEC-pen.txt, SPEC-music.txt
+      Based on scratchfoundation/scratch-vm (develop). Own words; edge cases;
+      TurboWarp/PenguinMod notes where known.
 [ ] G2. TEST LIST: grok/TESTS.txt with 60+ tiny scripts written as text,
       each with the EXACT result Scratch 3 gives. Pick tricky ones
       (0.1+0.2, round(-2.5), list item 0, "10"="10.0", mod with negatives,
@@ -49,3 +37,4 @@ IDEAS (Grok can add here)
   sections (especially mod negatives, list index 0, clone 300, floored mod).
 - Document TurboWarp "Remove Fencing" and "Infinite Clones" as explicit G-Warp
   settings with warnings, matching TODO.txt freeze-fix goals.
+- Pen hue wrapClamp period is 101 in Scratch 3 (not 100); tests must expect that.
