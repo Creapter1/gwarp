@@ -1,0 +1,92 @@
+G-WARP CLONE LIMIT — NOTES FOR CLAUDE
+=======================================
+
+Files
+-----
+- chatgpt/clone-limit.js
+
+Task addressed
+--------------
+First unfinished NOW sub-item: clone limit 300 like Scratch, optional
+Infinite clones setting, and an appropriate warning.
+
+Research findings from the current main/app.html
+------------------------------------------------
+I inspected the actual repository source (blob SHA 7ce527ca2908c63bbdfe642856ca29fd82178648; file app.html).
+
+The existing app already has these pieces:
+- Engine.cloneLimit = 300 near line 4171.
+- GW.createClone enforces the configured limit near line 10991 and only creates
+  a clone while the count is below that limit.
+- GW.deleteClone and GW.removeAllClones exist near lines 11005-11011.
+- More -> App -> Advanced settings exposes “Infinite clones” near line 13744.
+- GW_SETTINGS.setInfiniteClones sets Engine.cloneLimit to Infinity or 300 near
+  line 13708.
+- A current wrapper reports the normal limit being reached near lines 15481-15489.
+- A clone counter/report exists near line 17785.
+
+The missing behavior addressed here is a runtime warning when the project
+actually exceeds 300 clones because a higher/infinite limit is active. The
+current limit-reached wrapper does not fire when createClone succeeds, so it
+does not warn in this case. The current settings help text warns generally,
+but not at the moment a project crosses the Scratch-sized boundary.
+
+What the code does
+------------------
+- Wraps the existing GW.createClone and GW.deleteClone APIs without replacing
+  their underlying clone behavior.
+- Tracks the current clone count incrementally for normal create/delete paths.
+- Warns once when count rises above 300, including the active limit in the
+  message; resets the warning after the count drops to 300 or fewer.
+- Uses the existing GW.toast and GW_HEALTH.note APIs where available. A small
+  accessible dark fallback banner is used if GW.toast is unavailable.
+- Handles GW.removeAllClones and notices a replaced Engine.sprites array or
+  changed sprite-array length.
+- Does not change the configured clone limit, block execution, or project data.
+- Does not modify app.html. It is a supplemental file for Claude to review and
+  integrate at the appropriate location.
+
+Integration
+-----------
+Load this script after app.html has initialized window.GW, window.Engine,
+GW.createClone, and GW.deleteClone. The app's source currently exposes
+window.Engine and window.GW through the global-alias block, so placing the
+script after the existing app scripts should satisfy this requirement.
+
+Disable key (must be set before this script loads):
+  window.GW_DISABLE_CHATGPT_CLONE_LIMIT = true;
+
+Idempotence
+-----------
+The module uses window.__GW_CHATGPT_CLONE_LIMIT_WARNING_V1__ as an installation
+key. Loading it twice should not wrap the functions twice. It also returns
+without altering app behavior if the disable key is true.
+
+Scope / not claimed complete
+----------------------------
+This closes the runtime-warning part of the first clone-limit sub-task, but
+it does NOT complete the full NOW item “FREEZE FIXES (v15.46)”. Remaining
+subtasks include fast Stop/clone cleanup (<100 ms), a frame budget so scripts
+yield after about 250 ms, a stuck-script UI, text/list limits, and crash
+recovery using IndexedDB. Those must remain unchecked until separately
+implemented and tested.
+
+Testing status
+--------------
+- Static/manual source review: PASS for expected app API names, based on the
+  current main branch source cited above.
+- JavaScript syntax: to be checked before merge/integration.
+- Browser verification in G-Warp: NOT RUN here. This file is not active until
+  Claude integrates it into app.html. Do not mark the runtime warning as
+  browser-verified until tested with Infinite clones enabled, more than 300
+  successful clone creations, deletion below 300, and clone creation again.
+- Regression checks should also test default (limit 300) mode to ensure the
+  existing cap and existing limit toast remain unchanged.
+
+Research references
+-------------------
+- Scratch discussion: clone limit is 300 in Scratch 3 and is shared across
+  the project: https://scratch.mit.edu/discuss/post/3746148/
+- Scratch VM repository (archived; runtime defines a clone-count limit):
+  https://github.com/scratchfoundation/scratch-vm
+- G-Warp implementation references are in the current app.html locations above.
