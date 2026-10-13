@@ -145,11 +145,6 @@
           desc={...desc,value:unwrapList(protectList(desc.value,String(key)))};
         return Reflect.defineProperty(target,key,desc);
       },
-      getOwnPropertyDescriptor(target,key){
-        const d=Reflect.getOwnPropertyDescriptor(target,key);
-        if(d&&'value'in d&&Array.isArray(d.value))return {...d,value:protectList(d.value,String(key))};
-        return d;
-      }
     });
     dictRawToProxy.set(input,proxy);dictProxyToRaw.set(proxy,input);return proxy;
   }
