@@ -1,0 +1,371 @@
+G-WARP TESTS.txt — Scratch 3 exact-result cases
+Written by: Grok  |  Date: 2026-10-13
+Source of truth: grok/SPEC-*.txt + scratchfoundation/scratch-vm (develop)
+
+Format:
+  T### | category | short name
+  SCRIPT: (pseudocode / block English a kid could build)
+  EXPECT: exact Scratch 3 result / behaviour
+  NOTES: why it is tricky (optional)
+
+How to use: build each tiny project in Scratch 3 (or TurboWarp with
+compatibility mode), run once, confirm EXPECT. Then run the same in G-Warp.
+
+=====================================================================
+OPERATORS — math, strings, compare, boolean
+=====================================================================
+T001 | operators | float add 0.1+0.2
+SCRIPT: say (0.1 + 0.2)
+EXPECT: a float near 0.30000000000000004 (IEEE-754; do NOT force 0.3)
+NOTES: match Scratch display / internal number; do not "fix" float error
+
+T002 | operators | round half away from zero style
+SCRIPT: say (round (-2.5))
+EXPECT: -3
+NOTES: Scratch uses Math.round half-up toward +inf for positives; negatives
+       go to more-negative for .5 (JS Math.round(-2.5) === -2 in some engines
+       — Scratch VM uses its own path; VERIFY on live Scratch if unsure)
+
+T003 | operators | round 2.5
+SCRIPT: say (round (2.5))
+EXPECT: 3
+
+T004 | operators | mod positive
+SCRIPT: say (10 mod 3)
+EXPECT: 1
+
+T005 | operators | mod negative dividend (floored)
+SCRIPT: say ((-10) mod 3)
+EXPECT: 2
+NOTES: Scratch uses floored modulus, not truncated
+
+T006 | operators | mod negative divisor
+SCRIPT: say (10 mod (-3))
+EXPECT: -2
+NOTES: sign follows divisor in Scratch floored mod
+
+T007 | operators | equals number vs text
+SCRIPT: say ("10" = 10)
+EXPECT: true
+
+T008 | operators | equals 10 vs 10.0 text
+SCRIPT: say ("10" = "10.0")
+EXPECT: true
+NOTES: both cast to number when numeric
+
+T009 | operators | equals non-numeric strings
+SCRIPT: say ("abc" = "ABC")
+EXPECT: false
+NOTES: case-sensitive string compare when not both numbers
+
+T010 | operators | join empty
+SCRIPT: say (join [] [])
+EXPECT: empty string ""
+
+T011 | operators | letter of out of range
+SCRIPT: say (letter (0) of "hi")
+EXPECT: empty string
+
+T012 | operators | letter of 1-based
+SCRIPT: say (letter (1) of "hi")
+EXPECT: "h"
+
+T013 | operators | length of empty
+SCRIPT: say (length of [])
+EXPECT: 0
+
+T014 | operators | contains case
+SCRIPT: say ("Hello" contains "hello")
+EXPECT: true
+NOTES: case-insensitive contains in Scratch 3
+
+T015 | operators | not false
+SCRIPT: say (not (1 = 2))
+EXPECT: true
+
+T016 | operators | and short-circuit style truth
+SCRIPT: say ((1 = 1) and (2 = 2))
+EXPECT: true
+
+T017 | operators | random inclusive
+SCRIPT: repeat 50 [ if not ((pick random 1 to 3) = 1 or ... = 2 or ... = 3) fail ]
+EXPECT: only values 1, 2, or 3 ever appear
+
+T018 | operators | abs negative
+SCRIPT: say (abs (-7))
+EXPECT: 7
+
+T019 | operators | floor vs ceiling
+SCRIPT: say (floor (3.9)) ; say (ceiling (3.1))
+EXPECT: 3 ; 4
+
+T020 | operators | sqrt negative
+SCRIPT: say (sqrt (-1))
+EXPECT: NaN (Scratch shows "NaN" or empty in some monitors — match live UI)
+
+=====================================================================
+VARIABLES / LISTS
+=====================================================================
+T021 | data | list item 0
+SCRIPT: delete all of L; add "a" to L; say (item (0) of L)
+EXPECT: "a"  (0 treated like 1 for item of)
+NOTES: SPEC-variables-lists: index 0 often maps to first item
+
+T022 | data | list item 1-based
+SCRIPT: delete all of L; add "a"; add "b"; say (item (2) of L)
+EXPECT: "b"
+
+T023 | data | list item past end
+SCRIPT: delete all of L; add "a"; say (item (99) of L)
+EXPECT: empty string
+
+T024 | data | insert at 0
+SCRIPT: delete all of L; add "b"; insert "a" at (0) of L; say (item (1) of L)
+EXPECT: "a" (0 treated as first position)
+
+T025 | data | replace item last
+SCRIPT: delete all of L; add "x"; add "y"; replace item (last) of L with "z"; say (item (2) of L)
+EXPECT: "z"
+
+T026 | data | length of empty list
+SCRIPT: delete all of L; say (length of L)
+EXPECT: 0
+
+T027 | data | item # of missing
+SCRIPT: delete all of L; add "a"; say (item # of "z" in L)
+EXPECT: 0
+
+T028 | data | list contains number vs text
+SCRIPT: delete all of L; add "10"; say (L contains 10)
+EXPECT: true
+
+T029 | data | variable set number then join
+SCRIPT: set V to 10; say (join V "!")
+EXPECT: "10!"
+
+T030 | data | list size limit concept
+SCRIPT: (do not run full 200001 in CI) document that add beyond 200000 is blocked
+EXPECT: Scratch/TurboWarp style cap at 200000 items
+NOTES: G-Warp must match freeze-fix goal in TODO.txt
+
+=====================================================================
+MOTION
+=====================================================================
+T031 | motion | move steps east
+SCRIPT: go to x:0 y:0; point in direction 90; move 10 steps; say (x position)
+EXPECT: 10
+
+T032 | motion | direction wrap
+SCRIPT: point in direction 180; turn right 180; say (direction)
+EXPECT: 0 (or 360-normalized Scratch direction range -180..180)
+NOTES: Scratch directions wrap to (-180, 180]
+
+T033 | motion | if on edge bounce
+SCRIPT: go to x:240 y:0; point 90; if on edge, bounce; say (direction)
+EXPECT: direction flipped away from edge (~ -90)
+
+T034 | motion | glide does not skip if 0 secs
+SCRIPT: go to x:0 y:0; glide 0 secs to x:50 y:0; say (x position)
+EXPECT: 50
+
+T035 | motion | set x fences (default Scratch)
+SCRIPT: set x to 9999; say (x position)
+EXPECT: within stage fence (~240 for default costume) unless Remove Fencing
+
+=====================================================================
+LOOKS
+=====================================================================
+T036 | looks | say empty clears bubble
+SCRIPT: say "hi"; say [];  (empty)
+EXPECT: bubble hidden / empty
+
+T037 | looks | say truncates long text
+SCRIPT: say (join of 400 letter "a")
+EXPECT: bubble shows at most 330 characters
+NOTES: SPEC-looks 330 limit
+
+T038 | looks | costume number 1-based
+SCRIPT: switch costume to 1; say (costume [number])
+EXPECT: 1
+
+T039 | looks | next costume wraps
+SCRIPT: (sprite with 2 costumes) switch to 2; next costume; say (costume number)
+EXPECT: 1
+
+T040 | looks | ghost 100 still drawable rules
+SCRIPT: set ghost effect to 100; say (ghost effect)
+EXPECT: 100 (clamped 0..100)
+
+T041 | looks | size minimum
+SCRIPT: set size to 0%; say (size)
+EXPECT: small positive minimum (Scratch clamps size > 0)
+
+=====================================================================
+CONTROL / CLONES
+=====================================================================
+T042 | control | repeat 0
+SCRIPT: set C to 0; repeat 0 [ change C by 1 ]; say C
+EXPECT: 0
+
+T043 | control | repeat 2.7
+SCRIPT: set C to 0; repeat 2.7 [ change C by 1 ]; say C
+EXPECT: 2 (floor of count)
+
+T044 | control | forever yields
+SCRIPT: forever [ change X by 1 ]  + stop after 1 second via stop all
+EXPECT: X > 1 (loop yielded frames; not infinite tight loop freeze)
+
+T045 | control | stop this script
+SCRIPT: forever [ stop [this script] ]; say "never"
+EXPECT: "never" not said
+
+T046 | control | create clone limit 300
+SCRIPT: when flag; repeat 400 [ create clone of myself ]
+EXPECT: at most ~300 clones exist (Scratch default); extra creates no-op
+NOTES: G-Warp freeze-fix requirement
+
+T047 | control | delete this clone
+SCRIPT: when I start as clone [ delete this clone ]
+EXPECT: clone count returns to 0 after flag
+
+T048 | control | wait 0
+SCRIPT: wait 0 seconds; say "ok"
+EXPECT: "ok" (does not hang)
+
+T049 | control | if else false branch
+SCRIPT: if (1 = 2) [ say "a" ] else [ say "b" ]
+EXPECT: "b"
+
+=====================================================================
+EVENTS
+=====================================================================
+T050 | events | broadcast order same sprite
+SCRIPT: when flag [ broadcast M ]; when I receive M [ change A by 1 ]; when I receive M [ change A by 10 ]
+EXPECT: A becomes 11 (both run; order is all receivers for that broadcast)
+
+T051 | events | broadcast and wait finishes
+SCRIPT: when flag [ broadcast M and wait; say "done" ]; when I receive M [ wait 0.1 secs ]
+EXPECT: "done" appears after receivers finish
+
+T052 | events | hat restart on flag
+SCRIPT: when flag [ forever [ change T by 1 ] ]; click flag twice quickly
+EXPECT: old loop stopped; only one stack runs after second green flag
+
+T053 | events | key pressed edge
+SCRIPT: when [space] key pressed [ change K by 1 ]
+EXPECT: one increment per key-down edge (not per frame while held) for hat version
+
+=====================================================================
+SENSING
+=====================================================================
+T054 | sensing | timer reset
+SCRIPT: reset timer; wait 0.5 secs; say (timer)
+EXPECT: about 0.5 (tolerance ±0.2)
+
+T055 | sensing | distance to no sprite
+SCRIPT: say (distance to [nonexistent])
+EXPECT: 10000
+
+T056 | sensing | touching color false
+SCRIPT: go to empty area; say (touching color [#ff0000]?)
+EXPECT: false (unless backdrop has that color)
+
+T057 | sensing | answer default
+SCRIPT: (before any ask) say (answer)
+EXPECT: empty string
+
+T058 | sensing | current year is number
+SCRIPT: say (current [year])
+EXPECT: four-digit year number (e.g. 2026)
+
+=====================================================================
+SOUND
+=====================================================================
+T059 | sound | volume clamp
+SCRIPT: set volume to 200%; say (volume)
+EXPECT: 100
+
+T060 | sound | volume negative clamp
+SCRIPT: set volume to -50%; say (volume)
+EXPECT: 0
+
+T061 | sound | play missing sound
+SCRIPT: play sound [does-not-exist] until done; say "ok"
+EXPECT: "ok" (no crash)
+
+=====================================================================
+PEN
+=====================================================================
+T062 | pen | size clamp min
+SCRIPT: set pen size to 0; (draw);  (inspect pen diameter state if exposed)
+EXPECT: diameter >= 1
+
+T063 | pen | size clamp max
+SCRIPT: set pen size to 99999
+EXPECT: diameter <= 1200
+
+T064 | pen | hue wrap period 101 quirk
+SCRIPT: set pen (color) to 0; change pen (color) by 101; compare color param to 0
+EXPECT: matches Scratch period-101 wrapClamp behaviour (not pure 100)
+NOTES: SPEC-pen documents wrapClamp(0,100) range size 101
+
+T065 | pen | clear does not delete sprites
+SCRIPT: stamp; erase all
+EXPECT: sprites remain; pen trails gone
+
+=====================================================================
+MY BLOCKS
+=====================================================================
+T066 | procedures | missing definition no-op
+SCRIPT: call custom block that has no define in this sprite
+EXPECT: no error; script continues
+
+T067 | procedures | number arg default
+SCRIPT: define foo (n) ; say (n)  — call foo without filling input
+EXPECT: 0 (or defined default)
+
+T068 | procedures | boolean reporter outside
+SCRIPT: say (boolean arg reporter) outside any call
+EXPECT: 0 / falsy
+
+=====================================================================
+MUSIC (extension)
+=====================================================================
+T069 | music | tempo clamp high
+SCRIPT: set tempo to 9999; say (tempo)
+EXPECT: 500
+
+T070 | music | tempo clamp low
+SCRIPT: set tempo to 1; say (tempo)
+EXPECT: 20
+
+=====================================================================
+ENGINE / INTEGRATION (behavioural)
+=====================================================================
+T071 | engine | stop all clears clones fast
+SCRIPT: create 300 clones; press Stop
+EXPECT: clone count 0 within ~100 ms (G-Warp freeze-fix target)
+
+T072 | engine | green flag resets variables if "for all sprites" reset rules
+SCRIPT: set global V to 5; green flag with "reset variables" project rule if any
+EXPECT: match Scratch project setting (default often keep values — document actual)
+
+T073 | engine | turbo still yields occasionally
+SCRIPT: turbo on; forever [ change X by 1 ]
+EXPECT: page remains responsive; Stop works within 1 s
+
+T074 | operators | join huge string limit (G-Warp)
+SCRIPT: set S to "x"; repeat 100000 [ set S to (join S S) ]  (will try to explode)
+EXPECT: G-Warp should refuse/cap growth (TODO freeze-fix text limit)
+NOTES: Scratch may freeze; G-Warp must not
+
+T075 | data | delete all then item 1
+SCRIPT: delete all of L; say (item (1) of L)
+EXPECT: empty string
+
+=====================================================================
+COUNT: 75 cases (T001–T075)
+=====================================================================
+Priority for G-Warp freeze fixes: T046, T071, T030, T074, T044, T073.
+Priority for parity: T005–T006 (mod), T007–T008 (equals), T021 (list 0),
+T037 (say 330), T064 (pen hue), T052 (hat restart).
