@@ -100,7 +100,13 @@
       set(target,key,value){
         if(key==='length'){
           const n=Number(value);
-          if(Number.isFinite(n)&&n>MAX_LIST_ITEMS){warnList(proxy,name);return Reflect.set(target,'length',MAX_LIST_ITEMS,target);}
+          if(Number.isFinite(n)&&n>MAX_LIST_ITEMS){
+            warnList(proxy,name);
+            // If an imported list is already oversized, don't erase its old
+            // entries merely because another caller attempts to grow it.
+            if(target.length>MAX_LIST_ITEMS)return true;
+            return Reflect.set(target,'length',MAX_LIST_ITEMS,target);
+          }
           return Reflect.set(target,key,value,target);
         }
         const index=isArrayIndex(key);
@@ -108,7 +114,11 @@
         return Reflect.set(target,key,typeof value==='string'?boundedText(value):value,target);
       },
       defineProperty(target,key,desc){
-        if(key==='length'&&Number(desc.value)>MAX_LIST_ITEMS){warnList(proxy,name);desc={...desc,value:MAX_LIST_ITEMS};}
+        if(key==='length'&&Number(desc.value)>MAX_LIST_ITEMS){
+          warnList(proxy,name);
+          if(target.length>MAX_LIST_ITEMS)return true;
+          desc={...desc,value:MAX_LIST_ITEMS};
+        }
         const index=isArrayIndex(key);
         if(index>=MAX_LIST_ITEMS&&index>=target.length){warnList(proxy,name);return true;}
         if('value'in desc&&typeof desc.value==='string')desc={...desc,value:boundedText(desc.value)};
@@ -217,7 +227,22 @@
     gwCreateListWrapped:!!wrappedCreateList,fastJoinWrapped:!!wrappedJoin,
     evalNodeWrapped:!!wrappedEval,legacyExecuteWrapped:!!wrappedExecute};
   state.scanLists=scanLists;
+  function unwrapStoredListArrays(dict){
+    const raw=unwrapDictionary(dict);
+    if(!raw||typeof raw!=='object')return;
+    for(const key of Object.keys(raw)){
+      const value=raw[key];
+      if(Array.isArray(value)&&arrayProxyToRaw.has(value))raw[key]=arrayProxyToRaw.get(value);
+    }
+  }
+  function unwrapStoredLists(){
+    try{if(originalGlobalLists)unwrapStoredListArrays(originalGlobalLists.call(V));}catch(_){}
+    for(const sprite of Engine.sprites||[])try{unwrapStoredListArrays(sprite?.localLists);}catch(_){}
+  }
   state.dispose=()=>{
+    // Avoid leaving guarded array proxies stored in the project's live list
+    // dictionaries when QA disables this module.
+    unwrapStoredLists();
     if(wrappedList&&GW.list===wrappedList)GW.list=originalList;
     if(wrappedCreateList&&GW.createList===wrappedCreateList)GW.createList=originalCreateList;
     if(wrappedGlobalLists&&V.globalLists===wrappedGlobalLists)V.globalLists=originalGlobalLists;
