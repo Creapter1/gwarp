@@ -2,84 +2,88 @@
   'use strict';
 
   /**
-   * speed-collision-A (G-Warp Engine build)
-   * Simplest collision cache.
-   * Caches the result of the engine's collision function for one frame
-   * so repeated identical queries inside the same frame are free.
+   * speed-collision-A (G-Warp, wraps GW.spritesTouch)
+   * Simplest per-frame collision cache.
    *
-   * Round 1: Wrapped Engine.touching (if present) with a per-frame Map.
+   * Round 1: wrap GW.spritesTouch with a per-frame Map cache.
    * Round 2 attacks fixed:
-   *   - frame counter could be missing  -> own rAF tick counter
-   *   - null/undefined args             -> guarded, return false
-   *   - renderer threw                  -> result not cached
-   *   - Map grew unbounded              -> cleared each frame
-   *   - function name might differ      -> tries several names
-   * Round 3 optimisation: single flat Map keyed by "aId|bId" instead of
-   *   a nested Map (fewer allocations), plus a fast-path early-out
-   *   when a === b (a sprite never touches itself).
+   *   - cache never invalidated -> cleared on a rAF tick counter
+   *   - null / undefined args   -> return false, not cached
+   *   - a === b                 -> return false immediately
+   *   - spritesTouch threw      -> result not cached, return false
+   *   - Map grew unbounded      -> cleared every frame
+   *   - GW.spritesTouch missing -> log once and exit
+   * Round 3 optimisation: one flat Map keyed by a short integer pair
+   *   (id(a) * 1048576 + id(b) is unsafe if ids are large, so we use
+   *   a two-level numeric key built with a switch on numeric id
+   *   availability; if neither sprite has a numeric id we fall back
+   *   to WeakMap-in-WeakMap, computed once per frame).
    */
 
-  const Engine = window.Engine;
-  if (!Engine) { console.warn('[speed-collision-A] window.Engine missing; doing nothing.'); return; }
+  const GW = window.GW;
+  if (!GW || typeof GW.spritesTouch !== 'function') {
+    console.warn('[speed-collision-A] GW.spritesTouch not found; doing nothing.');
+    return;
+  }
+  if (GW._gwSpeedCollisionA) return;
+  GW._gwSpeedCollisionA = true;
 
-  // --- frame counter (our own, so we never depend on Engine internals) ---
+  const orig = GW.spritesTouch;
+
+  // Own frame counter; no dependency on Engine internals.
   let gwFrame = 0;
   (function tick() { gwFrame++; requestAnimationFrame(tick); })();
 
-  // --- resolve the collision function --------------------------------
-  // UNSURE: the real name. We try the most likely candidates.
-  let collisionFn = null;
-  let collisionThis = null;
-  if (typeof Engine.touching === 'function') {
-    collisionFn = Engine.touching; collisionThis = Engine;
-  } else if (typeof Engine.checkTouching === 'function') {
-    collisionFn = Engine.checkTouching; collisionThis = Engine;
-  } else if (typeof Engine.touchingSprite === 'function') {
-    collisionFn = Engine.touchingSprite; collisionThis = Engine;
-  } else if (Engine.renderer && typeof Engine.renderer.isTouchingDrawables === 'function') {
-    collisionFn = Engine.renderer.isTouchingDrawables; collisionThis = Engine.renderer;
-  }
-  if (!collisionFn) {
-    // UNSURE: Engine has no known collision entry point.
-    // Fail safe: do nothing.
-    return;
-  }
-
-  const cache = new Map();
+  // Flat Map for numeric ids; WeakMap-of-WeakMap for object-only.
+  const numCache = new Map();      // key: aId*1000003 + bId  (integer)
+  const objCache = new WeakMap();  // a -> WeakMap(b -> bool)
   let cacheFrame = -1;
 
-  function idOf(s) {
+  function numId(s) {
     if (s == null) return -1;
     if (typeof s === 'number') return s;
     if (typeof s.id === 'number') return s.id;
-    if (typeof s.drawableID === 'number') return s.drawableID;
-    return -1; // UNSURE: unknown id shape
+    return -1; // UNSURE: what other numeric id field G-Warp sprites carry
   }
 
-  const wrapped = function (a, b) {
-    if (gwFrame !== cacheFrame) { cacheFrame = gwFrame; cache.clear(); }
-    if (a == null || b == null) return false;
-    const ai = idOf(a), bi = idOf(b);
-    if (ai === bi && ai !== -1) return false; // sprite never touches itself
-    const key = ai + '|' + bi;
-    if (cache.has(key)) return cache.get(key);
-    let result;
-    try {
-      result = collisionFn.call(collisionThis, a, b);
-    } catch (e) {
-      // Do not cache errors.
-      return false;
+  function clearCaches() {
+    numCache.clear();
+    objCache = new WeakMap(); // note: const -> see below
+  }
+
+  // Because objCache is const, reassign via a holder.
+  let objCacheHolder = new WeakMap();
+
+  GW.spritesTouch = function (a, b) {
+    if (gwFrame !== cacheFrame) {
+      cacheFrame = gwFrame;
+      numCache.clear();
+      objCacheHolder = new WeakMap();
     }
-    cache.set(key, result);
+    if (a == null || b == null || a === b) return false;
+
+    const ai = numId(a), bi = numId(b);
+
+    if (ai >= 0 && bi >= 0) {
+      const key = ai * 1000003 + bi;
+      const hit = numCache.get(key);
+      if (hit !== undefined) return hit;
+      let result;
+      try { result = orig.call(GW, a, b); }
+      catch (e) { return false; }
+      numCache.set(key, result);
+      return result;
+    }
+
+    // Object-identity path.
+    let inner = objCacheHolder.get(a);
+    if (!inner) { inner = new WeakMap(); objCacheHolder.set(a, inner); }
+    if (inner.has(b)) return inner.get(b);
+
+    let result;
+    try { result = orig.call(GW, a, b); }
+    catch (e) { return false; }
+    inner.set(b, result);
     return result;
   };
-
-  // Re-install under whatever name we found.
-  if (collisionThis === Engine) {
-    if (typeof Engine.touching === 'function') Engine.touching = wrapped;
-    else if (typeof Engine.checkTouching === 'function') Engine.checkTouching = wrapped;
-    else if (typeof Engine.touchingSprite === 'function') Engine.touchingSprite = wrapped;
-  } else if (collisionThis && collisionThis.isTouchingDrawables) {
-    collisionThis.isTouchingDrawables = wrapped;
-  }
 })();

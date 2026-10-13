@@ -40,6 +40,12 @@ REAL HOOKS FOR SPEED WORK (checked in app.html - use THESE names)
               the main loop walks Engine.threads. (NO Engine.stepThread /
               tickThread / updateThread. The "stepThreads" in app.html is
               only a fake stub for extensions - don't wrap it.)
+              ScriptThread fields: sprite, blocks (the WHOLE script, never
+              empty), pc (which block is next), callStack, waitUntil
+              (time it's waiting until), finished. ScriptThread is NOT on
+              window; reach it via Engine.threads[i].constructor.
+              Idle check = finished === true or performance.now() < waitUntil.
+              Sprites use  visible  (true/false).
   Pen:        pen canvas comes from a private function ensurePenCanvas();
               there is NO Engine.pen / penDraw / drawPen. Pen code needs
               Claude to expose a hook first -> write "UNSURE: need pen hook".

@@ -2,99 +2,111 @@
   'use strict';
 
   /**
-   * speed-collision-C (G-Warp Engine build)
-   * Safest / most complete collision cache.
-   * Adds a hard per-frame budget so collisions can never blow the
-   * 16ms frame. After the budget is spent, further queries return
-   * false (safe default) and log once per frame.
+   * speed-collision-C (G-Warp, wraps GW.spritesTouch)
+   * Safest: cache + a hard per-frame budget, so collisions can never
+   * blow the 16ms frame. Respects Engine.isTurbo (no budget in turbo).
+   * Never false-positives: only false when the budget is exhausted,
+   * and this is logged once per frame.
    *
    * Round 1: cache + budget.
    * Round 2 attacks fixed:
-   *   - budget too low -> false negatives -> made it configurable
-   *     and default 200 (generous), warn once per frame
-   *   - turbo mode should not use budget -> skip when Engine.isTurbo
-   *   - exceptions from Engine must not consume budget
+   *   - budget too low -> default 250; still configurable via
+   *     GW._gwCollisionBudget
+   *   - turbo mode should not be throttled -> checked every call
+   *   - errors must not consume budget -> only successes do
    *   - NaN args -> return false
-   *   - cache cleared on budget reset AND on frame change
-   * Round 3 optimisation: budget counter is a plain integer, no
-   *   allocations in the hot path; the Map is reused between frames
-   *   (only cleared, never re-created).
+   *   - warning spam -> once per frame
+   *   - cache reuse across frames -> Map cleared, never re-allocated
+   * Round 3 optimisation: integer key when ids are available, else
+   *   WeakMap; the budget counter is a plain number, no allocations
+   *   in the hot path.
    */
 
+  const GW = window.GW;
   const Engine = window.Engine;
-  if (!Engine) { console.warn('[speed-collision-C] window.Engine missing.'); return; }
+  if (!GW || typeof GW.spritesTouch !== 'function') {
+    console.warn('[speed-collision-C] GW.spritesTouch not found; doing nothing.');
+    return;
+  }
+  if (GW._gwSpeedCollisionC) return;
+  GW._gwSpeedCollisionC = true;
 
-  const MAX_CHECKS_PER_FRAME = 200; // configurable
+  const orig = GW.spritesTouch;
+
+  let MAX = 250;
+  Object.defineProperty(GW, '_gwCollisionBudget', {
+    get() { return MAX; },
+    set(v) { if (typeof v === 'number' && v > 0) MAX = v | 0; },
+    configurable: true
+  });
+
   let checksThisFrame = 0;
   let warnedThisFrame = false;
 
   let gwFrame = 0;
   (function tick() { gwFrame++; requestAnimationFrame(tick); })();
 
-  let collisionFn = null, collisionThis = null;
-  if (typeof Engine.touching === 'function') { collisionFn = Engine.touching; collisionThis = Engine; }
-  else if (typeof Engine.checkTouching === 'function') { collisionFn = Engine.checkTouching; collisionThis = Engine; }
-  else if (typeof Engine.touchingSprite === 'function') { collisionFn = Engine.touchingSprite; collisionThis = Engine; }
-  else if (Engine.renderer && typeof Engine.renderer.isTouchingDrawables === 'function') {
-    collisionFn = Engine.renderer.isTouchingDrawables; collisionThis = Engine.renderer;
-  }
-  if (!collisionFn) return;
-
-  const cache = new Map();
+  const numCache = new Map();
+  let objCache = new WeakMap();
   let cacheFrame = -1;
 
-  function idOf(s) {
+  function numId(s) {
     if (s == null) return -1;
     if (typeof s === 'number') return s;
     if (typeof s.id === 'number') return s.id;
-    if (typeof s.drawableID === 'number') return s.drawableID;
-    return -1;
+    return -1; // UNSURE
   }
 
-  const wrapped = function (a, b) {
+  function isTurbo() {
+    return !!(Engine && Engine.isTurbo);
+  }
+
+  GW.spritesTouch = function (a, b) {
     if (gwFrame !== cacheFrame) {
       cacheFrame = gwFrame;
-      cache.clear();
+      numCache.clear();
+      objCache = new WeakMap();
       checksThisFrame = 0;
       warnedThisFrame = false;
     }
-    if (a == null || b == null) return false;
-    const ai = idOf(a), bi = idOf(b);
-    if (ai === bi && ai !== -1) return false;
+    if (a == null || b == null || a === b) return false;
 
-    const key = ai + '|' + bi;
-    const hit = cache.get(key);
-    if (hit !== undefined) return hit;
+    const ai = numId(a), bi = numId(b);
 
-    // Turbo mode is the user explicitly asking for "go as fast as
-    // possible"; do not throttle it.
-    const turbo = !!Engine.isTurbo;
+    // Cache lookup
+    if (ai >= 0 && bi >= 0) {
+      const key = ai * 1000003 + bi;
+      const hit = numCache.get(key);
+      if (hit !== undefined) return hit;
+    } else {
+      let inner = objCache.get(a);
+      if (inner && inner.has(b)) return inner.get(b);
+    }
 
-    if (!turbo && checksThisFrame >= MAX_CHECKS_PER_FRAME) {
+    if (!isTurbo() && checksThisFrame >= MAX) {
       if (!warnedThisFrame) {
-        console.warn('[speed-collision-C] per-frame collision budget exceeded; returning false for the rest of this frame.');
+        console.warn('[speed-collision-C] per-frame collision budget reached (' + MAX + '); returning false for the rest of this frame.');
         warnedThisFrame = true;
       }
       return false;
     }
 
     let result;
-    try {
-      result = collisionFn.call(collisionThis, a, b);
-    } catch (e) {
-      console.error('[speed-collision-C] engine collision threw:', e && e.message);
+    try { result = orig.call(GW, a, b); }
+    catch (e) {
+      console.error('[speed-collision-C] GW.spritesTouch threw:', e && e.message);
       return false;
     }
+
     checksThisFrame++;
-    cache.set(key, result);
+
+    if (ai >= 0 && bi >= 0) {
+      numCache.set(ai * 1000003 + bi, result);
+    } else {
+      let inner = objCache.get(a);
+      if (!inner) { inner = new WeakMap(); objCache.set(a, inner); }
+      inner.set(b, result);
+    }
     return result;
   };
-
-  if (collisionThis === Engine) {
-    if (typeof Engine.touching === 'function') Engine.touching = wrapped;
-    else if (typeof Engine.checkTouching === 'function') Engine.checkTouching = wrapped;
-    else if (typeof Engine.touchingSprite === 'function') Engine.touchingSprite = wrapped;
-  } else if (collisionThis && collisionThis.isTouchingDrawables) {
-    collisionThis.isTouchingDrawables = wrapped;
-  }
 })();

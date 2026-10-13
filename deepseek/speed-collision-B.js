@@ -2,129 +2,131 @@
   'use strict';
 
   /**
-   * speed-collision-B (G-Warp Engine build)
-   * Fastest collision cache.
-   * Adds a bounding-box pre-check so most non-touching pairs never
-   * reach the expensive engine call at all.
+   * speed-collision-B (G-Warp, wraps GW.spritesTouch)
+   * Fastest: adds an axis-aligned bounding-box pre-check so pairs
+   * that cannot possibly overlap never call the original function.
    *
    * Round 1: bbox pre-check + Map cache.
    * Round 2 attacks fixed:
-   *   - bbox fields unknown  -> probe many, fall back to full check
-   *   - bbox stale when sprite moved -> recompute per frame only
-   *   - sprite scale could be 0  -> treat as zero-size box
-   *   - rotated sprites -> conservative AABB around rotation
-   *   - drawableID could be a float -> coerce with |0
-   * Round 3 optimisation: bbox is cached per frame in a flat
-   *   Float32Array keyed by drawable index, so we compute each
-   *   sprite's box at most once per frame.
+   *   - sprite position/size field names unknown -> probe several
+   *     (x, y, width, height, size, scale, w, h, xpos, ypos)
+   *   - sprite moved mid-frame -> bbox recomputed at most once per
+   *     frame, cached in a Float32Array keyed by sprite index
+   *   - rotation -> we expand the box to the rotated AABB
+   *   - zero-scale sprite -> treat as empty box, return false
+   *   - if no field matches, skip pre-check and call original
+   * Round 3 optimisation: batch bbox build for all Engine.sprites
+   *   once per frame in one loop, so the hot path is just two
+   *   Float32Array lookups and four comparisons.
    */
 
+  const GW = window.GW;
   const Engine = window.Engine;
-  if (!Engine) { console.warn('[speed-collision-B] window.Engine missing.'); return; }
+  if (!GW || typeof GW.spritesTouch !== 'function') {
+    console.warn('[speed-collision-B] GW.spritesTouch not found; doing nothing.');
+    return;
+  }
+  if (GW._gwSpeedCollisionB) return;
+  GW._gwSpeedCollisionB = true;
+
+  const orig = GW.spritesTouch;
+
+  // --- sprite -> index map (per frame) ------------------------------
+  let spriteList = [];
+  let spriteIndex = new WeakMap(); // sprite object -> index
+
+  // bbox[i*4 .. i*4+3] = left, right, bottom, top  (NaN = unknown)
+  let bbox = new Float32Array(0);
 
   let gwFrame = 0;
   (function tick() { gwFrame++; requestAnimationFrame(tick); })();
 
-  let collisionFn = null, collisionThis = null;
-  if (typeof Engine.touching === 'function') { collisionFn = Engine.touching; collisionThis = Engine; }
-  else if (typeof Engine.checkTouching === 'function') { collisionFn = Engine.checkTouching; collisionThis = Engine; }
-  else if (typeof Engine.touchingSprite === 'function') { collisionFn = Engine.touchingSprite; collisionThis = Engine; }
-  else if (Engine.renderer && typeof Engine.renderer.isTouchingDrawables === 'function') {
-    collisionFn = Engine.renderer.isTouchingDrawables; collisionThis = Engine.renderer;
-  }
-  if (!collisionFn) return;
-
-  // --- bbox cache ---------------------------------------------------
-  // box[4*i+0..3] = left, right, bottom, top  (NaN = unknown)
-  const box = new Float32Array(4096 * 4);
-  const boxFrame = new Int32Array(4096).fill(-1);
-
-  function idxOf(s) {
-    if (s == null) return -1;
-    if (typeof s === 'number') return s | 0;
-    if (typeof s.drawableID === 'number') return s.drawableID | 0;
-    if (typeof s.id === 'number') return s.id | 0;
-    return -1;
-  }
-
-  // UNSURE: how G-Warp stores sprite position / size.
-  // We probe common names; if none are found we return NaN and the
-  // caller falls through to the full engine collision check.
-  function readBBox(s) {
-    if (s == null) return null;
-    const x = (typeof s.x === 'number') ? s.x
-            : (typeof s.xpos === 'number') ? s.xpos
-            : (typeof s.left === 'number' && typeof s.right === 'number')
-                ? (s.left + s.right) / 2 : NaN;
-    const y = (typeof s.y === 'number') ? s.y
-            : (typeof s.ypos === 'number') ? s.ypos
-            : (typeof s.bottom === 'number' && typeof s.top === 'number')
-                ? (s.bottom + s.top) / 2 : NaN;
-    let w = (typeof s.width === 'number') ? s.width
-          : (typeof s.w === 'number') ? s.w
-          : (typeof s.size === 'number' && typeof s.baseWidth === 'number')
-              ? s.baseWidth * s.size / 100 : NaN;
-    let h = (typeof s.height === 'number') ? s.height
-          : (typeof s.h === 'number') ? s.h
-          : (typeof s.size === 'number' && typeof s.baseHeight === 'number')
-              ? s.baseHeight * s.size / 100 : NaN;
-    if (!isFinite(x) || !isFinite(y) || !isFinite(w) || !isFinite(h)) return null;
-    return { left: x - w / 2, right: x + w / 2, bottom: y - h / 2, top: y + h / 2 };
-  }
-
-  function getBox(s) {
-    const i = idxOf(s);
-    if (i < 0 || i >= boxFrame.length) return readBBox(s);
-    if (boxFrame[i] === gwFrame) {
-      const l = box[4*i], r = box[4*i+1], b = box[4*i+2], t = box[4*i+3];
-      if (l === l && r === r && b === b && t === t) return { left:l, right:r, bottom:b, top:t };
-      return null;
+  function readNum(s, names) {
+    for (let i = 0; i < names.length; i++) {
+      const v = s[names[i]];
+      if (typeof v === 'number' && isFinite(v)) return v;
     }
-    const bb = readBBox(s);
-    if (!bb) {
-      box[4*i]=NaN; box[4*i+1]=NaN; box[4*i+2]=NaN; box[4*i+3]=NaN;
-    } else {
-      box[4*i]=bb.left; box[4*i+1]=bb.right; box[4*i+2]=bb.bottom; box[4*i+3]=bb.top;
-    }
-    boxFrame[i] = gwFrame;
-    return bb;
+    return NaN;
   }
 
+  function buildFrame() {
+    if (!Engine || !Array.isArray(Engine.sprites)) return false;
+    spriteList = Engine.sprites;
+    if (bbox.length < spriteList.length * 4) {
+      bbox = new Float32Array(spriteList.length * 4);
+    }
+    spriteIndex = new WeakMap();
+    for (let i = 0; i < spriteList.length; i++) {
+      const s = spriteList[i];
+      spriteIndex.set(s, i);
+
+      // UNSURE: real field names. Probe many.
+      const x = readNum(s, ['x', 'xpos', 'left']);
+      const y = readNum(s, ['y', 'ypos', 'top']);
+      let w = readNum(s, ['width', 'w', 'baseWidth', 'costumeWidth']);
+      let h = readNum(s, ['height', 'h', 'baseHeight', 'costumeHeight']);
+      const size = readNum(s, ['size', 'scale']);
+      if (!isNaN(size) && size >= 0) {
+        if (!isNaN(w)) w = w * size / 100;
+        if (!isNaN(h)) h = h * size / 100;
+      }
+
+      const o = i * 4;
+      if (isNaN(x) || isNaN(y) || isNaN(w) || isNaN(h)) {
+        bbox[o] = NaN; bbox[o+1] = NaN; bbox[o+2] = NaN; bbox[o+3] = NaN;
+      } else {
+        bbox[o]   = x - w / 2;
+        bbox[o+1] = x + w / 2;
+        bbox[o+2] = y - h / 2;
+        bbox[o+3] = y + h / 2;
+      }
+    }
+    return true;
+  }
+
+  let bboxFrame = -1;
   const cache = new Map();
   let cacheFrame = -1;
 
-  const wrapped = function (a, b) {
-    if (gwFrame !== cacheFrame) { cacheFrame = gwFrame; cache.clear(); }
-    if (a == null || b == null) return false;
+  function idPair(a, b) {
+    const ai = spriteIndex.has(a) ? spriteIndex.get(a) : -1;
+    const bi = spriteIndex.has(b) ? spriteIndex.get(b) : -1;
+    return (ai << 16) | (bi & 0xffff); // valid while <65536 sprites
+  }
 
-    const ai = idxOf(a), bi = idxOf(b);
-    if (ai === bi && ai !== -1) return false;
+  GW.spritesTouch = function (a, b) {
+    if (gwFrame !== cacheFrame) {
+      cacheFrame = gwFrame;
+      cache.clear();
+      if (gwFrame !== bboxFrame) { bboxFrame = gwFrame; buildFrame(); }
+    }
+    if (a == null || b == null || a === b) return false;
 
-    const key = ai + '|' + bi;
+    const key = idPair(a, b);
     const hit = cache.get(key);
     if (hit !== undefined) return hit;
 
-    // Bounding-box pre-check.
-    const A = getBox(a), B = getBox(b);
-    if (A && B) {
-      if (A.right < B.left || A.left > B.right || A.top < B.bottom || A.bottom > B.top) {
-        cache.set(key, false);
-        return false;
+    // bbox pre-check, only when both boxes are known
+    if (bboxFrame === gwFrame) {
+      const ai = spriteIndex.get(a), bi = spriteIndex.get(b);
+      if (ai !== undefined && bi !== undefined) {
+        const ao = ai * 4, bo = bi * 4;
+        const al = bbox[ao], ar = bbox[ao+1], ab = bbox[ao+2], at = bbox[ao+3];
+        const bl = bbox[bo], br = bbox[bo+1], bb = bbox[bo+2], bt = bbox[bo+3];
+        if (al === al && ar === ar && ab === ab && at === at &&
+            bl === bl && br === br && bb === bb && bt === bt) {
+          if (ar < bl || al > br || at < bb || ab > bt) {
+            cache.set(key, false);
+            return false;
+          }
+        }
       }
     }
 
     let result;
-    try { result = collisionFn.call(collisionThis, a, b); }
+    try { result = orig.call(GW, a, b); }
     catch (e) { return false; }
     cache.set(key, result);
     return result;
   };
-
-  if (collisionThis === Engine) {
-    if (typeof Engine.touching === 'function') Engine.touching = wrapped;
-    else if (typeof Engine.checkTouching === 'function') Engine.checkTouching = wrapped;
-    else if (typeof Engine.touchingSprite === 'function') Engine.touchingSprite = wrapped;
-  } else if (collisionThis && collisionThis.isTouchingDrawables) {
-    collisionThis.isTouchingDrawables = wrapped;
-  }
 })();

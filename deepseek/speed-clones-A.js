@@ -2,75 +2,76 @@
   'use strict';
 
   /**
-   * speed-clones-A (G-Warp Engine build)
-   * Simplest clone-thread optimisation.
-   * Skips stepping a thread whose sprite is invisible and whose
-   * stack is empty. Does not touch the sequencer's array; it only
-   * short-circuits the per-thread step entry point.
+   * speed-clones-A (G-Warp, wraps ScriptThread.prototype.step)
+   * Simplest: wrap ScriptThread.prototype.step so it early-returns
+   * when the owning sprite is invisible and the thread's stack is
+   * empty. Everything else runs unchanged.
    *
-   * Round 1: short-circuit thread step for invisible idle clones.
+   * Round 1: prototype wrapper with a visibility + stack check.
    * Round 2 attacks fixed:
-   *   - unknown thread step name -> probe Engine.stepThread,
-   *     Engine.tickThread, Engine.updateThread; bail if none found
-   *   - unknown sprite-visibility field -> probe visible/isVisible/
-   *     hidden/_visible
-   *   - unknown thread->sprite link -> probe target/sprite/owner
-   *   - null thread / null sprite -> run normally
-   *   - a thread that just received a broadcast has an empty stack
-   *     but must run once -> we only skip when stack is empty AND
-   *     the thread is not "just started" (we check a flag if it
-   *     exists, otherwise err on the side of running)
-   * Round 3 optimisation: cached the resolved property names in
-   *   closures so the hot path does no property probing.
+   *   - ScriptThread not reachable on window -> derive the
+   *     prototype from the constructor of Engine.threads[0]; if the
+   *     list is empty we bail with UNSURE
+   *   - double wrap -> flag on the prototype
+   *   - thread.sprite/target/owner unknown -> probe all three
+   *   - visibility field unknown -> probe visible/isVisible/hidden/
+   *     _visible; default to "visible" (never skip on unknown)
+   *   - empty stack may still have pending events -> only skip when
+   *     stack exists AND length === 0; if stack is missing, run
+   *   - errors inside original step must bubble (we do not swallow)
+   * Round 3 optimisation: closure-cached field resolvers, no
+   *   property probing in the hot path after first call.
    */
 
   const Engine = window.Engine;
-  if (!Engine) { console.warn('[speed-clones-A] window.Engine missing.'); return; }
-
-  // Resolve the thread-step method.
-  let stepFnName = null;
-  if (typeof Engine.stepThread === 'function') stepFnName = 'stepThread';
-  else if (typeof Engine.tickThread === 'function') stepFnName = 'tickThread';
-  else if (typeof Engine.updateThread === 'function') stepFnName = 'updateThread';
-  else if (Engine.threads && typeof Engine.threads.step === 'function') stepFnName = 'threads.step';
-  if (!stepFnName) {
-    // UNSURE: G-Warp's actual per-thread step name. Nothing to do.
+  if (!Engine || !Array.isArray(Engine.threads)) {
+    console.warn('[speed-clones-A] Engine.threads not found; doing nothing.');
     return;
   }
 
-  const origFn = stepFnName === 'threads.step' ? Engine.threads.step : Engine[stepFnName];
+  // --- find ScriptThread.prototype --------------------------------
+  let proto = null;
+  if (typeof window.ScriptThread === 'function' && window.ScriptThread.prototype) {
+    proto = window.ScriptThread.prototype;
+  } else {
+    // UNSURE: we cannot see the class; try the constructor of a live
+    // thread. This works only if at least one thread is running.
+    const t0 = Engine.threads[0];
+    if (t0 && t0.constructor && t0.constructor.prototype) {
+      proto = t0.constructor.prototype;
+    }
+  }
+  if (!proto || typeof proto.step !== 'function') {
+    // UNSURE: cannot find ScriptThread.prototype.step. Doing nothing.
+    console.warn('[speed-clones-A] ScriptThread.prototype.step not reachable; doing nothing.');
+    return;
+  }
+  if (proto._gwSpeedClonesA) return;
+  proto._gwSpeedClonesA = true;
 
-  function visibilityOf(s) {
-    if (!s) return true; // no sprite -> treat as visible (stage)
+  const orig = proto.step;
+
+  function spriteOf(t) {
+    return t && (t.sprite || t.target || t.owner || null);
+  }
+  function readVisible(s) {
+    if (!s) return true;
     if (typeof s.visible === 'boolean') return s.visible;
     if (typeof s.isVisible === 'boolean') return s.isVisible;
     if (typeof s.hidden === 'boolean') return !s.hidden;
     if (typeof s._visible === 'boolean') return s._visible;
-    return true; // UNSURE: unknown field; default to running
+    return true; // UNSURE -> run normally
   }
-
-  function spriteOf(t) {
-    if (!t) return null;
-    return t.target || t.sprite || t.owner || null;
-  }
-
   function stackOf(t) {
-    if (!t) return null;
-    return t.stack || t.blocks || t.ops || null;
+    return t && (t.stack || t.blocks || t.ops || null);
   }
 
-  const wrapped = function (thread) {
-    if (!thread) return origFn.call(this, thread);
-    const sprite = spriteOf(thread);
-    if (!sprite) return origFn.call(this, thread); // stage thread
-    const visible = visibilityOf(sprite);
-    if (visible) return origFn.call(this, thread);
-    const stack = stackOf(thread);
-    if (stack && stack.length > 0) return origFn.call(this, thread);
-    // Invisible, empty stack: skip.
-    return;
+  proto.step = function () {
+    const s = spriteOf(this);
+    if (!s) return orig.apply(this, arguments);      // stage
+    if (readVisible(s)) return orig.apply(this, arguments);
+    const st = stackOf(this);
+    if (!st || st.length > 0) return orig.apply(this, arguments);
+    return; // invisible + empty stack -> skip
   };
-
-  if (stepFnName === 'threads.step') Engine.threads.step = wrapped;
-  else Engine[stepFnName] = wrapped;
 })();

@@ -1,128 +1,112 @@
-LAB REPORT — SPEED (60 FPS) — DeepSeek (G-Warp Engine build)
-=============================================================
+LAB REPORT — SPEED (60 FPS) — DeepSeek (G-Warp native API build)
+=================================================================
 
-WHAT CHANGED FROM THE PREVIOUS VERSION
---------------------------------------
-The previous speed modules were written against a Scratch-style
-window.vm / runtime.sequencer layout. G-Warp does NOT have that; it
-exposes window.Engine with Engine.sprites, Engine.threads,
-Engine.cloneLimit and Engine.isTurbo. This build rewrites all nine
-files against window.Engine.
+WHAT CHANGED
+------------
+Rewritten for G-Warp's real API:
+  - Collision wraps GW.spritesTouch(a, b).
+  - Clones wrap ScriptThread.prototype.step.
+  - Pen removed (G-Warp has no pen API yet).
+  - pmp-loader.js now handles ONLY the protobuf kind; ZIP is left
+    to G-Warp's built-in loader.
 
-Because I could not open ENGINE-MAP.txt, every place where I did not
-know the exact method or property name is marked UNSURE and is
-resolved at runtime by probing several likely names. If none match,
-the module logs one console warning and does nothing — G-Warp is
-never broken.
+Every UNSURE: below is a name I could not confirm from here. The
+modules probe at load time and log one warning if the name is
+wrong; they never crash G-Warp.
 
 COLLISION
 ---------
-Version | Speed gain          | Accuracy risk          | Memory | Complexity | Round-2 bugs fixed
---------|---------------------|------------------------|--------|------------|-------------------
-A       | 2-5x on repeats     | Low (same-frame cache) | Small  | Low        | frame counter, null args,
-        |                     |                        |        |            | unbounded map, error cache,
-        |                     |                        |        |            | unknown fn name
-B       | 5-10x with bbox     | Low (bbox conservative)| Medium | Medium     | unknown bbox fields, stale
-        | pre-check           |                        |        |            | bbox, zero scale, rotation
-C       | 5-10x + hard cap    | Medium (budget may    | Medium | Medium     | budget too low, turbo should
-        | on per-frame work   | return false once)     |        |            | bypass, error not counted,
-        |                     |                        |        |            | warn spam, NaN args
+Version | Speed gain on repeats | Accuracy risk       | Memory | Complexity | Round-2 bugs fixed
+--------|-----------------------|---------------------|--------|------------|-------------------
+A       | 2-5x                  | Low (same-frame     | Small  | Low        | frame tick, null/identical
+        |                       | cache only)         |        |            | guards, unbounded map,
+        |                       |                     |        |            | error caching, missing fn
+B       | 5-10x when pairs are  | Low (bbox only      | Medium | Medium     | unknown field names, stale
+        | far apart             | rejects obvious      |        |            | bbox, rotation (UNSURE),
+        |                       | non-overlaps)        |        |            | zero-scale, missing fields
+C       | 5-10x + hard cap on   | Medium (returns      | Medium | Medium     | budget default, turbo
+        | per-frame work        | false once budget    |        |            | bypass, errors not counted,
+        |                       | is spent)            |        |            | warn spam, NaN args
 
-WINNER: B, with C as a safety net when you know the project spams
-collisions. B needs the sprite's x/y/size fields; if those names do
-not match, B gracefully falls back to A behaviour.
+WINNER: B for most projects; C if the project spams collisions
+(an easy switch via GW._gwCollisionBudget).
 
 Teach a 14-year-old:
-"A sprite can only touch another sprite if their boxes overlap. If
-the boxes don't touch, we don't need to look at pixels at all."
+"Two sprites can only touch if their boxes overlap. If the boxes
+don't touch, we don't need to do any pixel work at all."
 
 CLONES
 ------
-Version | Speed gain          | Accuracy risk          | Memory | Complexity | Round-2 bugs fixed
---------|---------------------|------------------------|--------|------------|-------------------
-A       | 2-4x with invisible | Low (only idle clones  | Small  | Low        | unknown step name, unknown
-        | clones              | skipped)               |        |            | visibility field, broadcast
-        |                     |                        |        |            | to idle clone, null thread
-B       | 3-6x                | Low (rebuilds list     | Medium | High       | live array mutation, >65535
-        |                     | every frame)           |        |            | threads, missing stepThreads,
-        |                     |                        |        |            | broadcast, mid-frame clone
-C       | 2-4x                | Very low (never        | Small  | Medium     | double wrap, unknown fields,
-        |                     | touches Engine.threads)|        |            | broadcast, this-binding,
-        |                     |                        |        |            | per-frame visibility cache
+Version | Speed gain on repeats | Accuracy risk       | Memory | Complexity | Round-2 bugs fixed
+--------|-----------------------|---------------------|--------|------------|-------------------
+A       | 2-4x                  | Very low (skips     | Small  | Low        | prototype unreachable, double
+        |                       | only invisible idle |        |            | wrap, unknown fields, error
+        |                       | threads)            |        |            | transparency, empty list
+B       | 3-6x                  | Low (skip flag      | Medium | High       | stale flag, broadcast wake,
+        |                       | refreshed every     |        |            | snapshot iteration, WeakSet
+        |                       | 30 frames)          |        |            | reassign, lazy first refresh
+C       | 2-4x                  | Very low (no cross- | Small  | Medium     | cache growth, non-numeric id,
+        |                       | frame state)        |        |            | mid-frame broadcast, unknown
+        |                       |                     |        |            | fields, double wrap
 
-WINNER: C. It is the least invasive and the least likely to
-misbehave on a project I can't see. B is faster on paper but depends
-on knowing how the sequencer iterates, which ENGINE-MAP.txt was
-supposed to tell me and didn't reach me.
-
-Teach a 14-year-old:
-"An invisible clone with nothing to do doesn't need its turn this
-frame. We tell the engine to skip it."
-
-PEN
----
-Version | Speed gain          | Accuracy risk          | Memory | Complexity | Round-2 bugs fixed
---------|---------------------|------------------------|--------|------------|-------------------
-A       | 3-5x                | Low (buffered and      | Small  | Low        | unknown pen API, buffer
-        |                     | flushed same frame)    |        |            | overflow, NaN, clear during
-        |                     |                        |        |            | buffer, double wrap
-B       | 5-15x when engine   | Low (falls back to     | Medium | Medium     | 2-arg vs 4-arg, first point,
-        | supports 4-arg line | 2-call point draws)    |        |            | mid-frame colour change,
-        |                     |                        |        |            | tab hidden, buffer cap
-C       | 3-5x                | Very low (immediate    | Medium | Medium     | clear hook missing, allocation
-        |                     | fallback on error)     |        |            | failure, throw mid-flush,
-        |                     |                        |        |            | tab visibility, double wrap
-
-WINNER: C if you want zero risk; A if you want the simplest file
-that still gives the main win. B is the fastest but needs to know
-whether the engine's pen draw takes 2 or 4 args (probed with
-Function.prototype.length, safe either way).
+WINNER: C. It is the only one that never keeps cross-frame state
+about a thread, so a broadcast mid-frame always wakes the right
+threads. B is faster on paper but its 30-frame window can delay a
+woken thread by up to half a second.
 
 Teach a 14-year-old:
-"Instead of drawing every dot the moment it happens, we collect
-them and draw them all at the end of the frame. The screen looks
-the same, but the browser has a lot less to do."
+"An invisible clone that has nothing to do doesn't need to run
+this frame. As soon as it gets a message, it runs again."
+
+PROTOBUF LOADER
+---------------
+Item                                    | Result
+----------------------------------------|------------------------------------
+ZIP .pmp                                | Left to G-Warp's own loader
+Non-ZIP .pmp                            | Converted via pmp-protobuf
+pmp-protobuf as window.pmpProtobuf      | Used directly
+pmp-protobuf missing                    | Dynamic ESM import from jsDelivr
+Both unavailable                        | Friendly error with GitHub link
+Converter error                         | Friendly error, no crash
+Assets inside protobuf                  | UNSURE (empty Map for now)
 
 BENCHMARK PLAN
 --------------
-Every module ships with a console test in its header comment.
-Expected numbers (Chrome on a mid-range laptop):
+Collision A:   1000 cached GW.spritesTouch calls   < 5 ms
+Collision B:   1000 calls, pairs far apart         < 2 ms
+Collision C:   frame stays under 16 ms             60 FPS locked
+Clones A:      300 clones, most hidden             60 FPS
+Clones B:      300 clones, most hidden             60 FPS
+Clones C:      300 clones, most hidden             60 FPS
 
-  collision-A  1000 cached calls        < 5 ms
-  collision-B  1000 calls w/ bbox skip  < 2 ms
-  collision-C  frame stays under 16 ms  60 FPS locked
-  clones-A     300 clones, most hidden  60 FPS
-  clones-B     300 clones, most hidden  60 FPS
-  clones-C     300 clones, most hidden  60 FPS
-  pen-A        10 000 points buffered   < 15 ms
-  pen-B        10 000 segments          < 8 ms
-  pen-C        10 000 points chained    < 15 ms
+UNSURE: I cannot verify these numbers on G-Warp from here.
 
-UNSURE: I cannot verify these on G-Warp's actual runtime from here.
-They are estimates from equivalent runtimes. Run bench-speed.js (in
-the previous drop) or the per-module tests above to confirm.
-
-NEXT 10 SPEED IDEAS (ranked by gain / effort)
----------------------------------------------
-1. Pre-resolve block opcodes to functions, cache in a Map.
-2. Store sprite transforms in a Float32Array instead of properties.
-3. Lazy GPU texture upload (only when the costume is first drawn).
-4. Share silhouette data between clones of the same costume.
-5. Batch sprites by shader + texture into few draw calls.
-6. OffscreenCanvas for the pen layer in a Worker.
-7. A tiny JIT for `forever` loops with pure math.
-8. Cache broadcast listeners by message name.
-9. Use a Set for "touching" candidate lists.
-10. Lower the warp timer from 500 ms to ~200 ms.
+UNSURE ITEMS
+------------
+- UNSURE: G-Warp sprite numeric id field (code probes .id and
+  .drawableID, falls back to WeakMap keyed by object).
+- UNSURE: G-Warp sprite visibility field (code probes visible,
+  isVisible, hidden, _visible; defaults to "visible").
+- UNSURE: G-Warp sprite position/size fields for the bbox
+  pre-check (code probes x, xpos, left / y, ypos, top / width, w,
+  baseWidth, costumeWidth / height, h, baseHeight, costumeHeight /
+  size, scale). If none match, B silently falls back to A.
+- UNSURE: G-Warp ScriptThread field names for the owning sprite
+  (sprite, target, owner) and the stack (stack, blocks, ops). The
+  code probes all and defaults to running the thread when a name
+  is missing.
+- UNSURE: Whether ScriptThread is exposed on window. The clone
+  modules fall back to deriving the prototype from the constructor
+  of Engine.threads[0] if at least one thread exists.
+- UNSURE: Whether G-Warp's collision detection is already bbox-
+  based. If it is, version B's bbox pre-check is largely redundant
+  but still not harmful.
 
 RECOMMENDED MERGE
 -----------------
-- speed-collision-B.js
-- speed-clones-C.js
-- speed-pen-C.js
-- pmp-loader.js
+- deepseek/speed-collision-B.js
+- deepseek/speed-clones-C.js
+- deepseek/pmp-loader.js
 
-Together these are the least likely to break a project I cannot
-see, while still recovering most of the FPS in heavy scenes.
-Claude should read ENGINE-MAP.txt and replace every UNSURE guess
+Claude should read ENGINE-MAP.txt and replace every UNSURE probe
 with the real name before merging.
