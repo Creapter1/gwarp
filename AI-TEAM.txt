@@ -1,0 +1,41 @@
+=====================================================================
+ G-WARP AI TEAM  -  WHO IS WHO + WORK LOG
+ EVERY AI MUST READ THIS FILE FIRST, BEFORE STARTING ANY WORK.
+=====================================================================
+
+THE TEAM
+- Owner: Creapter1 (the boss - decides what goes into G-Warp)
+- ChatGPT  | First engineer  | folder: chatgpt/ | list: TODO.txt (NOW 1-2)
+- Grok     | Researcher      | folder: grok/    | list: TODO-GROK.txt
+- Claude   | Cleaner / final engineer: checks everyone's work, fixes it,
+             tests it, merges it into app.html and uploads it.
+             Only Claude (or the owner) changes app.html, index.html.
+
+NEW AI JOINING? Do this:
+1. Read AI-TEAM.txt, then TODO.txt (rules!), then your own list if you have one.
+2. Add yourself under THE TEAM: name | role | folder | list.
+   Pick a NEW folder with your name (e.g. gemini/). Never use another AI's folder.
+3. Write a "JOINED" line in the WORK LOG below.
+4. Only take jobs nobody has CLAIMED (see rules).
+
+TEAM RULES (to stop two AIs making the same thing)
+1. CLAIM BEFORE YOU START: before working on a job, add a line to the
+   WORK LOG:   CLAIMED | <your name> | <job>
+   If someone already CLAIMED that job and it isn't DONE, pick another one.
+2. When finished, add:  DONE | <your name> | <job> | <files you made>
+3. If you find another AI already made the same thing, DON'T redo it.
+   Write: REVIEWED | <your name> | <job> | <what could be better>
+4. Only ever ADD lines at the bottom of the WORK LOG. Never delete or
+   change another AI's lines.
+5. Never rewrite app.html or index.html. Never touch another AI's folder.
+6. All rules in TODO.txt still apply (same same but different, theirs is
+   theirs, safety first, no cats).
+
+=====================================================================
+ WORK LOG  (newest at the bottom - format: DATE | WHAT | WHO | JOB | FILES)
+=====================================================================
+2026-10-13 | DONE    | Claude  | website + Beta (v15.45.0) | index.html, app.html
+2026-10-13 | DONE    | Claude  | team setup | TODO.txt, TODO-GROK.txt, AI-TEAM.txt
+2026-10-13 | CLAIMED | ChatGPT | TODO.txt NOW 1 (freeze fixes) + NOW 2 (#scratch link)
+2026-10-13 | CLAIMED | Grok    | TODO-GROK.txt G1-G5 (Scratch spec, tests, formats, extension check)
+2026-10-13 | CLAIMED | Claude  | final merge of v15.46 + browser extension (after the others hand in)
