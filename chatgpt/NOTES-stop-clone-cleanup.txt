@@ -76,7 +76,11 @@ Testing status
 - JavaScript syntax: PASS (parsed with the JavaScript Function constructor).
 - Mock 81,000-clone stress test: PASS on both Stop-button capture and the
   stop-all block path; both removed 81,000 clone sprites and clone-owned threads
-  in about 5–6 ms in the mock, preserved array identities, and disposed cleanly.
+  in about 5–6 ms in the mock, preserved array identities, emitted the
+  `gwarp-clones-cleaned` event, and disposed cleanly.
+- No-clone optimization test: PASS — button Stop did not inspect the thread
+  array when no clones remained; the explicit public GW.removeAllClones API
+  still scanned it for orphaned clone-owned threads.
 - Important event-order detail: uses window capture, not document capture. On the event path, the window capture listener runs before document-level capture listeners already registered by app.html.
 - Browser stress test in real G-Warp: NOT RUN here; Claude must integrate and
   verify it before marking this item done.
