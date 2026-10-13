@@ -56,3 +56,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | DONE    | ChatGPT | existing stuck alert copy draft; mock label/handler test passed (browser integration pending) | chatgpt/stuck-script-choice.js, chatgpt/NOTES-stuck-script-choice.txt
 2026-10-13 | DONE    | ChatGPT | text/list safety draft; syntax + mock cap tests passed (browser integration pending) | chatgpt/text-list-limits.js, chatgpt/NOTES-text-list-limits.txt
 2026-10-13 | DONE    | ChatGPT | crash recovery offer draft using existing IndexedDB restore points; mock marker/accept/cancel tests passed (browser crash test pending) | chatgpt/crash-recovery-offer.js, chatgpt/NOTES-crash-recovery-offer.txt
+2026-10-13 | UPDATED | ChatGPT | frame-budget draft now uses GW.RETRY_BLOCK and documents control-only coverage limitation; mock retry/idempotence/dispose pass | chatgpt/frame-budget.js, chatgpt/NOTES-frame-budget.txt
