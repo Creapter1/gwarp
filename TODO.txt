@@ -67,7 +67,10 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
       Scratch 3 (number/text rules, list indexes, rounding, pen colours,
       clone rules, hat restarts, broadcast order...). Make small test
       projects with the exact expected result.
-[ ] 5. Make sure .pmp (PenguinMod) files open, including newer ones.
+[x] (DeepSeek) 5. .pmp research + notes + test harness -> deepseek/
+      (NOTES-pmp.txt, test-pmp-loader.js saved; pmp-loader.js was MISSING from
+      the handoff paste — DeepSeek should re-send it. Claude still needs to
+      test + merge when the loader file arrives.)
 [ ] 6. TurboWarp / PenguinMod gallery extensions: test that they load on
       the real website (github.io), list any that fail.
 
