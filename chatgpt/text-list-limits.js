@@ -134,9 +134,15 @@
     const cached=dictRawToProxy.get(input);if(cached)return cached;
     const proxy=new Proxy(input,{
       get(target,key,receiver){const v=Reflect.get(target,key,receiver);return Array.isArray(v)?protectList(v,String(key)):v;},
-      set(target,key,v,receiver){return Reflect.set(target,key,Array.isArray(v)?protectList(v,String(key)):v,receiver);},
+      set(target,key,v,receiver){
+        // Store raw arrays in the project's owned dictionaries and wrap them
+        // on read. This prevents a temporary safety proxy leaking into saves.
+        const value=Array.isArray(v)?unwrapList(protectList(v,String(key))):v;
+        return Reflect.set(target,key,value,receiver);
+      },
       defineProperty(target,key,desc){
-        if('value'in desc&&Array.isArray(desc.value))desc={...desc,value:protectList(desc.value,String(key))};
+        if('value'in desc&&Array.isArray(desc.value))
+          desc={...desc,value:unwrapList(protectList(desc.value,String(key)))};
         return Reflect.defineProperty(target,key,desc);
       },
       getOwnPropertyDescriptor(target,key){
