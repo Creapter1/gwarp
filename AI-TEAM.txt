@@ -49,3 +49,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | CLAIMED | ChatGPT | TODO.txt NOW 1 (freeze fixes) + NOW 2 (#scratch link)
 2026-10-13 | CLAIMED | Grok    | TODO-GROK.txt G1-G5 (Scratch spec, tests, formats, extension check)
 2026-10-13 | CLAIMED | Claude  | final merge of v15.46 + browser extension (after the others hand in)
+2026-10-13 | DONE    | ChatGPT | clone-limit research + warning supplement; app integration/runtime test pending | chatgpt/clone-limit.js, chatgpt/NOTES-clone-limit.txt
