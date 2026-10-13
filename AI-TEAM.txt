@@ -133,3 +133,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | CLAIMED | Claude  | URGENT U3 (bug hunt, clean-up, merge, next Beta)
 2026-10-13 | DONE    | DeepSeek | URGENT U2 costume editor A/B/C (select, fill, text, eraser, undo) + checklist | deepseek/costume-*-[ABC].js, LAB-costumes.txt, CHECKLIST-costumes.txt (saved by Claude)
 2026-10-13 | REVIEWED | Claude  | U2: big, careful work; all 15 files pass a syntax check; research + 40-point checklist are useful. But it guesses state.mode / fillColor / eraserSize / font - real fields are costumeMode, svgTool, bitmapTool, selectedSvg (added to ENGINE-MAP.txt). Claude will adapt the picks (select-C, fill-C, text-B, eraser-C, undo-C) when merging.
+2026-10-13 | DONE    | ChatGPT | URGENT U1 UI behavior audit (static source audit; browser verification left for U3) | chatgpt/UI-AUDIT.txt
