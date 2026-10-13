@@ -64,7 +64,10 @@
 
   function shouldYield(thread, path, block) {
     state.checks++;
-    if (!inWarp(thread) || thread.finished || !Engine.isRunning || Engine.isPaused) return false;
+    // RETRY_BLOCK is caught by the runner inside ScriptThread.step(). Never
+    // throw it for editor/debugger/helper calls made outside that runner frame.
+    if (!stepStartedAt.has(thread) || !inWarp(thread) ||
+        thread.finished || !Engine.isRunning || Engine.isPaused) return false;
 
     const t = now();
     const stepStart = stepStartedAt.get(thread);
