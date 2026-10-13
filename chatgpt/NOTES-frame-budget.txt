@@ -31,9 +31,11 @@ What this module attempts
 - Starts a shared frame clock via the existing GW.frameGate hook, and tracks
   each ScriptThread.step call as a backup timer.
 - Checks before GW.extraBlock, GW8.resolveInput, GW9.evalNode and the legacy
-  ScriptThread.executeBlock paths. When a warp custom frame has exceeded the
-  budget, it throws the existing GW.RETRY_BLOCK sentinel before the next
-  operation can take effect. The runner catches it, rewinds the current block,
+  ScriptThread.executeBlock paths, but only while that thread is inside the
+  wrapped ScriptThread.step() call (where the interpreter catches RETRY_BLOCK).
+  When a warp custom frame has exceeded the budget, it throws the existing
+  GW.RETRY_BLOCK sentinel before the next operation can take effect. Calls from
+  editor/debugger helpers outside ScriptThread.step are never given the sentinel. The runner catches it, rewinds the current block,
   and returns to the browser event loop.
 - It does not toggle warp flags, insert synthetic call-stack frames, modify
   the script itself, or execute a block before deciding to yield.
