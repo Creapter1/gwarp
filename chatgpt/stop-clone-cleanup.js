@@ -72,17 +72,22 @@
     }
     if (write < sprites.length) sprites.length = write;
 
-    let threadWrite = 0;
     let removedThreads = 0;
-    for (let read = 0, length = threads.length; read < length; read++) {
-      const thread = threads[read];
-      if (thread?.sprite?.isClone) {
-        removedThreads++;
-        continue;
+    // Button Stop/green flag handlers already stop/reset ordinary threads.
+    // If no clone sprite exists, skip this second scan on those paths; the
+    // public GW.removeAllClones API still scans for orphaned clone threads.
+    if (removedSprites > 0 || trigger === 'GW.removeAllClones') {
+      let threadWrite = 0;
+      for (let read = 0, length = threads.length; read < length; read++) {
+        const thread = threads[read];
+        if (thread?.sprite?.isClone) {
+          removedThreads++;
+          continue;
+        }
+        threads[threadWrite++] = thread;
       }
-      threads[threadWrite++] = thread;
+      if (threadWrite < threads.length) threads.length = threadWrite;
     }
-    if (threadWrite < threads.length) threads.length = threadWrite;
 
     if (nextActiveIndex >= 0) {
       Engine.activeSpriteIndex = nextActiveIndex;
