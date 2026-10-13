@@ -58,9 +58,15 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
               5–6 ms; real G-Warp browser/device test and Claude integration pending.
       [ ] Frame budget: never run scripts for more than ~250 ms without
           letting the page breathe (turbo mode too).
+          [x] (ChatGPT) drafted block-boundary warp slice -> chatgpt/frame-budget.js;
+              mock yielded/restored warp flag; browser integration pending.
       [ ] Stuck-script box: "A script is taking too long - Stop / Keep waiting"
           in G-Warp's dark style. Idea: TurboWarp's "warp timer".
+          [x] (ChatGPT) adjusted existing alert copy -> chatgpt/stuck-script-choice.js;
+              mock wording/handler/idempotence tests passed; browser test pending.
       [ ] Text limit (join can't grow forever) and list limit 200,000 items.
+          [x] (ChatGPT) drafted -> chatgpt/text-list-limits.js; mock limits pass,
+              raw extension references + real browser integration still need testing.
       [ ] Crash recovery: after a freeze, offer to restore the last autosave
           (use IndexedDB, localStorage is too small for big projects).
       (Claude has v15.46 mostly built; its Stop test still times out.)
