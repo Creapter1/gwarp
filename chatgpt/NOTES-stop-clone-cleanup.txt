@@ -1,0 +1,97 @@
+G-WARP FAST CLONE CLEANUP — NOTES FOR CLAUDE
+=============================================
+
+Files
+-----
+- chatgpt/stop-clone-cleanup.js
+
+Task
+----
+TODO.txt NOW 1, sub-item:
+"Stop must clear all clones in one fast pass (< 100 ms)."
+
+Why this supplement exists
+--------------------------
+The current app.html has several Stop/start paths. Inspection of main/app.html
+found:
+- GW.removeAllClones at about line 11011 reassigns Engine.sprites using
+  Engine.sprites.filter(...) and Engine.threads using .filter(...).
+- A document listener at about line 15716 traverses ALL sprites on Start/Stop
+  with (E.sprites || []).forEach(stop).
+- The Stop button has several other listeners, including cleanup that is
+  deferred with setTimeout(..., 0).
+- stopAllLikeScratch at about line 17937 finishes threads, calls
+  GW.removeAllClones, stops sounds, and clears speech bubbles.
+- A later wrapper around createClone/deleteClone/removeAllClones bumps
+  GW.__sprEpoch for the spritesNamed cache (about line 14252).
+
+The main performance risk is that the Start/Stop event reaches handlers that
+walk the entire 81,000-clone list before the deferred clone cleanup runs.
+Even a single filter can allocate a large second array. This module therefore
+compacts clones out of the existing sprites array at the document capture
+phase, before target handlers and later document listeners run.
+
+What this module does
+---------------------
+1. Adds a self-contained IIFE module in chatgpt/; it does not modify app.html.
+2. Requires the inspected existing globals: window.GW, window.Engine,
+   Engine.sprites, Engine.threads, and GW.removeAllClones.
+3. Replaces GW.removeAllClones with an in-place stable compaction:
+   - one pass over Engine.sprites,
+   - one pass over Engine.threads to remove threads owned by clones,
+   - no new filtered arrays and no per-clone UI/render calls,
+   - preserves the sprite and thread array object identities,
+   - repairs activeSpriteIndex after removing clones,
+   - increments GW.__sprEpoch when that existing cache epoch exists.
+4. Adds a document capture listener for #stopBtn and #greenFlagBtn. It removes
+   clones before existing button handlers run, so existing listeners such as
+   the animation stop listener do not walk tens of thousands of clone objects.
+5. Keeps normal Stop/audio/animation handlers in app.html intact. It does not
+   replace the whole Stop workflow or clear ordinary/root sprites.
+6. Has a switch-off key:
+   window.GW_DISABLE_CHATGPT_FAST_CLONE_CLEANUP = true
+   must be set before this module loads.
+7. Has an idempotence key and a dispose() helper for QA/manual rollback:
+   window.__GW_CHATGPT_FAST_CLONE_CLEANUP_V1__.dispose()
+
+Integration
+-----------
+Load after app.html's scripts have initialized window.GW and window.Engine,
+ideally in a dedicated script include after the app's final existing script.
+Do not paste/inline the entire app.html to integrate it. Claude may adjust the
+placement or approach after reviewing order dependencies.
+
+Important: app.html also has GW.removeAllClones wrapped to bump GW.__sprEpoch.
+This file uses the inspected behavior and bumps that epoch itself. If the
+current branch changes those APIs before integration, Claude must re-check
+the current implementation and preserve any extra side effects.
+
+Testing status
+--------------
+- Static source inspection: PASS for the existing names and paths listed above
+  at the time of research on main/app.html.
+- JavaScript syntax: to be checked before merge/integration.
+- Mock stress test with 81,000 sprite clones + clone-owned threads: pending.
+- Browser stress test in real G-Warp: NOT RUN here; Claude must integrate and
+  verify it before marking this item done.
+- Required browser tests:
+  1. Make 81,000 clones or use a deterministic fixture of that size.
+  2. Click Stop. Confirm the visible Stop handler works and clone cleanup is
+     under 100 ms on a documented target device/browser.
+  3. Confirm Engine.sprites and Engine.threads array references stay stable.
+  4. Confirm ordinary sprites remain, activeSpriteIndex is valid, no stale
+     clone scripts remain, and no console errors occur.
+  5. Test green flag/start after cleanup.
+  6. Test the normal 300 cap and Infinite clones mode.
+  7. Test the stop-all block, not just the top bar button.
+  8. Toggle the module off and confirm the original app behavior returns.
+  9. Run multiple Stop/Start cycles to detect stale state or listener leaks.
+
+Not claimed fixed
+-----------------
+This only addresses the fast clone-removal portion of the freeze-fix work.
+It does not implement the 250 ms frame budget, stuck-script dialog, text/list
+limits, or IndexedDB crash recovery. Keep the main TODO item unchecked until
+the integration and timing requirements have been met.
+
+No app.html or index.html was changed.
