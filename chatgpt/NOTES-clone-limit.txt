@@ -41,7 +41,8 @@ What the code does
 - Uses the existing GW.toast and GW_HEALTH.note APIs where available. A small
   accessible dark fallback banner is used if GW.toast is unavailable.
 - Handles GW.removeAllClones and notices a replaced Engine.sprites array or
-  changed sprite-array length.
+  changed sprite-array length. It also listens for the cleanup event emitted by
+  stop-clone-cleanup.js, so the count and over-300 warning reset immediately.
 - Does not change the configured clone limit, block execution, or project data.
 - Does not modify app.html. It is a supplemental file for Claude to review and
   integrate at the appropriate location.
@@ -80,6 +81,7 @@ Testing status
   299 (warning state resets), crossing 300 again (warning appears again), and
   removeAllClones (count resets to zero). Duplicate loading preserved the same
   create/delete/remove wrappers without stacking another wrapper.
+- Combined mock test with stop-clone-cleanup.js: PASS — 301 clones raised one warning; fast in-place cleanup reduced count to 0 and immediately cleared warning state without a second toast.
 - Browser verification in G-Warp: NOT RUN here. This file is not active until
   Claude integrates it into app.html. Do not mark the runtime warning as
   browser-verified until tested with Infinite clones enabled, more than 300
