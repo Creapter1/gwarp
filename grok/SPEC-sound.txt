@@ -1,0 +1,66 @@
+G-WARP SPEC: SOUND (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_sound.js
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+RANGES
+=====================================================================
+Volume: clamp 0..100
+Pitch effect: -360..360 (~ -3 to +3 octaves)
+Pan effect: -100..100
+MIDI note (music ext, related): 36..96
+Beat duration clamp (music): 0..100
+Tempo (music): 20..500 bpm
+
+Green flag / stop all: clear effects for all targets; stop all sounds.
+Stop for target: stop only that target's waiting play-until-done sounds.
+
+=====================================================================
+BLOCKS
+=====================================================================
+--- sound_play ---
+Play sound by menu name or 1-based index (wrapClamp into list). Does not wait.
+Missing sound / empty list: no-op.
+
+--- sound_playuntildone ---
+Same play, stores soundId as waiting; returns promise from soundBank.
+Stop target clears waiting set and stops those sounds.
+
+--- sound_stopallsounds ---
+Stop every target's soundBank sounds; clear waiting sets.
+
+--- sound_seteffectto / sound_changeeffectby ---
+EFFECT pitch|pan (case-insensitive). set assigns; change adds.
+Then clamp to EFFECT_RANGE. Yields a tick (Promise.resolve).
+Unknown effect name: no-op.
+
+--- sound_cleareffects ---
+All effects on this target -> 0; sync soundBank.
+
+--- sound_setvolumeto / sound_changevolumeby / sound_volume ---
+Volume 0..100 on target; change adds then clamp. Reporter returns volume.
+Yields a tick after set/change.
+
+--- sound_sounds_menu / beats_menu / effects_menu ---
+Pass-through menu reporters.
+
+=====================================================================
+SOUND INDEX RULES
+=====================================================================
+1) Match by exact sound name.
+2) Else parseInt as 1-based index, wrapClamp into 0..len-1.
+3) Else -1 (no play).
+
+Clones inherit a copy of sound state from the source target.
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+Same semantics. Audio engine backend may differ; results for volume/effects
+should match when hardware allows.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- play until done must cooperate with Stop (clear waiting sounds).
+- Do not leak AudioBufferSource nodes across stop all.
