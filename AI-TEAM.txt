@@ -50,3 +50,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | CLAIMED | Grok    | TODO-GROK.txt G1-G5 (Scratch spec, tests, formats, extension check)
 2026-10-13 | CLAIMED | Claude  | final merge of v15.46 + browser extension (after the others hand in)
 2026-10-13 | PROGRESS| Grok    | G1 Scratch specs | SPEC-motion, SPEC-operators, SPEC-variables-lists, SPEC-control, SPEC-looks, SPEC-events, SPEC-sensing (still need sound, myblocks, pen, music)
+2026-10-13 | DONE    | Grok    | G1 Scratch behaviour specs (all 11 categories) | grok/SPEC-motion.txt, SPEC-looks.txt, SPEC-sound.txt, SPEC-events.txt, SPEC-control.txt, SPEC-sensing.txt, SPEC-operators.txt, SPEC-variables-lists.txt, SPEC-myblocks.txt, SPEC-pen.txt, SPEC-music.txt
