@@ -1,0 +1,99 @@
+G-WARP SPEC: SENSING (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_sensing.js + util/cast.js
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+TOUCH / DISTANCE / COLOUR
+=====================================================================
+--- sensing_touchingobject ---
+util.target.isTouchingObject(menu). Menu includes sprites, _mouse_, _edge_.
+
+--- sensing_touchingcolor ---
+Color via Cast.toRgbColorList (hex #rrggbb or decimal packed RGB).
+
+--- sensing_coloristouchingcolor ---
+Two colours: mask and target. colorIsTouchingColor on the drawable.
+
+--- sensing_distanceto ---
+Stage target always reports 10000.
+_mouse_ or sprite name; missing sprite -> 10000.
+Otherwise Euclidean distance from this sprite's x/y.
+
+=====================================================================
+MOUSE / KEYS / DRAG
+=====================================================================
+--- sensing_mousex / sensing_mousey / sensing_mousedown ---
+IO queries on mouse (Scratch coords).
+
+--- sensing_keypressed ---
+keyboard.getKeyIsDown(KEY_OPTION). Includes "any".
+
+--- sensing_setdragmode ---
+Draggable iff DRAG_MODE === "draggable".
+
+=====================================================================
+TIMER / LOUDNESS / TIME
+=====================================================================
+--- sensing_timer / sensing_resettimer ---
+projectTimer / resetProjectTimer via clock IO.
+
+--- sensing_loudness ---
+-1 if no audioEngine or currentStepTime null.
+Cached once per step (currentStepTime window).
+
+--- sensing_loud ---
+loudness > 10.
+
+--- sensing_current ---
+Menu year, month (1-12), date, dayofweek (Sun=1), hour, minute, second.
+Local timezone Date.
+
+--- sensing_dayssince2000 ---
+Fractional days since 2000-01-01 local, with DST offset adjustment.
+
+=====================================================================
+ASK / ANSWER / USER
+=====================================================================
+--- sensing_askandwait ---
+Queues question. If target visible and not stage, shows say bubble with
+the question text and emits empty QUESTION prompt; else emits QUESTION
+with the text. Returns a Promise resolved on ANSWER event.
+Stop all / stop target clears pending questions.
+
+--- sensing_answer ---
+Last answer string (reset on project start / runtime dispose).
+
+--- sensing_username ---
+userData.getUsername (empty string when not logged in).
+
+--- sensing_userid ---
+Legacy no-op.
+
+=====================================================================
+sensing_of
+=====================================================================
+OBJECT: _stage_ or sprite name. Missing target -> 0.
+Stage properties: backdrop #, backdrop name, volume, background # (1.4 alias).
+Sprite: x position, y position, direction, costume #, costume name, size, volume.
+Else treat PROPERTY as variable name on that target; missing -> 0.
+Costume/backdrop numbers are 1-based (currentCostume + 1).
+
+=====================================================================
+EDGE CASES
+=====================================================================
+- distance to missing sprite = 10000 (not 0).
+- ask queue is FIFO; only one prompt active.
+- loudness measured once per frame step.
+- colour args: invalid hex falls back toward black via Cast colour path.
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+- Same sensing semantics for compatibility.
+- Microphone permission may differ by browser; -1 when unavailable is correct.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- Username must not invent accounts; empty is fine offline.
+- Ask UI should use G-Warp dark style, not Scratch look.
