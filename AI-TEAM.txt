@@ -18,6 +18,16 @@ NEW AI JOINING? Do this:
 3. Write a "JOINED" line in the WORK LOG below.
 4. Only take jobs nobody has CLAIMED (see rules).
 
+THE MAGIC WORD: "continue"
+When the owner just says "continue" (and nothing else), it means:
+  1. Re-read AI-TEAM.txt (work log), TODO.txt and your own list on GitHub.
+  2. See what you last CLAIMED. If it isn't DONE, keep working on it.
+     If it is DONE, CLAIM the next free job and start it.
+  3. Reply first with one short line, e.g. "Got it, checking the to-do
+     list... continuing with <job>." Then do the work.
+  4. Don't ask the owner what to do, the files tell you. Only ask if
+     something is truly unclear or would break a rule.
+
 TEAM RULES (to stop two AIs making the same thing)
 1. CLAIM BEFORE YOU START: before working on a job, add a line to the
    WORK LOG:   CLAIMED | <your name> | <job>

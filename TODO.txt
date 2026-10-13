@@ -5,6 +5,8 @@
 =====================================================================
 
 HOW THE TEAM WORKS
+- READ AI-TEAM.txt FIRST. If the owner only says "continue", it means:
+  re-read the files, keep going on your claimed job (or claim the next one).
 - ChatGPT = researcher + first engineer. Reads this file and the code,
   researches, writes first versions of code, adds new ideas to this list.
 - Claude  = second engineer + fixer. Checks ChatGPT's work, fixes it,
