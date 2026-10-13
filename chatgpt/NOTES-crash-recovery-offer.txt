@@ -33,7 +33,9 @@ What this module adds
 - If the app loads and the previous marker remains, it treats that as a possible
   unclean end and asks whether to restore the newest existing IndexedDB point.
 - Reuses GW_CONFIRM and GW_FILES.restoreTo; a restore point is saved before
-  restore by the existing app path.
+  restore by the existing app path. IMPORTANT: current restoreTo() reports
+  success/failure with its own toast and returns undefined, so this module
+  records 'restore-invoked' rather than falsely claiming the project restored.
 - Handles missing IndexedDB/API/list, no recovery points, cancellation and
   restore errors with status/toast feedback.
 - Switch-off key:
