@@ -1,0 +1,194 @@
+G-WARP USER GUIDE
+Complete practical guide for G-Warp Desktop v15.45.0
+Last updated: 2026-10-13
+
+START HERE
+G-Warp is a Scratch-style block-programming environment with additional creative and developer tools. This guide describes the checked-in app.html interface inspected for this document. Layouts and features can change between commits.
+
+App: https://creapter1.github.io/gwarp/
+UI reference: chatgpt/SCREENSHOT-UI-DOCUMENTATION.md
+Visual maps: chatgpt/images/gwarp-ui-map.svg and chatgpt/images/gwarp-interactions-map.svg
+Behavior audit: chatgpt/UI-AUDIT.txt
+Source: app.html
+
+CONTENTS
+1. Editor layout
+2. First project
+3. Stage controls
+4. Sprites
+5. Blocks and workspace
+6. Variables, comments, debugging
+7. Costumes
+8. Sounds and instruments
+9. New/open/save/export/restore
+10. Load from web
+11. Extensions and advanced tools
+12. Performance and accessibility
+13. Troubleshooting
+14. Safe workflow
+15. Verification status
+
+1. EDITOR LAYOUT
+- Category rail: block families and Extensions. The current source has a known issue where one click may not navigate to a category as expected; consult UI-AUDIT.txt.
+- Block palette: find blocks and drag them into scripts.
+- Workspace: assemble scripts, pan/zoom, clean up, and use right-click actions.
+- Stage: preview project behavior. Green Flag starts scripts; Stop stops; G-Warp also has Pause.
+- Sprite list: select the sprite whose code, costumes, and sounds you want to edit.
+- Main tabs: Code, Costumes, Sounds.
+- More menu: project/file, edit/history, tools, and settings actions.
+- Extra tools in the source include Extensions, GWrap AI/search/debugging, music/instrument creation, tilemap, behavior design, LAN collaboration, diagnostics, restore points, and advanced settings. Some may be experimental or dependent on browser/build.
+
+2. MAKE YOUR FIRST PROJECT
+1. Open G-Warp and select a sprite.
+2. Choose Code.
+3. Find an Events Green Flag hat block.
+4. Drag it onto an empty part of the workspace.
+5. Find Motion and drag a move block underneath until it snaps.
+6. Optionally add a Looks say/think block or another Motion block.
+7. Click Green Flag and watch the Stage.
+8. Click Stop to stop the project.
+9. Change a number and test again.
+10. Save a copy before larger edits.
+
+Scripts run from the hat downward. Statement blocks connect vertically. C-shaped blocks contain nested blocks. Rounded reporter and hexagonal Boolean blocks fit into compatible inputs.
+
+3. STAGE CONTROLS
+- Green Flag starts scripts listening for the Green Flag event.
+- Stop ends running scripts and related activity. Verify cleanup for effects, clones, sounds, and timers in the actual build.
+- Pause is a G-Warp extra. The inspected handler pauses engine stepping but may not pause active audio.
+- The Stage previews sprites. The current audit flags a possible issue where clicking it may trigger more than the intended sprite-click script.
+- Use stage size/fullscreen controls where available. On a small screen, try landscape orientation.
+- HQ/high-quality rendering can improve sharpness but may reduce performance.
+- Frame-rate settings can change timing compared with Scratch's typical 30 updates per second.
+
+4. SPRITES
+A sprite has scripts, costumes, sounds, position, direction, and appearance.
+1. Click a sprite tile.
+2. Choose Code, Costumes, or Sounds.
+3. Confirm the selected sprite before editing assets.
+4. Use sprite tile actions such as duplicate, find on Stage, or delete where offered.
+5. Save a backup before deleting or making major changes.
+
+The inspected sprite context menu did not show Export Sprite. Scratch-style drag-to-reposition on the Stage was not found in the inspected source; use available x/y controls or Motion blocks as a workaround. Verify layer order and positions after import.
+
+5. BLOCKS AND WORKSPACE
+Add blocks by dragging them from the palette into the workspace or onto a compatible connection. Aim at the intended connection and confirm the script runs as expected.
+
+Block shapes:
+- Hat: begins a script and should not have another block above it.
+- Statement: connects vertically.
+- C-block: holds a nested sequence, as with if/repeat/forever.
+- Reporter: rounded value block for an input.
+- Boolean: hexagonal true/false result.
+- Cap: ends a stack and should not accept statements below it.
+
+Right-click:
+- On a block: Duplicate, Delete Block, Delete Full Stack are available in the inspected menu.
+- On empty workspace: Undo, Redo, Clean up Blocks, Add Comment, Delete Blocks, and block search are available.
+- These menus differ. Check the pointer is over the intended target.
+- The source audit reports possible issues with long-stack detaching, nested C-block snapping, selected-block duplicate/delete semantics, and menus near screen edges.
+- Dragging a stack to the palette may delete it. Undo or restore if the wrong blocks disappear.
+
+Workspace:
+- Use pan and zoom controls where available.
+- Clean up Blocks arranges scripts; inspect the result.
+- In Pan mode, begin on empty workspace until the possible drag/pan conflict is verified.
+- On touchscreens, use slow, single gestures.
+- Test long scripts and nested blocks with a small project before reorganizing important code.
+
+6. VARIABLES, LISTS, COMMENTS, DEBUGGING
+- Use the Variables/data category to create variables or lists where offered.
+- Choose all-sprites or current-sprite scope if the creation dialog provides it.
+- Use set/change variable blocks and list add/delete/replace/read blocks.
+- Monitors display values on the Stage. Monitor dragging and monitor-specific context menus appear incomplete in the inspected source.
+- Right-click empty workspace and choose Add Comment for a workspace note. Block-attached comments that follow a block are not equivalent to Scratch's behavior in the inspected source.
+- To debug, reproduce the problem with the smallest script, inspect connections and event hats, run it again, and record the browser, app version, steps, expected result, and actual result. Use Bug Hunter/diagnostics if available.
+
+7. COSTUMES AND DRAWING
+1. Select the intended sprite.
+2. Open Costumes and choose a costume.
+3. Use Paint new to create a blank costume or Upload to import an image (the interface describes PNG, JPG, and SVG).
+4. Duplicate the original before destructive edits.
+5. Rename the copy if helpful.
+6. Choose vector or bitmap mode, depending on the task.
+7. Use the active mode's selection/drawing/fill/text/eraser/color/size controls.
+8. Save/apply the edit and preview it on the Stage.
+9. Switch away and back to confirm it persisted, then save the project.
+
+Exact tools differ by mode. The inspected source did not show costume-list drag reordering; do not depend on dragging rows to change animation order without testing the live build. Asset menus offer actions such as duplicate, export, and delete.
+
+8. SOUNDS, INSTRUMENTS, AND MUSIC
+- Select a sound row to edit/audition it.
+- Upload imports an audio file; the interface describes common formats such as MP3, WAV, and OGG.
+- Record uses the microphone and the UI indicates a recording limit of up to 15 seconds. Allow browser microphone permission.
+- Instrument Playground offers groups such as Keys, Strings, Winds, Mallets, Synth, and Drums. Choose an instrument/pad, audition it, then adjust available sound-shaping controls such as brightness, fade-in, fade-out, echo, and volume.
+- Use the available save/add-to-sprite action to keep the sound with the selected sprite.
+- Music/song tools provide pattern, generation, and track controls where present. Work in small steps: make a pattern, audition it, adjust instruments, then save/export.
+- Return to Code and use sound blocks to play saved assets.
+- The inspected source did not show a sound-row right-click menu or sound-row drag reordering. Pause may not stop audio in this build.
+
+9. NEW, OPEN, SAVE, EXPORT, RESTORE
+- Save before starting a new project or making major changes.
+- Use explicit file/menu actions and follow the browser download/dialog.
+- Open a supported project file, then inspect sprites, scripts, costumes, sounds, variables, extensions, and layer order.
+- Use explicit export for the intended format. Exporting a whole project is different from exporting a single costume.
+- If SB3 export is available, reopen the export or test it in Scratch/TurboWarp to verify compatibility.
+- Restore points keep recent copies after changes. Choose a timestamp to restore; save a separate copy first if you may need both versions.
+- The source audit found two global Ctrl/Cmd+S handlers. Until verified/fixed, prefer the explicit Save menu action if the shortcut behaves strangely. Check the downloaded file and test reopening it.
+- G-Warp-only extension blocks may not have exact Scratch equivalents; consult project health/compatibility information where available.
+
+10. LOAD A PROJECT FROM THE WEB
+The loader describes support for shared Scratch project links/IDs, TurboWarp links, PenguinMod links, and direct .sb3 URLs where supported.
+1. Choose Load a project from the web.
+2. Paste the link or project number.
+3. Choose Load and wait for import.
+4. Inspect the project title/attribution, sprites, scripts, and assets.
+5. Save a local copy before editing.
+
+Only use links you trust. Public access may be required for the loader to retrieve a project.
+
+11. EXTENSIONS AND ADVANCED TOOLS
+1. Save a backup.
+2. Open Extensions.
+3. Read the description and safety/compatibility label.
+4. Add only the features needed.
+5. Test the extension in a small project before adding it to complex scripts.
+6. Save and check export compatibility.
+
+Other source-present tools include GWrap AI/search/debugging, tilemap editor, Behavior Designer, LAN collaboration, project health/restore, and advanced settings. Availability may depend on the build, developer mode, or browser capabilities. LAN collaboration was not security-tested for this guide; share session codes only with intended collaborators.
+
+Advanced settings can include frame rate, clone limits, HQ rendering, stage fencing, and miscellaneous runtime limits. Unlimited clones or disabled safeguards can reduce performance or freeze a tab; change these only when you understand the cost.
+
+12. PERFORMANCE AND ACCESSIBILITY
+- Maximize the window or use landscape on mobile if the workspace does not fit.
+- Reduce expensive loops/clones and disable HQ rendering if the project becomes slow.
+- Large audio assets and higher frame rates use more resources.
+- Browser permission prompts may appear for microphone recording or downloads.
+- Some menus support keyboard selection, but the inspected source does not provide full keyboard focus/Escape behavior for every context menu.
+- This is primarily a desktop-oriented block editor; small screens may require more scrolling.
+
+13. TROUBLESHOOTING
+Blocks jump when detached: undo, zoom out, and avoid reorganizing long stacks until the known drag issue is fixed.
+Nested blocks will not accept blocks: aim inside the C-body and confirm the block shape is valid. If it still fails, undo and create a small reproduction.
+Unexpected sprite-click scripts: test one sprite at a time; stage click routing is a known audit item.
+Sprite cannot be dragged on Stage: use x/y controls or Motion blocks as a workaround.
+Pause leaves music playing: stop sound explicitly or use Stop until audio pause is verified.
+Save shortcut behaves strangely: use explicit Save, check downloads, and reopen the saved file.
+Can't find a block: use category/palette search or right-click empty workspace for block search. The current menu displays at most eight matches.
+Can't move a monitor: use existing visibility controls; monitor drag behavior is a known gap.
+Asset order won't change: costume and sound row drag-reordering were not found in the inspected source.
+Import/export changed a project: check unsupported extensions, assets, variables, layers, and project health; compare files using a backup.
+
+14. SAFE WORKFLOW
+1. Save/export a backup.
+2. Make one kind of change at a time.
+3. Test on a small project.
+4. Undo immediately if the result is unexpected.
+5. Verify in a fresh load.
+6. Record app version/browser and exact steps for bugs.
+7. Separate source-inspected findings from browser-reproduced findings.
+
+15. VERIFICATION STATUS
+This guide is based on static inspection of app.html identified as Beta v15.45.0. It does not claim every feature has been browser-tested. Main Code/Costumes/Sounds switching, costume selection, workspace menus, sprite and costume menus, restore, web-load, instrument, extension, tilemap, behavior, and LAN-related code are present. High-priority items to verify are category navigation, long-stack/nested snapping, live edits in running loops, stage sprite-click routing, edit-mode sprite dragging, effect reset/audio pause, and duplicate Ctrl/Cmd+S handling.
+
+If the live interface differs, treat the current app/source as authoritative and update this guide after verification.
