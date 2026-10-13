@@ -163,7 +163,9 @@
 
     try {
       const ok = await restore.call(window.GW_FILES, latest.id);
-      state.result = ok === false ? 'restore-failed' : 'restored';
+      // app.html's restoreTo currently reports success/failure via its own
+      // toast and returns undefined in both paths, so do not overstate outcome.
+      state.result = ok === false ? 'restore-failed' : 'restore-invoked';
       return ok !== false;
     } catch (error) {
       state.result = 'restore-failed';
