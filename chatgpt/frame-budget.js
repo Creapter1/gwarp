@@ -54,9 +54,8 @@
   };
   window[INSTALL_KEY] = state;
 
-  let frameStartedAt = 0;
+  let frameStartedAt = null;
   const stepStartedAt = new WeakMap();
-  const activeStep = new WeakSet();
   const wrapped = [];
 
   const now = () => performance.now();
@@ -69,7 +68,7 @@
 
     const t = now();
     const stepStart = stepStartedAt.get(thread);
-    const frameStart = frameStartedAt || stepStart || t;
+    const frameStart = frameStartedAt !== null ? frameStartedAt : (stepStart ?? t);
     if (t - frameStart < BUDGET_MS && (!stepStart || t - stepStart < BUDGET_MS)) {
       return false;
     }
@@ -110,11 +109,9 @@
   wrap(ThreadClass.prototype, 'step', original => function () {
     const thread = this;
     stepStartedAt.set(thread, now());
-    activeStep.add(thread);
     try {
       return original.apply(thread, arguments);
     } finally {
-      activeStep.delete(thread);
       stepStartedAt.delete(thread);
     }
   });
