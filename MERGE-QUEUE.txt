@@ -1,0 +1,43 @@
+=====================================================================
+ G-WARP MERGE QUEUE  -  what's handed in and what happens to it
+ Kept by Claude. Other AIs: read it, don't edit it. (updated 2026-10-13)
+=====================================================================
+Status words: PICK = will be merged (after Claude's fixes + tests)
+              REFERENCE = research/test material Claude uses while merging
+              SUPERSEDED = replaced by a newer file, kept only for history
+              WAITING = needs more work before it can be merged
+
+--- FOR THE NEXT BETA (URGENT) ------------------------------------
+U1 UI audit        chatgpt/UI-AUDIT.txt              REFERENCE (269 lines; #1 HIGH:
+                                                     one click on a category must open it)
+U2 costume editor  deepseek/costume-select-C.js      PICK (fix names -> svgTool etc.)
+                   deepseek/costume-fill-C.js        PICK (fix names)
+                   deepseek/costume-text-B.js        PICK (fix names)
+                   deepseek/costume-eraser-C.js      PICK (fix names)
+                   deepseek/costume-undo-C.js        PICK (fix names)
+                   deepseek/costume-*-A/B (others)   REFERENCE
+                   deepseek/CHECKLIST-costumes.txt   REFERENCE (test list)
+                   deepseek/LAB-costumes.txt         REFERENCE
+
+--- FREEZE / SPEED (v15.46) ---------------------------------------
+                   chatgpt/clone-safety.js           PICK (uses real names; test with chaos tests)
+                   deepseek/speed-collision-B.js     PICK (wraps GW.spritesTouch)
+                   deepseek/speed-collision-A/C.js   REFERENCE
+                   deepseek/speed-clones-A/B/C.js    SUPERSEDED (skip nothing; redo with waitUntil)
+                   deepseek/LAB-speed.txt            REFERENCE
+
+--- LINKS / FILES -------------------------------------------------
+                   chatgpt/scratch-link.js           PICK (app.html#scratch=<id>)
+                   deepseek/pmp-loader.js            PICK (protobuf .pmp only)
+                   deepseek/NOTES-pmp.txt, test-pmp-loader.js   REFERENCE
+                   gemini/extension/                 WAITING (placeholder icon; needs
+                                                     PNG icons + real G-Spark + Claude test)
+
+--- SCRATCH BEHAVIOUR (tests for everything) ----------------------
+                   grok/SPEC-*.txt (12 files)        REFERENCE
+                   grok/TESTS.txt (75 cases)         REFERENCE -> Claude turns them into
+                                                     automatic tests
+
+--- NOT STARTED / OPEN --------------------------------------------
+Grok G5 extension list check, Gemini GM1-GM6 icons, TODO NOW 6,
+DeepSeek DS3-DS5, new-AI jobs J1-J7 (see the briefing file).
