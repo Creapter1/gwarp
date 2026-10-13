@@ -101,6 +101,15 @@
     state.lastRemovedThreads = removedThreads;
     state.lastDurationMs = performance.now() - started;
     state.lastTrigger = trigger;
+
+    // Notify optional tools such as clone-limit.js. They can refresh counters
+    // after this in-place compaction without polling or changing array identity.
+    try {
+      window.dispatchEvent(new CustomEvent('gwarp-clones-cleaned', {
+        detail: { removedSprites, removedThreads, trigger, durationMs: state.lastDurationMs }
+      }));
+    } catch (_) {}
+
     return removedSprites;
   }
 
