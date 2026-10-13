@@ -1,0 +1,198 @@
+G-WARP SPEC: ENGINE (Scratch 3.0 runtime behaviour)
+Source: scratchfoundation/scratch-vm
+  src/engine/runtime.js, sequencer.js, thread.js
+  + TurboWarp notes (framerate options, infinite clones)
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+FRAME TIMING
+=====================================================================
+Scratch 3 default tick rate aims at ~60 steps/second:
+  THREAD_STEP_INTERVAL ≈ 1000/60 ms  (~16.67 ms per step)
+
+"Compatibility mode" (Scratch 2 feel):
+  THREAD_STEP_INTERVAL_COMPATIBILITY = 1000/30 ms  (~33.33 ms) → ~30 TPS
+
+Each step:
+  1. updateCurrentMSecs() once (Scratch 2 clock compatibility)
+  2. sequencer.stepThreads()
+  3. render / monitors / glows as needed
+  4. redrawRequested is reset for the next frame
+
+currentStepTime is set from the active interval and drives WORK_TIME.
+
+TurboWarp: user-selectable framerate (often 30 default for parity, up to
+hundreds). Interpolation and separate draw loops may apply. G-Warp should
+default to Scratch-compatible 30 or 60 and document the choice in settings.
+
+=====================================================================
+WORK TIME / YIELD BUDGET
+=====================================================================
+WORK_TIME = 0.75 * currentStepTime
+
+Within one step, stepThreads keeps cycling active threads while:
+  - threads remain active
+  - timer.timeElapsed() < WORK_TIME
+  - (turboMode OR NOT redrawRequested)
+
+Meaning:
+  - Normal mode: a redraw request ends the multi-pass loop early so the
+    screen can update.
+  - Turbo mode: ignores redrawRequested and keeps burning WORK_TIME.
+
+G-Warp freeze-fix (TODO.txt): never run scripts more than ~250 ms without
+letting the page breathe — stricter than stock WORK_TIME when turbo/warp
+would otherwise monopolise the main thread. Stuck-script UI is separate.
+
+=====================================================================
+THREAD MODEL
+=====================================================================
+A Thread has:
+  topBlock, stack[], stackFrames[], status, target, warpTimer, isKilled
+
+Statuses:
+  STATUS_RUNNING (0)       — execute next block
+  STATUS_PROMISE_WAIT (1)  — waiting on async (sound until done, ask, wait)
+  STATUS_YIELD (2)         — yield to other threads this pass; resume soon
+  STATUS_YIELD_TICK (3)    — yield until next step/tick
+  STATUS_DONE (4)          — finished; removed from runtime.threads
+
+Order: runtime.threads is stepped in list order each pass. New threads are
+appended. Done threads are compacted out at end of a pass.
+
+executableTargets holds targets in reverse draw/execution order (front-most
+last for drawing; sequencer uses the threads list, not this, for script order).
+
+=====================================================================
+WHEN LOOPS YIELD
+=====================================================================
+forever / repeat / repeat-until mark the stack frame isLoop = true.
+
+After one body iteration, sequencer returns (yields) unless:
+  - warpMode is on AND warpTimer.timeElapsed() <= WARP_TIME (500 ms)
+
+In warp mode, loops can spin many times inside one step until 500 ms elapses,
+then yield.
+
+STATUS_YIELD after a normal yield is set back to RUNNING so the same thread
+can run again in a later pass of the same step (if time remains).
+
+STATUS_YIELD_TICK forces wait until the next step (cleared at start of the
+next stepThreads if !ranFirstTick).
+
+=====================================================================
+REDRAW RULE
+=====================================================================
+Primitives that change visible state call runtime.requestRedraw().
+redrawRequested = true stops further multi-pass stepping unless turboMode.
+
+Monitors and script glows update around the step boundary.
+
+=====================================================================
+WARP MODE ("run without screen refresh")
+=====================================================================
+Set per stack frame from custom-block mutation.warp (boolean/string JSON).
+Also inherited by pushed frames from parent warpMode.
+
+WARP_TIME = 500 ms per continuous warp run on a thread (Sequencer.WARP_TIME).
+
+While warping:
+  - yields from loops re-enter immediately until timer exceeds WARP_TIME
+  - recursive procedure calls do not force yield solely for recursion if
+    already warping and under time budget
+  - promise waits still pause the thread
+
+TurboWarp compiler treats warp aggressively for speed; semantics of reporters
+and stops must still match.
+
+=====================================================================
+TURBO MODE
+=====================================================================
+runtime.turboMode = true:
+  - stepThreads continues even when redrawRequested
+  - projects feel faster; frame pacing still uses currentStepTime
+  - does NOT by itself remove clone limits or fencing
+
+G-Warp: turbo must still respect the ~250 ms frame budget / Stop button.
+
+=====================================================================
+HATS & GREEN FLAG
+=====================================================================
+Green flag (PROJECT_START / greenFlag):
+  - Stops prior flag-started scripts as appropriate
+  - Starts all green-flag hat threads (and related edge hats per rules)
+  - Clears effects that listen on PROJECT_START (e.g. sound effects)
+
+Hat restart: clicking green flag again should stop the old stacks and start
+fresh (TESTS T052). Edge-triggered hats (key pressed, backdrop switches)
+follow edge vs level rules in SPEC-events.
+
+Broadcast: all matching "when I receive" threads are started; broadcast-and-wait
+blocks the caller until those threads complete (or are stopped).
+
+=====================================================================
+STOP BLOCKS
+=====================================================================
+stop [all] → runtime.stopAll / PROJECT_STOP_ALL:
+  - kill all threads
+  - stop sounds, clear clones path, reset edge state as designed
+  - G-Warp: clone teardown must finish in < ~100 ms even at 300 clones (TODO)
+
+stop [this script] → thread.stopThisScript():
+  - pop until procedures_call or empty; then DONE
+
+stop [other scripts in sprite] → STOP_FOR_TARGET for other threads on target
+
+stop [this block] (inside custom) — engine-specific; match Scratch if present
+
+=====================================================================
+CLONES
+=====================================================================
+MAX_CLONES = 300 (Scratch default)
+runtime._cloneCounter tracks live clones.
+create clone beyond limit: no-op (no new target).
+
+When I start as clone: hat runs only on the new clone target.
+delete this clone: removes clone target and its threads.
+
+TurboWarp "Infinite clones": optional; must be an explicit G-Warp setting
+with a warning (TODO freeze-fix). Default must stay 300.
+
+Stop all / delete must decrement counter correctly so new clones can spawn.
+
+=====================================================================
+STAGE GEOMETRY (runtime constants)
+=====================================================================
+STAGE_WIDTH = 480
+STAGE_HEIGHT = 360
+(Sprite coordinates: origin centre, x ∈ [-240,240], y ∈ [-180,180] when fenced.)
+
+Fencing: default on in Scratch. TurboWarp "Remove fencing" is optional;
+G-Warp should expose it as a setting with warning, not silently diverge.
+
+=====================================================================
+G-WARP REQUIREMENTS (from TODO.txt freeze fixes)
+=====================================================================
+1. Clone limit 300 default; optional infinite with warning.
+2. Stop clears all clones in one fast pass (< 100 ms).
+3. Frame budget ~250 ms max script work before yielding to browser.
+4. Stuck-script dialog: Stop / Keep waiting (TurboWarp-style warp timer UX).
+5. List length cap 200_000; join/string growth must not run forever.
+6. Crash recovery via IndexedDB autosave (not engine core, but related).
+
+=====================================================================
+TURBOWARP / PENGUINMOD DIFFERENCES
+=====================================================================
+- Selectable FPS / interpolation / compiler.
+- Runtime options: maxClones, fencing, miscLimits, dangerousOptimizations.
+- PenguinMod project.json may embed those options; loader must not crash
+  on unknown fields (see deepseek NOTES-pmp).
+
+=====================================================================
+IMPLEMENTATION NOTES FOR G-WARP
+=====================================================================
+- Prefer cooperative yielding every loop iteration in normal mode.
+- Warp = time-boxed tight loop (500 ms Scratch; G-Warp may also global-cap).
+- Never block the UI thread on Stop.
+- Thread list mutations while stepping: follow Scratch index-decrement when
+  killing the current thread (sequencer i-- pattern).
