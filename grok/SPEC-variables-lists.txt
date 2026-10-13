@@ -1,0 +1,105 @@
+G-WARP SPEC: VARIABLES + LISTS (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_data.js + util/cast.js
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+SHARED
+=====================================================================
+- Variables and lists are looked up (or created) by id+name on the target.
+- Cloud variables also request cloud IO update on set/change.
+- List indexes are 1-based in Scratch.
+- LIST_ITEM_LIMIT = 200000 (hard cap in official VM).
+
+Cast.toListIndex(index, length, acceptAll):
+  - "all" -> LIST_ALL if acceptAll else LIST_INVALID
+  - "last" -> length if length>0 else INVALID
+  - "random" / "any" -> 1 + floor(random*length) if length>0 else INVALID
+  - else floor(toNumber(index)); if outside 1..length -> INVALID
+  - LIST_INVALID means no-op or empty report depending on block
+
+=====================================================================
+VARIABLES
+=====================================================================
+
+--- data_variable ---
+Reporter. Returns variable.value (any type).
+
+--- data_setvariableto ---
+Sets variable.value = VALUE (no cast; stores as given).
+Cloud: also requestUpdateVariable.
+
+--- data_changevariableby ---
+newValue = toNumber(old) + toNumber(VALUE); store number.
+Cloud: requestUpdateVariable.
+
+--- data_showvariable / data_hidevariable ---
+Toggle monitor visibility via monitor checkbox event.
+
+=====================================================================
+LISTS
+=====================================================================
+
+--- data_listcontents ---
+Reporter of whole list:
+  - For monitors: return copy of array when changed so Immutable monitors update.
+  - For scripts: if every item is a single-character string, join with ""; else join with space.
+
+--- data_addtolist ---
+Push ITEM if length < 200000. Else ignore.
+
+--- data_deleteoflist ---
+INDEX via toListIndex(..., acceptAll=true).
+  - INVALID: no-op
+  - ALL: clear list
+  - number: splice(index-1, 1)
+
+--- data_deletealloflist ---
+Clear list.
+
+--- data_insertatlist ---
+INDEX via toListIndex(index, length+1, acceptAll=false) so you can insert at end+1.
+  - INVALID or index > 200000: no-op
+  - insert; if length exceeded limit, pop last
+
+--- data_replaceitemoflist ---
+INDEX via toListIndex(..., false). INVALID -> no-op. Else replace at index-1.
+
+--- data_itemoflist ---
+INDEX via toListIndex(..., false). INVALID -> "". Else list[index-1].
+Edge: item 0, negative, past end -> "".
+
+--- data_itemnumoflist ---
+First 1-based index where Cast.compare(list[i], ITEM)===0; else 0.
+Uses Scratch equality ("123" matches 123). Does not use JS indexOf alone.
+
+--- data_lengthoflist ---
+list.value.length
+
+--- data_listcontainsitem ---
+True if indexOf hits OR any Cast.compare === 0.
+
+--- data_showlist / data_hidelist ---
+Monitor visibility for the list.
+
+=====================================================================
+EDGE CASES TO TEST
+=====================================================================
+- item 0 of list -> ""
+- item last of empty -> ""
+- add when already 200000 items -> no growth
+- insert at 1 on full list -> inserts and drops last
+- contains number in list of digit-strings
+- list reporter of ["a","b","c"] -> "abc"; ["ab","c"] -> "ab c"
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+- Same 200000 list limit unless a mod explicitly raises it.
+- Cloud variables may be disabled offline; behaviour of local value still matches.
+- Compiler must keep Cast.compare for contains / item #.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- Freeze-fix plan in TODO.txt already calls for list limit 200000 — match this constant.
+- Do not use 0-based indexes in the language; only internally.
