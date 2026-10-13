@@ -62,9 +62,7 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
 [ ] 2. "Open in G-Warp" link: app.html#scratch=<number> should ask
       "Open Scratch project #<number>?" then load it (G-Warp already has
       More -> "Load from the web..."). Needed for the browser extension.
-[ ] 3. Browser extension "G-Warp Opener" (Chrome/Edge/Firefox): a button on
-      Scratch project pages that opens the project in G-Warp. Draft code
-      exists (from Gemini); needs PNG icons, real G-Spark, no forever timers.
+[x] (Gemini) 3. Browser extension -> gemini/extension/ (Claude still needs to test + merge)
 [ ] 4. Scratch behaviour check: every block must give the SAME result as
       Scratch 3 (number/text rules, list indexes, rounding, pen colours,
       clone rules, hat restarts, broadcast order...). Make small test
