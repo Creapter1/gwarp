@@ -53,6 +53,9 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
           normal cap warning. Supplement warns if an infinite/higher limit
           actually passes 300; runtime integration test remains pending.
       [ ] Stop must clear all clones in one fast pass (< 100 ms).
+          [x] (ChatGPT) drafted in-place cleanup -> chatgpt/stop-clone-cleanup.js
+              Mock stress test: 81,000 clones + 81,000 clone threads removed in
+              5–6 ms; real G-Warp browser/device test and Claude integration pending.
       [ ] Frame budget: never run scripts for more than ~250 ms without
           letting the page breathe (turbo mode too).
       [ ] Stuck-script box: "A script is taking too long - Stop / Keep waiting"
@@ -64,6 +67,8 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
 [ ] 2. "Open in G-Warp" link: app.html#scratch=<number> should ask
       "Open Scratch project #<number>?" then load it (G-Warp already has
       More -> "Load from the web..."). Needed for the browser extension.
+      [x] (ChatGPT) drafted URL-hash opener -> chatgpt/open-scratch-link.js;
+          uses existing GW_CONFIRM + GW_WEB.load; real-browser integration test pending.
 [ ] 3. Browser extension "G-Warp Opener" (Chrome/Edge/Firefox): a button on
       Scratch project pages that opens the project in G-Warp. Draft code
       exists (from Gemini); needs PNG icons, real G-Spark, no forever timers.
