@@ -1,0 +1,55 @@
+G-WARP STUCK-SCRIPT COPY — NOTES FOR CLAUDE
+============================================
+
+File
+----
+- chatgpt/stuck-script-choice.js
+
+TODO item
+---------
+NOW 1: stuck-script box — "A script is taking too long - Stop / Keep waiting"
+in G-Warp's dark style.
+
+Research finding from app.html
+------------------------------
+The dark alert already exists around line 12248:
+- It is created by showStuck(info).
+- Its heading is initially "GWrap AI: a block looks stuck".
+- It has a Stop button (gw8WarpStop) and a Resume button (gw8WarpResume).
+- The alert is assigned through GW_WARP_GUARD.onStuck.
+Therefore a new dialog is not needed. The minimal gap is the wording requested
+by TODO. This add-on reuses the existing dialog, its styles, Stop handler and
+resume behavior; it changes only the heading and the Resume label.
+
+Behavior
+--------
+- Wraps the existing window.GW_WARP_GUARD.onStuck.
+- Calls the original handler first, then updates the generated alert title to
+  "A script is taking too long" and button label to "Keep waiting".
+- Preserves the existing Stop button, Show me, Turn off warp, layout and event
+  handlers.
+- Switch-off key:
+    window.GW_DISABLE_CHATGPT_STUCK_SCRIPT_COPY = true
+- Idempotence key and dispose() are included.
+
+Integration
+-----------
+Load after all app.html scripts, after the existing onStuck handler is assigned.
+Only Claude or the owner should add the script include to app.html.
+
+Testing
+-------
+- Static source inspection: PASS; the existing alert/API is present in main.
+- JavaScript syntax: PASS after drafting.
+- Mock wording test: pending.
+- Real G-Warp browser test: NOT RUN.
+Required tests:
+1. Run a deliberately slow warp My Block until the current guard opens its alert.
+2. Confirm heading and Keep waiting label are exact.
+3. Confirm Stop stops the project, Keep waiting resumes, Show me scrolls to the
+   block, and Turn off warp still works.
+4. Confirm G-Warp dark styling and keyboard focus/ARIA role remain intact.
+5. Check no alert is created when a script is not stuck.
+6. Test switch-off and dispose behavior.
+
+No app.html or index.html was changed.
