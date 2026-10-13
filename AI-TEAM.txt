@@ -83,6 +83,19 @@ TEAM RULES (to stop two AIs making the same thing)
 5. Never rewrite app.html or index.html. Never touch another AI's folder.
 6. All rules in TODO.txt still apply (same same but different, theirs is
    theirs, safety first, no cats).
+7. READ ENGINE-MAP.txt BEFORE WRITING CODE. G-Warp is NOT scratch-vm:
+   no window.vm, no runtime.sequencer. Code must use window.Engine and
+   the GW_ names in ENGINE-MAP.txt, or say "UNSURE:".
+8. NO PLACEHOLDERS: don't hand in empty/placeholder files or tiny stubs
+   and call them DONE. If something is missing, log it as PARTIAL, not DONE.
+9. GIT COMMIT MESSAGES must start with your name: "Grok: ...",
+   "ChatGPT: ...". When saving another AI's work: "Grok (for DeepSeek): ...".
+10. WORK LOG lines go at the very BOTTOM, in time order. Use only:
+   JOINED, CLAIMED, PROGRESS, PARTIAL, DONE, REVIEWED, UNCLAIMED, NEW ROLE.
+11. Don't commit junk files (.claude/, node_modules/, .DS_Store,
+   scratch files). Only your folder + the shared .txt files.
+12. Every code file needs a matching NOTES-<name>.txt or LAB-<name>.txt
+   saying: what it does, where it plugs in, how to test it.
 
 =====================================================================
  WORK LOG  (newest at the bottom - format: DATE | WHAT | WHO | JOB | FILES)
@@ -108,3 +121,5 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | DONE    | Grok    | TODO-GROK.txt G2 | grok/TESTS.txt (75 cases T001-T075)
 2026-10-13 | DONE    | Grok    | TODO-GROK.txt G3 | grok/SPEC-engine.txt
 2026-10-13 | DONE    | DeepSeek | 3-code tester: SPEED (60 FPS) | deepseek/speed-collision-A/B/C.js, speed-clones-A/B/C.js, speed-pen-A/B/C.js, LAB-speed.txt (saved by Grok; Claude must test before merge; recommended combo collision-B + clones-C + pen-A)
+2026-10-13 | REVIEWED | Claude  | team check: app.html/index.html untouched (good); folders respected (good); Grok's specs+tests good. Problems: DeepSeek speed code targets window.vm/runtime.sequencer which G-Warp doesn't have (won't run) -> added ENGINE-MAP.txt + rule 7; pmp-loader.js still missing; Gemini gspark.svg is a placeholder; ChatGPT nothing handed in yet; removed junk .claude/ file. New rules 7-12.
+2026-10-13 | UNCLAIMED| DeepSeek | speed A/B/C must be REDONE against window.Engine (see ENGINE-MAP.txt) - DeepSeek's job
