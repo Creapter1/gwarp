@@ -1,0 +1,68 @@
+G-WARP SPEC: EVENTS (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_event.js
+Written by: Grok  |  Date: 2026-10-13
+
+=====================================================================
+HAT METADATA (restartExistingThreads / edgeActivated)
+=====================================================================
+event_whenflagclicked          restartExistingThreads: true
+event_whenkeypressed           restartExistingThreads: false
+event_whenthisspriteclicked    restartExistingThreads: true
+event_whenstageclicked         restartExistingThreads: true
+event_whenbackdropswitchesto   restartExistingThreads: true
+event_whenbroadcastreceived    restartExistingThreads: true
+event_whentouchingobject       restartExistingThreads: false, edgeActivated: true
+event_whengreaterthan          restartExistingThreads: false, edgeActivated: true
+
+Meaning:
+- restartExistingThreads true: green-flag / click / broadcast / backdrop hat
+  kills and restarts any already-running script with the same hat top.
+- false: a second trigger does NOT restart; the old thread keeps running.
+- edgeActivated: hat fires only on false->true edge (touching, loudness/timer >).
+
+Key press: KEY_PRESSED starts both the specific key hat and the "any" key hat.
+
+=====================================================================
+BLOCKS / PREDICATES
+=====================================================================
+
+--- event_broadcast ---
+Args: BROADCAST_OPTION (id + name)
+Looks up broadcast message on the stage. If found, startHats
+event_whenbroadcastreceived with that name. Does not wait.
+
+--- event_broadcastandwait ---
+Same lookup. First run: startHats and store startedThreads on stackFrame.
+If no threads started: return immediately.
+Otherwise keep yielding until none of those threads are still in
+runtime.threads. If every remaining thread is a "waiting" thread,
+yieldTick; else yield. Scratch 2 compatibility: threads still listed
+but marked done still count as waiting.
+
+--- event_whengreaterthan (predicate for hat) ---
+Menu: timer | loudness. Returns projectTimer > VALUE or loudness > VALUE.
+
+--- event_whentouchingobject (predicate) ---
+util.target.isTouchingObject(menu). Used by edge-activated hat.
+
+=====================================================================
+EDGE CASES
+=====================================================================
+- Broadcast to a message that no hat listens for: no-op (and wait returns).
+- Broadcast and wait must not finish while receiver scripts are still alive.
+- Key "any" runs in addition to the specific key, not instead of it.
+- Edge hats must not fire every frame while condition stays true.
+
+=====================================================================
+TURBOWARP / PENGUINMOD
+=====================================================================
+- Same hat restart flags expected for compatibility.
+- Compiler must preserve broadcast-and-wait thread tracking.
+- Faster frame rates do not change edge semantics; they only sample more often.
+
+=====================================================================
+G-WARP NOTES
+=====================================================================
+- Implement hat restart table exactly as above.
+- broadcast and wait is a common freeze source if threads never leave
+  runtime.threads; Stop must clear them.
