@@ -38,6 +38,39 @@ When the owner just says "continue" (and nothing else), it means:
   4. Don't ask the owner what to do, the files tell you. Only ask if
      something is truly unclear or would break a rule.
 
+WHEN YOUR LIST IS EMPTY: become a "3-CODE TESTER"
+If your own jobs are done (or there's nothing deeper left to research),
+don't stop. Pick a topic below, CLAIM it in the WORK LOG, and make
+3 DIFFERENT VERSIONS (A, B, C) of the same thing: code, icons or ideas.
+Try your best on each one. Claude later runs 3 agents to test them for
+real and merges the best, least buggy version into G-Warp.
+Files: <your folder>/<topic>-A, -B, -C  +  <your folder>/LAB-<topic>.txt
+TOPICS (most important first):
+  1. SPEED (MAIN GOAL): every project, no matter how heavy, must run at
+     a steady 60 FPS or more. Find what's slow (rendering, clones, pen,
+     collision "touching", lists, sounds, big costumes) and write faster
+     code for it.
+  2. Costumes / paint editor: make it work better and faster.
+  3. Music: better songs from the Song maker - more melodies, more bass,
+     better drums, sounds teens/adults like (not babyish).
+  4. UI ideas, textures, icons (G-Warp's own electric style only).
+  5. Education ideas that help kids learn to code in G-Warp.
+  6. GWrap AI knowledge (see below).
+The owner tests everything with screenshots, slowly, one by one.
+If it works and runs properly, that's what matters.
+
+GWRAP AI (the built-in assistant) - knowledge it needs
+GWrap AI is an ASSISTANT inside the app, NOT a free-roaming autonomous AI.
+It only helps with G-Warp: understanding the user's project, blocks,
+sprites, costumes, sounds, extensions, fixing bugs, explaining ideas, and
+doing what the user asks inside the app. Nothing beyond that.
+Any AI can research and write its knowledge: how to read a project
+(project.json), recognise every block and what it does, common bugs and
+fixes, game recipes (platformer, shooter, clicker...), and safe answers
+for kids. Put it in <your folder>/AI-KNOWLEDGE-<topic>.txt.
+Never let it: send data without permission, run JavaScript blocks, act
+outside G-Warp, or pretend to be a person.
+
 TEAM RULES (to stop two AIs making the same thing)
 1. CLAIM BEFORE YOU START: before working on a job, add a line to the
    WORK LOG:   CLAIMED | <your name> | <job>
