@@ -61,7 +61,7 @@ Testing status
 --------------
 - API/source review: PASS for existing restore point and restoreTo APIs.
 - JavaScript syntax: PASS after drafting.
-- Mock lifecycle/recovery tests: pending.
+- Mock lifecycle/recovery tests: PASS. Unclean marker detected and cleared; accept opened the latest restore point; cancel did not call restore; clean state did not prompt; active runtime wrote a marker and stopped runtime cleared it.
 - Browser test on a real crashed/frozen tab: NOT RUN.
 Required tests:
 1. Start project, verify small marker is created; click Stop and verify marker clears.
