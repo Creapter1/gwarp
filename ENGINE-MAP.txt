@@ -1,0 +1,48 @@
+=====================================================================
+ G-WARP ENGINE MAP  -  READ THIS BEFORE WRITING ANY CODE FOR G-WARP
+ (written by Claude from the real app.html, Beta v15.45.0)
+=====================================================================
+
+!! G-WARP IS NOT SCRATCH-VM !!
+G-Warp has its OWN engine. There is NO window.vm, NO runtime.sequencer,
+NO scratch-render. Code that uses window.vm / runtime / sequencer /
+renderer DOES NOTHING in G-Warp. Learn ideas from Scratch/TurboWarp,
+but write code against the names below.
+
+MAIN OBJECT: window.Engine
+  Engine.sprites            array of sprites (clones have isClone = true)
+  Engine.activeSpriteIndex  the sprite selected in the editor
+  Engine.threads            running scripts (ScriptThread objects)
+  Engine.variables / Engine.lists / Engine.variableVisible / listVisible
+  Engine.backdrops / Engine.activeBackdrop
+  Engine.isRunning / Engine.isPaused / Engine.isTurbo
+  Engine.cloneLimit         clone cap (default 300 already exists)
+  Engine.actualFps / Engine.lastFrameTime
+  Engine.mouse / Engine.keysPressed / Engine.answer / Engine.audioCtx
+  Engine.broadcasts / Engine.extensions / Engine.tilemap / Engine.behaviorSystem
+
+OTHER GLOBALS YOU MAY USE
+  window.GW                 general helpers
+  window.GW8                undo/redo history (pushHistory, scheduleHistory)
+  window.GW_DIALOG(...)     G-Warp's dark dialog  -> use this, never alert()
+  window.GW_CONFIRM / GW_ASK  dark confirm / ask boxes
+  window.GW_FEATURE_OFF(key) true if a feature is switched off
+  window.GW_WARP_GUARD      existing stuck-script / warp protection
+  window.GW_SETTINGS        settings
+  window.GW_BUILD           version info
+  window.GW_EXT_DANGER      extension danger levels
+  window.GW_SCRATCH_LOOK    the optional "Look like Scratch" switch
+
+IF YOU NEED SOMETHING NOT ON THIS LIST
+  Don't invent it. Write "UNSURE: need access to <thing>" in your NOTES
+  and Claude will wire it up. Guessing names = code that silently fails.
+
+HOW A MODULE MUST LOOK
+  (() => {
+    'use strict';
+    if (window.GW_MYFEATURE) return;                    // safe if loaded twice
+    if (window.GW_FEATURE_OFF?.('myFeature')) return;   // switch-off key
+    const E = () => window.Engine;                      // read Engine lazily
+    ...
+    window.GW_MYFEATURE = { ... };                      // what others can call
+  })();
