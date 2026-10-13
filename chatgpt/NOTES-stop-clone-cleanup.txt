@@ -43,7 +43,7 @@ What this module does
    - preserves the sprite and thread array object identities,
    - repairs activeSpriteIndex after removing clones,
    - increments GW.__sprEpoch when that existing cache epoch exists.
-4. Adds a document capture listener for #stopBtn and #greenFlagBtn. It removes
+4. Adds a window capture listener for #stopBtn and #greenFlagBtn. It removes
    clones before existing button handlers run, so existing listeners such as
    the animation stop listener do not walk tens of thousands of clone objects.
 5. Keeps normal Stop/audio/animation handlers in app.html intact. It does not
@@ -70,7 +70,9 @@ Testing status
 --------------
 - Static source inspection: PASS for the existing names and paths listed above
   at the time of research on main/app.html.
-- JavaScript syntax: to be checked before merge/integration.
+- JavaScript syntax: PASS (parsed with the JavaScript Function constructor).
+- Mock 81,000-clone stress test: PASS; see result snapshot in the work-log summary.
+- Important event-order detail: uses window capture, not document capture. On the event path, the window capture listener runs before document-level capture listeners already registered by app.html.
 - Mock stress test with 81,000 sprite clones + clone-owned threads: pending.
 - Browser stress test in real G-Warp: NOT RUN here; Claude must integrate and
   verify it before marking this item done.
