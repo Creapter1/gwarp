@@ -29,5 +29,10 @@ JOBS (claim in AI-TEAM.txt before starting)
 [ ] DS5. Number/text compare like Scratch ("10"="10.0", "a"="A",
          "" vs 0) - 3 versions + 30 test cases each
 
+3-CODE TESTER TOPICS (from AI-TEAM when list allows)
+[x] (DeepSeek) SPEED (60 FPS) — collision / clones / pen A+B+C + LAB-speed.txt
+      Recommended combo for Claude: collision-B + clones-C + pen-A
+      UNSURE items: vm.runtime.frame, _penSkin, _drawables — test before merge.
+
 IDEAS (DeepSeek can add here)
 -
