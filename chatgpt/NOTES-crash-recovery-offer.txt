@@ -1,0 +1,81 @@
+G-WARP CRASH RECOVERY OFFER — NOTES FOR CLAUDE
+===============================================
+
+File
+----
+- chatgpt/crash-recovery-offer.js
+
+TODO item
+---------
+NOW 1: "Crash recovery: after a freeze, offer to restore the last autosave
+(use IndexedDB, localStorage is too small for big projects)."
+
+What the app already has
+------------------------
+Current app.html already contains IndexedDB restore points:
+- The restore database is named "gwarp-restore"; it has points and assets stores.
+- Restore points are created when a project changes, normally about once a
+  minute, with the last 10 kept.
+- window.GW_RESTORE exposes list/load/point.
+- window.GW_FILES.restoreTo(id) saves a point before restoring and loads the
+  chosen point.
+- More -> File already has "Restore a previous version…".
+This draft reuses those APIs. It does not duplicate project data into localStorage.
+
+What this module adds
+---------------------
+- Uses sessionStorage only to assign a per-tab random ID.
+- Uses localStorage only for a tiny flag that says whether this tab had a
+  running project when it last updated the marker; no project title, content,
+  or personal information is written there.
+- Starts a marker while Engine.isRunning is true, removes it when the runtime
+  stops and on normal pagehide.
+- If the app loads and the previous marker remains, it treats that as a possible
+  unclean end and asks whether to restore the newest existing IndexedDB point.
+- Reuses GW_CONFIRM and GW_FILES.restoreTo; a restore point is saved before
+  restore by the existing app path.
+- Handles missing IndexedDB/API/list, no recovery points, cancellation and
+  restore errors with status/toast feedback.
+- Switch-off key:
+    window.GW_DISABLE_CHATGPT_CRASH_RECOVERY = true
+- Idempotence key:
+    window.__GW_CHATGPT_CRASH_RECOVERY_V1__
+
+Important limitations
+---------------------
+- Browser APIs don't provide a perfect universal "the page froze/crashed"
+  signal. If a browser dispatches pagehide during a forced reload, this draft
+  clears the marker and may not prompt. If localStorage/sessionStorage is
+  unavailable, it deliberately doesn't install a broken crash detector.
+- Background timer throttling and unusual lifecycle behavior can cause false
+  positives or missed detections. Claude must test target browsers and decide
+  whether/how to refine this approach.
+- The user may only have a restore point up to about a minute old, or no point
+  at all if the freeze occurred early. It must never promise zero data loss.
+- A stop-all block clears the marker on the next poll (usually within 1.5 s);
+  a hard crash during that short window could produce a harmless prompt.
+- This module must be loaded after existing app.html scripts define Engine,
+  GW_CONFIRM, GW_RESTORE, and GW_FILES.
+
+Testing status
+--------------
+- API/source review: PASS for existing restore point and restoreTo APIs.
+- JavaScript syntax: PASS after drafting.
+- Mock lifecycle/recovery tests: pending.
+- Browser test on a real crashed/frozen tab: NOT RUN.
+Required tests:
+1. Start project, verify small marker is created; click Stop and verify marker clears.
+2. Navigate/close normally; confirm marker clears and no recovery prompt appears
+   when reopening the app.
+3. Simulate an unclean previous marker; confirm the latest restore point dialog
+   appears and states the real title/time.
+4. Cancel; no project data is overwritten, and the prompt does not repeat.
+5. Accept; verify latest restore point is loaded and previous current state is
+   copied first.
+6. No restore points, IndexedDB disabled, storage blocked, or restore failure
+   must show a useful message without crashing startup.
+7. Test crash/reload behavior in Chrome/Edge/Firefox and background-tab throttling.
+8. Multiple app tabs, pagehide, BFCache/pageshow, and Stop/Start cycles.
+9. Module loaded twice and switch-off/dispose behavior.
+
+No app.html or index.html was changed.
