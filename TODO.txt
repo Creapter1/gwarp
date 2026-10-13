@@ -58,8 +58,8 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
               5–6 ms; real G-Warp browser/device test and Claude integration pending.
       [ ] Frame budget: never run scripts for more than ~250 ms without
           letting the page breathe (turbo mode too).
-          [x] (ChatGPT) drafted block-boundary warp slice -> chatgpt/frame-budget.js;
-              mock yielded/restored warp flag; browser integration pending.
+          [x] (ChatGPT) drafted retry-sentinel block-boundary yield -> chatgpt/frame-budget.js;
+              mock test passed; control-only + browser integration tests pending.
       [ ] Stuck-script box: "A script is taking too long - Stop / Keep waiting"
           in G-Warp's dark style. Idea: TurboWarp's "warp timer".
           [x] (ChatGPT) adjusted existing alert copy -> chatgpt/stuck-script-choice.js;
