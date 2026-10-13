@@ -85,8 +85,14 @@ Testing status
 
 Research references
 -------------------
-- Scratch discussion: clone limit is 300 in Scratch 3 and is shared across
-  the project: https://scratch.mit.edu/discuss/post/3746148/
-- Scratch VM repository (archived; runtime defines a clone-count limit):
+- Official Scratch Foundation education resource: says a project can create
+  at most 300 clones at a time, and explains the limit avoids lag:
+  https://resources.scratch.mit.edu/www/cards/en/advancedtopicsclones-cards.pdf
+- TurboWarp's official Infinite Clones documentation: the option disables
+  Scratch's 300-clone limit and may break projects that assume cloning will
+  stop at the limit:
+  https://docs.turbowarp.org/infinite-clones
+- Scratch VM source repository (the standalone repository is now archived
+  following the mono-repo migration):
   https://github.com/scratchfoundation/scratch-vm
 - G-Warp implementation references are in the current app.html locations above.
