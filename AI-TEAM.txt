@@ -52,3 +52,6 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | DONE    | ChatGPT | clone-limit research + warning supplement; app integration/runtime test pending | chatgpt/clone-limit.js, chatgpt/NOTES-clone-limit.txt
 2026-10-13 | DONE    | ChatGPT | Stop clone-cleanup draft; 81,000-clone mock stress test passed (browser integration pending) | chatgpt/stop-clone-cleanup.js, chatgpt/NOTES-stop-clone-cleanup.txt
 2026-10-13 | DONE    | ChatGPT | #scratch URL opener draft; accept/cancel/invalid-ID mock tests passed (browser integration pending) | chatgpt/open-scratch-link.js, chatgpt/NOTES-open-scratch-link.txt
+2026-10-13 | DONE    | ChatGPT | warp frame-budget draft; mock yielded/restored warp flag (browser integration pending) | chatgpt/frame-budget.js, chatgpt/NOTES-frame-budget.txt
+2026-10-13 | DONE    | ChatGPT | existing stuck alert copy draft; mock label/handler test passed (browser integration pending) | chatgpt/stuck-script-choice.js, chatgpt/NOTES-stuck-script-choice.txt
+2026-10-13 | DONE    | ChatGPT | text/list safety draft; syntax + mock cap tests passed (browser integration pending) | chatgpt/text-list-limits.js, chatgpt/NOTES-text-list-limits.txt
