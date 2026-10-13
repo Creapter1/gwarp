@@ -1,0 +1,130 @@
+G-WARP SPEC: MOTION (Scratch 3.0 behaviour)
+Source: scratchfoundation/scratch-vm src/blocks/scratch3_motion.js + util/cast.js + util/math-util.js
+Written by: Grok  |  Date: 2026-10-13
+Explain in own words. No large code paste.
+
+=====================================================================
+SHARED RULES USED BY MOTION
+=====================================================================
+- Cast.toNumber(v): if already number and NaN -> 0; else Number(v), NaN -> 0.
+- Stage size (official Scratch): STAGE_WIDTH=480, STAGE_HEIGHT=360. Origin (0,0) is stage centre. X right positive, Y up positive. Edges at x=+-240, y=+-180.
+- Direction: Scratch degrees. 90 = right (positive X), 0 = up, -90 or 270 = left, 180 = down. setDirection wraps into roughly (-180, 180] via the target (wrapClamp style).
+- Rotation styles: "all around", "left-right", "don't rotate". Affects drawing only; direction value still changes.
+- limitPrecision (x/y reporters): if |coord - round(coord)| < 1e-9, report the integer; else report the float. Matches Scratch 2 snapToInteger.
+- Sprites are fenced by default (cannot leave stage completely). TurboWarp can turn fencing off ("Remove Fencing").
+
+=====================================================================
+BLOCKS
+=====================================================================
+
+--- motion_movesteps ---
+Opcode: motion_movesteps
+Args: STEPS (number)
+What it does: Move the sprite STEPS steps in its current direction.
+How: steps = toNumber(STEPS). radians = degToRad(90 - direction). dx = steps*cos(radians), dy = steps*sin(radians). setXY(x+dx, y+dy).
+Edge cases:
+  - STEPS=0: no move.
+  - STEPS negative: move backward along the same heading.
+  - Non-numeric STEPS ("hello"): treated as 0.
+  - Very large STEPS: position can go far; fencing may clamp on next frame / keepInFence paths.
+TurboWarp/PenguinMod: same math. Fencing optional in TurboWarp.
+
+--- motion_gotoxy ---
+Opcode: motion_gotoxy
+Args: X, Y
+What it does: Instantly set sprite position to (X, Y).
+How: setXY(toNumber(X), toNumber(Y)).
+Edge cases: non-numbers -> 0. Stage fencing may still apply depending on runtime settings.
+TurboWarp: same; Remove Fencing lets absolute coords outside stage stick.
+
+--- motion_goto ---
+Opcode: motion_goto
+Args: TO (menu: sprite name, _mouse_, _random_)
+What it does: Go to another sprite, the mouse, or a random stage point.
+How:
+  - _mouse_: mouse Scratch X/Y.
+  - _random_: round(480*(random-0.5)), round(360*(random-0.5)) i.e. integer in about [-240,240] x [-180,180].
+  - sprite name: that sprite's x/y; if missing, no-op.
+Edge cases: unknown name -> do nothing. Going to self is fine (stays put).
+
+--- motion_turnright / motion_turnleft ---
+Opcodes: motion_turnright, motion_turnleft
+Args: DEGREES
+What it does: Add or subtract degrees from current direction.
+How: setDirection(direction +/- toNumber(DEGREES)).
+Edge cases: 360 leaves facing the same way after wrap. Non-number -> 0 change.
+
+--- motion_pointindirection ---
+Opcode: motion_pointindirection
+Args: DIRECTION
+What it does: Face exactly DIRECTION degrees.
+How: setDirection(toNumber(DIRECTION)).
+Edge cases: values outside (-180,180] are wrapped by the target.
+
+--- motion_pointtowards ---
+Opcode: motion_pointtowards
+Args: TOWARDS (_mouse_, _random_, or sprite name)
+What it does: Point toward mouse, random direction, or another sprite.
+How:
+  - _random_: setDirection(round(random*360) - 180) then return.
+  - else: dx = targetX - x, dy = targetY - y; direction = 90 - radToDeg(atan2(dy, dx)).
+Edge cases: missing sprite -> no-op. Same position as target: atan2(0,0) is implementation-defined but usually leaves a valid angle.
+
+--- motion_glidesecstoxy ---
+Opcode: motion_glidesecstoxy
+Args: SECS, X, Y
+What it does: Smoothly move to (X,Y) over SECS seconds (yielding each frame).
+How: first call stores timer, duration, startXY, endXY and yields. Later calls interpolate by elapsed/duration until done, then snap to end.
+Edge cases:
+  - SECS <= 0: jump to end immediately, no yield.
+  - SECS non-number: treated as 0 -> instant jump.
+  - Interrupted by stop: glide state is on the stack frame and is discarded with the thread.
+
+--- motion_glideto ---
+Opcode: motion_glideto
+Args: SECS, TO (same menu as goto)
+What it does: Glide to mouse / random / sprite over SECS.
+How: resolve target XY like goto, then same glide logic. If target missing, no-op.
+
+--- motion_ifonedgebounce ---
+Opcode: motion_ifonedgebounce
+Args: none
+What it does: If touching a stage edge, point away from the nearest edge and fence position.
+How: get costume bounds; distances to left/top/right/bottom (clamped at 0). Nearest edge with dist 0 is chosen. Reflect direction component (min abs 0.2) and keepInFence.
+Edge cases: not touching any edge -> no-op. Very large costumes can touch multiple edges; nearest wins.
+
+--- motion_setrotationstyle ---
+Opcode: motion_setrotationstyle
+Args: STYLE ("all around" | "left-right" | "don't rotate")
+What it does: Set how the costume is drawn relative to direction. Does not change the direction value itself.
+
+--- motion_changexby / motion_setx / motion_changeyby / motion_sety ---
+Opcodes: motion_changexby, motion_setx, motion_changeyby, motion_sety
+Args: DX or X or DY or Y
+What it does: Change/set one axis only.
+Edge cases: non-number -> 0. Fencing may apply.
+
+--- motion_xposition / motion_yposition / motion_direction ---
+Opcodes: motion_xposition, motion_yposition, motion_direction
+Type: reporters (sprite-specific monitors)
+What they report: current x (limitPrecision), y (limitPrecision), direction (raw).
+Edge cases: after many float moves, x/y may still be non-integers unless within 1e-9 of an integer.
+
+--- Legacy no-ops (Scratch 2 leftovers) ---
+motion_scroll_right, motion_scroll_up, motion_align_scene, motion_xscroll, motion_yscroll: empty functions. Keep for project load compatibility only.
+
+=====================================================================
+TURBOWARP / PENGUINMOD DIFFERENCES (motion)
+=====================================================================
+- Remove Fencing (TurboWarp): sprites may leave the stage; setXY is not forced inside fence.
+- 60 FPS mode: glide still uses real time (Timer), so duration in seconds stays correct; scripts that move N steps per frame will appear faster because more frames run per second.
+- Compiler: results of these blocks must match interpreter; motion math is not intentionally changed.
+- PenguinMod: generally follows Scratch/TurboWarp motion; check fencing and stage size options if present.
+
+=====================================================================
+IMPLEMENTATION NOTES FOR G-WARP
+=====================================================================
+- Prefer one shared toNumber / direction-wrap path for all motion blocks.
+- Glide must yield and use wall-clock time so Pause/Stop behave correctly.
+- if on edge, bounce must use costume bounds, not a fixed radius.
+- Do not invent stage sizes; keep 480x360 logical unless a documented stage-size option exists.
