@@ -124,11 +124,11 @@
     }
   }
 
-  document.addEventListener('click', onStartStopCapture, true);
+  window.addEventListener('click', onStartStopCapture, true);
 
   state.removeAllClonesFast = removeAllClonesFast;
   state.dispose = () => {
-    document.removeEventListener('click', onStartStopCapture, true);
+    window.removeEventListener('click', onStartStopCapture, true);
     if (GW.removeAllClones === removeAllClonesFast) {
       GW.removeAllClones = originalRemoveAllClones;
     }
