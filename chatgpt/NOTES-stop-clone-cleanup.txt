@@ -28,8 +28,8 @@ found:
 The main performance risk is that the Start/Stop event reaches handlers that
 walk the entire 81,000-clone list before the deferred clone cleanup runs.
 Even a single filter can allocate a large second array. This module therefore
-compacts clones out of the existing sprites array at the document capture
-phase, before target handlers and later document listeners run.
+compacts clones out of the existing sprites array at the window capture
+phase, before target/document handlers and later document listeners run.
 
 What this module does
 ---------------------
@@ -73,7 +73,6 @@ Testing status
 - JavaScript syntax: PASS (parsed with the JavaScript Function constructor).
 - Mock 81,000-clone stress test: PASS; see result snapshot in the work-log summary.
 - Important event-order detail: uses window capture, not document capture. On the event path, the window capture listener runs before document-level capture listeners already registered by app.html.
-- Mock stress test with 81,000 sprite clones + clone-owned threads: pending.
 - Browser stress test in real G-Warp: NOT RUN here; Claude must integrate and
   verify it before marking this item done.
 - Required browser tests:
