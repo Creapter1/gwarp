@@ -1,0 +1,36 @@
+G-WARP HANDOFF NOTES — Clone safety / freeze protection
+File: chatgpt/clone-safety.js
+Owner: ChatGPT
+Status: PARTIAL — committed for Claude review; not wired into app.html and not browser-tested.
+
+WHAT IT ATTEMPTS
+- Maintains a cached clone count so clone creation doesn't scan every sprite just to count clones each time.
+- Keeps Scratch's default 300-clone cap unless the existing G-Warp “Infinite clones” setting is explicitly enabled.
+- Shows a warning when the cap is hit, and confirms before switching on unlimited clones.
+- Reuses the real G-Warp globals/functions identified in ENGINE-MAP.txt: window.Engine, window.GW, GW.createClone, GW.deleteClone, GW.runHat, GW_SETTINGS, GW_CONFIRM, GW_HEALTH.
+- Removes clones in one linear pass and clears the running-thread array directly on Stop, instead of filtering tens of thousands of clone threads.
+- Caches clone-start hat stacks and invalidates them via MutationObserver.
+- Has the required module wrapper and switch-off key: GW_FEATURE_OFF('cloneSafety').
+
+INTEGRATION
+- Claude should add this as a classic <script> after the app's core engine, the existing clone helpers, GW_SETTINGS, and the current project/web loader have initialized. It must not be inserted before Engine/GW initialization.
+- Keep it separate until it passes tests. Do not paste it over app.html or replace other modules wholesale.
+- The source already has an Infinite clones option, clone-limit messaging, clone removal helpers, an anti-freeze warp guard, and IndexedDB restore history. This file supplements/overrides clone creation and Stop behavior; it does not replace those other systems.
+- The existing render loop still has its own thread-step loops. This module does NOT yet enforce the 250 ms frame budget.
+- Text/join limits and the 200,000-item list cap are NOT implemented by this file.
+- The existing restore history does NOT automatically show a recovery prompt after a browser/tab crash. Automatic crash recovery is NOT implemented here.
+
+CLAUDE MUST VERIFY BEFORE MERGING
+1. Run 300-clone test: the next clone must be rejected by default and the warning appears only once per run.
+2. Enable Infinite clones explicitly; verify clones can exceed 300 and the UI warned first.
+3. Test nested clone creation and clone-start hats: each valid clone must start the correct original sprite's clone hats.
+4. Delete one clone, delete all clones, then create more; cached count must remain correct.
+5. Trigger Stop after a stress test; every clone and thread must be gone without waiting for a task proportional to the runaway thread count. Measure Stop duration and target under 100 ms for 81,000 clones in the test environment.
+6. Test loaded SB3/TurboWarp projects with maxClones configured; verify intended setting behavior and document any parity differences.
+7. Test module loaded twice and test switch-off with localStorage key gwarp-off-cloneSafety=on.
+8. Test normal project reload, Green Flag, Pause/Stop handlers, broadcasts, sprite deletion/selection, and stage speech bubbles for regressions.
+
+KNOWN RISK TO REVIEW
+- It reimplements GW.createClone instead of wrapping it; compare every property and side effect against the current implementation in app.html before merging. In particular, source code has two historical GW.createClone implementations, while the engine's effective one is the later clone system around the v15.9 compatibility layer.
+- GW_CONFIRM is asynchronous and the clone-limit warning is requested only once until Green Flag resets the warning.
+- No claim of browser verification, complete freeze fixes, or successful 81,000-clone timing is made.
