@@ -7,6 +7,10 @@ THE TEAM
 - Owner: Creapter1 (the boss - decides what goes into G-Warp)
 - ChatGPT  | First engineer  | folder: chatgpt/ | list: TODO.txt (NOW 1-2)
 - Grok     | Researcher      | folder: grok/    | list: TODO-GROK.txt
+- DeepSeek | Researcher + code writer (no GitHub; owner pastes work to a
+             team AI using the HANDOFF block) | folder: deepseek/ | list: TODO.txt
+- Gemini   | Researcher + code writer (no GitHub yet; owner pastes work)
+             | folder: gemini/ | list: TODO.txt
 - Claude   | Cleaner / final engineer: checks everyone's work, fixes it,
              tests it, merges it into app.html and uploads it.
              Only Claude (or the owner) changes app.html, index.html.
@@ -51,3 +55,8 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | CLAIMED | Claude  | final merge of v15.46 + browser extension (after the others hand in)
 2026-10-13 | PROGRESS| Grok    | G1 Scratch specs | SPEC-motion, SPEC-operators, SPEC-variables-lists, SPEC-control, SPEC-looks, SPEC-events, SPEC-sensing (still need sound, myblocks, pen, music)
 2026-10-13 | DONE    | Grok    | G1 Scratch behaviour specs (all 11 categories) | grok/SPEC-motion.txt, SPEC-looks.txt, SPEC-sound.txt, SPEC-events.txt, SPEC-control.txt, SPEC-sensing.txt, SPEC-operators.txt, SPEC-variables-lists.txt, SPEC-myblocks.txt, SPEC-pen.txt, SPEC-music.txt
+2026-10-13 | JOINED  | DeepSeek | researcher, no GitHub (owner hands work over)
+2026-10-13 | CLAIMED | DeepSeek | TODO.txt NOW 5 (.pmp files open)
+2026-10-13 | JOINED  | Gemini   | researcher, no GitHub (owner hands work over)
+2026-10-13 | DONE    | Gemini   | first draft of the browser extension (saved by Claude; needs fixes)
+2026-10-13 | CLAIMED | Gemini   | TODO.txt NOW 3 (browser extension, fixed version)
