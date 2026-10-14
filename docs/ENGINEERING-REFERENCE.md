@@ -159,6 +159,20 @@ Useful primary sources are the [official monorepo](https://github.com/scratchfou
 
 A similar block shape is only the visible surface. For real compatibility, the block needs the correct connection behavior, stored values, runtime result, event timing, sprite effects and import/export representation. G-Warp can reuse **ideas and documented behavior** from Scratch while keeping its own code and visual identity. Do not copy Scratch art or assume a Scratch internal function is present in G-Warp.
 
+### How to study or run Scratch's own implementation
+
+Use the current [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor), rather than assuming the older standalone repositories are still the main development home. The monorepo's [package overview](https://github.com/scratchfoundation/scratch-editor) explains what each component owns.
+
+A practical source-reading route is:
+
+1. **Start with the interface** in [`packages/scratch-gui`](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui). It contains the React interface and connects editor state, project loading, the VM and the Stage. Its README includes examples of the project-loading process.
+2. **Follow a block edit** into [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks). This is the workspace and block-connection layer. Look at how a workspace event reports a change, rather than assuming the painted block alone is the saved program.
+3. **Follow that change into the VM** in [`packages/scratch-vm`](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-vm). The VM README explains that a workspace listener maintains an AST/block model per target and that the VM starts script execution. Its block example shows fields, inputs, next connection, parent, top-level state and workspace coordinates.
+4. **Follow what the audience sees** into [Scratch Render](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-render). Then inspect [Scratch Paint](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-paint) for costume editing and [Scratch Storage](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-storage) for assets. The [Scratch SVG renderer](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-svg-renderer) is important for vector artwork.
+5. **Run the right development task** from the package's current instructions. The monorepo's [AGENTS.md](https://github.com/scratchfoundation/scratch-editor/blob/develop/AGENTS.md) says packages define their own build/test scripts; for example, run the VM test suite from the repository root with `npm test --workspace=packages/scratch-vm`. Check the current package README before copying a command from an old tutorial.
+
+The official VM README explains the key dataflow: the visual workspace emits block-change events, a listener keeps the VM's AST/block representation up to date, and the VM runs scripts. This is a useful contrast with G-Warp: G-Warp's core workspace elements are DOM stacks and its runtime's live runner reads from that workspace. Similar visible behavior does not mean the data model or scheduler is the same.
+
 ## 7. If you were building the same kind of app from zero
 
 This is the order that prevents a good-looking editor from becoming a picture of an editor that cannot run projects:
