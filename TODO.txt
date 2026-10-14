@@ -5,7 +5,7 @@
 =====================================================================
 
 HOW THE TEAM WORKS
-- [ ] = not started, [~] = work handed in, waiting for Claude to test + merge, [x] = done.
+- [ ] = not started, [~] = candidate/report handed in and awaiting review, [x] = completed only to the scope stated (not automatically integrated). Check MERGE-QUEUE.txt for proposal status; owner approval is required before live integration/release.
 - See MERGE-QUEUE.txt for what's ready to merge.
 - READ AI-TEAM.txt FIRST. If the owner only says "continue", it means:
   re-read the files, keep going on your claimed job (or claim the next one).
@@ -44,8 +44,8 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 - Never rewrite or re-upload the whole app.html.
 - Keep the complete candidate in your own AI folder by default, for example chatgpt/.
 - Only if explicitly assigned to put a proposal inside app.html/index.html, add a uniquely marked inert block that cannot execute. Do not connect it to any live code path. If safe inert placement is uncertain, do not edit the app file.
-    chatgpt/clone-limit.js     (one feature per file)
-    chatgpt/NOTES-clone-limit.txt  (what it does, where it goes, how to test)
+    Example candidate files: chatgpt/clone-limit.js (one feature per file)
+  and chatgpt/NOTES-clone-limit.txt (purpose, integration point, APIs, risks, tests).
 - A candidate may be executable source in its own separate proposal file, but it must remain disconnected from the live app. Do not present an auto-running <script> module as inert code. Include a NOTES file with the real integration point, API assumptions, safety risks, and test steps.
 - Only use websites/functions that already exist in app.html. If you are
   not sure a function exists, SAY SO in the NOTES file instead of guessing.
