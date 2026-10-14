@@ -9,7 +9,7 @@ THE TEAM
 - Grok     | Scratch behavior specifications, expected-result tests and extension audit | folder: grok/ | list: team/TODO-GROK.txt
 - DeepSeek | Lab scientist: researches and proposes 3 distinct A/B/C candidates plus lab reports; no main app edits | folder: deepseek/ | list: team/TODO-DEEPSEEK.txt
 - Gemini   | Original G-Warp icons and picture concepts, usually 3 SVG options per idea | folder: gemini/ | list: team/TODO-GEMINI.txt
-- Claude Opus 5.5 | ONLY authorized AI for main app engineering, app.html/index.html changes, integration and release preparation. Must verify active model identity and follow owner approval gates.
+- Claude Opus 5.5 | ONLY AI authorized to connect/activate proposals, integrate live behavior, perform official side-by-side runtime/visual comparisons and screenshots, resolve conflicts, and prepare releases. Must verify active model identity and follow owner approval gates.
 
 START HERE: team/AI-WORK-PLAN.txt (ordered stages and roles), then TODO.txt. Also read STYLE-GUIDE.txt, MERGE-QUEUE.txt, and ENGINE-MAP.txt before code work. Contributor task lists and handoff notes are stored under team/.
 
@@ -30,13 +30,8 @@ When the owner just says "continue" (and nothing else), it means:
   4. Don't ask the owner what to do, the files tell you. Only ask if
      something is truly unclear or would break a rule.
 
-WHEN YOUR LIST IS EMPTY: become a "3-CODE TESTER"
-If your own jobs are done (or there's nothing deeper left to research),
-don't stop. Pick a topic below, CLAIM it in the WORK LOG, and make
-3 DIFFERENT VERSIONS (A, B, C) of the same thing: code, icons or ideas.
-Try your best on each one. Claude later runs 3 agents to test them for
-real and merges the best, least buggy version into G-Warp.
-Files: <your folder>/<topic>-A, -B, -C  +  <your folder>/LAB-<topic>.txt
+WHEN YOUR ASSIGNED LIST IS EMPTY
+Do not invent work or automatically start a feature. Check team/AI-WORK-PLAN.txt and team/FUTURE-IDEAS.txt, then claim the next unclaimed, in-scope task that matches your role. Make A/B/C variants only when the task explicitly requests them. Claude Opus 5.5 handles official comparison/integration after model verification and owner authorization.
 TOPICS (most important first):
   1. SPEED (MAIN GOAL): every project, no matter how heavy, must run at
      a steady 60 FPS or more. Find what's slow (rendering, clones, pen,
@@ -72,7 +67,7 @@ TEAM RULES (to stop two AIs making the same thing)
    Write: REVIEWED | <your name> | <job> | <what could be better>
 4. Only ever ADD lines at the bottom of the WORK LOG. Never delete or
    change another AI's lines.
-5. Never rewrite app.html or index.html. Never touch another AI's folder.
+5. Keep proposals in your own folder by default. If explicitly assigned to place code in app.html/index.html, add only a uniquely marked, inert, non-executing proposal block; never connect it to live behavior. If safe inert placement is uncertain, keep the full candidate in your own folder. Never touch another AI's folder.
 6. All rules in TODO.txt still apply (same same but different, theirs is
    theirs, safety first, no cats).
 7. READ ENGINE-MAP.txt BEFORE WRITING CODE. G-Warp is NOT scratch-vm:
