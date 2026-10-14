@@ -1,36 +1,41 @@
-# G-Warp Documentation Index
+# G-Warp Documentation — Start Here
 
-This is the **canonical starting point** for G-Warp's user documentation, UI evidence, and developer handoffs.
+This is the canonical index. The documentation has **two learning levels**: an easy user-facing path and a deep research path. They describe the same system from different angles.
 
-## Use the app
-- [G-Warp live app](https://creapter1.github.io/gwarp/app.html)
-- [User guide](../chatgpt/USER-GUIDE.txt) — step-by-step instructions for projects, blocks, sprites, costumes, sounds/music, saving/importing/exporting, extensions, and troubleshooting.
+## Start here: learn to use G-Warp
+1. **[Learn G-Warp](./LEARNING-GUIDE.md)** — short, beginner-friendly explanation of the editor and block-coding ideas, with a first project.
+2. **[Complete user guide](../chatgpt/USER-GUIDE.txt)** — detailed feature instructions and troubleshooting.
+3. **[UI behavior and screenshots](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — what the controls do, how menus/tabs/dragging/right-click work, and real screenshot evidence.
+4. **[Real screenshot gallery](./screens/)** — captures from the running app.
+5. **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** — test setup, results, and what is not yet tested.
 
-## Understand the interface
-- [Screenshot & UI behavior guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md) — describes what controls do and how to interact with menus, tabs, blocks, and assets.
-- [Real screenshot gallery](./screens/) — captured from the running Beta v15.45.0 app by Claude on 2026-10-13.
-- [Live UI verification report](./LIVE-UI-VERIFICATION.txt) — environment, test steps, actual outcomes, screenshots, and untested areas.
-- [Editor map schematic](../chatgpt/images/gwarp-ui-map.svg) — illustrative layout map, not a screenshot.
-- [Interaction flow schematic](../chatgpt/images/gwarp-interactions-map.svg) — illustrative workflow, not a screenshot.
+## Deep research: understand how it works
+1. **[Engineering reference](./ENGINEERING-REFERENCE.md)** — how Scratch-style editors are divided into UI, block graph, runtime, targets, rendering, audio, storage, safety, and tests; maps these ideas to G-Warp and Scratch sources.
+2. **[G-Warp engine map](../ENGINE-MAP.txt)** — actual G-Warp runtime globals, fields, hooks, costume structures, and warnings against assuming Scratch APIs.
+3. **[UI behavior audit](../chatgpt/UI-AUDIT.txt)** — numbered differences/risks compared with Scratch 3, TurboWarp, and PenguinMod.
+4. **[TODO roadmap](../TODO.txt)**, **[AI team log/rules](../AI-TEAM.txt)**, and **[merge queue](../MERGE-QUEUE.txt)** — current work and collaboration rules.
 
-## Audit and engineering
-- [UI audit](../chatgpt/UI-AUDIT.txt) — static/source findings and priorities. **Read the live report alongside it:** finding #1 about single-click category navigation was not reproduced; the live Looks click test passed.
-- [AI team rules and work log](../AI-TEAM.txt)
-- [Main task list](../TODO.txt)
-- [Engine map](../ENGINE-MAP.txt) — real G-Warp engine names and integration notes.
-- [Merge queue](../MERGE-QUEUE.txt) — status of submitted work awaiting testing/merge.
-- [Style guide](../STYLE-GUIDE.txt) — G-Warp visual and content rules.
+## Visual references
+- [Main editor schematic](../chatgpt/images/gwarp-ui-map.svg) — explanatory drawing, not a screenshot.
+- [Interaction-flow schematic](../chatgpt/images/gwarp-interactions-map.svg) — explanatory drawing, not a screenshot.
+- [Real screenshots](./screens/) — actual browser captures; see the live report for which interactions they evidence.
 
-## Evidence labels
-- **LIVE-BROWSER-VERIFIED:** actually tested in the recorded browser environment.
-- **SOURCE-VERIFIED / STATIC-ANALYSIS:** found by inspecting source; not proof of runtime behavior.
-- **NOT TESTED:** no claim about success or failure.
-- **SCHEMATIC:** explanatory diagram, not a captured UI screenshot.
+## How to read the evidence
+- **LIVE-BROWSER-VERIFIED:** a recorded interaction was actually tested in a named environment.
+- **SOURCE-VERIFIED:** directly found in a specific source revision.
+- **STATIC-ANALYSIS:** source suggests a behavior/risk but it was not reproduced.
+- **NOT TESTED:** no result is claimed.
+- **SCHEMATIC:** explanatory diagram, not a real app capture.
 
-## Latest live test snapshot
-- App: Beta v15.45.0
-- Browser: Chromium via Playwright (headless)
-- Viewports: 1440×900 and 1024×700
-- Ten interaction/layout checks passed.
-- Still not tested: nested C-block/long-stack dragging, Ctrl+S/Ctrl+O, SB3 import/export round-trip, Pause/audio, Stage click routing, individual paint tools, advanced tool dialogs, Firefox/Safari.
-- Full detail: [LIVE-UI-VERIFICATION.txt](./LIVE-UI-VERIFICATION.txt).
+## Scratch primary references
+- [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor)
+- [Scratch GUI package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui)
+- [Scratch VM package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-vm)
+- [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks)
+- [Scratch Render](https://github.com/scratchfoundation/scratch-render)
+- [Scratch Audio](https://github.com/scratchfoundation/scratch-audio)
+- [Scratch Storage](https://github.com/scratchfoundation/scratch-storage)
+- [Scratch Paint](https://github.com/scratchfoundation/scratch-paint)
+- [Scratch Specification (work in progress)](https://scratchspec.github.io/)
+
+**Important:** G-Warp is a custom engine, not Scratch VM. The two systems aim for similar user-facing behavior, but internal APIs, feature coverage, and edge cases must be verified separately.
