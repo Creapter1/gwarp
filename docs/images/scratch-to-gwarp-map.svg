@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="470" viewBox="0 0 1120 470" role="img" aria-labelledby="title desc">
+<title id="title">Scratch implementation mapped to G-Warp</title>
+<desc id="desc">Scratch uses several packages: GUI, Scratch Blocks, VM, renderer, paint, audio and storage. G-Warp combines equivalents in one HTML file through custom DOM blocks, Engine and ScriptThread, 2D canvas rendering, built-in costume and sound tools, and its own SB3 importer/exporter.</desc>
+<defs>
+ <style>
+ .bg{fill:#0b1020}.panel{fill:#111c2e;stroke:#334155;stroke-width:1.4}.scratch{fill:#142940;stroke:#60a5fa;stroke-width:1.8}.gw{fill:#132b27;stroke:#4ade80;stroke-width:1.8}
+ .head{fill:#f8fafc;font:700 21px Arial,sans-serif}.label{fill:#e2e8f0;font:600 15px Arial,sans-serif}.small{fill:#cbd5e1;font:13px Arial,sans-serif}.tiny{fill:#94a3b8;font:12px Arial,sans-serif}
+ .arrow{stroke:#64748b;stroke-width:1.7;fill:none;stroke-linecap:round}
+ </style>
+</defs>
+<rect class="bg" width="1120" height="470" rx="18"/>
+<text class="head" x="30" y="36">The same jobs exist in both editors, but the code is organized differently</text>
+<text class="small" x="30" y="61">Scratch's current source is organized as packages in scratchfoundation/scratch-editor. G-Warp packages the app into app.html.</text>
+
+<text class="label" x="42" y="101" fill="#93c5fd">SCRATCH 3 · MULTI-PACKAGE</text>
+<rect class="scratch" x="34" y="119" width="318" height="56" rx="9"/>
+<text class="label" x="193" y="142" text-anchor="middle">scratch-gui</text><text class="small" x="193" y="161" text-anchor="middle">React editor UI and connections</text>
+<rect class="scratch" x="34" y="187" width="318" height="56" rx="9"/>
+<text class="label" x="193" y="210" text-anchor="middle">scratch-blocks</text><text class="small" x="193" y="229" text-anchor="middle">Block shapes, fields and connections</text>
+<rect class="scratch" x="34" y="255" width="318" height="56" rx="9"/>
+<text class="label" x="193" y="278" text-anchor="middle">scratch-vm</text><text class="small" x="193" y="297" text-anchor="middle">Project state and script execution</text>
+<rect class="scratch" x="34" y="323" width="318" height="56" rx="9"/>
+<text class="label" x="193" y="346" text-anchor="middle">scratch-render + paint + audio + storage</text><text class="small" x="193" y="365" text-anchor="middle">Stage, costume editing, sound and assets</text>
+
+<text class="label" x="432" y="101" fill="#86efac">G-WARP · ONE HTML APP</text>
+<rect class="gw" x="420" y="119" width="665" height="56" rx="9"/>
+<text class="label" x="752" y="142" text-anchor="middle">Visible editor and DOM block workspace</text>
+<text class="small" x="752" y="161" text-anchor="middle">HTML / CSS / .scratch-block / .block-stack / palette and tools</text>
+<rect class="gw" x="420" y="187" width="322" height="56" rx="9"/>
+<text class="label" x="581" y="210" text-anchor="middle">Engine + ScriptThread</text>
+<text class="small" x="581" y="229" text-anchor="middle">State, events, waits, loops and clones</text>
+<rect class="gw" x="763" y="187" width="322" height="56" rx="9"/>
+<text class="label" x="924" y="210" text-anchor="middle">Custom Stage renderer</text>
+<text class="small" x="924" y="229" text-anchor="middle">Canvas 2D, logical 480 × 360 coordinates</text>
+<rect class="gw" x="420" y="255" width="322" height="56" rx="9"/>
+<text class="label" x="581" y="278" text-anchor="middle">Costumes + Sound Lab</text>
+<text class="small" x="581" y="297" text-anchor="middle">Vector SVG / bitmap canvas / Web Audio</text>
+<rect class="gw" x="763" y="255" width="322" height="56" rx="9"/>
+<text class="label" x="924" y="278" text-anchor="middle">SB3 / PMP / extension bridge</text>
+<text class="small" x="924" y="297" text-anchor="middle">Import/export and compatibility adapters</text>
+<rect class="gw" x="420" y="323" width="665" height="56" rx="9"/>
+<text class="label" x="752" y="346" text-anchor="middle">Later inline script modules</text>
+<text class="small" x="752" y="365" text-anchor="middle">Tilemap, Behaviors, LAN, Music Maker, menus, libraries and fixes</text>
+
+<path class="arrow" d="M193 175 V187 M193 243 V255 M193 311 V323"/>
+<path class="arrow" d="M752 175 V187 M581 243 V255 M924 243 V255 M581 311 V323 M924 311 V323"/>
+
+<rect class="panel" x="34" y="403" width="1051" height="42" rx="9"/>
+<text class="small" x="52" y="429">The mapping is conceptual, not one-to-one source reuse: G-Warp recreates similar jobs with its own code. Scratch's internal APIs cannot be assumed to exist in G-Warp.</text>
+</svg>
