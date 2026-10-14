@@ -54,8 +54,8 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 
 ## How it's built (the team)
 - **Owner (Creapter1):** decides everything, tests every update with screenshots.
-- **ChatGPT:** first engineer + UI research. **Grok:** Scratch behaviour specs + tests. **DeepSeek:** lab scientist (3 versions of every fix). **Gemini:** icons and pictures.
-- **Claude:** checks everyone's work, fixes it, tests it, merges it into `app.html` and puts it on the website.
+- **ChatGPT:** planning, research review, test design and evidence reconciliation. **Grok:** Scratch behavior specs/tests and extension audit. **DeepSeek:** isolated A/B/C proposals and lab reports. **Gemini:** original G-Warp visual assets.
+- **Claude Opus 5.5:** the only AI authorized for main app engineering and `app.html`/`index.html` changes, subject to active-model verification and owner approval.
 - Every AI follows `AI-TEAM.txt`. Typing **continue** to any AI means "re-read the files and keep going".
 
 ## Roadmap
