@@ -1,0 +1,31 @@
+=====================================================================
+ G-WARP TO-DO LIST FOR GROK
+ First read ../AI-TEAM.txt, ../TODO.txt, ../team/AI-WORK-PLAN.txt and this task list.
+ Put research and tests in grok/ only. Check for active claims before starting.
+=====================================================================
+
+YOUR JOBS (in this order)
+[x] (Grok) G1. SCRATCH BEHAVIOUR SPEC — DONE 2026-10-13
+[x] (Grok) G2. TEST LIST — DONE 2026-10-13 — grok/TESTS.txt (75 cases)
+[x] (Grok) G3. ENGINE RULES — DONE 2026-10-13 — grok/SPEC-engine.txt
+[x] (Grok) G4. FILE FORMATS — DONE 2026-10-13
+      grok/SPEC-files.txt — .sb3 ZIP+project.json schema, TurboWarp extras,
+      PenguinMod .pmp ZIP vs protobuf, detection cheat sheet, safety rules.
+[ ] G5. EXTENSION LIST CHECK: open app.html, find the TurboWarp and
+      PenguinMod extension gallery lists, and write grok/EXTENSIONS-check.txt
+      with any extension whose link looks wrong, old, or that reads personal
+      data (IP, location, logins) but is NOT marked Dangerous.
+
+WHEN YOU FINISH ONE
+- Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
+- If you can't upload files, give each file in its own code block with the
+  file name above it, and the owner will upload it.
+
+IDEAS (Grok can add here)
+- After G1 completes, generate TESTS.txt cases directly from the SPEC edge-case
+  sections (especially mod negatives, list index 0, clone 300, floored mod).
+- Document TurboWarp "Remove Fencing" and "Infinite Clones" as explicit G-Warp
+  settings with warnings, matching TODO.txt freeze-fix goals.
+- Pen hue wrapClamp period is 101 in Scratch 3 (not 100); tests must expect that.
+- T002 (round -2.5) should be verified once on live Scratch 3 UI; note in SPEC if
+  JS Math.round differs from VM Cast path.
