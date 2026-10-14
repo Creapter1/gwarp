@@ -1,0 +1,173 @@
+G-WARP MASTER AI WORK PLAN
+Version 1.0 | 2026-10-14
+Repository: https://github.com/Creapter1/gwarp
+Owner: Creapter1
+Status: Planning baseline. This file does not authorize app code changes.
+
+PURPOSE
+Give every AI a bounded role, ordered tasks, evidence requirements, acceptance criteria, and handoff gates. Prevent blind coding, duplicate research, guessed APIs, conflicting patches, repeated whole-app audits, and premature merging. The owner decides priorities and approves anything shipped.
+
+AUTHORITY — NON-NEGOTIABLE
+1. Creapter1 is product owner and final release approver.
+2. Claude Opus 5.5 is the ONLY AI authorized for main application engineering: modifying app.html/index.html, adapting proposals into the app, final integration, and release preparation. Before doing that work, confirm the displayed active model in the actual Claude interface is exactly “Claude Opus 5.5.” If unclear or different, stop and ask the owner. Never silently substitute another model.
+3. Other AIs may research, review, inspect the existing app, test, create specifications, test matrices, bug reports, design options, and candidate code in their own folders. They must not edit app.html/index.html or another AI's folder.
+4. Other AI code is a proposal, not an approved fix. Claude Opus 5.5 validates the real APIs, adapts/tests it, and the owner approves integration.
+5. This plan does not prove app.html/index.html are intact. The large app source was not fully verified in this planning pass.
+6. Never claim a browser test, successful merge, backup, rollback, or fix unless it actually happened and evidence is recorded.
+7. Preserve G-Warp; do not rebuild Scratch or make a replacement app. Do not remove existing features (“add, don't swap”). Follow STYLE-GUIDE, privacy, safety, and licensing requirements.
+8. Never run arbitrary JavaScript blocks or silently transmit project/personal data. Sensitive extension behavior must be correctly marked and warned.
+9. Before code work, read AI-TEAM.txt, TODO.txt, STYLE-GUIDE.txt, ENGINE-MAP.txt, MERGE-QUEUE.txt, this plan, and the relevant notes. G-Warp is not scratch-vm. Verify real hooks and mark unknown APIs UNSURE rather than guessing.
+10. Claim a task before work; one owner per task. Inspect existing outputs first. Don't repeat finished research unless assigned a specific gap review.
+
+SOURCE-OF-TRUTH ORDER
+A. Owner's latest explicit instruction.
+B. This plan for roles/stages.
+C. TODO.txt for product priorities and requirements.
+D. AI-TEAM.txt for governance and work-log rules.
+E. ENGINE-MAP.txt for real hooks, verified against current source before integration.
+F. MERGE-QUEUE.txt for candidate status.
+G. Individual reports and proposals.
+A file's existence or a “PICK” label does not prove integration or runtime correctness.
+
+CURRENT INVENTORY — PRESERVE AND RECONCILE
+- Main application: app.html (README describes about 2.3 MB); website: index.html. Current documented beta: v15.45.0.
+- Shared rules: TODO.txt, AI-TEAM.txt, ENGINE-MAP.txt, STYLE-GUIDE.txt, MERGE-QUEUE.txt.
+- ChatGPT: UI-AUDIT.txt, clone-safety.js and notes, scratch-link.js and notes, user guide, screenshot/UI documentation, implementation/documentation maps. Some work is research/proposal; don't assume integration.
+- Grok: 11 Scratch behavior specifications, SPEC-engine.txt, SPEC-files.txt, and TESTS.txt with 75 cases. G5 extension gallery audit remains open.
+- DeepSeek: A/B/C costume editor proposals + checklist/lab report; collision/clone performance proposals + lab report; protobuf .pmp loader proposal. Prior variants guessed invalid APIs; later reviews corrected some hooks and marked clone approaches superseded. Read latest lab notes and queue before reuse.
+- Gemini: browser extension files. Work log says G-Spark icon is a placeholder and real-site testing remains. Icon/art task list is open.
+- docs/LIVE-UI-VERIFICATION.txt reports 10 passing live tests and 11 screenshots for its specific scope only; do not generalize to untested features.
+- Prior handoff records a user-reported wrong-model incident. The actual model identity and app integrity were not independently established by that report.
+- The previous GitHub reader returned no app.html body in one large-file fetch. That is a limitation, not proof of damage or health.
+
+MASTER STAGES (in order)
+
+STAGE 0 — READ-ONLY INVENTORY
+Coordinator: ChatGPT for planning; Claude Opus 5.5 later confirms before engineering.
+0.1 Read root rules, this plan, and current TODO/MERGE QUEUE.
+0.2 Inventory each AI folder. Classify each artifact: SPEC, TEST, CANDIDATE CODE, DESIGN ASSET, NOTES, VERIFIED REPORT, or SUPERSEDED.
+0.3 Reconcile TODO statuses against MERGE-QUEUE and actual files. Existing output is not proof of completion.
+0.4 Record current app.html/index.html blob IDs and latest commit. If source can't be fetched, use reliable GitHub metadata/history or another available read-only route; document limitation.
+0.5 Produce a concise inventory and gap list. No speculative fixes.
+
+STAGE 1 — BASELINE / INCIDENT REVIEW (READ-ONLY)
+Owner of final diagnosis: Claude Opus 5.5, only after model verification.
+1. Verify active model identity in Claude UI. If not exactly Claude Opus 5.5, STOP.
+2. Record default/current branch, latest commit, app.html/index.html blob IDs, recent commits and open PR/diff context.
+3. Identify a known-good owner-approved baseline. If unclear, ask the owner; don't guess.
+4. Read relevant current source and diffs. Check whether ENGINE-MAP remains accurate.
+5. Label findings SOURCE-VERIFIED, STATIC-ANALYSIS, BROWSER-VERIFIED, or NOT-TESTED.
+6. Write team/INCIDENT-BASELINE.txt with exact commits, files inspected, limitations, evidence and next bounded action.
+7. Do not repair during this stage. Wait for owner approval.
+Acceptance: owner can tell what was actually inspected, what changed, what remains unknown, and which baseline is trusted.
+
+STAGE 2 — FREEZE / SAFETY / RECOVERY (highest product risk)
+Lead: Claude Opus 5.5. Support: ChatGPT test plan; DeepSeek A/B/C proposals; Grok edge-case tests.
+Requirements from TODO: 300 clone cap, optional warned infinite-clones setting, fast Stop/clone cleanup, frame budget/yielding including turbo mode, stuck-script prompt (Stop/Keep waiting), text/join limit, list limit, crash recovery/autosave using IndexedDB for large projects.
+2.1 Reproduce the reported 81,000-clone freeze and 45-second Stop symptom; until reproduced these are reported symptoms, not independently verified.
+2.2 Measure baseline clone count, time-to-freeze, Stop latency, FPS, UI responsiveness and recovery.
+2.3 Check existing Engine.cloneLimit (ENGINE-MAP says default 300 exists) before proposing a second limiter.
+2.4 Review chatgpt/clone-safety.js + notes and current DeepSeek lab files; mark superseded approaches explicitly.
+2.5 Test clone boundaries 299/300/301, rapid clone creation, Stop during load, turbo mode, broadcasts, empty scripts, large text/list values, crash and stale/corrupt autosave.
+2.6 Regression-test ordinary scripts, clones, broadcasts, stage input, save/load and extensions.
+Acceptance: no reproduced runaway clone freeze; Stop latency is measured against target <100 ms for a named test (report actual result, never claim target without evidence); page stays responsive; user-facing warnings are clear; autosave is explicit and safe; regression results recorded.
+Gate: Claude submits evidence and minimal fix; owner approves integration/release.
+
+STAGE 3 — CORE UI / COSTUME EDITOR
+Lead: Claude Opus 5.5. Support: ChatGPT test matrix and evidence reconciliation; DeepSeek A/B/C + 40-point checklist; Grok expected behavior as needed.
+Scope: select/move/reshape, fill, text, eraser, layers, undo/redo, bitmap/vector conversion, rotation center, costume list. Function parity, not Scratch visual imitation.
+3.1 Reconcile UI-AUDIT with docs/LIVE-UI-VERIFICATION. The work log says one alleged category-click issue worked live; don't re-fix without new evidence.
+3.2 Verify real hooks in current source: GW_V15_COSTUME_EDITOR, GW_VECTOR_EDITOR, state fields costumeMode, selectedSvg, bitmapTool, svgTool, svgDrag, selectionRect. Do not use guessed state.mode/fillColor/eraserSize/font.
+3.3 Compare DeepSeek candidates select-C, fill-C, text-B, eraser-C, undo-C with alternatives and LAB-costumes.txt. Candidates are not integrated fixes.
+3.4 Test vector and bitmap, zoom/pan, coordinate mapping, selection handles, empty canvas, multiple objects, undo/redo per operation, rotation center persistence, resizing, sprite/costume switching, save/reopen.
+Acceptance: each tool affects the right object and coordinate space; undo restores expected state; no silent asset loss; no unrelated redesign.
+Gate: exact workflow tests and regression evidence before owner approval.
+
+STAGE 4 — PROJECT FILES / COMPATIBILITY / LINKS
+Lead: Claude Opus 5.5. Support: Grok format specs, DeepSeek protobuf .pmp proposal, ChatGPT scratch-link proposal, owner-provided fixtures.
+A. “Open in G-Warp” Scratch link: review chatgpt/scratch-link.js and notes; test valid/invalid IDs, prompt/cancel, network failures, project load, no unexpected network access before consent.
+B. .pmp: current map says .sb3 and ZIP-type .pmp already open; newer protobuf .pmp is the gap. Do not replace working ZIP support. Review deepseek/pmp-loader.js and harness; test real fixtures, malformed/oversized input, useful errors and load-save-reload.
+C. Serialization: use grok/SPEC-files.txt and relevant tests; test fidelity, unsupported data and round-trip. Never promise complete parity without evidence.
+Acceptance: no regression to .sb3/JSON/ZIP .pmp; intentional user action controls loading; malformed files fail safely.
+Gate: fixture-based report + owner approval.
+
+STAGE 5 — SCRATCH BEHAVIOR TEST SYSTEM
+Lead: Grok for expected behavior/specs; Claude Opus 5.5 for app changes; ChatGPT reconciles coverage without duplicating Grok.
+Existing: grok/SPEC-*.txt, SPEC-engine.txt, SPEC-files.txt, TESTS.txt (75 cases).
+Focus: motion/looks/sound/events/control/sensing/operators/variables-lists/myblocks/pen/music; negative modulo, numeric/text comparison, rounding, list indexes, clone caps, hat restarts, broadcast order, pen hue wrap, procedures, save/load.
+5.1 Tag expectations as sourced/verified or inferred.
+5.2 Turn cases into small project fixtures/automated runner where practical; a written test list is not an automated suite.
+5.3 Record setup, action, expected output, actual output, pass/fail, browser/version/date and evidence.
+5.4 Verify disputed semantics against Scratch 3 directly where possible.
+5.5 Link failures to minimal reproducible projects and a single behavior.
+Acceptance: no silent skips; no changing expected output just to pass; browser-only checks distinguished.
+Gate: coverage report to Claude and owner.
+
+STAGE 6 — EXTENSION RELIABILITY / SECURITY
+Lead: Grok audit; Claude Opus 5.5 integration/fixes; Gemini original assets.
+6.1 Complete Grok G5: inspect actual gallery entries in app.html for broken/outdated links and personal-data access.
+6.2 Test extension loading on published GitHub Pages, not just static/local files; record browser/date/steps/console errors.
+6.3 Verify Dangerous warnings for IP/location/logins/sensitive access, consent and no silent transmission.
+6.4 Review Gemini extension packaging, permissions, placeholder icon, and actual G-Spark art.
+6.5 Verify extension credits/licenses, failure isolation and project compatibility.
+Acceptance: each link/load claim has evidence; danger labels match behavior; privacy boundaries documented; untested items remain explicitly unverified.
+Gate: security report first; owner approves relevant changes.
+
+STAGE 7 — ORIGINAL VISUAL ASSETS
+Lead: Gemini; owner chooses; Claude Opus 5.5 integrates selected assets.
+Order: GM1 extension icon; GM2 favicon; GM3 nine block category icons; GM4 achievement badges; GM5 four G-Spark poses; GM6 website hero art.
+Rules: three genuinely distinct SVG options per concept; viewBox; no scripts/external links/fonts/images; under 4 KB per icon; legible at 16/24 px and 128 px; dark electric palette; no third-party characters/art. No asset is integrated before owner selection.
+Acceptance: source SVG + target-size notes/previews; selection recorded; optimized asset and integration tests.
+
+STAGE 8 — LATER BACKLOG (do not jump ahead without owner reprioritization)
+- GWrap AI: in-app helper only, scoped to G-Warp projects/blocks/debugging/game recipes. No autonomous actions outside the app, impersonation, running JS blocks, or silent data transfer. BYO API key requires clear consent and child-safety handling.
+- 60 FPS goal: define repeatable benchmark sizes/devices/browsers before claiming it.
+- Song maker: original teen/adult-friendly sounds; accessible controls; no copyrighted songs/game music.
+- Power lines, developer mode, report-a-bug, showcase media, domain: backlog only until owner reprioritizes.
+
+ROLE CARDS
+
+CLAUDE OPUS 5.5 — MAIN ENGINEER / INTEGRATION OWNER
+May read all files, reproduce defects, author minimal fixes, adapt candidate code, run tests, edit app.html/index.html after model verification and explicit owner authorization, integrate selected assets, prepare releases.
+Must not broad-rewrite, redesign without request, blindly merge A/B/C, trust summaries over source, claim tests not run, or release without owner approval.
+Every handoff: decision log, commit/blob IDs, evidence class, tests/results, risks, rollback route, owner approval status.
+
+CHATGPT — PLANNER / RESEARCH REVIEWER / TEST DESIGNER
+May read all model folders and docs; maintain this plan/shared navigation; identify duplicates/conflicts/missing evidence; write bounded research, test matrices, acceptance criteria and isolated proposals when assigned. Never edit app.html/index.html or another AI's folder.
+Next: reconcile statuses/cross-references; compare UI audit against live verification; prepare a freeze acceptance matrix; keep summaries concise and source-linked. Don't produce another broad generic research library.
+
+GROK — BEHAVIOR SPECS / TESTS / EXTENSION AUDIT
+Own grok/ and its task list. Complete G5 gallery security/link audit; maintain 75+ expected-result tests; verify disputed Scratch semantics with references; distinguish written cases from automated tests.
+Do not edit app files, duplicate finished specs, or claim an extension works because a link exists.
+
+DEEPSEEK — LAB / A-B-C PROPOSALS
+Own deepseek/. Research and write 3 meaningfully different candidates + lab reports/tests. Never edit app files or other folders.
+Priority: DS2 freeze/Stop proposals; DS3 stuck-script behavior; DS4 IndexedDB crash recovery; DS5 Scratch number/text comparisons (30 test cases per version). For DS1 protobuf .pmp, first review the existing loader/notes and fill only a documented gap.
+Mark guessed APIs UNSURE; include failure modes, complexity, safety, console tests and why a variant wins. Candidate code is not a fix until integrated and tested.
+
+GEMINI — ORIGINAL ASSET DESIGNER
+Own gemini/. Create original SVG options. Priority: three real G-Spark extension-icon concepts; favicon; block category icons; achievement badges; poses; hero art. No integration claims. Under 4 KB per SVG option; no external assets/scripts; provide target-size notes; wait for owner selection.
+
+OWNER — PRODUCT DECISIONS / RELEASE GATE
+Sets priorities, names a known-good baseline when needed, chooses designs, approves integration/releases and tests the website. AI recommendations do not override owner decisions.
+
+CLAIM / HANDOFF FORMAT
+Append work-log lines only: CLAIMED | <AI> | <exact task>; PROGRESS | <AI> | <task> | <evidence/file>; PARTIAL | <AI> | <task> | <blocker>; DONE | <AI> | <task> | <deliverables>; REVIEWED | <AI> | <task> | <findings>.
+Every code proposal needs NOTES/LAB: purpose, integration point, APIs used, assumptions, test steps, failure modes.
+Bug report fields: ID; area/user impact; reproduction; expected/actual; evidence class; exact file/section/commit; root cause proven/likely/unknown; smallest proposed fix; tests/results; risks; rollback; owner decision.
+
+ANTI-CHAOS RULES
+- One named owner per task; others review, not duplicate implementation.
+- Do not repeat a full-app audit after every small change. Review the last report and changed files/dependencies; schedule another full audit only after meaningful baseline/release change.
+- No code without a stated bug/requirement; no “done” without tests.
+- Report failures honestly; never hide them or weaken tests silently.
+- Preserve old candidate files; mark superseded in MERGE-QUEUE instead of deleting history.
+- team/ is organizational only. This repository is public; moving files into a folder does NOT make them private.
+
+FIRST QUEUE AFTER OWNER ACCEPTS THIS PLAN
+1. Claude Opus 5.5: read-only baseline/integrity review after model verification; do not repair in that pass.
+2. Grok: finish G5 extension audit, no app edits.
+3. ChatGPT: reconcile status/cross-references and create freeze acceptance-test matrix without duplicating existing reports.
+4. DeepSeek: inspect current protobuf loader; then claim one A/B/C task, starting with DS2 or DS3.
+5. Gemini: create GM1 extension icon A/B/C options; do not overwrite or integrate without owner selection.
+6. Owner reviews baseline and priorities before integration begins.
