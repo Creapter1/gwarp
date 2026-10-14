@@ -4,7 +4,7 @@ Audit date: 2026-10-13
 Auditor: ChatGPT
 G-Warp target source: app.html, Beta v15.45.0
 Source SHA inspected: 7ce527ca2908c63bbdfe642856ca29fd82178648
-Status: STATIC SOURCE AUDIT COMPLETE; NOT BROWSER-VERIFIED
+Status: STATIC SOURCE AUDIT + LIMITED LIVE BROWSER VERIFICATION (see ../docs/LIVE-UI-VERIFICATION.txt). Most findings remain source-level until individually tested.
 
 SCOPE AND RULES
 This audit compares behavior (click, select, drag, drop, right-click, keyboard, tabs, and editor actions), not appearance. It covers primary editor interactions and major controls in the actual app.html source. It does not claim that every extension modal has been exhaustively interaction-tested. G-Warp-specific extras are not defects merely because Scratch lacks them; an item is marked as a bug/difference when it changes a standard editor operation or misleads the user.
@@ -26,15 +26,13 @@ NUMBERED FINDINGS
 
 CATEGORY RAIL AND PALETTE
 
-1. HIGH — One click on a category does not select/navigate to that category.
-   G-Warp source: the early .cat-btn handler uses double-click for filtering. The later single-click handler only clears an active filter when the clicked category is currently hidden and focuses the GWrap input for GWrap AI. A normal click on Motion/Looks/Sound/etc. otherwise does not select the section or scroll it into view.
-   Expected: clicking a Scratch/PenguinMod category opens that category's blocks; the category rail is navigation, not a double-click-only filter.
-   Fix: on a single click, apply active styling and scroll the matching palette section into view (or use a selected-category palette); preserve the existing filter as an extra option rather than the only working navigation.
+1. NOT CONFIRMED LIVE — Single-click category navigation appeared broken in the static source reading.
+   LIVE-BROWSER-VERIFIED (Claude, 2026-10-13, Chromium 1440×900): clicking “Looks” once scrolled the palette from 0 px to the Looks blocks at 943 px. See ../docs/LIVE-UI-VERIFICATION.txt, test T1, screenshot ../docs/screens/02-category-click-looks.png. Do not treat this as a confirmed bug unless another category or state produces a reproducible failure.
+   Follow-up: test all categories, filtered state, and narrow viewport before fully closing the broader category-navigation question.
 
-2. MEDIUM — Category filtering requires double-click and shows all categories by default.
-   G-Warp source: double-click on .cat-btn invokes GW_V1571_FILTER; the single-click path does not filter to the requested category.
-   Expected: one click should make the requested category immediately usable as in Scratch. Double-click-only discovery is inconsistent and difficult for younger users.
-   Fix: single-click category selection; keep the Show All control to undo filtering. Do not remove existing categories or extensions.
+2. PARTIALLY OPEN — Category filtering uses a double-click path in source, but basic single-click navigation passed live.
+   The double-click filter behavior is source-observed; no live test yet established whether it conflicts with or improves category navigation. Do not call single-click navigation broken based on the current evidence.
+   Follow-up: explicitly test single-click and double-click on several categories, then document the intended distinction.
 
 3. MEDIUM — G-Warp's special categories and palette aren't organized like the standard toolbox workflow.
    G-Warp puts its GWrap AI item on the rail and has a combined long palette with filter behavior, while Scratch separates ordinary categories, Variables/My Blocks, and Add Extension interactions. PenguinMod places extension access at the bottom of the toolbox.
