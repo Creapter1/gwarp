@@ -10,7 +10,7 @@ This handoff authorizes reading, inventory, research, testing, and reporting. It
 
 1. OWNER'S AUTHORITY
 The owner reports that a Claude-powered session used a model other than the specifically authorized Claude Opus 5.5 and that the session caused a mess. This is owner-reported, not independently verified by this document.
-All AIs may research, inspect/use the existing app, test, write code fixes, and prepare candidates. Any AI may add code inside app.html only as an explicitly marked, inert, non-executing proposal block when assigned. They must not connect/activate the proposal, attach it to live runtime paths, change live boot/event/hook/function behavior, or disturb current app behavior.
+All AIs may research, inspect/use the existing app, test, write code fixes, and prepare candidates. Any AI may add code inside app.html/index.html only when explicitly assigned, and only as a uniquely marked, inert, non-executing proposal block. They must not connect/activate the proposal, attach it to live runtime paths, change live boot/event/hook/function behavior, or disturb current app behavior.
 Claude Opus 5.5 is the ONLY AI authorized to connect/integrate proposal code into the live application flow, perform the official side-by-side runtime/visual comparison, capture integration screenshots/evidence, resolve competing proposals, and prepare releases. Before that work, verify the active model label in the actual Claude interface is exactly “Claude Opus 5.5.” If it is missing, ambiguous, or different, STOP and ask the owner. The owner retains final approval.
 
 2. IMMEDIATE DO-NOT LIST
@@ -22,9 +22,7 @@ Claude Opus 5.5 is the ONLY AI authorized to connect/integrate proposal code int
 - Do not guess APIs or import Scratch VM assumptions such as window.vm/runtime.sequencer. Read ENGINE-MAP.txt and verify against current source.
 - Do not merge candidate code merely because it looks plausible or came from another AI.
 - Do not edit another AI's folder. Use your own authorized work area or a separately assigned report file.
-- Do not leave proposal code executing. If safe inert placement in app.html cannot be guaranteed, keep the full candidate in your own folder and put only a pointer in app.html.
-- Out-of-scope ideas go to team/FUTURE-IDEAS.txt with WAITING FOR OWNER status; do not implement them until Creapter1 explicitly approves.
-- Do not leave proposal code executing. If safe inert placement in app.html cannot be guaranteed, keep the complete candidate in your own folder and put only a short pointer in app.html.
+- Do not leave proposal code executing. If safe inert placement in app.html/index.html cannot be guaranteed, keep the complete candidate in your own folder and do not modify the app file.
 - Out-of-scope ideas go to team/FUTURE-IDEAS.txt with WAITING FOR OWNER status; do not implement them until Creapter1 explicitly approves.
 - Do not claim a backup, rollback, browser test, or verification unless performed and recorded.
 - Do not run JavaScript blocks or silently send personal/project data.
