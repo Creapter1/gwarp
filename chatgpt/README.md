@@ -1,10 +1,22 @@
-# G-Warp Documentation Index
+# G-Warp — ChatGPT Work Folder
 
-- **[User guide](./USER-GUIDE.txt)** — first project, scripts, Stage, sprites, costumes, sounds, project files, extensions, troubleshooting.
-- **[Screenshot and UI behavior documentation](./SCREENSHOT-UI-DOCUMENTATION.md)** — schematic maps, interaction explanations, context-menu reference, screenshot capture checklist.
-- **[UI map diagram](./images/gwarp-ui-map.svg)** — schematic of the main editor areas.
-- **[Interaction map diagram](./images/gwarp-interactions-map.svg)** — common workflow schematic.
-- **[UI behavior audit](./UI-AUDIT.txt)** — prioritized findings and browser test plan.
-- **[Application source](../app.html)** — the app itself.
+Start with the repository's [AI-TEAM.txt](../AI-TEAM.txt), then [TODO.txt](../TODO.txt). Follow the shared rules: never rewrite `app.html`; submit small, self-contained work files and matching notes.
 
-**Important:** the diagrams are schematics, not captured screenshots. The live app could not be opened in the available browser environment, so the visual guide clearly labels that limitation. Capture actual screenshots before claiming screenshot verification.
+## User-facing documentation
+1. [User guide](./USER-GUIDE.txt) — getting started, scripts, sprites, costumes, sounds, project files, extensions, troubleshooting.
+2. [Screenshot & UI behavior guide](./SCREENSHOT-UI-DOCUMENTATION.md) — UI areas, interactions, context menus, real screenshot evidence.
+3. [Central documentation index](../docs/README.md) — canonical map of all guides, test reports, and screenshot evidence.
+4. [UI behavior audit](./UI-AUDIT.txt) — source-level findings and priorities; check the live report for corrected findings.
+
+## Visual references
+- [Editor UI schematic](./images/gwarp-ui-map.svg) — illustrative map, not a screenshot.
+- [Interaction flow schematic](./images/gwarp-interactions-map.svg) — illustrative workflow, not a screenshot.
+- [Real live screenshots](../docs/screens/) — captured from the running app by Claude on 2026-10-13.
+- [Live UI verification report](../docs/LIVE-UI-VERIFICATION.txt) — browser/environment, passes, and remaining tests.
+
+## Work handed to Claude
+- [Freeze-safety patch](./clone-safety.js) + [notes](./NOTES-clone-safety.txt).
+- [Open-in-G-Warp link patch](./scratch-link.js) + [notes](./NOTES-scratch-link.txt).
+
+## Important status
+The live report corrects UI-AUDIT finding #1: clicking Looks once did navigate to the matching palette blocks. Do not report that behavior as a confirmed bug. Other listed issues should remain labelled according to their evidence status.
