@@ -5,24 +5,14 @@
 
 THE TEAM
 - Owner: Creapter1 (the boss - decides what goes into G-Warp)
-- ChatGPT  | First engineer  | folder: chatgpt/ | list: TODO.txt (NOW 1-2)
-- Grok     | Researcher      | folder: grok/    | list: TODO-GROK.txt
-- DeepSeek | LAB SCIENTIST (researcher + experimenter). No GitHub (owner
-             pastes work). For every job writes at least 3 different
-             versions of the same code (A/B/C), tests them on paper and
-             says which is best and why. | folder: deepseek/ | list: TODO-DEEPSEEK.txt
-- Gemini   | Icons + pictures designer (+ a little research). No GitHub
-             (owner pastes work). Always gives 3 SVG options per idea, as
-             SVG code. | folder: gemini/ | list: TODO-GEMINI.txt
-- Claude   | Cleaner / final engineer: checks everyone's work, fixes it,
-             tests it, merges it into app.html and uploads it. When the
-             owner says "run", Claude runs 3 agents at once to test
-             DeepSeek's A/B/C versions for real, keeps the best parts,
-             and merges them.
-             Only Claude (or the owner) changes app.html, index.html.
+- Owner    | Product owner / final approval | decides priorities, design picks, merges and releases.
+- ChatGPT  | Planner / research reviewer / test designer | folder: chatgpt/ | list: team/AI-WORK-PLAN.txt
+- Grok     | Scratch behavior specifications, expected-result tests and extension audit | folder: grok/ | list: team/TODO-GROK.txt
+- DeepSeek | Lab scientist: researches and proposes 3 distinct A/B/C candidates plus lab reports; no main app edits | folder: deepseek/ | list: team/TODO-DEEPSEEK.txt
+- Gemini   | Original G-Warp icons and picture concepts, usually 3 SVG options per idea | folder: gemini/ | list: team/TODO-GEMINI.txt
+- Claude Opus 5.5 | ONLY authorized AI for main app engineering, app.html/index.html changes, integration and release preparation. Must verify active model identity and follow owner approval gates.
 
-SEE ALSO: STYLE-GUIDE.txt (look + what's not allowed), MERGE-QUEUE.txt (what's handed in + its status) and
-          ENGINE-MAP.txt (real names - read before coding).
+START HERE: team/AI-WORK-PLAN.txt (ordered stages and roles), then TODO.txt. Also read STYLE-GUIDE.txt, MERGE-QUEUE.txt, and ENGINE-MAP.txt before code work. Contributor task lists and handoff notes are stored under team/.
 
 NEW AI JOINING? Do this:
 1. Read AI-TEAM.txt, then TODO.txt (rules!), then your own list if you have one.
@@ -154,3 +144,4 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-13 | CLAIMED | ChatGPT | documentation gap audit: expand research and engineering library | docs/RESEARCH-LIBRARY.md, docs/RUNTIME-SEMANTICS-AND-PARITY.md, docs/PROJECT-FORMATS-AND-ROUNDTRIP.md, docs/EXTENSIONS-SECURITY-MODEL.md, docs/COMPATIBILITY-TEST-MATRIX.md, docs/EDITOR-ENGINEERING-PLAYBOOK.md
 2026-10-13 | DONE | ChatGPT | documentation gap audit: expanded source-linked research, runtime semantics, file formats, extension security, editor design and compatibility verification; added embedded diagrams and updated main documentation navigation | docs/README.md, README.md, chatgpt/README.md, docs/*.md, docs/images/compatibility-test-pipeline.svg, docs/images/extension-risk-boundaries.svg
 2026-10-13 | REVIEWED | ChatGPT | corrected documentation direction: removed generic research/checklist documents and replaced the main reference with a source-grounded G-Warp implementation map and application diagrams | docs/ENGINEERING-REFERENCE.md, docs/README.md, README.md, chatgpt/README.md, docs/images/gwarp-app-internals.svg, docs/images/scratch-to-gwarp-map.svg
+2026-10-14 | DONE | ChatGPT | master AI workflow plan, clarified roles/model gate, and moved task/handoff files under team/; app.html/index.html untouched | team/AI-WORK-PLAN.txt, team/README.txt, team/TODO-GROK.txt, team/TODO-GEMINI.txt, team/TODO-DEEPSEEK.txt, team/CLOUD-AI-OPUS-5.5-HANDOFF.txt
