@@ -198,7 +198,7 @@ Next: reconcile statuses/cross-references; compare UI audit against live verific
 
 GROK — BEHAVIOR SPECS / TESTS / EXTENSION AUDIT
 Own grok/ and its task list. Complete G5 gallery security/link audit; maintain 75+ expected-result tests; verify disputed Scratch semantics with references; distinguish written cases from automated tests.
-Do not edit app files, duplicate finished specs, or claim an extension works because a link exists.
+Do not connect or activate proposals in the live app, duplicate finished specs, or claim an extension works because a link exists. If assigned to add a code proposal to app.html, keep it inert and clearly marked.
 
 DEEPSEEK — LAB / A-B-C PROPOSALS
 Own deepseek/. Research and write 3 meaningfully different candidates + lab reports/tests. May place inert, uniquely marked proposal code in app.html if explicitly assigned, but may not connect it or edit another AI's folder.
