@@ -10,11 +10,7 @@
 
 ![G-Warp and Scratch architecture](./images/gwarp-scratch-architecture.svg)
 
-This diagram is a conceptual overview of the two architectures, not a literal source-code dependency graph.
-
-![G-Warp and Scratch architecture comparison](./images/gwarp-scratch-architecture.svg)
-
-[Open the architecture comparison SVG](./images/gwarp-scratch-architecture.svg)
+This diagram is a conceptual overview of the two architectures, not a literal source-code dependency graph. [Open the SVG](./images/gwarp-scratch-architecture.svg).
 
 A Scratch-like editor has several cooperating systems:
 
