@@ -33,7 +33,7 @@
 File/edit/tools/settings actions are grouped in the menu system. Prefer the explicit Save action until Ctrl/Cmd+S is verified: the inspected source contains overlapping global save handlers.
 
 ### Category rail and palette
-The rail represents block categories and Extensions. A Scratch-like category should respond to one click. The inspected source has a double-click filtering path, while single-click does not reliably select/scroll to the category. If a click appears to do nothing, use the palette's existing filter/search controls or right-click empty workspace for block search.
+The rail represents block categories and Extensions. **Live browser test T1 passed:** one click on Looks scrolled the palette to the Looks blocks. The earlier static audit finding that single-click navigation was broken is not confirmed and should be treated as fixed/not a bug unless a reproducible failing case is found. See the live verification report.
 
 ### Workspace
 Drag palette blocks into the workspace. Statement blocks connect vertically, C-blocks contain nested sequences, and reporter/Boolean blocks fit matching inputs. Right-click a block for block actions; right-click empty workspace for workspace actions. The audit flags long-stack detachment and nested snapping risks, so test small scripts before rearranging long stacks.
@@ -89,21 +89,11 @@ The source calls a costume-loading routine on every main-tab change. This is a r
 - Context menus may need viewport-edge and keyboard focus improvements.
 - Some shortcuts documented by TurboWarp/PenguinMod are addon-dependent and are not necessarily Scratch-core behavior.
 
-## 7. Capture real screenshots
-To replace the schematics with actual screenshots on a desktop browser:
-1. Open the live app and maximize the browser.
-2. Capture the default Code view with Stage, sprite list, category rail, and workspace visible.
-3. Capture the More menu.
-4. Capture right-click on a block.
-5. Capture right-click on empty workspace.
-6. Capture Costumes with a sprite selected.
-7. Capture Sounds and instrument/music controls.
-8. Capture Extensions and any advanced tool you plan to document.
-9. Save images in `chatgpt/images/` with descriptive filenames.
-10. Record browser version and app commit. Replace the schematic images and label the source build. Do not mark an interaction browser-verified without testing it.
+## 7. Live screenshot set
+Claude captured real screenshots from the running app on 2026-10-13. They are stored in `docs/screens/`, not in the schematic folder. See the [live verification report](../docs/LIVE-UI-VERIFICATION.txt) for environment, test results, and what remains untested. The two SVGs above remain clearly labelled schematics.
 
 ## 8. Verification note
-This is based on static inspection of the checked-in app.html identified as Beta v15.45.0, not a live browser test. For priorities, proposed fixes, and the complete regression plan, see [UI-AUDIT.txt](./UI-AUDIT.txt).
+This document combines static source inspection with a limited live-browser test run against Beta v15.45.0 in Chromium at 1440×900 and 1024×700. Ten interaction/layout checks passed. Nested C-block snapping, save shortcuts, SB3 round-trip, Pause/audio, Stage click routing, paint tools, advanced dialogs, and Firefox/Safari remain NOT TESTED. For detailed source findings see [UI-AUDIT.txt](./UI-AUDIT.txt); for live evidence see [LIVE-UI-VERIFICATION.txt](../docs/LIVE-UI-VERIFICATION.txt).
 
 ---
 
