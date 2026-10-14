@@ -7,7 +7,7 @@
 
 ## Start at the right level
 
-- **New user:** [Learn G-Warp](./LEARNING-GUIDE.md)
+- **New user:** [Learn G-Warp](./LEARNING-GUIDE.md) and the [Glossary](./GLOSSARY.md)
 - **Use the interface:** [Complete user guide](../chatgpt/USER-GUIDE.txt) and [UI behavior guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)
 - **Understand implementation:** [Engineering reference](./ENGINEERING-REFERENCE.md), [engine map](../ENGINE-MAP.txt), and [editor engineering playbook](./EDITOR-ENGINEERING-PLAYBOOK.md)
 - **Research behavior and edge cases:** [Runtime semantics](./RUNTIME-SEMANTICS-AND-PARITY.md), [test matrix](./COMPATIBILITY-TEST-MATRIX.md), and [file formats](./PROJECT-FORMATS-AND-ROUNDTRIP.md)
