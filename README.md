@@ -30,6 +30,14 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 | **Look like Scratch** | Optional, in More → Settings. The electric look stays the default. |
 | **GWrap AI** | In the works: a helper inside the editor (only helps with G-Warp, nothing else) |
 
+## Documentation (start here)
+
+- **[Documentation index](docs/README.md)** — user guide, UI behavior guide, source audit, live verification report, and screenshot gallery.
+- **[User guide](chatgpt/USER-GUIDE.txt)** — how to use the app.
+- **[UI behavior guide](chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — how controls and menus work, with real screenshots and clearly labelled schematics.
+- **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** — 10 browser/layout checks, evidence, and remaining tests.
+- **[Screenshot gallery](docs/screens/)** — real screenshots from the running app.
+
 ## Files in this repo
 | File / folder | What it is |
 |---|---|
