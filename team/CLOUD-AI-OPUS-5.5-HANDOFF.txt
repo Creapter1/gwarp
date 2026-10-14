@@ -1,0 +1,61 @@
+G-WARP — CLAUDE OPUS 5.5 HANDOFF / BASELINE SAFEGUARD
+Date: 2026-10-14
+Repository: https://github.com/Creapter1/gwarp
+Main application: app.html
+Primary plan: team/AI-WORK-PLAN.txt
+Purpose: preserve the app, document the owner-reported model-selection incident, and make the next review controlled and evidence-based.
+
+SCOPE
+This handoff authorizes reading, inventory, research, testing, and reporting. It does not itself authorize a repair, merge, release, or broad rewrite. The owner separately authorizes main engineering when ready.
+
+1. OWNER'S AUTHORITY
+The owner reports that a Claude-powered session used a model other than the specifically authorized Claude Opus 5.5 and that the session caused a mess. This is owner-reported, not independently verified by this document.
+Claude Opus 5.5 is the ONLY AI authorized for main app engineering: adapting proposals into the app, modifying app.html/index.html, final integration, and release preparation. Before that work, verify the active model label in the actual Claude interface is exactly “Claude Opus 5.5.” If it is missing, ambiguous, or different, STOP and ask the owner.
+Other AIs may research, review, inspect source, test, prepare bug reports/specifications, and create candidate code or assets in their own folders. They must not edit app.html/index.html, overwrite another AI's folder, or treat a candidate as approved. Their work is support material only until Claude Opus 5.5 validates it and the owner approves integration.
+
+2. IMMEDIATE DO-NOT LIST
+- Do not edit, replace, regenerate, reformat, or upload app.html/index.html during read-only baseline review.
+- Do not perform a broad rewrite, refactor, redesign, cleanup, or “improvement pass.”
+- Do not remove or replace existing features. “Add, don't swap.”
+- Do not treat a syntax check as proof behavior works.
+- Do not guess APIs or import Scratch VM assumptions such as window.vm/runtime.sequencer. Read ENGINE-MAP.txt and verify against current source.
+- Do not merge candidate code merely because it looks plausible or came from another AI.
+- Do not edit another AI's folder. Use your own authorized work area or a separately assigned report file.
+- Do not claim a backup, rollback, browser test, or verification unless performed and recorded.
+- Do not run JavaScript blocks or silently send personal/project data.
+- Do not publish or merge without owner approval.
+- Do not state that the app is intact until current source is compared with a known-good baseline and relevant tests support the claim.
+
+3. REQUIRED READING
+Read AI-TEAM.txt, TODO.txt, STYLE-GUIDE.txt, ENGINE-MAP.txt, MERGE-QUEUE.txt, team/AI-WORK-PLAN.txt, and relevant candidate notes/lab reports. Treat merge-queue status as candidate status, not proof of integration.
+
+4. KNOWN WORK / STATUS TO CHECK
+- Current documented Beta is v15.45.0. Record exact current app.html/index.html blob IDs before any change.
+- Main TODO identifies freeze protection; Scratch-project link; costume editor behavior; Scratch behavior tests; protobuf .pmp support; extension gallery validation.
+- ChatGPT's clone-safety.js and scratch-link.js were previously described as passing syntax review, but integration and behavior must be verified.
+- DeepSeek A/B/C costume and performance proposals have prior revisions with incorrect API guesses. Use current ENGINE-MAP and latest labs; do not rely on superseded clone approaches.
+- G-Warp already opens .sb3 and ZIP-type .pmp; identified gap is newer protobuf .pmp. Do not replace working support.
+- Grok has 75 behavior tests and specs; determine which cases have executable fixtures and which are only written plans.
+- Gemini's browser extension remains subject to real-site tests; work log says its G-Spark icon was a placeholder.
+- docs/LIVE-UI-VERIFICATION.txt reports 10 passing live tests and 11 screenshots for its scope only.
+- A previous large-file fetch returned no app.html body. That did not verify source integrity.
+- Check current files and history instead of treating work-log statements as sufficient evidence.
+
+5. FIRST ASSIGNMENT — READ-ONLY BASELINE
+A. Verify active Claude model label is exactly Claude Opus 5.5. If not, stop.
+B. Record branch/default branch, latest commit, app.html/index.html blob IDs, recent commits and open PR/diff context.
+C. Identify last known-good baseline. If unclear, ask the owner instead of guessing.
+D. Inspect relevant source/diffs read-only. Do not repair during this pass.
+E. Report visible changes against the selected baseline; distinguish differences from defects.
+F. Classify claims as SOURCE-VERIFIED, STATIC-ANALYSIS, BROWSER-VERIFIED, or NOT-TESTED.
+G. Write a concise report under team/ or your assigned folder with exact evidence and limitations.
+H. Wait for owner approval before engineering.
+
+6. REQUIRED ISSUE REPORT FIELDS
+Symptom/user impact; exact file/section/commit; evidence class; root cause (proven/likely/unknown); smallest proposed fix; tests/results; untested areas/risks; rollback route; owner approval status.
+
+7. PRESERVATION REQUIREMENTS
+Preserve G-Warp's engine, UI identity, serialization, extensions, costumes, sounds/music, tilemap, behavior system, LAN/SB3 workflows, and established features. This list is context to investigate, not proof every subsystem is healthy. Follow STYLE-GUIDE and safety/licensing requirements.
+
+CURRENT STATUS
+Incident reported; current app integrity is not independently established by this handoff. Safe next action is read-only baseline inspection by verified Claude Opus 5.5. Do not repair during that pass. After owner review, proceed only with explicit authorization and the smallest tested fix.
