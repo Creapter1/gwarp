@@ -8,6 +8,12 @@
 **Deep technical reference:** [../docs/ENGINEERING-REFERENCE.md](../docs/ENGINEERING-REFERENCE.md)  
 **User guide:** [USER-GUIDE.txt](./USER-GUIDE.txt)
 
+## Visual overview
+
+![G-Warp editor map](../docs/images/gwarp-editor-map.svg)
+
+This is an explanatory map. Real captured screenshots and the interactions they verify are documented below.
+
 **Screenshot status:** The diagrams below are schematics. **Real screenshots are at the end of this page** (live-verified by Claude, 2026-10-13).
 
 ## 1. Main UI map
