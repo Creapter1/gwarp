@@ -32,17 +32,12 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 
 ## Documentation (start here)
 
-The docs distinguish implementation details found in source, upstream documentation, browser-tested behavior and untested claims. Start with the [central documentation hub](docs/README.md).
-
-- **[Documentation index](docs/README.md)** — user guide, UI behavior guide, source audit, live verification report, and screenshot gallery.
-- **[User guide](chatgpt/USER-GUIDE.txt)** — how to use the app.
-- **[UI behavior guide](chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — how controls and menus work, with real screenshots and clearly labelled schematics.
-- **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** — recorded basic browser/layout checks, evidence, and remaining tests; these do not prove full runtime parity.
-- **[Research library](docs/RESEARCH-LIBRARY.md)** — annotated primary sources and evidence standards.
-- **[Engineering playbook](docs/EDITOR-ENGINEERING-PLAYBOOK.md)** — how to build a block editor and engine.
-- **[Runtime compatibility guide](docs/RUNTIME-SEMANTICS-AND-PARITY.md)** and **[test matrix](docs/COMPATIBILITY-TEST-MATRIX.md)** — observable behavior, edge cases and verification plan.
-- **[Project formats](docs/PROJECT-FORMATS-AND-ROUNDTRIP.md)** and **[extension security](docs/EXTENSIONS-SECURITY-MODEL.md)** — project integrity, permissions and risk.
-- **[Screenshot gallery](docs/screens/)** — real screenshots from the running app.
+- **[G-Warp implementation map](docs/ENGINEERING-REFERENCE.md)** — the real app architecture, runtime, block workspace, Stage renderer, costume editor, sound/music tools, Tilemap, Behaviors, extensions and project files; includes the Scratch implementation comparison.
+- **[Documentation index](docs/README.md)** — the short guide to the app, controls, screenshots and verification.
+- **[User guide](chatgpt/USER-GUIDE.txt)** — how to use the tools already in the app.
+- **[Screenshots and UI guide](chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — where controls live and how the visible interface behaves.
+- **[Engine map](ENGINE-MAP.txt)** — actual G-Warp globals and hooks to check before changing code.
+- **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** and [real screenshots](docs/screens/) — what has actually been tested.
 
 ## Files in this repo
 | File / folder | What it is |
