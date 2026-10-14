@@ -3,9 +3,12 @@ Complete practical guide for G-Warp Desktop v15.45.0
 Last updated: 2026-10-13
 
 START HERE
-G-Warp is a Scratch-style block-programming environment with additional creative and developer tools. This guide describes the checked-in app.html interface inspected for this document. Layouts and features can change between commits.
+G-Warp is a Scratch-style block-programming environment with additional creative and developer tools. This file is the detailed feature/user manual, not the first lesson. For the easy step-by-step learning path, start at docs/LEARNING-GUIDE.md. For a deeper explanation of how a Scratch-like editor is structured and how G-Warp differs internally from Scratch, read docs/ENGINEERING-REFERENCE.md. This guide describes the checked-in app.html interface inspected for this document. Layouts and features can change between commits.
 
 App: https://creapter1.github.io/gwarp/
+Beginner learning path: ../docs/LEARNING-GUIDE.md
+Deep engineering research: ../docs/ENGINEERING-REFERENCE.md
+Master index: ../docs/README.md
 UI reference: chatgpt/SCREENSHOT-UI-DOCUMENTATION.md
 Visual maps: chatgpt/images/gwarp-ui-map.svg and chatgpt/images/gwarp-interactions-map.svg
 Behavior audit: chatgpt/UI-AUDIT.txt
