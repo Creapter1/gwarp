@@ -38,6 +38,7 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 - **[Screenshots and UI guide](chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — where controls live and how the visible interface behaves.
 - **[Engine map](ENGINE-MAP.txt)** — actual G-Warp globals and hooks to check before changing code.
 - **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** and [real screenshots](docs/screens/) — what has actually been tested.
+- **[Master AI work plan](team/AI-WORK-PLAN.txt)** and [deliverable inventory](team/AI-DELIVERABLE-INVENTORY.txt) — assigned roles, task stages, current candidate status and evidence gaps.
 
 ## Files in this repo
 | File / folder | What it is |
