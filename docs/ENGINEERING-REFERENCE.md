@@ -15,6 +15,10 @@ This is the main technical guide to **the application in this repository**. It d
 - **[UI audit](../chatgpt/UI-AUDIT.txt)** is a detailed source inspection. A static concern in that file is not automatically a reproduced bug.
 - **[TODO](../TODO.txt)** and **[MERGE-QUEUE](../MERGE-QUEUE.txt)** show what is current work and what is only a candidate patch.
 
+## How it is packaged
+
+The application logic is in one `app.html`, but **“single HTML file” does not mean “no external dependencies.”** The inspected source includes Tailwind CSS from its CDN, Font Awesome's stylesheet from its CDN, and JSZip 3.10.1 from a CDN. Some project-file operations also have G-Warp's own ZIP/SB3 code. An offline build or test should check these external dependencies separately: copy the required libraries locally or deliberately replace them, then confirm the same interface and import/export behavior.
+
 ## 1. The app in one picture
 
 ![G-Warp application internals](./images/gwarp-app-internals.svg)
