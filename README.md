@@ -46,7 +46,7 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 | `app.html` | The G-Warp Beta app (one single file, ~2.3 MB). **Only Claude or the owner changes it.** |
 | `AI-TEAM.txt` | The AI team: who does what, team rules, the "continue" word, the work log |
 | `TODO.txt` | The main to-do list (URGENT / NOW / LATER / DONE) |
-| `TODO-GROK.txt`, `TODO-DEEPSEEK.txt`, `TODO-GEMINI.txt` | Each AI's own job list |
+| `team/` | Master AI plan, per-contributor task lists, and handoff notes; public, not private |
 | `ENGINE-MAP.txt` | The REAL names inside G-Warp's engine. Read before writing code. |
 | `MERGE-QUEUE.txt` | Everything handed in and its status (pick / reference / superseded / waiting) |
 | `STYLE-GUIDE.txt` | G-Warp's look, words and what's not allowed (brands, characters…) |
