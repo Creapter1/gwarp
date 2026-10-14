@@ -1,75 +1,36 @@
-# G-Warp Documentation — Start Here
+# G-Warp Documentation
 
-This is the canonical index. The documentation has **two learning levels**: an easy user-facing path and a deep research path. They describe the same system from different angles.
+This folder explains **the actual G-Warp application**: what you see on screen, how its real code runs, how its tools save their work, and how its implementation relates to Scratch 3. Start with the app map, then follow the guide for the task you are doing.
 
-## Start here: learn to use G-Warp
-1. **[Learn G-Warp](./LEARNING-GUIDE.md)** — short, beginner-friendly explanation of the editor and block-coding ideas, with a first project.
-2. **[Glossary](./GLOSSARY.md)** — plain-English and technical definitions for blocks, runtime, file formats, performance and extension security.
-3. **[Complete user guide](../chatgpt/USER-GUIDE.txt)** — detailed feature instructions and troubleshooting.
-4. **[UI behavior and screenshots](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — what the controls do, how menus/tabs/dragging/right-click work, and real screenshot evidence.
-5. **[Real screenshot gallery](./screens/)** — captures from the running app.
-6. **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** — test setup, results, and what is not yet tested.
+## 1. The app, explained
 
-## Deep research: understand how it works
+**[G-Warp implementation map](./ENGINEERING-REFERENCE.md)** is the main technical guide. It follows the real implementation from block workspace to `ScriptThread`, `Engine`, Stage drawing, costumes, sound/music, Tilemap, Behaviors, extensions and file import/export. It also explains how Scratch itself is organized and maps each Scratch subsystem to the closest G-Warp equivalent.
 
-1. **[Engineering reference](./ENGINEERING-REFERENCE.md)** — subsystem overview and G-Warp/Scratch source mapping.
-2. **[Editor engineering playbook](./EDITOR-ENGINEERING-PLAYBOOK.md)** — graph model, block dragging/snapping, runtime scheduler, rendering, history, serialization and safe integration.
-3. **[Research library](./RESEARCH-LIBRARY.md)** — annotated source map, upstream references, evidence hierarchy and research workflow.
-4. **[Runtime semantics and parity](./RUNTIME-SEMANTICS-AND-PARITY.md)** — scheduling, broadcasts, clones, coercion, sensing, costumes, audio and observable compatibility.
-5. **[Compatibility test matrix](./COMPATIBILITY-TEST-MATRIX.md)** — existing test assets, evidence gaps, proposed test IDs and release gates.
-6. **[Project formats and round-trip](./PROJECT-FORMATS-AND-ROUNDTRIP.md)** — SB3/PMP boundaries, asset integrity, safe import/export and round-trip checks.
-7. **[Extension security model](./EXTENSIONS-SECURITY-MODEL.md)** — threat model, sandbox boundaries, risk labels, privacy and lifecycle testing.
-8. **[G-Warp engine map](../ENGINE-MAP.txt)** — recorded real runtime globals/hooks; G-Warp is not Scratch VM.
-9. **[UI behavior audit](../chatgpt/UI-AUDIT.txt)** and **[live UI verification](./LIVE-UI-VERIFICATION.txt)** — source findings versus behaviors actually tested.
-10. **[TODO roadmap](../TODO.txt)**, **[AI team log/rules](../AI-TEAM.txt)** and **[merge queue](../MERGE-QUEUE.txt)** — current priorities and work status.
+![Actual G-Warp application internals](./images/gwarp-app-internals.svg)
 
-Research documents are not product guarantees. Follow the linked primary sources, check version stamps, and keep untested behavior marked NOT TESTED.
+![Scratch package architecture compared with G-Warp](./images/scratch-to-gwarp-map.svg)
 
-## Visual references
+## 2. How to use the app
 
-### Editor map
+- **[Learn G-Warp](./LEARNING-GUIDE.md)** — first project and basic block-coding concepts.
+- **[Complete user guide](../chatgpt/USER-GUIDE.txt)** — how to use the existing controls and tools.
+- **[Screenshots and UI guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — visual location of the controls, menus, tabs and right-click actions.
+- **[Editor-area map](./images/gwarp-editor-map.svg)** and [block shapes](./images/gwarp-blocks-explained.svg) — quick visual explanations.
 
-![G-Warp editor map](./images/gwarp-editor-map.svg)
+## 3. What has actually been checked
 
-### Block coding explained
+- **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** — tests actually run in Chromium, with screenshots and the items that remain untested.
+- **[UI behavior audit](../chatgpt/UI-AUDIT.txt)** — source-level findings and likely issues. Read it together with the live report.
+- **[Real screenshots](./screens/)** — pictures captured from the running app, not drawings.
 
-![Block shapes and script flow](./images/gwarp-blocks-explained.svg)
+A test report does not prove every app feature is working. The source map, browser results and untested items are kept separate.
 
-### G-Warp and Scratch architecture
+## 4. If you're changing G-Warp
 
-![G-Warp and Scratch architecture](./images/gwarp-scratch-architecture.svg)
+Read [ENGINE-MAP.txt](../ENGINE-MAP.txt) before writing code. It lists the actual engine object and hooks and warns against assuming that Scratch VM internals exist in G-Warp. Then check [TODO.txt](../TODO.txt) and [MERGE-QUEUE.txt](../MERGE-QUEUE.txt) to see the current priority and whether a patch is only a candidate.
 
-- [G-Warp editor map (SVG)](./images/gwarp-editor-map.svg) — labeled editor areas and their purpose.
-- [Block shapes explainer (SVG)](./images/gwarp-blocks-explained.svg) — event hats, statements, C-blocks, reporters, and Boolean conditions.
-- [G-Warp vs. Scratch architecture (SVG)](./images/gwarp-scratch-architecture.svg) — conceptual systems comparison; not an exact code diagram.
-- [Main editor schematic](../chatgpt/images/gwarp-ui-map.svg) — explanatory drawing, not a screenshot.
-- [Interaction-flow schematic](../chatgpt/images/gwarp-interactions-map.svg) — explanatory drawing, not a screenshot.
-- [Real screenshots](./screens/) — actual browser captures; see the live report for which interactions they evidence.
+## Where Scratch's own code lives
 
-### Research and test diagrams
+The implementation guide links directly to the official [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor) and the actual `scratch-gui`, `scratch-blocks`, `scratch-vm`, renderer, paint and storage components. Use those sources to understand Scratch's implementation; use G-Warp's own `app.html` and [engine map](../ENGINE-MAP.txt) to understand this app.
 
-![Compatibility testing pipeline](./images/compatibility-test-pipeline.svg)
-
-![Extension security boundary model](./images/extension-risk-boundaries.svg)
-
-These are original explanatory diagrams. They describe recommended research/testing workflows, not a claim that every step is already implemented by the app.
-
-## How to read the evidence
-- **LIVE-BROWSER-VERIFIED:** a recorded interaction was actually tested in a named environment.
-- **SOURCE-VERIFIED:** directly found in a specific source revision.
-- **STATIC-ANALYSIS:** source suggests a behavior/risk but it was not reproduced.
-- **NOT TESTED:** no result is claimed.
-- **SCHEMATIC:** explanatory diagram, not a real app capture.
-
-## Scratch primary references
-- [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor)
-- [Scratch GUI package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui)
-- [Scratch VM package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-vm)
-- [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks)
-- [Scratch Render](https://github.com/scratchfoundation/scratch-render)
-- [Scratch Audio](https://github.com/scratchfoundation/scratch-audio)
-- [Scratch Storage](https://github.com/scratchfoundation/scratch-storage)
-- [Scratch Paint](https://github.com/scratchfoundation/scratch-paint)
-- [Scratch Specification (work in progress)](https://scratchspec.github.io/)
-
-**Important:** These SVGs are explanatory diagrams, not screenshots captured from the live app. **G-Warp is a custom engine, not Scratch VM. The two systems aim for similar user-facing behavior, but internal APIs, feature coverage, and edge cases must be verified separately.
+**Important:** G-Warp is an independent implementation. It aims to provide Scratch-style behavior and project workflows, but it is not Scratch VM and compatibility must be checked feature by feature.
