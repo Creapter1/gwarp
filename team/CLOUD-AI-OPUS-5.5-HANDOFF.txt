@@ -22,6 +22,8 @@ Claude Opus 5.5 is the ONLY AI authorized to connect/integrate proposal code int
 - Do not guess APIs or import Scratch VM assumptions such as window.vm/runtime.sequencer. Read ENGINE-MAP.txt and verify against current source.
 - Do not merge candidate code merely because it looks plausible or came from another AI.
 - Do not edit another AI's folder. Use your own authorized work area or a separately assigned report file.
+- Do not leave proposal code executing. If safe inert placement in app.html cannot be guaranteed, keep the full candidate in your own folder and put only a pointer in app.html.
+- Out-of-scope ideas go to team/FUTURE-IDEAS.txt with WAITING FOR OWNER status; do not implement them until Creapter1 explicitly approves.
 - Do not leave proposal code executing. If safe inert placement in app.html cannot be guaranteed, keep the complete candidate in your own folder and put only a short pointer in app.html.
 - Out-of-scope ideas go to team/FUTURE-IDEAS.txt with WAITING FOR OWNER status; do not implement them until Creapter1 explicitly approves.
 - Do not claim a backup, rollback, browser test, or verification unless performed and recorded.
