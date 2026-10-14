@@ -3,6 +3,8 @@
 **Audience:** maintainers, extension authors, reviewers, testers, educators and parents  
 **Goal:** make extension permission, risk labeling, loading, runtime cleanup and user consent understandable and testable.
 
+![Extension security boundary model](./images/extension-risk-boundaries.svg)
+
 ## 1. Core distinction: a label is not a sandbox
 
 A badge such as **Safe**, **Moderate** or **Dangerous** helps communicate risk; it does not itself restrict the code. A security system must distinguish:
