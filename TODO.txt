@@ -86,9 +86,9 @@ HOW CHATGPT SHOULD HAND IN WORK (important, app.html is huge: ~2.3 MB)
       clone rules, hat restarts, broadcast order...). Make small test
       projects with the exact expected result.
 [x] (DeepSeek) 5. .pmp research + notes + test harness -> deepseek/
-      (NOTES-pmp.txt, test-pmp-loader.js saved; pmp-loader.js was MISSING from
-      the handoff paste — DeepSeek should re-send it. Claude still needs to
-      test + merge when the loader file arrives.)
+      (NOTES-pmp.txt, test-pmp-loader.js, and protobuf-only pmp-loader.js are
+      present. Claude still needs to test the candidate with real protobuf
+      fixtures before any integration. Existing ZIP-type .pmp support must stay.)
 [ ] 6. TurboWarp / PenguinMod gallery extensions: test that they load on
       the real website (github.io), list any that fail.
 
