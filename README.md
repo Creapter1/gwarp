@@ -1,6 +1,6 @@
 # ⚡ G-Warp
 
-G-Warp (G Wrapper) is a free, block-based game maker. It works the way **Scratch, TurboWarp and PenguinMod** work (same blocks, same results, opens their projects), but with its **own dark, electric look**, a mascot named **G-Spark**, a built-in **Song maker** and **191 extensions**.
+G-Warp (G Wrapper) is a free, Scratch-style visual programming and game-making project with its own dark, electric interface, the G-Spark mascot and a built-in Song maker. It aims for compatibility with standard Scratch behavior and common Scratch/TurboWarp/PenguinMod project workflows. Exact block behavior, extension support and file-format coverage should be checked against the published evidence and compatibility tests; G-Warp uses its own engine rather than Scratch VM.
 
 **Status:** Beta (the only beta for now). Some things may break. If you find a bug, that's how G-Warp gets better.
 
@@ -14,28 +14,34 @@ G-Warp (G Wrapper) is a free, block-based game maker. It works the way **Scratch
 1. Open the website and click **⚡ Create your first code** to start a new project, or **📂 Use your project** to open a `.sb3` (Scratch / TurboWarp), `.pmp` (PenguinMod) or G-Warp file.
 2. Drag blocks from the palette into the code area and snap them together.
 3. Press **Start** in the top bar. **Pause** and **Stop** are next to it.
-4. Save with **More → Save to your computer**. Your project works in Scratch too, as long as it only uses normal Scratch blocks.
+4. Save with **More → Save to your computer**. Projects using only standard Scratch features are the best candidates for Scratch interoperability; reopen the export in a fresh session and check it in Scratch. G-Warp-specific extensions or unsupported file features are not guaranteed to work elsewhere.
 
 Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 
 ## What's inside
 | Area | What it does |
 |---|---|
-| **Code** | Every Scratch block, electric C-blocks with a live "wire", right-click search, duplicate, comments, clean up |
+| **Code** | Scratch-style block workspace, electric C-blocks with a live "wire", right-click search, duplicate, comments, clean up |
 | **Costumes** | Vector + bitmap paint editor, G-Warp's own sprite library (rockets, coins, gems… no cats) |
 | **Sounds** | Sound editor, instruments, loop maker and the **Song maker** (genre, mood, theme → a whole song) |
 | **Stage** | 480×360 stage, backdrop library (Space, Night City, Underwater…), select the Stage like in Scratch |
-| **Extensions** | 8 of G-Warp's own + 104 TurboWarp + 79 PenguinMod, each labelled ✓ Safe / ● Moderate / ⚠ Dangerous |
+| **Extensions** | A changing catalog of G-Warp, TurboWarp and PenguinMod extensions with ✓ Safe / ● Moderate / ⚠ Dangerous labels; verify exact counts and behavior in the live app |
 | **Bug Hunter** | Break G-Warp and you earn an achievement |
 | **Look like Scratch** | Optional, in More → Settings. The electric look stays the default. |
 | **GWrap AI** | In the works: a helper inside the editor (only helps with G-Warp, nothing else) |
 
 ## Documentation (start here)
 
+The docs distinguish implementation details found in source, upstream documentation, browser-tested behavior and untested claims. Start with the [central documentation hub](docs/README.md).
+
 - **[Documentation index](docs/README.md)** — user guide, UI behavior guide, source audit, live verification report, and screenshot gallery.
 - **[User guide](chatgpt/USER-GUIDE.txt)** — how to use the app.
 - **[UI behavior guide](chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — how controls and menus work, with real screenshots and clearly labelled schematics.
-- **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** — 10 browser/layout checks, evidence, and remaining tests.
+- **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** — recorded basic browser/layout checks, evidence, and remaining tests; these do not prove full runtime parity.
+- **[Research library](docs/RESEARCH-LIBRARY.md)** — annotated primary sources and evidence standards.
+- **[Engineering playbook](docs/EDITOR-ENGINEERING-PLAYBOOK.md)** — how to build a block editor and engine.
+- **[Runtime compatibility guide](docs/RUNTIME-SEMANTICS-AND-PARITY.md)** and **[test matrix](docs/COMPATIBILITY-TEST-MATRIX.md)** — observable behavior, edge cases and verification plan.
+- **[Project formats](docs/PROJECT-FORMATS-AND-ROUNDTRIP.md)** and **[extension security](docs/EXTENSIONS-SECURITY-MODEL.md)** — project integrity, permissions and risk.
 - **[Screenshot gallery](docs/screens/)** — real screenshots from the running app.
 
 ## Files in this repo
