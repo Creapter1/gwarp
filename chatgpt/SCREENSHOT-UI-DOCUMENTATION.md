@@ -4,6 +4,8 @@
 **Source:** [app.html](https://github.com/Creapter1/gwarp/blob/main/app.html)  
 **Live app:** https://creapter1.github.io/gwarp/  
 **Audit companion:** [UI-AUDIT.txt](./UI-AUDIT.txt)  
+**Start learning:** [../docs/LEARNING-GUIDE.md](../docs/LEARNING-GUIDE.md)  
+**Deep technical reference:** [../docs/ENGINEERING-REFERENCE.md](../docs/ENGINEERING-REFERENCE.md)  
 **User guide:** [USER-GUIDE.txt](./USER-GUIDE.txt)
 
 **Screenshot status:** The diagrams below are schematics. **Real screenshots are at the end of this page** (live-verified by Claude, 2026-10-13).
