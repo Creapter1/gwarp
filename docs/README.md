@@ -10,10 +10,19 @@ This is the canonical index. The documentation has **two learning levels**: an e
 5. **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** — test setup, results, and what is not yet tested.
 
 ## Deep research: understand how it works
-1. **[Engineering reference](./ENGINEERING-REFERENCE.md)** — how Scratch-style editors are divided into UI, block graph, runtime, targets, rendering, audio, storage, safety, and tests; maps these ideas to G-Warp and Scratch sources.
-2. **[G-Warp engine map](../ENGINE-MAP.txt)** — actual G-Warp runtime globals, fields, hooks, costume structures, and warnings against assuming Scratch APIs.
-3. **[UI behavior audit](../chatgpt/UI-AUDIT.txt)** — numbered differences/risks compared with Scratch 3, TurboWarp, and PenguinMod.
-4. **[TODO roadmap](../TODO.txt)**, **[AI team log/rules](../AI-TEAM.txt)**, and **[merge queue](../MERGE-QUEUE.txt)** — current work and collaboration rules.
+
+1. **[Engineering reference](./ENGINEERING-REFERENCE.md)** — subsystem overview and G-Warp/Scratch source mapping.
+2. **[Editor engineering playbook](./EDITOR-ENGINEERING-PLAYBOOK.md)** — graph model, block dragging/snapping, runtime scheduler, rendering, history, serialization and safe integration.
+3. **[Research library](./RESEARCH-LIBRARY.md)** — annotated source map, upstream references, evidence hierarchy and research workflow.
+4. **[Runtime semantics and parity](./RUNTIME-SEMANTICS-AND-PARITY.md)** — scheduling, broadcasts, clones, coercion, sensing, costumes, audio and observable compatibility.
+5. **[Compatibility test matrix](./COMPATIBILITY-TEST-MATRIX.md)** — existing test assets, evidence gaps, proposed test IDs and release gates.
+6. **[Project formats and round-trip](./PROJECT-FORMATS-AND-ROUNDTRIP.md)** — SB3/PMP boundaries, asset integrity, safe import/export and round-trip checks.
+7. **[Extension security model](./EXTENSIONS-SECURITY-MODEL.md)** — threat model, sandbox boundaries, risk labels, privacy and lifecycle testing.
+8. **[G-Warp engine map](../ENGINE-MAP.txt)** — recorded real runtime globals/hooks; G-Warp is not Scratch VM.
+9. **[UI behavior audit](../chatgpt/UI-AUDIT.txt)** and **[live UI verification](./LIVE-UI-VERIFICATION.txt)** — source findings versus behaviors actually tested.
+10. **[TODO roadmap](../TODO.txt)**, **[AI team log/rules](../AI-TEAM.txt)** and **[merge queue](../MERGE-QUEUE.txt)** — current priorities and work status.
+
+Research documents are not product guarantees. Follow the linked primary sources, check version stamps, and keep untested behavior marked NOT TESTED.
 
 ## Visual references
 
@@ -35,6 +44,14 @@ This is the canonical index. The documentation has **two learning levels**: an e
 - [Main editor schematic](../chatgpt/images/gwarp-ui-map.svg) — explanatory drawing, not a screenshot.
 - [Interaction-flow schematic](../chatgpt/images/gwarp-interactions-map.svg) — explanatory drawing, not a screenshot.
 - [Real screenshots](./screens/) — actual browser captures; see the live report for which interactions they evidence.
+
+### Research and test diagrams
+
+![Compatibility testing pipeline](./images/compatibility-test-pipeline.svg)
+
+![Extension security boundary model](./images/extension-risk-boundaries.svg)
+
+These are original explanatory diagrams. They describe recommended research/testing workflows, not a claim that every step is already implemented by the app.
 
 ## How to read the evidence
 - **LIVE-BROWSER-VERIFIED:** a recorded interaction was actually tested in a named environment.
