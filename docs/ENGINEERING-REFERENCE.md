@@ -8,6 +8,10 @@
 
 ## 1. Executive model
 
+![G-Warp and Scratch architecture comparison](./images/gwarp-scratch-architecture.svg)
+
+[Open the architecture comparison SVG](./images/gwarp-scratch-architecture.svg)
+
 A Scratch-like editor has several cooperating systems:
 
 1. **Editor UI:** project controls, tabs, sprite selection, categories, palette, workspace, Stage and asset editors.
