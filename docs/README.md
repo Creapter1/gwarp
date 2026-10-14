@@ -16,6 +16,19 @@ This is the canonical index. The documentation has **two learning levels**: an e
 4. **[TODO roadmap](../TODO.txt)**, **[AI team log/rules](../AI-TEAM.txt)**, and **[merge queue](../MERGE-QUEUE.txt)** — current work and collaboration rules.
 
 ## Visual references
+
+### Editor map
+
+![G-Warp editor map](./images/gwarp-editor-map.svg)
+
+### Block coding explained
+
+![Block shapes and script flow](./images/gwarp-blocks-explained.svg)
+
+### G-Warp and Scratch architecture
+
+![G-Warp and Scratch architecture](./images/gwarp-scratch-architecture.svg)
+
 - [G-Warp editor map (SVG)](./images/gwarp-editor-map.svg) — labeled editor areas and their purpose.
 - [Block shapes explainer (SVG)](./images/gwarp-blocks-explained.svg) — event hats, statements, C-blocks, reporters, and Boolean conditions.
 - [G-Warp vs. Scratch architecture (SVG)](./images/gwarp-scratch-architecture.svg) — conceptual systems comparison; not an exact code diagram.
