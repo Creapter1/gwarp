@@ -4,10 +4,11 @@ This is the canonical index. The documentation has **two learning levels**: an e
 
 ## Start here: learn to use G-Warp
 1. **[Learn G-Warp](./LEARNING-GUIDE.md)** — short, beginner-friendly explanation of the editor and block-coding ideas, with a first project.
-2. **[Complete user guide](../chatgpt/USER-GUIDE.txt)** — detailed feature instructions and troubleshooting.
-3. **[UI behavior and screenshots](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — what the controls do, how menus/tabs/dragging/right-click work, and real screenshot evidence.
-4. **[Real screenshot gallery](./screens/)** — captures from the running app.
-5. **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** — test setup, results, and what is not yet tested.
+2. **[Glossary](./GLOSSARY.md)** — plain-English and technical definitions for blocks, runtime, file formats, performance and extension security.
+3. **[Complete user guide](../chatgpt/USER-GUIDE.txt)** — detailed feature instructions and troubleshooting.
+4. **[UI behavior and screenshots](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — what the controls do, how menus/tabs/dragging/right-click work, and real screenshot evidence.
+5. **[Real screenshot gallery](./screens/)** — captures from the running app.
+6. **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** — test setup, results, and what is not yet tested.
 
 ## Deep research: understand how it works
 
