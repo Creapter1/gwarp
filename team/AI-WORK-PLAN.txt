@@ -8,16 +8,18 @@ PURPOSE
 Give every AI a bounded role, ordered tasks, evidence requirements, acceptance criteria, and handoff gates. Prevent blind coding, duplicate research, guessed APIs, conflicting patches, repeated whole-app audits, and premature merging. The owner decides priorities and approves anything shipped.
 
 AUTHORITY — NON-NEGOTIABLE
-1. Creapter1 is product owner and final release approver.
-2. Claude Opus 5.5 is the ONLY AI authorized for main application engineering: modifying app.html/index.html, adapting proposals into the app, final integration, and release preparation. Before doing that work, confirm the displayed active model in the actual Claude interface is exactly “Claude Opus 5.5.” If unclear or different, stop and ask the owner. Never silently substitute another model.
-3. Other AIs may research, review, inspect the existing app, test, create specifications, test matrices, bug reports, design options, and candidate code in their own folders. They must not edit app.html/index.html or another AI's folder.
-4. Other AI code is a proposal, not an approved fix. Claude Opus 5.5 validates the real APIs, adapts/tests it, and the owner approves integration.
-5. This plan does not prove app.html/index.html are intact. The large app source was not fully verified in this planning pass.
-6. Never claim a browser test, successful merge, backup, rollback, or fix unless it actually happened and evidence is recorded.
-7. Preserve G-Warp; do not rebuild Scratch or make a replacement app. Do not remove existing features (“add, don't swap”). Follow STYLE-GUIDE, privacy, safety, and licensing requirements.
-8. Never run arbitrary JavaScript blocks or silently transmit project/personal data. Sensitive extension behavior must be correctly marked and warned.
-9. Before code work, read AI-TEAM.txt, TODO.txt, STYLE-GUIDE.txt, ENGINE-MAP.txt, MERGE-QUEUE.txt, this plan, and the relevant notes. G-Warp is not scratch-vm. Verify real hooks and mark unknown APIs UNSURE rather than guessing.
-10. Claim a task before work; one owner per task. Inspect existing outputs first. Don't repeat finished research unless assigned a specific gap review.
+1. Creapter1 is product owner and final approver for priorities, design choices, live integration, and releases.
+2. ALL AIs may inspect/use the existing app, research, reproduce and test assigned issues, write fixes, and prepare code proposals. Keep work in your own folder by default. No AI may edit another AI's folder or overwrite another contributor's work.
+3. ALL AIs may place code in app.html/index.html only when explicitly assigned, and only as a uniquely marked, inert, non-executing proposal. Never connect it to live runtime, boot, event, import, rendering, UI, or serialization paths. If inert placement cannot be guaranteed, keep the complete candidate in the contributor's own folder and add no app-file code.
+4. Claude Opus 5.5 is the ONLY AI authorized to connect/activate proposals, integrate them into live behavior, conduct the official side-by-side runtime/visual comparison, capture official screenshots/evidence, resolve competing candidates, and prepare releases. Before any such work, verify the active model label in the actual Claude interface is exactly “Claude Opus 5.5.” If unclear or different, stop and ask the owner.
+5. No proposal is approved merely because it exists, passes syntax, or is labelled PICK. Owner approval is required before live integration/release.
+6. This plan does not prove app.html/index.html are intact. The large app source was not fully verified in this planning pass.
+7. Never claim a browser test, successful merge, backup, rollback, or fix unless it actually happened and evidence is recorded.
+8. Preserve G-Warp; do not rebuild Scratch or make a replacement app. Do not remove existing features (“add, don't swap”). Follow STYLE-GUIDE, privacy, safety, and licensing requirements.
+9. Never run arbitrary JavaScript blocks or silently transmit project/personal data. Sensitive extension behavior must be correctly marked and warned.
+10. Before code work, read AI-TEAM.txt, TODO.txt, STYLE-GUIDE.txt, ENGINE-MAP.txt, MERGE-QUEUE.txt, this plan, and relevant notes. G-Warp is not scratch-vm. Verify real hooks and mark unknown APIs UNSURE rather than guessing.
+11. Claim a task before work; one owner per task. Inspect existing outputs first. Don't repeat finished research unless assigned a specific gap review.
+12. Out-of-scope ideas must be preserved in team/FUTURE-IDEAS.txt as WAITING FOR OWNER; do not implement or integrate them without the owner's explicit approval.
 
 SOURCE-OF-TRUTH ORDER
 A. Owner's latest explicit instruction.
