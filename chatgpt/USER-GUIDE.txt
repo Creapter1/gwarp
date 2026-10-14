@@ -29,7 +29,7 @@ CONTENTS
 15. Verification status
 
 1. EDITOR LAYOUT
-- Category rail: block families and Extensions. The current source has a known issue where one click may not navigate to a category as expected; consult UI-AUDIT.txt.
+- Category rail: block families and Extensions. Live-tested: one click on Looks navigated the palette to its blocks. The old static-audit concern is not confirmed; see the live report.
 - Block palette: find blocks and drag them into scripts.
 - Workspace: assemble scripts, pan/zoom, clean up, and use right-click actions.
 - Stage: preview project behavior. Green Flag starts scripts; Stop stops; G-Warp also has Pause.
@@ -56,7 +56,7 @@ Scripts run from the hat downward. Statement blocks connect vertically. C-shaped
 - Green Flag starts scripts listening for the Green Flag event.
 - Stop ends running scripts and related activity. Verify cleanup for effects, clones, sounds, and timers in the actual build.
 - Pause is a G-Warp extra. The inspected handler pauses engine stepping but may not pause active audio.
-- The Stage previews sprites. The current audit flags a possible issue where clicking it may trigger more than the intended sprite-click script.
+- The Stage previews sprites. Stage click routing to sprite-specific scripts remains NOT TESTED live; see the verification report.
 - Use stage size/fullscreen controls where available. On a small screen, try landscape orientation.
 - HQ/high-quality rendering can improve sharpness but may reduce performance.
 - Frame-rate settings can change timing compared with Scratch's typical 30 updates per second.
@@ -189,6 +189,6 @@ Import/export changed a project: check unsupported extensions, assets, variables
 7. Separate source-inspected findings from browser-reproduced findings.
 
 15. VERIFICATION STATUS
-This guide is based on static inspection of app.html identified as Beta v15.45.0. It does not claim every feature has been browser-tested. Main Code/Costumes/Sounds switching, costume selection, workspace menus, sprite and costume menus, restore, web-load, instrument, extension, tilemap, behavior, and LAN-related code are present. High-priority items to verify are category navigation, long-stack/nested snapping, live edits in running loops, stage sprite-click routing, edit-mode sprite dragging, effect reset/audio pause, and duplicate Ctrl/Cmd+S handling.
+This guide is based on static inspection of app.html identified as Beta v15.45.0 plus Claude's limited live-browser run (Chromium, 1440×900 and 1024×700, 2026-10-13). Ten interaction/layout checks passed; see docs/LIVE-UI-VERIFICATION.txt. It does not claim every feature has been browser-tested. Live-verified: category single-click, basic block drag, workspace and block context menus, Start/Stop, More menu, sprite context menu, Code/Costumes/Sounds tab switching, Extensions library, and 1024×700 width fit. Restore, web-load, instrument details, tilemap, Behavior Designer, LAN, and other advanced tools are present in source but were not part of the live test run. High-priority items to verify are category navigation, long-stack/nested snapping, live edits in running loops, stage sprite-click routing, edit-mode sprite dragging, effect reset/audio pause, and duplicate Ctrl/Cmd+S handling.
 
 If the live interface differs, treat the current app/source as authoritative and update this guide after verification.
