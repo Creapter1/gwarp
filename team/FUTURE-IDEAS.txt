@@ -1,0 +1,31 @@
+G-WARP FUTURE IDEAS PARKING LOT
+Owner: Creapter1
+Status rule: WAITING FOR OWNER means do not implement, activate, or integrate.
+Purpose: preserve potentially good ideas that are outside the current Scratch/TurboWarp/PenguinMod and G-Warp goals without letting them distract from core compatibility or destabilize the current app.
+
+CLASSIFICATION
+- CORE COMPATIBILITY: needed for Scratch, TurboWarp, PenguinMod, or an existing G-Warp requirement. Put it in the active work plan after evidence and prioritization.
+- PRODUCT IMPROVEMENT: improves an existing G-Warp workflow while staying within the product's direction. Propose it to the owner for prioritization.
+- FUTURE IDEA: optional/out-of-scope capability. Park it here until the owner explicitly approves it.
+
+ENTRY TEMPLATE
+ID:
+Idea title:
+Origin AI / source:
+Description:
+Problem or user need:
+Relationship to Scratch / TurboWarp / PenguinMod:
+Why it might be valuable:
+Estimated effort and dependencies:
+Risks / performance / security / child-safety concerns:
+Overlap with existing G-Warp feature:
+Suggested next step:
+Status: WAITING FOR OWNER
+
+RULES
+1. Do not discard an idea just because it is not part of Scratch/TurboWarp/PenguinMod. Record it for later consideration.
+2. Do not assume that a feature missing from those projects should be added to G-Warp.
+3. Do not build or integrate a FUTURE IDEA until Creapter1 explicitly approves that specific idea.
+4. Do not silently add optional features to the core plan or bundle unrelated ideas into a bug fix.
+5. If approved, the owner decides whether it becomes an active task, and the master plan is updated.
+6. Keep the core app stable; optional ideas are not a reason to rewrite existing systems.
