@@ -16,6 +16,9 @@ This is the canonical index. The documentation has **two learning levels**: an e
 4. **[TODO roadmap](../TODO.txt)**, **[AI team log/rules](../AI-TEAM.txt)**, and **[merge queue](../MERGE-QUEUE.txt)** — current work and collaboration rules.
 
 ## Visual references
+- [G-Warp editor map (SVG)](./images/gwarp-editor-map.svg) — labeled editor areas and their purpose.
+- [Block shapes explainer (SVG)](./images/gwarp-blocks-explained.svg) — event hats, statements, C-blocks, reporters, and Boolean conditions.
+- [G-Warp vs. Scratch architecture (SVG)](./images/gwarp-scratch-architecture.svg) — conceptual systems comparison; not an exact code diagram.
 - [Main editor schematic](../chatgpt/images/gwarp-ui-map.svg) — explanatory drawing, not a screenshot.
 - [Interaction-flow schematic](../chatgpt/images/gwarp-interactions-map.svg) — explanatory drawing, not a screenshot.
 - [Real screenshots](./screens/) — actual browser captures; see the live report for which interactions they evidence.
@@ -38,4 +41,4 @@ This is the canonical index. The documentation has **two learning levels**: an e
 - [Scratch Paint](https://github.com/scratchfoundation/scratch-paint)
 - [Scratch Specification (work in progress)](https://scratchspec.github.io/)
 
-**Important:** G-Warp is a custom engine, not Scratch VM. The two systems aim for similar user-facing behavior, but internal APIs, feature coverage, and edge cases must be verified separately.
+**Important:** These SVGs are explanatory diagrams, not screenshots captured from the live app. **G-Warp is a custom engine, not Scratch VM. The two systems aim for similar user-facing behavior, but internal APIs, feature coverage, and edge cases must be verified separately.
