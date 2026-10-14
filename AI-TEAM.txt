@@ -4,8 +4,7 @@
 =====================================================================
 
 THE TEAM
-- Owner: Creapter1 (the boss - decides what goes into G-Warp)
-- Owner    | Product owner / final approval | decides priorities, design picks, merges and releases.
+- Owner: Creapter1 (the boss - decides priorities, design picks, merges and releases).
 - ChatGPT  | Planner / research reviewer / test designer | folder: chatgpt/ | list: team/AI-WORK-PLAN.txt
 - Grok     | Scratch behavior specifications, expected-result tests and extension audit | folder: grok/ | list: team/TODO-GROK.txt
 - DeepSeek | Lab scientist: researches and proposes 3 distinct A/B/C candidates plus lab reports; no main app edits | folder: deepseek/ | list: team/TODO-DEEPSEEK.txt
