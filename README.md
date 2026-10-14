@@ -44,7 +44,7 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 | File / folder | What it is |
 |---|---|
 | `index.html` | The website |
-| `app.html` | The G-Warp Beta app (one single file, ~2.3 MB). **Only verified Claude Opus 5.5 or the owner changes it.** |
+| `app.html` | The G-Warp Beta app (one single file, ~2.3 MB). Any AI may add an explicitly assigned, uniquely marked inert proposal only; Claude Opus 5.5 alone may connect/integrate live behavior after model verification and owner authorization. |
 | `AI-TEAM.txt` | The AI team: who does what, team rules, the "continue" word, the work log |
 | `TODO.txt` | The main to-do list (URGENT / NOW / LATER / DONE) |
 | `team/` | Master AI plan, per-contributor task lists, and handoff notes; public, not private |
