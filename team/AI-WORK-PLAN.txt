@@ -1,8 +1,8 @@
 G-WARP MASTER AI WORK PLAN
-Version 1.0 | 2026-10-14
+Version 1.1 | 2026-10-14
 Repository: https://github.com/Creapter1/gwarp
 Owner: Creapter1
-Status: Planning baseline. This file does not authorize app code changes.
+Status: Planning baseline. Includes the owner's new isolated-code-proposal workflow; it does not authorize live integration or release.
 
 PURPOSE
 Give every AI a bounded role, ordered tasks, evidence requirements, acceptance criteria, and handoff gates. Prevent blind coding, duplicate research, guessed APIs, conflicting patches, repeated whole-app audits, and premature merging. The owner decides priorities and approves anything shipped.
@@ -60,6 +60,66 @@ Owner of final diagnosis: Claude Opus 5.5, only after model verification.
 6. Write team/INCIDENT-BASELINE.txt with exact commits, files inspected, limitations, evidence and next bounded action.
 7. Do not repair during this stage. Wait for owner approval.
 Acceptance: owner can tell what was actually inspected, what changed, what remains unknown, and which baseline is trusted.
+
+
+STAGE 1B — REVIEW APPLICATIONS + ISOLATED CODING PROPOSALS (NEW OWNER RULE)
+Purpose: let any AI that is already running/inspecting G-Warp contribute useful code without allowing that code to silently alter the working app. This applies to every AI, including Claude, ChatGPT, Grok, DeepSeek, Gemini, and any future AI.
+
+PERMITTED FOR ALL AIs
+- Open and use the current app to understand behavior, reproduce a specific bug, or collect observations, without claiming that a test passed unless it was actually run.
+- Research, draft fixes, create code, compare approaches, and implement a proposal in the contributor's own folder.
+- If the owner/task specifically calls for code to be placed inside app.html, add it ONLY in a uniquely named, clearly delimited, inert proposal block.
+- Report exact changes, the reason, APIs/hooks assumed, expected behavior, risks, and tests performed/not performed.
+- Suggest improvements to existing features and prepare optional ideas for later.
+
+PROHIBITED FOR NON-INTEGRATION WORK
+- Do not connect a proposal to the running app: no live function replacement, call sites, imports, script registration, boot hooks, active event listeners, CSS selectors that alter live UI, active feature flags, or serialization/initialization changes.
+- Do not leave new code executing. Proposal blocks must be non-executable (for example, a clearly marked comment containing the candidate source or an inert text/template payload); do not paste raw executable statements into a live script.
+- Do not rewrite, remove, rename, or reformat unrelated code; do not change current behavior as a side effect.
+- Do not overwrite another AI's proposal or edit a shared file concurrently. Claim the file/task and record the base commit/blob ID first.
+- Do not describe a dormant proposal as a completed fix.
+
+REQUIRED PROPOSAL MARKERS
+Use a unique ID and obvious boundaries, such as:
+  GW-AI-PROPOSAL: <ID> | AUTHOR: <AI> | STATUS: DORMANT / NOT CONNECTED
+  PURPOSE: <one sentence>
+  TARGET: <file/module/feature>
+  BASE COMMIT: <commit SHA>
+  START: <unique proposal marker>
+  [candidate code stored inertly; it must not execute]
+  END: <unique proposal marker>
+Do not nest or reuse IDs. If storing executable source inside comments is unsafe because of comment termination or HTML parsing, put the full candidate in the contributor's own folder and add only a short pointer in app.html.
+
+CLAUDE OPUS 5.5 — INTEGRATION / VISUAL REVIEW
+After verifying the active model identity and obtaining owner authorization:
+1. Inventory all new proposal IDs and compare each against the base commit/current source.
+2. Verify APIs and side effects against ENGINE-MAP and actual app source; mark uncertain assumptions.
+3. Compare candidates side by side using the same input/project/device/browser where possible.
+4. Activate only one candidate at a time in a controlled working copy/branch, not directly in the owner's release baseline.
+5. Capture screenshots and runtime evidence for before/after, console/errors, interactions and regression checks.
+6. Record accepted/rejected/needs-revision with reasons. Keep rejected useful ideas as proposals; don't silently delete history.
+7. Integrate only after explicit owner approval. Preserve rollback to the baseline and document exact commit/file diffs.
+8. After integration, run focused regression tests and update MERGE-QUEUE/TODO. A screenshot alone is not proof of engine correctness.
+
+ACCEPTANCE FOR EACH PROPOSAL
+- Problem/goal and user impact
+- Reproduction steps or explicit “new feature idea”
+- Proposed code and exact location
+- Evidence class: SOURCE-VERIFIED / STATIC-ANALYSIS / BROWSER-VERIFIED / NOT-TESTED
+- Real API names used and source evidence
+- Tests run and results, plus tests not run
+- Performance/security/compatibility risks
+- Expected visual change (if any)
+- Status: DORMANT / READY FOR REVIEW / REJECTED / SELECTED / INTEGRATED / REGRESSION-TESTED
+- No integration claim before the code is actually connected and tested
+
+STAGE 1C — FUTURE IDEAS PARKING LOT (OWNER-CONTROLLED)
+If an AI suggests something outside Scratch, TurboWarp, PenguinMod, or the stated G-Warp product direction, do not throw it away and do not build it into the live app. Record it in team/FUTURE-IDEAS.txt as an optional idea. Include the origin AI, the problem it might solve, value, cost/risk, relation (or lack of relation) to the core product, and a status of WAITING FOR OWNER.
+The fact that another tool lacks a feature does not automatically make it a good idea or a priority. Clearly distinguish:
+- CORE COMPATIBILITY: required for Scratch/TurboWarp/PenguinMod or existing G-Warp goals.
+- PRODUCT IMPROVEMENT: improves an existing G-Warp workflow while staying in scope.
+- FUTURE IDEA: optional feature outside current scope; parked until the owner explicitly says to build it.
+Only Creapter1 can promote a FUTURE IDEA into the active plan. Until then, no implementation or integration of that idea.
 
 STAGE 2 — FREEZE / SAFETY / RECOVERY (highest product risk)
 Lead: Claude Opus 5.5. Support: ChatGPT test plan; DeepSeek A/B/C proposals; Grok edge-case tests.
@@ -128,12 +188,12 @@ STAGE 8 — LATER BACKLOG (do not jump ahead without owner reprioritization)
 ROLE CARDS
 
 CLAUDE OPUS 5.5 — MAIN ENGINEER / INTEGRATION OWNER
-May read all files, reproduce defects, author minimal fixes, adapt candidate code, run tests, edit app.html/index.html after model verification and explicit owner authorization, integrate selected assets, prepare releases.
+May read all files, reproduce defects, author and place inert proposal code, and test proposals. After active-model verification and explicit owner authorization, is the sole AI authorized to connect proposals to live runtime paths, conduct the official side-by-side comparison, capture integration screenshots/evidence, resolve candidate conflicts, integrate selected assets, and prepare releases.
 Must not broad-rewrite, redesign without request, blindly merge A/B/C, trust summaries over source, claim tests not run, or release without owner approval.
 Every handoff: decision log, commit/blob IDs, evidence class, tests/results, risks, rollback route, owner approval status.
 
 CHATGPT — PLANNER / RESEARCH REVIEWER / TEST DESIGNER
-May read all model folders and docs; maintain this plan/shared navigation; identify duplicates/conflicts/missing evidence; write bounded research, test matrices, acceptance criteria and isolated proposals when assigned. Never edit app.html/index.html or another AI's folder.
+May read all model folders and docs; maintain this plan/shared navigation; identify duplicates/conflicts/missing evidence; write bounded research, test matrices, acceptance criteria and code proposals. May place inert, explicitly marked proposal code inside app.html when assigned, but must never connect or activate it or edit another AI's folder.
 Next: reconcile statuses/cross-references; compare UI audit against live verification; prepare a freeze acceptance matrix; keep summaries concise and source-linked. Don't produce another broad generic research library.
 
 GROK — BEHAVIOR SPECS / TESTS / EXTENSION AUDIT
@@ -141,12 +201,12 @@ Own grok/ and its task list. Complete G5 gallery security/link audit; maintain 7
 Do not edit app files, duplicate finished specs, or claim an extension works because a link exists.
 
 DEEPSEEK — LAB / A-B-C PROPOSALS
-Own deepseek/. Research and write 3 meaningfully different candidates + lab reports/tests. Never edit app files or other folders.
+Own deepseek/. Research and write 3 meaningfully different candidates + lab reports/tests. May place inert, uniquely marked proposal code in app.html if explicitly assigned, but may not connect it or edit another AI's folder.
 Priority: DS2 freeze/Stop proposals; DS3 stuck-script behavior; DS4 IndexedDB crash recovery; DS5 Scratch number/text comparisons (30 test cases per version). For DS1 protobuf .pmp, first review the existing loader/notes and fill only a documented gap.
 Mark guessed APIs UNSURE; include failure modes, complexity, safety, console tests and why a variant wins. Candidate code is not a fix until integrated and tested.
 
 GEMINI — ORIGINAL ASSET DESIGNER
-Own gemini/. Create original SVG options. Priority: three real G-Spark extension-icon concepts; favicon; block category icons; achievement badges; poses; hero art. No integration claims. Under 4 KB per SVG option; no external assets/scripts; provide target-size notes; wait for owner selection.
+Own gemini/. Create original SVG options. Priority: three real G-Spark extension-icon concepts; favicon; block category icons; achievement badges; poses; hero art. May contribute inert marked code/assets for review when assigned, but may not connect assets to live UI. No integration claims. Under 4 KB per SVG option; no external assets/scripts; provide target-size notes; wait for owner selection.
 
 OWNER — PRODUCT DECISIONS / RELEASE GATE
 Sets priorities, names a known-good baseline when needed, chooses designs, approves integration/releases and tests the website. AI recommendations do not override owner decisions.
@@ -171,3 +231,4 @@ FIRST QUEUE AFTER OWNER ACCEPTS THIS PLAN
 4. DeepSeek: inspect current protobuf loader; then claim one A/B/C task, starting with DS2 or DS3.
 5. Gemini: create GM1 extension icon A/B/C options; do not overwrite or integrate without owner selection.
 6. Owner reviews baseline and priorities before integration begins.
+
