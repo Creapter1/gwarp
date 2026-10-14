@@ -4,7 +4,14 @@
 **Goal:** learn the ideas behind G-Warp and Scratch by doing, not by reading a wall of technical words  
 **App version covered:** Beta v15.45.0, unless the live app says otherwise
 
-Start with this guide. For a complete control-by-control reference, continue to [the UI guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md). For deep technical research, use [the engineering reference](./ENGINEERING-REFERENCE.md).
+Start with this guide.
+
+## Visual map of the editor
+
+![G-Warp editor map](./images/gwarp-editor-map.svg)
+
+This labeled map shows the main work areas and how a beginner moves from choosing blocks to running a project.
+ For a complete control-by-control reference, continue to [the UI guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md). For deep technical research, use [the engineering reference](./ENGINEERING-REFERENCE.md).
 
 ## The big idea
 
@@ -54,6 +61,10 @@ What happened? The event block waited for a signal. When you started the project
 If the block does not connect, move the pointer slowly over the top/bottom connection until the snap preview appears. Drop only when the intended connection is highlighted. Basic block dragging passed a live browser check; complex nested stacks still need additional testing.
 
 ## 3. Understand block shapes
+
+![Block shapes and script flow](./images/gwarp-blocks-explained.svg)
+
+Use this illustration to recognize event hats, action blocks, loops, value reporters, and true/false conditions.
 
 ![How Scratch-style blocks connect](./images/gwarp-blocks-explained.svg)
 
