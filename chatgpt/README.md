@@ -8,6 +8,14 @@ Start with the repository's [AI-TEAM.txt](../AI-TEAM.txt), then [TODO.txt](../TO
 3. [Central documentation index](../docs/README.md) — canonical map of all guides, test reports, and screenshot evidence.
 4. [UI behavior audit](./UI-AUDIT.txt) — source-level findings and priorities; check the live report for corrected findings.
 
+## Deep research references
+- [Central research library](../docs/RESEARCH-LIBRARY.md) — annotated source map and evidence standards.
+- [Engineering playbook](../docs/EDITOR-ENGINEERING-PLAYBOOK.md) — how to build a block editor and runtime.
+- [Runtime semantics / parity](../docs/RUNTIME-SEMANTICS-AND-PARITY.md) — tricky block and scheduler behaviors.
+- [Compatibility test matrix](../docs/COMPATIBILITY-TEST-MATRIX.md) — planned versus verified tests.
+- [Project formats and round-trip](../docs/PROJECT-FORMATS-AND-ROUNDTRIP.md) — SB3/PMP, asset validation and import/export.
+- [Extension security model](../docs/EXTENSIONS-SECURITY-MODEL.md) — permissions, sandboxing and risk.
+
 ## Visual references
 - [Editor UI schematic](./images/gwarp-ui-map.svg) — illustrative map, not a screenshot.
 - [Interaction flow schematic](./images/gwarp-interactions-map.svg) — illustrative workflow, not a screenshot.
