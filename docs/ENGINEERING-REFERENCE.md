@@ -1,217 +1,191 @@
-# G-Warp and Scratch-Style Editors — Deep Engineering Reference
+# G-Warp Implementation Map: How the Actual App Works
 
-**Purpose:** a source-grounded research reference for understanding how G-Warp works, how Scratch 3 works conceptually, where they align, and what evidence is needed to reproduce compatible behavior. This is not the beginner guide; start with [Learn G-Warp](./LEARNING-GUIDE.md) first.
+This is the main technical guide to **the application in this repository**. It describes the real screens, the real runtime, the actual tool modules, how data moves through G-Warp, and how that compares with Scratch 3's implementation. It is not a generic programming tutorial or an AI-agent guide.
 
-**G-Warp source inspected:** `app.html`, Beta v15.45.0, source SHA `7ce527ca2908c63bbdfe642856ca29fd82178648` as recorded by the audit/engine map.  
-**G-Warp architecture reference:** [ENGINE-MAP.txt](../ENGINE-MAP.txt)  
-**UI behavior evidence:** [LIVE-UI-VERIFICATION.txt](./LIVE-UI-VERIFICATION.txt) and [UI-AUDIT.txt](../chatgpt/UI-AUDIT.txt)
+**Source baseline used:** `app.html` from the repository's main branch, titled “G-Warp Beta”; the companion [ENGINE-MAP.txt](../ENGINE-MAP.txt) records Beta v15.45.0 and the inspected source SHA `7ce527ca2908c63bbdfe642856ca29fd82178648`. The source includes later feature modules whose internal IDs keep older version numbers. Re-check the live file before relying on any implementation detail.
 
-## 1. Executive model
+## Start here: which file explains what?
 
-![G-Warp and Scratch architecture](./images/gwarp-scratch-architecture.svg)
+- **[app.html](../app.html)** is the actual application: the interface, the custom engine, the Stage, block editing, media tools and later features are packaged inside this large HTML file.
+- **[index.html](../index.html)** is the website entry page. It is not the project runtime.
+- **[ENGINE-MAP.txt](../ENGINE-MAP.txt)** is the short, critical list of real G-Warp globals and hooks.
+- **[Complete user guide](../chatgpt/USER-GUIDE.txt)** tells you how to operate the current app.
+- **[UI/screenshots guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** names visible controls and contains real browser captures.
+- **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** records the actions that were actually tested and the remaining gaps.
+- **[UI audit](../chatgpt/UI-AUDIT.txt)** is a detailed source inspection. A static concern in that file is not automatically a reproduced bug.
+- **[TODO](../TODO.txt)** and **[MERGE-QUEUE](../MERGE-QUEUE.txt)** show what is current work and what is only a candidate patch.
 
-This diagram is a conceptual overview of the two architectures, not a literal source-code dependency graph. [Open the SVG](./images/gwarp-scratch-architecture.svg).
+## 1. The app in one picture
 
-A Scratch-like editor has several cooperating systems:
+![G-Warp application internals](./images/gwarp-app-internals.svg)
 
-1. **Editor UI:** project controls, tabs, sprite selection, categories, palette, workspace, Stage and asset editors.
-2. **Block representation:** block types, fields, inputs, connections, top-level scripts, and coordinates.
-3. **Runtime:** events start script threads; threads advance through blocks; control blocks, waits, broadcasts, clones, variables and procedures affect execution.
-4. **Target/project state:** sprites, clones, Stage/backdrops, costumes, sounds, variables/lists, extensions and project metadata.
-5. **Rendering and input:** draw the Stage and costumes; route mouse, keyboard and Stage events to the correct target.
-6. **Audio:** load, synthesize, schedule, stop and manage sound assets.
-7. **Persistence/interchange:** serialize project state, package assets, import files, and export a compatible project.
-8. **Safety and performance:** extension permissions, clone/list limits, runaway scripts, stop/cleanup behavior and recovery.
-9. **Verification:** tests for exact semantics and interaction parity, not just screenshots.
+G-Warp is built as a **single HTML application with many inline modules**. It is not built by importing the Scratch GUI and Scratch VM packages. The file begins with the visual interface and its styles, contains the initial engine/runtime, then adds feature modules and compatibility fixes in later script elements.
 
-The key research rule: similar UI does not imply the same internal implementation. G-Warp is not Scratch VM. Its internals must be understood from G-Warp source and its engine map, while Scratch's semantics should be researched from Scratch's own code/specification.
+Some `<script>` elements are executable JavaScript; others are embedded JSON manifests, reports or plain-text data. A script ID such as `gw-v1580-sb3` identifies a feature layer in the file. It does not mean the module is a separate file, nor that its historical number is the current public app version.
 
-## 2. Scratch 3 architecture: authoritative starting points
+The source's top-level UI comments mark these visible areas: main workspace, category rail, block palette, coding workspace, right-hand Stage/sprite/assets pane, sprite properties, sprites grid, Costumes, Sounds and block context menu.
 
-Scratch's own repository documentation describes a modular architecture: the GUI is the React-based front end; the VM manages project state and business logic; Scratch Blocks handles block UI/logic; the renderer handles the Stage; audio and storage are separate systems. See the [Scratch GUI getting-started architecture note](https://github.com/scratchfoundation/scratch-gui/wiki/Getting-Started) and the [current scratch-editor monorepo GUI package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui).
+## 2. What the user sees — and which source area owns it
 
-Useful primary references:
-- [Scratch editor UI package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui) — tabs, layout, menus, editor state, loading state.
-- [Scratch VM package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-vm) — project runtime and execution semantics.
-- [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks) — visual block representation and connections.
-- [Scratch Render](https://github.com/scratchfoundation/scratch-render) — Stage rendering.
-- [Scratch Audio](https://github.com/scratchfoundation/scratch-audio) — audio behavior.
-- [Scratch Storage](https://github.com/scratchfoundation/scratch-storage) — assets/project loading and storage.
-- [Scratch Paint](https://github.com/scratchfoundation/scratch-paint) — costume editing.
-- [Scratch Specification](https://scratchspec.github.io/) — independent, explicitly work-in-progress description of runtime, palette, file format and I/O. Use as a guide, then verify against source.
-- [Scratch VM README](https://github.com/scratchfoundation/scratch-vm) — explains the VM and block-to-AST relationship.
+![G-Warp editor map](./images/gwarp-editor-map.svg)
 
-**Repository status note:** older standalone Scratch repositories have been migrated/archived in favor of the `scratch-editor` monorepo. For current implementation research, prefer the monorepo package paths while retaining older READMEs as explanatory references.
+The main screen is divided into a few connected work areas:
 
-## 3. G-Warp architecture: confirmed from its own engine map
+**The category rail and block palette** are for finding instructions. Clicking a category changes the palette; palette blocks are dragged into the workspace. The palette's contents must match blocks the runtime actually supports.
 
-G-Warp is a single-file HTML application with a custom engine. Do not write patches against Scratch internals and expect them to work.
+**The code workspace** is assembled from DOM elements. The inspected source uses `.scratch-block` for blocks and `.block-stack` for stacks. The workspace has a special pointer-drag path, connection checking and snap-preview line. This is not a React Scratch Blocks workspace; the code is G-Warp's own implementation.
 
-### Runtime and project state
-The G-Warp engine map identifies `window.Engine` as the main object. Its documented fields include:
-- `sprites`, `activeSpriteIndex`
-- `threads` (ScriptThread objects)
-- `variables`, `lists`, visibility state for monitors
-- `backdrops`, `activeBackdrop`
-- `isRunning`, `isPaused`, `isTurbo`, `cloneLimit`
-- frame timing, mouse and keyboard state, answer/audio context
-- broadcasts, extensions, tilemap, behavior system
+**The Stage** previews the project. The Stage canvas is a 480×360 logical scene. The CSS size of the canvas can change to fit the dock, but the project coordinate system must remain the same. Start, Pause and Stop live in G-Warp's top bar; G-Warp keeps its own visual design rather than copying Scratch's artwork.
 
-The map names the script execution type `ScriptThread`, with fields including `sprite`, `blocks`, `pc`, `callStack`, `waitUntil`, and `finished`. A thread's `blocks` is the whole script, not an empty stack. The main loop walks `Engine.threads` and calls `step()`.
+**The sprite panel** chooses the object being edited and offers sprite properties and sprite actions. The selected sprite owns its scripts, costumes and sounds; the Stage itself owns backdrop and stage-wide state.
 
-### Rendering
-G-Warp draws with its own 2D canvas code. Do not assume it has Scratch's WebGL renderer or a public `Engine.renderer`. The engine map explicitly says there is no `Engine.renderer`, no WebGL drawables, and no Scratch-style `isTouchingDrawables` hook.
+**Code, Costumes and Sounds** switch the selected target's editing view. When drawing, always check the selected sprite and active costume before changing media.
 
-### Costumes
-The map identifies:
-- `window.GW_V15_COSTUME_EDITOR` with save/load/mode/list helpers
-- `window.GW_VECTOR_EDITOR` with vector-mode helpers
-- Costume data fields including `name`, `canvas`, `res`, rotation center `rc`, `dataFormat`, and optional SVG
-- `sprite.costumes` and `sprite.activeCostume`
+**Extra tools** include Extensions, Instrument Studio, Song Maker/Loop Maker, Tilemap, Behavior Designer, project health/restore, advanced settings, physics-related features, animation tools, fullscreen/high-quality Stage options, sprite/backdrop libraries, Bug Hunter and Live LAN collaboration. The availability and details of each tool depend on the current source build; the modules below identify their implementation entry points.
 
-The editor has vector and bitmap modes. Do not guess editor state property names: the map says `costumeMode`, `svgTool`, `bitmapTool`, `selectedSvg`, etc. are real fields and warns that assumed fields such as `state.mode` or `fillColor` are not real.
+## 3. How a block becomes a running script
 
-### Helpers and integration
-The engine map lists `window.GW`, `window.GW8`, `GW_DIALOG`, `GW_CONFIRM`, `GW_ASK`, `GW_FEATURE_OFF`, `GW_WARP_GUARD`, `GW_SETTINGS`, `GW_BUILD`, `GW_EXT_DANGER`, and `GW_SCRATCH_LOOK`. Treat this as the known API list, not proof every function is public or stable. Verify current source before using a name.
+The easiest way to understand G-Warp is to follow one action from the screen through to the Stage.
 
-**Required integration rule:** if a hook is not in the engine map or cannot be verified in the current source, document it as unknown and ask the maintainer to expose a hook. Never invent a Scratch-style API.
+### Step A — the user places blocks
 
-## 4. Mapping the editor UI to the underlying systems
+The core functions `setupDragAndDrop()`, `getWorkspacePoint()` and `collectSnapCandidate()` manage block movement. The code listens for pointer events, identifies the dragged stack, converts the pointer location into workspace coordinates and searches for a nearby compatible connection.
 
-| User-visible area | User action | System responsibilities | Research/test question |
-|---|---|---|---|
-| Category rail / palette | click category, search, drag block | category selection, palette filtering, block definitions | Does one click navigate? Are all categories and extensions reachable? |
-| Workspace | drag, snap, detach, delete, duplicate, comment | block graph, geometry, zoom/scroll transform, undo/redo | Does the graph remain valid at nested levels and after undo? |
-| Code tab | select/edit scripts | selected target + block workspace | Does tab/sprite switching preserve edits and target identity? |
-| Stage | start, stop, pause, click sprite, drag sprite | runtime state, input routing, drawing, effects, audio | Are events routed to the correct target and are all effects stopped/reset? |
-| Sprite list | select, duplicate, delete, reorder | target collection and active target | Does selection remain correct after clone/delete/import? |
-| Costumes | paint, select, resize, rotate, reorder | costume state, vector/bitmap tools, rotation center, history | Do edits persist across tab switch and file round-trip? |
-| Sounds/music | upload, record, synthesize, audition | audio context, sound assets, playback lifecycle | Does Stop/Pause stop the intended audio? Are assets saved? |
-| Variables/lists | create, mutate, show/hide monitor | scope, storage, monitor UI | Are scoping, index, numeric and text rules Scratch-compatible? |
-| More/file menu | new/open/save/export/restore | project lifecycle, serialization, asset packaging | Does save/reopen preserve project state exactly? |
-| Extensions | add extension, use its blocks | block registration, runtime functions, permissions | Are origin, risk labels, export compatibility and cleanup correct? |
+The snap code distinguishes value blocks from statement stacks, treats hat and cap blocks specially, considers nested `.block-c-body` areas, and compensates for workspace zoom and scrolling. The source's candidate threshold is 46 screen pixels before the zoom conversion. A visible snap line previews the proposed connection before release.
 
-## 5. Runtime semantics to study for compatibility
+After a drag is finished, the stack must be either attached to a valid place or left as a standalone stack. This code is one of the most important places to inspect for reports about invisible hit areas, C-blocks, nested stacks, moving a stack out of a loop, and blocks that look connected but fail when run.
 
-A similar editor must match observable behavior, not just block names:
-- Event hats and when/how scripts start.
-- Thread scheduling, waits, loops, stop behavior, and restart behavior.
-- Broadcast ordering and whether receivers run immediately or later.
-- Clone creation, initialization, deletion, limits, and clone-specific scripts.
-- Variable and list scope, indexing, coercion, rounding and comparison rules.
-- Reporter/Boolean evaluation, empty values, text/number conversion, and edge cases.
-- Procedure definitions, parameters, recursion/warp behavior if supported.
-- Sprite direction, rotation styles, movement, edge bounce, layer order, visibility and graphic effects.
-- Mouse/keyboard sensing, sprite hit testing, touching, timer, answer and stage click events.
-- Pen/tilemap/custom extension behavior, if those extensions are part of the target.
-- Sound scheduling, effects, stop-all-sounds, and pause semantics.
-- Serialization of targets, block connections, asset references, variables, lists, extension metadata and stage/backdrop state.
+### Step B — the runtime makes threads
 
-Do not declare parity from a handful of example projects. Build a test matrix with small projects and exact expected values/outcomes, then compare Scratch and G-Warp.
+G-Warp's runtime defines a `ScriptThread` class. In the inspected source, each thread carries the target/sprite, a block sequence, a program counter (`pc`), a call stack, a wait deadline (`waitUntil`) and a finished flag. Its `step()` method advances execution when the thread is not finished, the project is running and any wait deadline has passed.
 
-## 6. Block graph and snapping model
+The initial `startGreenFlagExecution()` scans top-level `.block-stack` elements for a `when_flag` hat and creates threads. Later modules add or refine live editing, clone behavior, nested control blocks and My Blocks; the source explicitly says the runner reads blocks from the workspace while they run. Because those later modules patch the original runtime, use the current whole file and [ENGINE-MAP.txt](../ENGINE-MAP.txt) before editing execution code.
 
-A block workspace is a graph/tree-like structure, not just coloured rectangles. At minimum, a representation must distinguish:
-- block identity and opcode/type
-- field values
-- input sockets and their child connections
-- next-statement connection
-- parent/child relationship
-- top-level script roots
-- shadow/default input blocks where applicable
-- workspace coordinates and selection/drag state
-- C-block body and else branch
-- block shape/connection compatibility
-- undo/redo state
+**Do not use Scratch VM names as though they were G-Warp hooks.** G-Warp does not expose `window.vm` or `runtime.sequencer`. The recorded main runtime object is `window.Engine`; the real thread step is `ScriptThread.step()`. The engine map says `ScriptThread` itself is not exported globally, though its instances are reachable through `Engine.threads`.
 
-The Scratch VM README includes an example block object with `opcode`, `inputs`, `fields`, `next`, `topLevel`, `parent`, `shadow`, `x`, and `y`. Treat that as a useful conceptual example, not a claim G-Warp stores blocks in exactly that format.
+### Step C — the animation loop advances work and draws the Stage
 
-For G-Warp, test: dragging from the middle of a long stack; dragging a nested stack out of a C-block; inserting at each nested level; cap/hat constraints; zoom/scroll offsets; pointer release outside the workspace; undo/redo after every graph mutation. The live verification report has not yet tested nested/long-stack cases.
+The base Stage setup is `setupStage()`, with an animation-frame loop named `renderLoop()`. Each iteration calculates elapsed time/FPS, clears the canvas, selects a draw order, steps active threads when the project is running and not paused, removes finished threads, and draws visible sprites.
 
-## 7. Project format and interchange
+The documented renderer places a sprite using the Stage center plus its logical coordinates. The core transform is based on `ctx.translate(240 + sprite.x, 180 - sprite.y)`; rotation and size/costume transforms are applied around that location. Mouse coordinates are transformed back from the displayed canvas rectangle into the same 480×360 logical space. That shared mapping is critical: if drawing and pointer mapping disagree, a sprite can appear in one place while click/touch detection acts somewhere else.
 
-G-Warp's engine map says its current loader opens SB3 and ZIP-type PMP files through the local-file menu, plus JSON and ZIP, and has a PenguinMod-link path. It states that newer protobuf-based PMP files are missing. Treat this as source documentation from the inspected version, not a guarantee for every future build.
+The base loop uses `requestAnimationFrame`; a later turbo path can take additional script passes within a bounded frame-work window. Stage fitting, layer ordering, speech bubbles, hit-shielding and high-quality drawing are extended by later modules. Their IDs include `gw-v155-stage-dock-fix`, `gw-v1551-stage-layer-lock`, `gw-v1552-stage-fit`, `gw-v1553-stage-interaction-cleanup`, `gw-v1555-stage-hit-shield`, `gw-v1520-hq` and `gw-v2400-stage-sizes`.
 
-For reliable interchange tests:
-1. Create a small project containing multiple sprites, a backdrop, costumes, sounds, variables/lists, nested control blocks, broadcasts, and a clone.
-2. Save/export.
-3. Open it in a fresh G-Warp session.
-4. Open the same supported file in Scratch/TurboWarp/PenguinMod where applicable.
-5. Compare scripts, target order, variables, assets, sounds, and runtime output.
-6. Record unsupported extensions/features instead of silently dropping them.
+## 4. The actual engine and shared project data
 
-A round-trip test is not complete until both import and export are tested. The current live report says SB3 export/import round-trip remains NOT TESTED.
+The core engine starts as a JavaScript `Engine` object, later exposed on `window` by the global-alias layer. In the inspected source it holds running state, the sprite array, active sprite index, threads, keyboard/mouse state, audio context, broadcasts, variables and drawing/frame timing. Feature modules extend it with things such as clone limits, tilemap and the behavior system.
 
-## 8. Testing and evidence discipline
+A sprite includes its position, size, direction, visibility, current costume, costume collection and sounds. Costumes carry drawing data and metadata such as natural resolution and rotation centre. The Stage/backdrop and project variables/lists have their own state as well. These objects are the shared bridge between the UI, runtime, renderer, media tools and serializer.
 
-Use these labels consistently:
-- **SOURCE-VERIFIED:** directly located in the current source.
-- **STATIC-ANALYSIS:** a likely consequence of source structure, not reproduced in a browser.
-- **LIVE-BROWSER-VERIFIED:** tested in a named browser, viewport, and build with recorded steps.
-- **NOT TESTED:** no result claimed.
-- **FAILED:** the stated expected behavior was tested and did not occur.
+G-Warp also has shared helper/feature objects: `GW` for engine and rendering helpers; `GW8` for editing history; `GW_V15_COSTUME_EDITOR` and `GW_VECTOR_EDITOR` for costume editing; `GW_FILES` for file actions; `GW_V1580_SB3` and `GW_V1580_SB3_EXPORT` for project interchange; and feature objects for sound, tilemap, behaviors, extensions and Stage layout. Not every internal helper is a stable public API—verify each name in the current source.
 
-Every reported defect should include: test ID, build/version or source SHA, browser/viewport, setup, exact steps, expected result, actual result, pass/fail, screenshot/video/log, and whether a regression test exists.
+## 5. How the app's main tools are implemented
 
-Current evidence snapshot: Claude's 2026-10-13 Chromium run passed ten basic UI/layout checks at 1440×900 and 1024×700. This does not verify deep runtime parity. See [LIVE-UI-VERIFICATION.txt](./LIVE-UI-VERIFICATION.txt).
+### Costumes and the paint editor
 
-## 9. Security, performance, and recovery
+The primary paint system is exposed as `window.GW_V15_COSTUME_EDITOR`. Its documented methods include save, bitmap/vector load, list refresh, mode switch and SVG cleaning. The companion `window.GW_VECTOR_EDITOR` handles vector mode and shared costume-coordinate mapping.
 
-A block editor executes user-created programs, so runtime correctness includes containment:
-- Bound clone creation, list size, string growth and expensive loops.
-- Yield to the browser so Stop and recovery controls remain responsive.
-- Stop must clean up threads, clones, timers, sounds and effects.
-- Pause must define what happens to scripts and audio separately.
-- Extension permissions and dangerous capabilities must be visible and explicit.
-- Avoid sending project/user data anywhere without clear consent.
-- Large projects need robust persistence and recovery; browser localStorage may be too small for project-scale assets.
-- Stress tests should cover Stop during loops, clones inside clones, rapidly triggered hats, large lists, long strings, many sounds, and import failures.
+The vector editor introduced by `gw-v1700-vector-editor` keeps vectors as SVG geometry instead of flattening the drawing to an 80×80 image. It preserves costume proportions and rotation centre and can keep an imported vector costume's shapes editable. The `gw-v17010-bitmap` module keeps bitmap costumes at their proper dimensions rather than squeezing everything into a fixed 80×80 result. Bitmap tools operate on a canvas; vector tools transform/select SVG elements. The active tool and selection are different state in each mode, and the real field names are in [ENGINE-MAP.txt](../ENGINE-MAP.txt).
 
-G-Warp's TODO has an active freeze-safety task. The engineering reference should be read alongside the current TODO, merge queue, and engine map before writing or integrating a patch.
+When diagnosing paint problems, trace this path in order: selected sprite → active costume → editor mode → canvas/SVG load → pointer coordinate conversion → edit operation → save back to costume → refresh thumbnail and Stage. A canvas changing on screen is not enough: verify that the underlying costume and its rotation centre survive a save and fresh reload.
 
-## 10. Research workflow for an unfamiliar subsystem
+### Sounds, Instrument Studio and Song Maker
 
-1. Read `AI-TEAM.txt`, `TODO.txt`, `ENGINE-MAP.txt`, and `MERGE-QUEUE.txt`.
-2. Identify the user-visible behavior and the exact Scratch baseline.
-3. Locate the current G-Warp source implementation and its real functions/state.
-4. Trace the full path: UI event → state mutation → runtime/asset operation → rendering/persistence.
-5. Write a minimal reproduction and expected behavior before proposing a fix.
-6. Compare against official Scratch sources/specification and TurboWarp/PenguinMod documentation where relevant.
-7. Separate observed facts from assumptions.
-8. Propose one small, reversible module with a feature-off switch and matching NOTES file, following repository rules.
-9. Test normal, edge, undo/redo, save/reload, and performance cases.
-10. Let Claude review/merge; owner approval is required before shipping.
+The sound tools use the browser's Web Audio API and the app's audio context. The editor has sound import/record/preview/edit behavior, while Instrument Studio defines instrument patches and note scheduling. The module `gw-v1556-instrument-studio` includes instrument definitions (for example piano, electric piano, organ, guitar and bass) and controls for shaping the voice, including waveform/partials, filtering, envelope and other patch settings. The runtime schedules oscillator/sample/drum voices through an audio context and can stop tracked voices.
 
-This process is a research discipline, not a promise that all behavior is already replicated. A faithful Scratch-like environment requires systematic compatibility testing over time.
+The `gw-v1570-song-maker` module builds a song from a part/stem grid. Its source comments describe genre, mood and theme controls, a per-stem energy curve, chord progressions, and up to three instrument layers per stem. It uses a shared scheduling path for live playback and offline rendering so the result can be saved as a normal sound asset on a sprite. `gw-v1580-loop` turns a song or sprite sound into a seamless loop saved as an ordinary sound. These are G-Warp-specific tools; don't assume that every editor control has a direct Scratch equivalent.
 
-## 11. Source and reference library
+When debugging music, test preview, Stop, a second playback, export/save-to-sprite, and project reload separately. A silent preview can be an audio-context issue; a working preview with missing saved sound is an asset/persistence issue.
 
-### G-Warp
-- [Application source](../app.html)
-- [Engine map](../ENGINE-MAP.txt)
-- [TODO / active roadmap](../TODO.txt)
-- [AI team rules and log](../AI-TEAM.txt)
-- [Merge queue](../MERGE-QUEUE.txt)
-- [UI audit](../chatgpt/UI-AUDIT.txt)
-- [Live browser report](./LIVE-UI-VERIFICATION.txt)
-- [UI guide and screenshot gallery](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)
+### Tilemap and Behavior Designer
 
-### Scratch
-- [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor)
-- [Scratch GUI package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui)
-- [Scratch VM package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-vm)
-- [Scratch Blocks repository](https://github.com/scratchfoundation/scratch-blocks)
-- [Scratch Render repository](https://github.com/scratchfoundation/scratch-render)
-- [Scratch Audio repository](https://github.com/scratchfoundation/scratch-audio)
-- [Scratch Storage repository](https://github.com/scratchfoundation/scratch-storage)
-- [Scratch Paint repository](https://github.com/scratchfoundation/scratch-paint)
-- [Scratch Specification (work in progress)](https://scratchspec.github.io/)
-- [Scratch GUI architecture overview](https://github.com/scratchfoundation/scratch-gui/wiki/Getting-Started)
+The tilemap state hangs off `Engine.tilemap`. The inspected initializer uses a 480×360 world and a default 16-pixel tile size, with tile definitions, layers and an active editing layer. The tile code includes world-to-tile conversion, painting, tile-collision lookups, a cached tile image and separate Stage-layer rendering. The Tilemap UI is opened by `openTilemap()` and its controls are wired in the `gw-v1580-tiles` layer.
 
-### TurboWarp and PenguinMod
-- [TurboWarp editor](https://turbowarp.org/editor)
-- [TurboWarp addons](https://turbowarp.org/addons)
-- [PenguinMod Code Editor documentation](https://docs.penguinmod.com/codeeditor/)
-- [PenguinMod shortcuts](https://docs.penguinmod.com/shortcuts/)
+Behaviors are stored in `Engine.behaviorSystem` and attached per sprite with named attributes and event responses. The source defines events such as created, updated, actor-collision and tile-collision, and can start behavior threads from response stacks associated with the behavior definition. This is an additional G-Warp visual-programming system, not part of the standard Scratch project model. Its data must be checked separately when exporting to another editor.
 
-Use official source as the first authority for Scratch behavior. Use community documentation and independent specifications to discover edge cases, then verify them against implementation and reproducible tests.
+### Extensions and the Scratch-shaped compatibility layer
+
+The extension bridge is in `gw-v1510-ext`. It provides a `window.Scratch`-style registration surface, including block-type/argument helpers, then adapts registered extension blocks to G-Warp's engine and script runtime. This is a compatibility adapter, not an instance of Scratch VM.
+
+The extension UI can add an extension from a URL. The code validates that the URL uses HTTP or HTTPS and consults `GW_EXT_DANGER` to decide whether a warning is needed. The actual capability of an extension depends on the loaded code and its runtime context; a risk label is not itself a sandbox. The extension collection and its credits/licences are maintained in the app. Keep source attribution and each extension's licence intact.
+
+### Opening, saving and restoring projects
+
+The file actions live under `GW_FILES`, added by `gw-v1510-files`. The module describes computer/web loading, Save/Save As, restore points and project-health/error reporting. It keeps recent restore points in browser storage and supports loading Scratch shared-project links or direct project files where the route is available.
+
+The SB3 import module is `gw-v1580-sb3`; export is `gw-v1580-sb3export`. They package project structure and assets, including Stage/backdrops, sprites, variables/lists, costumes, sounds and supported scripts. The importer comments explicitly say unsupported blocks are preserved and reported where possible. The exporter warns about G-Warp-only features such as extensions, tilemaps and behaviors rather than silently claiming those are standard Scratch blocks.
+
+The PenguinMod project-link path is in `gw-v1518-penguinmod`; its comments describe reading protobuf-form PenguinMod projects and converting them into a project representation. The engine map also notes a ZIP-type PMP path. Those paths are not interchangeable: test a concrete file from each format.
+
+**Important data boundary:** “the file opens” is not the same as “everything survived.” After a format change, verify the sprites, block stacks, variables, costumes, sounds, rotation centres, layer order, extensions and Stage output after opening the export in a new session.
+
+### Live collaboration, cloud data and other tools
+
+The Live LAN module `gw-v13-live-lan` maintains peers, cursors, locks, change queues and project slices through a WebSocket connection. Its default URL uses the current host and port 8787. That source code alone does not mean a collaboration server is running; connection requires a compatible server and a successful connection.
+
+The cloud-variable module `gw-v1519-cloud` connects to TurboWarp's cloud service for numeric cloud data with a user consent step, as described in its source comments. Other feature layers include physics, animation/bone tooling, Stage fullscreen and high-quality display, sprite/backdrop libraries, Bug Hunter, project diagnostics, updater/settings and GWrap AI assistance. Treat each as its own feature: its UI, stored data, runtime behavior and cleanup may live in more than one script module.
+
+## 6. Why Scratch is built differently
+
+![Scratch components mapped to G-Warp](./images/scratch-to-gwarp-map.svg)
+
+Scratch 3 is built from cooperating packages in the official [scratchfoundation/scratch-editor monorepo](https://github.com/scratchfoundation/scratch-editor):
+
+- **scratch-gui** builds the React-based editor interface and connects the other systems.
+- **scratch-blocks** provides the block workspace, fields, shapes and connections.
+- **scratch-vm** keeps project state and runs the Scratch program. Its README explains how workspace events update an abstract syntax tree (AST) for each target and shows the serialized/in-memory block shape.
+- **scratch-render** draws the Stage with WebGL.
+- **scratch-paint** edits vector and bitmap costumes.
+- **scratch-storage** loads/stores project assets; **scratch-svg-renderer** processes vector artwork.
+- **scratch-audio** implements sound behavior; scheduling/helper packages manage background work.
+
+Useful primary sources are the [official monorepo](https://github.com/scratchfoundation/scratch-editor), [GUI package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui), [VM package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-vm), [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks), [render package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-render), and [storage package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-storage). The Scratch team has moved code from some older standalone repositories into the monorepo, so use the current package paths rather than old tutorials alone.
+
+### The important difference
+
+| Job | Scratch 3 | G-Warp in this source |
+|---|---|---|
+| Main interface | React-based `scratch-gui` package | HTML/CSS in `app.html` with later DOM-building modules |
+| Block workspace | `scratch-blocks` | Custom DOM `.scratch-block` / `.block-stack`, pointer dragging and custom snap logic |
+| Program model/runtime | `scratch-vm` keeps per-target block/AST state and schedules threads | `Engine` plus `ScriptThread`; the workspace DOM is read by the live runner |
+| Stage rendering | `scratch-render` WebGL renderer | Custom 2D canvas with G-Warp drawing/coordinate helpers |
+| Costume editing | `scratch-paint` | `GW_V15_COSTUME_EDITOR` plus `GW_VECTOR_EDITOR` and bitmap canvas tools |
+| Project storage | `scratch-storage` and VM/GUI integration | G-Warp's own file modules, ZIP/SB3 parser/exporter, asset conversion and restore points |
+| Extension API | Scratch VM extension/runtime integration | `gw-v1510-ext` compatibility adapter into G-Warp's own Engine and threads |
+
+A similar block shape is only the visible surface. For real compatibility, the block needs the correct connection behavior, stored values, runtime result, event timing, sprite effects and import/export representation. G-Warp can reuse **ideas and documented behavior** from Scratch while keeping its own code and visual identity. Do not copy Scratch art or assume a Scratch internal function is present in G-Warp.
+
+## 7. If you were building the same kind of app from zero
+
+This is the order that prevents a good-looking editor from becoming a picture of an editor that cannot run projects:
+
+1. **Build the screen shell:** workspace, block palette, Stage, sprite list and Code/Costumes/Sounds tabs. Decide the logical Stage coordinate space up front.
+2. **Define block data and connections:** statement, hat, cap, reporter, Boolean and C-block forms; input sockets and parent/next relationships. The connection model must exist before complex drag snapping.
+3. **Make block editing real:** pointer drag, zoom/scroll transforms, snap previews, nested C-block insertion, detach/delete, comments and undo/redo. Keep graph changes consistent.
+4. **Implement an interpreter and scheduler:** start event hats, create threads, advance instructions, support loops/conditions/waits/broadcasts/procedures, and make Stop work even for runaway scripts.
+5. **Draw the project:** map Stage coordinates, rotate/scale costumes, keep layer order and hit-testing consistent with what the user sees.
+6. **Add media tools:** costume vector/bitmap editing with real save-back and rotation-centre preservation; sound playback and recording; then music synthesis and export.
+7. **Add project interchange:** parse SB3, map blocks and target data, package assets, export, and open the result in a fresh editor session.
+8. **Add extra tools only after the core holds together:** extensions, tilemap, behaviors, collaboration, physics and animation each need their own state and life cycle.
+
+That is also how to understand the current G-Warp source: follow each feature through the visible tool, shared model, runtime handler, renderer or media path, and file save/load. If a UI button has no connection through those layers, the feature is only partially implemented.
+
+## 8. How to inspect or change this app without breaking it
+
+G-Warp has accumulated multiple inline modules and patches. A later script can replace an earlier event handler or add behavior to an earlier object. **Order matters.** Search for the module ID and function name, read the earlier definition it relies on, and inspect the later patches before drawing conclusions.
+
+For code work, follow the repo's workflow: read [AI-TEAM.txt](../AI-TEAM.txt), [TODO.txt](../TODO.txt), [ENGINE-MAP.txt](../ENGINE-MAP.txt) and [MERGE-QUEUE.txt](../MERGE-QUEUE.txt) first. The repository rule is that ChatGPT's feature work goes into small files under `chatgpt/` with a matching notes file; only the owner or Claude changes `app.html` and `index.html`. Don't replace the large app with a rewritten copy.
+
+For every feature, verify the whole path:
+**visible control → event handler → model/state change → runtime/drawing/audio effect → save/load path.**
+Then compare the actual browser result with the expected result. A source comment or passing syntax check is not proof the feature works in the running app.
+
+## 9. What has been demonstrated so far
+
+The latest recorded browser run in [LIVE-UI-VERIFICATION.txt](./LIVE-UI-VERIFICATION.txt) used Chromium at 1440×900 and 1024×700. It passed the basic editor render, category click, palette block drag, workspace and block context menus, Start/Stop state, More menu, sprite context menu, tab switching, Extension panel opening and narrow-window width checks.
+
+Those are real results, but **they do not demonstrate full Scratch parity**. The report explicitly leaves complex nested snapping, keyboard shortcuts, SB3 round-trip, Pause/audio, sprite Stage-click routing, the individual paint tools, advanced tool dialogs and other browsers as not tested. Keep that distinction honest in release notes.
+
+## Next step
+
+Use this page as the technical map, the [user guide](../chatgpt/USER-GUIDE.txt) for what to click, and the [screenshot/UI guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md) to find each control. When working on a specific bug, start from its actual screen and trace into the named code module instead of reading the entire HTML file from beginning to end.
