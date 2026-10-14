@@ -22,7 +22,9 @@ A project is not just the picture you see. It contains:
 
 ## 1. Learn the screen in one minute
 
-![G-Warp editor map schematic](../chatgpt/images/gwarp-ui-map.svg)
+![G-Warp editor map schematic](./images/gwarp-editor-map.svg)
+
+[Open the editor map SVG](./images/gwarp-editor-map.svg)
 
 - **Category rail:** choose a family of blocks, such as Motion, Looks, Sound, Events, Control, Sensing, Operators, Variables, or Extensions.
 - **Block palette:** the blocks available in the chosen family.
@@ -52,6 +54,10 @@ What happened? The event block waited for a signal. When you started the project
 If the block does not connect, move the pointer slowly over the top/bottom connection until the snap preview appears. Drop only when the intended connection is highlighted. Basic block dragging passed a live browser check; complex nested stacks still need additional testing.
 
 ## 3. Understand block shapes
+
+![How Scratch-style blocks connect](./images/gwarp-blocks-explained.svg)
+
+[Open the block shapes SVG](./images/gwarp-blocks-explained.svg)
 
 | Shape | What it means | Typical use |
 |---|---|---|
