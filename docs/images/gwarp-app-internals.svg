@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="560" viewBox="0 0 1240 560" role="img" aria-labelledby="title desc">
+<title id="title">G-Warp application internals</title>
+<desc id="desc">The actual single-file G-Warp application contains the interface and feature modules. Block DOM stacks feed ScriptThread execution in Engine; the frame loop advances threads and draws sprites to a 2D canvas. Costume, sound, extension, tilemap, behavior, collaboration and file modules connect to shared project state.</desc>
+<defs>
+ <style>
+ .bg{fill:#0b1020}.panel{fill:#121b2c;stroke:#334155;stroke-width:1.5}.green{fill:#102e2b;stroke:#4ade80;stroke-width:2}.purple{fill:#231e45;stroke:#a78bfa;stroke-width:2}.blue{fill:#142b46;stroke:#60a5fa;stroke-width:2}.orange{fill:#3b2a18;stroke:#fbbf24;stroke-width:2}
+ .head{fill:#f8fafc;font:700 19px Arial,sans-serif}.label{fill:#e2e8f0;font:600 15px Arial,sans-serif}.small{fill:#cbd5e1;font:13px Arial,sans-serif}.tiny{fill:#94a3b8;font:12px Arial,sans-serif}
+ .arrow{fill:none;stroke:#94a3b8;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:6 6}
+ </style>
+ <marker id="arr" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 Z" fill="#94a3b8"/></marker>
+</defs>
+<rect class="bg" width="1240" height="560" rx="18"/>
+<text class="head" x="28" y="36" style="font-size:23px">G-Warp: how the running app is connected</text>
+<text class="small" x="28" y="59">Mapped to the inspected app.html source and the real function/module names in ENGINE-MAP.txt</text>
+
+<rect class="panel" x="28" y="92" width="230" height="116" rx="12"/>
+<text class="label" x="143" y="119" text-anchor="middle">1 · Main interface</text>
+<text class="small" x="143" y="145" text-anchor="middle">Category rail + block palette</text>
+<text class="small" x="143" y="164" text-anchor="middle">DOM: .scratch-block</text>
+<text class="small" x="143" y="183" text-anchor="middle">Workspace: .block-stack</text>
+
+<rect class="purple" x="302" y="92" width="230" height="116" rx="12"/>
+<text class="label" x="417" y="119" text-anchor="middle">2 · Drag + snapping</text>
+<text class="small" x="417" y="145" text-anchor="middle">setupDragAndDrop()</text>
+<text class="small" x="417" y="164" text-anchor="middle">collectSnapCandidate()</text>
+<text class="small" x="417" y="183" text-anchor="middle">preview → connect / release</text>
+<path class="arrow" d="M258 150 H295" marker-end="url(#arr)"/>
+
+<rect class="green" x="576" y="92" width="230" height="116" rx="12"/>
+<text class="label" x="691" y="119" text-anchor="middle">3 · Script runtime</text>
+<text class="small" x="691" y="145" text-anchor="middle">ScriptThread.step()</text>
+<text class="small" x="691" y="164" text-anchor="middle">pc · callStack · waitUntil</text>
+<text class="small" x="691" y="183" text-anchor="middle">finish / wait / control flow</text>
+<path class="arrow" d="M532 150 H569" marker-end="url(#arr)"/>
+
+<rect class="blue" x="850" y="92" width="230" height="116" rx="12"/>
+<text class="label" x="965" y="119" text-anchor="middle">4 · Shared Engine</text>
+<text class="small" x="965" y="145" text-anchor="middle">window.Engine</text>
+<text class="small" x="965" y="164" text-anchor="middle">sprites · threads · variables</text>
+<text class="small" x="965" y="183" text-anchor="middle">events · extensions · stage</text>
+<path class="arrow" d="M806 150 H843" marker-end="url(#arr)"/>
+
+<rect class="green" x="1096" y="92" width="116" height="116" rx="12"/>
+<text class="label" x="1154" y="124" text-anchor="middle">5 · Draw</text>
+<text class="small" x="1154" y="149" text-anchor="middle">2D</text>
+<text class="small" x="1154" y="168" text-anchor="middle">canvas</text>
+<text class="small" x="1154" y="187" text-anchor="middle">480×360</text>
+<path class="arrow" d="M1080 150 H1089" marker-end="url(#arr)"/>
+
+<rect class="panel" x="28" y="262" width="280" height="128" rx="12"/>
+<text class="label" x="168" y="290" text-anchor="middle">Costumes + sprite artwork</text>
+<text class="small" x="168" y="315" text-anchor="middle">GW_V15_COSTUME_EDITOR</text>
+<text class="small" x="168" y="336" text-anchor="middle">GW_VECTOR_EDITOR</text>
+<text class="small" x="168" y="357" text-anchor="middle">Bitmap canvas + SVG assets</text>
+<text class="tiny" x="168" y="375" text-anchor="middle">Sprites own costumes, center and scale</text>
+
+<rect class="panel" x="330" y="262" width="280" height="128" rx="12"/>
+<text class="label" x="470" y="290" text-anchor="middle">Sounds + music</text>
+<text class="small" x="470" y="315" text-anchor="middle">Web Audio synthesis / playback</text>
+<text class="small" x="470" y="336" text-anchor="middle">GW_INSTRUMENT_STUDIO</text>
+<text class="small" x="470" y="357" text-anchor="middle">GW_SONG_ARRANGER</text>
+<text class="tiny" x="470" y="375" text-anchor="middle">Preview and export audio as a sprite sound</text>
+
+<rect class="panel" x="632" y="262" width="280" height="128" rx="12"/>
+<text class="label" x="772" y="290" text-anchor="middle">World tools</text>
+<text class="small" x="772" y="315" text-anchor="middle">Engine.tilemap</text>
+<text class="small" x="772" y="336" text-anchor="middle">Engine.behaviorSystem</text>
+<text class="small" x="772" y="357" text-anchor="middle">Tile collisions + behavior threads</text>
+<text class="tiny" x="772" y="375" text-anchor="middle">G-Warp features, not stock Scratch blocks</text>
+
+<rect class="panel" x="934" y="262" width="278" height="128" rx="12"/>
+<text class="label" x="1073" y="290" text-anchor="middle">Project + extensions</text>
+<text class="small" x="1073" y="315" text-anchor="middle">GW_V1580_SB3 / EXPORT</text>
+<text class="small" x="1073" y="336" text-anchor="middle">GW_FILES · fromPenguinMod()</text>
+<text class="small" x="1073" y="357" text-anchor="middle">Extension bridge + safety prompts</text>
+<text class="tiny" x="1073" y="375" text-anchor="middle">Package assets, state and supported blocks</text>
+
+<path class="arrow dash" d="M168 262 V230 H965 V216" marker-end="url(#arr)"/>
+<path class="arrow dash" d="M470 262 V238 H965 V216" marker-end="url(#arr)"/>
+<path class="arrow dash" d="M772 262 V246 H965 V216" marker-end="url(#arr)"/>
+<path class="arrow dash" d="M1073 262 V254 H965 V216" marker-end="url(#arr)"/>
+
+<rect x="28" y="424" width="1184" height="104" rx="12" fill="#111827" stroke="#475569" stroke-width="1.5"/>
+<text class="label" x="48" y="452">Important implementation fact</text>
+<text class="small" x="48" y="475">The workspace is represented by actual DOM block elements and stack containers. The runtime creates/steps ScriptThread objects;</text>
+<text class="small" x="48" y="495">the animation-frame loop advances threads and draws sprites to the custom 2D canvas. Later inline modules patch and extend earlier code.</text>
+<text class="tiny" x="48" y="514">This is a source-grounded map, not a claim that every feature has been browser-tested.</text>
+</svg>
