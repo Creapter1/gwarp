@@ -1,5 +1,5 @@
 G-WARP MASTER AI WORK PLAN
-Version 1.1 | 2026-10-14
+Version 1.2 | 2026-10-14
 Repository: https://github.com/Creapter1/gwarp
 Owner: Creapter1
 Status: Planning baseline. Includes the owner's new isolated-code-proposal workflow; it does not authorize live integration or release.
@@ -70,7 +70,7 @@ Purpose: let any AI that is already running/inspecting G-Warp contribute useful 
 PERMITTED FOR ALL AIs
 - Open and use the current app to understand behavior, reproduce a specific bug, or collect observations, without claiming that a test passed unless it was actually run.
 - Research, draft fixes, create code, compare approaches, and implement a proposal in the contributor's own folder.
-- If the owner/task specifically calls for code to be placed inside app.html, add it ONLY in a uniquely named, clearly delimited, inert proposal block.
+- If the owner/task specifically calls for code to be placed inside app.html/index.html, add it ONLY in a uniquely named, clearly delimited, inert proposal block.
 - Report exact changes, the reason, APIs/hooks assumed, expected behavior, risks, and tests performed/not performed.
 - Suggest improvements to existing features and prepare optional ideas for later.
 
