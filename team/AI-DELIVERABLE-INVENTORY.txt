@@ -1,5 +1,5 @@
 G-WARP AI DELIVERABLE INVENTORY AND REVIEW NOTES
-Date: 2026-10-14
+Date: 2026-10-15
 Purpose: summarize existing model outputs and identify the next concrete review action. This is an inventory/static review, not a claim that all candidate code was executed.
 
 EVIDENCE KEY
@@ -45,3 +45,11 @@ CROSS-TEAM GAPS / CONFLICTS TO RESOLVE
 - App source integrity is NOT established by this inventory. A prior large-file fetch did not return the app.html body.
 - Existing browser verification covers only listed workflows; costumes, import/export round trip, nested block snapping, Pause/audio, stage routing, tilemap, Behavior Designer, diagnostics and non-Chromium browsers remain untested in the report.
 - Avoid repeat full-app reviews after every patch. Keep a baseline, review changed files/dependencies, run targeted regression tests, and schedule another full audit only after a meaningful release/baseline change.
+
+
+CURRENT REVIEWER ROLE + CONTINUOUS QUEUE (2026-10-15)
+- ChatGPT is now the standing independent reviewer for all AI deliverables. See team/TODO-CHATGPT.txt.
+- First-pass static findings are recorded in team/CROSS-AI-REVIEW-2026-10-15.txt. No candidate in that report was executed or browser-verified by ChatGPT.
+- Every AI may review other AIs' outputs, but must submit findings rather than edit another contributor's folder.
+- team/CONTINUOUS-WORK-QUEUE.txt is the shared next-task queue; when a task finishes and time remains, claim the next suitable unclaimed task rather than stopping or inventing work.
+- Claude Opus 5.5's additional work mode is integration lead + official runtime/visual evidence owner: review all progress, assign bounded revisions/assets/scenarios to the best-fit AI, test one candidate at a time, capture screenshots/evidence, and integrate only after active-model verification and owner approval.
