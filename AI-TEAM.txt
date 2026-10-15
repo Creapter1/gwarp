@@ -5,13 +5,13 @@
 
 THE TEAM
 - Owner: Creapter1 (the boss - decides priorities, design picks, merges and releases).
-- ChatGPT  | Planner / research reviewer / test designer | folder: chatgpt/ | list: team/AI-WORK-PLAN.txt
+- ChatGPT  | Independent reviewer / planner / test designer / evidence reconciler | folder: chatgpt/ | queue: team/CONTINUOUS-WORK-QUEUE.txt
 - Grok     | Scratch behavior specifications, expected-result tests and extension audit | folder: grok/ | list: team/TODO-GROK.txt
 - DeepSeek | Lab scientist: researches and proposes 3 distinct A/B/C candidates plus lab reports; no main app edits | folder: deepseek/ | list: team/TODO-DEEPSEEK.txt
 - Gemini   | Original G-Warp icons and picture concepts, usually 3 SVG options per idea | folder: gemini/ | list: team/TODO-GEMINI.txt
-- Claude Opus 5.5 | ONLY AI authorized to connect/activate proposals, integrate live behavior, perform official side-by-side runtime/visual comparisons and screenshots, resolve conflicts, and prepare releases. Must verify active model identity and follow owner approval gates.
+- Claude Opus 5.5 | Integration lead + official runtime/visual evidence owner. Reviews all AI work, assigns bounded revisions/assets, integrates approved candidates, captures screenshots, and prepares releases. Must verify active model identity and follow owner approval gates.
 
-START HERE: team/AI-WORK-PLAN.txt (ordered stages and roles), then TODO.txt. Also read STYLE-GUIDE.txt, MERGE-QUEUE.txt, and ENGINE-MAP.txt before code work. Contributor task lists and handoff notes are stored under team/.
+START HERE: team/AI-WORK-PLAN.txt, then team/CONTINUOUS-WORK-QUEUE.txt and TODO.txt. Read STYLE-GUIDE.txt, MERGE-QUEUE.txt, and ENGINE-MAP.txt before code work. Contributor task lists and handoff notes are stored under team/.
 
 NEW AI JOINING? Do this:
 1. Read AI-TEAM.txt, then TODO.txt (rules!), then your own list if you have one.
@@ -29,9 +29,11 @@ When the owner just says "continue" (and nothing else), it means:
      list... continuing with <job>." Then do the work.
   4. Don't ask the owner what to do, the files tell you. Only ask if
      something is truly unclear or would break a rule.
+  5. If time remains after your task, claim the next suitable unclaimed task
+     from team/CONTINUOUS-WORK-QUEUE.txt. Never invent busywork.
 
 WHEN YOUR ASSIGNED LIST IS EMPTY
-Do not invent work or automatically start a feature. Check team/AI-WORK-PLAN.txt and team/FUTURE-IDEAS.txt, then claim the next unclaimed, in-scope task that matches your role. Make A/B/C variants only when the task explicitly requests them. Claude Opus 5.5 handles official comparison/integration after model verification and owner authorization.
+Do not stop just because your first task is done if session time remains. Check team/CONTINUOUS-WORK-QUEUE.txt and team/FUTURE-IDEAS.txt, then claim the next unclaimed, in-scope task matching your role. Review other AI work when assigned, but report findings instead of editing their folders. Make A/B/C variants only when explicitly requested. Claude Opus 5.5 alone handles official connected-runtime comparison/integration after model verification and owner authorization.
 TOPICS (most important first):
   1. SPEED (MAIN GOAL): every project, no matter how heavy, must run at
      a steady 60 FPS or more. Find what's slow (rendering, clones, pen,
@@ -57,6 +59,9 @@ fixes, game recipes (platformer, shooter, clicker...), and safe answers
 for kids. Put it in <your folder>/AI-KNOWLEDGE-<topic>.txt.
 Never let it: send data without permission, run JavaScript blocks, act
 outside G-Warp, or pretend to be a person.
+
+CROSS-REVIEW RULE
+Every AI may inspect and review any other AI's submitted work for bugs, missing requirements, unsafe assumptions, incomplete testing, and improvement ideas. Do not edit another AI's folder or silently rewrite their files. Submit a review with severity, exact file/function, evidence class, minimum correction, and acceptance test. The original author revises their own proposal; ChatGPT maintains the independent review ledger; Claude owns official integration evidence after model verification. A review is not permission to activate code.
 
 TEAM RULES (to stop two AIs making the same thing)
 1. CLAIM BEFORE YOU START: before working on a job, add a line to the
