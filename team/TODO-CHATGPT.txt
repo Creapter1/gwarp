@@ -26,3 +26,5 @@ REVIEW FORMAT
 
 CONTINUOUS WORK RULE
 When one task is complete and session time remains, claim the next unclaimed C-task. Do not invent features or repeat the whole audit unless the source/diff materially changed. If blocked, produce a source-evidence map, test matrix, or precise author revision request.
+
+C8 SECURITY REVIEW (2026-10-15): Maintain team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. Review the current user-owned AI-key flow and exactly what project context is transmitted; provide a bounded risk report and acceptance tests. Do not change app.html or claim the key can be made perfectly secret in browser code. Also reconcile stale status statements in TODO.txt with current cross-review evidence. Ask the owner for the new canonical website URL before replacing old URLs.
