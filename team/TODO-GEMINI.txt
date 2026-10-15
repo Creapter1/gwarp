@@ -39,3 +39,5 @@ Read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt first. T
 [ ] GM5: after blockers, create three original SVG favicon options and a separate set of category icons in G-Warp style.
 [ ] GM6: cross-review DeepSeek costume proposals for canvas targeting and visual/coordinate issues; report findings without editing deepseek/.
 If time remains after one task, claim the next unclaimed in-scope task. Record browser/version and exact results; do not infer release readiness from static inspection.
+
+[ ] GM7. WEBSITE TARGET RECHECK: the extension currently references the previously documented https://creapter1.github.io/gwarp/app.html target. Wait for the owner to provide the new canonical URL, then update only the extension/docs references assigned to Gemini, test the exact target, and report the files changed. Do not guess a replacement URL or assume gwarper.com is live.
