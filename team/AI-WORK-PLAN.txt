@@ -5,7 +5,7 @@ Owner: Creapter1
 Status: Planning baseline. Includes the owner's new isolated-code-proposal workflow; it does not authorize live integration or release.
 
 PURPOSE
-Give every AI a bounded role, ordered tasks, evidence requirements, acceptance criteria, and handoff gates. Prevent blind coding, duplicate research, guessed APIs, conflicting patches, repeated whole-app audits, and premature merging. ChatGPT is the standing independent cross-AI reviewer; every AI may review peers' work. See team/CROSS-AI-REVIEW-2026-10-15.txt and team/CONTINUOUS-WORK-QUEUE.txt. The owner decides priorities and approves anything shipped.
+Give every AI a bounded role, ordered tasks, evidence requirements, acceptance criteria, and handoff gates. Prevent blind coding, duplicate research, guessed APIs, conflicting patches, repeated whole-app audits, and premature merging. ChatGPT is the standing independent cross-AI reviewer; every AI may review peers' work. See team/TODO-CHATGPT.txt, team/CROSS-AI-REVIEW-2026-10-15.txt and team/CONTINUOUS-WORK-QUEUE.txt. The owner decides priorities and approves anything shipped.
 
 AUTHORITY — NON-NEGOTIABLE
 1. Creapter1 is product owner and final approver for priorities, design choices, live integration, and releases.
