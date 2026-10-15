@@ -79,11 +79,11 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
       [ ] Text limit (join can't grow forever) and list limit 200,000 items.
       [ ] Crash recovery: after a freeze, offer to restore the last autosave
           (use IndexedDB, localStorage is too small for big projects).
-      (Claude has v15.46 mostly built; its Stop test still times out.)
+      (Historical owner-reported note from 13 Oct 2026 only; current v15.46 status and Stop behavior are NOT VERIFIED. Recheck against the current baseline.)
 [~] 2. (ChatGPT: chatgpt/scratch-link.js) "Open in G-Warp" link: app.html#scratch=<number> should ask
       "Open Scratch project #<number>?" then load it (G-Warp already has
       More -> "Load from the web..."). Needed for the browser extension.
-[x] (Gemini) 3. Browser extension -> gemini/extension/ (Claude still needs to test + merge)
+[~] (Gemini) 3. Browser-extension proposal delivered -> gemini/extension/ (acceptance pending packaging, permission review, real-browser tests and owner-approved integration).
 [~] 4. (Grok: grok/SPEC-*.txt + TESTS.txt) Scratch behaviour check: every block must give the SAME result as
       Scratch 3 (number/text rules, list indexes, rounding, pen colours,
       clone rules, hat restarts, broadcast order...). Make small test
@@ -133,3 +133,7 @@ DEEPSEEK TEMPORARY-COVERAGE RULE (2026-10-15)
 ChatGPT, Grok, Gemini, and Claude can work directly on GitHub; DeepSeek currently cannot. If an open DeepSeek task has no meaningful progress for two consecutive team check-ins/session cycles, mark it TEMP COVERAGE OPEN (the owner may open it sooner). Any AI that has officially completed its own assigned task may claim that open task if it has the relevant skills and time. Record the claim in AI-TEAM.txt and the shared queue before starting. Do not wait idle, duplicate actively progressing work, edit deepseek/, or claim the work was completed by DeepSeek. Keep all candidate files in the covering AI's own folder. Create a short plain-TXT handoff using team/DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt and label the candidate/report TEMP COVERAGE / NEEDS DEEPSEEK REVIEW. When DeepSeek returns, it reviews the report and candidate, verifies the evidence, corrects/adapts the work in deepseek/ where appropriate, and records its disposition. Temporary coverage does not authorize live integration; Claude's existing authority/model-verification gates and the owner's approval remain unchanged.
 
 SECURITY RULE (2026-10-15): Never put real API keys, tokens, passwords, private keys, or credentials in source, reports, prompts, screenshots, tests, or handoffs. Use placeholders only; never ask the owner to paste a live key into chat. Never embed a shared service key in public browser code. For user-owned AI keys, disclose the provider, destination, cost, project context sent, storage behavior, and removal. Session-only should be the default; persistent browser storage is not a secure vault. Never log/export keys. If exposure is suspected, alert the owner by file/path without reproducing the value, rotate/revoke it, and review history. Do not change the app key flow without owner approval. See team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt.
+
+
+WEBSITE URL NOTE (2026-10-15)
+The URL above is the previously documented GitHub Pages address, not a confirmed replacement for the website the owner says was changed. Do not replace site links, extension targets, or documentation with a guessed URL. Ask the owner for the exact new canonical URL and whether the old GitHub Pages URL should remain as a fallback.
