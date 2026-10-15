@@ -38,7 +38,9 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 - **[Screenshots and UI guide](chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — where controls live and how the visible interface behaves.
 - **[Engine map](ENGINE-MAP.txt)** — actual G-Warp globals and hooks to check before changing code.
 - **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** and [real screenshots](docs/screens/) — what has actually been tested.
-- **[Master AI work plan](team/AI-WORK-PLAN.txt)** and [deliverable inventory](team/AI-DELIVERABLE-INVENTORY.txt) — assigned roles, task stages, current candidate status and evidence gaps.
+- **[Master AI work plan](team/AI-WORK-PLAN.txt)** and [deliverable inventory](team/AI-DELIVERABLE-INVENTORY.txt) — roles, task stages, candidate status and evidence gaps.
+- **[Cross-AI review report](team/CROSS-AI-REVIEW-2026-10-15.txt)** and [continuous work queue](team/CONTINUOUS-WORK-QUEUE.txt) — independent findings, blockers, and the next bounded task for each AI.
+- **[ChatGPT reviewer task list](team/TODO-CHATGPT.txt)** — review scope and acceptance-report format.
 
 ## Files in this repo
 | File / folder | What it is |
@@ -47,7 +49,7 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 | `app.html` | The G-Warp Beta app (one single file, ~2.3 MB). Any AI may add an explicitly assigned, uniquely marked inert proposal only; Claude Opus 5.5 alone may connect/integrate live behavior after model verification and owner authorization. |
 | `AI-TEAM.txt` | The AI team: who does what, team rules, the "continue" word, the work log |
 | `TODO.txt` | The main to-do list (URGENT / NOW / LATER / DONE) |
-| `team/` | Master AI plan, per-contributor task lists, and handoff notes; public, not private |
+| `team/` | Master AI plan, per-contributor task lists, independent review report, continuous work queue and handoff notes; public, not private |
 | `ENGINE-MAP.txt` | The REAL names inside G-Warp's engine. Read before writing code. |
 | `MERGE-QUEUE.txt` | Everything handed in and its status (pick / reference / superseded / waiting) |
 | `STYLE-GUIDE.txt` | G-Warp's look, words and what's not allowed (brands, characters…) |
@@ -55,7 +57,7 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 
 ## How it's built (the team)
 - **Owner (Creapter1):** decides everything, tests every update with screenshots.
-- **ChatGPT:** planning, research review, test design and evidence reconciliation. **Grok:** Scratch behavior specs/tests and extension audit. **DeepSeek:** isolated A/B/C proposals and lab reports. **Gemini:** original G-Warp visual assets.
+- **ChatGPT:** independent reviewer of every AI's work, planning, test design and evidence reconciliation. **Grok:** Scratch behavior specs/tests and extension audit. **DeepSeek:** isolated code candidates, technical harnesses and lab reports. **Gemini:** original G-Warp visual assets. **Claude Opus 5.5:** integration lead and official runtime/visual evidence owner after active-model verification.
 - **All AIs:** may research, test and prepare code proposals; any proposal placed in `app.html` must remain inert and disconnected. **Claude Opus 5.5:** sole AI authorized to connect/integrate proposals and conduct official side-by-side visual/runtime review and screenshots, subject to active-model verification and owner approval.
 - Every AI follows `AI-TEAM.txt`. Typing **continue** to any AI means "re-read the files and keep going".
 
