@@ -192,14 +192,14 @@ STAGE 8 — LATER BACKLOG (do not jump ahead without owner reprioritization)
 
 ROLE CARDS
 
-CLAUDE OPUS 5.5 — MAIN ENGINEER / INTEGRATION OWNER
-May read all files, reproduce defects, author and place inert proposal code, and test proposals. After active-model verification and explicit owner authorization, is the sole AI authorized to connect proposals to live runtime paths, conduct the official side-by-side comparison, capture integration screenshots/evidence, resolve candidate conflicts, integrate selected assets, and prepare releases.
+CLAUDE OPUS 5.5 — INTEGRATION LEAD + OFFICIAL RUNTIME/VISUAL EVIDENCE OWNER
+Additional work mode: review all AI progress, combine compatible proposals, identify missing assets/fixtures/scenarios, and assign bounded follow-up work to the contributor best suited to it. May read all files, reproduce defects, author proposals, and test candidates. After verifying that the active model label in the actual Claude UI is exactly “Claude Opus 5.5” and receiving explicit owner authorization, is the sole AI authorized to connect proposals to live runtime paths, conduct official side-by-side comparisons, capture screenshots/runtime evidence, resolve candidate conflicts, integrate selected assets, and prepare releases. If identity is missing/ambiguous/different, stop and ask the owner.
 Must not broad-rewrite, redesign without request, blindly merge A/B/C, trust summaries over source, claim tests not run, or release without owner approval.
 Every handoff: decision log, commit/blob IDs, evidence class, tests/results, risks, rollback route, owner approval status.
 
 CHATGPT — PLANNER / RESEARCH REVIEWER / TEST DESIGNER
 Standing independent reviewer for every AI's output. May read all model folders/docs, inspect candidate code and reports, identify bugs, unsupported APIs, duplicate work, missing evidence, risks, and improvements; maintain the cross-AI review ledger; write bounded research, test matrices, acceptance criteria and code proposals. Must not edit another AI's folder or claim runtime verification without running it. May place inert, explicitly marked proposal code inside app.html when assigned, but must never connect or activate it or edit another AI's folder.
-Next: reconcile statuses/cross-references; compare UI audit against live verification; prepare a freeze acceptance matrix; keep summaries concise and source-linked. Don't produce another broad generic research library.
+Next: follow team/TODO-CHATGPT.txt and team/CONTINUOUS-WORK-QUEUE.txt. Review every AI's submitted work for bugs, unsupported APIs, missing tests, risk and improvement opportunities. Maintain team/CROSS-AI-REVIEW-2026-10-15.txt; report findings, don't edit another AI's folder. Don't produce another broad generic research library.
 
 GROK — BEHAVIOR SPECS / TESTS / EXTENSION AUDIT
 Own grok/ and its task list. Complete G5 gallery security/link audit; maintain 75+ expected-result tests; verify disputed Scratch semantics with references; distinguish written cases from automated tests.
@@ -207,11 +207,11 @@ Do not connect or activate proposals in the live app, duplicate finished specs, 
 
 DEEPSEEK — LAB / A-B-C PROPOSALS
 Own deepseek/. Research and write 3 meaningfully different candidates + lab reports/tests. May place inert, uniquely marked proposal code in app.html if explicitly assigned, but may not connect it or edit another AI's folder.
-Priority: DS2 freeze/Stop proposals; DS3 stuck-script behavior; DS4 IndexedDB crash recovery; DS5 Scratch number/text comparisons (30 test cases per version). For DS1 protobuf .pmp, first review the existing loader/notes and fill only a documented gap.
+Current priority: repair/evidence-map the existing costume proposals, build an isolated harness, then resolve protobuf .pmp real-fixture/asset gaps and collision correctness. Follow team/TODO-DEEPSEEK.txt and team/CONTINUOUS-WORK-QUEUE.txt before starting older DS1-DS5 jobs; do not generate more unrelated A/B/C variants while high-risk existing candidates are unresolved.
 Mark guessed APIs UNSURE; include failure modes, complexity, safety, console tests and why a variant wins. Candidate code is not a fix until integrated and tested.
 
 GEMINI — ORIGINAL ASSET DESIGNER
-Own gemini/. Create original SVG options. Priority: three real G-Spark extension-icon concepts; favicon; block category icons; achievement badges; poses; hero art. May contribute inert marked code/assets for review when assigned, but may not connect assets to live UI. No integration claims. Under 4 KB per SVG option; no external assets/scripts; provide target-size notes; wait for owner selection.
+Own gemini/. Create original SVG options. Current priority: make the existing extension package reproducible (real G-Spark icon plus required PNG sizes), test Chromium/Firefox/SPA navigation and end-to-end handoff, then continue with favicon/category icons, badges, poses and hero art. Follow team/TODO-GEMINI.txt and team/CONTINUOUS-WORK-QUEUE.txt. May contribute inert marked code/assets for review when assigned, but may not connect assets to live UI. No integration claims. Under 4 KB per SVG option; no external assets/scripts; provide target-size notes; wait for owner selection.
 
 OWNER — PRODUCT DECISIONS / RELEASE GATE
 Sets priorities, names a known-good baseline when needed, chooses designs, approves integration/releases and tests the website. AI recommendations do not override owner decisions.
