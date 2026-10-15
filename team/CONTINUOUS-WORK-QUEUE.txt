@@ -61,6 +61,7 @@ CL5 Run controlled before/after tests and visual comparisons, capture screenshot
 CL6 Integrate only after explicit owner approval, preserve rollback, update MERGE-QUEUE/TODO, and report exact changed files/commit.
 CL7 If a candidate fails, return a narrow revision request to its author instead of rewriting everything or discarding useful work.
 CL8 Keep a next-task list ready before ending the session; if Claude usage/time expires, leave a resumable handoff with current status, evidence, blockers and next exact action.
+CL9 Before using MERGE-QUEUE.txt, reconcile its statuses against the latest cross-review and current baseline. This file is Claude-owned; keep costume candidates blocked until the review's source-evidence and isolated-test requirements are met. Recheck Gemini WAITING status and the old v15.46 note.
 
 ASSET / SCENARIO ASSIGNMENT RULE
 Claude may request images, SVGs, lyric/song test cases, sample projects, or reproduction scenarios. Assign each artifact to the AI suited to that artifact:
