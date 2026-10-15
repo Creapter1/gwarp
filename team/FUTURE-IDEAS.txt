@@ -29,3 +29,16 @@ RULES
 4. Do not silently add optional features to the core plan or bundle unrelated ideas into a bug fix.
 5. If approved, the owner decides whether it becomes an active task, and the master plan is updated.
 6. Keep the core app stable; optional ideas are not a reason to rewrite existing systems.
+
+ID: FI-SEC-01
+Idea title: Clearer AI Key and Project Privacy Controls
+Origin AI / source: ChatGPT security and consistency review, 2026-10-15
+Description: Improve the existing GWrap AI connection experience so users can preview what project context will be sent, choose whether to include it, understand which provider receives the request and possible costs, use session-only key storage by default, clearly opt into remembering a key, and remove the saved key easily.
+Problem or user need: A user-owned API key is currently optionally stored in browser localStorage, and AI requests include project-derived context. Users need plain-language transparency and a safer default.
+Relationship to Scratch / TurboWarp / PenguinMod: Product/privacy improvement to existing G-Warp AI, not a Scratch-parity requirement.
+Why it might be valuable: Reduces accidental data sharing and makes the existing feature easier to understand.
+Estimated effort and dependencies: Small UX and data-flow audit first; any implementation depends on confirming the current behavior and owner approval. A shared provider key would require a trusted server-side design, not a key embedded in public browser code.
+Risks / performance / security / child-safety concerns: Browser storage is not a secure vault; same-origin script access is a risk. Do not claim a browser-held key is impossible to steal. Explain provider, data sent, and costs. Do not transmit context silently.
+Overlap with existing G-Warp feature: Existing Developer mode → Connect a real AI feature.
+Suggested next step: Review the current implementation and propose minimal options; do not change live code until owner approves.
+Status: WAITING FOR OWNER
