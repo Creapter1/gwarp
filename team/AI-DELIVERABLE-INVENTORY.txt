@@ -53,3 +53,6 @@ CURRENT REVIEWER ROLE + CONTINUOUS QUEUE (2026-10-15)
 - Every AI may review other AIs' outputs, but must submit findings rather than edit another contributor's folder.
 - team/CONTINUOUS-WORK-QUEUE.txt is the shared next-task queue; when a task finishes and time remains, claim the next suitable unclaimed task rather than stopping or inventing work.
 - Claude Opus 5.5's additional work mode is integration lead + official runtime/visual evidence owner: review all progress, assign bounded revisions/assets/scenarios to the best-fit AI, test one candidate at a time, capture screenshots/evidence, and integrate only after active-model verification and owner approval.
+
+SECURITY / CONSISTENCY AUDIT (2026-10-15)
+team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt — STATIC REVIEW. No matching hard-coded secret patterns were found in app.html, index.html and 90 other current text/code/documentation files. This is not a history scan or security certification. app.html's user-owned AI key is session-only by default but may be remembered in localStorage; requests go directly to Anthropic and include project-derived names and selected-sprite script/block text. Clearer disclosure is recommended; no app code was changed. README.md and TODO.txt still reference the previously documented GitHub Pages URL; exact new canonical URL is pending owner confirmation.
