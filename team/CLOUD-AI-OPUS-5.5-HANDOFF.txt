@@ -63,3 +63,7 @@ Preserve G-Warp's engine, UI identity, serialization, extensions, costumes, soun
 
 CURRENT STATUS
 Incident reported; current app integrity is not independently established by this handoff. Safe next action is read-only baseline inspection by verified Claude Opus 5.5. Do not repair during that pass. After owner review, proceed only with explicit authorization and the smallest tested fix.
+
+8. SECURITY AND WEBSITE HANDOFF (2026-10-15)
+Read team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. The current-file pattern scan found no matching hard-coded key patterns in the scanned text/code/docs, but Git history and deployment settings remain unchecked. app.html accepts the user's own Anthropic key; sessionStorage is default, but an explicit remember option uses localStorage, and requests send the key plus project-derived context directly to Anthropic. Review disclosure and storage risk; do not change app code until owner approval. Never embed a shared provider key in public browser code or include live keys in reports/logs/exports.
+The owner reports the website changed, but the replacement canonical URL has not been provided. README.md and TODO.txt now label the GitHub Pages URL as previously documented; extension target references still need owner confirmation before being changed. Do not guess the new URL.
