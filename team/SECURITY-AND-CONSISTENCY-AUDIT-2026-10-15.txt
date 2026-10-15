@@ -1,0 +1,43 @@
+G-WARP SECURITY AND CONSISTENCY REVIEW
+Date: 2026-10-15
+Reviewer: ChatGPT
+Repository: Creapter1/gwarp
+Evidence: STATIC ANALYSIS ONLY. No browser test, penetration test, or full Git-history scan was performed.
+
+SCOPE
+Current recursive tree contains 116 entries. Static pattern checks covered app.html, index.html, and 90 other text/code/documentation assets (92 files total). Checked for private-key headers, common provider key formats, credential assignments, bearer values, and credential-bearing URLs.
+
+RESULT
+No hard-coded secret pattern was detected in the current contents of the 92 scanned files. This is not proof that no secret exists: unknown formats, binary files, repository history, forks, cached copies, ignored files, and deployment settings were not exhaustively checked. No current-file scan can certify the whole Git history.
+
+HIGH-PRIORITY FINDING: USER-SUPPLIED AI KEY
+app.html includes a user-supplied Anthropic API-key feature. The key is stored in sessionStorage by default; if the user checks “Remember the key on this computer,” it is saved in localStorage. Browser code sends the key directly to api.anthropic.com. No hard-coded key was found, but localStorage is not a secure vault: scripts running on the same origin may be able to read it. A public browser app cannot hide a shared provider key from its users or guarantee that a key is impossible to steal.
+
+The request also sends project-derived context: sprite names, selected sprite name, variable names, and selected-sprite script/block text, in addition to the user's question. The current visible copy does not clearly preview all context being sent.
+
+REQUIRED RULE FOR ALL AI CONTRIBUTORS
+- Never place real API keys, tokens, passwords, private keys, cookies, or other credentials in source, examples, screenshots, reports, test fixtures, commits, issues, prompts, or handoffs. Use dummy placeholders only.
+- Never ask the owner to paste a live key into chat.
+- Never put a shared provider key in app.html, index.html, an extension, or any public browser bundle.
+- User-owned key flows must clearly identify the provider, request destination, possible costs, project context transmitted, storage choice, and how to remove the key. Session-only storage should be the default. Persistent browser storage must be an explicit opt-in with a warning that it is not a secure vault.
+- Never include keys in exports, project files, autosaves, diagnostics, crash reports, AI reports, logs, or extension messages.
+- If a real key may have been exposed, do not copy it into a report. Tell the owner the file/path and line, revoke or rotate it, and assess current source plus history. Deleting a line does not invalidate a leaked key.
+- If a shared AI service is ever needed, prefer a trusted server-side proxy with access controls, rate limits, and server-side secret storage. Do not create or deploy a backend without owner approval.
+
+CONSISTENCY FINDINGS
+1. README.md and TODO.txt still reference https://creapter1.github.io/gwarp/. The owner has not supplied the replacement canonical URL in this request. Do not guess it or substitute gwarper.com, which is currently only a future idea. Update links only after owner confirmation.
+2. TODO.txt says “Claude has v15.46 mostly built” and that its Stop test times out. Treat this as a historical 2026-10-13 note, not verified current status.
+3. TODO.txt marks the costume work [x], but the cross-AI review says the candidates are blocked pending source evidence and isolated tests. Status should mean “candidate delivered; acceptance blocked,” not finished/integrated.
+4. TODO.txt marks the Gemini extension [x] while MERGE-QUEUE.txt still marks it WAITING for packaging, browser tests, and integration. Clarify “proposal delivered; acceptance pending.”
+5. MERGE-QUEUE.txt is owned by Claude and says other AIs should read it, not edit it. This audit does not edit that file; Claude should reconcile its statuses after a fresh baseline.
+6. Preserve the authority rules: owner has final approval; all AIs can research/review and create isolated candidates; no AI edits another AI's folder; only verified Claude Opus 5.5 may integrate live behavior and own official runtime/visual evidence; temporary DeepSeek coverage does not bypass those gates.
+
+NEXT ACTIONS
+SEC1 ChatGPT: maintain the audit and add the key-handling rule to shared governance docs. No application code was changed in this audit.
+SEC2 Claude after access returns: verify exact active model label; review the key UX/data flow; propose the smallest safe change; wait for owner approval before integration. Test session-only default, persistent-storage warning, remove-key behavior, project-context consent/preview, request destination, and ensuring keys never enter exports/logs.
+SEC3 Owner: provide the exact new canonical website URL and say whether the current GitHub Pages URL should remain as a fallback.
+SEC4 Owner/Claude: use a suitable Git-history scanner and review GitHub secret-scanning alerts/settings where available; rotate any confirmed exposed key. This review cannot access repository secrets settings or certify history.
+SEC5 ChatGPT: keep statuses distinct: CANDIDATE, STATIC REVIEWED, TESTED, OWNER-APPROVED, INTEGRATED, RELEASED.
+
+LIMITATIONS
+No candidate code was executed. No browser, extension, network, deployment, repository secret settings, or full Git history was tested. The scan found no matching hard-coded secret patterns in the current scanned files; this is not a security certification.
