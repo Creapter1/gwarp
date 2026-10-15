@@ -60,7 +60,7 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 [x] U1. UI must work 1-to-1 like Scratch/TurboWarp/PenguinMod (function,
         not look). (ChatGPT) static behavior audit delivered: chatgpt/UI-AUDIT.txt.
         Browser verification remains for Claude/U3; see audit test plan.
-[x] U2. (DeepSeek, done -> deepseek/costume-*, needs name fixes) COSTUMES / paint editor must work like Scratch's (tools, select,
+[~] U2. (DeepSeek candidate delivered; integration blocked pending source/API evidence and isolated canvas tests) COSTUMES / paint editor must work like Scratch's (tools, select,
         reshape, fill, text, eraser, layers, undo, bitmap<->vector,
         rotation centre, costume list). DeepSeek: code fixes, 3 versions.
 [ ] U3. Claude: bug hunting + clean-up + merge -> new Beta on the website.
