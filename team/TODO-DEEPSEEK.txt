@@ -36,3 +36,14 @@ JOBS (claim in AI-TEAM.txt before starting)
 
 IDEAS (DeepSeek can add here)
 -
+
+
+CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
+Read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt before coding. Current costume candidates are BLOCKED for integration; do not create more unrelated A/B/C features before resolving these issues.
+[ ] D1 (NEXT): source-evidence map for each costume candidate: real state field, editor-root selector, canvas identity, SVG attributes, coordinate conversion, history/undo API, and listener scope. Link to source lines or mark UNSURE.
+[ ] D2: build a disconnected test harness with stage canvas + bitmap/vector costume canvases; prove no unrelated canvas is modified. Include zoom/pan, pointer cancel/lost capture, repeat load and feature-off.
+[ ] D3: revise the candidates in deepseek/ only; avoid broad document listeners and unverified state fields. Include teardown/double-registration safety where applicable.
+[ ] D4: verify pmp-protobuf API from primary source and obtain a real test fixture. Test real project assets and malformed/oversized input. If unavailable, mark loader INCOMPLETE.
+[ ] D5: benchmark collision-B against original GW.spritesTouch with rotation/scale cases; prove no false negatives. Clone variants remain SUPERSEDED unless separately reauthorized.
+[ ] D6: cross-review Grok and Gemini outputs; report findings without editing their folders.
+After each task, review your own diff and claim the next suitable unclaimed item if session time remains. Do not claim tests passed without recorded results.
