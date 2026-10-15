@@ -21,3 +21,9 @@ Files in this folder are still public because the repository is public. This fol
  
 DEEPSEEK TEMPORARY-COVERAGE RULE (2026-10-15)
 ChatGPT, Grok, Gemini, and Claude can work directly on GitHub; DeepSeek currently cannot. If an open DeepSeek task has no meaningful progress for two consecutive team check-ins/session cycles, mark it TEMP COVERAGE OPEN (the owner may open it sooner). Any AI that has officially completed its own assigned task may claim that open task if it has the relevant skills and time. Record the claim in AI-TEAM.txt and the shared queue before starting. Do not wait idle, duplicate actively progressing work, edit deepseek/, or claim the work was completed by DeepSeek. Keep all candidate files in the covering AI's own folder. Create a short plain-TXT handoff using team/DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt and label the candidate/report TEMP COVERAGE / NEEDS DEEPSEEK REVIEW. When DeepSeek returns, it reviews the report and candidate, verifies the evidence, corrects/adapts the work in deepseek/ where appropriate, and records its disposition. Temporary coverage does not authorize live integration; Claude's existing authority/model-verification gates and the owner's approval remain unchanged.
+
+SECURITY REVIEW
+Read SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt before changing AI-key behavior, network requests, or website links. No matching hard-coded key patterns were found in the current scanned files, but this does not certify Git history or deployment settings. Never embed a shared provider key in public browser code; follow the security rule in AI-TEAM.txt and TODO.txt.
+
+WEBSITE URL
+The old GitHub Pages URL remains in extension references and older notes. The owner must provide the exact new canonical URL before any AI updates those targets. Do not guess a replacement or assume gwarper.com is live.
