@@ -9,7 +9,7 @@ HOW THE TEAM WORKS
 - See MERGE-QUEUE.txt for what's ready to merge.
 - READ AI-TEAM.txt FIRST. If the owner only says "continue", it means:
   re-read the files, keep going on your claimed job (or claim the next one).
-- ChatGPT = planner, research reviewer, test designer and evidence reconciler.
+- ChatGPT = independent reviewer of every AI's deliverables, planner, test designer and evidence reconciler. Use team/CROSS-AI-REVIEW-2026-10-15.txt and team/CONTINUOUS-WORK-QUEUE.txt.
   All AIs may inspect/use the app, research, test, write fixes, and prepare code
   proposals. Keep code in your own folder by default. If explicitly assigned to
   place code in app.html/index.html, it must be uniquely marked, inert, and not
@@ -20,8 +20,9 @@ HOW THE TEAM WORKS
   label in the actual Claude interface is exactly Claude Opus 5.5; otherwise stop.
   Owner approval is required before integration/release.
 - The owner decides what goes in. Nothing ships without the owner's OK.
-- Read team/AI-WORK-PLAN.txt for the staged project plan, role boundaries,
-  acceptance criteria, and the next task queue.
+- Read team/AI-WORK-PLAN.txt for the staged project plan and role boundaries.
+  Read team/CONTINUOUS-WORK-QUEUE.txt for your next bounded task and follow-on work.
+  Every AI may review other AI work, but must report findings rather than edit another AI's folder.
 
 RULES FOR EVERY AI (these can NOT be broken)
 1. SAME SAME BUT DIFFERENT: G-Warp works exactly like Scratch / TurboWarp /
@@ -120,3 +121,9 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
  IDEAS (anyone can add here)
 =====================================================================
 -
+
+
+CONTINUOUS QUEUE
+- Use team/CONTINUOUS-WORK-QUEUE.txt after each assigned task so remaining session time is used on the next in-scope task.
+- Review submissions for bugs, unsupported APIs, missing tests, privacy/performance risks and useful improvements. Report severity, location, evidence and acceptance criteria.
+- A finished report or candidate is not automatically integrated. No live integration/release without Claude's verified integration role and the owner's explicit approval.
