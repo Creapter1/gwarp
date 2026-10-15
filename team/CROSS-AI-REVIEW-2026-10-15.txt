@@ -1,0 +1,112 @@
+G-WARP CROSS-AI DELIVERABLE REVIEW
+Review date: 2026-10-15
+Reviewer: ChatGPT (new standing role: independent cross-AI reviewer)
+Repository snapshot reviewed: main tree SHA 33a5fed7e1f4b501c6dec9bc0b43fce5d22c5768
+Application baseline metadata: app.html blob 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes); this is metadata only, not proof that the app was browser-tested.
+Evidence boundary: this review inspected repository files, notes, task lists, and code statically. It did NOT execute candidate modules or run a browser session. No candidate is marked runtime-verified by this report.
+
+STATUS KEY
+- FILE PRESENT: exists in repository.
+- STATIC REVIEW: code or report inspected without execution.
+- REPORTED LIVE TEST: another report records a browser test; this reviewer did not independently repeat it.
+- BLOCKED / HIGH RISK: do not integrate until the listed issue is resolved.
+- READY FOR NEXT REVIEW: documentation/candidate is useful, but acceptance tests remain required.
+
+EXECUTIVE SUMMARY
+1. The repository contains substantial useful work, but the merge queue overstates readiness in several places. PICK is not equivalent to safe-to-integrate.
+2. Highest-risk issue: DeepSeek costume proposals assume CE.state.mode, generic canvas selectors, and data-gw-shape attributes despite ENGINE-MAP documenting CE.state.costumeMode and saying several editor selectors/attributes are UNSURE. Multiple modules attach global document listeners and can intercept unrelated canvas interactions. Do NOT integrate the five costume candidates yet.
+3. ChatGPT clone-safety is a meaningful candidate but overrides clone creation/deletion/Stop behavior and has not been browser-tested. It must be diffed against the current engine and tested for side effects before selection.
+4. ChatGPT scratch-link is small and has a clear user-consent step, but it depends on a live GW_WEB.load hook and has not been integrated or tested end-to-end. The Gemini extension's hash link therefore also depends on that app handler existing in the published build.
+5. DeepSeek protobuf .pmp loader is explicitly incomplete: it treats every non-ZIP buffer as protobuf, relies on a CDN import path/API that is marked UNSURE, returns an empty asset map, and has no real project fixture. Its current test only checks fake byte sequences and error handling; it is not a meaningful compatibility test.
+6. Grok has useful broad behavior specifications and 75 written cases, but several edge expectations are explicitly uncertain or potentially contradictory. These are a specification/test backlog, not a passing test suite. G5 extension audit remains open.
+7. Gemini's extension has a coherent draft flow, but icon PNG paths referenced by manifests are not present in the current tree (only gspark.svg and make-icons.js are present); packaging requires generating/committing icons. The SVG is documented as a placeholder, and real cross-browser/end-to-end tests are missing. Firefox API namespace compatibility and SPA navigation behavior need explicit testing.
+8. ChatGPT UI-AUDIT and Claude's docs/LIVE-UI-VERIFICATION must be reconciled: the latter records 10 PASS results for a narrow scope and explicitly corrects the single-click category finding. Do not claim broader UI/engine correctness.
+9. No current repository evidence proves any candidate was integrated into app.html. The current app blob ID should be recorded before future edits and checked afterward.
+
+PER-CONTRIBUTOR REVIEW
+
+CHATGPT — chatgpt/
+Files reviewed: UI-AUDIT.txt, clone-safety.js + notes, scratch-link.js + notes, screenshot/UI documentation, user guide, interaction/UI SVG maps, live-verification handoff note.
+Strengths:
+- The UI audit records concrete workflows and has an explicit correction after the reported live test disproved the initial category-click issue.
+- clone-safety.js uses the documented Engine/GW family of APIs rather than Scratch VM globals, and its notes honestly list unimplemented frame budgeting, text/list caps, and automatic crash-recovery prompting.
+- scratch-link.js uses an explicit confirmation before calling the existing loader, validates a constrained hash pattern, and documents manual test cases.
+Risks / next checks:
+- clone-safety.js modifies clone behavior and the Engine thread/sprite arrays; static review cannot establish safe cleanup, index integrity, clone hats, broadcast behavior, or latency. Do not merge solely because its names match ENGINE-MAP.
+- Its feature-off, warning, settings, observer lifecycle, repeated load, and project-reset behavior require tests. Compare its wrappers against the effective current clone functions in app.html.
+- scratch-link.js waits up to 20 seconds for GW_CONFIRM/GW_WEB.load via setTimeout; test timeout/failure, consent cancel, invalid hashes, existing #open handling, history/hash behavior, feature-off, and repeated navigation.
+- UI audit open areas remain: nested C-block drag/snap, keyboard shortcuts, save/load round trip, Pause/audio, stage click routing, paint tools, tilemap, Behavior Designer, diagnostics/restore, and Firefox/Safari.
+Verdict: useful reviewer/test work and two candidates; neither candidate is integrated or browser-verified by this report.
+
+GROK — grok/
+Files reviewed: 12 behavior/specification documents and TESTS.txt (75 cases), plus team/TODO-GROK.txt.
+Strengths:
+- Broad coverage across motion, looks, sound, events, control, sensing, operators, data, my blocks, pen, music, files, and engine rules.
+- TESTS.txt makes cases easy to identify and reproduce.
+Risks / next checks:
+- Written cases are not an automated suite and no passing run is recorded here.
+- Some expectations are labelled uncertain or require live Scratch verification; source/version and confidence should be attached to every disputed expected result.
+- Prioritize negative rounding/modulo, list index 0, text-vs-number/case comparison, clone limit, broadcast order, and pen hue wrap. Verify the actual Scratch 3 behavior before turning uncertain expectations into hard failure tests.
+- G5 extension gallery check is explicitly open.
+Verdict: reference material is valuable; G5 is unfinished; no claim of app compatibility is supported yet.
+
+DEEPSEEK — deepseek/
+Files reviewed: costume A/B/C candidates and lab/checklist, speed A/B/C candidates and lab, pmp-loader.js, test-pmp-loader.js, notes, and task list.
+Costume candidates — BLOCKED / HIGH RISK:
+- ENGINE-MAP documents CE.state.costumeMode, selectedSvg, bitmapTool, svgTool, svgDrag, selectionRect; the candidates commonly inspect CE.state.mode and fields such as fillColor/fontSize/eraserSize that are not confirmed.
+- Generic querySelector('canvas') fallback can bind the wrong canvas (stage or another editor), and document-level click/pointer handlers can intercept unrelated UI.
+- [data-gw-shape] and [data-gw-selected] are assumed attributes; no source evidence in this review confirms production SVG elements carry them.
+- select-C edits a parsed SVG DOM object and writes transform/data attributes, but this review did not find evidence that the modified parsed document is serialized back into the actual costume or rendered editor.
+- fill-C's bitmap flood fill must map CSS coordinates to backing-store pixels and be tested for large canvases, transparency, edge pixels, and undo correctness.
+- eraser-C changes canvas pixels directly; verify coordinate scaling, pointer capture, context save/restore on cancellation/lost pointer, and that the correct bitmap canvas is targeted.
+- text-B attaches a textarea immediately, captures all document clicks, chooses the first canvas, and uses event offsets as SVG coordinates; likely to mis-target stage/other canvases and mishandle zoom/pan. Verify actual mode fields and style input locations.
+- undo-C's pushHistory('__undo__'/'__redo__') fallback is not proven to perform undo/redo; a history push is not necessarily an undo command.
+Required action: DeepSeek must make a source-evidence map for each API/selector/attribute and revise each candidate into an isolated, opt-in test harness that cannot affect other canvases. Claude should not integrate until these are fixed and the owner authorizes a test branch.
+Speed candidates — BLOCKED pending benchmarks:
+- LAB-speed reports estimated speed gains; no reproducible benchmark results are established here.
+- Collision-B's bounding-box rejection is only safe if bounds cover rotated/scaled sprites and all costume geometries; rotation handling is explicitly uncertain. Prove no false negatives against the existing exact collision function.
+- Clone candidates are marked SUPERSEDED in MERGE-QUEUE; do not revive them without a new task and a documented correction.
+- Pen optimization was appropriately removed because the private pen hook is not documented.
+PMP loader — BLOCKED / INCOMPLETE:
+- Non-ZIP is treated as protobuf without a signature check.
+- CDN import URL and library export shape are explicitly uncertain.
+- assets are returned as an empty Map; projects with costumes/sounds cannot be claimed to load faithfully.
+- test-pmp-loader.js uses fake bytes only and has no real .pmp fixture, assertions, or load/save round trip.
+Verdict: lab reports identify useful hypotheses, but current candidates are not integration-ready.
+
+GEMINI — gemini/extension/
+Files reviewed: manifests, content.js, background.js, popup files, privacy page, README, icon SVG/generator.
+Strengths:
+- The extension has a narrow purpose and only matches Scratch project pages; it does not request broad all-site host access.
+- The button uses a shadow root and exposes an accessible label.
+Risks / next checks:
+- Both manifests reference icons/icon16.png, icon32.png, icon48.png and icon128.png, but those PNG files are absent from the reviewed repository tree. The current gspark.svg is documented as a placeholder. Generate and commit required icons or adjust packaging intentionally.
+- Firefox MV2 manifest currently uses chrome.* APIs; verify Firefox compatibility with the target environment or add a reviewed browser namespace compatibility layer.
+- content.js wraps history.pushState/replaceState globally on Scratch pages and never restores them; verify SPA transitions, repeated injection, errors, and compatibility with Scratch's own code.
+- The close button writes showButton=false to synced storage and calls removePill; test storage errors, popup toggle behavior, and how to re-enable after hiding.
+- The extension opens a G-Warp hash URL; end-to-end success depends on the published app actually containing the scratch-link handler and on the existing loader successfully fetching the project.
+- privacy.html and requested permissions should be checked against actual data flow. Do not label it release-ready before browser testing and icon generation.
+Verdict: prototype only; WAITING status is appropriate until assets, browser compatibility, privacy review, and end-to-end tests pass.
+
+CLAUDE / SHARED INTEGRATION
+- The repo has no claude/ contributor folder; Claude's current artifacts are the handoff and recorded live UI verification. This is not a problem by itself.
+- The recorded live UI verification reports 10 PASS tests and screenshots for one app build/limited scope. It explicitly lists many untested workflows; keep the claim narrow.
+- MERGE-QUEUE currently marks several risky/unverified candidates PICK. Change semantics/entries so PICK means “candidate selected for controlled testing,” not “safe to merge”; require evidence gates before integration.
+- Claude's future mode should begin with an inventory/diff and model-identity check, then choose one candidate at a time in a controlled working copy. No broad batch merge.
+
+PRIORITY ORDER
+P0 — Record baseline; fix task/status ambiguity; do not integrate high-risk candidates.
+P1 — DeepSeek costume API/selector proof and isolated harness; correct or quarantine candidate code.
+P2 — Clone-safety side-effect comparison + controlled stress/Stop tests.
+P3 — Scratch-link + Gemini extension end-to-end and packaging tests.
+P4 — Grok verify uncertain edge semantics and complete G5 extension audit.
+P5 — DeepSeek PMP real fixtures/asset mapping/protobuf library verification; collision-B correctness benchmarks.
+P6 — UI coverage expansion (save/load, stage routing, pause/audio, nested C-blocks, tilemap, Behavior Designer, diagnostics, cross-browser).
+
+NEXT ACTIONS
+- ChatGPT: maintain independent review ledger, review each newly submitted deliverable, issue precise blockers and bounded rework requests, and prevent duplicate work.
+- Grok: complete G5 and then source/version-check uncertain tests, starting with the highest-risk operator/data cases.
+- DeepSeek: pause new unrelated candidate generation; first repair the costume API/selector evidence and build a test harness. Then address PMP fixtures/assets. Do not mark superseded clone variants as active.
+- Gemini: fix icon packaging and extension cross-browser/SPA tests; only then continue GM2/GM3 design tasks.
+- Claude Opus 5.5: after October 18 when owner can access it, verify model identity, inventory baseline, review this report, and work one candidate at a time. No integration before owner approval.
+- Owner: use this report as a decision aid; no code was changed by this review.
