@@ -118,3 +118,6 @@ SUPPLEMENTAL STATIC SCAN NOTES (2026-10-15)
 - Grok's operator and variable/list notes contain important semantics that must be source-checked before being hard-coded as tests. In particular, TESTS.txt's T002 rounding note acknowledges uncertainty and the list-index-0 expectation conflicts with the general 1-based description in SPEC-variables-lists.txt; resolve this explicitly rather than choosing one silently.
 - Gemini's manifest paths and README make icon generation a release prerequisite: make-icons.js generates PNGs, but those generated files were not present in the repository tree at review time. The extension's history wrapping and Firefox namespace remain unverified.
 - The current main tree includes 101 files and the app.html blob/size recorded above. A tree/blob identifier proves which repository object was present; it does not prove its runtime health.
+
+SECURITY REVIEW ADDENDUM (2026-10-15)
+A separate scoped static review is recorded in team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. No matching hard-coded key patterns were found in the current files scanned, but Git history and deployment settings remain unchecked. The app's user-owned AI-key flow deserves clearer storage-risk and project-context disclosure. The report also lists stale task statuses and website URL confirmation needed from the owner.
