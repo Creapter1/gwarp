@@ -29,3 +29,12 @@ IDEAS (Grok can add here)
 - Pen hue wrapClamp period is 101 in Scratch 3 (not 100); tests must expect that.
 - T002 (round -2.5) should be verified once on live Scratch 3 UI; note in SPEC if
   JS Math.round differs from VM Cast path.
+
+
+CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
+Before claiming new work, read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt.
+[ ] G5 (NEXT): finish the extension-gallery audit already listed above; report exact entries, URLs, data permissions, Dangerous labels and evidence.
+[ ] G6: verify uncertain high-risk cases in grok/TESTS.txt against a named Scratch 3 source/version or live reference, especially negative rounding/modulo, list index 0, string/number comparison, case behavior, clone limit and pen hue wrap.
+[ ] G7: cross-review DeepSeek costume/PMP proposals and ChatGPT clone-safety notes. Submit a review report in grok/; do not edit other AI folders.
+[ ] G8: turn 10-15 verified cases into a deterministic fixture/test format; label it a written fixture unless actually executable.
+When a task is complete and time remains, claim the next unclaimed Grok task from ../CONTINUOUS-WORK-QUEUE.txt. Record evidence and unresolved questions. Do not report app behavior as tested unless you ran the test.
