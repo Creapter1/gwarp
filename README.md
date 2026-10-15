@@ -4,8 +4,9 @@ G-Warp (G Wrapper) is a free, Scratch-style visual programming and game-making p
 
 **Status:** Beta (the only beta for now). Some things may break. If you find a bug, that's how G-Warp gets better.
 
-- **Website:** https://creapter1.github.io/gwarp/
-- **App (Beta):** https://creapter1.github.io/gwarp/app.html
+- **Previously documented website:** https://creapter1.github.io/gwarp/
+- **Previously documented app (Beta):** https://creapter1.github.io/gwarp/app.html
+- **Canonical website URL:** pending owner confirmation after the reported website change. Do not assume the previous links are current until confirmed.
 - **Tester account on Scratch:** https://scratch.mit.edu/users/creapter_teter/
 
 ---
@@ -39,7 +40,7 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 - **[Engine map](ENGINE-MAP.txt)** — actual G-Warp globals and hooks to check before changing code.
 - **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** and [real screenshots](docs/screens/) — what has actually been tested.
 - **[Master AI work plan](team/AI-WORK-PLAN.txt)** and [deliverable inventory](team/AI-DELIVERABLE-INVENTORY.txt) — roles, task stages, candidate status and evidence gaps.
-- **[Cross-AI review report](team/CROSS-AI-REVIEW-2026-10-15.txt)** and [continuous work queue](team/CONTINUOUS-WORK-QUEUE.txt) — independent findings, blockers, and the next bounded task for each AI.
+- **[Cross-AI review report](team/CROSS-AI-REVIEW-2026-10-15.txt)**, [security and consistency audit](team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt), and [continuous work queue](team/CONTINUOUS-WORK-QUEUE.txt) — independent findings, blockers, security checks, and next tasks.
 - **[ChatGPT reviewer task list](team/TODO-CHATGPT.txt)** — review scope and acceptance-report format.
 
 ## Files in this repo
