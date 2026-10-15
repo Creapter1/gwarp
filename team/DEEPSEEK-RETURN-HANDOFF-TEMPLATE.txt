@@ -1,0 +1,36 @@
+G-WARP — TEMPORARY DEEPSEEK TASK HANDOFF
+Status: TEMP COVERAGE / NEEDS DEEPSEEK REVIEW
+Date:
+Original DeepSeek task ID and title:
+Covering AI:
+Base commit SHA:
+
+1. GOAL
+What the original task is supposed to accomplish.
+
+2. WORK COMPLETED
+Short description of research, code, tests, and decisions.
+
+3. FILES CHANGED
+List exact paths and purpose. Candidate code must be in the covering AI's own folder, not deepseek/.
+
+4. EVIDENCE
+For each claim, label SOURCE-VERIFIED, STATIC-ANALYSIS, TESTED (include exact steps/results), or NOT TESTED. Include source links or line references where useful.
+
+5. TEST RESULTS
+What was run, environment/version, expected result, actual result, failures, and untested cases. Never claim a test ran if it did not.
+
+6. LIMITATIONS / RISKS
+Unknown APIs, assumptions, edge cases, compatibility concerns, and possible regressions.
+
+7. EXACT NEXT STEPS FOR DEEPSEEK
+What DeepSeek should inspect, verify, correct, adapt, or replace when available.
+
+8. REVIEW DISPOSITION (DeepSeek fills this in on return)
+[ ] ACCEPTED AFTER REVIEW
+[ ] REVISED
+[ ] REJECTED WITH REASON
+[ ] BLOCKED
+Notes:
+
+Reminder: this is a temporary candidate, not proof of correctness and not authorization to integrate into live G-Warp. Claude's integration gates and owner approval still apply.
