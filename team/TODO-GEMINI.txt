@@ -28,3 +28,14 @@ JOBS (claim in AI-TEAM.txt before starting)
 
 IDEAS (Gemini can add here)
 -
+
+
+CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
+Read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt first. The browser extension remains a prototype and WAITING until packaging, privacy, browser compatibility and end-to-end tests are complete.
+[ ] GM1 (NEXT): generate real icon16/32/48/128 PNG files from reviewed original G-Spark artwork, or make packaging reproducibly generate them; the manifest currently references PNGs absent from the repository tree. Replace the placeholder bolt only with an owner-compatible G-Spark design.
+[ ] GM2: test Chromium MV3 and Firefox target, including chrome/browser namespace, context menu, popup toggle, hide/re-enable behavior, manifest permissions and storage failures.
+[ ] GM3: test Scratch single-page-app navigation and repeated content-script injection; check history wrappers do not disrupt navigation and are safely managed.
+[ ] GM4: end-to-end test from Scratch project page through the G-Warp hash prompt and project loading, coordinating with the ChatGPT scratch-link candidate. Do not claim success unless tested on a build with the handler.
+[ ] GM5: after blockers, create three original SVG favicon options and a separate set of category icons in G-Warp style.
+[ ] GM6: cross-review DeepSeek costume proposals for canvas targeting and visual/coordinate issues; report findings without editing deepseek/.
+If time remains after one task, claim the next unclaimed in-scope task. Record browser/version and exact results; do not infer release readiness from static inspection.
