@@ -5,7 +5,7 @@
 
 THE TEAM
 - Owner: Creapter1 (the boss - decides priorities, design picks, merges and releases).
-- ChatGPT  | Independent reviewer / planner / test designer / evidence reconciler | folder: chatgpt/ | queue: team/CONTINUOUS-WORK-QUEUE.txt
+- ChatGPT  | Independent reviewer / planner / test designer / evidence reconciler | folder: chatgpt/ | list: team/TODO-CHATGPT.txt | queue: team/CONTINUOUS-WORK-QUEUE.txt
 - Grok     | Scratch behavior specifications, expected-result tests and extension audit | folder: grok/ | list: team/TODO-GROK.txt
 - DeepSeek | Lab scientist: researches and proposes 3 distinct A/B/C candidates plus lab reports; no main app edits | folder: deepseek/ | list: team/TODO-DEEPSEEK.txt
 - Gemini   | Original G-Warp icons and picture concepts, usually 3 SVG options per idea | folder: gemini/ | list: team/TODO-GEMINI.txt
