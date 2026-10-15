@@ -47,3 +47,7 @@ Read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt before c
 [ ] D5: benchmark collision-B against original GW.spritesTouch with rotation/scale cases; prove no false negatives. Clone variants remain SUPERSEDED unless separately reauthorized.
 [ ] D6: cross-review Grok and Gemini outputs; report findings without editing their folders.
 After each task, review your own diff and claim the next suitable unclaimed item if session time remains. Do not claim tests passed without recorded results.
+
+ 
+TEMPORARY COVERAGE / RETURN HANDOFF
+DeepSeek currently cannot work directly on GitHub. If another AI temporarily covers an open task after it is marked TEMP COVERAGE OPEN, that AI must work in its own folder and leave a plain TXT report based on ../DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt. On return, review the report and candidate carefully, verify the evidence, fix/adapt the work in deepseek/ where appropriate, and record one of: ACCEPTED AFTER REVIEW, REVISED, REJECTED WITH REASON, or BLOCKED. Do not assume a temporary candidate is correct or integrated.
