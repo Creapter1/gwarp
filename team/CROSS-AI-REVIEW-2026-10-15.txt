@@ -3,7 +3,7 @@ Review date: 2026-10-15
 Reviewer: ChatGPT (new standing role: independent cross-AI reviewer)
 Repository snapshot reviewed: main tree SHA 33a5fed7e1f4b501c6dec9bc0b43fce5d22c5768
 Application baseline metadata: app.html blob 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes); this is metadata only, not proof that the app was browser-tested.
-Evidence boundary: this review inspected repository files, notes, task lists, and code statically. It did NOT execute candidate modules or run a browser session. No candidate is marked runtime-verified by this report.
+Evidence boundary: this is a first-pass cross-AI audit based on a full repository file inventory, inspection of the shared rules/task lists and major reports, and static code-pattern review across the candidate families. It is not line-by-line certification of every source line. No candidate was executed and no browser session was run by this reviewer. No candidate is marked runtime-verified by this report. The follow-up queue assigns deeper, bounded reviews.
 
 STATUS KEY
 - FILE PRESENT: exists in repository.
@@ -39,7 +39,7 @@ Risks / next checks:
 Verdict: useful reviewer/test work and two candidates; neither candidate is integrated or browser-verified by this report.
 
 GROK — grok/
-Files reviewed: 12 behavior/specification documents and TESTS.txt (75 cases), plus team/TODO-GROK.txt.
+Files inventoried and statically scanned: all 12 behavior/specification documents, TESTS.txt (75 cases), and team/TODO-GROK.txt. This pass flagged semantic-risk areas; it did not independently verify every expected result.
 Strengths:
 - Broad coverage across motion, looks, sound, events, control, sensing, operators, data, my blocks, pen, music, files, and engine rules.
 - TESTS.txt makes cases easy to identify and reproduce.
@@ -51,7 +51,7 @@ Risks / next checks:
 Verdict: reference material is valuable; G5 is unfinished; no claim of app compatibility is supported yet.
 
 DEEPSEEK — deepseek/
-Files reviewed: costume A/B/C candidates and lab/checklist, speed A/B/C candidates and lab, pmp-loader.js, test-pmp-loader.js, notes, and task list.
+Files inventoried and statically scanned: costume select/fill/text/eraser/undo A/B/C candidates, speed collision/clone A/B/C candidates, lab/checklists, pmp-loader.js, test-pmp-loader.js, notes, and task list. This is a family-level static review, not execution or line-by-line certification.
 Costume candidates — BLOCKED / HIGH RISK:
 - ENGINE-MAP documents CE.state.costumeMode, selectedSvg, bitmapTool, svgTool, svgDrag, selectionRect; the candidates commonly inspect CE.state.mode and fields such as fillColor/fontSize/eraserSize that are not confirmed.
 - Generic querySelector('canvas') fallback can bind the wrong canvas (stage or another editor), and document-level click/pointer handlers can intercept unrelated UI.
@@ -75,7 +75,7 @@ PMP loader — BLOCKED / INCOMPLETE:
 Verdict: lab reports identify useful hypotheses, but current candidates are not integration-ready.
 
 GEMINI — gemini/extension/
-Files reviewed: manifests, content.js, background.js, popup files, privacy page, README, icon SVG/generator.
+Files inventoried and statically scanned: manifests, content.js, background.js, popup files, privacy page, README, icon SVG/generator. No extension was loaded in a browser during this review.
 Strengths:
 - The extension has a narrow purpose and only matches Scratch project pages; it does not request broad all-site host access.
 - The button uses a shadow root and exposes an accessible label.
@@ -110,3 +110,11 @@ NEXT ACTIONS
 - Gemini: fix icon packaging and extension cross-browser/SPA tests; only then continue GM2/GM3 design tasks.
 - Claude Opus 5.5: after October 18 when owner can access it, verify model identity, inventory baseline, review this report, and work one candidate at a time. No integration before owner approval.
 - Owner: use this report as a decision aid; no code was changed by this review.
+
+
+SUPPLEMENTAL STATIC SCAN NOTES (2026-10-15)
+- All 15 DeepSeek costume A/B/C files were inventoried and scanned for state fields, generic canvas selectors, document-level listeners, feature-off guards, coordinate/pointer cleanup, and undo/redo calls. The family consistently lacks confirmed use of ENGINE-MAP's costumeMode field; some variants use broad canvas selection or document-wide handlers. The C variants are not automatically safe merely because their comments call them safest.
+- DeepSeek speed A/B/C files were scanned for hooks and uncertainty markers. Collision-B creates a requestAnimationFrame-driven frame counter and wraps GW.spritesTouch; benchmark overhead and correctness under transformed sprites need measurement. Collision-C deliberately returns false when its budget is exhausted, which can change Scratch behavior and must be treated as an accuracy trade-off, not a transparent optimization. Clone variants wrap ScriptThread.prototype.step and skip some steps based on visibility/idle assumptions; any skipped step must be proven semantically safe. The existing queue marks clone variants SUPERSEDED.
+- Grok's operator and variable/list notes contain important semantics that must be source-checked before being hard-coded as tests. In particular, TESTS.txt's T002 rounding note acknowledges uncertainty and the list-index-0 expectation conflicts with the general 1-based description in SPEC-variables-lists.txt; resolve this explicitly rather than choosing one silently.
+- Gemini's manifest paths and README make icon generation a release prerequisite: make-icons.js generates PNGs, but those generated files were not present in the repository tree at review time. The extension's history wrapping and Firefox namespace remain unverified.
+- The current main tree includes 101 files and the app.html blob/size recorded above. A tree/blob identifier proves which repository object was present; it does not prove its runtime health.
