@@ -1,11 +1,11 @@
 G-WARP MASTER AI WORK PLAN
-Version 1.2 | 2026-10-14
+Version 1.3 | 2026-10-15
 Repository: https://github.com/Creapter1/gwarp
 Owner: Creapter1
 Status: Planning baseline. Includes the owner's new isolated-code-proposal workflow; it does not authorize live integration or release.
 
 PURPOSE
-Give every AI a bounded role, ordered tasks, evidence requirements, acceptance criteria, and handoff gates. Prevent blind coding, duplicate research, guessed APIs, conflicting patches, repeated whole-app audits, and premature merging. The owner decides priorities and approves anything shipped.
+Give every AI a bounded role, ordered tasks, evidence requirements, acceptance criteria, and handoff gates. Prevent blind coding, duplicate research, guessed APIs, conflicting patches, repeated whole-app audits, and premature merging. ChatGPT is the standing independent cross-AI reviewer; every AI may review peers' work. See team/CROSS-AI-REVIEW-2026-10-15.txt and team/CONTINUOUS-WORK-QUEUE.txt. The owner decides priorities and approves anything shipped.
 
 AUTHORITY — NON-NEGOTIABLE
 1. Creapter1 is product owner and final approver for priorities, design choices, live integration, and releases.
@@ -115,6 +115,9 @@ ACCEPTANCE FOR EACH PROPOSAL
 - Status: DORMANT / READY FOR REVIEW / REJECTED / SELECTED / INTEGRATED / REGRESSION-TESTED
 - No integration claim before the code is actually connected and tested
 
+STAGE 1D — CONTINUOUS CROSS-AI REVIEW + TASK LOOP
+Every AI may review any other AI's deliverables for correctness, missing requirements, bugs, unsupported assumptions, test gaps, safety/privacy/performance risks, and improvements. Do not edit another AI's folder; return findings to the original author and ChatGPT reviewer. A review must include severity, exact file/function, evidence class, minimum correction, and an acceptance test. ChatGPT maintains the independent review ledger; Claude Opus 5.5 owns official connected-runtime comparisons and integration evidence after active-model verification and owner authorization. Use team/CONTINUOUS-WORK-QUEUE.txt to claim the next unclaimed bounded task whenever time remains. Do not invent unrelated work or mark tasks done without evidence.
+
 STAGE 1C — FUTURE IDEAS PARKING LOT (OWNER-CONTROLLED)
 If an AI suggests something outside Scratch, TurboWarp, PenguinMod, or the stated G-Warp product direction, do not throw it away and do not build it into the live app. Record it in team/FUTURE-IDEAS.txt as an optional idea. Include the origin AI, the problem it might solve, value, cost/risk, relation (or lack of relation) to the core product, and a status of WAITING FOR OWNER.
 The fact that another tool lacks a feature does not automatically make it a good idea or a priority. Clearly distinguish:
@@ -195,7 +198,7 @@ Must not broad-rewrite, redesign without request, blindly merge A/B/C, trust sum
 Every handoff: decision log, commit/blob IDs, evidence class, tests/results, risks, rollback route, owner approval status.
 
 CHATGPT — PLANNER / RESEARCH REVIEWER / TEST DESIGNER
-May read all model folders and docs; maintain this plan/shared navigation; identify duplicates/conflicts/missing evidence; write bounded research, test matrices, acceptance criteria and code proposals. May place inert, explicitly marked proposal code inside app.html when assigned, but must never connect or activate it or edit another AI's folder.
+Standing independent reviewer for every AI's output. May read all model folders/docs, inspect candidate code and reports, identify bugs, unsupported APIs, duplicate work, missing evidence, risks, and improvements; maintain the cross-AI review ledger; write bounded research, test matrices, acceptance criteria and code proposals. Must not edit another AI's folder or claim runtime verification without running it. May place inert, explicitly marked proposal code inside app.html when assigned, but must never connect or activate it or edit another AI's folder.
 Next: reconcile statuses/cross-references; compare UI audit against live verification; prepare a freeze acceptance matrix; keep summaries concise and source-linked. Don't produce another broad generic research library.
 
 GROK — BEHAVIOR SPECS / TESTS / EXTENSION AUDIT
@@ -234,3 +237,7 @@ FIRST QUEUE AFTER OWNER ACCEPTS THIS PLAN
 5. Gemini: create GM1 extension icon A/B/C options; do not overwrite or integrate without owner selection.
 6. Owner reviews baseline and priorities before integration begins.
 
+
+
+NEW WORK MODE — INTEGRATION LEAD (CLAUDE OPUS 5.5)
+When the owner can use Claude again, Claude must verify the active model label is exactly Claude Opus 5.5, then read the current cross-AI review report and all task statuses. Inventory the current baseline/diffs before engineering. Review each AI's progress, combine only compatible proposals, assign missing code/assets/SVGs/test fixtures/scenarios to the most suitable contributor, and test one candidate at a time in a controlled working copy. Capture before/after screenshots and runtime evidence, test regressions, document failures and request narrow revisions from the original author. Do not integrate or release without explicit owner approval. Leave a resumable handoff and next-task queue before the session ends.
