@@ -1,0 +1,53 @@
+G-WARP INTEGRATION AND CROSS-AI STATUS AUDIT
+Date: 2026-10-16
+Reviewer: ChatGPT
+Scope: Current main-branch integration state, contributor deliverables, workflow consistency, and visible risks.
+Evidence type: STATIC REPOSITORY REVIEW. This session did not launch the app or run browser tests.
+
+EXECUTIVE RESULT
+- No new live application integration was detected in the current main-branch changes reviewed.
+- app.html blob SHA remains 7ce527ca2908c63bbdfe642856ca29fd82178648, matching the prior review baseline (2,327,544 bytes recorded in the previous audit).
+- index.html blob SHA remains d8cf02962b20c0379a51aab7d46d829925325dbd, matching the prior review baseline.
+- The latest commits inspected were documentation/governance updates, not app.html/index.html code changes.
+- This is a source-control/baseline finding, NOT a fresh browser proof that the app behaves correctly. The GitHub file connector did not return app.html's body because of its size; its blob SHA could still be checked.
+- No candidate is approved for integration by this review. Owner approval and the Claude model-verification gate still apply.
+
+WHAT IS AND IS NOT CONNECTED
+1. Main G-Warp app: no new app.html/index.html integration detected since the previous audited baseline. The main source hashes are unchanged.
+2. ChatGPT candidate files:
+   - chatgpt/clone-safety.js exists as a separate candidate. Its own notes explicitly say it is NOT wired into app.html and NOT browser-tested.
+   - chatgpt/scratch-link.js exists as a separate candidate. It is not shown to be wired into app.html. The hash-link workflow depends on a live GW_WEB.load handler; the Gemini extension README itself says end-to-end loading depends on that app handler.
+   - Do not treat these files as live features just because they are in the repository or listed as PICK in MERGE-QUEUE.txt.
+3. Gemini browser extension:
+   - gemini/extension/ is a separate prototype, not a module imported by app.html. If a person manually loads/installs it in a browser, it can add an “Open in G-Warp” pill to Scratch project pages and add a context-menu item. That changes the Scratch browsing experience, not G-Warp's in-app runtime.
+   - It currently targets the previously documented https://creapter1.github.io/gwarp/app.html#scratch=<id> URL. The owner has not confirmed the replacement canonical URL, so do not guess it.
+   - manifest.json references icons/icon16.png, icon32.png, icon48.png and icon128.png, but the repo documentation describes these as generated assets and says to run make-icons.js first. The PNGs were not present at the expected paths when checked. The extension is not package-ready as committed.
+   - background.js uses the Chrome API namespace and content.js wraps history.pushState/replaceState without restoring the originals. Cross-browser compatibility, repeated injection, navigation effects, storage failure, privacy and end-to-end load remain unverified. Keep extension status WAITING.
+4. Other AI proposals:
+   - DeepSeek costume candidates remain BLOCKED: unverified state/selector assumptions and broad document listeners can affect unrelated canvases. Require source evidence and an isolated stage-vs-costume canvas harness before controlled testing.
+   - DeepSeek protobuf .pmp loader remains INCOMPLETE: no confirmed real project fixture, uncertain dependency/API, and empty asset handling. Do not replace or regress existing ZIP-based .pmp support.
+   - DeepSeek collision-B remains a candidate only until benchmarked against GW.spritesTouch for rotation/scale with no false negatives. Old clone variants remain superseded.
+   - Grok's 75 cases are a written test list, not an automatically passing suite. G5 extension audit and high-risk semantic confirmations remain open.
+   - Gemini's extension and icon deliverables remain proposals pending packaging and browser tests. No live G-Warp app integration found.
+5. Old candidate branches:
+   - chatgpt/clone-limit-warning is 6 commits ahead and 228 behind main, with a diverged history.
+   - chatgpt/clone-limit-warning-v2 is 61 commits ahead and 219 behind main, with a diverged history and extra candidate files.
+   - These are NOT main-branch integrations. Do not merge either branch wholesale; cherry-pick/rebuild only narrowly reviewed work against the current main baseline if later authorized.
+
+WORKFLOW / CONSISTENCY FINDINGS
+- MERGE-QUEUE.txt is explicitly Claude-owned; ChatGPT did not edit it. Its U2 costume entries still say PICK even though the cross-review blocks integration. Claude must reconcile the queue statuses against the latest review before selecting candidates.
+- Main TODO now describes costume acceptance as pending and the Gemini extension as awaiting packaging/tests; retain that distinction between “candidate delivered” and “integrated/accepted.”
+- Canonical website URL remains unresolved. Existing links must be treated as previously documented, not verified current.
+- Current main app version documented in README/TODO is Beta v15.45.0. Historical v15.46 notes are not evidence of the currently shipped app.
+- The security scan remains limited to current-file patterns; Git history, binary assets, deployment configuration and GitHub secret-scanning settings were not exhaustively checked.
+
+NEXT ACTIONS
+1. Owner: supply the exact canonical website URL and say whether the old GitHub Pages URL should remain a fallback.
+2. Claude (only after verifying the active model label is exactly “Claude Opus 5.5” and obtaining owner authorization): inspect current app source, reconcile MERGE-QUEUE.txt, and run official before/after runtime tests for one candidate at a time. No candidate should be connected solely because its queue status says PICK.
+3. Gemini: fix extension packaging, review icon generation, test Chromium/Firefox and Scratch SPA navigation, then verify end-to-end loading against the owner-confirmed URL and an app build that actually contains the hash handler.
+4. DeepSeek or approved temporary cover: finish costume API evidence + isolated canvas tests; prove collision-B correctness; obtain a real legal .pmp fixture or keep loader marked INCOMPLETE.
+5. Grok: complete G5 extension gallery audit and verify uncertain Scratch semantic cases against named primary-source versions or live results.
+6. Owner/Claude: perform a full Git-history secret scan and review GitHub secret-scanning alerts/settings.
+
+BOTTOM LINE
+The reviewed main-branch app files are unchanged from the prior audited baseline, and the new candidates inspected are disconnected proposals or a separate browser-extension prototype. No newly connected app code was found in the reviewed commits. Runtime behavior has NOT been re-tested in this session, so this report does not certify that the app currently works correctly.
