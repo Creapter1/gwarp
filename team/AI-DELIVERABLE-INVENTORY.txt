@@ -61,3 +61,7 @@ team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt — STATIC REVIEW. No matchin
 INTEGRATION STATUS CHECK — 2026-10-16
 Current follow-up: [INTEGRATION-STATUS-AUDIT-2026-10-16.txt](INTEGRATION-STATUS-AUDIT-2026-10-16.txt).
 The main app.html and index.html blob SHAs match the prior audited baseline. No new live app integration was detected in the reviewed main-branch commits. This is static repository evidence, not a fresh browser test. ChatGPT clone-safety and scratch-link remain disconnected candidates; Gemini's browser extension is separate from the app and remains WAITING for packaging, URL confirmation, cross-browser and end-to-end tests. DeepSeek costume/PMP candidates remain blocked/incomplete, and Grok's written tests still need primary-source verification and an extension-gallery audit. See the report for exact findings, branch divergence, ownership boundaries and next actions.
+
+
+GEMINI-ONLY REVIEW — 2026-10-16
+See [GEMINI-ONLY-REVIEW-2026-10-16.txt](GEMINI-ONLY-REVIEW-2026-10-16.txt). Static review of current main found the extension remains separate from the G-Warp runtime. The current tree still lacks manifest-referenced PNG icons; content-script SPA wrappers, storage failure handling, privacy wording, destination URL confirmation and browser/end-to-end testing remain open. This is not browser verification. The repository's current main branch did not show a newer Gemini commit/branch when checked; confirm the just-finished work was pushed to the intended place.
