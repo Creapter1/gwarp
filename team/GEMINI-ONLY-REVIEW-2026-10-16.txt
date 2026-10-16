@@ -1,0 +1,44 @@
+GEMINI-ONLY REVIEW — G-WARP OPENER
+Date: 2026-10-16
+Reviewer: ChatGPT
+Scope: gemini/extension/ only, plus Gemini's task/status notes. No other AI deliverables reviewed in this pass.
+Method: static repository inspection of the current main branch. No browser installation or end-to-end runtime test was run.
+
+SUMMARY
+Gemini's extension is a useful small prototype with a narrow Scratch host match and a simple UI. It is NOT ready to mark complete or distribute yet. The current main branch does not contain a new Gemini commit after the existing extension commits from 2026-10-13; the only branches currently listed are main and two ChatGPT candidate branches. If Gemini has just finished work locally or in another workspace, that work is not visible on this repository's current main branch yet.
+
+MAIN-BRANCH EVIDENCE
+- Current tree contains README.txt, background.js, content.js, make-icons.js, manifest.json, manifest.firefox.json, popup.html, popup.js, privacy.html and icons/gspark.svg.
+- The icons directory contains only gspark.svg. Neither icon16.png, icon32.png, icon48.png nor icon128.png exists at the expected manifest paths.
+- manifest.json points to all four missing PNG files. The extension may load with missing-icon warnings or fail packaging/validation depending on browser tooling; packaging is blocked until the files are generated and verified.
+- make-icons.js uses the sharp package, but no package.json or lockfile is present in this extension folder. README gives a manual npm i sharp && node make-icons.js route, which may work, but it is not yet a pinned/reproducible build process.
+- gspark.svg is a simple bolt on a dark square. It is a placeholder, not the requested original G-Spark mascot artwork.
+- README describes Firefox temporary loading via manifest.firefox.json using Manifest V2. This target needs a current-version compatibility check; do not assume cross-browser support based on the manifest alone.
+- The current default branch shows no new Gemini branch or newer Gemini commit. Latest Gemini-path commits returned by the repository API are dated 2026-10-13. If the owner expected a just-finished upload, verify it was pushed to the correct repository/branch before considering it reviewed.
+
+FUNCTIONAL / COMPATIBILITY FINDINGS
+1. Content-script SPA hooks: content.js overwrites history.pushState and history.replaceState and never restores them. It does not have a top-level per-page idempotency guard, so repeated injection can wrap the wrappers and add duplicate listeners. Add a stable window marker and avoid stacking wrappers/listeners. Prefer a safer SPA navigation strategy if practical.
+2. State transitions: the pill checks the current project ID when clicked, which is good. It also removes the pill on non-project pages. Re-test project-to-project navigation, project-to-home navigation, back/forward, and repeated SPA transitions.
+3. Storage failures: chrome.storage.sync.get/set callbacks do not surface runtime errors. Add graceful handling for unavailable storage/quota/permission failures so the button does not get stuck in a misleading state.
+4. Context menu: background.js matches a project ID from info.linkUrl or tab.url and opens the hard-coded old GitHub Pages URL. Consider validating that a clicked link's hostname is scratch.mit.edu before using its path. Test page-context and link-context behavior separately.
+5. Destination URL: background.js, content.js, popup.html and README.txt still point at https://creapter1.github.io/gwarp/. The canonical website URL is not confirmed. Keep the old URL explicitly labelled as previously documented until the owner supplies the exact replacement; do not guess a new host.
+6. Hash-handler dependency: the extension opens app.html#scratch=<id>, but README itself says end-to-end load depends on the app's hash handler. The extension alone cannot prove project loading. Test against a build where the handler is present; verify confirm/cancel, invalid IDs, download/network failure, and refresh behavior.
+7. Privacy statement: privacy.html says no information is transmitted externally. The extension does open a G-Warp URL containing the Scratch project ID after the user clicks, so make the wording precise: no analytics or independent telemetry, but the selected project ID is included in the destination URL to load that project. The privacy page is not linked from popup.html, making the disclosure difficult to discover.
+8. Hide wording: the close control says “Hide G-Warp button permanently,” but popup toggle can re-enable it. Change the label to “Hide button” or “Turn off button” unless “permanently” is explicitly explained as persistent until the setting is changed.
+9. Browser scope: manifest permissions appear limited to storage/contextMenus and Scratch host access; content script is restricted to Scratch URLs. This is a good least-privilege starting point. Still verify actual permissions and behaviors in each supported browser and inspect generated packages before release.
+
+RECOMMENDED ORDER
+P0 — Confirm Gemini's latest work is actually pushed to the intended repository/branch.
+P1 — Generate and commit the four PNG icons, or alter packaging so they are generated automatically and reproducibly; validate each output size and manifest path. Replace placeholder bolt only after owner approves G-Spark artwork.
+P2 — Add content-script idempotency and stop stacking history wrappers. Handle storage errors.
+P3 — Correct privacy and “permanently” wording, and add an accessible privacy-policy link in the popup.
+P4 — Owner supplies the exact canonical website URL; update Gemini-owned target references only after that.
+P5 — Test Chromium MV3 and the declared Firefox target on current versions; test context menu, toggle/hide/re-enable, SPA navigation, storage failure, and the full Scratch-to-G-Warp project-load flow.
+P6 — Package and verify from a clean checkout with written reproducible steps.
+
+STATUS
+STATIC REVIEW: complete for the current main-branch Gemini extension files.
+BROWSER-VERIFIED: no.
+RELEASE/PACKAGING: BLOCKED by missing PNG assets and unverified browser/end-to-end behavior.
+LIVE G-WARP APP INTEGRATION: none found; this is a separate browser extension.
+OWNER ACTION NEEDED: confirm whether Gemini's just-finished changes were pushed to main or another branch, and provide the canonical website URL when ready.
