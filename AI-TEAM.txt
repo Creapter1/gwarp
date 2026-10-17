@@ -3,6 +3,15 @@
  EVERY AI MUST READ THIS FILE FIRST, BEFORE STARTING ANY WORK.
 =====================================================================
 
+AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17) — REQUIRED FOR EVERY AI
+- Every AI must keep a chronological conversation/context log inside its OWN folder named <ai-folder>/AI-CHAT-LOG.txt (examples: chatgpt/AI-CHAT-LOG.txt, gemini/AI-CHAT-LOG.txt, grok/AI-CHAT-LOG.txt, deepseek/AI-CHAT-LOG.txt).
+- For each task/session, append the user's request accurately and the AI's response/handoff. Include date, task, files changed, evidence/test status, unresolved questions, and exact next step.
+- Preserve decisions, constraints, corrections, and explicit prohibitions. Keep direct user wording separate from AI summaries. Never invent missing chat history or claim an incomplete transcript is complete.
+- If the platform may truncate/delete history, update the log before ending the session. Read your own log before continuing an existing task.
+- Never log passwords, API keys, tokens, private keys, personal secrets, or unnecessary sensitive data. Redact secrets. Keep logs focused on project work.
+- If original chat is unavailable, write ORIGINAL CHAT NOT AVAILABLE and only summarize supported facts; ask the owner rather than guessing.
+- Use team/AI-CHAT-LOG-TEMPLATE.txt. This rule does not grant cross-folder editing, live integration, testing authority, or release permission.
+
 THE TEAM
 - Owner: Creapter1 (the boss - decides priorities, design picks, merges and releases).
 - ChatGPT  | Independent reviewer / planner / test designer / evidence reconciler | folder: chatgpt/ | list: team/TODO-CHATGPT.txt | queue: team/CONTINUOUS-WORK-QUEUE.txt
@@ -163,3 +172,4 @@ Never commit or paste real API keys, access tokens, passwords, private keys, coo
 
 2026-10-16 | REVIEWED | ChatGPT | Gemini-only static review: current main has no newer Gemini branch/commit; extension is separate from G-Warp runtime; PNG icons missing; SPA wrapper, privacy copy, storage errors, URL confirmation and browser/end-to-end tests remain | team/GEMINI-ONLY-REVIEW-2026-10-16.txt
 \n2026-10-17 | RULE ADDED | ChatGPT | Added mandatory per-AI AI-CHAT-LOG.txt request/response preservation rule; transcript must not fabricate missing history or store secrets | team/AI-CHAT-LOG-TEMPLATE.txt\n
+2026-10-17 | RULE ADDED | ChatGPT | Required per-AI AI-CHAT-LOG.txt to preserve user requests and AI responses when chat history is truncated; template created | team/AI-CHAT-LOG-TEMPLATE.txt
