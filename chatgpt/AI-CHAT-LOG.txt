@@ -1,0 +1,35 @@
+G-WARP CHATGPT CONTEXT LOG
+Append-only record. Do not put credentials or unrelated sensitive information here.
+
+--- ENTRY ---
+Date: 2026-10-17 (America/New_York)
+AI: ChatGPT (active model identity not independently verified from repository)
+Task: Establish a mandatory chat-context preservation rule for all AI contributors.
+
+USER REQUEST (verbatim):
+"this gemini stuf. ok new rule because it may create memory remuval so in oder to prevent it from hapinig all ai in there folder well add the caht user recuest and response. some ai like you well delite the firt ting wi talck to make space for more chat room so yes i need all ai to not alusinate or forget or create sonting alse because memory chat is gone."
+
+AI RESPONSE / ACTION:
+Agreed to establish a durable per-AI conversation log rule. Added team/AI-CHAT-LOG-TEMPLATE.txt and updated AI-TEAM.txt, TODO.txt, and team/AI-WORK-PLAN.txt to require every AI to keep an append-only AI-CHAT-LOG.txt in its own folder, preserve user requests and AI responses/handoffs, record evidence status and next steps, read the log before resuming, and mark missing original chat honestly rather than reconstructing it. The rule does not grant permission to edit another AI's folder or bypass integration/owner-approval gates.
+
+FILES CHANGED:
+- team/AI-CHAT-LOG-TEMPLATE.txt — created.
+- AI-TEAM.txt — added required rule and work-log entry.
+- TODO.txt — added required rule.
+- team/AI-WORK-PLAN.txt — added required rule.
+- No app.html or index.html changes.
+
+EVIDENCE / TEST STATUS:
+- SOURCE-VERIFIED: GitHub file-write operations returned commit SHAs for the four changes above.
+- NOT-TESTED: no app/browser behavior was tested; this is a documentation/governance change.
+
+BLOCKERS / UNCERTAINTIES:
+- Other AI folders must create/update their own AI-CHAT-LOG.txt when those AIs next work; ChatGPT should not edit their folders.
+- This entry records the current request, not the full historical Gemini conversation or all earlier discussions.
+
+NEXT STEP / HANDOFF:
+- Each AI must create its own AI-CHAT-LOG.txt and append this rule to its normal task workflow. Review Gemini's delivered artifacts separately; do not assume the uploaded ZIP contains the original chat transcript.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — this entry covers this task only.
+--- END ENTRY ---
