@@ -137,3 +137,6 @@ SECURITY RULE (2026-10-15): Never put real API keys, tokens, passwords, private 
 
 WEBSITE URL NOTE (2026-10-15)
 The URL above is the previously documented GitHub Pages address, not a confirmed replacement for the website the owner says was changed. Do not replace site links, extension targets, or documentation with a guessed URL. Ask the owner for the exact new canonical URL and whether the old GitHub Pages URL should remain as a fallback.
+
+
+AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17): Every AI must append the user's request and its own response/handoff to <own-folder>/AI-CHAT-LOG.txt for each task/session, including date, task, changed files, evidence status, blockers, and next step. Read the log before continuing. Preserve exact wording where practical; separate user quotes from AI summaries; never invent missing context. Do not log secrets or unnecessary sensitive data. If history is missing, say so and ask rather than guessing. Use team/AI-CHAT-LOG-TEMPLATE.txt. This does not grant cross-folder editing or integration permission.
