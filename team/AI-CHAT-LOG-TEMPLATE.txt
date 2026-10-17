@@ -1,0 +1,40 @@
+G-WARP — AI CHAT LOG TEMPLATE
+Purpose: durable, truthful context when chat history is truncated, deleted, or unavailable.
+
+RULES
+- Store this file as <your-ai-folder>/AI-CHAT-LOG.txt. Append entries; do not overwrite earlier history.
+- Keep the user's request separate from the AI's response/interpretation.
+- Quote the request accurately where available. If unavailable, write ORIGINAL CHAT NOT AVAILABLE; do not reconstruct it as a quote.
+- Never record passwords, API keys, access tokens, private keys, or unrelated sensitive personal data. Redact secrets and say [REDACTED — SECRET OMITTED].
+- Mark evidence honestly: SOURCE-VERIFIED, STATIC-ANALYSIS, BROWSER-VERIFIED, NOT-TESTED, or other clearly explained status.
+
+--- ENTRY TEMPLATE (copy for each task/session) ---
+Date/time (timezone):
+AI / model identity (only if actually known):
+Task ID / title:
+Base branch / commit (if known):
+
+USER REQUEST (quote accurately; do not silently paraphrase):
+[Paste request here. Redact secrets if any.]
+
+AI RESPONSE / WORK SUMMARY:
+[What was answered or done. Distinguish completed work from proposals.]
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- [Owner decisions, scope, prohibitions, unresolved choices]
+
+FILES CHANGED (with paths):
+- [Path — what changed; or NONE]
+
+EVIDENCE / TEST STATUS:
+- [SOURCE-VERIFIED / STATIC-ANALYSIS / BROWSER-VERIFIED / NOT-TESTED; include what was actually checked]
+
+BLOCKERS / UNCERTAINTIES:
+- [Unknowns, missing context, assumptions to avoid]
+
+NEXT STEP / HANDOFF:
+- [Exact continuation action; do not invent a new task]
+
+CHAT HISTORY COMPLETENESS:
+[COMPLETE FOR THIS TASK / PARTIAL / ORIGINAL CHAT NOT AVAILABLE]
+--- END ENTRY ---
