@@ -173,3 +173,4 @@ Never commit or paste real API keys, access tokens, passwords, private keys, coo
 2026-10-16 | REVIEWED | ChatGPT | Gemini-only static review: current main has no newer Gemini branch/commit; extension is separate from G-Warp runtime; PNG icons missing; SPA wrapper, privacy copy, storage errors, URL confirmation and browser/end-to-end tests remain | team/GEMINI-ONLY-REVIEW-2026-10-16.txt
 \n2026-10-17 | RULE ADDED | ChatGPT | Added mandatory per-AI AI-CHAT-LOG.txt request/response preservation rule; transcript must not fabricate missing history or store secrets | team/AI-CHAT-LOG-TEMPLATE.txt\n
 2026-10-17 | RULE ADDED | ChatGPT | Required per-AI AI-CHAT-LOG.txt to preserve user requests and AI responses when chat history is truncated; template created | team/AI-CHAT-LOG-TEMPLATE.txt
+2026-10-17 | PLAN    | Claude  | read-only check: app.html/index.html unchanged since Beta v15.45.0; plan written -> team/CLAUDE-PLAN-2026-10-17.txt (waiting for owner's go)
