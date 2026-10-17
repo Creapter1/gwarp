@@ -1,0 +1,39 @@
+DEEPSEEK RETURN / REVIEW HANDOFF — BUFFY ADD-ONS + SETTINGS CANDIDATES
+Date: 2026-10-17
+Status: REVIEW REQUIRED — NOT INTEGRATED
+Source archive supplied by owner: Buffy-2026-10-17-addons-settings.zip
+Attribution note: The archive is labelled Buffy and its AI-TEAM.txt credits Buffy. Do not assume DeepSeek authored these candidates. Owner asked that the review findings be handed to DeepSeek for follow-up.
+
+SCOPE
+The archive contains:
+- chatgpt/settings-ui-fix.js
+- chatgpt/addons-pack.js
+- NOTES-settings-ui-fix.txt
+- NOTES-addons-pack.txt
+- AI-TEAM.txt, TODO.txt, MERGE-QUEUE.txt, README-HANDOFF.txt, TODO-GEMINI.txt
+
+The two JavaScript files passed Node syntax checks. This proves parse validity only, not browser behavior or integration. They are candidate modules and are not connected to app.html. Do not wire them into app.html or index.html; DeepSeek's role is lab research/candidates in deepseek/ only, and Claude remains the authorized integration lead.
+
+STATIC REVIEW FINDINGS — VERIFY AGAINST CURRENT SOURCE
+1. settings-ui-fix.js: cleanup/off behavior appears incomplete. Generated headings/rows may remain or ordering may not be restored, and event listeners are not all removed. Repeated enable/disable or rescans may leave inconsistent UI.
+2. addons-pack.js: off() does not appear to fully stop the recurring interval and workspace mutation observer. Ensure timers/observers/listeners are all tracked and disconnected.
+3. P pause shortcut: toast may read pause state before the app's asynchronous state update settles. Read the actual resulting state or use a confirmed app API.
+4. Sprite hotkeys 1–9: code assumes first child of #spritesGrid corresponds to sprite 1. Verify selector, ordering, hidden/empty items, and active-sprite API against app.html.
+5. Settings reset: directly changing control values may not synchronize dependent controls or the app's save/change handlers. Test each affected setting and persisted result.
+6. Block counter: selectors and insertion parent may be brittle across workspace resize, tab changes, and editor reinitialization.
+
+REQUESTED DEEPSEEK FOLLOW-UP
+A. Read AI-TEAM.txt, TODO.txt, team/AI-WORK-PLAN.txt, team/TODO-DEEPSEEK.txt, and team/AI-CHAT-LOG-TEMPLATE.txt first.
+B. Inspect the candidate source and the actual current app.html only as evidence; do not edit app.html/index.html or Buffy/ChatGPT folders.
+C. Produce deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt with per-finding severity, exact source evidence/line references, reproducible test cases, and corrections recommended.
+D. If tasked to create a safer candidate, work only in deepseek/ using the required A/B/C approach in team/TODO-DEEPSEEK.txt. Include complete teardown for timers, observers, event listeners, and generated DOM; make enable/disable idempotent.
+E. Include a console/browser test harness or explicit tests for: enable twice, disable, enable-disable-enable, repeated workspace scan, pause toggle and toast correctness, sprite keys 1–9 with hidden/reordered sprites, reset/save synchronization, resize/tab changes, and no residual listeners/timers/observers.
+F. Do not claim browser tests passed unless executed and evidence is recorded. If browser runtime or app source is unavailable, mark NOT TESTED / UNSURE.
+G. Update DeepSeek's own AI-CHAT-LOG.txt after the task. Do not write into other AI folders.
+
+CURRENT EVIDENCE / LIMITATIONS
+- Node syntax checks passed for both candidate JavaScript files during the review.
+- No browser execution or end-to-end test was performed in this review.
+- Candidate attribution is not independently authenticated; the archive's included team file labels the work Buffy.
+- No repository source files were modified as part of the static review itself. This handoff is a new documentation item for DeepSeek to act on.
+- Do not describe candidates as integrated, production-ready, or browser-verified.
