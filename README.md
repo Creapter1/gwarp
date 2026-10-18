@@ -64,7 +64,7 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 - Every AI follows `AI-TEAM.txt`. Typing **continue** to any AI means "re-read the files and keep going".
 
 ## Roadmap
-1. **Match the basics 1-to-1:** every block, menu and tool works like Scratch (now: UI audit + costume editor fixes).
+1. **Match the basics 1-to-1:** verify every block, menu and tool against Scratch behavior (static UI audit delivered; full runtime parity and costume editor acceptance remain pending).
 2. **Make it tough:** no freezes (clone limit, frame budget, stuck-script box, crash recovery).
 3. **Speed:** every project at a steady 60 FPS or more.
 4. **Build in AI:** GWrap AI helper + "use your own API key".
