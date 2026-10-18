@@ -4,7 +4,7 @@ Owner: Creapter1
 Status source: current repository file inventory and GitHub metadata; this is not a browser/runtime test.
 
 CURRENT SOURCE REFERENCE
-- Source metadata was rechecked against main at commit a74b75475cb0e9548056935bd35455bfd1da0a84; subsequent commits in this cleanup are documentation-only.
+- Source metadata was rechecked against main at commit 11fdea2af8ad393f56b988b307781eb739ace638; subsequent commits in this cleanup are documentation-only.
 - app.html blob: 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes).
 - index.html blob: d8cf02962b20c0379a51aab7d46d829925325dbd (586,179 bytes).
 - The cleanup actions recorded here changed documentation only. Claude must re-read current main/working-branch hashes and establish the authorized baseline before any source edit.
@@ -15,8 +15,11 @@ CLEANUP COMPLETED IN THIS PASS
 - Added team/WORKFLOW-START-HERE.txt as the shared routing guide and simplified team/README.txt.
 - Reduced team/AI-WORK-PLAN.txt from about 29 KB to a 5.9 KB prioritized roadmap. Detailed rules now route through single-purpose files.
 - Marked team/CLAUDE-PLAN-2026-10-17.txt as superseded by the 2026-10-18 Claude execution plan.
-- Merged the useful notes from chatgpt/README.txt into chatgpt/README.md and removed the duplicate README.txt.
-- Kept dated reviews/reports where they carry distinct evidence. Do not treat their old task ordering/status as current.
+- Merged the unique notes from chatgpt/README.txt into chatgpt/README.md and removed the duplicate README.txt.
+- Consolidated the overlapping AI-DELIVERABLE-INVENTORY and AI-PROGRESS-PREVIEW bodies into short routing pointers; their prior snapshots remain in Git history. team/AI-STATUS.txt is the only current cross-team summary.
+- Created team/CLAUDE-CHECKPOINT.txt as preliminary Git metadata handoff; Claude must reverify it in its actual working copy and replace it with real test/task evidence.
+- Updated TODO and the continuous queue to distinguish Grok's delivered static G5 audit from still-pending published-site/load testing. The merge queue remains Claude-maintained and was not edited.
+- Kept dated reports where they carry distinct evidence. Do not treat their old task order/status as current.
 
 CURRENT WORK STATUS — EVIDENCE FIRST
 P0 Freeze / Stop: highest priority. TODO.txt records the 81,000-clone / ~45-second Stop symptom as owner-reported and not reproduced in this cleanup. Claude should verify the active model label, baseline, then reproduce and measure before changing code. chatgpt/clone-safety.js remains a disconnected candidate.
