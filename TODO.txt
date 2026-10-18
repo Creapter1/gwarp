@@ -1,7 +1,7 @@
 =====================================================================
  G-WARP TO-DO LIST  (shared by the AI team)
  Owner: Creapter1     Repo: github.com/Creapter1/gwarp
- Previously documented website: https://creapter1.github.io/gwarp/ (canonical URL pending owner confirmation)   App: app.html (Beta v15.46.4)
+ Previously documented website: https://creapter1.github.io/gwarp/ (canonical URL pending owner confirmation)   App: app.html (Beta v15.47.0)
 =====================================================================
 
 HOW THE TEAM WORKS
@@ -99,6 +99,10 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 =====================================================================
 [ ] GWrap AI: built-in AI helper + "use your own API key" option
     (kids under 13: parent's OK first; never send data silently).
+[x] (Claude) COSTUME ANIMATION (v15.47.0, owner's focus): Flipbook (Onion skin + Play) in the
+    Costumes tab; Animation tab (bones) + Animation blocks out of preview for everyone; G-Spark
+    has ready-made walk + wave; made costumes follow changes. claude/flipbook4700.js,
+    test claude/tests/test_cosanim.js. Team jobs: team/ASSIGNMENTS-ANIMATION-2026-10-18.txt
 [x] (Claude) "Power lines" (v15.46.4): while a project runs, animated electric lines
     between broadcast -> when I receive, and my block -> define; start blocks get a
     sparking pole; More -> Settings -> "Power lines" switch. claude/powerlines4640.js

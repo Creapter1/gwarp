@@ -1849,8 +1849,7 @@ body.gw8-dev-mode .gw20-dev-only{display:inline-flex!important}
 </style>
 <style id="gw-v15162-css">
 /* v15.16.2: Animation preview (Developer mode only) */
-.gw18-entry{display:none!important}
-body.gw8-dev-mode .gw18-entry{display:inline-flex!important;align-items:center;gap:4px;border-left:1px solid #334155!important}
+.gw18-entry{display:inline-flex!important;align-items:center;gap:4px;border-left:1px solid #334155!important} /* v15.47.0: Animation is for everyone */
 #gw18Anim{position:fixed;inset:12px;z-index:9000;display:flex;flex-direction:column;background:#0d0f1c;border:1px solid #3b2a77;border-radius:14px;box-shadow:0 30px 90px rgba(0,0,0,.7);color:#e5e7eb;font-size:12.5px;outline:none}
 #gw18Anim .gw18-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid #262a45}
 #gw18Anim .gw18-title{font-size:14px;margin-right:6px}
@@ -2285,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.46.4</span>
+<span class="app-version">Beta v15.47.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4632,7 +4631,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.46.4',label:'Beta v15.46.4',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.47.0',label:'Beta v15.47.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -15684,7 +15683,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   const making = new WeakMap();
   function frameIdx(s, anim) {
     const cs = s.costumes || rootOf(s)?.costumes || [], out = [];
-    for (let i = 0; i < anim.frames.length; i++) { const k = cs.findIndex(c => c && c.name === `${anim.name} ${i + 1}`); if (k < 0) return null; out.push(k); }
+    for (let i = 0; i < anim.frames.length; i++) { const k = cs.findIndex(c => c && c.name === `${anim.name} ${i + 1}`); if (k < 0) return null; const g = cs[k].gwAnimFrame; if (g && g.anim === anim.id && (g.rev ?? 0) !== (anim.rev || 0)) return null; /* v15.47.0: out of date → made again */ out.push(k); }
     return out;
   }
   async function ensureFrames(s, anim) {
@@ -15742,11 +15741,11 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     const dock = by('dynamicAiExtensionDock'); if (!dock) return null;
     let sec = dock.querySelector(`[data-ext-section="${EXT}"]`); if (sec) return sec;
     sec = document.createElement('div'); sec.className = 'cat-section flex flex-col items-start gap-1.5 gw-ext-card gw19-anim-sec'; sec.dataset.extSection = EXT; sec.style.display = 'none';
-    sec.innerHTML = `<div class="gw-ext-title" style="color:#f0abfc"><i class="fa-solid fa-bone"></i> Animation <span class="gw19-pv">preview</span></div>`;
+    sec.innerHTML = `<div class="gw-ext-title" style="color:#f0abfc"><i class="fa-solid fa-bone"></i> Animation</div>`;
     INFO.blocks.forEach(b => {
       const el = document.createElement('div'); el.className = 'scratch-block gw19-anim-block'; el.style.backgroundColor = COLOR; el.style.borderColor = COLOR2; el.style.color = '#fff';
       el.dataset.extId = EXT; el.dataset.opcode = b.opcode; el.dataset.blockType = 'command'; el.dataset.argNames = JSON.stringify(Object.keys(b.arguments));
-      el.title = 'Animation (preview): uses the costumes made by the Animation tab';
+      el.title = 'Animation: plays the frames made in the Costumes → Animation tab';
       sec.appendChild(el);
     });
     dock.appendChild(sec); return sec;
@@ -15754,7 +15753,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   let sig = '';
   function refresh() {
     const sec = build(); if (!sec) return;
-    const s = active(), names = animsOf(s).map(a => a.name), show = devOn() && names.length > 0;
+    const s = active(), names = animsOf(s).map(a => a.name), show = names.length > 0; /* v15.47.0: for everyone (was Developer mode only) */
     sec.style.display = show ? '' : 'none';
     const now = (show ? '1' : '0') + '|' + names.join('|'); if (now === sig) return; sig = now;
     sec.querySelectorAll('.gw19-anim-block').forEach(el => {
@@ -15884,7 +15883,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
 (() => {
   'use strict';
   if (window.GW_FEATURE_OFF?.('animation')) return; // switched off (an incomplete feature)
-  /* G-Warp v15.16.2 — Animation tab, PREVIEW (written by Claude). Only visible in Developer mode.
+  /* G-Warp v15.16.2 — Animation tab (written by Claude). v15.47.0: out of preview, for everyone (was Developer mode only).
      v15.17.0: undo / redo (buttons, Ctrl+Z, Ctrl+Y / Ctrl+Shift+Z).
      Owner's plan: "not a stick-figure maker" — bones go INSIDE the vector costumes the user already
      drew, using Pivot Animator's method: bones are joined at pivot points, and you pose a figure by
@@ -16005,10 +16004,14 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
       const w = Math.max(1, im?.naturalWidth || 1), hh = Math.max(1, im?.naturalHeight || 1), R = Math.max(0.25, Math.min(w * hh > 1.5e6 ? 1 : 2, 4096 / Math.max(w, hh)));
       const cv = document.createElement('canvas'); cv.width = Math.ceil(w * R); cv.height = Math.ceil(hh * R); if (im) cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
       const name = `${anim.name} ${i + 1}`;
-      const c = { name, canvas: cv, rc: { ...(src?.rc || anim.rc || { x: w / 2, y: hh / 2 }) }, res: R, natural: true, dataFormat: 'svg', svg: text, gwAnimFrame: { anim: anim.id, frame: i } };
+      const c = { name, canvas: cv, rc: { ...(src?.rc || anim.rc || { x: w / 2, y: hh / 2 }) }, res: R, natural: true, dataFormat: 'svg', svg: text, gwAnimFrame: { anim: anim.id, frame: i, rev: anim.rev || 0 } };
       const at = s.costumes.findIndex(x => x.name === name); if (at >= 0) s.costumes[at] = c; else s.costumes.push(c);
       made.push(name);
     }
+    // v15.47.0 (Claude): fewer frames than before → the extra frame costumes of this animation go away
+    const cur = s.costumes[s.activeCostume], keep = new Set(made);
+    const extra = s.costumes.filter(c => c?.gwAnimFrame?.anim === anim.id && !keep.has(c.name));
+    if (extra.length && s.costumes.length - extra.length >= 1) { s.costumes = s.costumes.filter(c => !extra.includes(c)); const k = s.costumes.indexOf(cur); s.activeCostume = k >= 0 ? k : Math.min(s.activeCostume, s.costumes.length - 1); }
     try { window.renderSpritesGrid?.(); window.GW_V1570_STUDIO?.renderCostumeList?.(true); window.GW_V1570_STUDIO?.refreshCostumeMenus?.(); } catch {}
     return made;
   }
@@ -16018,9 +16021,9 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   /* ---- undo / redo: snapshots of the animation ---- */
   const KEEP = ['name', 'costume', 'svg', 'rc', 'bones', 'parts', 'frames', 'fps'];
   const pack = () => JSON.stringify({ a: Object.fromEntries(KEEP.map(k => [k, st.anim?.[k]])), frame: st.frame, bone: st.bone });
-  function snap() { if (!st.anim) return; st.hist.push(pack()); if (st.hist.length > 100) st.hist.shift(); st.fut = []; paintUndo(); }
+  function snap() { if (!st.anim) return; st.anim.rev = (st.anim.rev || 0) + 1; /* v15.47.0: costumes made before this change are out of date */ st.hist.push(pack()); if (st.hist.length > 100) st.hist.shift(); st.fut = []; paintUndo(); }
   function unsnapIfSame() { if (st.hist.length && st.hist[st.hist.length - 1] === pack()) { st.hist.pop(); paintUndo(); } }
-  function restore(text) { const o = JSON.parse(text), svgBefore = st.anim.svg; KEEP.forEach(k => { st.anim[k] = o.a[k]; }); st.frame = Math.min(o.frame || 0, st.anim.frames.length - 1); st.bone = o.bone && st.anim.bones.some(b => b.id === o.bone) ? o.bone : null; if (st.anim.svg !== svgBefore) loadArt(); refreshAll(); }
+  function restore(text) { const o = JSON.parse(text), svgBefore = st.anim.svg; KEEP.forEach(k => { st.anim[k] = o.a[k]; }); st.frame = Math.min(o.frame || 0, st.anim.frames.length - 1); st.bone = o.bone && st.anim.bones.some(b => b.id === o.bone) ? o.bone : null; st.anim.rev = (st.anim.rev || 0) + 1; if (st.anim.svg !== svgBefore) loadArt(); refreshAll(); }
   function undo() { if (!st.hist.length || !st.anim) return; play(false); st.fut.push(pack()); restore(st.hist.pop()); paintUndo(); }
   function redo() { if (!st.fut.length || !st.anim) return; play(false); st.hist.push(pack()); restore(st.fut.pop()); paintUndo(); }
   function paintUndo() { const u = by('gw18Undo'), r = by('gw18Redo'); if (u) u.disabled = !st.hist.length; if (r) r.disabled = !st.fut.length; }
@@ -16229,7 +16232,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     const ic = (name, label) => [h('i', { class: 'fa-solid ' + name, 'aria-hidden': 'true' }), ' ' + label];
     const ov = h('div', { id: 'gw18Anim', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Animation', tabindex: '-1' },
       h('div', { class: 'gw18-head' },
-        h('b', { class: 'gw18-title', html: '<i class="fa-solid fa-bone" aria-hidden="true"></i> Animation <span class="gw18-badge">preview · Developer mode</span>' }),
+        h('b', { class: 'gw18-title', html: '<i class="fa-solid fa-bone" aria-hidden="true"></i> Animation <span class="gw18-badge">Beta</span>' }),
         h('label', { class: 'gw18-lab' }, 'Animation ', h('select', { id: 'gw18AnimSel', onchange: e => chooseAnim(e.target.value) })),
         btn(h('i', { class: 'fa-solid fa-rotate-left', 'aria-hidden': 'true' }), () => undo(), { id: 'gw18Undo', title: 'Undo (Ctrl+Z)', 'aria-label': 'Undo', disabled: '' }), btn(h('i', { class: 'fa-solid fa-rotate-right', 'aria-hidden': 'true' }), () => redo(), { id: 'gw18Redo', title: 'Redo (Ctrl+Y)', 'aria-label': 'Redo', disabled: '' }),
         btn('+ New', () => openNew(), { id: 'gw18New' }), btn('Rename', () => rename()),
@@ -16256,14 +16259,20 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
           h('label', { class: 'gw18-lab', title: 'Loop: the preview (and in-betweens) go from the last frame back to the first' }, h('input', { id: 'gw18Loop', type: 'checkbox', checked: 'checked', onchange: e => { if (st.anim) { snap(); st.anim.loop = e.target.checked; paintHeader(); } } }), ' Loop'),
           h('span', { id: 'gw18Len', class: 'gw18-muted', 'aria-live': 'polite' }))));
     document.body.appendChild(ov);
-    ov.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); close(); } else if (e.key === 'Delete' && st.mode === 'rig' && st.bone && !/INPUT|SELECT/.test(e.target.tagName)) deleteBone(); });
+    ov.addEventListener('keydown', e => { const typing = /INPUT|SELECT|TEXTAREA/.test(e.target.tagName); if (e.key === 'Escape') { e.preventDefault(); close(); } else if (!typing && st.anim && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); play(false); const n = st.anim.frames.length; st.frame = (st.frame + (e.key === 'ArrowLeft' ? n - 1 : 1)) % n; setMode('animate'); } else if (!typing && st.anim && e.key === ' ' && !e.target.closest?.('button')) { e.preventDefault(); play(!st.play); } else if (e.key === 'Delete' && st.mode === 'rig' && st.bone && !/INPUT|SELECT/.test(e.target.tagName)) deleteBone(); });
     return ov;
   }
   async function rename() {
     if (!st.anim) return; const D = window.GW_DIALOG; const inp = h('input', { type: 'text', class: 'gw8-q-in', maxlength: '40', value: st.anim.name, 'aria-label': 'Animation name' });
     setTimeout(() => { inp.focus(); inp.select(); }, 40); inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); by('gw18Rename')?.querySelector('.gw8-dlg-foot .primary')?.click(); } });
     const ok = D ? await D({ id: 'gw18Rename', title: 'Rename animation', body: inp, buttons: [{ text: 'Cancel', value: false }, { text: 'OK', value: true, cls: 'ai primary' }] }) : true;
-    const n = inp.value.trim().slice(0, 40); if (ok && n && st.anim && n !== st.anim.name) { snap(); st.anim.name = n; refreshAll(); }
+    const n = inp.value.trim().slice(0, 40); if (ok && n && st.anim && n !== st.anim.name) {
+      if ((st.s.gwAnimations || []).some(a => a !== st.anim && a.name === n)) return toast(`There is already an animation called “${n}”.`);
+      const old = st.anim.name; snap(); st.anim.name = n;
+      madeOf(st.s, st.anim).forEach(c => { c.name = `${n} ${c.gwAnimFrame.frame + 1}`; c.gwAnimFrame.rev = st.anim.rev || 0; });
+      document.querySelectorAll('#workspaceCanvas select.gw19-anim-menu').forEach(sel => { if (sel.value === old) sel.innerHTML = `<option value="${n.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]))}" selected></option>`, sel.options[0].textContent = n; });
+      try { window.GW_V1570_STUDIO?.renderCostumeList?.(true); } catch {}
+      refreshAll(); }
   }
   function openNew() {
     const s = st.s, list = vectorCostumes(s).filter(c => !c.gwAnimFrame);
@@ -16271,15 +16280,34 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     const cur = s.costumes?.[s.activeCostume], c = list.includes(cur) ? cur : list[0];
     const a = newAnim(s, c); st.mode = 'rig'; st.tool = 'bone'; chooseAnim(a.id); return true;
   }
+  /* v15.47.0 (Claude): G-Spark is drawn as the G mascot, so its costume can get the mascot's bones and its
+     walk + wave animations straight away (a working example for kids, ready to change). */
+  function isMascotArt(c) {
+    if (!c || c.dataFormat !== 'svg' || !c.svg || !window.GW_MASCOT) return false;
+    if (c.svg === window.GW_MASCOT.svg) return true;
+    const r = parseSvg(c.svg); return !!r && /gwMascotGrad/.test(c.svg) && viewBoxOf(r).join(' ') === '0 0 120 110' && partPaths(r).length === 5;
+  }
+  function readyMade(s) {
+    const M = window.GW_MASCOT, c = s.costumes?.[s.activeCostume]; if (!M || !isMascotArt(c) || c.gwAnimFrame || (s.gwAnimations || []).length) return false; // only when the costume showing is G-Spark's own drawing
+    const mk = (name, frames) => ({ id: uid('a'), name, costume: c.name, svg: c.svg, rc: c.rc ? { ...c.rc } : { x: 60, y: 60 }, bones: M.bones(), parts: { 1: 'legL', 2: 'legR', 3: 'body', 4: 'armL', 5: 'armR' }, frames, fps: 8, rev: 1 });
+    s.gwAnimations = [mk('walk', M.walkFrames()), mk('wave', M.waveFrames())];
+    setTimeout(() => toast('G-Spark already has bones and two animations: “walk” and “wave”. Press ▶ Play, or change a pose and make your own!'), 300);
+    return true;
+  }
   function open() {
     const s = sprite(); if (!s) return false;
     st.s = s; st.open = true; build();
+    if (readyMade(s)) st.mode = 'animate';
     const list = s.gwAnimations || [];
     if (list.length) chooseAnim(list[0].id); else if (!openNew()) { close(); offerMascot(); return false; }
     setTimeout(() => { drawBones(); by('gw18Anim')?.focus?.(); }, 50);
     return true;
   }
-  function close() { play(false); st.open = false; st.drag = null; by('gw18Anim')?.remove(); try { window.renderSpritesGrid?.(); } catch {} }
+  function close() { play(false); st.open = false; st.drag = null; by('gw18Anim')?.remove(); try { window.renderSpritesGrid?.(); } catch {} refreshMade(st.s); }
+  /* v15.47.0 (Claude): costumes already made from an animation follow its changes (no stale frames) */
+  const madeOf = (s, a) => (s?.costumes || []).filter(c => c?.gwAnimFrame?.anim === a.id);
+  const stale = (s, a) => { const m = madeOf(s, a); return m.length > 0 && (m.length !== a.frames.length || m.some(c => (c.gwAnimFrame.rev ?? 0) !== (a.rev || 0))); };
+  async function refreshMade(s) { if (!s) return; const out = []; for (const a of s.gwAnimations || []) if (stale(s, a)) { await makeCostumes(s, a); out.push(a.name); } if (out.length) toast(`Updated the costumes of “${out.join('”, “')}”.`); }
   addEventListener('resize', () => { if (st.open) drawBones(); });
   // the main code area's undo listener asks the costume studio first; while this tab is open, the keys are ours
   (function claimKeys(n = 0) {
@@ -16297,7 +16325,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   function addEntry() {
     if (by('gw18AnimBtn')) return true;
     const row = by('gwCostumeModeV15'); if (!row) return false;
-    const b = h('button', { type: 'button', id: 'gw18AnimBtn', class: 'gw-costume-mode gw18-entry', title: 'Animation (preview, Developer mode only): bones inside vector costumes', onclick: () => open() }, h('i', { class: 'fa-solid fa-bone', 'aria-hidden': 'true' }), ' Animation');
+    const b = h('button', { type: 'button', id: 'gw18AnimBtn', class: 'gw-costume-mode gw18-entry', title: 'Animation: put bones in a vector costume, pose them in frames, and play it', onclick: () => open() }, h('i', { class: 'fa-solid fa-bone', 'aria-hidden': 'true' }), ' Animation');
     row.appendChild(b); return true;
   }
   (function boot(n = 0) { if (!addEntry() && n < 120) setTimeout(() => boot(n + 1), 500); })();
@@ -21299,6 +21327,204 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
 <script id="gw-v4640-report">
 (() => { const V = s => `${s} (v15.46.4, Claude)`; const ADDED = [V('Power lines: while a project runs, glowing electric wires in the code area show which script starts which (broadcast → when I receive in green, My Block → define in violet). Start blocks get a little electric pole that sparks when their script starts, and a broadcast heard by other sprites names them. Switch: More → Settings → “Power lines”')];
   function apply(n = 0) { const R = window.GW_AI_REPORT?.data; if (!R || !R.__v4600) return n < 80 && setTimeout(() => apply(n + 1), 250); if (R.__v4640) return; R.__v4640 = true; R.added = [...ADDED, ...R.added]; } apply(); })();
+</script>
+<script id="gw-v4700-flipbook">
+(() => {
+  'use strict';
+  /* v15.47.0 (Claude): Flipbook tools — costume animation, frame by frame (the way most Scratch animations are made:
+     one costume per frame, then "next costume" in a loop). Same idea as the onion-skin add-on people use with
+     Scratch / TurboWarp, in G-Warp's own look:
+       • Onion skin (button in the paint editor's bottom bar, Vector and Bitmap): the costume before shows faintly in
+         violet and the one after in green, BEHIND your drawing, lined up by rotation centre — so the next frame can be
+         drawn in the right place. It is only a picture behind the editor; it is never saved into the costume.
+         When it is on, a small strip lets you pick how many costumes before / after and how strong.
+       • ▶ Play (under the costume list): a little player over the editor flips through the sprite's costumes in
+         order, lined up by rotation centre like on the stage. Speed (frames per second), loop, and which costumes.
+     Nothing in the project changes. Settings are remembered on this computer only. */
+  if (window.GW_FLIPBOOK) return;
+  const by = id => document.getElementById(id);
+  const E = () => window.Engine;
+  const spr = () => E()?.sprites?.[E()?.activeSpriteIndex] || null;
+  const KEY = 'gwarp-flipbook';
+  const S = { onion: false, before: 1, after: 0, strength: 35, fps: 8, loop: true };
+  try { Object.assign(S, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const h = (tag, props = {}, ...kids) => { const el = document.createElement(tag); for (const [k, v] of Object.entries(props)) { if (k === 'class') el.className = v; else if (k === 'text') el.textContent = v; else if (k === 'html') el.innerHTML = v; else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2), v); else if (v != null) el.setAttribute(k, v); } kids.flat().forEach(c => c != null && el.append(c)); return el; };
+  const ONION_ICON = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="2.5" y="6.5" width="11" height="11" rx="2.5" fill="none" stroke="#8b5cf6" stroke-width="1.8" opacity=".75"/><rect x="10.5" y="6.5" width="11" height="11" rx="2.5" fill="none" stroke="#4ade80" stroke-width="1.8" opacity=".75"/><rect x="6.5" y="4.5" width="11" height="15" rx="2.5" fill="currentColor" opacity=".9"/></svg>';
+
+  const css = document.createElement('style'); css.id = 'gw-v4700-flipbook-css';
+  css.textContent = `
+#gwpeOnion svg{display:block}
+#gwOnionBar{position:absolute;left:12px;bottom:6px;z-index:6;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:5px 10px;border-radius:10px;background:rgba(11,11,20,.88);border:1px solid #3b2a77;color:#e5e7eb;font:700 11.5px Inter,system-ui,sans-serif;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+#gwOnionBar b{color:#c4b5fd}#gwOnionBar label{display:inline-flex;align-items:center;gap:4px}
+#gwOnionBar select{background:#0b0b14;color:#fff;border:1px solid #34344a;border-radius:6px;padding:1px 4px;font:inherit}
+#gwOnionBar input[type=range]{width:70px;accent-color:#8b5cf6}
+#gwOnionBar .b{color:#c4b5fd}#gwOnionBar .a{color:#86efac}
+#gwFlipbook{position:absolute;right:12px;top:12px;z-index:7;width:236px;padding:8px;border-radius:12px;background:#0d0f1c;border:1px solid #3b2a77;box-shadow:0 14px 40px rgba(0,0,0,.6);color:#e5e7eb;font:700 11.5px Inter,system-ui,sans-serif}
+#gwFlipbook .fb-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+#gwFlipbook .fb-head b{flex:1;color:#fff;font-size:12.5px}#gwFlipbook .fb-head i.fa-bolt{color:#4ade80}
+#gwFlipbook canvas{display:block;width:220px;height:165px;border-radius:8px;background:#fff;box-shadow:0 0 0 1px #34344a}
+#gwFlipbook .fb-row{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+#gwFlipbook button{height:26px;min-width:26px;padding:0 8px;border-radius:7px;border:1px solid #34344a;background:#1b1d33;color:#e5e7eb;font:inherit;cursor:pointer}
+#gwFlipbook button:hover{background:#262a45}
+#gwFlipbook button.go{background:linear-gradient(135deg,#7c3aed,#4f46e5);border-color:#8b5cf6;color:#fff}
+#gwFlipbook input[type=number]{width:44px;background:#0b0b14;color:#fff;border:1px solid #34344a;border-radius:6px;padding:2px 4px;font:inherit}
+#gwFlipbook .fb-info{color:#94a3b8;font-weight:600;min-height:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#gwFlipbook label{display:inline-flex;align-items:center;gap:4px}
+#gwFlipbook input[type=checkbox]{accent-color:#8b5cf6}
+`;
+  document.head.appendChild(css);
+
+  /* ================= onion skin ================= */
+  const ids = new WeakMap(); let idN = 0; const idOf = o => { if (!o) return 0; let v = ids.get(o); if (!v) { v = ++idN; ids.set(o, v); } return v; };
+  const sizeOf = c => ({ w: (c.canvas?.width || 0) / (c.res || 1), h: (c.canvas?.height || 0) / (c.res || 1) });
+  const surfaces = () => [by('gwVectorCanvasV15'), by('gwBitmapCanvasV15')].filter(Boolean);
+  const base = new WeakMap(); // the editor's own background (checkerboard), kept to put back
+  let url = '', sig = '', busy = false;
+  function clearOnion() {
+    surfaces().forEach(el => { if (el.dataset.gwOnion) { ['background-image', 'background-size', 'background-repeat', 'background-position'].forEach(p => el.style.removeProperty(p)); delete el.dataset.gwOnion; } });
+    if (url) { URL.revokeObjectURL(url); url = ''; } sig = '';
+  }
+  function neighbours(s) {
+    const cs = s.costumes || [], i = s.activeCostume | 0, out = [];
+    for (let k = S.before; k >= 1; k--) if (cs[i - k]?.canvas) out.push({ c: cs[i - k], k, side: 'b' });
+    for (let k = S.after; k >= 1; k--) if (cs[i + k]?.canvas) out.push({ c: cs[i + k], k, side: 'a' });
+    return out;
+  }
+  function tinted(c, color) {
+    const t = document.createElement('canvas'); t.width = c.canvas.width; t.height = c.canvas.height; const x = t.getContext('2d');
+    x.drawImage(c.canvas, 0, 0); x.globalCompositeOperation = 'source-atop'; x.globalAlpha = 0.55; x.fillStyle = color; x.fillRect(0, 0, t.width, t.height); return t;
+  }
+  function renderOnion() {
+    const s = spr(), map = window.GW_VECTOR_EDITOR?.mapFor; const c = s?.costumes?.[s.activeCostume];
+    if (!S.onion || !s || !c || !map || !editorShown()) { if (sig) clearOnion(); return; }
+    const list = neighbours(s), m = map(c), rc = c.rc || { x: 0, y: 0 };
+    const key = [E().activeSpriteIndex, s.activeCostume, idOf(c), c.canvas?.width, c.canvas?.height, rc.x, rc.y, S.before, S.after, S.strength, list.map(n => idOf(n.c) + ':' + idOf(n.c.canvas) + ':' + (n.c.rc?.x) + ',' + (n.c.rc?.y)).join(';')].join('|');
+    const need = surfaces().some(el => !el.dataset.gwOnion);
+    if (key === sig && !need) return;
+    if (busy) return; sig = key;
+    if (!list.length) { clearOnion(); sig = key; return; }
+    const Z = 2, oc = document.createElement('canvas'); oc.width = 512 * Z; oc.height = 384 * Z; const x = oc.getContext('2d');
+    for (const n of list) {
+      const r = n.c.rc || { x: 0, y: 0 }, sz = sizeOf(n.c); if (!sz.w || !sz.h) continue;
+      const fade = 1 - (n.k - 1) / ((n.side === 'b' ? S.before : S.after) + 1);
+      x.globalAlpha = clamp(S.strength / 100, 0.05, 0.9) * fade;
+      x.drawImage(tinted(n.c, n.side === 'b' ? '#8b5cf6' : '#22c55e'), (m.ox + (rc.x - r.x) * m.k) * Z, (m.oy + (rc.y - r.y) * m.k) * Z, sz.w * m.k * Z, sz.h * m.k * Z);
+    }
+    busy = true;
+    oc.toBlob(b => {
+      busy = false; if (!b || sig !== key) return;
+      const old = url; url = URL.createObjectURL(b);
+      surfaces().forEach(el => {
+        if (!el.dataset.gwOnion || !base.has(el)) { const cs = getComputedStyle(el); base.set(el, { img: cs.backgroundImage, size: cs.backgroundSize, rep: cs.backgroundRepeat, pos: cs.backgroundPosition }); }
+        const b0 = base.get(el), hasBase = b0.img && b0.img !== 'none';
+        el.style.setProperty('background-image', `url("${url}")` + (hasBase ? ', ' + b0.img : ''), 'important');
+        el.style.setProperty('background-size', '100% 100%' + (hasBase ? ', ' + b0.size : ''), 'important');
+        el.style.setProperty('background-repeat', 'no-repeat' + (hasBase ? ', ' + b0.rep : ''), 'important');
+        el.style.setProperty('background-position', '0 0' + (hasBase ? ', ' + b0.pos : ''), 'important');
+        el.dataset.gwOnion = '1';
+      });
+      if (old) setTimeout(() => URL.revokeObjectURL(old), 500);
+    }, 'image/png');
+  }
+  function editorShown() { const w = by('gwCostumeCanvasWrapV15'); return !!w && w.offsetWidth > 0 && w.offsetHeight > 0; }
+  function setOnion(on) { S.onion = !!on; save(); if (!S.onion) clearOnion(); paint(); renderOnion(); }
+
+  function paint() {
+    const b = by('gwpeOnion'); if (b) { b.classList.toggle('on', S.onion); b.setAttribute('aria-pressed', String(S.onion)); }
+    const wrap = by('gwCostumeCanvasWrapV15'); let bar = by('gwOnionBar');
+    if (!S.onion || !wrap) { bar?.remove(); return; }
+    if (!bar) {
+      const num = (cls, key, max) => { const sel = h('select', { 'aria-label': key === 'before' ? 'Costumes before' : 'Costumes after' }); for (let i = 0; i <= max; i++) sel.append(h('option', { value: String(i), text: String(i) })); sel.value = String(S[key]); sel.addEventListener('change', () => { S[key] = +sel.value; save(); renderOnion(); }); return h('label', { class: cls }, key === 'before' ? 'before' : 'after', sel); };
+      const rng = h('input', { type: 'range', min: '10', max: '80', value: String(S.strength), 'aria-label': 'Onion skin strength' }); rng.addEventListener('input', () => { S.strength = +rng.value; save(); renderOnion(); });
+      bar = h('div', { id: 'gwOnionBar', role: 'group', 'aria-label': 'Onion skin settings' }, h('b', { text: 'Onion skin' }), num('b', 'before', 3), num('a', 'after', 3), h('label', {}, 'strength', rng),
+        h('button', { type: 'button', title: 'Turn onion skin off', 'aria-label': 'Turn onion skin off', style: 'background:none;border:0;color:#94a3b8;cursor:pointer;font:inherit', onclick: () => setOnion(false), html: '<i class="fa-solid fa-xmark"></i>' }));
+      wrap.appendChild(bar);
+    }
+  }
+  function addOnionButton() {
+    if (by('gwpeOnion')) return; const grid = by('gwpeGrid'); if (!grid) return;
+    const b = h('button', { type: 'button', id: 'gwpeOnion', class: 'gwpe-tg', title: 'Onion skin: see the costume before (violet) and after (green) behind your drawing', 'aria-label': 'Onion skin', 'aria-pressed': 'false', html: ONION_ICON });
+    b.addEventListener('click', () => setOnion(!S.onion));
+    grid.before(b); paint();
+  }
+
+  /* ================= flipbook player ================= */
+  const P = { timer: 0, i: 0, from: 1, to: 0, frames: [], box: null };
+  function frameList(s) { const cs = s?.costumes || []; const a = clamp(P.from | 0, 1, cs.length || 1), b = clamp((P.to | 0) || cs.length, a, cs.length || 1); return cs.slice(a - 1, b).map((c, k) => ({ c, n: a + k })).filter(f => f.c?.canvas); }
+  function unionBox(list) { let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity; for (const { c } of list) { const r = c.rc || { x: 0, y: 0 }, z = sizeOf(c); x0 = Math.min(x0, -r.x); y0 = Math.min(y0, -r.y); x1 = Math.max(x1, -r.x + z.w); y1 = Math.max(y1, -r.y + z.h); } return Number.isFinite(x0) ? { x0, y0, w: Math.max(1, x1 - x0), h: Math.max(1, y1 - y0) } : null; }
+  function drawFrame() {
+    const cv = by('gwFlipCanvas'), s = spr(); if (!cv || !s) return; const x = cv.getContext('2d'); x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, cv.width, cv.height);
+    const f = P.frames[P.i], B = P.box; const info = by('gwFlipInfo');
+    if (!f || !B) { if (info) info.textContent = 'No costumes to play.'; return; }
+    const k = Math.min((cv.width - 16) / B.w, (cv.height - 16) / B.h), ox = (cv.width - B.w * k) / 2 - B.x0 * k, oy = (cv.height - B.h * k) / 2 - B.y0 * k;
+    const r = f.c.rc || { x: 0, y: 0 }, z = sizeOf(f.c); x.imageSmoothingQuality = 'high';
+    x.drawImage(f.c.canvas, ox - r.x * k, oy - r.y * k, z.w * k, z.h * k);
+    if (info) info.textContent = `${P.i + 1} / ${P.frames.length} · ${f.n}. ${f.c.name}`;
+  }
+  function stopPlay() { clearInterval(P.timer); P.timer = 0; const b = by('gwFlipGo'); if (b) b.innerHTML = '<i class="fa-solid fa-play"></i>'; }
+  function startPlay() {
+    stopPlay(); const s = spr(); P.frames = frameList(s); P.box = unionBox(P.frames); if (!P.frames.length) { drawFrame(); return; }
+    if (P.i >= P.frames.length) P.i = 0; drawFrame();
+    const b = by('gwFlipGo'); if (b) b.innerHTML = '<i class="fa-solid fa-stop"></i>';
+    P.timer = setInterval(() => {
+      if (!by('gwFlipbook') || spr() !== s) return closePlayer();
+      if (P.i + 1 >= P.frames.length) { if (!S.loop) return stopPlay(); P.i = 0; } else P.i++;
+      drawFrame();
+    }, 1000 / clamp(S.fps, 1, 30));
+  }
+  // which costumes to play first: the frames of the animation / numbered group the selected costume belongs to
+  // ("run 1"…"run 7", "walk1"…"walk4"), otherwise all of them
+  function group(s) {
+    const cs = s.costumes || [], i = s.activeCostume | 0, c = cs[i], all = [1, Math.max(1, cs.length)]; if (!c) return all;
+    const same = c.gwAnimFrame ? (x => x?.gwAnimFrame?.anim === c.gwAnimFrame.anim) : (() => { const m = /^(.*?)\s*\d+$/.exec(c.name || ''); const stem = m && m[1].trim().toLowerCase(); return stem ? (x => { const k = /^(.*?)\s*\d+$/.exec(x?.name || ''); return !!k && k[1].trim().toLowerCase() === stem; }) : null; })();
+    if (!same) return all; let a = i, b = i; while (a > 0 && same(cs[a - 1])) a--; while (b < cs.length - 1 && same(cs[b + 1])) b++;
+    return b > a ? [a + 1, b + 1] : all;
+  }
+  function openPlayer() {
+    const wrap = by('gwCostumeCanvasWrapV15'), s = spr(); if (!wrap || !s) return;
+    by('gwFlipbook')?.remove(); const g = group(s); P.from = g[0]; P.to = g[1]; P.i = 0;
+    const fps = h('input', { type: 'number', min: '1', max: '30', value: String(S.fps), 'aria-label': 'Frames per second' }); fps.addEventListener('change', () => { S.fps = clamp(Math.round(+fps.value || 8), 1, 30); fps.value = String(S.fps); save(); if (P.timer) startPlay(); });
+    const from = h('input', { type: 'number', min: '1', value: String(P.from), 'aria-label': 'First costume' }), to = h('input', { type: 'number', min: '1', value: String(P.to), 'aria-label': 'Last costume' });
+    const range = () => { const n = spr()?.costumes.length || 1; P.from = clamp(Math.round(+from.value || 1), 1, n); P.to = clamp(Math.round(+to.value || n), P.from, n); from.value = String(P.from); to.value = String(P.to); P.i = 0; P.frames = frameList(spr()); P.box = unionBox(P.frames); drawFrame(); if (P.timer) startPlay(); };
+    from.addEventListener('change', range); to.addEventListener('change', range);
+    const loop = h('input', { type: 'checkbox', 'aria-label': 'Loop' }); loop.checked = S.loop; loop.addEventListener('change', () => { S.loop = loop.checked; save(); });
+    const step = d => { stopPlay(); if (!P.frames.length) { P.frames = frameList(spr()); P.box = unionBox(P.frames); } const n = P.frames.length || 1; P.i = (P.i + d + n) % n; drawFrame(); };
+    const box = h('div', { id: 'gwFlipbook', role: 'dialog', 'aria-label': 'Flipbook: play the costumes' },
+      h('div', { class: 'fb-head' }, h('i', { class: 'fa-solid fa-bolt', 'aria-hidden': 'true' }), h('b', { text: 'Flipbook' }), h('button', { type: 'button', title: 'Close', 'aria-label': 'Close', onclick: () => closePlayer(), html: '<i class="fa-solid fa-xmark"></i>' })),
+      h('canvas', { id: 'gwFlipCanvas', width: '440', height: '330' }),
+      h('div', { class: 'fb-info', id: 'gwFlipInfo', 'aria-live': 'off' }),
+      h('div', { class: 'fb-row' },
+        h('button', { type: 'button', title: 'Previous frame', 'aria-label': 'Previous frame', onclick: () => step(-1), html: '<i class="fa-solid fa-backward-step"></i>' }),
+        h('button', { type: 'button', id: 'gwFlipGo', class: 'go', title: 'Play / stop', 'aria-label': 'Play or stop', onclick: () => (P.timer ? stopPlay() : startPlay()), html: '<i class="fa-solid fa-play"></i>' }),
+        h('button', { type: 'button', title: 'Next frame', 'aria-label': 'Next frame', onclick: () => step(1), html: '<i class="fa-solid fa-forward-step"></i>' }),
+        h('label', { title: 'Frames per second' }, fps, 'FPS'), h('label', { title: 'Start again after the last costume' }, loop, 'Loop')),
+      h('div', { class: 'fb-row' }, h('span', { text: 'Costumes' }), from, h('span', { text: 'to' }), to));
+    wrap.appendChild(box); startPlay();
+  }
+  function closePlayer() { stopPlay(); by('gwFlipbook')?.remove(); }
+  function addPlayButton() {
+    if (by('gwCosPlayBtn')) return; const add = by('gwCosAdd'), up = by('gwCosUploadBtn'); if (!add || !up) return;
+    const b = h('button', { type: 'button', class: 'gw7-btn', id: 'gwCosPlayBtn', title: 'Flipbook: play the costumes in order, like an animation', html: '<i class="fa-solid fa-play"></i> Play' });
+    b.addEventListener('click', () => (by('gwFlipbook') ? closePlayer() : openPlayer()));
+    up.after(b);
+  }
+
+  /* ================= keep everything in place ================= */
+  let lastSprite = -1;
+  setInterval(() => {
+    addOnionButton(); addPlayButton(); paint();
+    const i = E()?.activeSpriteIndex; if (i !== lastSprite) { lastSprite = i; closePlayer(); }
+    if (by('gwFlipbook') && !P.timer) { /* list may have changed while stopped */ }
+    renderOnion();
+  }, 250);
+  window.GW_FLIPBOOK = { settings: S, setOnion, renderOnion, open: openPlayer, close: closePlayer, play: startPlay, stop: stopPlay, state: P };
+})();
+</script>
+<script id="gw-v4700-report">
+(() => { const V = s => `${s} (v15.47.0, Claude)`; const ADDED = [V('Costume animation: the Animation tab (bones in vector costumes, pose frames, in-betweens, play, make costumes) is out of preview and for everyone, with the “switch to / play animation” blocks. G-Spark comes with bones and “walk” + “wave” to try. Costumes made from an animation now follow its changes, renaming an animation renames its costumes and blocks, ← → step through frames and Space plays'), V('Flipbook for frame-by-frame animation: Onion skin in the paint editor (the costume before in violet, after in green, behind your drawing, lined up by rotation centre) and ▶ Play under the costume list (plays the costumes in order: speed, loop, which costumes)')];
+  function apply(n = 0) { const R = window.GW_AI_REPORT?.data; if (!R || !R.__v4640) return n < 80 && setTimeout(() => apply(n + 1), 250); if (R.__v4700) return; R.__v4700 = true; R.added = [...ADDED, ...R.added]; } apply(); })();
 </script>
 </body>
 </html>

@@ -1,0 +1,103 @@
+G-WARP ASSIGNMENTS: COSTUME ANIMATION  (from Claude, team leader)  -  2026-10-18
+Owner: Creapter1. The owner says the team's FOCUS now is ANIMATION FOR COSTUMES.
+Do these jobs FIRST. Your older jobs in ASSIGNMENTS-2026-10-19.txt come after them.
+Live app: Beta v15.47.0 (app.html). Engine names: ENGINE-MAP.txt. Rules: TODO.txt (they still apply:
+same same but different, theirs is theirs / ours is ours, no cats, no Scratch art, add don't swap).
+Golden rule: every job ends in something TESTABLE. Keep your work in YOUR folder only.
+
+--------------------------------------------------------------------
+WHAT IS ALREADY IN THE APP (v15.47.0, built by Claude, test: claude/tests/test_cosanim.js 27/27 PASS)
+--------------------------------------------------------------------
+1. FLIPBOOK (frame by frame, in the Costumes tab)
+   - Onion skin button (bottom bar of the paint editor): the costume BEFORE shows faintly in violet,
+     the one AFTER in green, BEHIND the drawing, lined up by rotation centre. Strip with
+     before 0-3 / after 0-3 / strength. Vector + Bitmap. Never saved into the costume.
+     Code: window.GW_FLIPBOOK {settings, setOnion, renderOnion, open, close, play, stop, state}
+     Source: claude/flipbook4700.js
+   - Play button (under the costume list): a small player flips through the costumes in order,
+     lined up like on the stage. FPS 1-30, loop, "Costumes [from] to [to]". It starts with the
+     group the selected costume belongs to (run 1..run 7) or all costumes.
+2. ANIMATION TAB (bones, like Pivot Animator) - now for EVERYONE (was Developer mode only)
+   - Costumes -> "Animation" button. Rig mode: add bones, attach shapes (or automatically).
+     Animate mode: frames strip, drag bone ends, onion skin, In-between, Smooth x2, Play, FPS, loop.
+     "Make costumes" turns every frame into a normal costume ("walk 1", "walk 2"...).
+   - G-Spark comes with bones and two animations (walk, wave) the first time you open it.
+   - Costumes made from an animation now FOLLOW its changes (no old frames), rename renames them.
+   - Keys: <- -> step frames, Space plays.
+   - Code: window.GW_ANIM {open, close, solve(anim,pose), deltas, applyPose, frameSvg(anim,i),
+     partPaths, makeCostumes(sprite,anim), newAnim, undo, redo, tween, smooth, mix(A,B,t), state}
+     Animation object: {id, name, costume, svg, rc, bones:[{id,name,parent,at,off,x,y,len,angle}],
+     parts:{ "<path>": boneId }, frames:[{roots:{boneId:{x,y}}, angles:{boneId:deg}}], fps, loop, rev}
+   - window.GW_MASCOT {svg, bones(), walkFrames(), waveFrames()}  (G-Spark's own drawing + rig)
+3. ANIMATION BLOCKS (palette section "Animation", shows when the sprite has an animation)
+   switch to animation [ ] / play animation [ ] from frame [ ] / play animation [ ] over and over /
+   stop animation.  Code: window.GW_ANIM_BLOCKS {start, stop, frameIdx, ensureFrames, refresh}
+
+--------------------------------------------------------------------
+=== GROK  (tests + facts: make sure G-Warp animates EXACTLY like Scratch) ===
+--------------------------------------------------------------------
+GA1. grok/ANIM-FIXTURES.json: 20 small cases with the EXACT costume sequence Scratch 3 shows, e.g.
+     forever { next costume; wait 0.1 } for 1 second at 30 TPS -> which costume numbers, in order;
+     "switch costume to (2.6)", to "0", to "-1", to a costume NAMED "3", to "next costume" text,
+     next costume on the last costume (wraps), "costume [number]" reporter after each step,
+     what TurboWarp 60 FPS mode changes. Same block format as GR1. Give the SOURCE for each
+     (scratch-vm file + line or Scratch Wiki page).
+GA2. grok/SPEC-onion-skin.txt: how the onion-skin add-on that Scratch / TurboWarp users know works
+     (behaviour only, do NOT copy code): defaults (how many before/after, opacity, colours/modes),
+     vector vs bitmap, rotation centre, what happens on the first/last costume, settings it has.
+     Then list every DIFFERENCE with G-Warp's Onion skin (try it in the live app). Credit the
+     add-on's authors and say its licence.
+
+--------------------------------------------------------------------
+=== DEEPSEEK  (lab: 3 versions of each, with a test page) ===
+--------------------------------------------------------------------
+DA1. Easing for in-betweens. Today "In-between" makes the exact half-way pose (linear).
+     Make 3 versions of an ease option for GW_ANIM.mix(A, B, t): (A) linear, (B) ease in-out (sine),
+     (C) your best "springy" one. Pure functions + deepseek/lab-easing.html that draws G-Spark's
+     bones (GW_MASCOT.bones(), walkFrames()) for t = 0..1 so we can SEE the difference.
+     Bones turn the short way round (see mix in the app). Say which one you'd pick and why.
+DA2. Auto-rig: guess bones for a vector costume the kid drew. Input: the costume's SVG text.
+     Output: { bones:[...], parts:{...} } in the GW_ANIM format above. 3 versions, for example
+     (A) one bone per shape along its longest side, (B) chain shapes that overlap, root = biggest
+     shape, (C) your idea. Test each on 3 of YOUR OWN drawings (stick robot, lightning bug, a G-Warp
+     style character - no cats, no famous characters). File: deepseek/auto-rig-A/B/C.js + LAB notes.
+DA3. Faster "Make costumes": it turns every frame into an SVG, then a picture at 2x. Time it for
+     8 / 30 / 120 frames (G-Spark walk + Smooth x2 a few times) and make 3 faster versions (reuse one
+     Image, createImageBitmap, draw only the parts that move...). Same pictures, measured times.
+
+--------------------------------------------------------------------
+=== GEMINI  (pictures: 3 SVG options for each, always check them) ===
+--------------------------------------------------------------------
+GA-M1. Icons in G-Warp's style (24x24 viewBox, currentColor + violet #8b5cf6 / electric green
+       #4ade80 accents, dark UI): Onion skin, Flipbook play, Animation (bones), In-between,
+       Smooth x2, Make costumes. 3 options each -> gemini/icons-animation/. Check each one renders.
+GA-M2. 3 starter characters made FOR rigging (G-Warp originals: a robot "Volt", a lightning bug,
+       a battery buddy - no cats, no brands, no famous characters). Each body part is its OWN
+       <g id="head">, <g id="body">, <g id="armL">... so bones can be attached. Size about 120x120.
+       -> gemini/rig-characters/ with a note of where each joint (pivot point) should go.
+
+--------------------------------------------------------------------
+=== CHATGPT  (reviewer + docs) ===
+--------------------------------------------------------------------
+CA1. chatgpt/USER-GUIDE.txt: new section "Animate your costumes" for kids: (1) Flipbook: draw
+     costume 1, duplicate, turn on Onion skin, change it a little, press Play; (2) Animation tab:
+     G-Spark's walk + wave, Rig (bones, attach), Animate (pose frames, In-between, Play),
+     Make costumes; (3) the blocks. Short steps, no long words.
+CA2. chatgpt/REVIEW-costume-animation.txt: read claude/tests/test_cosanim.js and list what is NOT
+     tested yet, as numbered test cases with the expected result (ideas: save + reopen a project
+     keeps animations; clones play animations on their own; undo after rename; a bitmap costume
+     in the Animation tab; 2 sprites with the same animation name; Stop during play).
+CA3. chatgpt/UX-costume-animation.txt: 10 concrete improvements for the Flipbook + Animation tab,
+     ranked, each with "how we know it's done" (compare with Pivot Animator and the Scratch paint
+     editor, but keep G-Warp's own look).
+
+--------------------------------------------------------------------
+=== CLAUDE (leader) ===
+--------------------------------------------------------------------
+CL4. Merge the best of DA1 (easing) + DA2 (auto-rig) + GA-M1 icons after testing them.
+CL5. Tests from CA2 + GA1 run on every Beta; fix what fails.
+CL6. Save/load .sb3 with animations; clones playing animations; Stop during play.
+
+HOW TO HAND IN: your folder + one line at the bottom of AI-TEAM.txt:
+  <date> | DONE | <AI> | <job id> | <files>
+If you can't do a job (no GitHub, no browser), say so in your folder's notes and do the part you can.
