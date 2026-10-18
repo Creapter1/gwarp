@@ -1,6 +1,7 @@
 G-WARP SPEC: VARIABLES + LISTS (Scratch 3.0 behaviour)
 Source: scratchfoundation/scratch-vm src/blocks/scratch3_data.js + util/cast.js
 Written by: Grok  |  Date: 2026-10-13
+G6 alignment: 2026-10-18 (see grok/VERIFY-high-risk.txt, FIXTURES-verified.txt)
 
 =====================================================================
 SHARED
@@ -8,7 +9,7 @@ SHARED
 - Variables and lists are looked up (or created) by id+name on the target.
 - Cloud variables also request cloud IO update on set/change.
 - List indexes are 1-based in Scratch.
-- LIST_ITEM_LIMIT = 200000 (hard cap in official VM).
+- LIST_ITEM_LIMIT = 200000 (hard cap in official VM).  [F030]
 
 Cast.toListIndex(index, length, acceptAll):
   - "all" -> LIST_ALL if acceptAll else LIST_INVALID
@@ -16,6 +17,7 @@ Cast.toListIndex(index, length, acceptAll):
   - "random" / "any" -> 1 + floor(random*length) if length>0 else INVALID
   - else floor(toNumber(index)); if outside 1..length -> INVALID
   - LIST_INVALID means no-op or empty report depending on block
+  - G6: index 0 is ALWAYS invalid (does NOT map to first item)
 
 =====================================================================
 VARIABLES
@@ -60,13 +62,17 @@ Clear list.
 INDEX via toListIndex(index, length+1, acceptAll=false) so you can insert at end+1.
   - INVALID or index > 200000: no-op
   - insert; if length exceeded limit, pop last
+  - G6: insert at 0 is INVALID (no-op); does not insert at first position  [F024]
 
 --- data_replaceitemoflist ---
 INDEX via toListIndex(..., false). INVALID -> no-op. Else replace at index-1.
 
 --- data_itemoflist ---
 INDEX via toListIndex(..., false). INVALID -> "". Else list[index-1].
-Edge: item 0, negative, past end -> "".
+Edge (G6 SOURCE-CONFIRMED):
+  - item 0 of non-empty list -> ""  [F021]  (NOT the first item)
+  - item 1 of ["a","b"] -> "a"; item 2 -> "b"  [F022]
+  - item past end or empty list -> ""  [F075]
 
 --- data_itemnumoflist ---
 First 1-based index where Cast.compare(list[i], ITEM)===0; else 0.
@@ -77,6 +83,7 @@ list.value.length
 
 --- data_listcontainsitem ---
 True if indexOf hits OR any Cast.compare === 0.
+Fixture: list ["10"] contains 10 -> true  [F028]
 
 --- data_showlist / data_hidelist ---
 Monitor visibility for the list.
@@ -84,7 +91,8 @@ Monitor visibility for the list.
 =====================================================================
 EDGE CASES TO TEST
 =====================================================================
-- item 0 of list -> ""
+- item 0 of list -> ""   (G6; never treat 0 as 1)
+- insert at 0 -> no-op; existing item 1 unchanged
 - item last of empty -> ""
 - add when already 200000 items -> no growth
 - insert at 1 on full list -> inserts and drops last
@@ -103,3 +111,5 @@ G-WARP NOTES
 =====================================================================
 - Freeze-fix plan in TODO.txt already calls for list limit 200000 — match this constant.
 - Do not use 0-based indexes in the language; only internally.
+- G6 fixtures: F021 F022 F024 F028 F030 F075 in FIXTURES-verified.txt.
+- Older wrong claims that "index 0 maps to first item" are SUPERSEDED by G6.
