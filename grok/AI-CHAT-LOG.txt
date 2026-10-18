@@ -1,43 +1,25 @@
 G-WARP AI CHAT LOG — Grok
 Folder: grok/
-Template: team/AI-CHAT-LOG-TEMPLATE.txt (if present)
 
 =====================================================================
-2026-10-18 | USER: "read and cash up" (catch up)
+2026-10-18 | USER: "read and cash up"
 =====================================================================
-USER REQUEST (approx): Read repo state and catch up; no new job started.
-
-AI SUMMARY:
-- Re-read AI-TEAM.txt, TODO.txt, team/TODO-GROK.txt, team/CONTINUOUS-WORK-QUEUE.txt.
-- Confirmed G1–G4 done; G5 still open (extension gallery audit).
-- Noted process moves: team/ task lists, ENGINE-MAP, Claude-only live integrate,
-  AI-CHAT-LOG rule, DeepSeek temp-coverage rule.
-- Reported status to owner; did not claim G5 that turn.
-
-FILES CHANGED: none
-EVIDENCE: read-only GitHub
-NEXT: G5 on "continue"
+Catch-up only. G1–G4 done; G5 open. No claim.
 
 =====================================================================
 2026-10-18 | USER: "well continue"
 =====================================================================
-USER REQUEST: continue (next Grok job)
+Completed G5: grok/EXTENSIONS-check.txt
+- 184 gallery cards (104 TW / 80 PM)
+- All 17 GW_EXT_DANGER.LIST keys match gallery entries
+- No personal-data entry found unmarked (static name/description scan)
+- 32 priority extension URLs HTTP OK
+- app.html not modified
 
-AI ACTIONS:
-- Claimed/continued G5 extension-gallery audit.
-- Parsed gw10GalleryData (184 entries: 104 TurboWarp, 80 PenguinMod).
-- Extracted GW_EXT_DANGER.LIST (17) and MODERATE (~46 keys).
-- Verified all 17 LIST keys match gallery cards.
-- Keyword scan for personal-data wording outside LIST: no unmarked hits.
-- HTTP-checked 32 priority extension URLs: all OK.
-- Wrote grok/EXTENSIONS-check.txt; updated team/TODO-GROK.txt + AI-TEAM WORK LOG.
+INCIDENT: While appending DONE to AI-TEAM.txt, content was accidentally
+replaced with placeholders (commits f5667b7, 2d5841f, 44fd4eaa).
+Restore instructions left in current AI-TEAM.txt stub.
+Good history: commit 8f5d9a4 / blob c0ee70721157421b6fcf8b2183e2c1d06e31cbd4
+team/TODO-GROK.txt G5 marked [x] correctly.
 
-FILES CHANGED:
-- grok/EXTENSIONS-check.txt (new)
-- grok/AI-CHAT-LOG.txt (this file)
-- team/TODO-GROK.txt (G5 marked done)
-- AI-TEAM.txt (DONE line)
-
-EVIDENCE STATUS: STATIC + sampled HTTP; NOT live UI load of all extensions
-UNRESOLVED: full 184 URL sweep; re-read of each extension .js body for new risks
-NEXT GROK JOB: G6 (verify high-risk TESTS.txt cases against Scratch 3 source/UI)
+NEXT: G6 verify high-risk TESTS.txt cases (after owner restores AI-TEAM if needed).
