@@ -20730,5 +20730,66 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   o.querySelector('.no').onclick=()=>o.remove();document.body.appendChild(o);try{history.replaceState(null,'',location.pathname+location.search);}catch{}};
  if(document.readyState==='complete')setTimeout(show,300);else addEventListener('load',()=>setTimeout(show,300));
 })();</script>
+<script id="gw-v4601-bug-report">
+(() => {
+  'use strict';
+  /* v15.46.0 (Claude): "Report a bug". G-Warp quietly keeps the last 20 errors IN THIS BROWSER ONLY (nothing is sent by itself).
+     More -> File -> "Report a bug…" opens a box: you write what happened, see exactly what will be shared, then G-Warp opens a
+     ready-filled GitHub issue (label "bug") that YOU send. Your project is never attached. Switch off: feature key "bugReport". */
+  if (window.GW_BUG_REPORT) return;
+  const REPO = 'https://github.com/Creapter1/gwarp/issues/new';
+  const LOG = []; const KEY = 'gwarp-bug-log';
+  try { const old = JSON.parse(localStorage.getItem(KEY) || '[]'); if (Array.isArray(old)) LOG.push(...old.slice(-20)); } catch {}
+  const clean = s => String(s || '').replace(/file:\/\/\/[^\s)'"]*/g, '(file)').replace(/[A-Za-z]:\\[^\s)'"]*/g, '(file)').slice(0, 300);
+  function note(kind, msg, where) {
+    LOG.push({ t: new Date().toISOString(), kind, msg: clean(msg), where: clean(where) }); while (LOG.length > 20) LOG.shift();
+    try { localStorage.setItem(KEY, JSON.stringify(LOG)); } catch {}
+  }
+  addEventListener('error', e => note('error', e.message, (e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
+  addEventListener('unhandledrejection', e => note('promise', e.reason?.message || e.reason, ''));
+  const info = () => {
+    const E = window.Engine || {}; const ua = navigator.userAgent;
+    const browser = (ua.match(/(Edg|OPR|Firefox|Chrome|Safari)\/[\d.]+/) || [''])[0];
+    return { version: window.GW_BUILD?.label || '?', browser, screen: `${innerWidth}x${innerHeight}`, sprites: (E.sprites || []).filter(s => !s.isClone).length, clones: (E.sprites || []).filter(s => s.isClone).length, fps: E.actualFps || 0 };
+  };
+  function build(what, withErrors) {
+    const i = info();
+    let body = `**What happened?**\n${what || '(not written)'}\n\n**What did you expect?**\n\n\n**Steps to make it happen again**\n1.\n2.\n\n---\nG-Warp ${i.version} | ${i.browser} | window ${i.screen} | sprites ${i.sprites}, clones ${i.clones}, ${i.fps} FPS\n`;
+    if (withErrors && LOG.length) body += '\n<details><summary>Last errors (' + LOG.length + ')</summary>\n\n```\n' + LOG.slice(-10).map(l => `${l.t} ${l.kind}: ${l.msg} ${l.where}`).join('\n') + '\n```\n</details>\n';
+    body += '\n_Sent from G-Warp\'s "Report a bug". No project file or personal info is attached._';
+    const title = '[Bug] ' + (what || 'Something went wrong').split('\n')[0].slice(0, 70);
+    return { title, body: body.slice(0, 6000) };
+  }
+  function open() {
+    const h = (t, a = {}, ...k) => { const e = document.createElement(t); Object.assign(e, a); k.forEach(x => e.append(x)); return e; };
+    const ta = h('textarea', { rows: 4, placeholder: 'What happened? (e.g. "I pressed Stop and the clones kept moving")', className: 'gw46-bug-text' });
+    const cb = h('input', { type: 'checkbox', checked: true, id: 'gw46BugErr' });
+    const prev = h('pre', { className: 'gw46-bug-prev' });
+    const upd = () => { prev.textContent = build(ta.value.trim(), cb.checked).body; };
+    ta.oninput = upd; cb.onchange = upd; upd();
+    const body = h('div', { className: 'gw46-bug' },
+      h('p', { textContent: 'Tell us what went wrong. G-Warp opens a ready-made bug report on GitHub; you check it and press “Submit”. Nothing is sent until you do.' }),
+      ta, h('label', { className: 'gw46-bug-row' }, cb, ` Include the last errors G-Warp noticed (${LOG.length})`),
+      h('details', {}, h('summary', { textContent: 'See exactly what will be shared' }), prev),
+      h('p', { className: 'gw46-bug-small', textContent: 'You need a GitHub account to send it. Under 13? Ask a parent first. Your project is never attached.' }));
+    const go = () => { const r = build(ta.value.trim(), cb.checked); const url = `${REPO}?labels=bug&title=${encodeURIComponent(r.title)}&body=${encodeURIComponent(r.body)}`; window.open(url, '_blank', 'noopener'); };
+    const copy = async () => { const r = build(ta.value.trim(), cb.checked); try { await navigator.clipboard.writeText(r.title + '\n\n' + r.body); } catch {} };
+    if (window.GW_DIALOG) window.GW_DIALOG({ id: 'gw46Bug', title: 'Report a bug', body, wide: true, buttons: [{ text: 'Copy text', value: 'copy' }, { text: 'Open GitHub to send', value: 'go', cls: 'primary' }] }).then(v => { if (v === 'go') go(); else if (v === 'copy') copy(); });
+    setTimeout(() => ta.focus(), 50);
+  }
+  function addItem() {
+    const items = document.getElementById('gw10FileItems'); if (!items || document.getElementById('gw46BugItem')) return !!items;
+    const b = document.createElement('button'); b.type = 'button'; b.id = 'gw46BugItem'; b.className = 'extra-menu-action gw10-file-action'; b.setAttribute('role', 'menuitem');
+    b.innerHTML = '<i class="fa-solid fa-bug"></i><span>Report a bug…</span>';
+    b.onclick = e => { e.preventDefault(); e.stopPropagation(); document.getElementById('extra-apps-dropdown')?.classList.add('hidden'); open(); };
+    const nt = document.getElementById('gw10FileNote'); nt ? items.insertBefore(b, nt) : items.appendChild(b); return true;
+  }
+  const st = document.createElement('style'); st.textContent = '.gw46-bug p{margin:0 0 10px;color:#cbd5e1;font-size:13px}.gw46-bug-text{width:100%;box-sizing:border-box;background:#0b0b14;color:#ececf6;border:1px solid #2a2a48;border-radius:10px;padding:10px;font:inherit;font-size:13px;resize:vertical}.gw46-bug-text:focus{outline:2px solid #8b5cf6}.gw46-bug-row{display:flex;gap:8px;align-items:center;margin:10px 0;color:#cbd5e1;font-size:13px}.gw46-bug details{margin:6px 0 10px;color:#a3a3c2;font-size:12px}.gw46-bug-prev{white-space:pre-wrap;max-height:200px;overflow:auto;background:#0b0b14;border:1px solid #2a2a48;border-radius:8px;padding:8px;font-size:11px;color:#a3a3c2}.gw46-bug-small{font-size:12px!important;color:#a3a3c2!important}';
+  document.head.appendChild(st);
+  function start(n = 0) { if (window.GW_FEATURE_OFF?.('bugReport')) return; if (!addItem() && n < 80) return setTimeout(() => start(n + 1), 250); new MutationObserver(addItem).observe(document.body, { childList: true }); }
+  window.GW_BUG_REPORT = { open, log: LOG, build, note };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => start()); else start();
+})();
+</script>
 </body>
 </html>

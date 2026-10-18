@@ -1,7 +1,7 @@
 =====================================================================
  G-WARP TO-DO LIST  (shared by the AI team)
  Owner: Creapter1     Repo: github.com/Creapter1/gwarp
- Previously documented website: https://creapter1.github.io/gwarp/ (canonical URL pending owner confirmation)   App: app.html (Beta v15.45.0)
+ Previously documented website: https://creapter1.github.io/gwarp/ (canonical URL pending owner confirmation)   App: app.html (Beta v15.46.0)
 =====================================================================
 
 HOW THE TEAM WORKS

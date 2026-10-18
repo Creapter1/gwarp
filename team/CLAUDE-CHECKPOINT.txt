@@ -18,5 +18,5 @@ STATUS
   for it (TurboWarp compiles blocks to JavaScript). Not a clone problem (only ~50 clones).
 
 NEXT
-1. Owner tries the candidate; if OK, Claude copies it over app.html (Beta v15.46.0).
+1. DONE 2026-10-18: Beta v15.46.0 is live in app.html (+ Report a bug).
 2. Speed project: a block compiler / faster evaluator (biggest remaining performance gap).

@@ -2285,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.45.0</span>
+<span class="app-version">Beta v15.46.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -3707,7 +3707,7 @@ IMPORTANT:
                 const gwOrder = GW.drawOrder ? GW.drawOrder() : Engine.sprites;
 
                 if (Engine.isRunning && !Engine.isPaused) {
-                    const gwT0 = performance.now(); let gwPass = 0; do { gwPass++; for (let gwI = 0; gwI < Engine.threads.length && gwI < 20000; gwI++) { const gwT = Engine.threads[gwI]; if (gwT && !gwT.finished) gwT.step(); } } while (Engine.isTurbo && Engine.isRunning && !Engine.isPaused && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame */
+                    const gwT0 = performance.now(); let gwPass = 0; do { gwPass++; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isTurbo && Engine.isRunning && !Engine.isPaused && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame */
                     Engine.threads = Engine.threads.filter(t => !t.finished);
                 }
 
@@ -4632,7 +4632,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.45.0',label:'Beta v15.45.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.46.0',label:'Beta v15.46.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -10990,18 +10990,22 @@ nodes.push(el);cur=b.next;}return nodes;};
   const ownerOf = st => Number(st.dataset.owner ?? -1);
   GW.createClone = function (source) {
     if (!source) return null;
-    if (Engine.sprites.filter(s => s.isClone).length >= (Engine.cloneLimit || 300)) return null;
+    // v15.46.0 (Claude, P0): count clones in O(1) instead of scanning every sprite on every new clone (that scan made 'infinite clones' freeze the page)
+    // "Infinite clones" still stops at a safety ceiling (GW.CLONE_CEILING, 5000): drawing tens of thousands of sprites every frame froze the browser for 3-18 s
+    const gwLim = Engine.cloneLimit || 300, gwCap = Math.min(gwLim, GW.CLONE_CEILING || 5000);
+    if (GW.cloneCount() >= gwCap) { if (gwCap < gwLim && !GW.__ceilWarned) { GW.__ceilWarned = true; try { window.GW_TOAST?.('Clone safety limit reached (' + gwCap + ' clones).'); } catch {} console.warn('[G-Warp] clone safety ceiling reached:', gwCap); } return null; }
     const root = source.isClone ? (source.cloneRoot || source.cloneOf || source) : source;
     const clone = { ...source, name: root.name, rootName: root.name, isClone: true, cloneOf: source, cloneRoot: root, sayText: '', sayUntil: 0, layer: source.layer };
     clone.costumes = source.costumes.map(c => ({ ...c }));
     // v15.9.0: each clone has its own copy of the sprite's “for this sprite only” variables and lists
     clone.localVars = { ...(source.localVars || {}) }; clone.localLists = Object.fromEntries(Object.entries(source.localLists || {}).map(([k, v]) => [k, Array.isArray(v) ? v.slice() : []]));
     clone.effects = { ...(source.effects || {}) };
-    Engine.sprites.push(clone);
+    const gwNc = GW.cloneCount(); Engine.sprites.push(clone); Engine.__nc = gwNc + 1; Engine.__ncLen = Engine.sprites.length;
     const ri = Engine.sprites.indexOf(root);
     (GW.hatStacks ? GW.hatStacks('when_clone') : document.querySelectorAll('#workspaceCanvas > .block-stack')).forEach(st => { const f = st.firstElementChild; if (f?.dataset.type === 'when_clone' && ownerOf(st) === ri) GW.runHat(st, clone); });
     return clone;
   };
+  GW.cloneCount = function () { const a = Engine.sprites; if (Engine.__ncArr !== a || Engine.__ncLen !== a.length) { let n = 0; for (let i = 0; i < a.length; i++) if (a[i] && a[i].isClone) n++; Engine.__nc = n; Engine.__ncArr = a; Engine.__ncLen = a.length; } return Engine.__nc; };
   GW.deleteClone = function (sprite) {
     if (!sprite?.isClone) return;
     Engine.threads = Engine.threads.filter(t => t.sprite !== sprite);
@@ -13128,6 +13132,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   /* ================= 2. sprite sounds (own sounds, effects, stop one, loop) ================= */
   let AC = null; const ac = () => { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume?.(); return AC; };
   const playing = new Set(); // { src, sprite, name, gain }
+  const playingBy = new WeakMap(); // v15.46.0 (Claude): sprite -> Map(name -> rec), so restarting a sound doesn't scan every playing sound
   const bufferOf = asset => asset.__gwBuf || (asset.__gwBuf = (asset.__gwBytes ? Promise.resolve(asset.__gwBytes.slice().buffer) : fetch(asset.dataUrl).then(r => r.arrayBuffer())).then(b => ac().decodeAudioData(b)).catch(() => null)); // v15.23.0: straight from the bytes
   const soundOf = (s, name) => { const list = s?.sounds?.length ? s.sounds : (s?.cloneRoot?.sounds || []); let a = list.find(x => x.name === name); if (!a && name !== '' && Number.isFinite(Number(name))) a = list[(Math.round(Number(name)) - 1 + list.length * 1000) % Math.max(1, list.length)]; return a; };
   const rateOf = s => Math.pow(2, (Math.max(-360, Math.min(360, Number(s?.soundFx?.pitch) || 0))) / 120);
@@ -13136,8 +13141,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const rate = rateOf(s), c = ac();
     if (wait) th.waitUntil = performance.now() + Math.max(0.01, Number(asset.duration) || 0.3) * 1000 / rate;
     // Scratch restarts a sound that is already playing on the same sprite
-    playing.forEach(p => { if (p.sprite === s && p.name === asset.name) { try { p.src.stop(); } catch {} playing.delete(p); } });
-    const rec = { src: null, sprite: s, name: asset.name, gain: null }; playing.add(rec);
+    let gwMs = playingBy.get(s); if (!gwMs) playingBy.set(s, gwMs = new Map()); const gwOld = gwMs.get(asset.name); if (gwOld && playing.has(gwOld)) { try { gwOld.src?.stop(); } catch {} playing.delete(gwOld); }
+    const rec = { src: null, sprite: s, name: asset.name, gain: null }; playing.add(rec); gwMs.set(asset.name, rec);
     bufferOf(asset).then(buf => {
       if (!buf || !playing.has(rec)) { playing.delete(rec); return; }
       const src = c.createBufferSource(), g = c.createGain(); src.buffer = buf; src.playbackRate.value = rate; src.loop = !!loop;
@@ -13570,8 +13575,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   /* ================= 11. menus that get their value from a reporter, costumes and backdrops like Scratch ================= */
   function applyMenuExpr(th, b) {
     let mx = b.__gw9mx; if (!mx || mx.raw !== b.dataset.gw9MenuExpr) { try { mx = b.__gw9mx = { raw: b.dataset.gw9MenuExpr, list: JSON.parse(b.dataset.gw9MenuExpr) }; } catch { return; } }
-    const own = [...b.querySelectorAll('.block-select')].filter(x => x.closest('.scratch-block') === b);
-    mx.list.forEach(({ i, node }) => { let v = ''; try { v = window.GW9.evalNode(th, node, 'value', b); } catch {} const sel = own[i]; if (!sel) return; const sv = String(v ?? ''); if (![...sel.options].some(o => o.value === sv)) sel.appendChild(new Option(sv, sv)); sel.value = sv; });
+    let own = mx.own; if (!own || own.some(x => !x.isConnected)) own = mx.own = [...b.querySelectorAll('.block-select')].filter(x => x.closest('.scratch-block') === b); // v15.46.0: look the menus up once, not every time the block runs
+    mx.list.forEach(({ i, node }) => { let v = ''; try { v = window.GW9.evalNode(th, node, 'value', b); } catch {} const sel = own[i]; if (!sel) return; const sv = String(v ?? ''); if (!sel.__gwVals) sel.__gwVals = new Set([...sel.options].map(o => o.value)); if (!sel.__gwVals.has(sv)) { if (!sel.__gwDyn || !sel.__gwDyn.isConnected) { sel.__gwDyn = new Option(sv, sv); sel.appendChild(sel.__gwDyn); } if (sel.__gwDyn.value !== sv) { sel.__gwDyn.value = sv; sel.__gwDyn.text = sv; } } if (sel.__gwLast !== sv) { sel.__gwLast = sv; sel.value = sv; } }); // v15.46.0: one reusable option for computed values (the menu used to grow by one option per new value, slowing every run)
   }
   function pickIndex(list, cur, v, word) {
     const n = list.length; if (!n) return -1; const str = String(v ?? '');
@@ -20647,6 +20652,72 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
 (() => { const V = s => `${s} (v15.45.0, Claude + audit agents)`; const ADDED = [V('Style audit (owner: v15.31.0 is the baseline look; new features stay, Scratch look only as an option): comments now use G-Warp’s dark violet style (Scratch’s yellow only with “Look like Scratch”); the “Look like Scratch” switch uses G-Warp’s On/Off pill; new guard test test_unique.js locks G-Warp’s own look')];
   function apply(n = 0) { const R = window.GW_AI_REPORT?.data; if (!R || !R.__v4400) return n < 80 && setTimeout(() => apply(n + 1), 250); if (R.__v4500) return; R.__v4500 = true; R.added = [...ADDED, ...R.added]; } apply(); })();
 </script>
+<script id="gw-v4600-chaos-guard">
+(() => {
+  'use strict';
+  /* v15.46.0 (Claude), fixes from the Chaos Tester ("Josh mode") run:
+     - a WATCHDOG: if the project makes the page stall (3 very slow frames in a row), it is paused and G-Warp asks
+       "Stop it / Keep going" — before, 81,000 self-copying clones made Stop take 45 s;
+     - text limit: a variable can hold at most 16 million letters (the "join itself forever" bomb froze the tab for good);
+     - list limit: 200,000 items, like Scratch (extra "add" does nothing);
+     - crash recovery: if G-Warp was not closed normally, it offers the last automatic restore point on the next start.
+     Switch off: feature key "chaosGuard". */
+  if (window.GW_CHAOS_GUARD) return;
+  const E = () => window.Engine || {};
+  const toast = m => { try { (window.GW?.toast || console.log)(m); } catch {} };
+  const TEXT_MAX = 16e6, LIST_MAX = 200000;
+  let slow = 0, last = 0, quietUntil = 0, asking = false, wasRunning = false, toldText = false, toldList = false;
+  function ask() {
+    const e = E(); asking = true; e.isPaused = true;
+    const clones = (e.sprites || []).filter(s => s.isClone).length, threads = (e.threads || []).length;
+    const body = document.createElement('p'); body.className = 'gw8-dlg-text';
+    body.textContent = `Your project made G-Warp very slow (${clones.toLocaleString()} clones, ${threads.toLocaleString()} scripts running), so it is paused. Stop it, or keep going?`;
+    const done = v => { asking = false; last = performance.now(); slow = 0; if (v === 'go') { e.isPaused = false; quietUntil = performance.now() + 30000; } else document.getElementById('stopBtn')?.click(); };
+    if (window.GW_DIALOG) window.GW_DIALOG({ id: 'gw46Stuck', title: 'Your project is stuck', body, buttons: [{ text: 'Keep going', value: 'go' }, { text: 'Stop it', value: 'stop', cls: 'primary' }] }).then(done);
+    else done(confirm(body.textContent + '\n\nOK = keep going') ? 'go' : 'stop');
+    try { window.GW_HEALTH?.event?.('slow', body.textContent); } catch {}
+  }
+  function limits() {
+    const e = E(); const holders = [e.variables || {}]; const lists = [e.lists || {}];
+    const ss = e.sprites || []; for (let i = 0; i < ss.length && i < 3000; i++) { if (ss[i].localVars) holders.push(ss[i].localVars); if (ss[i].localLists) lists.push(ss[i].localLists); }
+    for (const o of holders) for (const k in o) { const v = o[k]; if (typeof v === 'string' && v.length > TEXT_MAX) { o[k] = v.slice(0, TEXT_MAX); try { window.GW_BUG_HUNTER?.award?.('text'); } catch {} if (!toldText) { toldText = true; toast(`“${k}” got longer than 16 million letters, so G-Warp cut it there to keep running.`); } } }
+    for (const o of lists) for (const k in o) { const l = o[k]; if (Array.isArray(l) && l.length > LIST_MAX) { l.length = LIST_MAX; try { window.GW_BUG_HUNTER?.award?.('list'); } catch {} if (!toldList) { toldList = true; toast(`The list “${k}” is full (200,000 items, the same limit as Scratch).`); } } }
+  }
+  function frame(t) {
+    const e = E();
+    if (e.isRunning && !e.isPaused && !asking) {
+      // v15.46.0: no alarm in the first 6 s after Start (big projects load costumes/sounds then), and only for really long stalls
+      if (!wasRunning) { wasRunning = true; quietUntil = Math.max(quietUntil, t + 6000); slow = 0; }
+      const gap = last ? t - last : 0;
+      slow = gap > 2000 ? slow + 1 : Math.max(0, slow - 1);
+      if (slow >= 3 && t > quietUntil) ask();
+      limits();
+    } else { slow = 0; if (!e.isRunning) wasRunning = false; }
+    last = t; requestAnimationFrame(frame);
+  }
+  function recovery() {
+    const KEY = 'gwarp-open-session'; let crashed = false;
+    try { crashed = localStorage.getItem(KEY) === '1'; localStorage.setItem(KEY, '1'); } catch {}
+    addEventListener('pagehide', () => { try { localStorage.removeItem(KEY); } catch {} });
+    if (!crashed || !window.GW_FILES?.openRestore) return;
+    setTimeout(() => {
+      const body = document.createElement('p'); body.className = 'gw8-dlg-text';
+      body.textContent = 'G-Warp was not closed normally last time (maybe a project froze it). Your work is saved automatically every few minutes. Do you want to look at your restore points?';
+      window.GW_DIALOG?.({ id: 'gw46Recover', title: 'Welcome back', body, buttons: [{ text: 'No thanks', value: false }, { text: 'Show restore points', value: true, cls: 'primary' }] }).then(v => { if (v) window.GW_FILES.openRestore(); });
+    }, 2500);
+  }
+  function start() {
+    if (window.GW_FEATURE_OFF?.('chaosGuard')) return;
+    requestAnimationFrame(frame); recovery();
+    window.GW_CHAOS_GUARD = { limits, TEXT_MAX, LIST_MAX };
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>
+<script id="gw-v4600-report">
+(() => { const V = s => `${s} (v15.46.0, Claude)`; const ADDED = [V('Chaos guard (from the Josh-mode Chaos Tester): scripts get at most ~250 ms per frame so Stop always works; a watchdog pauses a project that stalls the page and asks “Stop it / Keep going”; variables cap at 16 million letters and lists at 200,000 items (Scratch’s limit); crash recovery offers the restore points after G-Warp was not closed normally; the HTTP block’s example address no longer shows your IP')];
+  function apply(n = 0) { const R = window.GW_AI_REPORT?.data; if (!R || !R.__v4500) return n < 80 && setTimeout(() => apply(n + 1), 250); if (R.__v4600) return; R.__v4600 = true; R.added = [...ADDED, ...R.added]; } apply(); })();
+</script>
 <style id="gw-beta-css">.gwb-open{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:rgba(5,5,12,.72);backdrop-filter:blur(4px);font-family:Inter,system-ui,sans-serif}
 .gwb-open>div{background:#141425;border:1px solid #2a2a48;border-radius:18px;padding:28px 30px;text-align:center;max-width:380px;color:#ececf6;box-shadow:0 30px 80px rgba(0,0,0,.6)}
 .gwb-open h2{margin:0 0 6px;font-size:22px}.gwb-open p{margin:0 0 18px;color:#a3a3c2;font-size:14px}
@@ -20659,5 +20730,66 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   o.querySelector('.no').onclick=()=>o.remove();document.body.appendChild(o);try{history.replaceState(null,'',location.pathname+location.search);}catch{}};
  if(document.readyState==='complete')setTimeout(show,300);else addEventListener('load',()=>setTimeout(show,300));
 })();</script>
+<script id="gw-v4601-bug-report">
+(() => {
+  'use strict';
+  /* v15.46.0 (Claude): "Report a bug". G-Warp quietly keeps the last 20 errors IN THIS BROWSER ONLY (nothing is sent by itself).
+     More -> File -> "Report a bug…" opens a box: you write what happened, see exactly what will be shared, then G-Warp opens a
+     ready-filled GitHub issue (label "bug") that YOU send. Your project is never attached. Switch off: feature key "bugReport". */
+  if (window.GW_BUG_REPORT) return;
+  const REPO = 'https://github.com/Creapter1/gwarp/issues/new';
+  const LOG = []; const KEY = 'gwarp-bug-log';
+  try { const old = JSON.parse(localStorage.getItem(KEY) || '[]'); if (Array.isArray(old)) LOG.push(...old.slice(-20)); } catch {}
+  const clean = s => String(s || '').replace(/file:\/\/\/[^\s)'"]*/g, '(file)').replace(/[A-Za-z]:\\[^\s)'"]*/g, '(file)').slice(0, 300);
+  function note(kind, msg, where) {
+    LOG.push({ t: new Date().toISOString(), kind, msg: clean(msg), where: clean(where) }); while (LOG.length > 20) LOG.shift();
+    try { localStorage.setItem(KEY, JSON.stringify(LOG)); } catch {}
+  }
+  addEventListener('error', e => note('error', e.message, (e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
+  addEventListener('unhandledrejection', e => note('promise', e.reason?.message || e.reason, ''));
+  const info = () => {
+    const E = window.Engine || {}; const ua = navigator.userAgent;
+    const browser = (ua.match(/(Edg|OPR|Firefox|Chrome|Safari)\/[\d.]+/) || [''])[0];
+    return { version: window.GW_BUILD?.label || '?', browser, screen: `${innerWidth}x${innerHeight}`, sprites: (E.sprites || []).filter(s => !s.isClone).length, clones: (E.sprites || []).filter(s => s.isClone).length, fps: E.actualFps || 0 };
+  };
+  function build(what, withErrors) {
+    const i = info();
+    let body = `**What happened?**\n${what || '(not written)'}\n\n**What did you expect?**\n\n\n**Steps to make it happen again**\n1.\n2.\n\n---\nG-Warp ${i.version} | ${i.browser} | window ${i.screen} | sprites ${i.sprites}, clones ${i.clones}, ${i.fps} FPS\n`;
+    if (withErrors && LOG.length) body += '\n<details><summary>Last errors (' + LOG.length + ')</summary>\n\n```\n' + LOG.slice(-10).map(l => `${l.t} ${l.kind}: ${l.msg} ${l.where}`).join('\n') + '\n```\n</details>\n';
+    body += '\n_Sent from G-Warp\'s "Report a bug". No project file or personal info is attached._';
+    const title = '[Bug] ' + (what || 'Something went wrong').split('\n')[0].slice(0, 70);
+    return { title, body: body.slice(0, 6000) };
+  }
+  function open() {
+    const h = (t, a = {}, ...k) => { const e = document.createElement(t); Object.assign(e, a); k.forEach(x => e.append(x)); return e; };
+    const ta = h('textarea', { rows: 4, placeholder: 'What happened? (e.g. "I pressed Stop and the clones kept moving")', className: 'gw46-bug-text' });
+    const cb = h('input', { type: 'checkbox', checked: true, id: 'gw46BugErr' });
+    const prev = h('pre', { className: 'gw46-bug-prev' });
+    const upd = () => { prev.textContent = build(ta.value.trim(), cb.checked).body; };
+    ta.oninput = upd; cb.onchange = upd; upd();
+    const body = h('div', { className: 'gw46-bug' },
+      h('p', { textContent: 'Tell us what went wrong. G-Warp opens a ready-made bug report on GitHub; you check it and press “Submit”. Nothing is sent until you do.' }),
+      ta, h('label', { className: 'gw46-bug-row' }, cb, ` Include the last errors G-Warp noticed (${LOG.length})`),
+      h('details', {}, h('summary', { textContent: 'See exactly what will be shared' }), prev),
+      h('p', { className: 'gw46-bug-small', textContent: 'You need a GitHub account to send it. Under 13? Ask a parent first. Your project is never attached.' }));
+    const go = () => { const r = build(ta.value.trim(), cb.checked); const url = `${REPO}?labels=bug&title=${encodeURIComponent(r.title)}&body=${encodeURIComponent(r.body)}`; window.open(url, '_blank', 'noopener'); };
+    const copy = async () => { const r = build(ta.value.trim(), cb.checked); try { await navigator.clipboard.writeText(r.title + '\n\n' + r.body); } catch {} };
+    if (window.GW_DIALOG) window.GW_DIALOG({ id: 'gw46Bug', title: 'Report a bug', body, wide: true, buttons: [{ text: 'Copy text', value: 'copy' }, { text: 'Open GitHub to send', value: 'go', cls: 'primary' }] }).then(v => { if (v === 'go') go(); else if (v === 'copy') copy(); });
+    setTimeout(() => ta.focus(), 50);
+  }
+  function addItem() {
+    const items = document.getElementById('gw10FileItems'); if (!items || document.getElementById('gw46BugItem')) return !!items;
+    const b = document.createElement('button'); b.type = 'button'; b.id = 'gw46BugItem'; b.className = 'extra-menu-action gw10-file-action'; b.setAttribute('role', 'menuitem');
+    b.innerHTML = '<i class="fa-solid fa-bug"></i><span>Report a bug…</span>';
+    b.onclick = e => { e.preventDefault(); e.stopPropagation(); document.getElementById('extra-apps-dropdown')?.classList.add('hidden'); open(); };
+    const nt = document.getElementById('gw10FileNote'); nt ? items.insertBefore(b, nt) : items.appendChild(b); return true;
+  }
+  const st = document.createElement('style'); st.textContent = '.gw46-bug p{margin:0 0 10px;color:#cbd5e1;font-size:13px}.gw46-bug-text{width:100%;box-sizing:border-box;background:#0b0b14;color:#ececf6;border:1px solid #2a2a48;border-radius:10px;padding:10px;font:inherit;font-size:13px;resize:vertical}.gw46-bug-text:focus{outline:2px solid #8b5cf6}.gw46-bug-row{display:flex;gap:8px;align-items:center;margin:10px 0;color:#cbd5e1;font-size:13px}.gw46-bug details{margin:6px 0 10px;color:#a3a3c2;font-size:12px}.gw46-bug-prev{white-space:pre-wrap;max-height:200px;overflow:auto;background:#0b0b14;border:1px solid #2a2a48;border-radius:8px;padding:8px;font-size:11px;color:#a3a3c2}.gw46-bug-small{font-size:12px!important;color:#a3a3c2!important}';
+  document.head.appendChild(st);
+  function start(n = 0) { if (window.GW_FEATURE_OFF?.('bugReport')) return; if (!addItem() && n < 80) return setTimeout(() => start(n + 1), 250); new MutationObserver(addItem).observe(document.body, { childList: true }); }
+  window.GW_BUG_REPORT = { open, log: LOG, build, note };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => start()); else start();
+})();
+</script>
 </body>
 </html>
