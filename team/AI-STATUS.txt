@@ -4,7 +4,7 @@ Owner: Creapter1
 Status source: current repository file inventory and GitHub metadata; this is not a browser/runtime test.
 
 CURRENT SOURCE REFERENCE
-- Reference main commit before this status file was created: d1d022e1c2da321d7c62b0285bb422ba54597216.
+- Source metadata was rechecked against main at commit a74b75475cb0e9548056935bd35455bfd1da0a84; subsequent commits in this cleanup are documentation-only.
 - app.html blob: 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes).
 - index.html blob: d8cf02962b20c0379a51aab7d46d829925325dbd (586,179 bytes).
 - The cleanup actions recorded here changed documentation only. Claude must re-read current main/working-branch hashes and establish the authorized baseline before any source edit.
@@ -31,7 +31,7 @@ OWNER / CLAUDE GATES STILL OPEN
 1. Confirm active Claude interface label is exactly “Claude Opus 5.5” before integration or official runtime evidence.
 2. Explicit owner authorization before any live integration/release; app.html/index.html must remain untouched until the specific change is authorized.
 3. Confirm canonical destination URL; do not guess or bulk-replace the legacy GitHub Pages URL.
-4. Claude must initialize/reverify team/CLAUDE-CHECKPOINT.txt from the actual working baseline before its long work session. This status file is only the cleanup handoff, not proof of runtime health.
+4. team/CLAUDE-CHECKPOINT.txt now contains a preliminary metadata handoff; Claude must reverify it in the actual work copy and overwrite it with real task/test results. This status file is not proof of runtime health.
 
 DOCUMENT ROUTING — CURRENT SOURCE OF TRUTH
 - Start/rules routing: team/WORKFLOW-START-HERE.txt
