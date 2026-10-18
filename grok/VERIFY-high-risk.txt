@@ -1,0 +1,73 @@
+G-WARP G6 — HIGH-RISK TEST VERIFICATION
+Written by: Grok  |  Date: 2026-10-18
+Source of truth: scratchfoundation/scratch-vm develop branch
+  - src/blocks/scratch3_operators.js
+  - src/blocks/scratch3_data.js
+  - src/util/cast.js
+  - src/util/math-util.js
+  - src/engine/runtime.js (MAX_CLONES)
+  - src/extensions/scratch3_pen/index.js (_wrapColor / wrapClamp)
+  - GitHub issue #2273 (pen hue period 101)
+Evidence class: SOURCE-CONFIRMED (static). NOT live Scratch UI session.
+
+=====================================================================
+CORRECTIONS REQUIRED IN grok/TESTS.txt
+=====================================================================
+
+T002 | round (-2.5)
+  OLD EXPECT: -3
+  CORRECT:    -2
+  EVIDENCE: operators.round → Math.round(Cast.toNumber(n))
+            Node/JS: Math.round(-2.5) === -2
+            (half rounds toward +Infinity in ES Math.round)
+
+T009 | "abc" = "ABC"
+  OLD EXPECT: false
+  CORRECT:    true
+  EVIDENCE: operator_equals → Cast.compare === 0
+            Non-numeric strings compared with toLowerCase()
+            (cast.js compare, lines ~128–139)
+
+T021 | item (0) of list with one item "a"
+  OLD EXPECT: "a" (0 treated like 1)
+  CORRECT:    empty string ""
+  EVIDENCE: Cast.toListIndex floors index; if index < 1 → LIST_INVALID
+            getItemOfList returns '' on LIST_INVALID
+            (cast.js toListIndex; data.js getItemOfList)
+
+T024 | insert "a" at (0) of L which had "b"
+  OLD EXPECT: item 1 becomes "a"
+  CORRECT:    insert is a no-op; item 1 remains "b"
+  EVIDENCE: insertAtList uses toListIndex(..., length+1); 0 is LIST_INVALID
+
+=====================================================================
+CONFIRMED AS WRITTEN
+=====================================================================
+
+T003 | round(2.5) → 3  (Math.round)
+T005 | (-10) mod 3 → 2  (floored mod: n%m then if result/m < 0 add m)
+T006 | 10 mod (-3) → -2  (same floored rule; sign follows divisor)
+T007 | "10" = 10 → true  (Cast.compare numeric)
+T008 | "10" = "10.0" → true  (both numeric)
+T014 | "Hello" contains "hello" → true  (toLowerCase includes)
+T028 | list contains 10 when list has "10" → true  (Cast.compare)
+T030 | list limit 200000  (Scratch3DataBlocks.LIST_ITEM_LIMIT)
+T046 | clone limit 300  (Runtime.MAX_CLONES === 300)
+T064 | pen color wrap period 101  (wrapClamp(n,0,100) → range=(100-0)+1=101)
+       Documented quirk; issue #2273; still current in develop pen extension
+
+=====================================================================
+STILL UNSURE / NEEDS LIVE UI (optional)
+=====================================================================
+- Exact bubble display of NaN (T020) — monitor formatting may differ.
+- Say bubble 330 char limit (T037) — looks block; not re-read this session.
+- Live green-flag hat restart timing (T052).
+
+=====================================================================
+ACTION TAKEN
+=====================================================================
+- This file: grok/VERIFY-high-risk.txt
+- TESTS.txt expectations for T002, T009, T021, T024 updated to match VM.
+- SPEC-operators / SPEC-variables-lists should be treated as superseded by
+  this verification where they claimed list index 0 maps to first item or
+  case-sensitive non-numeric equals.
