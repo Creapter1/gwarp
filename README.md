@@ -39,8 +39,9 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 - **[Screenshots and UI guide](chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — where controls live and how the visible interface behaves.
 - **[Engine map](ENGINE-MAP.txt)** — actual G-Warp globals and hooks to check before changing code.
 - **[Live UI verification](docs/LIVE-UI-VERIFICATION.txt)** and [real screenshots](docs/screens/) — what has actually been tested.
-- **[Master AI work plan](team/AI-WORK-PLAN.txt)** and [deliverable inventory](team/AI-DELIVERABLE-INVENTORY.txt) — roles, task stages, candidate status and evidence gaps.
-- **[Cross-AI review report](team/CROSS-AI-REVIEW-2026-10-15.txt)**, [security and consistency audit](team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt), and [continuous work queue](team/CONTINUOUS-WORK-QUEUE.txt) — independent findings, blockers, security checks, and next tasks.
+- **[AI workflow entry](team/WORKFLOW-START-HERE.txt)** and [current AI status](team/AI-STATUS.txt) — the single starting point, owner/model gates, current blockers and next handoff.
+- **[Master AI roadmap](team/AI-WORK-PLAN.txt)** and [continuous work queue](team/CONTINUOUS-WORK-QUEUE.txt) — priority order and next bounded tasks.
+- **[Cross-AI review](team/CROSS-AI-REVIEW-2026-10-15.txt)** and [security/consistency audit](team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt) — detailed historical findings; check current status before acting.
 - **[ChatGPT reviewer task list](team/TODO-CHATGPT.txt)** — review scope and acceptance-report format.
 
 ## Files in this repo
