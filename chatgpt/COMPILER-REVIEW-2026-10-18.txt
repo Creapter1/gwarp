@@ -1,0 +1,49 @@
+G-WARP COMPILER REVIEW — 2026-10-18
+Reviewer: ChatGPT
+Observed main HEAD: 7d82a447a1c1a519e3c0446fcefac1592e955215
+Current app blob: 7b22b5327369cf68cf9be147813109c4b6cffed1 (2,380,161 bytes)
+Current app label in TODO.txt: Beta v15.46.4
+Evidence: repository metadata and static review of team/SPEED-PLAN.txt. This is not an independent browser test. No concrete statement-cache/compiler patch was present in the inspected commit history.
+
+CLONE DISPOSITION
+MERGE-QUEUE.txt already labels chatgpt/clone-safety.js SUPERSEDED by Claude's v15.46 clone fixes. Do not integrate it or duplicate the live fix. Keep the candidate and notes as history for now; removing them would break the old queue reference and provide little benefit. This reviewer did not independently rerun clone tests.
+
+COMPILER PLAN — FINDINGS
+The staged order in team/SPEED-PLAN.txt is reasonable: statement cache, expression cache, compiler for common blocks, then interpreter fallback. The reported bottleneck is interpreter overhead and repeated DOM/JSON work, not the use of HTML as the app shell.
+
+HIGH — Cache invalidation: the plan names GW.__wsEpoch. Confirm it exists in the current source and advances for block edits, input/dropdown changes, connect/disconnect, add/delete/duplicate, undo/redo, project load and edits during execution. Missing one path can make cached scripts run stale logic.
+HIGH — Live editing/thread state: define when an edited script is rebuilt. Preserve ScriptThread pause/yield/resume, pc/callStack, waitUntil, Stop, green flag, turbo/frame budget/watchdog, clones, broadcasts, procedures and variable scope.
+HIGH — Scratch behavior: retain the current runner for unknown blocks/extensions. Test number/text comparisons, whitespace, round, mod, random bounds, list indexes/item-number, missing inputs, clone hats, broadcasts and warp/yield behavior against expected results.
+HIGH — Generated code safety: compile only known internal block structures using fixed compiler logic. Do not execute project text as source or add a user JavaScript-block feature.
+MEDIUM — Cache lifecycle: invalidate/release cached data on project replacement, deletion and editor changes; avoid retaining removed DOM nodes or old project objects.
+HIGH — Performance proof: benchmark the same zombie.sb3 on the same machine/browser and record FPS, frame stalls, throughput, Stop latency, and functional outputs before/after. Do not claim 10x or 30–60 FPS without measurements.
+
+RECOMMENDED ORDER
+1. Establish v15.46.4 baseline; record metrics and correctness results.
+2. Add statement cache behind a reversible switch; test all invalidation paths.
+3. Add expression cache separately and measure it.
+4. Compile one small high-frequency block family at a time. Keep fallback for unsupported blocks.
+5. Turn Grok's high-risk cases into runnable automated fixtures before expanding compiler coverage.
+6. Profile drawing separately after CPU execution improvements.
+
+CPU/GPU PRODUCT ANSWER
+The browser already uses the computer's CPU and its rendering stack. JavaScript compilation cuts interpreter/DOM overhead on the CPU; it is the first priority from current evidence. ENGINE-MAP describes G-Warp's renderer as 2D canvas. Canvas may benefit from browser/hardware acceleration, but the entire pipeline is not guaranteed to run on the GPU.
+WebGL/WebGPU can provide GPU rendering/compute but are not a substitute for compiling the block interpreter and would be a separate, larger compatibility project. OffscreenCanvas/Web Workers can move eligible rendering or pure computation off the main thread; a DOM-driven engine cannot be moved wholesale into a worker. Keep the current renderer, benchmark it independently, then consider culling/batching/drawing optimizations. Prototype WebGL/WebGPU only if profiling justifies it.
+
+ACCEPTANCE
+[ ] Cache correctly refreshes after edit, input change, reconnect, delete, duplicate, undo/redo, load and edit-while-running.
+[ ] Cached and interpreter execution produce the same results on high-risk fixtures.
+[ ] Existing chaos/Stop/regression tests still pass.
+[ ] Unsupported blocks use fallback; Stop/pause/wait, clones, broadcasts and procedures remain correct.
+[ ] Same-machine/browser benchmark records before/after metrics; test Chromium and Firefox where available.
+
+SOURCES
+https://github.com/Creapter1/gwarp/blob/main/team/SPEED-PLAN.txt
+https://github.com/Creapter1/gwarp/blob/main/ENGINE-MAP.txt
+https://docs.turbowarp.org/how
+https://docs.turbowarp.org/new-compiler
+https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
+https://developer.mozilla.org/en-US/docs/Web/API/WebGPU_API
+https://web.dev/articles/offscreen-canvas
+
+NEXT: Review CL1 when Claude lands the actual statement-cache patch. This document is a plan review, not code acceptance.
