@@ -20,14 +20,14 @@ U2 costume editor  deepseek/costume-select-C.js      PICK (fix names -> svgTool 
                    deepseek/LAB-costumes.txt         REFERENCE
 
 --- FREEZE / SPEED (v15.46) ---------------------------------------
-                   chatgpt/clone-safety.js           PICK (uses real names; test with chaos tests)
+                   chatgpt/clone-safety.js           SUPERSEDED by Claude's v15.46 clone fixes (O(1) count + 5000 ceiling + Stop 1 s)
                    deepseek/speed-collision-B.js     PICK (wraps GW.spritesTouch)
                    deepseek/speed-collision-A/C.js   REFERENCE
                    deepseek/speed-clones-A/B/C.js    SUPERSEDED (skip nothing; redo with waitUntil)
                    deepseek/LAB-speed.txt            REFERENCE
 
 --- LINKS / FILES -------------------------------------------------
-                   chatgpt/scratch-link.js           PICK (app.html#scratch=<id>)
+                   chatgpt/scratch-link.js           MERGED in Beta v15.46.1 (test_4611 ALL PASS)
                    deepseek/pmp-loader.js            PICK (protobuf .pmp only)
                    deepseek/NOTES-pmp.txt, test-pmp-loader.js   REFERENCE
                    gemini/extension/                 WAITING (placeholder icon; needs
