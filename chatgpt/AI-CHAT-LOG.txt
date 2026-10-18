@@ -240,3 +240,28 @@ Final cross-reference pass:
 - Updated the public README roadmap to state that the static UI audit is delivered but full runtime parity and costume editor acceptance remain pending.
 - Rechecked the workflow links; no app source files were changed and no runtime tests were run.
 --- END ADDENDUM ---
+
+
+--- ENTRY ---
+Date: 2026-10-18 (America/New_York)
+AI: ChatGPT
+Task: Compare the clone-safety proposal with Cloud/Claude's latest work; begin assigned compiler-plan review and answer the CPU/GPU architecture question.
+
+USER REQUEST SUMMARY:
+The owner said Cloud/Claude had returned and was already working; asked me to compare the clone-related work and avoid duplicating features already integrated. The owner also asked whether G-Warp should use JavaScript compilation and CPU/GPU rendering for performance, and requested planning/review of the idea.
+
+FINDINGS:
+- Current GitHub main is Beta v15.46.4 (observed HEAD 7d82a447a1c1a519e3c0446fcefac1592e955215; app.html blob 7b22b5327369cf68cf9be147813109c4b6cffed1).
+- team/MERGE-QUEUE.txt explicitly marks chatgpt/clone-safety.js SUPERSEDED by Claude's v15.46 clone fixes. I did not integrate or delete it; the queue is Claude-maintained and the candidate remains useful as historical/audit material.
+- Claude's team/SPEED-PLAN.txt attributes remaining slowdown to interpreter overhead and repeated DOM/expression work; its next concrete step is statement caching, followed by expression caching and gradual compilation with interpreter fallback. No concrete statement-cache/compiler patch was found in the inspected current history.
+- Static review flags cache invalidation, edits while running, exact Scratch behavior, thread state, fallback behavior, generated-code safety, cache lifetime and before/after benchmarks as acceptance gates.
+- The browser already uses the device CPU and browser rendering stack. JavaScript compilation is the first performance priority; GPU/WebGL/WebGPU rendering is a separate project and will not itself fix interpreter overhead.
+
+CHANGES:
+- Created chatgpt/COMPILER-REVIEW-2026-10-18.txt.
+- Appended this task and evidence boundary to AI-TEAM.txt and this log.
+- No app.html/index.html edit, code integration, browser/runtime test or deployment was performed by ChatGPT. Clone/compiler runtime evidence cited in source reports is Claude-reported, not independently reproduced here.
+
+NEXT:
+Re-review when Claude lands the actual statement-cache implementation. Check the cache invalidation mechanism against the current source and verify the reported before/after benchmark and the high-risk behavior fixtures.
+--- END ENTRY ---
