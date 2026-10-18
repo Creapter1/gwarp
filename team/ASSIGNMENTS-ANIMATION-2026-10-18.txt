@@ -4,6 +4,9 @@ Do these jobs FIRST. Your older jobs in ASSIGNMENTS-2026-10-19.txt come after th
 Live app: Beta v15.47.0 (app.html). Engine names: ENGINE-MAP.txt. Rules: TODO.txt (they still apply:
 same same but different, theirs is theirs / ours is ours, no cats, no Scratch art, add don't swap).
 Golden rule: every job ends in something TESTABLE. Keep your work in YOUR folder only.
+TEST PROJECTS: the owner's 5 real projects are in the PRIVATE repo Creapter1/gwarp-test-projects
+(README there = rules). Each has SCRIPTS.txt (every script as text) - use REAL scripts for your tests.
+DeepSeek/Gemini: ask the owner to paste or upload them. Never copy them into this public repo (TODO.txt rule 7).
 
 --------------------------------------------------------------------
 WHAT IS ALREADY IN THE APP (v15.47.0, built by Claude, test: claude/tests/test_cosanim.js 27/27 PASS)

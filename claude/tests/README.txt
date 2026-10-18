@@ -5,3 +5,4 @@ test_4600.js = chaos/clone-freeze guard   test_4601.js = Report a bug   test_461
 test_4700.js = "item # of" gives the same answers as Scratch compare (13,200 random cases)
 test_4640.js = Power lines: node test_4640.js ../../app.html <powerlines.sb3> [shot.png] (wires while running, sparks, Stop clears, switch, zoom, clicks pass through)
 test_cosanim.js = costume animation: Animation tab for everyone, G-Spark walk/wave, stale frames, rename, blocks, rigging a drawn costume, Onion skin + Flipbook Play (27 checks)
+smoke.js = node smoke.js ../../app.html <project.sb3> [shot.png] : load, Start, 6 s -> load time, FPS, worst frame, clones, unsupported blocks, Stop time, errors (used for the private test projects)

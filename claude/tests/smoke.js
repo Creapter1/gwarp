@@ -1,0 +1,21 @@
+// Load a project, press Start, measure 6 s: FPS, worst frame gap, sprites/clones, unknown blocks, errors, Stop time.
+const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path');
+const [file, sb3, shot] = process.argv.slice(2);
+(async () => { const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1440, height: 900 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
+  await prep(p); await p.addInitScript(() => { delete window.showOpenFilePicker; }); await p.goto('file://' + path.resolve(file)); await p.waitForTimeout(3500);
+  const n0 = await p.evaluate(() => Engine.sprites.length);
+  const [fc] = await Promise.all([p.waitForEvent('filechooser'), p.evaluate(() => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'o', ctrlKey: true, bubbles: true })))]);
+  const t0 = Date.now(); await fc.setFiles(sb3);
+  await p.waitForFunction(() => document.getElementById('gw8ImportReport') || document.body.innerText.includes('Loaded'), null, { timeout: 180000 }).catch(() => {});
+  await p.waitForTimeout(2500); const loadS = Math.round((Date.now() - t0) / 100) / 10;
+  const report = await p.evaluate(() => (document.getElementById('gw8ImportReport')?.innerText || '').replace(/\s+/g, ' ').slice(0, 300));
+  await p.keyboard.press('Escape');
+  await p.evaluate(() => { window.__gap = 0; window.__fr = 0; let last = performance.now(); (function f() { const n = performance.now(); window.__gap = Math.max(window.__gap, n - last); window.__fr++; last = n; requestAnimationFrame(f); })(); });
+  await p.evaluate(() => document.getElementById('greenFlagBtn').click()); await p.waitForTimeout(400);
+  await p.evaluate(() => [...document.querySelectorAll('#gw15CloudAsk .gw8-dlg-foot button')].find(x => /this computer/.test(x.textContent))?.click()).catch(() => {});
+  await p.evaluate(() => setInterval(() => { const d = document.getElementById('gw46Stuck'); if (d) [...d.querySelectorAll('button')].find(x => x.textContent === 'Keep going')?.click(); }, 200));
+  await p.evaluate(() => { window.__gap = 0; window.__fr = 0; }); await p.keyboard.down('ArrowRight'); await p.keyboard.press('Space'); await p.waitForTimeout(6000); await p.keyboard.up('ArrowRight');
+  const r = await Promise.race([p.evaluate(() => ({ fps: Math.round(window.__fr / 6), worstGapMs: Math.round(window.__gap), sprites: Engine.sprites.filter(s => !s.isClone).length, clones: Engine.sprites.filter(s => s.isClone).length, threads: Engine.threads.length, running: Engine.isRunning, unknown: [...new Set([...document.querySelectorAll('#workspaceCanvas [data-type]')].map(e => e.dataset.type).filter(t => /unknown|unsupported/i.test(t)))] })), new Promise(r => setTimeout(() => r({ frozen: true }), 30000))]);
+  if (shot) await p.screenshot({ path: shot });
+  const stop = await Promise.race([p.evaluate(async () => { const a = performance.now(); document.getElementById('stopBtn').click(); await new Promise(r => setTimeout(r, 0)); return Math.round(performance.now() - a); }), new Promise(r => setTimeout(() => r('timeout'), 30000))]);
+  console.log(JSON.stringify({ loadS, report, ...r, stopMs: stop, errors: errs.slice(0, 3) })); await b.close(); process.exit(0); })();

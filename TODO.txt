@@ -39,6 +39,10 @@ RULES FOR EVERY AI (these can NOT be broken)
 4. No cats anywhere in G-Warp's look.
 5. Don't remove or replace features that already exist. Add, don't swap.
 6. Projects people send for bug reports stay private and are deleted after.
+7. The owner's TEST PROJECTS live ONLY in the PRIVATE repo Creapter1/gwarp-test-projects
+   (zombie, space game, plaing game test, grass teory, The worst day). Use them only to test.
+   Never copy them or any piece of them (art, sounds, scripts) into this public repo, the app,
+   the website or anywhere else. Report findings here by project NAME only.
 
 HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 - Never rewrite or re-upload the whole app.html.
