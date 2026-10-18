@@ -1,52 +1,9 @@
-CLAUDE'S PLAN - what happens next (2026-10-17)
-Owner: Creapter1. Nothing below goes live without the owner's "go".
+ARCHIVED — NOT AN ACTIVE INSTRUCTION FILE
 
-WHERE WE ARE (read-only check, 2026-10-17)
-- app.html / index.html: unchanged since the Beta v15.45.0 upload (same file
-  hash as 13 Oct). The website still runs v15.45.0.
-- Since then ~237 commits, almost all rules/plans/audits/logs. Very little new
-  CODE arrived. Good: nothing got broken. Problem: the Beta isn't improving.
-- Candidate code waiting: chatgpt/clone-safety.js, chatgpt/scratch-link.js,
-  deepseek/speed-collision-B.js, deepseek/costume-* (blocked: wrong names),
-  deepseek/pmp-loader.js (incomplete), gemini/extension (missing PNG icons),
-  "Buffy" add-ons/settings (outside the repo, under review).
-- Claude also has its own v15.46.0 build (freeze fixes from the chaos test:
-  frame budget, stuck-script box, text/list caps, crash recovery) - built and
-  mostly tested, one Stop test left to fix.
+This 2026-10-17 Claude plan is superseded by:
+- ../team/WORKFLOW-START-HERE.txt — workflow entry and document routing.
+- team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt — current Claude execution plan v2.0.
 
-STEP 1 - Beta v15.46 "no more freezes"   (owner says go -> Claude does it)
-  a. Start from the live v15.45.0 app.html (record its hash first).
-  b. Add Claude's v15.46 freeze fixes + chatgpt/clone-safety.js (one clone-limit
-     system, not two) + deepseek/speed-collision-B.js (only if it gives the
-     same answers as GW.spritesTouch in a rotation/scale test).
-  c. Fix the remaining Stop-button test (clone bomb must stop in < 1 s).
-  d. Run the full old test suite + the chaos tests + 10 live UI tests.
-  e. Before/after screenshots + FPS numbers -> team/RELEASE-v15.46.txt.
-  f. Owner checks screenshots -> upload app.html -> website updates.
+Do not follow task order, model/build status, or integration assumptions from this older plan without rechecking current repository state. Its unique historical notes remain available in Git history; current status must come from TODO.txt, CONTINUOUS-WORK-QUEUE.txt, MERGE-QUEUE.txt, and verified source evidence.
 
-STEP 2 - "Open in G-Warp" link        (small, after step 1)
-  chatgpt/scratch-link.js: app.html#scratch=<id> asks, then loads the project.
-  Test with a real shared Scratch project. Then Gemini's extension can point
-  at it (needs PNG icons + Chrome/Firefox test).
-
-STEP 3 - Costume editor fixes (U2)    (biggest user-visible win)
-  Rewrite DeepSeek's 5 picks against the REAL editor (svgTool, bitmapTool,
-  selectedSvg...). Test every item of deepseek/CHECKLIST-costumes.txt in the
-  real editor with screenshots. Ship as v15.47.
-
-STEP 4 - Turn Grok's 75 tests into automatic tests
-  Each written case becomes a small project that runs in G-Warp and checks the
-  exact Scratch answer. Every future Beta must pass them.
-
-STEP 5 - Later: protobuf .pmp (needs a real test file), speed work (60 FPS),
-  music, GWrap AI.
-
-WHAT THE OWNER NEEDS TO DECIDE
-  1. The website address: is it still https://creapter1.github.io/gwarp/ ?
-     (The team docs say it changed, but nobody knows the new one.)
-  2. "Go" for Step 1.
-  3. Whether Buffy's add-ons/settings work should be reviewed for a Beta.
-
-ADVICE FOR THE TEAM
-  Fewer new rule files, more tested code. Each AI's next job should end in a
-  file that can be tested (code + test), not another audit of the audits.
+No app.html/index.html change is authorized by this archive notice.
