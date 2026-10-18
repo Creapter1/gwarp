@@ -1,0 +1,103 @@
+G-WARP G10 — STATIC ASSERT: GW_EXT_DANGER keys ⊆ gallery
+Author: Grok  |  Date: 2026-10-18
+Baseline: app.html main (~2,327,544 bytes) downloaded 2026-10-18
+Evidence: SOURCE-VERIFIED parse of embedded JSON + LIST/MODERATE literals
+NOT: live extension load, browser UI, or full .js code re-audit
+
+=====================================================================
+METHOD
+=====================================================================
+1. Parse <script id="gw10GalleryData"> → 184 entry array.
+2. keyOf(entry) = "tw:" + slug if src TurboWarp / turbowarp.org URL;
+                 "pm:" + slug if src PenguinMod / penguinmod.com URL.
+3. Extract const LIST = { ... } keys (17).
+4. Extract const MODERATE = Object.fromEntries([ ... ]) keys (46).
+5. Assert every LIST and MODERATE key is in the gallery key set.
+
+=====================================================================
+RESULT
+=====================================================================
+LIST keys:     17 / 17 present in gallery  → PASS
+MODERATE keys: 46 / 46 present in gallery  → PASS
+Missing:       none
+
+Gallery notes:
+- 184 entries parsed; 183 distinct keyOf values (one entry may share
+  slug/src edge or empty slug — residual, not a DANGER key failure).
+- Matches prior G5 count: Dangerous 17, Moderate 46.
+
+=====================================================================
+LIST KEYS (all matched)
+=====================================================================
+pm:bruhbeast-pixel/CockatielLocation.js
+tw:SamuelLouf/Geolocation
+pm:RubyDevs/turboweather.js
+tw:NexusKitten/sgrab
+tw:steamworks
+tw:cloudlink
+pm:MikeDev101/cloudlink.js
+pm:MikeDev101/webrtc.js
+pm:pooiod/VideoSharing.js
+tw:gamejolt
+tw:obviousAlexC/newgroundsIO
+pm:MubiLop/authpenguin.js
+pm:Ikelene/googleAuthExtension.js
+pm:NotHouse/DiscordAuth.js
+tw:clipboard
+tw:obviousAlexC/SensingPlus
+tw:Lily/lmsutils
+
+=====================================================================
+MODERATE KEYS (all matched) — 46
+=====================================================================
+tw:files, tw:fetch, tw:utilities, tw:iframe, tw:Lily/Skins,
+tw:clouddata-ping, tw:true-fantom/network, tw:TheShovel/ShovelUtils,
+tw:Lily/Assets, tw:SharkPool/Font-Manager, tw:CST1229/zip,
+tw:CST1229/images, tw:0832/rxFS2, tw:godslayerakp/http,
+tw:godslayerakp/ws, tw:CubesterYT/Webhooks, tw:veggiecan/LongmanDictionary,
+tw:itchio, tw:Lily/Video,
+pm:Ikelene/serverStorageExtension.js, pm:Gen1x/storage_plus.js,
+pm:Gen1x/better_storage.js, pm:WAYLIVES/FreeServers.js,
+pm:TheShovel/qoan-renderer.js, pm:AndrewGaming587/agBuffer.js,
+pm:PuzzlingGGG/ttsrV2.js, pm:MubiLop/penguinhook.js, pm:Faunks/Blobs.js,
+pm:Gen1x/random_utils.js, pm:justablock/gitpenguin.js,
+pm:SammerLOL/pangapi.js, pm:NamelessCat/corsproxy.js,
+pm:DogeisCut/BeepBoxPlayer.js, pm:Anonymous_cat1/updateFile.js,
+pm:MubiLop/yeetyourfiles.js, pm:Codefoxy/cfupload.js,
+pm:pooiod/Scratchblocks.js, pm:bop_tw/Twitch.js, pm:Gen1x/chess-ext.js,
+pm:Gen1x/CATS.js, pm:electricfuzzball_pm/StageBrah.js,
+pm:NishiOwO/libxmp.js, pm:MubiLop/penguingpt.js, pm:TheShovel/blockAI.js,
+pm:NotHouse/OnlineCaptcha.js, pm:Gen1x/mouth_washer.js
+
+=====================================================================
+PROPOSED SELF-TEST (for Claude; NOT wired into app.html)
+=====================================================================
+Optional console snippet after gallery + DANGER init (inert proposal only):
+
+  (function assertDangerKeysInGallery() {
+    const g = window.GW_EXT_GALLERY || [];
+    const keyOf = e => {
+      const slug = e.slug || '';
+      if (e.src === 'TurboWarp') return 'tw:' + slug;
+      if (e.src === 'PenguinMod') return 'pm:' + slug;
+      return null;
+    };
+    const set = new Set(g.map(keyOf).filter(Boolean));
+    const D = window.GW_EXT_DANGER;
+    if (!D?.LIST || !D?.MODERATE) return console.warn('no GW_EXT_DANGER');
+    const miss = [];
+    for (const k of Object.keys(D.LIST)) if (!set.has(k)) miss.push('LIST:'+k);
+    for (const k of Object.keys(D.MODERATE)) if (!set.has(k)) miss.push('MOD:'+k);
+    if (miss.length) console.error('[G-Warp] DANGER keys missing from gallery', miss);
+    else console.log('[G-Warp] DANGER keys ⊆ gallery OK', Object.keys(D.LIST).length, Object.keys(D.MODERATE).length);
+  })();
+
+=====================================================================
+LIMITS
+=====================================================================
+- Does not prove every extension loads on the published site (TODO.txt #6).
+- Does not re-read each extension's source for personal-data claims.
+- Gallery cardinality 183 keys vs 184 cards: investigate empty slug if needed;
+  no DANGER key orphaned.
+
+Files: grok/ASSERT-ext-danger-keys.txt only. app.html untouched.
