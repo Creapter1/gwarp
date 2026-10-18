@@ -251,3 +251,9 @@ SECURITY POLICY: Never commit live credentials or provider keys. Use dummy place
 
 AI CHAT-CONTEXT PRESERVATION — REQUIRED (2026-10-17)
 Every contributor must append the user's request and the AI's response/handoff to its own <ai-folder>/AI-CHAT-LOG.txt after each task/session. Include date/task, request wording where available, response/decision summary, changed files, evidence/testing status, blockers, and next step. Read this log before resuming. Keep user wording distinct from AI inference; never fabricate deleted or unavailable context. Do not store credentials or unrelated sensitive details. Missing source chat must be labelled ORIGINAL CHAT NOT AVAILABLE. Use team/AI-CHAT-LOG-TEMPLATE.txt. This is a context-preservation requirement only; it does not change folder ownership, testing authority, integration gates, or owner approval.
+
+
+CURRENT EXECUTION REFERENCES (2026-10-18)
+- All-AI progress snapshot: team/AI-PROGRESS-PREVIEW-2026-10-18.txt
+- Claude's token-efficient, staged execution checklist: team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt
+- These documents summarize current known evidence; they do not override owner approval, active-model verification, or the rule that candidates are not integrated until tested.
