@@ -32,7 +32,7 @@ IDEAS (Grok can add here)
 
 CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
 Before claiming new work, read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt.
-[x] G5 (NEXT): finish the extension-gallery audit — DONE 2026-10-18 -> grok/EXTENSIONS-check.txt
+[x] G5: finish the extension-gallery audit — DONE 2026-10-18 -> grok/EXTENSIONS-check.txt
 [ ] G6: verify uncertain high-risk cases in grok/TESTS.txt against a named Scratch 3 source/version or live reference, especially negative rounding/modulo, list index 0, string/number comparison, case behavior, clone limit and pen hue wrap.
 [ ] G7: cross-review DeepSeek costume/PMP proposals and ChatGPT clone-safety notes. Submit a review report in grok/; do not edit other AI folders.
 [ ] G8: turn 10-15 verified cases into a deterministic fixture/test format; label it a written fixture unless actually executable.
