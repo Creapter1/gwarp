@@ -1,6 +1,7 @@
 G-WARP SPEC: OPERATORS (Scratch 3.0 behaviour)
 Source: scratchfoundation/scratch-vm src/blocks/scratch3_operators.js + util/cast.js + util/math-util.js
 Written by: Grok  |  Date: 2026-10-13
+G6 alignment: 2026-10-18 (see grok/VERIFY-high-risk.txt, FIXTURES-verified.txt)
 
 =====================================================================
 CAST RULES (used by almost every operator)
@@ -19,10 +20,13 @@ toString(v): String(v)
 
 compare(v1, v2): Scratch equality / ordering
   - Try Number both sides. Whitespace-only or null that become 0 are treated as NaN for this path.
-  - If either side is NaN: case-insensitive string compare
+  - If either side is NaN: case-insensitive string compare (toLowerCase)
   - Infinity == Infinity, -Infinity == -Infinity
   - else numeric subtract
-  Important: "10" equals 10.0 and 10. "123" equals 123.
+  Important:
+    - "10" equals 10.0 and 10  (numeric path)  [F007 F008]
+    - "abc" equals "ABC"  (case-insensitive string path)  [F009]
+    - G6 CORRECTED: non-numeric equality is NOT case-sensitive
 
 isInt(v): true for numeric integers (and NaN treated as int), booleans, or strings without '.'
 
@@ -45,7 +49,8 @@ Args: OPERAND1, OPERAND2
 What: compare(...) < 0, === 0, > 0
 Edge cases:
   - "10" = "10.0" -> true
-  - "a" < "B" -> case-insensitive
+  - "abc" = "ABC" -> true (G6; case-insensitive when not both numbers)
+  - "a" < "B" -> case-insensitive ordering
   - empty string vs 0: whitespace path can make them compare as equal in some cases; follow Cast.compare exactly
 
 --- operator_and / operator_or / operator_not ---
@@ -83,6 +88,7 @@ What: toString(STRING).length
 Opcode: operator_contains
 Args: STRING1, STRING2
 What: case-insensitive substring: toString both lowercased, includes
+Fixture: F014 "Hello" contains "hello" -> true
 
 --- operator_mod ---
 Opcode: operator_mod
@@ -90,14 +96,18 @@ Args: NUM1, NUM2
 What: floored modulo (Scratch style), NOT JS truncated %
 How: n % modulus; if result/modulus < 0 then result += modulus
 Edge cases:
-  - mod(-4, 3) -> 2 in Scratch (JS %-4%3 is -1)
+  - (-10) mod 3 -> 2  [F005]
+  - 10 mod (-3) -> -2  [F006]
+  - mod(-4, 3) -> 2 (JS %-4%3 is -1)
   - modulus 0 -> NaN
 
 --- operator_round ---
 Opcode: operator_round
 Args: NUM
-What: Math.round(toNumber(NUM))
-Edge cases: JS half-away-from-zero for .5 on positives; Math.round(-2.5) is -2 in JS (toward +inf). Scratch uses Math.round so same as JS.
+What: Math.round(toNumber(NUM)) — same as JS Math.round
+Edge cases (G6 SOURCE-CONFIRMED):
+  - round(2.5) -> 3  [F003]
+  - round(-2.5) -> -2  [F002]  (NOT -3; half rounds toward +Infinity)
 
 --- operator_mathop ---
 Opcode: operator_mathop
@@ -125,3 +135,4 @@ G-WARP NOTES
 - Implement one Cast module and use it everywhere (motion, sensing, lists, etc.).
 - operator_mod must not use raw JS %.
 - equals must use compare, not ===.
+- G6 fixtures: F002 F003 F005 F006 F007 F008 F009 F014 in FIXTURES-verified.txt.
