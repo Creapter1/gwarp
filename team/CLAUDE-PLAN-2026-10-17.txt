@@ -1,9 +1,10 @@
 ARCHIVED — NOT AN ACTIVE INSTRUCTION FILE
 
 This 2026-10-17 Claude plan is superseded by:
-- ../team/WORKFLOW-START-HERE.txt — workflow entry and document routing.
-- team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt — current Claude execution plan v2.0.
+- team/WORKFLOW-START-HERE.txt — shared workflow entry and document routing.
+- team/AI-STATUS.txt — current team status and next handoff.
+- team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt — current Claude execution plan v2.1.
+- team/CLAUDE-CHECKPOINT.txt — preliminary metadata checkpoint; Claude must refresh it after verifying the actual baseline and tests.
 
-Do not follow task order, model/build status, or integration assumptions from this older plan without rechecking current repository state. Its unique historical notes remain available in Git history; current status must come from TODO.txt, CONTINUOUS-WORK-QUEUE.txt, MERGE-QUEUE.txt, and verified source evidence.
-
+Do not follow the old task order, model/build status, or integration assumptions without rechecking the current repository. This archive notice replaces duplicated instructions; the prior plan text remains in Git history.
 No app.html/index.html change is authorized by this archive notice.
