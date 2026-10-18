@@ -1,0 +1,153 @@
+G-WARP G7 CROSS-REVIEW
+Reviewer: Grok
+Date: 2026-10-18
+Evidence class: STATIC-ANALYSIS only (no browser run, no app.html edit)
+Scope: DeepSeek costume winners + LAB-costumes + pmp-loader/NOTES-pmp;
+       ChatGPT clone-safety.js + NOTES-clone-safety
+Compared against: ENGINE-MAP.txt, team/CROSS-AI-REVIEW-2026-10-15.txt,
+                  MERGE-QUEUE.txt, team/AI-STATUS.txt, team/CONTINUOUS-WORK-QUEUE.txt
+Rules: report only; did not edit deepseek/ or chatgpt/
+
+=====================================================================
+1. DEEPSEEK COSTUME CANDIDATES — still BLOCKED / HIGH RISK
+=====================================================================
+Reviewed: LAB-costumes.txt, costume-select-C.js, costume-fill-C.js
+(and LAB's stated winners: select-C, fill-C, text-B, eraser-C, undo-C).
+
+What is good
+- Honest UNSURE list in LAB-costumes (canvas id, data-gw-shape, GW8.undo,
+  mapFor signature, mode field name).
+- Safe-ish module shape: early return if GW_V15_COSTUME_EDITOR missing;
+  tries GW_DIALOG; feature-off on fill-C.
+- Round-2 attack notes (pointer capture, history spam, PNG path) show
+  useful lab thinking.
+
+Blocking issues (must fix before any controlled test branch)
+1. Wrong state field names vs ENGINE-MAP
+   - Code uses CE.state.mode and CE.state.fillColor / fill.
+   - ENGINE-MAP documents costumeMode, svgTool, bitmapTool, selectedSvg,
+     selectionRect — not mode / fillColor.
+   - Severity: HIGH. Modules may always take the wrong branch or wrong color.
+
+2. Assumed DOM attributes with no source proof
+   - [data-gw-shape] and [data-gw-selected] are required for select/fill.
+   - No confirmation in ENGINE-MAP that production SVG carries these.
+   - Severity: HIGH. Select/fill become no-ops or never bind shapes.
+
+3. Parsed SVG not proven to write back
+   - select-C mutates a DOMParser document and sets transform/data attrs.
+   - Review did not find a call that serializes that DOM back into
+     costume.svg / CE.save / VE.save.
+   - Severity: HIGH. User sees no persistent change, or editor state diverges.
+
+4. Generic canvas targeting
+   - querySelector('#gw-costume-canvas, .gw-paint-canvas, canvas') and
+     similar bitmap lists can hit stage or unrelated canvas.
+   - fill-C uses document-level click listener (not editor-scoped).
+   - Severity: HIGH. Stage/UI clicks can be intercepted.
+
+5. Undo assumptions
+   - LAB notes pushHistory('__undo__') is UNSURE; C probes GW8.undo first.
+   - Still not SOURCE-VERIFIED that either path performs real undo/redo.
+   - Severity: MEDIUM-HIGH.
+
+Minimum correction (DeepSeek's job in deepseek/ only)
+A. Source-evidence table: for each API/selector/attribute used, cite the
+   exact app.html / ENGINE-MAP line or mark UNSURE and stop using it.
+B. Switch CE.state.mode → CE.state.costumeMode; remove fillColor unless proven.
+C. Isolate handlers to the confirmed costume canvas only; no bare 'canvas'.
+D. Prove write-back path: after SVG edit, call the real save/load API and
+   refresh list.
+E. Build an opt-in harness that cannot attach until a test flag is set.
+
+Acceptance tests (for Claude later; Grok did not run)
+- Vector select/move one shape; costume persists after tab switch.
+- Fill SVG + PNG; undo restores both.
+- Clicks on stage / block palette never trigger fill/select.
+- Feature-off keys disable tools without throwing.
+
+Verdict: Do NOT treat MERGE-QUEUE "PICK" as safe-to-merge. Agree with
+ChatGPT 2026-10-15 cross-review: blocked until API map + isolated harness.
+
+=====================================================================
+2. DEEPSEEK PMP LOADER — still INCOMPLETE / not load-faithful
+=====================================================================
+Reviewed: deepseek/pmp-loader.js, NOTES-pmp.txt.
+
+What is good
+- Correctly refuses ZIP and defers ZIP .pmp to G-Warp's existing loader.
+- Kid-friendly errors; detect() on PK signature is clear.
+- Module is small and side-effect limited (sets window.GW_PMP only).
+
+Blocking gaps
+1. assets: always new Map() for protobuf — costumes/sounds cannot load.
+2. Any non-ZIP buffer classified as 'protobuf' (no real magic/signature).
+3. CDN import path + global export shape still UNSURE (NOTES + code).
+4. No real legal .pmp protobuf fixture in repo; test-pmp-loader is synthetic.
+
+Minimum correction
+- Confirm pmp-protobuf API (UMD/ESM) with a pinned version that works offline
+  or is vendorable under license rules.
+- Document or implement asset extraction for protobuf projects.
+- Keep ZIP path out of this module (already correct).
+- Add one real fixture only if owner provides a legal sample.
+
+Verdict: REFERENCE / WAITING. Useful research; not integration-ready for
+faithful project open. Preserve existing .sb3 and ZIP .pmp support.
+
+=====================================================================
+3. CHATGPT CLONE-SAFETY — useful candidate, not proven
+=====================================================================
+Reviewed: chatgpt/clone-safety.js, NOTES-clone-safety.txt.
+
+What is good
+- Uses Engine / GW / GW_SETTINGS / GW_CONFIRM / GW_FEATURE_OFF family
+  (aligned with ENGINE-MAP; not window.vm).
+- Cached clone count + O(1) threads.length = 0 on Stop is the right idea
+  for the reported Stop lag with huge thread lists.
+- Default 300 cap; infinite clones requires explicit confirm.
+- NOTES honestly list non-goals (frame budget, text/list caps, crash recovery)
+  and that the module is not browser-tested.
+- Feature-off key cloneSafety; idempotent GW_CLONE_SAFETY guard.
+
+Risks
+1. Reimplements g.createClone instead of wrapping the live implementation.
+   NOTES already warn about dual historical createClone paths in app.html.
+   Missing side effects (layering, speech, extension hooks) = silent bugs.
+2. Capture-phase Stop/Green Flag listeners can race or double-clear with the
+   real handlers; order must be verified in source.
+3. Hat cache via #workspaceCanvas + data-type === 'when_clone' may not match
+   G-Warp's actual hat DOM if structure differs.
+4. effectiveLimit uses Math.min(BASE_LIMIT, project cloneLimit) when finite —
+   good safety bias; document parity vs TurboWarp "infinite clones" projects.
+5. Owner-reported 81k-clone / ~45s Stop remains REPORTED, not reproduced here.
+
+Minimum correction / test gate (Claude + owner; not Grok)
+- Diff optimizedCreateClone field-by-field against the effective live
+  GW.createClone (v15.9-era path noted in NOTES).
+- Prefer wrap-then-call original for unknown fields if parity is unclear.
+- Controlled tests: 299/300/301 clones; nested clone hats; delete one/all;
+  Stop latency measurement; infinite-clones confirm cancel/accept;
+  double-load module; feature-off; Green Flag reset of warn flag.
+
+Verdict: Keep as candidate for controlled testing. Do not call it a fix for
+the unreproduced 81k case. MERGE-QUEUE PICK = "selected for test," not approved.
+
+=====================================================================
+4. CROSS-CUTTING NOTES FOR THE TEAM
+=====================================================================
+- Grok G6 already corrected TESTS T002/T009/T021/T024; older CROSS-AI note
+  about uncertain list-index-0 / case equals is partially resolved in
+  grok/VERIFY-high-risk.txt (SOURCE-CONFIRMED against scratch-vm develop).
+- Costume and PMP remain the highest structural blockers for DeepSeek merge.
+- Clone-safety is the strongest freeze-related candidate reviewed here, but
+  still STATIC only.
+- No recommendation to edit app.html from this review.
+
+=====================================================================
+5. FILES TOUCHED BY THIS TASK
+=====================================================================
+- grok/REVIEW-G7-costume-pmp-clone-safety.txt (this file)
+- team/TODO-GROK.txt will mark G7 [x]
+
+Next for Grok: G8 (written fixtures from verified tests) if time remains.
