@@ -1,78 +1,14 @@
-G-WARP — ALL-AI WORK PREVIEW
-Date: 2026-10-18
-Owner: Creapter1
-Purpose: One concise snapshot of what each AI has delivered, what is actually verified, what remains blocked, and what Claude should do next.
-Evidence rule: A file existing or being marked PICK/DONE does not mean integrated or browser-tested. This is a repository-document review; no fresh app browser run was performed for this preview.
+ARCHIVED SNAPSHOT — CURRENT STATUS MOVED
+Original snapshot date: 2026-10-18
+Current status: team/AI-STATUS.txt
 
-EXECUTIVE SNAPSHOT
-- Current documented baseline: Beta v15.45.0. Previously audited app.html and index.html blob IDs were unchanged as of the 2026-10-16 audit; that is not proof of current runtime health.
-- No reviewed evidence establishes that the candidate modules below have been integrated into the live app.
-- Main immediate risk: reported freeze/Stop behavior and unverified safety/cleanup around candidates. Start with baseline + reproduction, then one narrowly scoped candidate at a time.
-- Canonical live website URL remains unconfirmed by the owner. Do not guess or mass-replace URLs.
-- Claude may integrate only after confirming the actual active model label is exactly “Claude Opus 5.5” and the owner explicitly approves integration. If the label is different/unclear, stop before editing live behavior.
+This dated all-AI progress preview overlapped with the deliverable inventory and current handoff. The original snapshot remains in Git history. Use team/AI-STATUS.txt for current task order, verified/blocked state, owner decisions and Claude's next action.
 
-CHATGPT — REVIEW / PLANNING / TEST DESIGN
-Delivered:
-- chatgpt/UI-AUDIT.txt: broad static UI behavior audit; several interactions remain unverified.
-- docs/LIVE-UI-VERIFICATION.txt: reported 10 passing live tests and 11 screenshots for its limited scope; not comprehensive parity proof.
-- chatgpt/clone-safety.js + notes: candidate only, not integrated/browser-tested; covers only part of freeze wishlist.
-- chatgpt/scratch-link.js + notes: candidate only; depends on real GW_WEB.load handler and consent/error flow.
-- Documentation and review ledgers, including security/consistency and integration status audits.
-- 2026-10-18 correction: re-inspected Buffy-2026-10-17-addons-settings.zip (SHA-256 f7d8ae3ff5cf7db085cb3f15965de6e93fc3f347a2b24b3324d008e7ce7e56ad). The source paths and notes label the modules Buffy and place them under chatgpt\\; the included TODO-GEMINI.txt is team context, not proof of Gemini authorship. Both JS files pass Node syntax checks, but static review finds lifecycle cleanup defects, possible stale pause toast, sprite-order assumptions, reset event synchronization risk, and incomplete visual rollback. Current attribution record: chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt. The earlier deepseek handoff was misrouted and should not be treated as evidence that DeepSeek authored this ZIP.
-Next: keep reviews bounded; provide targeted regression checklists and reconcile status claims, not another broad rewrite.
+Purpose-specific detail:
+- team/CROSS-AI-REVIEW-2026-10-15.txt — cross-AI candidate review.
+- team/INTEGRATION-STATUS-AUDIT-2026-10-16.txt — historical integration status.
+- team/GEMINI-ONLY-REVIEW-2026-10-16.txt — browser extension review.
+- team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt — security/consistency findings.
+- chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt — Buffy-labelled ZIP review and provenance caveat.
 
-GROK — SCRATCH SEMANTICS / TESTS / EXTENSION AUDIT
-Delivered:
-- Scratch behavior specs across block categories and engine rules.
-- grok/SPEC-files.txt: .sb3 and .pmp format notes.
-- grok/TESTS.txt: 75 written expected-result cases; not automatically executable and some edge semantics still need named primary-source/version confirmation.
-Open:
-- G5 extension gallery link/privacy/Dangerous-label audit.
-- Verify uncertain high-risk cases such as negative rounding/modulo, list index 0, text/number comparisons, pen hue wrap and clone boundaries.
-- Convert a small subset of verified cases into deterministic fixtures when feasible.
-Do not repeat finished specs or call written tests passed.
-
-DEEPSEEK — LAB CANDIDATES
-Delivered:
-- Costume editor A/B/C proposals and LAB-costumes.txt; tentative winners select-C, fill-C, text-B, eraser-C, undo-C. Blocked by uncertain real selectors/state/attributes/history APIs and risk of affecting unrelated canvases.
-- Speed proposals and LAB-speed.txt; collision-B is a candidate to benchmark against GW.spritesTouch; old clone variants are superseded.
-- pmp-loader.js + notes/harness: protobuf .pmp candidate only; real fixture/API/asset handling still incomplete. Preserve existing ZIP-based .pmp support.
-- New review handoff: deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt.
-Open priority:
-1. Costume source-evidence map + isolated stage-vs-costume canvas harness + teardown.
-2. Validate protobuf loader against a real fixture and malformed/oversized files.
-3. Benchmark collision-B with rotation/scale and prove no false negatives.
-4. Only then resume one bounded DS task at a time. Never create unrelated A/B/C sets while high-risk candidates remain unresolved.
-
-GEMINI — ORIGINAL ASSETS / BROWSER EXTENSION
-Delivered:
-- gemini/extension/ prototype, manifests/content/background scripts and icon-generation instructions.
-Open/blockers:
-- Required PNG icons were absent at the reviewed paths; placeholder bolt is not accepted as final G-Spark.
-- Owner must confirm canonical destination URL.
-- Chromium/Firefox, Scratch SPA navigation, repeated injection, storage failures, permissions/privacy and end-to-end project loading remain unverified.
-- The app-side #scratch handler dependency must exist and be tested before claiming end-to-end success.
-- Original SVG options remain planned: extension icon, favicon, category icons, achievement badges, G-Spark poses and website hero.
-Status: extension remains WAITING, not release-ready.
-
-BUFFY-LABELLED ZIP (TRACKED UNDER CHATGPT; MODEL PROVENANCE UNVERIFIED)
-- Includes settings-ui-fix.js and addons-pack.js plus notes, with source paths and headers labelled Buffy/chatgpt.
-- Both files passed Node syntax validation; static review identifies incomplete cleanup/rollback, pause-toast timing risk, sprite-order assumptions, and reset event-sync risk.
-- Review: chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt.
-- The ZIP also includes TODO-GEMINI.txt, but that is not evidence that Gemini authored the code. Do not attribute this submission to Gemini or DeepSeek without provenance evidence. Keep disconnected until Claude reproduces tests.
-
-CLAUDE — ONLY OFFICIAL INTEGRATOR / RUNTIME EVIDENCE OWNER
-Must not merge everything at once. Start with the separate execution plan in team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt. First read-only baseline and issue reproduction; then freeze/safety first; then one candidate per controlled test cycle. Preserve owner approval and rollback gates.
-
-OWNER DECISIONS NEEDED
-1. Confirm active Claude interface actually says “Claude Opus 5.5” before integration work.
-2. Confirm exact canonical live website URL and whether old GitHub Pages URL remains a fallback.
-3. Confirm the known-good baseline if current main/deployment diverges.
-4. Approve each live integration/release explicitly after reviewing evidence.
-
-DO NOT CLAIM
-- “Fixed” because syntax passes.
-- “Integrated” because file is in GitHub or MERGE-QUEUE says PICK.
-- “Browser tested” without actual recorded steps, browser/version and results.
-- “Scratch compatible” from a written spec alone.
-- “DeepSeek authored” solely from an archive named or labelled by another tool.
+No browser tests, integration, deployment, or app.html/index.html edits are implied by this archived snapshot.
