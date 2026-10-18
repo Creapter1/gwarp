@@ -5,13 +5,16 @@
 =====================================================================
 
 YOUR JOBS (in this order)
-[x] (Grok) G1–G5 — DONE (see prior marks)
+[x] (Grok) G1–G5 — DONE
 [x] (Grok) G6. HIGH-RISK TEST VERIFY — DONE 2026-10-18
       grok/VERIFY-high-risk.txt + corrected TESTS.txt
-      Fixed wrong expects: T002 round(-2.5)→-2, T009 "abc"="ABC"→true,
-      T021/T024 list index 0 → invalid/empty (not first item).
-      Confirmed: floored mod, equals numeric, contains CI, LIST 200000,
-      MAX_CLONES 300, pen hue wrapClamp period 101.
+[x] (Grok) G7. CROSS-REVIEW costume/PMP/clone-safety — DONE 2026-10-18
+      grok/REVIEW-G7-costume-pmp-clone-safety.txt
+      Costume C-picks: still BLOCKED (wrong state fields, data-gw-shape,
+      no write-back proof, generic canvas / document listeners).
+      PMP loader: INCOMPLETE (empty assets, weak detect, CDN UNSURE).
+      clone-safety: useful candidate, reimplements createClone; needs
+      controlled tests; not a proven fix for unreproduced 81k Stop case.
 
 WHEN YOU FINISH ONE
 - Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
@@ -23,5 +26,6 @@ IDEAS (Grok can add here)
 CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
 [x] G5 DONE 2026-10-18
 [x] G6 DONE 2026-10-18 → grok/VERIFY-high-risk.txt
-[ ] G7: cross-review DeepSeek costume/PMP proposals and ChatGPT clone-safety notes. Submit a review report in grok/; do not edit other AI folders.
-[ ] G8: turn 10-15 verified cases into a deterministic fixture/test format; label it a written fixture unless actually executable.
+[x] G7 DONE 2026-10-18 → grok/REVIEW-G7-costume-pmp-clone-safety.txt
+[ ] G8: turn 10-15 verified cases into a deterministic fixture/test format;
+      label it a written fixture unless actually executable.
