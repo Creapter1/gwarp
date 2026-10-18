@@ -1,0 +1,17 @@
+const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path');
+(async () => { const [file] = process.argv.slice(2); let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fails++; };
+  const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } }); const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
+  await prep(p); await p.goto('file://' + path.resolve(file)); await p.waitForTimeout(3500);
+  await p.evaluate(() => setTimeout(() => { throw new Error('test boom at C:\\Users\\kid\\secret.txt'); }, 0)); await p.waitForTimeout(300);
+  await p.click('#extra-menu-trigger'); await p.waitForTimeout(400);
+  ok(await p.isVisible('#gw46BugItem'), 'More menu has "Report a bug…"');
+  await p.click('#gw46BugItem'); await p.waitForTimeout(500);
+  ok(await p.isVisible('#gw46Bug'), 'the Report a bug box opens');
+  await p.fill('.gw46-bug-text', 'Stop did not stop the clones');
+  const prev = await p.textContent('.gw46-bug-prev');
+  ok(/Stop did not stop/.test(prev) && /test boom/.test(prev), 'preview shows the text and the caught error');
+  ok(!/Users\\kid|secret\.txt/.test(prev), 'file paths are hidden from the report');
+  const [pop] = await Promise.all([ctx.waitForEvent('page'), p.evaluate(() => [...document.querySelectorAll('#gw46Bug button')].find(x => /Open GitHub/.test(x.textContent)).click())]);
+  await pop.waitForLoadState('commit').catch(()=>{}); const u = decodeURIComponent(pop.url()); console.log('URL', u.slice(0,140)); const u2 = decodeURIComponent(u); ok(/github\.com\/Creapter1\/gwarp\/issues\/new\?labels=bug&title=\[Bug\] Stop did not stop/.test(u2), 'opens a pre-filled GitHub bug issue (user sends it)');
+  ok(errs.length === 1, 'no page errors except the test error');
+  await b.close(); console.log(fails ? fails + ' FAILED' : 'ALL PASS'); process.exit(fails ? 1 : 0); })();

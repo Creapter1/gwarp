@@ -195,3 +195,4 @@ PROGRESS / PLAN UPDATE (2026-10-18)
 2026-10-18 | MERGED  | Claude | chatgpt/scratch-link.js into app.html (Beta v15.46.1): #scratch=<id> asks, then loads; Cancel/bad id do nothing (test_4611 ALL PASS). Gemini's extension link target now works.
 2026-10-18 | ASSIGNED | Claude | jobs for every AI -> team/ASSIGNMENTS-2026-10-19.txt (Grok GR1-2, DeepSeek DS6-7, Gemini GM7-8, ChatGPT CG1-3, Claude CL1-3)
 2026-10-18 | RELEASED | Claude | Beta v15.46.2: skip inaudible sound restarts (<30 ms); key tests pass. Found zombie game runs 3.2M if/else + 3.2M start sound in 15 s -> compiler (CL1) is the real fix, see team/SPEED-PLAN.txt
+2026-10-18 | RELEASED | Claude | Beta v15.46.3 COSTUMES: Paint new makes a vector costume (was bitmap, Scratch makes vector); vector RESHAPE + ERASER work (were 'coming soon') - claude/vectools4630.js, built on DeepSeek's checklist/lab. Costume checklist test claude/tests/test_cos.js 20/20 PASS + old costume tests 3300/3700/3900/4000/2400 PASS

@@ -1,0 +1,15 @@
+const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path');
+(async () => { const [file] = process.argv.slice(2); let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fails++; };
+  const b = await chromium.launch(); const errs = [];
+  const run = async (hash, click) => { const p = await b.newPage(); p.on('pageerror', e => errs.push(e.message)); await prep(p);
+    await p.addInitScript(() => { window.__loads = []; const iv = setInterval(() => { if (window.GW_WEB?.load && !window.GW_WEB.__mock) { window.GW_WEB.load = id => { window.__loads.push(id); return Promise.resolve(); }; window.GW_WEB.__mock = 1; clearInterval(iv); } }, 20); });
+    await p.goto('file://' + path.resolve(file) + hash); await p.waitForTimeout(4000);
+    const box = await p.evaluate(() => /Open Scratch project #/.test(document.body.innerText));
+    if (click) await p.evaluate(t => [...document.querySelectorAll('.gw8-dlg button, [role="dialog"] button')].find(x => x.textContent.trim() === t)?.click(), click); await p.waitForTimeout(500);
+    const r = await p.evaluate(() => ({ loads: window.__loads, hash: location.hash })); await p.close(); return { box, ...r }; };
+  let r = await run('#scratch=10128407', 'Load project'); ok(r.box, 'link #scratch=<id> asks first'); ok(JSON.stringify(r.loads) === '["10128407"]', 'Load project loads that id: ' + JSON.stringify(r.loads)); ok(r.hash === '', 'link is removed from the address');
+  r = await run('#scratch=10128407', 'Cancel'); ok(r.loads.length === 0, 'Cancel loads nothing');
+  r = await run('#scratch=abc', null); ok(!r.box && r.loads.length === 0, 'a bad id does nothing');
+  r = await run('', null); ok(!r.box, 'normal start: no question');
+  ok(!errs.length, 'no page errors ' + errs.slice(0, 2).join(' | '));
+  await b.close(); console.log(fails ? fails + ' FAILED' : 'ALL PASS'); process.exit(fails ? 1 : 0); })();

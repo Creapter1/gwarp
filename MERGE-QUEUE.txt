@@ -10,7 +10,9 @@ Status words: PICK = will be merged (after Claude's fixes + tests)
 --- FOR THE NEXT BETA (URGENT) ------------------------------------
 U1 UI audit        chatgpt/UI-AUDIT.txt              REFERENCE (269 lines; #1 HIGH NOT confirmed
                                                      live - see docs/LIVE-UI-VERIFICATION.txt)
-U2 costume editor  deepseek/costume-select-C.js      PICK (fix names -> svgTool etc.)
+U2 costume editor  (Claude tested the REAL editor with DeepSeek's checklist: select/move/resize/delete/undo/fill/text/brush/shapes already worked;
+                   missing Reshape + vector Eraser + Paint-new-as-vector were built in v15.46.3 -> claude/vectools4630.js)
+                   deepseek/costume-select-C.js      REFERENCE (editor already does this)
                    deepseek/costume-fill-C.js        PICK (fix names)
                    deepseek/costume-text-B.js        PICK (fix names)
                    deepseek/costume-eraser-C.js      PICK (fix names)
