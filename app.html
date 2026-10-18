@@ -2285,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.46.0</span>
+<span class="app-version">Beta v15.46.1</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4632,7 +4632,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.46.0',label:'Beta v15.46.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.46.1',label:'Beta v15.46.1',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -13641,6 +13641,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const spr = (th, ow) => ow?.__thread?.sprite || th?.sprite || E.sprites?.[E.activeSpriteIndex] || null;
     const listIndex = (v, len) => { const t = String(v).toLowerCase(); if (t === 'last') return len; if (t === 'random' || t === 'any') return len ? 1 + Math.floor(Math.random() * len) : 0; const i = Math.floor(num(v)); return i < 1 || i > len ? 0 : i; };
     const A = (th, nd, ow, i) => EV(th, nd.args?.[i], ow);
+    const itemNum = (a, v) => {
+      let nv = Number(v); if (nv === 0 && ws(v)) nv = NaN; const n = a.length;
+      if (Number.isNaN(nv)) { const sv = String(v), lv = sv.toLowerCase(); for (let i = 0; i < n; i++) { const x = a[i]; if (x === sv) return i + 1; const xs = typeof x === 'string' ? x : String(x); if (xs.toLowerCase() === lv) return i + 1; } return 0; }
+      let lv = null;
+      for (let i = 0; i < n; i++) {
+        const x = a[i]; let nx;
+        if (typeof x === 'number') nx = x; else { nx = Number(x); if (nx === 0 && ws(x)) nx = NaN; }
+        if (nx === nv) return i + 1;
+        if (Number.isNaN(nx)) { if (lv === null) lv = String(v).toLowerCase(); if (String(x).toLowerCase() === lv) return i + 1; }
+      }
+      return 0;
+    };
+    G9.itemNum = itemNum;
     const FN = {
       literal: (th, nd) => nd.value ?? '',
       get_var: (th, nd) => G9.scopedValue(th, nd.name || 'my variable'),
@@ -13659,7 +13672,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       op_random: (th, nd, ow) => { const f = A(th, nd, ow, 0), t = A(th, nd, ow, 1), a = num(f), b = num(t), lo = Math.min(a, b), hi = Math.max(a, b); if (lo === hi) return lo; if (isInt(f) && isInt(t)) return lo + Math.floor(Math.random() * (hi + 1 - lo)); return Math.random() * (hi - lo) + lo; },
       list_item: (th, nd, ow) => { const a = E.lists?.[nd.name] || []; const i = listIndex(EV(th, nd.index, ow), a.length); return i ? (a[i - 1] ?? '') : ''; },
       list_length: (th, nd) => (E.lists?.[nd.name] || []).length,
-      list_itemnum: (th, nd, ow) => { const a = E.lists?.[nd.name] || [], v = A(th, nd, ow, 0); for (let i = 0; i < a.length; i++) if (cmp(a[i], v) === 0) return i + 1; return 0; }
+      // v15.46.1 (Claude, speed step 1): "item # of" did a full Scratch compare per item (95% of the time in a TurboWarp zombie game);
+      // now the looked-for value is prepared once and each item is checked with the same rules, inline
+      list_itemnum: (th, nd, ow) => { const a = E.lists?.[nd.name] || [], v = A(th, nd, ow, 0); return itemNum(a, v); }
     };
     G9.fastFN = FN; // v15.9.1: other layers add their reporters here
     G9.evalNode = function (th, node, expected, owner) { if (!node) return expected === 'boolean' ? false : ''; const f = FN[node.type]; return f ? f(th, node, owner) : slow.apply(this, arguments); };

@@ -1,0 +1,23 @@
+G-WARP SPEED PLAN - the "block compiler"  (Claude, 2026-10-18)   Evidence: BROWSER-VERIFIED profiles (Chromium)
+
+WHY G-WARP IS SLOWER THAN TURBOWARP (measured on the owner's zombie.sb3)
+- The game spends most time inside "run without screen refresh" loops (AI / path finding).
+- G-Warp runs blocks by reading the code-area HTML every time a block runs: querySelector,
+  dataset, JSON.parse of expression slots, 4-5 wrapper layers per reporter.
+  TurboWarp turns each script into real JavaScript once, then the browser runs it at full speed.
+
+DONE (v15.46.1)
+- "item # of (x) in list": same Scratch answers (13,200 random cases checked), about 2x faster.
+  It was 95% of all comparisons in the zombie game. Worst frame stall 2 s -> about 1 s.
+- Tried: a direct dispatcher above the reporter wrappers - no measurable gain, removed.
+
+NEXT STEPS (each one tested against grok/TESTS.txt fixtures + zombie.sb3 FPS before/after)
+1. Statement cache: when a script starts, read each block's type, inputs and sub-blocks ONCE
+   into plain objects (rebuilt only when the code area changes - GW.__wsEpoch already tells us).
+   Removes the DOM reads from the hot loop. Expected: the biggest single win.
+2. Expression cache: parse each slot's JSON expression once per edit (key = the JSON text),
+   not every time it runs.
+3. Compile the cached objects into JavaScript functions (like TurboWarp): math, compare,
+   variables, lists, if/else, repeat, motion. Unknown blocks fall back to the current runner.
+4. Warp loops: with 1-3, a "run without screen refresh" loop should finish in milliseconds.
+Target: zombie.sb3 at 30-60 FPS like TurboWarp.
