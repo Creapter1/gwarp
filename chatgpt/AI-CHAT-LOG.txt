@@ -230,3 +230,13 @@ Task: Final queue deduplication follow-up.
 Correction/update to the cleanup entry above: team/CONTINUOUS-WORK-QUEUE.txt was reduced again from about 7.8 KB to about 4.6 KB (4,641 characters). Duplicate task IDs/descriptions were removed from the shared queue; contributor-specific numbered tasks now live in the corresponding team/TODO-CHATGPT.txt, team/TODO-GROK.txt, team/TODO-DEEPSEEK.txt, or team/TODO-GEMINI.txt. The shared queue holds cross-team dependencies, the P0 freeze/Stop priority, and model/owner gates.
 No app.html/index.html edit, integration, deployment or runtime test was performed.
 --- END ADDENDUM ---
+
+
+--- ADDENDUM ---
+Date: 2026-10-18 (America/New_York)
+Final cross-reference pass:
+- Removed the contradictory “(NEXT)” label from Grok's completed G5 item in team/TODO-GROK.txt.
+- Updated team/TODO-CHATGPT.txt to use the workflow/status entry point, correct same-folder report paths, and root-relative ENGINE-MAP/MERGE-QUEUE paths.
+- Updated the public README roadmap to state that the static UI audit is delivered but full runtime parity and costume editor acceptance remain pending.
+- Rechecked the workflow links; no app source files were changed and no runtime tests were run.
+--- END ADDENDUM ---
