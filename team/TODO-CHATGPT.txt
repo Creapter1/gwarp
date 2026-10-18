@@ -1,7 +1,7 @@
 G-WARP CHATGPT REVIEWER TASK LIST
 Owner: Creapter1
 Role: Independent cross-AI reviewer, planner, test designer, evidence reconciler.
-Read first: ../AI-TEAM.txt, ../TODO.txt, AI-WORK-PLAN.txt, CONTINUOUS-WORK-QUEUE.txt, CROSS-AI-REVIEW-2026-10-15.txt, ../ENGINE-MAP.txt, ../MERGE-QUEUE.txt.
+Start: WORKFLOW-START-HERE.txt and AI-STATUS.txt. Then read ../AI-TEAM.txt's relevant rules/log entries, ../TODO.txt, CONTINUOUS-WORK-QUEUE.txt, this task list, ENGINE-MAP/ MERGE-QUEUE as needed, and the specific report/source for the selected task.
 Scope: inspect/review all contributors' work, identify bugs and unsupported assumptions, write bounded corrections/tests/reports, maintain review findings. Do not edit another AI's folder. Do not integrate or activate code.
 
 ACTIVE TASKS (ordered)
@@ -10,7 +10,7 @@ ACTIVE TASKS (ordered)
 [ ] C3. Review ChatGPT scratch-link.js and Gemini extension together. Map the end-to-end dependency and create exact test cases for prompt, cancel, network failure, app hash, popup, SPA navigation, browser permissions and packaging.
 [ ] C4. Review Grok TESTS.txt: label questionable expected results and provide primary-source/version evidence requirements; avoid rewriting Grok's folder.
 [ ] C5. Review DeepSeek pmp-loader.js and test harness after D4 revision; verify parser API, real fixture and assets.
-[ ] C6. Review each new deliverable as it arrives and update ../CROSS-AI-REVIEW-2026-10-15.txt with date, commit/blob, severity, evidence class, fix and acceptance test.
+[ ] C6. Review each new deliverable as it arrives and update CROSS-AI-REVIEW-2026-10-15.txt with date, commit/blob, severity, evidence class, fix and acceptance test.
 [ ] C7. Create a concise owner report every major review cycle: verified progress, blocked work, decisions needed, next exact task.
 
 REVIEW FORMAT
@@ -27,4 +27,4 @@ REVIEW FORMAT
 CONTINUOUS WORK RULE
 When one task is complete and session time remains, claim the next unclaimed C-task. Do not invent features or repeat the whole audit unless the source/diff materially changed. If blocked, produce a source-evidence map, test matrix, or precise author revision request.
 
-C8 SECURITY REVIEW (2026-10-15): Maintain team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. Review the current user-owned AI-key flow and exactly what project context is transmitted; provide a bounded risk report and acceptance tests. Do not change app.html or claim the key can be made perfectly secret in browser code. Also reconcile stale status statements in TODO.txt with current cross-review evidence. Ask the owner for the new canonical website URL before replacing old URLs.
+C8 SECURITY REVIEW (2026-10-15): Maintain SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. Review the current user-owned AI-key flow and exactly what project context is transmitted; provide a bounded risk report and acceptance tests. Do not change app.html or claim the key can be made perfectly secret in browser code. Also reconcile stale status statements in TODO.txt with current cross-review evidence. Ask the owner for the new canonical website URL before replacing old URLs.
