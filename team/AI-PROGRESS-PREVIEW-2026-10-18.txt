@@ -18,7 +18,7 @@ Delivered:
 - chatgpt/clone-safety.js + notes: candidate only, not integrated/browser-tested; covers only part of freeze wishlist.
 - chatgpt/scratch-link.js + notes: candidate only; depends on real GW_WEB.load handler and consent/error flow.
 - Documentation and review ledgers, including security/consistency and integration status audits.
-- 2026-10-17: reviewed Buffy-labelled settings/add-ons ZIP; both candidate JS files passed Node syntax checking. Static concerns: incomplete teardown, possible stale pause toast, sprite ordering assumptions, settings reset/save sync, brittle selectors. Handoff: deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt. This does NOT prove DeepSeek authored the ZIP.
+- 2026-10-18 correction: re-inspected Buffy-2026-10-17-addons-settings.zip (SHA-256 f7d8ae3ff5cf7db085cb3f15965de6e93fc3f347a2b24b3324d008e7ce7e56ad). The source paths and notes label the modules Buffy and place them under chatgpt\\; the included TODO-GEMINI.txt is team context, not proof of Gemini authorship. Both JS files pass Node syntax checks, but static review finds lifecycle cleanup defects, possible stale pause toast, sprite-order assumptions, reset event synchronization risk, and incomplete visual rollback. Current attribution record: chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt. The earlier deepseek handoff was misrouted and should not be treated as evidence that DeepSeek authored this ZIP.
 Next: keep reviews bounded; provide targeted regression checklists and reconcile status claims, not another broad rewrite.
 
 GROK — SCRATCH SEMANTICS / TESTS / EXTENSION AUDIT
@@ -55,11 +55,11 @@ Open/blockers:
 - Original SVG options remain planned: extension icon, favicon, category icons, achievement badges, G-Spark poses and website hero.
 Status: extension remains WAITING, not release-ready.
 
-BUFFY ZIP (ATTRIBUTION AS LABELLED IN ARCHIVE)
-- Includes settings-ui-fix.js and addons-pack.js plus notes.
-- Both files passed syntax validation only.
-- Review handoff records lifecycle cleanup, pause state, sprite ordering, settings synchronization and selector risks.
-- Keep as disconnected candidates until source verification and browser tests; don't attribute to DeepSeek without evidence.
+BUFFY-LABELLED ZIP (TRACKED UNDER CHATGPT; MODEL PROVENANCE UNVERIFIED)
+- Includes settings-ui-fix.js and addons-pack.js plus notes, with source paths and headers labelled Buffy/chatgpt.
+- Both files passed Node syntax validation; static review identifies incomplete cleanup/rollback, pause-toast timing risk, sprite-order assumptions, and reset event-sync risk.
+- Review: chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt.
+- The ZIP also includes TODO-GEMINI.txt, but that is not evidence that Gemini authored the code. Do not attribute this submission to Gemini or DeepSeek without provenance evidence. Keep disconnected until Claude reproduces tests.
 
 CLAUDE — ONLY OFFICIAL INTEGRATOR / RUNTIME EVIDENCE OWNER
 Must not merge everything at once. Start with the separate execution plan in team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt. First read-only baseline and issue reproduction; then freeze/safety first; then one candidate per controlled test cycle. Preserve owner approval and rollback gates.
