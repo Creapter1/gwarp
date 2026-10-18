@@ -1,13 +1,13 @@
 G-WARP — CLAUDE CHECKPOINT
-Prepared: 2026-10-18 by ChatGPT (handoff only; Claude must refresh this after verification)
+Refreshed: 2026-10-18 by ChatGPT (handoff only; Claude must refresh this after verification)
 Status: PRELIMINARY METADATA CHECKPOINT — NOT RUNTIME EVIDENCE
 
 REPOSITORY BASELINE OBSERVED
 - Branch: main
-- Latest commit observed before this checkpoint: a74b75475cb0e9548056935bd35455bfd1da0a84
+- Latest main commit observed at this checkpoint refresh: 9fd16cb6b0e3557a932ade04e41d45cc36353c47
 - app.html blob: 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes)
 - index.html blob: d8cf02962b20c0379a51aab7d46d829925325dbd (586,179 bytes)
-- Current content tree still has these same app/index blob IDs as the earlier documented baseline.
+- Current main tree at that reference still has these same app/index blob IDs as the earlier documented baseline. Cleanup commits since that tree are documentation-only.
 - Cleanup changes since the previous snapshot were documentation/workflow only. No app.html/index.html change, browser run, integration, or deployment was performed.
 - Evidence class: SOURCE-REPOSITORY-METADATA VERIFIED; runtime NOT TESTED.
 - Important: this is GitHub main metadata, not confirmation of Claude's local/authorized working copy or deployed website. Re-fetch hashes and inspect branch/diff before editing.
