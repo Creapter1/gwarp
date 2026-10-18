@@ -1,6 +1,6 @@
 G-WARP TESTS.txt — Scratch 3 exact-result cases
-Written by: Grok  |  Date: 2026-10-13
-Source of truth: grok/SPEC-*.txt + scratchfoundation/scratch-vm (develop)
+Written by: Grok  |  Date: 2026-10-13; G6 corrections 2026-10-18
+Source of truth: scratchfoundation/scratch-vm (develop) + grok/VERIFY-high-risk.txt
 
 Format:
   T### | category | short name
@@ -19,12 +19,10 @@ SCRIPT: say (0.1 + 0.2)
 EXPECT: a float near 0.30000000000000004 (IEEE-754; do NOT force 0.3)
 NOTES: match Scratch display / internal number; do not "fix" float error
 
-T002 | operators | round half away from zero style
+T002 | operators | round half (JS Math.round)
 SCRIPT: say (round (-2.5))
-EXPECT: -3
-NOTES: Scratch uses Math.round half-up toward +inf for positives; negatives
-       go to more-negative for .5 (JS Math.round(-2.5) === -2 in some engines
-       — Scratch VM uses its own path; VERIFY on live Scratch if unsure)
+EXPECT: -2
+NOTES: G6 VERIFIED: operators.round uses Math.round; Math.round(-2.5)===-2
 
 T003 | operators | round 2.5
 SCRIPT: say (round (2.5))
@@ -37,26 +35,27 @@ EXPECT: 1
 T005 | operators | mod negative dividend (floored)
 SCRIPT: say ((-10) mod 3)
 EXPECT: 2
-NOTES: Scratch uses floored modulus, not truncated
+NOTES: G6 VERIFIED: floored mod in operators.mod
 
 T006 | operators | mod negative divisor
 SCRIPT: say (10 mod (-3))
 EXPECT: -2
-NOTES: sign follows divisor in Scratch floored mod
+NOTES: G6 VERIFIED: sign follows divisor in Scratch floored mod
 
 T007 | operators | equals number vs text
 SCRIPT: say ("10" = 10)
 EXPECT: true
+NOTES: G6 VERIFIED: Cast.compare numeric path
 
 T008 | operators | equals 10 vs 10.0 text
 SCRIPT: say ("10" = "10.0")
 EXPECT: true
-NOTES: both cast to number when numeric
+NOTES: G6 VERIFIED: both cast to number when numeric
 
-T009 | operators | equals non-numeric strings
+T009 | operators | equals non-numeric strings case
 SCRIPT: say ("abc" = "ABC")
-EXPECT: false
-NOTES: case-sensitive string compare when not both numbers
+EXPECT: true
+NOTES: G6 VERIFIED: Cast.compare uses toLowerCase when not both numbers
 
 T010 | operators | join empty
 SCRIPT: say (join [] [])
@@ -77,7 +76,7 @@ EXPECT: 0
 T014 | operators | contains case
 SCRIPT: say ("Hello" contains "hello")
 EXPECT: true
-NOTES: case-insensitive contains in Scratch 3
+NOTES: G6 VERIFIED: case-insensitive contains
 
 T015 | operators | not false
 SCRIPT: say (not (1 = 2))
@@ -108,8 +107,8 @@ VARIABLES / LISTS
 =====================================================================
 T021 | data | list item 0
 SCRIPT: delete all of L; add "a" to L; say (item (0) of L)
-EXPECT: "a"  (0 treated like 1 for item of)
-NOTES: SPEC-variables-lists: index 0 often maps to first item
+EXPECT: empty string ""
+NOTES: G6 VERIFIED: Cast.toListIndex rejects index < 1 → LIST_INVALID → ''
 
 T022 | data | list item 1-based
 SCRIPT: delete all of L; add "a"; add "b"; say (item (2) of L)
@@ -121,7 +120,8 @@ EXPECT: empty string
 
 T024 | data | insert at 0
 SCRIPT: delete all of L; add "b"; insert "a" at (0) of L; say (item (1) of L)
-EXPECT: "a" (0 treated as first position)
+EXPECT: "b" (insert at 0 is no-op; first item unchanged)
+NOTES: G6 VERIFIED: toListIndex(0, ...) → LIST_INVALID
 
 T025 | data | replace item last
 SCRIPT: delete all of L; add "x"; add "y"; replace item (last) of L with "z"; say (item (2) of L)
@@ -138,6 +138,7 @@ EXPECT: 0
 T028 | data | list contains number vs text
 SCRIPT: delete all of L; add "10"; say (L contains 10)
 EXPECT: true
+NOTES: G6 VERIFIED: Cast.compare
 
 T029 | data | variable set number then join
 SCRIPT: set V to 10; say (join V "!")
@@ -146,7 +147,7 @@ EXPECT: "10!"
 T030 | data | list size limit concept
 SCRIPT: (do not run full 200001 in CI) document that add beyond 200000 is blocked
 EXPECT: Scratch/TurboWarp style cap at 200000 items
-NOTES: G-Warp must match freeze-fix goal in TODO.txt
+NOTES: G6 VERIFIED: LIST_ITEM_LIMIT = 200000
 
 =====================================================================
 MOTION
@@ -221,8 +222,8 @@ EXPECT: "never" not said
 
 T046 | control | create clone limit 300
 SCRIPT: when flag; repeat 400 [ create clone of myself ]
-EXPECT: at most ~300 clones exist (Scratch default); extra creates no-op
-NOTES: G-Warp freeze-fix requirement
+EXPECT: at most 300 clones exist (Scratch default); extra creates no-op
+NOTES: G6 VERIFIED: Runtime.MAX_CLONES === 300
 
 T047 | control | delete this clone
 SCRIPT: when I start as clone [ delete this clone ]
@@ -307,7 +308,7 @@ EXPECT: diameter <= 1200
 T064 | pen | hue wrap period 101 quirk
 SCRIPT: set pen (color) to 0; change pen (color) by 101; compare color param to 0
 EXPECT: matches Scratch period-101 wrapClamp behaviour (not pure 100)
-NOTES: SPEC-pen documents wrapClamp(0,100) range size 101
+NOTES: G6 VERIFIED: wrapClamp(0,100) range size 101; issue #2273
 
 T065 | pen | clear does not delete sprites
 SCRIPT: stamp; erase all
@@ -367,5 +368,7 @@ EXPECT: empty string
 COUNT: 75 cases (T001–T075)
 =====================================================================
 Priority for G-Warp freeze fixes: T046, T071, T030, T074, T044, T073.
-Priority for parity: T005–T006 (mod), T007–T008 (equals), T021 (list 0),
+Priority for parity: T005–T006 (mod), T007–T009 (equals), T021/T024 (list 0),
 T037 (say 330), T064 (pen hue), T052 (hat restart).
+G6 (2026-10-18): corrected T002, T009, T021, T024; confirmed T005–T008, T014,
+T028, T030, T046, T064 against scratch-vm develop.
