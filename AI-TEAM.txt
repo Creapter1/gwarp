@@ -174,3 +174,9 @@ Never commit or paste real API keys, access tokens, passwords, private keys, coo
 \n2026-10-17 | RULE ADDED | ChatGPT | Added mandatory per-AI AI-CHAT-LOG.txt request/response preservation rule; transcript must not fabricate missing history or store secrets | team/AI-CHAT-LOG-TEMPLATE.txt\n
 2026-10-17 | RULE ADDED | ChatGPT | Required per-AI AI-CHAT-LOG.txt to preserve user requests and AI responses when chat history is truncated; template created | team/AI-CHAT-LOG-TEMPLATE.txt
 2026-10-17 | PLAN    | Claude  | read-only check: app.html/index.html unchanged since Beta v15.45.0; plan written -> team/CLAUDE-PLAN-2026-10-17.txt (waiting for owner's go)
+
+
+PROGRESS / PLAN UPDATE (2026-10-18)
+- Added team/AI-PROGRESS-PREVIEW-2026-10-18.txt: concise status of ChatGPT, Grok, DeepSeek, Gemini, Buffy-labelled candidates and Claude, with evidence levels and blockers.
+- Added team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt: phased integration plan prioritizing baseline verification and freeze/Stop reproduction, with token-saving workflow, test gates, rollback and owner approval.
+- Linked both documents from team/AI-WORK-PLAN.txt. These are planning/reporting changes only; no app.html/index.html code was changed and no new browser tests were run.
