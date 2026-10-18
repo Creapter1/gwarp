@@ -1,56 +1,42 @@
 G-WARP — CURRENT TEAM STATUS
-Updated: 2026-10-18
-Owner: Creapter1
-Status source: current repository file inventory and GitHub metadata; this is not a browser/runtime test.
+Updated: 2026-10-18 | Owner: Creapter1
+Evidence boundary: GitHub metadata/document review only; no browser/runtime test in this cleanup.
 
-CURRENT SOURCE REFERENCE
-- Source metadata was rechecked against main at commit 11fdea2af8ad393f56b988b307781eb739ace638; subsequent commits in this cleanup are documentation-only.
-- app.html blob: 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes).
-- index.html blob: d8cf02962b20c0379a51aab7d46d829925325dbd (586,179 bytes).
-- The cleanup actions recorded here changed documentation only. Claude must re-read current main/working-branch hashes and establish the authorized baseline before any source edit.
-- No browser test, integration, deployment, or app.html/index.html edit was performed in this cleanup.
+SOURCE REFERENCE
+At main commit 11fdea2af8ad393f56b988b307781eb739ace638, app.html blob was 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes) and index.html was d8cf02962b20c0379a51aab7d46d829925325dbd (586,179 bytes). Later commits from this cleanup are documentation-only. Claude must re-fetch current hashes/diffs in its actual work copy before any source edit.
 
-CLEANUP COMPLETED IN THIS PASS
-- Restored AI-TEAM.txt from the known-good blob referenced by its recovery instructions; repaired a malformed literal \n work-log line, restored the workflow entry point, and recorded Grok G5's delivered report.
-- Added team/WORKFLOW-START-HERE.txt as the shared routing guide and simplified team/README.txt.
-- Reduced team/AI-WORK-PLAN.txt from about 29 KB to a 5.9 KB prioritized roadmap. Detailed rules now route through single-purpose files.
-- Marked team/CLAUDE-PLAN-2026-10-17.txt as superseded by the 2026-10-18 Claude execution plan.
-- Merged the unique notes from chatgpt/README.txt into chatgpt/README.md and removed the duplicate README.txt.
-- Consolidated the overlapping AI-DELIVERABLE-INVENTORY and AI-PROGRESS-PREVIEW bodies into short routing pointers; their prior snapshots remain in Git history. team/AI-STATUS.txt is the only current cross-team summary.
-- Created team/CLAUDE-CHECKPOINT.txt as preliminary Git metadata handoff; Claude must reverify it in its actual working copy and replace it with real test/task evidence.
-- Updated TODO and the continuous queue to distinguish Grok's delivered static G5 audit from still-pending published-site/load testing. The merge queue remains Claude-maintained and was not edited.
-- Kept dated reports where they carry distinct evidence. Do not treat their old task order/status as current.
+CLEANUP COMPLETED
+- Restored AI-TEAM.txt from its referenced good blob; fixed malformed log text and recorded Grok G5 report delivery.
+- Added WORKFLOW-START-HERE.txt and AI-STATUS.txt; reduced AI-WORK-PLAN from ~29 KB to ~5.9 KB.
+- Claude plan v2.1 now routes through current status/checkpoint; 2026-10-17 plan and 2026-10-14 handoff are archived pointers.
+- Consolidated unique notes into chatgpt/README.md, deleted duplicate chatgpt/README.txt, and converted overlapping progress/inventory snapshots to pointers. Former text is retained in Git history.
+- Updated TODO.txt and continuous queue to separate delivered static review from pending runtime acceptance; simplified root README links.
+- No app.html/index.html edits, runtime tests, integration or deployment.
 
-CURRENT WORK STATUS — EVIDENCE FIRST
-P0 Freeze / Stop: highest priority. TODO.txt records the 81,000-clone / ~45-second Stop symptom as owner-reported and not reproduced in this cleanup. Claude should verify the active model label, baseline, then reproduce and measure before changing code. chatgpt/clone-safety.js remains a disconnected candidate.
-Costume editor: DeepSeek A/B/C files are candidates. Source/API mapping and isolated stage-vs-costume canvas tests remain required before integration.
-Scratch link / extension: chatgpt/scratch-link.js is disconnected. Gemini extension remains waiting on packaging, owner-confirmed destination URL, cross-browser and end-to-end tests.
-Protobuf .pmp: deepseek/pmp-loader.js remains incomplete until the parser API and a real legal fixture/assets are verified. Preserve existing .sb3 and ZIP .pmp support.
-Scratch behavior: grok/TESTS.txt contains written cases, not a fully automated passing suite. Resolve uncertain edge cases against a named Scratch source/version or live reference.
-Grok extension audit: grok/EXTENSIONS-check.txt was delivered and marked G5 done. Its stated static URL results are not the same as proving every extension loads successfully in the published app.
-Buffy-labelled add-ons/settings: review is in chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt. Syntax checks passed; static review only; no browser test/integration. Archive/model authorship is unverified. deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt is a misrouted handoff copy, not evidence DeepSeek authored it; do not edit DeepSeek's folder without the applicable workflow/owner direction.
+CURRENT PRIORITIES (NOT CLAIMING FIXES)
+- P0 freeze/Stop: reproduce/measure first. The 81,000-clone/~45-second symptom remains owner-reported, not independently reproduced. chatgpt/clone-safety.js is disconnected.
+- Costume candidates: source/API evidence map and isolated stage-vs-costume canvas tests remain required.
+- Scratch link/Gemini extension: not end-to-end verified; packaging, permissions, browser tests and owner-confirmed target URL remain open.
+- Protobuf .pmp: incomplete without confirmed parser API and a real legal fixture/assets. Preserve existing .sb3 and ZIP .pmp support.
+- Scratch parity: Grok's 75 cases are written tests, not a passing automated suite.
+- Grok G5 static gallery audit is delivered; published-site extension loading remains unverified.
+- Buffy-labelled add-on/settings ZIP: syntax checked + static review only. Model authorship unverified; no browser test or integration. DeepSeek's folder contains a misrouted copy, not proof of DeepSeek authorship.
 
-OWNER / CLAUDE GATES STILL OPEN
-1. Confirm active Claude interface label is exactly “Claude Opus 5.5” before integration or official runtime evidence.
-2. Explicit owner authorization before any live integration/release; app.html/index.html must remain untouched until the specific change is authorized.
-3. Confirm canonical destination URL; do not guess or bulk-replace the legacy GitHub Pages URL.
-4. team/CLAUDE-CHECKPOINT.txt now contains a preliminary metadata handoff; Claude must reverify it in the actual work copy and overwrite it with real task/test results. This status file is not proof of runtime health.
+GATES / OWNER DECISIONS
+1. Claude must confirm active model label is exactly “Claude Opus 5.5”.
+2. Owner must authorize each live integration/release; this cleanup did not authorize app code changes.
+3. Owner must supply the exact canonical website URL before anyone replaces legacy URL references.
+4. team/CLAUDE-CHECKPOINT.txt is only a preliminary metadata handoff; Claude must verify the actual working copy, then overwrite it with real task/test evidence.
 
-DOCUMENT ROUTING — CURRENT SOURCE OF TRUTH
-- Start/rules routing: team/WORKFLOW-START-HERE.txt
-- Roles + chronological work log: ../AI-TEAM.txt
-- Product requirements and priority: ../TODO.txt
-- Current task claim/next bounded task: team/CONTINUOUS-WORK-QUEUE.txt
-- Exact hooks/source map: ../ENGINE-MAP.txt (verify against current source)
-- Candidate dispositions: ../MERGE-QUEUE.txt (Claude-maintained; do not edit as ChatGPT)
-- Master product roadmap: team/AI-WORK-PLAN.txt
-- Claude low-token long-run procedure: team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt
-- Detailed historical review: team/CROSS-AI-REVIEW-2026-10-15.txt
-- Security analysis: team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt
-- Detailed dated evidence: team/INTEGRATION-STATUS-AUDIT-2026-10-16.txt; team/GEMINI-ONLY-REVIEW-2026-10-16.txt; chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt.
-- Old inventory/progress snapshots are historical; use this file for the current summary and the detailed reports only for a specific question.
+CURRENT DOCUMENT ROUTING
+- Start/gates: team/WORKFLOW-START-HERE.txt
+- Product priorities: ../TODO.txt
+- Current task: team/CONTINUOUS-WORK-QUEUE.txt
+- Roadmap: team/AI-WORK-PLAN.txt
+- Candidate status: ../MERGE-QUEUE.txt (Claude-maintained)
+- Claude procedure/checkpoint: team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt and team/CLAUDE-CHECKPOINT.txt
+- Detailed evidence: team/CROSS-AI-REVIEW-2026-10-15.txt, team/INTEGRATION-STATUS-AUDIT-2026-10-16.txt, team/GEMINI-ONLY-REVIEW-2026-10-16.txt, team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt, docs/LIVE-UI-VERIFICATION.txt, chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt.
 
-CLEANUP ITEMS NOT TO CHANGE FROM CHATGPT
-- grok/AI-TEAM-RESTORE-BACKUP.txt is a 47-byte placeholder (“See /tmp…”). It appears non-useful but sits in Grok's folder; leave it for Grok/owner to remove or archive.
-- deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt is a copied/misrouted handoff in DeepSeek's folder; leave in place unless the owner explicitly directs a cross-folder cleanup.
-- No bulk deletion of dated audits was performed. Unique evidence and history should not be discarded just to make the file list shorter.
+NOT TO EDIT FROM CHATGPT
+- grok/AI-TEAM-RESTORE-BACKUP.txt is a 47-byte “See /tmp…” placeholder; leave for Grok/owner to remove/archive.
+- deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt is a misrouted handoff copy in DeepSeek's folder; leave it there unless the owner explicitly directs cross-folder cleanup.
