@@ -187,3 +187,38 @@ EVIDENCE / TEST STATUS:
 NEXT STEP:
 Claude should use team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt v2.0, verify the active model and owner-approval gates, establish the actual baseline, initialize the checkpoint, then start P0 reproduction/measurement without rereading every report.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+Date: 2026-10-18 (America/New_York)
+AI: ChatGPT
+Task: Final workflow cleanup, duplicate-document reduction, and Claude handoff preparation.
+
+USER REQUESTS (verbatim):
+"Yee know I need to wait it'll 3pm so claud do he's ting so log off a wait time. We'll do a last review pls and organize the worck flow pls remove repited stof and file and add them in single txt if needed to avoid some confusion pls I checked and is a mess"
+"If you need more time to complete the cleaning process go head"
+
+CHANGES COMPLETED:
+- Added team/WORKFLOW-START-HERE.txt as the single routing entry point.
+- Added team/AI-STATUS.txt as the compact current cross-team status and owner handoff.
+- Created team/CLAUDE-CHECKPOINT.txt with GitHub metadata only; Claude must reverify the actual working-copy baseline and replace it with real test evidence.
+- Condensed team/AI-WORK-PLAN.txt from about 29 KB to about 5.9 KB and shortened team/CONTINUOUS-WORK-QUEUE.txt from about 11.7 KB to about 7.8 KB.
+- Updated team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt to v2.1 for current status/checkpoint routing and reduced repeated-read cost.
+- Marked team/CLAUDE-PLAN-2026-10-17.txt and team/CLOUD-AI-OPUS-5.5-HANDOFF.txt as historical pointers; kept the unique prior wrong-model incident explicitly labelled owner-reported, not independently verified.
+- Repaired AI-TEAM.txt's malformed escaped log line and restored the missing G5 completion log entry from the recovery instructions.
+- Folded unique notes from chatgpt/README.txt into chatgpt/README.md and deleted the duplicate README.txt.
+- Turned team/AI-DELIVERABLE-INVENTORY.txt and team/AI-PROGRESS-PREVIEW-2026-10-18.txt into short pointers; prior snapshot contents remain in Git history.
+- Updated TODO.txt, README.md and team/README.txt to use the current workflow/status sources and distinguish delivered static audits from pending runtime acceptance.
+- Did not edit another AI's folder. Identified but left grok/AI-TEAM-RESTORE-BACKUP.txt (a 47-byte placeholder) and deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt (a misrouted copy) for their folder owner/the repository owner.
+
+SOURCE / TEST STATUS:
+- GitHub main metadata was rechecked after the docs-only cleanup. app.html blob remains 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes); index.html remains d8cf02962b20c0379a51aab7d46d829925325dbd (586,179 bytes).
+- No app.html/index.html edits, browser/runtime tests, integration, or deployment were performed.
+- The 81,000-clone/~45-second Stop symptom remains reported, not reproduced.
+- Current Claude plan is team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt v2.1. Claude must verify active model label exactly "Claude Opus 5.5", confirm owner-authorized scope, recheck actual working-copy baseline, then prioritize P0 reproduction/measurement.
+- Canonical website URL remains pending owner confirmation.
+- Evidence class: SOURCE-REPOSITORY-METADATA VERIFIED for the recorded GitHub blob IDs; STATIC/DOCUMENTATION CLEANUP only; runtime NOT TESTED.
+
+NEXT STEP:
+Use team/WORKFLOW-START-HERE.txt, team/AI-STATUS.txt and team/CLAUDE-CHECKPOINT.txt. Claude must replace the preliminary checkpoint after verifying its real branch/baseline and recording actual tests. Do not reread archived snapshots or touch app.html/index.html without explicit authorization.
+--- END ENTRY ---
