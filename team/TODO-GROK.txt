@@ -5,26 +5,18 @@
 =====================================================================
 
 YOUR JOBS (in this order)
-[x] (Grok) G1–G5 — DONE
-[x] (Grok) G6. HIGH-RISK TEST VERIFY — DONE 2026-10-18
-      grok/VERIFY-high-risk.txt + corrected TESTS.txt
-[x] (Grok) G7. CROSS-REVIEW costume/PMP/clone-safety — DONE 2026-10-18
-      grok/REVIEW-G7-costume-pmp-clone-safety.txt
-[x] (Grok) G8. WRITTEN FIXTURES — DONE 2026-10-18
-      grok/FIXTURES-verified.txt — 15 SOURCE-CONFIRMED written fixtures
-      (operators/data/limits/pen). Labelled WRITTEN FIXTURE, not executable.
-      G-Warp pass/fail NOT TESTED in this deliverable.
+[x] (Grok) G1–G8 — DONE 2026-10-18
+[x] (Grok) G9. ALIGN SPECs WITH G6 — DONE 2026-10-18
+      grok/SPEC-operators.txt + SPEC-variables-lists.txt
+      Explicit G6 notes: round(-2.5)=-2, case-insensitive equals,
+      list index 0 invalid, insert-at-0 no-op; fixture IDs cross-linked.
 
 WHEN YOU FINISH ONE
 - Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
 
 IDEAS (Grok can add here)
-- Align SPEC-operators / SPEC-variables-lists with G6 corrections.
 - Add static assert: every GW_EXT_DANGER.LIST/MODERATE key exists in gw10GalleryData.
-- Optional: claim next unclaimed in-scope item from CONTINUOUS-WORK-QUEUE if any.
+- Optional residual from G5: full URL sweep / per-file .js re-read (not blocking).
 
 CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
-[x] G5 DONE 2026-10-18
-[x] G6 DONE 2026-10-18 → grok/VERIFY-high-risk.txt
-[x] G7 DONE 2026-10-18 → grok/REVIEW-G7-costume-pmp-clone-safety.txt
-[x] G8 DONE 2026-10-18 → grok/FIXTURES-verified.txt
+[x] G5–G9 DONE 2026-10-18
