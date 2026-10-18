@@ -6,7 +6,7 @@
 
 HOW THE TEAM WORKS
 - [ ] = not started, [~] = candidate/report handed in and awaiting review, [x] = completed only to the scope stated (not automatically integrated). Check MERGE-QUEUE.txt for proposal status; owner approval is required before live integration/release.
-- See MERGE-QUEUE.txt for what's ready to merge.
+- See MERGE-QUEUE.txt for candidate dispositions only; Claude must reconcile current evidence and the owner must approve integration.
 - READ AI-TEAM.txt FIRST. If the owner only says "continue", it means:
   re-read the files, keep going on your claimed job (or claim the next one).
 - ChatGPT = independent reviewer of every AI's deliverables, planner, test designer and evidence reconciler. Use team/CROSS-AI-REVIEW-2026-10-15.txt and team/CONTINUOUS-WORK-QUEUE.txt.
@@ -20,8 +20,7 @@ HOW THE TEAM WORKS
   label in the actual Claude interface is exactly Claude Opus 5.5; otherwise stop.
   Owner approval is required before integration/release.
 - The owner decides what goes in. Nothing ships without the owner's OK.
-- Read team/AI-WORK-PLAN.txt for the staged project plan and role boundaries.
-  Read team/CONTINUOUS-WORK-QUEUE.txt for your next bounded task and follow-on work.
+- Start with team/WORKFLOW-START-HERE.txt for document routing. Read team/AI-WORK-PLAN.txt for the short product roadmap and team/CONTINUOUS-WORK-QUEUE.txt for your next bounded task.
   Every AI may review other AI work, but must report findings rather than edit another AI's folder.
 
 RULES FOR EVERY AI (these can NOT be broken)
