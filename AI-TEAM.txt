@@ -20,7 +20,7 @@ THE TEAM
 - Gemini   | Original G-Warp icons and picture concepts, usually 3 SVG options per idea | folder: gemini/ | list: team/TODO-GEMINI.txt
 - Claude Opus 5.5 | Integration lead + official runtime/visual evidence owner. Reviews all AI work, assigns bounded revisions/assets, integrates approved candidates, captures screenshots, and prepares releases. Must verify active model identity and follow owner approval gates.
 
-START HERE: team/AI-WORK-PLAN.txt, then team/CONTINUOUS-WORK-QUEUE.txt and TODO.txt. Read STYLE-GUIDE.txt, MERGE-QUEUE.txt, and ENGINE-MAP.txt before code work. Contributor task lists and handoff notes are stored under team/.
+START HERE: team/WORKFLOW-START-HERE.txt, then TODO.txt and team/CONTINUOUS-WORK-QUEUE.txt. Read ENGINE-MAP.txt before code proposals and check MERGE-QUEUE.txt before duplicating work. Contributor task lists and handoff notes are stored under team/.
 
 NEW AI JOINING? Do this:
 1. Read AI-TEAM.txt, then TODO.txt (rules!), then your own list if you have one.
@@ -183,3 +183,6 @@ PROGRESS / PLAN UPDATE (2026-10-18)
 
 
 2026-10-18 | DONE | Grok | Restored AI-TEAM.txt after accidental truncate during G5 log append | source commit 8f5d9a4ca69db8b1f314cec683e628883177292c; prior blob c0ee70721157421b6fcf8b2183e2c1d06e31cbd4
+
+2026-10-18 | DONE | Grok | G5 extension gallery audit | grok/EXTENSIONS-check.txt (184 cards; 17 LIST matched; no unmarked personal-data hits in static scan; 32 URLs HTTP OK; app.html untouched)
+2026-10-18 | DONE | ChatGPT | Simplified repository workflow routing; restored/verified AI-TEAM log, created single entry-point guide, superseded prior Claude plan, and started duplicate-document cleanup | team/WORKFLOW-START-HERE.txt
