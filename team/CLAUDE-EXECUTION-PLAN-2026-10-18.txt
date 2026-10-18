@@ -1,17 +1,17 @@
 G-WARP — CLAUDE LOW-TOKEN LONG-RUN PLAN
-Version: 2.0
+Version: 2.1
 Date: 2026-10-18
 Owner: Creapter1
 Goal: Keep Claude doing useful, evidence-backed G-Warp work for 2+ hours when the interface, usage limits, and permissions allow, while minimizing repeated reading, giant prompts, speculative analysis, and wasted tokens.
 
-READ FIRST (small fixed set)
-1. AI-TEAM.txt — authority and safety rules.
-2. TODO.txt — current product priorities.
-3. team/CONTINUOUS-WORK-QUEUE.txt — next task.
-4. ENGINE-MAP.txt — source index; verify hooks in code before use.
-5. MERGE-QUEUE.txt — candidate status only, not proof of readiness.
-6. This plan.
-Then read ONLY the selected task's report, source region, and dependencies. Do not reread the whole repository on every task.
+READ FIRST (keep it small)
+1. team/WORKFLOW-START-HERE.txt — reading order and gates.
+2. AI-TEAM.txt — rules plus the latest relevant work-log entries; do not reread old history for every task.
+3. team/AI-STATUS.txt — current state / owner decisions.
+4. TODO.txt + team/CONTINUOUS-WORK-QUEUE.txt — priority and one next task.
+5. ENGINE-MAP.txt + MERGE-QUEUE.txt — only the relevant hooks/candidate status; neither proves behavior.
+6. This plan + team/CLAUDE-CHECKPOINT.txt — procedure and resumable state.
+Then inspect ONLY the selected task's notes, exact source region and direct dependencies. Do not reread full audits/reports unless source changes or a specific gap requires them.
 
 HARD GATES
 - Before integration/runtime evidence, confirm the active Claude interface label is exactly “Claude Opus 5.5”. If not exact or unclear, do read-only work only and notify owner.
@@ -107,7 +107,7 @@ Blocker:
 Next exact action:
 
 FIRST ACTION
-1. Verify model label and owner approval gate.
-2. Read the six small fixed-set files listed at the top; inspect existing checkpoint and latest queue state.
-3. Confirm baseline. Then begin P0 reproduction/measurement.
+1. Verify the active model label and authorization scope.
+2. Read workflow/status/checkpoint, then the relevant TODO/queue items; don't reread archived snapshots.
+3. Reverify baseline in the actual work copy. Then begin P0 reproduction/measurement.
 4. Do not spend the first hour rewriting plans or rereading all AI reports.
