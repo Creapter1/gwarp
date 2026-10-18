@@ -1,0 +1,57 @@
+G-WARP — BUFFY-LABELLED SETTINGS / ADD-ONS ZIP REVIEW
+Date: 2026-10-18
+Reviewer: ChatGPT
+Archive: Buffy-2026-10-17-addons-settings.zip
+SHA-256: f7d8ae3ff5cf7db085cb3f15965de6e93fc3f347a2b24b3324d008e7ce7e56ad
+
+ATTRIBUTION / DESTINATION
+- The archive paths explicitly place the two candidate modules and notes under chatgpt\\.
+- Both source headers and both notes label the work “Buffy”.
+- The archive contains AI-TEAM.txt and TODO-GEMINI.txt, but these are team/task documents, not proof that Gemini authored the two JavaScript modules.
+- Based on available evidence, this is a Buffy-labelled helper submission packaged under chatgpt/, not a Gemini deliverable. Exact model provenance cannot be established from the ZIP alone.
+- Therefore keep the review/candidate tracking in chatgpt/. Do not credit DeepSeek or Gemini without stronger provenance. The earlier deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt handoff was routed incorrectly and must not be treated as evidence that DeepSeek authored this work. ChatGPT will not edit another AI’s folder to “move” or delete it.
+
+CONTENTS
+- chatgpt/addons-pack.js
+- chatgpt/settings-ui-fix.js
+- chatgpt/NOTES-addons-pack.txt
+- chatgpt/NOTES-settings-ui-fix.txt
+- AI-TEAM.txt, MERGE-QUEUE.txt, README-HANDOFF.txt, TODO-GEMINI.txt, TODO.txt
+
+VERIFICATION PERFORMED
+- Extracted both JavaScript files from the uploaded ZIP.
+- Node syntax validation: PASS for addons-pack.js.
+- Node syntax validation: PASS for settings-ui-fix.js.
+- Static source inspection performed. No real app/browser harness was run in this review.
+- NOT integrated into app.html or index.html.
+
+FINDINGS — addons-pack.js
+1. CLEANUP DEFECT (high confidence, source-visible): setInterval(paintCount, 700) is not stored/cleared; the MutationObserver created for workspaceCanvas is not stored/disconnected; the global keydown listener is anonymous and cannot be removed. GW_ADDONS_PACK.off() only disables the three switches, removes the count tag and stylesheet. Repeated enable/disable or teardown can leave background work/listeners alive.
+2. OBSERVER MARKER: ws.__gwAPWatch is never cleared; if the workspace node is replaced, a new workspace can be observed only if it lacks that marker, but the old observer remains attached to the old node.
+3. PAUSE TOAST STATE: togglePause() clicks the app button and immediately reads E.isPaused. If the button changes pause state asynchronously or through a delayed handler, the toast can describe the old state. Verify against the real pause implementation.
+4. SPRITE ORDER ASSUMPTION: pickSprite(n) uses grid.children[n]. This assumes the first direct child is sprite 1 and there are no non-sprite children or hidden/template elements. Verify actual #spritesGrid structure and keyboard focus rules.
+5. SELECTOR/COUNT ASSUMPTIONS: counts every .scratch-block descendant but only direct-child .block-stack scripts; may be correct for the current DOM, but needs source/runtime evidence. The alert/hidden checks also need validation against actual stage/workspace layout.
+6. REGISTRATION RETRIES: register() may retry for up to 15 seconds, but does not retain/cancel timeout handles on off(). Confirm behavior if app initialization is delayed or module is disabled during retries.
+7. The code checks for duplicate module loading, but that alone does not make the lifecycle cleanup complete.
+
+FINDINGS — settings-ui-fix.js
+1. CLEANUP DEFECT (high confidence, source-visible): MutationObserver is disconnected by off(), but event listeners attached to risky controls and the Reset button are not removed. If the module is re-enabled or the same dialog remains alive, repeated setup can accumulate handlers.
+2. OFF IS NOT A FULL RESTORE: off() removes CSS/warning/reset and clears dataset flags, but does not restore the original order of settings rows, prior inline position/other DOM changes, or undo inserted Sound heading / Addons note. It is a visual/DOM teardown, not a true rollback.
+3. WEAKSET VS DATASET: seen is a WeakSet, while off() deletes dataset flags but cannot clear seen. A dialog already seen by the WeakSet will not be processed again after off() if the same DOM node remains. That makes the apparent re-enable path inconsistent.
+4. RESET SYNCHRONIZATION RISK: Reset updates .checked values directly without dispatching change/input events for those checkboxes. If app state or dependent controls listen to those events, UI and saved state may diverge. The frame-rate select does dispatch change; the other controls do not.
+5. ASSUMPTION-BASED DOM MOVES: grouping depends on exact visible labels and selectors; unmatched rows are moved to the end. A future label/DOM change could reorder settings unexpectedly.
+6. Repeated scan is guarded with dataset/WeakSet, but if a dialog is partially built or changes after successful setup, the module will not re-run setup for that same element.
+7. Risk warning is useful, but its safety wording and “recommended” values must be checked against current app defaults and the actual semantics of these controls.
+
+DECISION
+- Syntax: PASS.
+- Static review: NEEDS FIXES before any integration.
+- Browser behavior: NOT TESTED by this review; the ZIP notes claim earlier harness tests, but those claims were not independently reproduced here.
+- Integration: NOT APPROVED / NOT DONE.
+- Preserve as a disconnected candidate. Claude should not merge either module until cleanup, idempotence, reset event synchronization, real DOM selectors, and narrow/wide viewport behavior are tested against a known-good app baseline.
+- Keep the candidate in the ChatGPT/Buffy tracking lane because of archive paths and labels. Do not copy it to gemini/ merely because the ZIP includes TODO-GEMINI.txt.
+
+NEXT ACTIONS
+1. Correct the previous DeepSeek attribution in the progress record and use this review as the current attribution record.
+2. If retaining code in GitHub, keep source and notes under chatgpt/ as disconnected candidates, with no app.html/index.html changes.
+3. Claude: test each module separately in a disposable copy; verify off/re-enable/off, duplicate load, workspace replacement, pause toast, sprite order, Reset followed by Save/reopen, and responsive dialog layout.
