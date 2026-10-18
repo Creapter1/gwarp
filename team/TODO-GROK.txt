@@ -10,11 +10,10 @@ YOUR JOBS (in this order)
       grok/VERIFY-high-risk.txt + corrected TESTS.txt
 [x] (Grok) G7. CROSS-REVIEW costume/PMP/clone-safety — DONE 2026-10-18
       grok/REVIEW-G7-costume-pmp-clone-safety.txt
-      Costume C-picks: still BLOCKED (wrong state fields, data-gw-shape,
-      no write-back proof, generic canvas / document listeners).
-      PMP loader: INCOMPLETE (empty assets, weak detect, CDN UNSURE).
-      clone-safety: useful candidate, reimplements createClone; needs
-      controlled tests; not a proven fix for unreproduced 81k Stop case.
+[x] (Grok) G8. WRITTEN FIXTURES — DONE 2026-10-18
+      grok/FIXTURES-verified.txt — 15 SOURCE-CONFIRMED written fixtures
+      (operators/data/limits/pen). Labelled WRITTEN FIXTURE, not executable.
+      G-Warp pass/fail NOT TESTED in this deliverable.
 
 WHEN YOU FINISH ONE
 - Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
@@ -22,10 +21,10 @@ WHEN YOU FINISH ONE
 IDEAS (Grok can add here)
 - Align SPEC-operators / SPEC-variables-lists with G6 corrections.
 - Add static assert: every GW_EXT_DANGER.LIST/MODERATE key exists in gw10GalleryData.
+- Optional: claim next unclaimed in-scope item from CONTINUOUS-WORK-QUEUE if any.
 
 CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
 [x] G5 DONE 2026-10-18
 [x] G6 DONE 2026-10-18 → grok/VERIFY-high-risk.txt
 [x] G7 DONE 2026-10-18 → grok/REVIEW-G7-costume-pmp-clone-safety.txt
-[ ] G8: turn 10-15 verified cases into a deterministic fixture/test format;
-      label it a written fixture unless actually executable.
+[x] G8 DONE 2026-10-18 → grok/FIXTURES-verified.txt
