@@ -1,67 +1,14 @@
-G-WARP AI DELIVERABLE INVENTORY AND REVIEW NOTES
-Date: 2026-10-15
-Purpose: summarize existing model outputs and identify the next concrete review action. This is an inventory/static review, not a claim that all candidate code was executed.
+ARCHIVED SUMMARY — CURRENT STATUS MOVED
+Updated: 2026-10-18
 
-EVIDENCE KEY
-- EXISTING FILE: found in current repository listing.
-- REPORT REVIEWED: read the report/notes/specification.
-- STATIC REVIEW: inspected text/source but did not run it.
-- LIVE VERIFIED: only where a specific browser report records the test.
-- NOT TESTED: no runtime result established by this inventory.
-- CANDIDATE: not integrated merely because it exists or is listed as PICK.
+Use team/AI-STATUS.txt for the one current cross-team status and next handoff. This file's former contents were an overlapping dated roll-up of contributor deliverables and status; its original snapshot remains in Git history for historical reference.
 
-CHATGPT — chatgpt/
-1. UI-AUDIT.txt — REPORT REVIEWED. Broad static audit of primary editor interactions; it explicitly corrects the initial single-click category finding using the live test T1. Remaining open areas include category filtering, nested C-block snapping, keyboard shortcuts, save/load round trip, Pause/audio, stage routing, individual paint tools, tilemap, Behavior Designer, diagnostics, Firefox/Safari.
-2. docs/LIVE-UI-VERIFICATION.txt — REPORT REVIEWED; this is Claude's live test report requested by ChatGPT, not ChatGPT's own browser execution. It records 10 live tests passing and 11 screenshots for the tested scope. It states several workflows were not tested.
-3. clone-safety.js + NOTES-clone-safety.txt — REPORT REVIEWED; CANDIDATE / PARTIAL. Not wired into app.html and not browser-tested. It reimplements GW.createClone and touches Stop/thread behavior, so the engineer must compare every side effect with the effective current implementation. It does not implement the full freeze wishlist: frame budget, text/join cap, list cap and automatic crash recovery prompt remain outside this module. Test duplicate load, feature-off, clone hats, settings, project reload, Pause/Stop, broadcasts, and the reported 81,000-clone stress case.
-4. scratch-link.js + NOTES-scratch-link.txt — REPORT REVIEWED; CANDIDATE. It depends on the real GW_WEB.load integration point and needs browser tests for valid/invalid IDs, cancel, hash clearing, network errors, existing #open flow and feature-off behavior.
-5. User guide, screenshot/UI documentation and docs implementation maps — EXISTING documentation. These are explanatory/reference material; they do not prove untested engine behaviors.
+Use the purpose-specific evidence files rather than maintaining several copies of the same status:
+- team/CROSS-AI-REVIEW-2026-10-15.txt — detailed cross-AI static findings and candidate risks.
+- team/INTEGRATION-STATUS-AUDIT-2026-10-16.txt — historical baseline/candidate integration check.
+- team/GEMINI-ONLY-REVIEW-2026-10-16.txt — Gemini extension review.
+- team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt — key-handling, privacy and consistency review.
+- docs/LIVE-UI-VERIFICATION.txt — reported live UI tests, screenshots and untested scope.
+- chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt — latest Buffy-labelled ZIP static review.
 
-GROK — grok/
-1. SPEC-motion/looks/sound/events/control/sensing/operators/variables-lists/myblocks/pen/music and SPEC-engine.txt — REPORT REVIEWED at representative scope; REFERENCE. They describe Scratch expectations, but G-Warp parity must be checked against current source and exact Scratch outputs.
-2. SPEC-files.txt — REPORT REVIEWED; REFERENCE for .sb3, TurboWarp additions and PenguinMod .pmp distinctions. The plan should preserve existing ZIP-based .pmp support and isolate the newer protobuf case.
-3. TESTS.txt — REPORT REVIEWED; 75 written cases. A written test list is not automatically an executable suite. Each expected result needs a source/version and evidence status; disputed cases include negative rounding/modulo, index 0, case rules and other Scratch-specific edge semantics.
-4. TODO-GROK G5 — OPEN. Audit actual extension gallery entries and links, permissions, privacy-risk classification, and load results on the published GitHub Pages app. Static URL presence alone is not a successful test.
-
-DEEPSEEK — deepseek/
-1. LAB-costumes.txt — REPORT REVIEWED; candidate winners select-C, fill-C, text-B, eraser-C, undo-C. It contains useful attack cases but also flags uncertainties around canvas selectors, SVG attributes, mapFor signatures, and undo behavior. The real editor fields differ from several earlier guessed names; verify current ENGINE-MAP/source before use.
-2. CHECKLIST-costumes.txt — REPORT REVIEWED; 56 checks across vector tools, bitmap tools, shortcuts, and costume list. This is a broad acceptance checklist, not evidence those checks pass. Prioritize the five candidate fixes and use the checklist to define the full remaining gap.
-3. LAB-speed.txt — REPORT REVIEWED; candidate performance comparisons for collision and thread stepping; it explicitly removes pen optimization because no public pen hook is known. Claimed speedups are estimates/analysis unless backed by actual benchmarks. The latest review in AI-TEAM/MERGE-QUEUE marks collision-B as the candidate pick and earlier clone variants as superseded because they skipped no useful work or had correctness problems. Retest on current source before reuse.
-4. pmp-loader.js, NOTES-pmp.txt, test-pmp-loader.js — EXISTING CANDIDATE/HARNESS. The current proposal is protobuf-only; do not replace the built-in ZIP .pmp path. Inspect parser correctness, real fixture coverage, malformed input handling and round-trip behavior. TODO wording that says the loader is missing from the handoff paste is stale; the file is now present.
-5. DS3 stuck-script, DS4 crash recovery, DS5 number/text comparisons — OPEN in the contributor task list. Do not start all at once: claim one bounded job, coordinate with Claude/ChatGPT, and provide A/B/C + tests + lab report.
-
-GEMINI — gemini/
-1. gemini/extension/ — EXISTING browser-extension proposal with README, background.js, content.js, icon-generation script, manifests and icon folder. The work log says extension work is not yet fully accepted; it still needs a real G-Spark icon (the prior SVG is described as a placeholder bolt) and end-to-end testing/permission review. Do not assume “DONE” in the work log means production-ready.
-2. GM1-GM6 — OPEN design queue: extension icon, favicon, nine category icons, achievement badges, G-Spark poses, website hero art. Provide three distinct SVG options per concept; no third-party art, external dependencies or integration before owner selection.
-
-CLAUDE / MERGE QUEUE
-1. MERGE-QUEUE.txt is the authoritative candidate-status snapshot, but statuses PICK/REFERENCE/WAITING/SUPERSEDED do not prove code is integrated or correct.
-2. The queue currently lists costume winners as PICK with API-name adaptation required; clone safety and scratch-link as PICK candidates; collision-B as PICK; older clone candidates as SUPERSEDED; protobuf .pmp loader as PICK; Gemini extension as WAITING; Grok specs/tests as REFERENCE.
-3. The next Claude task is not to merge everything at once. Follow team/AI-WORK-PLAN.txt Stage 1 first: verify active model identity, establish a known-good baseline, and conduct read-only source/diff review. After owner approval, integrate one risk area at a time.
-
-CROSS-TEAM GAPS / CONFLICTS TO RESOLVE
-- Main TODO and older team text previously called ChatGPT a first engineer; this has been superseded by the current plan: ChatGPT plans/reviews/tests, Claude Opus 5.5 alone does main app engineering.
-- The root model-specific TODO files and handoff have been relocated under team/. Existing work folders (chatgpt/, grok/, deepseek/, gemini/) remain unchanged.
-- App source integrity is NOT established by this inventory. A prior large-file fetch did not return the app.html body.
-- Existing browser verification covers only listed workflows; costumes, import/export round trip, nested block snapping, Pause/audio, stage routing, tilemap, Behavior Designer, diagnostics and non-Chromium browsers remain untested in the report.
-- Avoid repeat full-app reviews after every patch. Keep a baseline, review changed files/dependencies, run targeted regression tests, and schedule another full audit only after a meaningful release/baseline change.
-
-
-CURRENT REVIEWER ROLE + CONTINUOUS QUEUE (2026-10-15)
-- ChatGPT is now the standing independent reviewer for all AI deliverables. See team/TODO-CHATGPT.txt.
-- First-pass static findings are recorded in team/CROSS-AI-REVIEW-2026-10-15.txt. No candidate in that report was executed or browser-verified by ChatGPT.
-- Every AI may review other AIs' outputs, but must submit findings rather than edit another contributor's folder.
-- team/CONTINUOUS-WORK-QUEUE.txt is the shared next-task queue; when a task finishes and time remains, claim the next suitable unclaimed task rather than stopping or inventing work.
-- Claude Opus 5.5's additional work mode is integration lead + official runtime/visual evidence owner: review all progress, assign bounded revisions/assets/scenarios to the best-fit AI, test one candidate at a time, capture screenshots/evidence, and integrate only after active-model verification and owner approval.
-
-SECURITY / CONSISTENCY AUDIT (2026-10-15)
-team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt — STATIC REVIEW. No matching hard-coded secret patterns were found in app.html, index.html and 90 other current text/code/documentation files. This is not a history scan or security certification. app.html's user-owned AI key is session-only by default but may be remembered in localStorage; requests go directly to Anthropic and include project-derived names and selected-sprite script/block text. Clearer disclosure is recommended; no app code was changed. README.md and TODO.txt still reference the previously documented GitHub Pages URL; exact new canonical URL is pending owner confirmation.
-
-
-INTEGRATION STATUS CHECK — 2026-10-16
-Current follow-up: [INTEGRATION-STATUS-AUDIT-2026-10-16.txt](INTEGRATION-STATUS-AUDIT-2026-10-16.txt).
-The main app.html and index.html blob SHAs match the prior audited baseline. No new live app integration was detected in the reviewed main-branch commits. This is static repository evidence, not a fresh browser test. ChatGPT clone-safety and scratch-link remain disconnected candidates; Gemini's browser extension is separate from the app and remains WAITING for packaging, URL confirmation, cross-browser and end-to-end tests. DeepSeek costume/PMP candidates remain blocked/incomplete, and Grok's written tests still need primary-source verification and an extension-gallery audit. See the report for exact findings, branch divergence, ownership boundaries and next actions.
-
-
-GEMINI-ONLY REVIEW — 2026-10-16
-See [GEMINI-ONLY-REVIEW-2026-10-16.txt](GEMINI-ONLY-REVIEW-2026-10-16.txt). Static review of current main found the extension remains separate from the G-Warp runtime. The current tree still lacks manifest-referenced PNG icons; content-script SPA wrappers, storage failure handling, privacy wording, destination URL confirmation and browser/end-to-end testing remain open. This is not browser verification. The repository's current main branch did not show a newer Gemini commit/branch when checked; confirm the just-finished work was pushed to the intended place.
+Do not read this archive pointer as evidence that a candidate is integrated or tested. Recheck file state, current source and evidence before acting.
