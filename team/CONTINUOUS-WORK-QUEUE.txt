@@ -1,90 +1,75 @@
 G-WARP CONTINUOUS WORK QUEUE
 Owner: Creapter1
-Updated: 2026-10-15
-Purpose: every AI has a next bounded task so remaining work time is spent usefully, while avoiding duplicate work and unsafe integration.
+Updated: 2026-10-18
+Purpose: one owner per bounded task; work from current evidence instead of repeating audits.
 
-NON-NEGOTIABLE LOOP FOR EVERY AI
-1. Read AI-TEAM.txt, TODO.txt, team/AI-WORK-PLAN.txt, your task list, and this queue.
-2. Claim exactly one task in AI-TEAM.txt before starting. Include base commit SHA, target files, acceptance test, and a time-box appropriate to the session.
-3. Inspect existing work before creating a duplicate. Review other AIs' outputs when assigned, but do not edit their folders. Send findings to the owner/ChatGPT reviewer as a report or issue list.
-4. Work in small stages: inspect -> plan -> implement candidate or report -> self-review -> test -> record evidence -> hand off.
-5. When a task is done, do NOT stop. If time remains, claim the next unclaimed task in this queue that matches your role. Do not start unrelated features just to stay busy.
-6. If blocked by missing source, API, fixture, permission, or runtime access, document the exact blocker and create a useful fallback (test case, source evidence map, repro harness, or next-step checklist). Do not fabricate a result.
-7. Keep all code disconnected from live app behavior unless Claude is explicitly authorized to integrate it after active-model verification and owner approval. Do not edit another AI's folder.
-8. Before declaring done, review your own diff and ask: what can break, what did I assume, what did I actually test, and what remains untested?
+SHARED TASK RULES
+1. Follow team/WORKFLOW-START-HERE.txt. Read only the selected task notes and source dependencies.
+2. Claim one task in AI-TEAM.txt before work; record target, baseline commit/blob and acceptance test.
+3. Inspect current work before creating a duplicate. Do not edit another AI's folder.
+4. Use: inspect -> reproduce -> minimal candidate/report -> focused checks -> evidence -> status update -> checkpoint -> next unblocked task.
+5. If blocked, record the exact blocker and do an independent task. Never invent tests/results.
+6. Keep candidates disconnected from live behavior. Model/owner/integration gates are in the workflow guide and master roadmap.
 
-PRIORITY 0 — REVIEW / SAFETY
-R0 ChatGPT: maintain team/CROSS-AI-REVIEW-2026-10-15.txt and review new submissions. For each artifact, label STATIC REVIEW / TESTED / NOT TESTED; list blockers, evidence, and a bounded fix task.
-R1 DeepSeek: source-map every costume candidate's API, state field, selector, SVG attribute, coordinate conversion, and history behavior against ENGINE-MAP/current source. Mark unsupported assumptions. No integration.
-R2 DeepSeek: build an isolated costume test harness with a mock stage canvas plus bitmap/vector costume canvases; prove candidate events cannot alter the stage or non-costume canvas. No app runtime wiring.
-R3 ChatGPT: review the corrected DeepSeek candidates after R1/R2 and return BLOCKED / READY FOR CONTROLLED TEST with exact reasons.
-R4 Claude Opus 5.5: after owner access returns, verify actual active model label is exactly “Claude Opus 5.5”; read the reviewer report; verify current source baseline; then select one candidate only for controlled testing. If model label is wrong/unclear, stop.
-R5 Owner: review decisions, prioritize, and approve any live integration.
+P0 — BASELINE / SAFETY
+R0 ChatGPT: maintain the cross-AI review when material new evidence arrives; label static vs reported vs independently tested, severity, exact location and acceptance test. Avoid a new broad audit.
+R1 DeepSeek: map each costume candidate's real state fields, editor root, canvas identity, SVG attributes, coordinate conversion, history and listener scope. Mark unknowns UNSURE.
+R2 DeepSeek: isolated stage + bitmap/vector costume test harness. Prove tool events cannot affect the wrong canvas; include zoom/pan, pointer cancel/lost capture, undo, reload and feature-off.
+R3 ChatGPT: review corrected costume candidates after R1/R2; return BLOCKED or READY FOR CONTROLLED TEST with exact reasons.
+R4 Claude Opus 5.5: only after active-label verification and owner authorization, verify source baseline and reproduce the freeze/Stop issue first. Select one candidate per controlled test cycle.
+R5 Owner: set priority and approve/reject live integrations/releases.
 
-GROK QUEUE
-G1 Complete G5 extension-gallery audit: exact extension entries/URLs, whether links resolve, permission/data access, Dangerous labels, evidence and date. No assumptions from URL strings alone.
-G2 Verify high-risk Scratch expected outputs against authoritative Scratch 3 source/version or live Scratch UI: negative rounding, negative modulo, string-number equality, case behavior, list index 0, clone limit and pen hue wrap. Mark unresolved expectations UNSURE rather than forcing a test.
-G3 Convert the most reliable 10-15 cases into a small deterministic test fixture format, separating source-confirmed from inferred expectations. Do not claim automation unless executable.
-G4 Cross-review DeepSeek's pmp and costume reports for Scratch/PenguinMod semantic mistakes; submit findings only, don't edit deepseek/.
-G5 When done, review ChatGPT's clone-safety notes for missing stress/regression cases and add test recommendations to your own test/spec files.
+GROK
+G1 Status: G5 static gallery audit delivered at grok/EXTENSIONS-check.txt. It reports URL checks, not complete proof that extensions load in the published app. Full published-site/browser verification remains open under TODO.txt item 6.
+G2 Verify uncertain Scratch results against named Scratch 3 source/version or live Scratch UI: negative rounding/modulo, string-number equality, case behavior, list index 0, clone limit, pen hue wrap. Mark unresolved cases UNSURE.
+G3 Turn 10–15 verified cases into deterministic fixtures or a clearly labelled written format; do not claim automation unless executable.
+G4 Cross-review DeepSeek's pmp/costume reports for Scratch/PenguinMod semantic mistakes; submit findings only.
+G5 Review ChatGPT clone-safety notes for missing stress/regression tests and add recommendations to Grok-owned test/spec files.
+After a Grok task, take the next suitable unclaimed item; don't re-audit G5 without a specific gap.
 
-DEEPSEEK QUEUE
-D1 Highest priority: API/source evidence map for costume select/fill/text/eraser/undo proposals. Resolve CE.state.costumeMode versus mode, canvas selection, data-gw-shape/selected attributes, coordinate mapping, history APIs and listener scope.
-D2 Build isolated test harness or minimal fixture for candidate behavior; include correct target canvas, unrelated stage canvas, bitmap/vector modes, zoom/pan, pointer cancel/lost capture, undo, repeated load and feature-off. Do not attach to live app.
-D3 Rework any candidate with unverified APIs or broad document handlers; use one explicit editor root and confirmed state fields. Add feature-off, teardown and no-double-registration protections where appropriate.
-D4 PMP: obtain at least one legally usable real protobuf .pmp fixture and verify pmp-protobuf package API/export and asset representation from primary source. Add malformed/oversized input tests, real assets, load/save/reload. If unavailable, document blocker and leave loader marked INCOMPLETE.
-D5 Collision-B: prove bounding-box rejection has no false negatives for rotated/scaled sprites and compare against original exact GW.spritesTouch results; produce reproducible benchmarks. Do not revive superseded clone variants without a new request.
-D6 Cross-review Grok's uncertain cases and Gemini's extension implementation; report issues without editing their folders.
+DEEPSEEK
+D1 Source-evidence map for costume select/fill/text/eraser/undo: real state, canvas selection, data attributes, coordinates, history APIs, listener scope.
+D2 Isolated editor harness with stage and bitmap/vector costume canvases. Include zoom/pan, pointer cancellation/lost capture, undo, repeated load and feature-off.
+D3 Revise candidates only in deepseek/; remove unsupported APIs, broad document listeners, and unsafe double registration; make teardown complete.
+D4 Verify pmp-protobuf API from primary source and obtain a legal real protobuf .pmp fixture. Test real assets, malformed/oversized inputs and load/save/reload. If unavailable, leave loader INCOMPLETE.
+D5 Benchmark speed-collision-B against exact GW.spritesTouch with rotated/scaled sprites; prove no false negatives. Do not revive superseded clone variants without owner approval.
+D6 Cross-review Grok's uncertain cases and Gemini extension; report issues without editing their folders.
 
-GEMINI QUEUE
-GM1 Fix extension packaging: generate real icon16/32/48/128 PNG assets or revise build instructions so the extension is reproducibly packaged. Replace placeholder art with owner-approved G-Spark design; do not use Scratch art.
-GM2 Test Chromium MV3 and Firefox target. Verify chrome/browser API availability, context menu behavior, popup toggle, close/re-enable behavior, and manifest permissions. Record exact browser/version and results.
-GM3 Test Scratch SPA navigation and repeated injection. Ensure history hooks don't break navigation; prefer a reversible/listener-based approach if feasible. Test project-to-project navigation and leaving project pages.
-GM4 End-to-end test: open a Scratch project -> open G-Warp hash URL -> consent prompt -> project load. Coordinate with ChatGPT's scratch-link candidate; do not claim success until the published/controlled app has the handler.
-GM5 After extension blockers are resolved, produce three SVG options each for GM2 favicon and GM3 block category icon set, within style/licensing rules.
-GM6 Cross-review DeepSeek's canvas candidates for visual/coordinate issues; submit notes only.
+GEMINI
+GM1 Generate valid extension icon16/32/48/128 PNGs or make packaging reproducibly generate them; use approved original G-Spark art, not a placeholder.
+GM2 Test Chromium MV3 and the intended Firefox target: API namespace, context menu, popup toggle, hide/re-enable, permissions and storage errors.
+GM3 Test Scratch SPA navigation, repeated injection, leaving/changing project pages and reversible history hooks.
+GM4 End-to-end test: Scratch project -> G-Warp hash URL -> consent prompt -> project load on a build containing the handler. Record exact browser/version/results.
+GM5 After extension blockers: create three distinct original SVG options for favicon and block category icons.
+GM6 Cross-review DeepSeek costume proposals for canvas/coordinate risks; submit notes only.
+GM7 Do not change old site URLs until owner confirms canonical destination.
 
-CHATGPT REVIEWER QUEUE
-C1 Maintain the review report and update it when new evidence arrives.
-C2 Review each AI's new deliverables, starting with DeepSeek costume candidates, then Gemini extension, then Grok tests.
-C3 For every review, provide severity (BLOCKER/HIGH/MEDIUM/LOW), exact file/line or function, why it matters, minimum correction, and acceptance test.
-C4 Review candidate changes against ENGINE-MAP and existing code before any integration; flag guessed APIs and broad listeners.
-C5 Produce a concise weekly owner-facing status: completed evidence, blocked tasks, next decisions. No duplicated full audits unless source changes materially.
+CHATGPT REVIEWER
+C1 Deep-review DeepSeek costume candidates after R1/R2; exact findings and acceptance tests.
+C2 Review clone-safety.js against current source and ENGINE-MAP; record side effects and focused stress/regression checklist. Do not call it tested unless run.
+C3 Review scratch-link.js + Gemini extension end-to-end dependencies: consent/cancel, bad IDs, network failure, hash, popup, SPA navigation, permissions and package contents.
+C4 Review Grok TESTS.txt; separate sourced expectations from inferred/uncertain edge cases.
+C5 Review pmp-loader.js after D4 has a real fixture/API evidence.
+C6 Review new submissions only when source/evidence materially changes; don't re-copy the full audit.
+C7 Give the owner concise reports: verified progress, blockers, decision needed, next task.
+C8 Security audit: review user-owned AI-key flow and project context sent, using team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. No app.html changes or claims that browser keys can be perfectly secret.
 
-CLAUDE OPUS 5.5 QUEUE — NEW WORK MODE: INTEGRATION LEAD + EVIDENCE OWNER
-When owner access resumes (reported as October 18; verify with owner), and only after verifying the active model identity:
-CL1 Read the reviewer report and every contributor's current task/status files.
-CL2 Confirm main branch, app.html/index.html blob IDs, current baseline and diffs; do not assume prior state.
-CL3 Select one candidate from the review queue at a time. Ask ChatGPT/Grok/DeepSeek/Gemini for a bounded revision or test if needed; avoid spending Claude time on tasks another AI can complete.
-CL4 If a feature needs images/SVGs/lyrics/scenarios/fixtures, define the exact target size, context, behavior, file format, rights/safety constraints and acceptance test; assign that asset/test creation to the AI best suited to it. Claude consumes the finished asset after review.
-CL5 Run controlled before/after tests and visual comparisons, capture screenshots and console/runtime evidence, run regression tests, record exact results and remaining risks.
-CL6 Integrate only after explicit owner approval, preserve rollback, update MERGE-QUEUE/TODO, and report exact changed files/commit.
-CL7 If a candidate fails, return a narrow revision request to its author instead of rewriting everything or discarding useful work.
-CL8 Keep a next-task list ready before ending the session; if Claude usage/time expires, leave a resumable handoff with current status, evidence, blockers and next exact action.
-CL9 Before using MERGE-QUEUE.txt, reconcile its statuses against the latest cross-review and current baseline. This file is Claude-owned; keep costume candidates blocked until the review's source-evidence and isolated-test requirements are met. Recheck Gemini WAITING status and the old v15.46 note.
+CLAUDE OPUS 5.5 — INTEGRATION / OFFICIAL EVIDENCE QUEUE
+CL1 Read current status and bounded task notes, not every historical review.
+CL2 Verify active model label exactly “Claude Opus 5.5”, owner authorization, current branch/commit, app.html/index.html blob IDs and working baseline. If any gate fails, stop integration.
+CL3 Reproduce/measure P0 freeze/Stop before changing code; one candidate/change at a time.
+CL4 Review relevant API/side effects against current source, select candidate, use isolated working branch/copy and preserve rollback.
+CL5 Run focused before/after tests, console/runtime evidence and regression. Record browser/version, steps, actual results and untested areas.
+CL6 Update TODO/merge status only through authorized process after tests; the merge queue is Claude-maintained.
+CL7 If a candidate fails, send a narrow revision request to its author instead of rewriting all work.
+CL8 Before ending or changing context, overwrite team/CLAUDE-CHECKPOINT.txt with baseline, task, changed files, actual tests, risks and exact next steps.
+CL9 Reconcile old PICK/WAITING statuses against the current baseline and reviews before selecting a candidate. Never treat “PICK” as approval.
 
-ASSET / SCENARIO ASSIGNMENT RULE
-Claude may request images, SVGs, lyric/song test cases, sample projects, or reproduction scenarios. Assign each artifact to the AI suited to that artifact:
-- Gemini: G-Warp SVG concepts/icons/visual assets.
-- Grok: expected behaviors, test fixtures, Scratch semantic edge cases.
-- DeepSeek: code candidates, technical harnesses, comparative experiments.
-- ChatGPT: independent review, acceptance criteria, test plans, issue reconciliation, reports.
-Claude integrates and verifies; owner approves. Do not generate lyrics or third-party art that violates rights; prefer original short test content or owner-provided licensed assets.
+SECURITY / OWNER ITEMS
+- SEC1 ChatGPT: review the user-owned AI-key flow and project-context disclosure; record risk and acceptance tests, no app edits.
+- SEC2 Claude: only with model verification + owner authorization, inspect storage, key removal, disclosure, request destination, consent and ensuring keys never enter exports/logs.
+- SEC3 Owner: provide exact canonical website URL before old links are replaced.
+- SEC4 Owner/Claude: run a Git-history secret scan and review available secret-scanning settings; the existing scan was current-files only.
 
-RELEASE GATES
-- Source diff reviewed; no unrelated changes.
-- APIs and integration point verified against current source.
-- Candidate test evidence is reproducible and accurately labelled.
-- Focused regressions pass; failed/not-run cases disclosed.
-- Accessibility, privacy, permissions, and performance risks documented.
-- Owner explicitly approves live integration/release.
-
- 
-DEEPSEEK TEMPORARY-COVERAGE RULE (2026-10-15)
-ChatGPT, Grok, Gemini, and Claude can work directly on GitHub; DeepSeek currently cannot. If an open DeepSeek task has no meaningful progress for two consecutive team check-ins/session cycles, mark it TEMP COVERAGE OPEN (the owner may open it sooner). Any AI that has officially completed its own assigned task may claim that open task if it has the relevant skills and time. Record the claim in AI-TEAM.txt and the shared queue before starting. Do not wait idle, duplicate actively progressing work, edit deepseek/, or claim the work was completed by DeepSeek. Keep all candidate files in the covering AI's own folder. Create a short plain-TXT handoff using team/DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt and label the candidate/report TEMP COVERAGE / NEEDS DEEPSEEK REVIEW. When DeepSeek returns, it reviews the report and candidate, verifies the evidence, corrects/adapts the work in deepseek/ where appropriate, and records its disposition. Temporary coverage does not authorize live integration; Claude's existing authority/model-verification gates and the owner's approval remain unchanged.
-
-SECURITY QUEUE
-SEC1 ChatGPT reviewer: review the app's user-owned AI-key flow and data disclosure against team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. Report risks and acceptance tests; do not change app.html.
-SEC2 Claude Opus 5.5, after exact active-model verification and owner authorization: inspect key storage, remove-key behavior, project-context disclosure, and network request. Propose the smallest safe improvement; do not integrate until owner approval. Test session-only default, persistent-storage warning, context preview/consent, request destination, and absence of keys from exports/logs.
-SEC3 Owner: provide the new canonical website URL before anyone replaces current website references.
-SEC4 Owner/Claude: run a Git-history secret scan and check available secret-scanning alerts/settings. The static scan did not cover Git history or deployment settings.
+TEMPORARY DEEPSEEK COVERAGE
+DeepSeek currently cannot work directly on GitHub. Only after an open task is marked TEMP COVERAGE OPEN may a qualified AI claim temporary coverage. Work in that AI's own folder, use team/DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt and label the handoff TEMP COVERAGE / NEEDS DEEPSEEK REVIEW. When DeepSeek returns, record ACCEPTED AFTER REVIEW, REVISED, REJECTED WITH REASON, or BLOCKED. This never authorizes live integration.
