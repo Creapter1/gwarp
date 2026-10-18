@@ -1,0 +1,55 @@
+G-WARP — ONE-PAGE TEAM WORKFLOW
+Owner: Creapter1
+Updated: 2026-10-18
+Purpose: one clear entry point. This file routes work; it does not authorize live integration.
+
+START HERE — READ ONLY WHAT YOUR TASK NEEDS
+1. ../AI-TEAM.txt — team roles, hard rules, chronological work log. This file was restored from known-good commit 8f5d9a4ca69db8b1f314cec683e628883177292c after an accidental truncation.
+2. ../TODO.txt — product priorities and requirements.
+3. CONTINUOUS-WORK-QUEUE.txt — choose one unclaimed bounded task.
+4. ../ENGINE-MAP.txt — before proposing code, then verify the exact hooks in current source.
+5. ../MERGE-QUEUE.txt — candidate status only; “PICK” is not proof of safety or approval.
+6. Read the selected task's own report/notes only. Do not reread every audit or the whole app.
+
+AUTHORITY / SAFETY
+- Creapter1 is the owner and final approver.
+- Claude may integrate only when the active Claude model label is exactly “Claude Opus 5.5” and the owner has authorized the task. If the label is missing/unclear/different, stop integration and do read-only work.
+- Never rewrite app.html or index.html wholesale. Do not modify either file unless the owner explicitly authorizes the exact change. Prefer small isolated candidate files in the author AI's folder.
+- Do not edit another AI's folder. Keep candidates disconnected from live behavior until authorized integration.
+- Never delete a feature, claim a test that did not run, or call syntax checks behavioral proof.
+- Preserve uncertain/older work; mark it SUPERSEDED or ARCHIVE rather than deleting it unless the owner specifically approves deletion.
+- Record baseline commit + file hashes before any authorized source edit. Log exact tests, results, risks and rollback.
+
+TASK LOOP
+Claim one task -> state issue and measurable acceptance test -> inspect only relevant source -> reproduce -> make one minimal candidate/fix if justified -> run cheap checks then targeted runtime tests -> record evidence -> update task/merge status -> checkpoint -> continue to the next unclaimed in-scope task.
+If blocked, state the exact blocker and do a useful independent task; do not invent results or pad time.
+
+EVIDENCE LABELS
+SOURCE-VERIFIED = exact current source inspected.
+STATIC-ANALYSIS = reasoning/review only; not executed.
+REPORTED TEST = another person/tool reports a test; not independently reproduced.
+BROWSER-VERIFIED = test personally run in browser with steps/results recorded.
+NOT TESTED = no supporting execution evidence.
+
+ACTIVE WORKFLOW DOCUMENTS (single purpose each)
+- This file: entry point and routing.
+- ../AI-TEAM.txt: roles, rules, and chronological team log.
+- ../TODO.txt: product requirements/priorities.
+- CONTINUOUS-WORK-QUEUE.txt: next bounded tasks.
+- ../ENGINE-MAP.txt: source/API map; verify against current source.
+- ../MERGE-QUEUE.txt: candidate disposition.
+- CLAUDE-EXECUTION-PLAN-2026-10-18.txt: current Claude long-run/low-token procedure. Do not use older Claude plans as active instructions.
+- CLAUDE-CHECKPOINT.txt: intended live checkpoint; if absent, create it from verified current evidence before continuing a long session. Never guess hashes or tests.
+- AI-DELIVERABLE-INVENTORY.txt: inventory only; check file links/status against current repo before relying on it.
+- FUTURE-IDEAS.txt: unapproved ideas; preserve, do not implement.
+- Each AI's own folder/AI-CHAT-LOG.txt: append only to that AI's own log.
+
+DUPLICATE / STALE DOCUMENT POLICY
+- The current Claude execution plan is the 2026-10-18 version 2.0. team/CLAUDE-PLAN-2026-10-17.txt is historical and must not override it.
+- Older reviews, inventories and reports are historical evidence, not additional rules. Update the single-purpose active file instead of creating another broad plan/audit.
+- Keep one current status per task in the queue/merge queue. Cross-link reports rather than copying the same analysis into multiple files.
+- Do not mass-delete files during this cleanup. First identify exact duplicates, preserve unique findings, update links, then archive/delete only after checking references and owner constraints.
+- Recent Buffy add-ons/settings ZIP: authorship is not proven by archive contents. Review is in chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt; no browser test or integration was performed. Do not label it Gemini/DeepSeek-authored without evidence.
+
+FIRST TASK FOR CLAUDE
+Verify active model label and owner authorization. Read this file, AI-TEAM.txt, TODO.txt, CONTINUOUS-WORK-QUEUE.txt, ENGINE-MAP.txt, MERGE-QUEUE.txt, and the current checkpoint if it exists. Confirm the actual current app.html/index.html baseline and relevant hashes. Then follow the current 2026-10-18 Claude plan; prioritize reproducing the reported freeze/slow Stop issue. The reported 81,000-clone/45-second case is not yet a reproduced result. Do not touch app.html/index.html without the owner's explicit authorization.
