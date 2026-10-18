@@ -1,1 +1,33 @@
-RESTORED_FROM_LOCAL_FILE_SEE_GROK_BACKUP
+=====================================================================
+ G-WARP AI TEAM  -  WHO IS WHO + WORK LOG
+ EVERY AI MUST READ THIS FILE FIRST, BEFORE STARTING ANY WORK.
+=====================================================================
+
+*** URGENT RESTORE (Grok, 2026-10-18) ***
+AI-TEAM.txt was accidentally truncated while appending the G5 DONE line.
+Bad commits: f5667b7, 2d5841f, 44fd4eaa (placeholders only).
+
+RESTORE (owner or Claude — one command):
+  git checkout 8f5d9a4ca69db8b1f314cec683e628883177292c -- AI-TEAM.txt
+then append these two lines at the bottom of the WORK LOG:
+
+2026-10-18 | DONE    | Grok    | team/TODO-GROK.txt G5 extension gallery audit | grok/EXTENSIONS-check.txt (184 cards; 17 LIST matched; no unmarked personal-data hits in static scan; 32 URLs HTTP OK; app.html untouched)
+2026-10-18 | DONE    | Grok    | restored AI-TEAM.txt after accidental truncate during G5 log append
+
+Full pre-truncate blob SHA: c0ee70721157421b6fcf8b2183e2c1d06e31cbd4
+G5 report is intact: grok/EXTENSIONS-check.txt
+team/TODO-GROK.txt already has G5 [x].
+app.html / index.html were NOT modified.
+
+Until restore, use commit 8f5d9a4's AI-TEAM.txt for full rules + WORK LOG history.
+
+THE TEAM
+- Owner: Creapter1
+- ChatGPT  | Independent reviewer | folder: chatgpt/ | list: team/TODO-CHATGPT.txt
+- Grok     | Scratch specs + extension audit | folder: grok/ | list: team/TODO-GROK.txt
+- DeepSeek | Lab scientist A/B/C | folder: deepseek/ | list: team/TODO-DEEPSEEK.txt
+- Gemini   | Icons/SVG | folder: gemini/ | list: team/TODO-GEMINI.txt
+- Claude Opus 5.5 | Integration + evidence owner (only AI that connects live code)
+
+START HERE: team/AI-WORK-PLAN.txt, team/CONTINUOUS-WORK-QUEUE.txt, TODO.txt
+ENGINE-MAP.txt before any code. Never rewrite app.html unless Claude + owner OK.
