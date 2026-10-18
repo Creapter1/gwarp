@@ -153,3 +153,37 @@ Keep the review in chatgpt/ as an independent reviewer record. Do not place this
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this ZIP verification/correction only.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+Date: 2026-10-18 (America/New_York)
+AI: ChatGPT
+Task: Research official Claude token/context guidance and simplify the G-Warp Claude plan for 2+ hours of productive work.
+
+USER REQUEST (verbatim):
+"Well the plan need ubdate the more lest token the claude use the better if you want this is out side the worck sone but look online how and what to give claude so is lest token so the plan is simple and it can worck for long time at minimum 2h or more if possible"
+
+RESEARCH:
+Consulted Anthropic official guidance:
+- Claude Help Center, “Models, usage, and limits in Claude Code”: https://support.claude.com/en/articles/14552983-models-usage-and-limits-in-claude-code
+- Claude Help Center, “Give Claude context: CLAUDE.md and better prompts”: https://support.claude.com/en/articles/14553240-give-claude-context-claude-md-and-better-prompts
+- Anthropic docs, context windows: https://platform.claude.com/docs/en/build-with-claude/context-windows
+- Anthropic prompt best practices: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+
+ACTION:
+Replaced the long Claude execution plan with a leaner v2.0 low-token, long-run workflow. It specifies a fixed small read-first set, narrow source inspection, one bounded task at a time, minimal fixes, cheap checks before targeted tests, no repeated broad audits, checkpoints before context/session ends, /clear between independent tasks and /compact for continuing tasks when using Claude Code, and a flexible 2-hour schedule with no padding. It prioritizes the reported freeze/Stop issue, then existing candidate tests only when ready. The plan explicitly notes that commands depend on the active Claude interface and that long sessions depend on available usage/permissions. Linked the plan and checkpoint requirement from team/AI-WORK-PLAN.txt.
+
+FILES CHANGED:
+- team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt — replaced with v2.0 (commit 74ca1e99a5928f4901a313af482415cccc8904a3).
+- team/AI-WORK-PLAN.txt — updated execution reference and checkpoint requirement (commit fb25dfdb95b8f1330c2d1db7a2043f822fc10468).
+- No app.html/index.html changes.
+- team/CLAUDE-CHECKPOINT.txt has not been created yet; Claude should initialize it from actual baseline evidence at the start of work.
+
+EVIDENCE / TEST STATUS:
+- Official web research completed; links above.
+- GitHub update operations returned commit SHAs.
+- Documentation-only change; no browser/runtime tests performed.
+
+NEXT STEP:
+Claude should use team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt v2.0, verify the active model and owner-approval gates, establish the actual baseline, initialize the checkpoint, then start P0 reproduction/measurement without rereading every report.
+--- END ENTRY ---
