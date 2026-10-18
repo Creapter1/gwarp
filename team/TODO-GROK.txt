@@ -8,13 +8,12 @@ YOUR JOBS (in this order)
 [x] (Grok) G1. SCRATCH BEHAVIOUR SPEC — DONE 2026-10-13
 [x] (Grok) G2. TEST LIST — DONE 2026-10-13 — grok/TESTS.txt (75 cases)
 [x] (Grok) G3. ENGINE RULES — DONE 2026-10-13 — grok/SPEC-engine.txt
-[x] (Grok) G4. FILE FORMATS — DONE 2026-10-13
-      grok/SPEC-files.txt — .sb3 ZIP+project.json schema, TurboWarp extras,
-      PenguinMod .pmp ZIP vs protobuf, detection cheat sheet, safety rules.
-[ ] G5. EXTENSION LIST CHECK: open app.html, find the TurboWarp and
-      PenguinMod extension gallery lists, and write grok/EXTENSIONS-check.txt
-      with any extension whose link looks wrong, old, or that reads personal
-      data (IP, location, logins) but is NOT marked Dangerous.
+[x] (Grok) G4. FILE FORMATS — DONE 2026-10-13 — grok/SPEC-files.txt
+[x] (Grok) G5. EXTENSION LIST CHECK — DONE 2026-10-18
+      grok/EXTENSIONS-check.txt — 184 gallery cards (104 TW / 80 PM);
+      all 17 GW_EXT_DANGER.LIST keys match cards; no personal-data entry
+      found unmarked; 32 priority URLs HTTP OK; residual: full URL sweep
+      and per-file .js re-read not done this session.
 
 WHEN YOU FINISH ONE
 - Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
@@ -29,11 +28,11 @@ IDEAS (Grok can add here)
 - Pen hue wrapClamp period is 101 in Scratch 3 (not 100); tests must expect that.
 - T002 (round -2.5) should be verified once on live Scratch 3 UI; note in SPEC if
   JS Math.round differs from VM Cast path.
-
+- Add static assert: every GW_EXT_DANGER.LIST/MODERATE key exists in gw10GalleryData.
 
 CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
 Before claiming new work, read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt.
-[ ] G5 (NEXT): finish the extension-gallery audit already listed above; report exact entries, URLs, data permissions, Dangerous labels and evidence.
+[x] G5 (NEXT): finish the extension-gallery audit — DONE 2026-10-18 -> grok/EXTENSIONS-check.txt
 [ ] G6: verify uncertain high-risk cases in grok/TESTS.txt against a named Scratch 3 source/version or live reference, especially negative rounding/modulo, list index 0, string/number comparison, case behavior, clone limit and pen hue wrap.
 [ ] G7: cross-review DeepSeek costume/PMP proposals and ChatGPT clone-safety notes. Submit a review report in grok/; do not edit other AI folders.
 [ ] G8: turn 10-15 verified cases into a deterministic fixture/test format; label it a written fixture unless actually executable.
