@@ -1,0 +1,46 @@
+G-WARP ASSIGNMENTS FROM CLAUDE (team leader)  -  2026-10-18
+Owner: Creapter1. Read this first; it replaces older "next task" lists for each AI.
+Live app: Beta v15.46.1 (app.html). Real engine names: ENGINE-MAP.txt.
+Golden rule: every job ends in something TESTABLE (code + test, or a test file).
+No new rule files, plans or audits of audits. Keep work in your own folder.
+
+=== GROK  (tests = the safety net for the compiler) ===
+GR1. Turn grok/FIXTURES-verified.txt + TESTS.txt into ONE machine-readable file:
+     grok/fixtures.json = [{ "id":"T001", "setup":"...", "blocks": <see format>, "expect": {...} }]
+     Format for blocks (G-Warp's own): {"hat":"when_flag","stack":[{"type":"set_var","name":"x","value":"0"},
+     {"type":"repeat","times":"10","body":[{"type":"change_var","name":"x","by":"1"}]}]}
+     Expected result = variables/lists/x/y/say after the script finishes.
+     Start with the 30 HIGHEST-RISK cases (number/text compare, round, mod, list index, join, random range).
+GR2. For each case say SOURCE (Scratch source file/line or Scratch Wiki) for the expected value.
+
+=== DEEPSEEK  (lab: fixes with 3 versions) ===
+DS6. Clones speed redo: skip threads that are finished or waiting (performance.now() < waitUntil),
+     and remove finished threads in ONE pass. Real fields: ScriptThread {sprite, blocks, pc,
+     callStack, waitUntil, finished}. Don't skip by visibility. A/B/C + LAB file.
+DS7. Costume fixes v2: rewrite your picks (select-C, fill-C, text-B, eraser-C, undo-C) with the REAL
+     editor names: GW_V15_COSTUME_EDITOR.state = {tab, zoom, pan, costumeMode, selectedSvg,
+     bitmapTool, svgTool, svgDrag, selectionRect}. Never attach listeners to the whole document;
+     only to the costume canvas. One file per fix + what you tested.
+
+=== GEMINI  (pictures + the extension) ===
+GM7. Extension: make the 4 PNG icons (16/32/48/128) from G-Spark (rounded violet square, big white
+     "G", small dark stick arms + legs) - give the SVG and the exact PNG export steps.
+GM8. Extension target is now LIVE: https://creapter1.github.io/gwarp/app.html#scratch=<id>
+     (asks, then loads). Update gemini/extension to use it; restore history.pushState/replaceState
+     if the extension is turned off. Write the Chrome test steps you followed.
+
+=== CHATGPT  (reviewer + docs) ===
+CG1. Update chatgpt/USER-GUIDE.txt for Beta v15.46.1: Report a bug (More -> File), clone safety
+     limit (300 normal, 5000 with infinite clones), "Your project is stuck" box, #scratch links.
+CG2. Review Claude's compiler work as it lands (team/SPEED-PLAN.txt): check each step keeps
+     Scratch answers (use Grok's fixtures), report problems as a numbered list.
+CG3. Keep MERGE-QUEUE.txt honest: list what's MERGED / WAITING / SUPERSEDED (Claude owns the file;
+     send changes as a short list in chatgpt/MERGE-QUEUE-NOTES.txt).
+
+=== CLAUDE (leader) ===
+CL1. Compiler step 1: statement cache (read each block once per edit, not every run).
+CL2. Merge DeepSeek collision-B after a rotation/scale correctness test.
+CL3. Turn Grok's fixtures.json into an automatic test that every Beta must pass.
+
+HOW TO HAND IN: your folder + one line at the bottom of AI-TEAM.txt:
+  <date> | DONE | <AI> | <job id> | <files>

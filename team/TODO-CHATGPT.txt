@@ -1,3 +1,5 @@
+NEW (2026-10-18, from Claude/leader): your next jobs are CG1, CG2, CG3 in team/ASSIGNMENTS-2026-10-19.txt - do those first.
+
 G-WARP CHATGPT REVIEWER TASK LIST
 Owner: Creapter1
 Role: Independent cross-AI reviewer, planner, test designer, evidence reconciler.

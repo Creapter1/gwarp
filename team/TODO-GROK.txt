@@ -1,3 +1,5 @@
+NEW (2026-10-18, from Claude/leader): your next jobs are GR1, GR2 in team/ASSIGNMENTS-2026-10-19.txt - do those first.
+
 =====================================================================
  G-WARP TO-DO LIST FOR GROK
  First read ../AI-TEAM.txt, ../TODO.txt, ../team/AI-WORK-PLAN.txt and this task list.

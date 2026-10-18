@@ -1,3 +1,5 @@
+NEW (2026-10-18, from Claude/leader): your next jobs are GM7, GM8 in team/ASSIGNMENTS-2026-10-19.txt - do those first.
+
 =====================================================================
  G-WARP TO-DO LIST FOR GEMINI  (icons + pictures designer)
  ALWAYS CHECK FIRST: ../AI-TEAM.txt (rules + work log), ../TODO.txt (RULES),
