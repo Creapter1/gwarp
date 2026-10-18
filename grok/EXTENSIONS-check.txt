@@ -1,0 +1,126 @@
+G-WARP EXTENSION GALLERY CHECK (G5)
+Written by: Grok  |  Date: 2026-10-18
+Baseline: app.html on main (blob size ~2,327,544 bytes)
+Evidence class: STATIC SOURCE + sampled HTTP HEAD/GET  |  NOT full live gallery UI test
+
+=====================================================================
+1. WHERE THE LISTS LIVE
+=====================================================================
+- Embedded JSON: <script type="application/json" id="gw10GalleryData">
+- Runtime: window.GW_EXT_GALLERY (parsed from that script)
+- Safety: window.GW_EXT_DANGER = { LIST, MODERATE, level, forEntry, match, confirm, markCard, markPalette }
+  Definition around app.html ~lines 16890–16987
+- Owner rule text (changelog ADDED): 17 personal-data extensions must show ⚠ + tick box
+
+Gallery counts in this baseline:
+  TurboWarp:  104
+  PenguinMod:  80
+  Total:       184
+
+Level coverage (by keyOf = tw:<slug> or pm:<slug>):
+  Dangerous (LIST):     17
+  Moderate (MODERATE):  46
+  Safe-default:        121
+
+=====================================================================
+2. DANGEROUS LIST (all matched to a gallery card)
+=====================================================================
+Every LIST key resolves to a live gallery entry with matching URL host.
+
+| Key | Name | Reads (from LIST) | URL host OK? |
+|-----|------|-------------------|--------------|
+| pm:bruhbeast-pixel/CockatielLocation.js | Cockatiel Location | IP, location | yes (sampled) |
+| tw:SamuelLouf/Geolocation | Geolocation | location | yes |
+| pm:RubyDevs/turboweather.js | TurboWeather | location | yes |
+| tw:NexusKitten/sgrab | S-Grab | others’ country (Scratch profile) | yes |
+| tw:steamworks | Steamworks | Steam account, country/IP | yes |
+| tw:cloudlink | CloudLink V4 | IP via server | yes |
+| pm:MikeDev101/cloudlink.js | CloudLink (PM) | IP via server | yes |
+| pm:MikeDev101/webrtc.js | WebRTC | IP to peer | yes |
+| pm:pooiod/VideoSharing.js | Video Sharing | screen | yes |
+| tw:gamejolt | Game Jolt | account username | yes |
+| tw:obviousAlexC/newgroundsIO | Newgrounds | account username | yes |
+| pm:MubiLop/authpenguin.js | AuthPenguin | account fields | yes |
+| pm:Ikelene/googleAuthExtension.js | Google Auth | Google name/pic/email | yes |
+| pm:NotHouse/DiscordAuth.js | Discord Auth | Discord id/username | yes |
+| tw:clipboard | Clipboard | clipboard | yes |
+| tw:obviousAlexC/SensingPlus | Sensing Plus | clipboard | yes |
+| tw:Lily/lmsutils | Lily's Toolbox | clipboard | yes |
+
+Count = 17, matches owner changelog text. No LIST entry was missing from gw10GalleryData.
+
+=====================================================================
+3. FINDINGS — SAFETY (personal data without Dangerous)
+=====================================================================
+STATIC REVIEW against name + description keywords (auth, location, geo,
+weather, clipboard, webrtc, cloud link, account, login, etc.):
+
+- No gallery entry with clear personal-data wording was found OUTSIDE LIST
+  for: auth/login, geolocation/IP, clipboard, WebRTC, CloudLink, screen share.
+- AI / webhook / Twitch / HTTP-style extensions are correctly treated as
+  MODERATE (internet use) when present in MODERATE keys, not Dangerous.
+  Examples: pm:MubiLop/penguingpt.js, pm:TheShovel/blockAI.js,
+  pm:MubiLop/penguinhook.js, pm:bop_tw/Twitch.js, tw:fetch, tw:godslayerakp/http.
+- Face Sensing / Video Sprites / camera: owner rule explicitly excludes camera
+  (and mic) from the Dangerous personal-data list for now. They are not in LIST.
+  Evidence: RULES string near ~18224 in app.html.
+
+RESULT: No confirmed case of “reads personal data but NOT marked Dangerous”
+in the current 184-card table + LIST keys.
+
+UNSURE / residual risk (not failures of the LIST, but gaps to watch):
+- Safety depends on exact keyOf(slug). A gallery slug rename without LIST/MODERATE
+  update would silently drop a warning. Recommend a small unit test that every
+  LIST/MODERATE key exists in gw10GalleryData.
+- Extensions loaded only by raw URL (outside gallery) still go through
+  GW_EXT_DANGER.match(url); coverage is only as good as norm() + gallery find.
+- Full code of each of 184 .js files was NOT re-read this session; LIST claims
+  “made by reading each extension’s code” are taken as prior owner/Claude work.
+  This audit does not re-prove those code reads.
+
+=====================================================================
+4. FINDINGS — LINKS (wrong / old / broken)
+=====================================================================
+Method: parse every gallery url; HEAD then GET fallback for 32 priority URLs
+(all Dangerous-related + network-ish + every 12th entry). Date: 2026-10-18.
+
+- Sampled HTTP results: 32/32 OK (no 4xx/5xx, no transport errors).
+- No non-https gallery urls in the table.
+- No localhost / empty urls.
+- No slug vs path mismatches (slug substring present in url for all 184).
+- All `code` fields point at github.com (184/184).
+
+Quality issues (not “broken URL”, not Dangerous failures):
+- 47 byLinks[].link values are empty strings (creator name without profile URL).
+  Cards still show the name; only the hyperlink is missing.
+- Canonical site URL for G-Warp itself is still “pending owner confirmation”
+  per TODO.txt; gallery hosts used here are extensions.turbowarp.org and
+  extensions.penguinmod.com only.
+
+NOT TESTED this session:
+- Opening every of the 184 URLs (only 32 sampled).
+- Live “Add extension” UI path, tick-box UX, or health-report line after load.
+- Whether github.com `code` blob paths still exist for every file (only hosts checked via extension .js sample).
+
+=====================================================================
+5. RECOMMENDATIONS (for Claude / owner — not integrated)
+=====================================================================
+1. Add a static self-test: for each key in GW_EXT_DANGER.LIST and .MODERATE,
+   assert some gw10GalleryData entry has the same keyOf.
+2. Optionally fill empty byLinks.link when known (cosmetic).
+3. When galleries add new auth/geo/clipboard/WebRTC-style extensions, update
+   LIST before shipping; do not rely on keyword heuristics alone.
+4. TODO.txt item 6 (live load of gallery extensions on the real website) remains
+   separate from this static audit.
+
+=====================================================================
+6. ACCEPTANCE FOR G5
+=====================================================================
+G5 asked: report extensions whose link looks wrong/old, OR that read personal
+data but are NOT marked Dangerous.
+
+- Personal-data unmarked: NONE found in current baseline (static).
+- Wrong/old links: NONE in sampled set; no structural URL defects in full table.
+- Residual: incomplete full-HTTP sweep; no re-audit of extension source code.
+
+Files: grok/EXTENSIONS-check.txt only. app.html not modified.
