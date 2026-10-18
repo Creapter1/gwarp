@@ -8,8 +8,9 @@ Quick routing:
 - CONTINUOUS-WORK-QUEUE.txt: next bounded task.
 - ../ENGINE-MAP.txt: verify actual source hooks before code work.
 - ../MERGE-QUEUE.txt: candidate disposition, not approval.
+- AI-STATUS.txt: current state and handoff.
 - CLAUDE-EXECUTION-PLAN-2026-10-18.txt: only current Claude execution plan.
-- AI-DELIVERABLE-INVENTORY.txt: inventory; check statuses against current files.
+- AI-DELIVERABLE-INVENTORY.txt: archive pointer to detailed reviews, not current status.
 - FUTURE-IDEAS.txt: owner-controlled, unapproved ideas.
 - Each AI's own folder/AI-CHAT-LOG.txt: that AI's append-only work log.
 
