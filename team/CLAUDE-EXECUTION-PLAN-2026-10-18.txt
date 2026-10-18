@@ -1,0 +1,143 @@
+G-WARP — CLAUDE EXECUTION PLAN
+Version: 1.0
+Date: 2026-10-18
+Owner: Creapter1
+Purpose: Let Claude execute the next work efficiently, safely, and without repeated broad audits, speculative rewrites, or wasteful token use.
+This plan supplements AI-TEAM.txt, TODO.txt, team/AI-WORK-PLAN.txt, ENGINE-MAP.txt, STYLE-GUIDE.txt and MERGE-QUEUE.txt. If they conflict, obey the source-of-truth order in AI-WORK-PLAN and the owner's latest instruction.
+
+0. HARD STOP GATES — BEFORE ENGINEERING
+1. Verify the model label in the actual Claude interface is exactly “Claude Opus 5.5.” If absent, different, or ambiguous, do not integrate/activate code; tell the owner and stop at read-only review.
+2. Get explicit owner approval for live integration/release. Being the designated integrator is not blanket approval.
+3. Identify the known-good baseline: branch, commit SHA, app.html/index.html blob IDs, deployed URL and current deployed version. If uncertain or deployment diverges, ask the owner; do not guess.
+4. Never rewrite app.html wholesale. Make the smallest localized patch; preserve unrelated features and original style. No broad redesign.
+5. Never claim a test, backup, rollback, merge, or deployment succeeded unless it actually did and evidence is recorded.
+6. Keep candidate work and notes in their owners' folders. Do not silently edit another AI's folder. Request a narrow revision from the original author or record your own integration patch separately with rationale.
+7. The owner is final authority. If the owner has not approved integration, finish only read-only inventory, reproduction, and a proposed patch/test plan.
+
+1. TOKEN-SAVING WORK LOOP
+Use this loop for every issue:
+A. Read only the current source area, the relevant notes, latest review, and diff. Do not reread the whole repository every time.
+B. State the one bug/requirement, impact, and acceptance test in 3–6 lines.
+C. Find the actual implementation and API names. Use ENGINE-MAP as an index, then verify current source. Mark unknowns UNSURE.
+D. Choose one candidate/fix. Do not compare every A/B/C unless the current winner fails or evidence shows a material trade-off.
+E. Create a minimal patch in a working copy/branch; preserve baseline commit and record changed files.
+F. Run cheap checks first (syntax/lint/static checks), then the smallest targeted runtime test, then targeted regressions. Run full suite only when the change touches shared runtime, serialization, or broad UI behavior.
+G. Report actual results in a compact table: test, expected, actual, PASS/FAIL/NOT RUN, evidence location.
+H. If blocked, write the exact missing evidence/question and stop that branch of work; don't burn tokens speculating.
+I. Append a resumable handoff and update the task/merge status after the work.
+
+TOKEN BUDGET RULES
+- No repeated broad research or full-app summaries when a current report exists. Read the latest report and changed dependencies only.
+- No long chain-of-thought or speculative essay. Produce decisions, evidence, risks, and next action.
+- Do not create more than one patch candidate per issue unless the first fails or a specific trade-off requires alternatives.
+- Do not run all test cases after every tiny edit; use risk-based targeted regression, then a release-level suite at milestone.
+- Do not inspect unrelated files. Use targeted search for symbols/selectors, then open only surrounding code.
+- Stop and ask the owner when a product decision, canonical URL, model identity, baseline, privacy policy or irreversible action is unclear.
+- Keep handoffs concise; link reports rather than copying them into every file.
+- A test marked NOT RUN is preferable to an invented result.
+
+2. PHASE 1 — READ-ONLY BASELINE / RECONCILIATION
+Goal: know what is real before changing anything.
+- Read AI-TEAM.txt, TODO.txt, AI-WORK-PLAN, CONTINUOUS-WORK-QUEUE, ENGINE-MAP, STYLE-GUIDE, MERGE-QUEUE, latest cross-review and integration audit.
+- Confirm current branch/head and app.html/index.html blob IDs; compare with the audited baseline. Record only factual differences.
+- Inspect latest commit/diff and check whether deployed site matches repository; do not assume URL.
+- Reconcile stale queue statuses: PICK means candidate choice, not tested/integrated. Costume entries are blocked by source evidence; collision-B requires correctness benchmarks; protobuf .pmp requires fixture validation; Gemini extension remains WAITING; Buffy ZIP remains disconnected.
+- Create/update team/CLAUDE-BASELINE-2026-10-18.txt with baseline commit, hashes, deployment URL if owner-confirmed, status per candidate, and blockers.
+Acceptance: known-good baseline identified or owner question raised; every artifact has one status: REFERENCE, CANDIDATE, BLOCKED, SUPERSEDED, VERIFIED, INTEGRATED (with commit), or NOT TESTED.
+
+3. PHASE 2 — REPRODUCE FREEZE / STOP FAILURE FIRST
+Reason: this is the highest user-impact failure; fix it before adding polish or unrelated features.
+- Use a safe test copy and known project/test harness. Do not use the live site for destructive stress unless owner explicitly approves.
+- Reproduce the reported 81,000 clones / ~45-second Stop symptom; treat it as a reported symptom until observed.
+- Record device/browser/version, test project, clone count, time to slowdown, FPS/responsiveness, Stop latency, memory symptoms and recovery.
+- Check existing Engine.cloneLimit and actual clone creation/Stop code before adding another limiter. Avoid double limits or duplicate cleanup.
+- Review chatgpt/clone-safety.js and its notes. Verify every replaced side effect against the current source; do not merge just because MERGE-QUEUE says PICK.
+- Test boundaries 299/300/301, rapid clone creation, clone hats, broadcasts, Stop during script execution, Pause, turbo mode, project reload, duplicate module load and feature-off.
+- Measure Stop latency; target is <100 ms for the named test, but report the actual measurement and environment.
+- Do not add text/list limits, watchdog prompts, or IndexedDB recovery in the same patch unless needed for the specific reproduced root cause. Break them into separate small tasks after the core freeze is controlled.
+Acceptance: reproducible before/after evidence, responsive page, measured Stop latency, no regression to clone/event behavior, safe rollback, owner approval before release.
+
+4. PHASE 3 — COSTUME EDITOR ONLY AFTER FREEZE IS STABLE
+- Read latest DeepSeek source-evidence map and isolated harness. If absent, ask for those deliverables rather than guessing.
+- Verify real costume state, editor root, active canvas, SVG shape attribute, coordinate transform, undo/history API and event/listener scope.
+- Require proof the candidate only touches costume canvases, never stage or unrelated canvases.
+- Start with one tool (select/move or fill) and one candidate winner. Test pointer capture/cancel/lost capture, zoom/pan, malformed SVG, switching sprite/costume, repeated enable/disable, undo/redo and save/reopen.
+- Add one tool at a time. Preserve existing behavior and visual style. Do not batch all five tools into a single unreviewable patch.
+Acceptance: isolated harness passes; selected tool changes only intended assets; undo works; no asset corruption; target regression tests pass; owner approval.
+
+5. PHASE 4 — PROJECT LOADERS AND SCRATCH LINK
+A. .pmp protobuf:
+- Preserve existing ZIP-based .pmp support.
+- Do not integrate until parser/dependency API is verified against primary source and a legal real fixture is available.
+- Test valid fixture, malformed protobuf, missing/empty assets, oversized input, unsupported fields, load-save-reload and useful errors.
+- If no fixture/API proof, leave status INCOMPLETE/BLOCKED.
+B. Scratch link:
+- Confirm current app has the expected GW_WEB.load integration path.
+- Test valid and invalid project IDs, consent/cancel, hash cleanup, network failure, repeated navigation, no automatic fetch before consent, and compatibility with existing #open flow.
+- Coordinate Gemini extension testing only after owner confirms canonical URL and app handler exists.
+Acceptance: no regression to .sb3, JSON and existing ZIP .pmp paths; explicit user intent controls network/project loading.
+
+6. PHASE 5 — BEHAVIOR TESTS / EXTENSION SECURITY
+- Grok's 75 cases are written cases, not automatically passing tests. Choose 10–15 highest-risk cases first; attach a Scratch version/source or mark unresolved.
+- Prioritize numeric/text coercion, negative modulo/rounding, list index 0, clone limits, broadcast order, pen hue wrap, procedure/hat semantics, save/load round-trip.
+- Complete G5 extension audit against actual gallery entries: URL, version/availability, permissions/data access, Dangerous warning, evidence.
+- Review Gemini extension packaging/permissions/privacy only after the canonical URL is confirmed. Test Chromium and Firefox separately; verify SPA navigation and repeated injection cleanup.
+- Never claim cross-browser or privacy safety from static code alone.
+Acceptance: test records include setup, browser/version, expected, actual, pass/fail and evidence. Security claims remain scoped to what was actually checked.
+
+7. PHASE 6 — ASSETS AND SECONDARY ADD-ONS
+- Gemini: generate/review actual G-Spark extension icon and required PNG sizes first. Then favicon/category icons only when needed and selected by owner. Three SVG options per design requirement; no third-party assets/external dependencies.
+- Buffy-labelled settings/add-ons: keep disconnected. Verify source assumptions, teardown of all timers/observers/listeners/generated DOM, idempotent on/off, pause toast, sprite ordering, reset/save synchronization and responsive layout before considering integration. Syntax check is not behavioral evidence.
+- Do not spend time on hero art, badges, music redesign, or optional features while freeze and core editor/load reliability are unresolved unless the owner reprioritizes.
+
+8. EVIDENCE LABELS — USE CONSISTENTLY
+- SOURCE-VERIFIED: exact current source or Git object inspected.
+- STATIC-ANALYSIS: reasoned from code without executing it.
+- REPORTED LIVE TEST: another contributor's result; cite their report and exact scope.
+- INDEPENDENTLY BROWSER-VERIFIED: Claude personally executed named steps in named browser/version and recorded results.
+- NOT TESTED: no valid execution evidence.
+Never upgrade reported results into independently verified results.
+
+9. PATCH / ROLLBACK RULE
+For each change, record:
+- Base commit + changed file/function/region.
+- Why this is the smallest fix.
+- Tests run and actual results.
+- Known limitations and risks.
+- Exact rollback method/commit.
+- Owner approval status.
+Do not force-push, rewrite history, merge divergent branches wholesale, or deploy without authorization. For old candidate branches, rebuild/cherry-pick only a narrow reviewed change onto the confirmed baseline.
+
+10. RELEASE CHECKLIST — ONLY AFTER OWNER APPROVAL
+- Confirm active model gate and owner approval.
+- Confirm app/index hashes and candidate diff.
+- Run targeted tests plus core smoke suite: launch, editor tabs, block drag/snap, sprite/stage input, Run/Pause/Stop, clone stress/Stop, costume edit/undo, save/load round-trip, extension loading, console errors.
+- Capture before/after screenshots for UI changes and exact environment details.
+- Verify no secrets or private test projects were committed.
+- Update MERGE-QUEUE and TODO statuses to reflect actual state.
+- Deploy only when explicitly approved; verify the exact owner-confirmed URL and rollback path.
+- Produce concise release notes and a handoff with commit, tests, known issues and next action.
+
+11. FIRST SESSION CHECKLIST — DO THESE IN ORDER
+[ ] Verify active model label exactly Claude Opus 5.5; otherwise stop.
+[ ] Ask owner to confirm canonical URL if deployment verification is needed.
+[ ] Read latest inventory, audits and current diff; avoid redoing full research.
+[ ] Establish baseline commit/hash and whether deployed app matches it.
+[ ] Reproduce freeze/Stop issue in safe test copy; record baseline numbers.
+[ ] Review clone-safety candidate and select one minimal patch only if root cause/evidence support it.
+[ ] Run targeted tests and report results.
+[ ] Stop before integration/release unless owner has explicitly approved that scope.
+[ ] Append Claude's own AI-CHAT-LOG.txt entry and update shared queue/status.
+
+HANDOFF TEMPLATE
+Task:
+Baseline commit:
+Candidate/file:
+Decision:
+Evidence class:
+Tests run/results:
+Tests not run:
+Risk/rollback:
+Files changed:
+Owner approval:
+Next exact step:
