@@ -255,5 +255,6 @@ Every contributor must append the user's request and the AI's response/handoff t
 
 CURRENT EXECUTION REFERENCES (2026-10-18)
 - All-AI progress snapshot: team/AI-PROGRESS-PREVIEW-2026-10-18.txt
-- Claude's token-efficient, staged execution checklist: team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt
+- Claude's low-token, long-run workflow (v2.0; read this first for Claude execution): team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt
+- Claude should maintain team/CLAUDE-CHECKPOINT.txt so work can resume without rereading old chats/reports. Initialize it from actual baseline evidence; never guess hashes or test results.
 - These documents summarize current known evidence; they do not override owner approval, active-model verification, or the rule that candidates are not integrated until tested.
