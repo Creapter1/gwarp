@@ -1,0 +1,160 @@
+G-WARP G8 — WRITTEN FIXTURES (deterministic parity cases)
+Author: Grok  |  Date: 2026-10-18
+Format class: WRITTEN FIXTURE — not an executable test suite
+Source: grok/VERIFY-high-risk.txt + scratch-vm develop (G6)
+How to use: build each case in Scratch 3 / TurboWarp compatibility mode,
+then in G-Warp. Compare reporter/say output to EXPECT. Do not claim
+"tests passed" unless a human or Claude recorded a BROWSER-VERIFIED run.
+
+Fixture ID scheme: F### maps to TESTS T### when applicable.
+Each fixture is self-contained: setup → action → single observable result.
+
+=====================================================================
+OPERATORS (SOURCE-CONFIRMED)
+=====================================================================
+
+F002 | round negative half
+SETUP: empty sprite
+ACTION: say (round (-2.5))
+EXPECT: -2
+TYPE: number reporter / say text
+CONFIDENCE: SOURCE-CONFIRMED (Math.round)
+
+F003 | round positive half
+SETUP: empty sprite
+ACTION: say (round (2.5))
+EXPECT: 3
+TYPE: number
+CONFIDENCE: SOURCE-CONFIRMED
+
+F005 | floored mod negative dividend
+SETUP: empty sprite
+ACTION: say ((-10) mod 3)
+EXPECT: 2
+TYPE: number
+CONFIDENCE: SOURCE-CONFIRMED (operators.mod floored path)
+
+F006 | floored mod negative divisor
+SETUP: empty sprite
+ACTION: say (10 mod (-3))
+EXPECT: -2
+TYPE: number
+CONFIDENCE: SOURCE-CONFIRMED
+
+F007 | equals number vs numeric string
+SETUP: empty sprite
+ACTION: say ("10" = 10)
+EXPECT: true
+TYPE: boolean
+CONFIDENCE: SOURCE-CONFIRMED (Cast.compare numeric)
+
+F008 | equals two numeric strings
+SETUP: empty sprite
+ACTION: say ("10" = "10.0")
+EXPECT: true
+TYPE: boolean
+CONFIDENCE: SOURCE-CONFIRMED
+
+F009 | equals non-numeric case-insensitive
+SETUP: empty sprite
+ACTION: say ("abc" = "ABC")
+EXPECT: true
+TYPE: boolean
+CONFIDENCE: SOURCE-CONFIRMED (Cast.compare toLowerCase)
+
+F014 | contains case-insensitive
+SETUP: empty sprite
+ACTION: say ("Hello" contains "hello")
+EXPECT: true
+TYPE: boolean
+CONFIDENCE: SOURCE-CONFIRMED
+
+=====================================================================
+DATA / LISTS (SOURCE-CONFIRMED)
+=====================================================================
+
+F021 | item of list index 0 is invalid
+SETUP: delete all of L; add "a" to L
+ACTION: say (item (0) of L)
+EXPECT: "" (empty string)
+TYPE: string
+CONFIDENCE: SOURCE-CONFIRMED (toListIndex < 1 → LIST_INVALID)
+
+F022 | item of list 1-based
+SETUP: delete all of L; add "a"; add "b"
+ACTION: say (item (2) of L)
+EXPECT: "b"
+TYPE: string
+CONFIDENCE: SOURCE-CONFIRMED
+
+F024 | insert at index 0 is no-op
+SETUP: delete all of L; add "b"
+ACTION: insert "a" at (0) of L; say (item (1) of L)
+EXPECT: "b"
+TYPE: string
+CONFIDENCE: SOURCE-CONFIRMED
+
+F028 | list contains with number vs text item
+SETUP: delete all of L; add "10"
+ACTION: say (L contains 10)
+EXPECT: true
+TYPE: boolean
+CONFIDENCE: SOURCE-CONFIRMED (Cast.compare in listContainsItem)
+
+F075 | item of empty list
+SETUP: delete all of L
+ACTION: say (item (1) of L)
+EXPECT: ""
+TYPE: string
+CONFIDENCE: SOURCE-CONFIRMED (LIST_INVALID / empty)
+
+=====================================================================
+LIMITS (SOURCE-CONFIRMED constants)
+=====================================================================
+
+F030 | list item limit constant
+SETUP: (document only; do not run 200001 adds in CI)
+ACTION: attempt to grow list past 200000 items
+EXPECT: adds beyond 200000 are blocked (length stays ≤ 200000)
+TYPE: limit / freeze-safety
+CONFIDENCE: SOURCE-CONFIRMED (LIST_ITEM_LIMIT = 200000)
+NOTE: full stress run is optional and slow; constant match is enough for parity docs
+
+F046 | clone limit constant
+SETUP: one sprite with "when I start as clone" optional no-op
+ACTION: green flag; repeat 400 [ create clone of myself ]; count isClone sprites
+EXPECT: clone count ≤ 300 (extra create clone no-ops)
+TYPE: limit / freeze-safety
+CONFIDENCE: SOURCE-CONFIRMED (Runtime.MAX_CLONES = 300)
+NOTE: G-Warp Engine.cloneLimit should match unless Infinite clones is on
+
+=====================================================================
+PEN QUIRK (SOURCE-CONFIRMED)
+=====================================================================
+
+F064 | pen color wrap period 101
+SETUP: pen extension on; set pen color to 0
+ACTION: change pen color by 101; read internal color param (or redraw compare)
+EXPECT: color parameter equivalent to 0 (wrapClamp range size 101, not 100)
+TYPE: extension state
+CONFIDENCE: SOURCE-CONFIRMED (MathUtil.wrapClamp(n,0,100); issue #2273)
+NOTE: observable via pen trail color match vs pure-100 period projects
+
+=====================================================================
+SUMMARY
+=====================================================================
+Count: 15 written fixtures (F002 F003 F005 F006 F007 F008 F009 F014
+       F021 F022 F024 F028 F075 F030 F046 F064 — 16 IDs; core set is 15
+       unique behaviors; F075 is extra empty-list case).
+
+Strict set of 15 primary:
+  F002 F003 F005 F006 F007 F008 F009 F014 F021 F022 F024 F028 F030 F046 F064
+
+Not included (still needs live UI or broader engine work):
+  T020 NaN display, T037 say 330, T052 hat restart, T071 Stop latency.
+
+Executable automation: NOT provided. Claude may later map these to a
+runner that drives reporters; until then treat as manual parity cards.
+
+Evidence: SOURCE-CONFIRMED against scratch-vm; G-Warp pass/fail = NOT TESTED
+in this G8 deliverable.
