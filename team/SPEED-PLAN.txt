@@ -21,3 +21,11 @@ NEXT STEPS (each one tested against grok/TESTS.txt fixtures + zombie.sb3 FPS bef
    variables, lists, if/else, repeat, motion. Unknown blocks fall back to the current runner.
 4. Warp loops: with 1-3, a "run without screen refresh" loop should finish in milliseconds.
 Target: zombie.sb3 at 30-60 FPS like TurboWarp.
+
+UPDATE 2026-10-18 (Claude) - block counts in 15 s of the zombie game (BROWSER-VERIFIED)
+- 6.4 million blocks ran: "if/else" 3.2 M and "start sound" 3.2 M (a tight loop restarting a
+  sound ~200,000 times a second), everything else tiny.
+- v15.46.2: restarting the same sound again within 30 ms is skipped (can't be heard).
+- Profile after that: the time is spread over the runner itself - evalNode wrappers 20%,
+  step 11%, querySelector/contains 10% (DOM lookups per block), cond 5%, pruneRemoved 4%.
+  => no single hot spot left; the real fix is CL1 (statement cache) + the compiler.

@@ -2285,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.46.1</span>
+<span class="app-version">Beta v15.46.2</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4632,7 +4632,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.46.1',label:'Beta v15.46.1',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.46.2',label:'Beta v15.46.2',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -13141,8 +13141,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const rate = rateOf(s), c = ac();
     if (wait) th.waitUntil = performance.now() + Math.max(0.01, Number(asset.duration) || 0.3) * 1000 / rate;
     // Scratch restarts a sound that is already playing on the same sprite
-    let gwMs = playingBy.get(s); if (!gwMs) playingBy.set(s, gwMs = new Map()); const gwOld = gwMs.get(asset.name); if (gwOld && playing.has(gwOld)) { try { gwOld.src?.stop(); } catch {} playing.delete(gwOld); }
-    const rec = { src: null, sprite: s, name: asset.name, gain: null }; playing.add(rec); gwMs.set(asset.name, rec);
+    let gwMs = playingBy.get(s); if (!gwMs) playingBy.set(s, gwMs = new Map()); const gwOld = gwMs.get(asset.name); if (gwOld && !wait && !loop && !from && playing.has(gwOld) && gwOld.t0 && performance.now() - gwOld.t0 < 30) return true; /* v15.46.2: restarting the same sound again within 30 ms can't be heard; skip it (a TurboWarp game did this 200,000 times a second) */ if (gwOld && playing.has(gwOld)) { try { gwOld.src?.stop(); } catch {} playing.delete(gwOld); }
+    const rec = { src: null, sprite: s, name: asset.name, gain: null, t0: performance.now() }; playing.add(rec); gwMs.set(asset.name, rec);
     bufferOf(asset).then(buf => {
       if (!buf || !playing.has(rec)) { playing.delete(rec); return; }
       const src = c.createBufferSource(), g = c.createGain(); src.buffer = buf; src.playbackRate.value = rate; src.loop = !!loop;
