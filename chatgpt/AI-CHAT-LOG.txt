@@ -222,3 +222,11 @@ SOURCE / TEST STATUS:
 NEXT STEP:
 Use team/WORKFLOW-START-HERE.txt, team/AI-STATUS.txt and team/CLAUDE-CHECKPOINT.txt. Claude must replace the preliminary checkpoint after verifying its real branch/baseline and recording actual tests. Do not reread archived snapshots or touch app.html/index.html without explicit authorization.
 --- END ENTRY ---
+
+
+--- ADDENDUM ---
+Date: 2026-10-18 (America/New_York)
+Task: Final queue deduplication follow-up.
+Correction/update to the cleanup entry above: team/CONTINUOUS-WORK-QUEUE.txt was reduced again from about 7.8 KB to about 4.6 KB (4,641 characters). Duplicate task IDs/descriptions were removed from the shared queue; contributor-specific numbered tasks now live in the corresponding team/TODO-CHATGPT.txt, team/TODO-GROK.txt, team/TODO-DEEPSEEK.txt, or team/TODO-GEMINI.txt. The shared queue holds cross-team dependencies, the P0 freeze/Stop priority, and model/owner gates.
+No app.html/index.html edit, integration, deployment or runtime test was performed.
+--- END ADDENDUM ---
