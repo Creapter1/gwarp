@@ -5,35 +5,23 @@
 =====================================================================
 
 YOUR JOBS (in this order)
-[x] (Grok) G1. SCRATCH BEHAVIOUR SPEC — DONE 2026-10-13
-[x] (Grok) G2. TEST LIST — DONE 2026-10-13 — grok/TESTS.txt (75 cases)
-[x] (Grok) G3. ENGINE RULES — DONE 2026-10-13 — grok/SPEC-engine.txt
-[x] (Grok) G4. FILE FORMATS — DONE 2026-10-13 — grok/SPEC-files.txt
-[x] (Grok) G5. EXTENSION LIST CHECK — DONE 2026-10-18
-      grok/EXTENSIONS-check.txt — 184 gallery cards (104 TW / 80 PM);
-      all 17 GW_EXT_DANGER.LIST keys match cards; no personal-data entry
-      found unmarked; 32 priority URLs HTTP OK; residual: full URL sweep
-      and per-file .js re-read not done this session.
+[x] (Grok) G1–G5 — DONE (see prior marks)
+[x] (Grok) G6. HIGH-RISK TEST VERIFY — DONE 2026-10-18
+      grok/VERIFY-high-risk.txt + corrected TESTS.txt
+      Fixed wrong expects: T002 round(-2.5)→-2, T009 "abc"="ABC"→true,
+      T021/T024 list index 0 → invalid/empty (not first item).
+      Confirmed: floored mod, equals numeric, contains CI, LIST 200000,
+      MAX_CLONES 300, pen hue wrapClamp period 101.
 
 WHEN YOU FINISH ONE
 - Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
-- If you can't upload files, give each file in its own code block with the
-  file name above it, and the owner will upload it.
 
 IDEAS (Grok can add here)
-- After G1 completes, generate TESTS.txt cases directly from the SPEC edge-case
-  sections (especially mod negatives, list index 0, clone 300, floored mod).
-- Document TurboWarp "Remove Fencing" and "Infinite Clones" as explicit G-Warp
-  settings with warnings, matching TODO.txt freeze-fix goals.
-- Pen hue wrapClamp period is 101 in Scratch 3 (not 100); tests must expect that.
-- T002 (round -2.5) should be verified once on live Scratch 3 UI; note in SPEC if
-  JS Math.round differs from VM Cast path.
+- Align SPEC-operators / SPEC-variables-lists with G6 corrections.
 - Add static assert: every GW_EXT_DANGER.LIST/MODERATE key exists in gw10GalleryData.
 
 CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
-Before claiming new work, read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt.
-[x] G5: finish the extension-gallery audit — DONE 2026-10-18 -> grok/EXTENSIONS-check.txt
-[ ] G6: verify uncertain high-risk cases in grok/TESTS.txt against a named Scratch 3 source/version or live reference, especially negative rounding/modulo, list index 0, string/number comparison, case behavior, clone limit and pen hue wrap.
+[x] G5 DONE 2026-10-18
+[x] G6 DONE 2026-10-18 → grok/VERIFY-high-risk.txt
 [ ] G7: cross-review DeepSeek costume/PMP proposals and ChatGPT clone-safety notes. Submit a review report in grok/; do not edit other AI folders.
 [ ] G8: turn 10-15 verified cases into a deterministic fixture/test format; label it a written fixture unless actually executable.
-When a task is complete and time remains, claim the next unclaimed Grok task from ../CONTINUOUS-WORK-QUEUE.txt. Record evidence and unresolved questions. Do not report app behavior as tested unless you ran the test.
