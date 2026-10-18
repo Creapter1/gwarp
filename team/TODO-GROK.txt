@@ -5,18 +5,19 @@
 =====================================================================
 
 YOUR JOBS (in this order)
-[x] (Grok) G1–G8 — DONE 2026-10-18
-[x] (Grok) G9. ALIGN SPECs WITH G6 — DONE 2026-10-18
-      grok/SPEC-operators.txt + SPEC-variables-lists.txt
-      Explicit G6 notes: round(-2.5)=-2, case-insensitive equals,
-      list index 0 invalid, insert-at-0 no-op; fixture IDs cross-linked.
+[x] (Grok) G1–G9 — DONE 2026-10-18
+[x] (Grok) G10. STATIC ASSERT DANGER KEYS ⊆ GALLERY — DONE 2026-10-18
+      grok/ASSERT-ext-danger-keys.txt
+      LIST 17/17 and MODERATE 46/46 keys present in gw10GalleryData.
+      Proposed console self-test snippet (not wired into app.html).
 
 WHEN YOU FINISH ONE
 - Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
 
 IDEAS (Grok can add here)
-- Add static assert: every GW_EXT_DANGER.LIST/MODERATE key exists in gw10GalleryData.
-- Optional residual from G5: full URL sweep / per-file .js re-read (not blocking).
+- Residual G5: full HTTP sweep of all 184 gallery URLs (optional).
+- Investigate 184 gallery cards vs 183 keyOf values (empty slug?).
+- Align remaining SPEC-*.txt footnotes with FIXTURES if needed.
 
-CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
-[x] G5–G9 DONE 2026-10-18
+CROSS-AI REVIEW + CONTINUOUS WORK
+[x] G5–G10 DONE 2026-10-18
