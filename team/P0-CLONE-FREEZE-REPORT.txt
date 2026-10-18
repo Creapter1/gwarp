@@ -1,0 +1,31 @@
+P0 - CLONE FREEZE / SLOW STOP  (Claude, 2026-10-18)   Evidence: BROWSER-VERIFIED
+Browser: Chromium (Playwright, headless), 1440x900, offline copies of Tailwind/FontAwesome/JSZip.
+Test: "when flag clicked: forever create clone of myself" + "when I start as a clone: forever create clone of myself"
+Measured: clones, longest gap between frames, Stop time (in-page click until 0 clones).
+
+BEFORE (live Beta v15.45.0)
+ limit 300 (default) : 300 clones, worst frame gap 66 ms, Stop 18 ms            -> fine
+ Infinite clones ON  : 40,000-60,000 clones, frame gaps 13-18 s, page frozen at 9 s, Stop 4.2 s in page / 9.3 s wall
+ROOT CAUSES FOUND
+ 1. Every new clone counted ALL sprites (Engine.sprites.filter) -> slows down as clones grow.
+ 2. Drawing tens of thousands of sprites every frame (canvas work grows with clones) -> profile: 64-79% of time in canvas drawing.
+ 3. No time budget per frame for scripts (fixed in Claude's earlier v15.46 work: 250 ms budget, round-robin).
+FIXES IN THE v15.46.0 CANDIDATE
+ - O(1) clone counter (GW.cloneCount) instead of scanning all sprites.
+ - "Infinite clones" keeps a safety ceiling: GW.CLONE_CEILING = 5000 (one warning). Default 300 unchanged.
+ - Script time budget per frame + watchdog ("Your project is stuck") from the chaos work, now with a
+   6-second grace after Start and a 2 s stall threshold (it fired falsely on a big project's loading).
+ - Sound restart: O(1) per sprite instead of scanning all playing sounds.
+ - Computed menus (e.g. "switch costume to (join ...)"): no longer add a new <option> for every
+   new value, and only write the menu when the value changes.
+AFTER (candidate)
+ limit 300           : unchanged (Stop 18 ms)
+ Infinite clones ON  : 5,000 clones, frame gaps ~0.5 s, Stop 315 ms in page; test_4600 Stop 1.0 s -> PASS
+OWNER'S zombie.sb3 (TurboWarp, 4 sprites, ~50 clones, extensions lmsclonesplus + cloneplusplus)
+ - Loads in ~4 s. 2 blocks not supported yet: lmsclonesplus_touchingCloneWithVar, sensing_setdragmode.
+ - Runs, Stop 20 ms, no page errors. FPS only 2-5: the game does ~9 million comparisons per second
+   (AI loops). G-Warp interprets blocks; TurboWarp compiles them to JavaScript, so it's much faster.
+   This is the next big performance job (a compiler / faster evaluator), not a clone-limit problem.
+NOT DONE / RISKS
+ - Real-browser (non-headless) audio timing not tested.  - Firefox not tested.
+ - 5000 ceiling is a G-Warp safety choice; TurboWarp's infinite clones has no ceiling.

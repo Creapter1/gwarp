@@ -1,38 +1,21 @@
-G-WARP — CLAUDE CHECKPOINT
-Refreshed: 2026-10-18 by ChatGPT (handoff only; Claude must refresh this after verification)
-Status: PRELIMINARY METADATA CHECKPOINT — NOT RUNTIME EVIDENCE
+G-WARP - CLAUDE CHECKPOINT (Claude, 2026-10-18)
+Model: Claude Opus 5.5 session (owner confirmed this chat is always Opus). Owner said "go ahead and work".
 
-REPOSITORY BASELINE OBSERVED
-- Branch: main
-- Latest main commit observed at this checkpoint refresh: 9fd16cb6b0e3557a932ade04e41d45cc36353c47
-- app.html blob: 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes)
-- index.html blob: d8cf02962b20c0379a51aab7d46d829925325dbd (586,179 bytes)
-- Current main tree at that reference still has these same app/index blob IDs as the earlier documented baseline. Cleanup commits since that tree are documentation-only.
-- Cleanup changes since the previous snapshot were documentation/workflow only. No app.html/index.html change, browser run, integration, or deployment was performed.
-- Evidence class: SOURCE-REPOSITORY-METADATA VERIFIED; runtime NOT TESTED.
-- Important: this is GitHub main metadata, not confirmation of Claude's local/authorized working copy or deployed website. Re-fetch hashes and inspect branch/diff before editing.
+BASELINE
+- main app.html = Beta v15.45.0, md5 a8cb9a7dce97b9bc4beef6b4bf7de74a (unchanged since 13 Oct). Not modified by this work.
+- Work copy (NOT uploaded yet): Beta v15.46.0 candidate, md5 recorded in team/P0-CLONE-FREEZE-REPORT.txt.
 
-GATES
-- Active Claude UI model label: NOT VERIFIED HERE. Claude must confirm it is exactly “Claude Opus 5.5”.
-- Owner authorization for an app.html/index.html change: NOT established by this documentation-cleanup request. Confirm before live integration.
-- Canonical website URL: still unconfirmed by owner; do not guess or replace legacy URLs.
+P0 RESULT (BROWSER-VERIFIED, Chromium headless, 1440x900): see team/P0-CLONE-FREEZE-REPORT.txt
+- Reproduced: freeze only happens with "Infinite clones" ON. Default 300 limit: Stop in 18 ms, 30-60 FPS.
+- Fixed in candidate: Stop with an infinite-clone bomb now 1.0 s (was frozen 4-20 s; owner saw 45 s).
 
-CURRENT TASK
-- Repository documentation cleanup: COMPLETED to this handoff's scope.
-- Next priority: reproduce and measure the reported clone/freeze/slow Stop behavior in a safe test copy. The 81,000-clone / approximately 45-second Stop report remains owner-reported, not independently reproduced.
-- Candidate status: chatgpt/clone-safety.js remains disconnected; do not assume the merge queue's PICK means it is safe or tested.
+STATUS
+- test_4600 (chaos): ALL PASS on the candidate.
+- Full old regression suite: RUNNING (results -> next checkpoint).
+- Owner's zombie.sb3 (TurboWarp clone project): loads, runs, Stop 20 ms, but only 2-5 FPS -
+  the project does ~9 million comparisons per second; G-Warp's block interpreter is too slow
+  for it (TurboWarp compiles blocks to JavaScript). Not a clone problem (only ~50 clones).
 
-CHECKS PERFORMED
-- Inspected GitHub repository directory listings and current file metadata.
-- Restored AI-TEAM.txt from the known-good blob specified by its recovery note; removed a malformed literal escaped work-log line and recorded the Grok G5 report status.
-- Added team/WORKFLOW-START-HERE.txt and team/AI-STATUS.txt; simplified team/README.txt and the master roadmap; reduced duplicate snapshot documents to pointers; removed chatgpt/README.txt after merging its useful notes into chatgpt/README.md.
-- Updated TODO.txt and CONTINUOUS-WORK-QUEUE.txt to distinguish delivered static audits from remaining live/browser acceptance.
-- No code syntax checks or runtime tests were part of the repository cleanup.
-
-NEXT ACTIONS (Claude: verify all before reliance)
-1. Confirm exact active model label + owner authorization; re-fetch main/working branch, commit, app/index hashes and diff.
-2. Read team/WORKFLOW-START-HERE.txt, team/AI-STATUS.txt, relevant TODO/queue lines, ENGINE-MAP and the narrow clone/Stop source region. Do not reread archived summaries.
-3. Safely reproduce the P0 issue, measure baseline and record actual test results; make no live source change before the owner authorizes its specific scope.
-
-UPDATE RULE
-Claude should overwrite this file after its real baseline/task checks. Keep it compact. Record actual test steps/environment/expected/actual outcomes; never copy in unrun tests or guessed results.
+NEXT
+1. Finish regression suite; if green, ask owner to approve uploading Beta v15.46.0.
+2. Speed project: a block compiler / faster evaluator (biggest remaining performance gap).
