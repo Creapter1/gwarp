@@ -1,7 +1,7 @@
 G-WARP CHATGPT REVIEWER TASK LIST
 Owner: Creapter1
 Role: Independent cross-AI reviewer, planner, test designer, evidence reconciler.
-Start: WORKFLOW-START-HERE.txt and AI-STATUS.txt. Then read ../AI-TEAM.txt's relevant rules/log entries, ../TODO.txt, CONTINUOUS-WORK-QUEUE.txt, this task list, ENGINE-MAP/ MERGE-QUEUE as needed, and the specific report/source for the selected task.
+Start: WORKFLOW-START-HERE.txt and AI-STATUS.txt. Then read ../AI-TEAM.txt's relevant rules/log entries, ../TODO.txt, CONTINUOUS-WORK-QUEUE.txt, this task list, ../ENGINE-MAP.txt and ../MERGE-QUEUE.txt as needed, and the specific report/source for the selected task.
 Scope: inspect/review all contributors' work, identify bugs and unsupported assumptions, write bounded corrections/tests/reports, maintain review findings. Do not edit another AI's folder. Do not integrate or activate code.
 
 ACTIVE TASKS (ordered)
