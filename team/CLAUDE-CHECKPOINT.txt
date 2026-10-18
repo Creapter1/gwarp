@@ -11,11 +11,12 @@ P0 RESULT (BROWSER-VERIFIED, Chromium headless, 1440x900): see team/P0-CLONE-FRE
 
 STATUS
 - test_4600 (chaos): ALL PASS on the candidate.
-- Full old regression suite: RUNNING (results -> next checkpoint).
+- Full old regression suite on the candidate: 432 PASS, 6 FAIL - all 6 are old 'version number in the title' checks that fail because the Beta is titled 'G-Warp Beta' (same as the live v15.45.0 Beta). No real regressions.
+- Candidate to try: claude/app-v15.46.0-candidate.html (separate file; the live app.html is untouched).
 - Owner's zombie.sb3 (TurboWarp clone project): loads, runs, Stop 20 ms, but only 2-5 FPS -
   the project does ~9 million comparisons per second; G-Warp's block interpreter is too slow
   for it (TurboWarp compiles blocks to JavaScript). Not a clone problem (only ~50 clones).
 
 NEXT
-1. Finish regression suite; if green, ask owner to approve uploading Beta v15.46.0.
+1. Owner tries the candidate; if OK, Claude copies it over app.html (Beta v15.46.0).
 2. Speed project: a block compiler / faster evaluator (biggest remaining performance gap).
