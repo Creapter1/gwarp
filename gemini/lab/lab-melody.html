@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G-Warp Lab — Melody Engine (8 Distinct Styles)</title>
+  <style>
+    :root {
+      --bg: #0b0b14;
+      --panel: #141425;
+      --panel2: #1b1b31;
+      --line: #2a2a48;
+      --text: #ececf6;
+      --muted: #a3a3c2;
+      --violet: #8b5cf6;
+      --violet2: #a855f7;
+      --green: #4ade80;
+      --yellow: #facc15;
+      --red: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    h1 { margin: 0; font-size: 20px; color: var(--green); letter-spacing: 0.3px; }
+    .sub { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+      border-radius: 12px;
+      margin-bottom: 14px;
+    }
+    label { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+    select, input[type="text"] {
+      background: var(--panel2);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+    button {
+      background: var(--panel2);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 13px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--violet); background: #232342; }
+    button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+    button.primary { background: var(--violet); border-color: var(--violet2); color: #fff; }
+    button.stop { background: #2a121b; border-color: var(--red); color: #fecaca; }
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .style-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 11px 13px;
+      text-align: left;
+      background: var(--panel);
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+    }
+    .style-btn.active {
+      border-color: var(--green);
+      background: #191933;
+      box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.3);
+    }
+    .style-btn .top { display: flex; width: 100%; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text); }
+    .style-btn .play-pill { font-size: 11px; padding: 2px 8px; border-radius: 99px; background: var(--violet); color: #fff; }
+    .style-btn.active .play-pill { background: var(--green); color: #0b0b14; font-weight: 700; }
+    .style-btn .desc { font-size: 11.5px; color: var(--muted); font-weight: 400; line-height: 1.35; }
+    .roll-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+    .roll-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+    .stats { font-size: 12.5px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .stats strong { color: var(--green); }
+    canvas { width: 100%; height: 300px; background: #080811; border: 1px solid var(--line); border-radius: 8px; display: block; }
+    .legend { display: flex; gap: 16px; margin-top: 10px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>G-Warp Melody Engine Lab</h1>
+        <p class="sub"><code>window.GW_MELODY.make({ style, mood, key, bars, seed })</code> — 8 distinct styles, A–A'–A–Root 4-bar phrasing, Web Audio synth + chords + drums.</p>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <label>
+        Mood
+        <select id="moodSel" aria-label="Mood picker">
+          <option value="happy">happy</option>
+          <option value="chill">chill</option>
+          <option value="energetic">energetic</option>
+          <option value="sad">sad</option>
+          <option value="dark">dark</option>
+          <option value="epic">epic</option>
+        </select>
+      </label>
+      <label>
+        Key
+        <select id="keySel" aria-label="Musical key">
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="Eb">Eb</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="A">A</option>
+          <option value="Bb">Bb</option>
+        </select>
+      </label>
+      <label>
+        Seed
+        <input id="seedInp" type="text" value="gwarp-101" size="12" aria-label="Seed" />
+      </label>
+      <button id="newSeedBtn" type="button" class="primary">New seed</button>
+      <label>
+        <input id="backingChk" type="checkbox" checked />
+        Chords + Drums
+      </label>
+      <button id="stopBtn" type="button" class="stop">Stop</button>
+    </div>
+
+    <div id="styleGrid" class="style-grid" role="group" aria-label="Play melody style"></div>
+
+    <div class="roll-card">
+      <div class="roll-head">
+        <div id="rollTitle" class="stats">Style: <strong>lofi</strong></div>
+        <div id="rollStats" class="stats"></div>
+      </div>
+      <canvas id="pianoRoll" width="1020" height="300"></canvas>
+      <div class="legend">
+        <span><i class="dot" style="background:#8b5cf6"></i>Bar 1 &amp; Bar 3: Idea A</span>
+        <span><i class="dot" style="background:#a855f7"></i>Bar 2: Idea A changed (A')</span>
+        <span><i class="dot" style="background:#4ade80"></i>Bar 4: Cadence ending on Root note</span>
+        <span><i class="dot" style="background:#facc15"></i>Active Playhead</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="melody-engine.js"></script>
+  <script>
+    (() => {
+      'use strict';
+      const GW = window.GW_MELODY;
+      const styleGrid = document.getElementById('styleGrid');
+      const moodSel = document.getElementById('moodSel');
+      const keySel = document.getElementById('keySel');
+      const seedInp = document.getElementById('seedInp');
+      const newSeedBtn = document.getElementById('newSeedBtn');
+      const backingChk = document.getElementById('backingChk');
+      const stopBtn = document.getElementById('stopBtn');
+      const rollTitle = document.getElementById('rollTitle');
+      const rollStats = document.getElementById('rollStats');
+      const canvas = document.getElementById('pianoRoll');
+      const ctx = canvas.getContext('2d');
+
+      let currentStyle = 'lofi';
+      let currentNotes = [];
+      let currentBacking = null;
+      let audioCtx = null;
+      let activeNodes = [];
+      let playStartAudioTime = 0;
+      let playDurationBeats = 16;
+      let playBpm = 120;
+      let isPlaying = false;
+      let rafId = 0;
+
+      const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+      function midiName(m) {
+        return NOTE_NAMES[m % 12] + (Math.floor(m / 12) - 1);
+      }
+      function midiFreq(m) {
+        return 440 * Math.pow(2, (m - 69) / 12);
+      }
+
+      function buildStyleButtons() {
+        styleGrid.innerHTML = '';
+        for (const st of GW.STYLES) {
+          const spec = GW.STYLE_SPECS[st];
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'style-btn' + (st === currentStyle ? ' active' : '');
+          btn.dataset.style = st;
+          btn.innerHTML = `
+            <div class="top">
+              <strong>${st.toUpperCase()}</strong>
+              <span class="play-pill">▶ Play ${spec.bpm} BPM</span>
+            </div>
+            <div class="desc">${spec.desc}</div>
+          `;
+          btn.addEventListener('click', () => {
+            currentStyle = st;
+            updateActiveButtons();
+            regenerateAndPlay(true);
+          });
+          styleGrid.appendChild(btn);
+        }
+      }
+
+      function updateActiveButtons() {
+        document.querySelectorAll('.style-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.style === currentStyle);
+        });
+      }
+
+      function stopPlayback() {
+        isPlaying = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        for (const node of activeNodes) {
+          try { node.stop(); } catch (_) {}
+          try { node.disconnect(); } catch (_) {}
+        }
+        activeNodes = [];
+        drawPianoRoll(-1);
+      }
+
+      function scheduleLeadNote(ac, master, style, startSec, durSec, midi, vel) {
+        const osc = ac.createOscillator();
+        const gain = ac.createGain();
+
+        if (style === 'chiptune') osc.type = 'square';
+        else if (style === 'edm' || style === 'rock') osc.type = 'sawtooth';
+        else if (style === 'lofi' || style === 'jazz') osc.type = 'triangle';
+        else osc.type = 'sine';
+
+        osc.frequency.setValueAtTime(midiFreq(midi), startSec);
+
+        let osc2 = null;
+        if (style === 'cinematic' || style === 'edm' || style === 'pop') {
+          osc2 = ac.createOscillator();
+          osc2.type = style === 'cinematic' ? 'sawtooth' : 'triangle';
+          osc2.frequency.setValueAtTime(midiFreq(midi) * 1.003, startSec);
+        }
+
+        const filter = ac.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(style === 'lofi' ? 1400 : style === 'rock' ? 2600 : 4200, startSec);
+
+        const peak = Math.max(0.05, Math.min(0.35, vel * 0.28));
+        gain.gain.setValueAtTime(0.0001, startSec);
+        gain.gain.linearRampToValueAtTime(peak, startSec + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0008, startSec + Math.max(0.05, durSec));
+
+        osc.connect(filter);
+        if (osc2) osc2.connect(filter);
+        filter.connect(gain);
+        gain.connect(master);
+
+        osc.start(startSec);
+        osc.stop(startSec + durSec + 0.03);
+        activeNodes.push(osc);
+        if (osc2) {
+          osc2.start(startSec);
+          osc2.stop(startSec + durSec + 0.03);
+          activeNodes.push(osc2);
+        }
+      }
+
+      function scheduleChordPad(ac, master, startSec, durSec, midiNotes) {
+        for (const m of midiNotes) {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(midiFreq(m), startSec);
+          gain.gain.setValueAtTime(0.0001, startSec);
+          gain.gain.linearRampToValueAtTime(0.038, startSec + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.0008, startSec + durSec);
+          osc.connect(gain);
+          gain.connect(master);
+          osc.start(startSec);
+          osc.stop(startSec + durSec + 0.02);
+          activeNodes.push(osc);
+        }
+      }
+
+      function scheduleKick(ac, master, timeSec) {
+        const osc = ac.createOscillator();
+        const gain = ac.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(135, timeSec);
+        osc.frequency.exponentialRampToValueAtTime(38, timeSec + 0.11);
+        gain.gain.setValueAtTime(0.28, timeSec);
+        gain.gain.exponentialRampToValueAtTime(0.001, timeSec + 0.14);
+        osc.connect(gain);
+        gain.connect(master);
+        osc.start(timeSec);
+        osc.stop(timeSec + 0.15);
+        activeNodes.push(osc);
+      }
+
+      function scheduleHatOrSnare(ac, master, timeSec, isSnare) {
+        const len = Math.floor(ac.sampleRate * (isSnare ? 0.12 : 0.045));
+        const buf = ac.createBuffer(1, len, ac.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (len * 0.4));
+
+        const src = ac.createBufferSource();
+        src.buffer = buf;
+
+        const filter = ac.createBiquadFilter();
+        filter.type = isSnare ? 'bandpass' : 'highpass';
+        filter.frequency.setValueAtTime(isSnare ? 1800 : 6500, timeSec);
+
+        const gain = ac.createGain();
+        gain.gain.setValueAtTime(isSnare ? 0.16 : 0.07, timeSec);
+        gain.gain.exponentialRampToValueAtTime(0.001, timeSec + (isSnare ? 0.12 : 0.045));
+
+        src.connect(filter);
+        filter.connect(gain);
+        gain.connect(master);
+        src.start(timeSec);
+        activeNodes.push(src);
+      }
+
+      function playCurrentMelody() {
+        stopPlayback();
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return;
+        if (!audioCtx) audioCtx = new AudioContextClass();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const master = audioCtx.createGain();
+        master.gain.value = 0.85;
+        master.connect(audioCtx.destination);
+
+        playBpm = currentBacking.bpm;
+        const secPerBeat = 60 / playBpm;
+        const now = audioCtx.currentTime + 0.04;
+        playStartAudioTime = now;
+        playDurationBeats = 16;
+        isPlaying = true;
+
+        for (const ev of currentNotes) {
+          scheduleLeadNote(
+            audioCtx,
+            master,
+            currentStyle,
+            now + ev.t * secPerBeat,
+            ev.d * secPerBeat,
+            ev.n,
+            ev.v
+          );
+        }
+
+        if (backingChk.checked) {
+          for (const ch of currentBacking.chords) {
+            scheduleChordPad(
+              audioCtx,
+              master,
+              now + ch.t * secPerBeat,
+              ch.d * secPerBeat,
+              ch.notes
+            );
+          }
+          for (let beat = 0; beat < 16; beat++) {
+            const tBeat = now + beat * secPerBeat;
+            if (currentStyle === 'cinematic') {
+              if (beat % 4 === 0 || beat % 4 === 2) scheduleKick(audioCtx, master, tBeat);
+            } else {
+              if (beat % 2 === 0) scheduleKick(audioCtx, master, tBeat);
+              if (beat % 2 === 1) scheduleHatOrSnare(audioCtx, master, tBeat, true);
+              scheduleHatOrSnare(audioCtx, master, tBeat + 0.5 * secPerBeat, false);
+            }
+          }
+        }
+
+        function tick() {
+          if (!isPlaying) return;
+          const elapsedBeats = (audioCtx.currentTime - playStartAudioTime) / secPerBeat;
+          if (elapsedBeats > playDurationBeats) {
+            isPlaying = false;
+            drawPianoRoll(-1);
+            return;
+          }
+          drawPianoRoll(elapsedBeats);
+          rafId = requestAnimationFrame(tick);
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function drawPianoRoll(playheadBeat = -1) {
+        const W = canvas.width;
+        const H = canvas.height;
+        ctx.clearRect(0, 0, W, H);
+
+        const padL = 48, padR = 16, padT = 18, padB = 26;
+        const plotW = W - padL - padR;
+        const plotH = H - padT - padB;
+
+        const midis = currentNotes.map(n => n.n);
+        const minM = Math.min(...midis, currentBacking ? currentBacking.rootMidi - 2 : 55) - 2;
+        const maxM = Math.max(...midis, currentBacking ? currentBacking.rootMidi + 14 : 76) + 2;
+        const spanM = Math.max(12, maxM - minM + 1);
+
+        for (let b = 0; b < 4; b++) {
+          const x0 = padL + (b / 4) * plotW;
+          const bw = plotW / 4;
+          ctx.fillStyle = b % 2 === 0 ? '#0c0c18' : '#101022';
+          ctx.fillRect(x0, padT, bw, plotH);
+          ctx.strokeStyle = '#2a2a48';
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(x0, padT, bw, plotH);
+
+          ctx.fillStyle = '#a3a3c2';
+          ctx.font = '600 11px system-ui, sans-serif';
+          const barLabels = ['Bar 1 (Idea A)', "Bar 2 (A' changed)", 'Bar 3 (Idea A)', 'Bar 4 (Root ending)'];
+          ctx.fillText(barLabels[b], x0 + 8, H - 8);
+        }
+
+        ctx.strokeStyle = '#1b1b31';
+        ctx.lineWidth = 1;
+        for (let beat = 1; beat < 16; beat++) {
+          if (beat % 4 === 0) continue;
+          const x = padL + (beat / 16) * plotW;
+          ctx.beginPath();
+          ctx.moveTo(x, padT);
+          ctx.lineTo(x, padT + plotH);
+          ctx.stroke();
+        }
+
+        const rowH = plotH / spanM;
+        ctx.font = '10px ui-monospace, monospace';
+        for (let m = minM; m <= maxM; m++) {
+          const y = padT + (maxM - m) * rowH;
+          if (m % 12 === (currentBacking.rootMidi % 12)) {
+            ctx.fillStyle = 'rgba(74, 222, 128, 0.07)';
+            ctx.fillRect(padL, y, plotW, rowH);
+          }
+          if (m % 3 === 0 || m === currentBacking.rootMidi) {
+            ctx.fillStyle = m === currentBacking.rootMidi ? '#4ade80' : '#a3a3c2';
+            ctx.fillText(midiName(m), 8, y + rowH * 0.8);
+          }
+        }
+
+        for (const ev of currentNotes) {
+          const x = padL + (ev.t / 16) * plotW;
+          const w = Math.max(4, (ev.d / 16) * plotW - 1.5);
+          const y = padT + (maxM - ev.n) * rowH + 1;
+          const h = Math.max(5, rowH - 2);
+
+          const barIdx = Math.floor(ev.t / 4);
+          let fill = '#8b5cf6';
+          if (barIdx === 1) fill = '#a855f7';
+          if (barIdx === 3) fill = '#4ade80';
+
+          ctx.fillStyle = fill;
+          ctx.beginPath();
+          ctx.roundRect(x, y, w, h, 3);
+          ctx.fill();
+
+          ctx.strokeStyle = '#ececf6';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+
+        if (playheadBeat >= 0 && playheadBeat <= 16) {
+          const px = padL + (playheadBeat / 16) * plotW;
+          ctx.strokeStyle = '#facc15';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(px, padT);
+          ctx.lineTo(px, padT + plotH);
+          ctx.stroke();
+        }
+      }
+
+      function regenerateAndPlay(shouldPlay) {
+        const opts = {
+          style: currentStyle,
+          mood: moodSel.value,
+          key: keySel.value,
+          bars: 4,
+          seed: seedInp.value.trim() || 'gwarp-101'
+        };
+        currentNotes = GW.make(opts);
+        currentBacking = GW.getBackingForStyle(opts);
+
+        const midis = currentNotes.map(n => n.n);
+        const lastNote = currentNotes[currentNotes.length - 1];
+        rollTitle.innerHTML = `Style: <strong>${currentStyle.toUpperCase()}</strong> | Mood: <strong>${opts.mood}</strong> | Key: <strong>${opts.key}</strong>`;
+        rollStats.innerHTML = `Notes: <strong>${currentNotes.length}</strong> | Range: <strong>${midiName(Math.min(...midis))}–${midiName(Math.max(...midis))}</strong> | Final Root: <strong>${midiName(lastNote.n)} (${lastNote.n})</strong>`;
+
+        drawPianoRoll(-1);
+        if (shouldPlay) playCurrentMelody();
+      }
+
+      newSeedBtn.addEventListener('click', () => {
+        seedInp.value = 'gw-' + Math.floor(1000 + Math.random() * 9000);
+        regenerateAndPlay(true);
+      });
+      moodSel.addEventListener('change', () => regenerateAndPlay(true));
+      keySel.addEventListener('change', () => regenerateAndPlay(true));
+      seedInp.addEventListener('change', () => regenerateAndPlay(false));
+      stopBtn.addEventListener('click', stopPlayback);
+
+      buildStyleButtons();
+      regenerateAndPlay(false);
+    })();
+  </script>
+</body>
+</html>
