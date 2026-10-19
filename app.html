@@ -2284,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.47.0</span>
+<span class="app-version">Beta v15.48.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4194,6 +4194,8 @@ IMPORTANT:
             return GW.condition(block);
         };
         GW.list = function(name) { if (!Engine.lists[name]) Engine.lists[name] = []; return Engine.lists[name]; };
+        // v15.48.0 (Claude, from Grok's fixtures): list positions follow Scratch exactly ("last", "random", "all"; 0 or past the end does nothing)
+        GW.toListIndex = function(v, len, acceptAll) { const t = String(v ?? ''); if (t === 'all') return acceptAll ? 'ALL' : 0; if (t === 'last') return len > 0 ? len : 0; if (t === 'random' || t === 'any') return len > 0 ? 1 + Math.floor(Math.random() * len) : 0; const n0 = Number(t.trim() === '' ? 0 : t), i = Math.floor(Number.isNaN(n0) ? 0 : n0); return i < 1 || i > len ? 0 : i; };
         GW.refreshListMonitors = function() {
             document.querySelectorAll('[data-list-monitor]').forEach(el => {
                 const name=el.dataset.listMonitor; el.textContent=`${name}: ${(Engine.lists[name]||[]).join('  ')}`;
@@ -4269,9 +4271,9 @@ IMPORTANT:
                 case 'show_var': Engine.variableVisible[sel]=true;GW.ensureMonitor('var',sel);GW.refreshVariableMonitors();return;
                 case 'hide_var': Engine.variableVisible[sel]=false;GW.refreshVariableMonitors();return;
                 case 'list_add': GW.list(sel).push(text(0));GW.refreshListMonitors();return;
-                case 'list_delete': {const a=GW.list(sel),i=Math.max(1,Math.floor(n(0)))-1;if(i>=0&&i<a.length)a.splice(i,1);GW.refreshListMonitors();return;}
-                case 'list_insert': {const a=GW.list(sel),i=Math.max(1,Math.floor(n(1)))-1;a.splice(Math.min(i,a.length),0,text(0));GW.refreshListMonitors();return;}
-                case 'list_replace': {const a=GW.list(sel),i=Math.max(1,Math.floor(n(0)))-1;if(i<a.length)a[i]=text(1);GW.refreshListMonitors();return;}
+                case 'list_delete': {const a=GW.list(sel),i=GW.toListIndex(text(0),a.length,true);if(i==='ALL')a.length=0;else if(i)a.splice(i-1,1);GW.refreshListMonitors();return;}
+                case 'list_insert': {const a=GW.list(sel),i=GW.toListIndex(text(1),a.length+1,false);if(i&&i<=200000)a.splice(i-1,0,text(0));GW.refreshListMonitors();return;}
+                case 'list_replace': {const a=GW.list(sel),i=GW.toListIndex(text(0),a.length,false);if(i)a[i-1]=text(1);GW.refreshListMonitors();return;}
                 case 'list_clear': GW.lists[sel]=[];GW.refreshListMonitors();return;
                 case 'list_show': Engine.listVisible[sel]=true;GW.ensureMonitor('list',sel);GW.refreshListMonitors();return;
                 case 'list_hide': Engine.listVisible[sel]=false;GW.refreshListMonitors();return;
@@ -4303,7 +4305,7 @@ IMPORTANT:
                 case 'op_abs': return Math.abs(Number(GW.resolve(ins[0]?.value)));
                 case 'op_join': return String(GW.resolve(ins[0]?.value))+String(GW.resolve(ins[1]?.value));
                 case 'op_length': return String(GW.resolve(ins[0]?.value)).length;
-                case 'op_letter': {const i=Math.max(1,Math.floor(Number(GW.resolve(ins[0]?.value))))-1;return String(GW.resolve(ins[1]?.value)).charAt(i);}
+                case 'op_letter': {const i=(Number(GW.resolve(ins[0]?.value))||0)-1,s=String(GW.resolve(ins[1]?.value));return i<0||i>=s.length?'':s.charAt(i);}
                 case 'op_random': {const a=Number(GW.resolve(ins[0]?.value)),b=Number(GW.resolve(ins[1]?.value));return Math.floor(Math.random()*(b-a+1))+a;}
                 case 'list_item': return GW.list(sel())[Math.max(1,Math.floor(n(0)))-1]??'';
                 case 'list_length': return GW.list(sel()).length;
@@ -4631,7 +4633,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.47.0',label:'Beta v15.47.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.48.0',label:'Beta v15.48.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -5401,7 +5403,7 @@ IMPORTANT:
       case 'op_add':return n(GW9.evalNode(thread,node.args?.[0]))+n(GW9.evalNode(thread,node.args?.[1]));case 'op_sub':return n(GW9.evalNode(thread,node.args?.[0]))-n(GW9.evalNode(thread,node.args?.[1]));case 'op_mul':return n(GW9.evalNode(thread,node.args?.[0]))*n(GW9.evalNode(thread,node.args?.[1]));case 'op_div':{const b=n(GW9.evalNode(thread,node.args?.[1]));return b===0?0:n(GW9.evalNode(thread,node.args?.[0]))/b;}
       case 'op_mod':{const b=n(GW9.evalNode(thread,node.args?.[1]));return b===0?0:n(GW9.evalNode(thread,node.args?.[0]))%b;}
       case 'op_join':return String(GW9.evalNode(thread,node.args?.[0]))+String(GW9.evalNode(thread,node.args?.[1]));case 'op_length':return String(GW9.evalNode(thread,node.args?.[0])).length;
-      case 'op_letter':{const i=Math.max(1,Math.floor(n(GW9.evalNode(thread,node.args?.[0]))));return String(GW9.evalNode(thread,node.args?.[1])).charAt(i-1);}
+      case 'op_letter':{const i=(n(GW9.evalNode(thread,node.args?.[0]))||0)-1,s=String(GW9.evalNode(thread,node.args?.[1]));return i<0||i>=s.length?'':s.charAt(i);} /* v15.48.0: letter 0 or past the end is empty, like Scratch */
       case 'op_random':{const a=n(GW9.evalNode(thread,node.args?.[0])),b=n(GW9.evalNode(thread,node.args?.[1])),lo=Math.min(a,b),hi=Math.max(a,b);return Math.floor(Math.random()*(hi-lo+1))+lo;}
       case 'op_gt':return n(GW9.evalNode(thread,node.args?.[0]))>n(GW9.evalNode(thread,node.args?.[1]));case 'op_eq':return String(GW9.evalNode(thread,node.args?.[0]))===String(GW9.evalNode(thread,node.args?.[1]));
       case 'op_and':return !!GW9.evalNode(thread,node.args?.[0],'boolean',ownerBlock)&&!!GW9.evalNode(thread,node.args?.[1],'boolean',ownerBlock);case 'op_or':return !!GW9.evalNode(thread,node.args?.[0],'boolean',ownerBlock)||!!GW9.evalNode(thread,node.args?.[1],'boolean',ownerBlock);case 'op_not':return !GW9.evalNode(thread,node.args?.[0],'boolean',ownerBlock);
@@ -5441,11 +5443,14 @@ IMPORTANT:
   GW8.indexCustomProcedures=function(){
     GW8.customDefs={};
     document.querySelectorAll('#workspaceCanvas > .block-stack').forEach(st=>{const f=st.firstElementChild;if(f?.dataset.type==='define_custom'){const ins=[...f.querySelectorAll(':scope .block-input')];const name=(ins[0]?.value||'do something').trim();const params=(ins[1]?.value||'').split(',').map(s=>s.trim()).filter(Boolean);const body=[...(f.querySelector('.block-c-body')?.children||[])].filter(x=>x.classList.contains('scratch-block'));GW8.customDefs[name]={name,params,blocks:body,definition:f};}});return GW8.customDefs;};
+  // v15.47.1 (Claude): the variable menu and value box of a set/change block are found once until the code area changes
+  const gwVarCache=new WeakMap();
+  const gwVarEls=b=>{const ep=window.GW?.__wsEpoch;let e=gwVarCache.get(b);if(e&&e.ep===ep)return e;e={ep,sel:b.querySelector('.block-select'),raw:[...b.querySelectorAll('.block-input')].filter(x=>x.dataset.slotProxy!=='1')[0]||null};gwVarCache.set(b,e);return e;};
   ScriptThread.prototype.executeBlock=function(block){
     const type=block?.dataset?.type||'';
-    if(type==='get_var'){const name=block.querySelector('.block-select')?.value||'my variable';return GW9.scopedValue(this,name);}
+    if(type==='get_var'){const name=gwVarEls(block).sel?.value||'my variable';return GW9.scopedValue(this,name);}
     if(type==='set_var'||type==='change_var'){
-      const name=block.querySelector('.block-select')?.value||'my variable';const raw=[...block.querySelectorAll('.block-input')].filter(x=>x.dataset.slotProxy!=='1')[0]?.value??0;const val=GW8.resolveInput(this,block,0,raw);if(type==='set_var')GW9.setScopedValue(this,name,val);else GW9.setScopedValue(this,name,GW9.scopedValue(this,name)+GW8.coerceNumber(val));GW.refreshVariableMonitors?.();return;
+      const gwE=gwVarEls(block);const name=gwE.sel?.value||'my variable';const raw=gwE.raw?.value??0;const val=GW8.resolveInput(this,block,0,raw);if(type==='set_var')GW9.setScopedValue(this,name,val);else GW9.setScopedValue(this,name,GW9.scopedValue(this,name)+GW8.coerceNumber(val));GW.refreshVariableMonitors?.();return;
     }
     if(type==='call_custom'){
       const ins=[...block.querySelectorAll('.block-input')].filter(x=>x.dataset.slotProxy!=='1');const name=(ins[0]?.value||'').trim();const def=GW8.customDefs?.[name];if(!def)return;if(this.callStack.length>128){toast('Custom procedure recursion limit reached');return;}const argText=ins[1]?.value||'';const args=argText.split(',').map(s=>s.trim()).filter((_,i)=>i<def.params.length).map(s=>{const scoped=GW9.scopedValue(this,s);const n=Number(s);return s!==''&&scoped!==''?scoped:(Number.isFinite(n)?n:s);});const locals={};def.params.forEach((p,i)=>locals[p]=args[i]??'');this.callStack.push({type:'custom',name:def.name,blocks:def.blocks,pc:0,locals});return;
@@ -6656,14 +6661,14 @@ nodes.push(el);cur=b.next;}return nodes;};
   function loadBitmapFromSprite(){const c=by('gwBitmapCanvasV15'),s=activeSprite(),cost=s?.costumes?.[s.activeCostume];if(!c||!cost)return;const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);const gm=window.GW_VECTOR_EDITOR?.mapFor?.(cost)||{ox:64,oy:0,w:80,h:80,k:4.8};ctx.drawImage(cost.canvas,gm.ox,gm.oy,gm.w*gm.k,gm.h*gm.k);} /* v15.17.1: real proportions */
   function loadVectorFromSprite(){const svg=by('gwVectorCanvasV15');if(!svg)return;clearSvg();const s=activeSprite(),cost=s?.costumes?.[s.activeCostume];if(!cost)return;const img=document.createElementNS('http://www.w3.org/2000/svg','image');img.setAttribute('x','64');img.setAttribute('y','0');img.setAttribute('width','384');img.setAttribute('height','384');img.setAttribute('preserveAspectRatio','none');try{img.setAttribute('href',cost.canvas.toDataURL('image/png'));}catch{}svg.appendChild(img);refreshSvgList();}
   function svgPoint(e){const r=by('gwVectorCanvasV15').getBoundingClientRect();return {x:(e.clientX-r.left)*512/r.width,y:(e.clientY-r.top)*384/r.height};}
-  function onSvgPointerDown(e){const svg=by('gwVectorCanvasV15');if(e.target===svg||e.target.id==='gwV153Grid'||['rect','circle','line'].includes(state.svgTool)){const p=svgPoint(e);if(state.svgTool==='rect'){const r=document.createElementNS(svg.namespaceURI,'rect');r.setAttribute('x',p.x);r.setAttribute('y',p.y);r.setAttribute('width',80);r.setAttribute('height',60);r.setAttribute('fill',by('gwVectorFillV15').value);r.setAttribute('stroke',by('gwVectorStrokeV15').value);r.setAttribute('stroke-width',by('gwVectorStrokeWidthV15').value);svg.appendChild(r);selectSvg(r);return;}if(state.svgTool==='circle'){const c=document.createElementNS(svg.namespaceURI,'circle');c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',36);c.setAttribute('fill',by('gwVectorFillV15').value);c.setAttribute('stroke',by('gwVectorStrokeV15').value);c.setAttribute('stroke-width',by('gwVectorStrokeWidthV15').value);svg.appendChild(c);selectSvg(c);return;}if(state.svgTool==='line'){const l=document.createElementNS(svg.namespaceURI,'line');l.setAttribute('x1',p.x);l.setAttribute('y1',p.y);l.setAttribute('x2',p.x+80);l.setAttribute('y2',p.y);l.setAttribute('stroke',by('gwVectorStrokeV15').value);l.setAttribute('stroke-width',by('gwVectorStrokeWidthV15').value);svg.appendChild(l);selectSvg(l);return;}return;}selectSvg(e.target);if(state.svgTool==='select'){state.svgDrag={start:svgPoint(e),node:e.target,orig:readGeom(e.target)};}}
-  function onSvgPointerMove(e){if(!state.svgDrag)return;const p=svgPoint(e),d=state.svgDrag,dx=p.x-d.start.x,dy=p.y-d.start.y,n=d.node,o=d.orig;if(n.tagName==='rect'){n.setAttribute('x',o.x+dx);n.setAttribute('y',o.y+dy);}else if(n.tagName==='circle'){n.setAttribute('cx',o.cx+dx);n.setAttribute('cy',o.cy+dy);}else if(n.tagName==='line'){n.setAttribute('x1',o.x1+dx);n.setAttribute('y1',o.y1+dy);n.setAttribute('x2',o.x2+dx);n.setAttribute('y2',o.y2+dy);}refreshSelectionInfo();}
+  function onSvgPointerDown(e){if(window.GW_TRANSFORM&&!['rect','circle','line'].includes(state.svgTool))return;const svg=by('gwVectorCanvasV15');if(e.target===svg||e.target.id==='gwV153Grid'||['rect','circle','line'].includes(state.svgTool)){const p=svgPoint(e);if(state.svgTool==='rect'){const r=document.createElementNS(svg.namespaceURI,'rect');r.setAttribute('x',p.x);r.setAttribute('y',p.y);r.setAttribute('width',80);r.setAttribute('height',60);r.setAttribute('fill',by('gwVectorFillV15').value);r.setAttribute('stroke',by('gwVectorStrokeV15').value);r.setAttribute('stroke-width',by('gwVectorStrokeWidthV15').value);svg.appendChild(r);selectSvg(r);return;}if(state.svgTool==='circle'){const c=document.createElementNS(svg.namespaceURI,'circle');c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',36);c.setAttribute('fill',by('gwVectorFillV15').value);c.setAttribute('stroke',by('gwVectorStrokeV15').value);c.setAttribute('stroke-width',by('gwVectorStrokeWidthV15').value);svg.appendChild(c);selectSvg(c);return;}if(state.svgTool==='line'){const l=document.createElementNS(svg.namespaceURI,'line');l.setAttribute('x1',p.x);l.setAttribute('y1',p.y);l.setAttribute('x2',p.x+80);l.setAttribute('y2',p.y);l.setAttribute('stroke',by('gwVectorStrokeV15').value);l.setAttribute('stroke-width',by('gwVectorStrokeWidthV15').value);svg.appendChild(l);selectSvg(l);return;}return;}selectSvg(e.target);if(state.svgTool==='select'){state.svgDrag={start:svgPoint(e),node:e.target,orig:readGeom(e.target)};}}
+  function onSvgPointerMove(e){if(!state.svgDrag||window.GW_TRANSFORM)return;const p=svgPoint(e),d=state.svgDrag,dx=p.x-d.start.x,dy=p.y-d.start.y,n=d.node,o=d.orig;if(n.tagName==='rect'){n.setAttribute('x',o.x+dx);n.setAttribute('y',o.y+dy);}else if(n.tagName==='circle'){n.setAttribute('cx',o.cx+dx);n.setAttribute('cy',o.cy+dy);}else if(n.tagName==='line'){n.setAttribute('x1',o.x1+dx);n.setAttribute('y1',o.y1+dy);n.setAttribute('x2',o.x2+dx);n.setAttribute('y2',o.y2+dy);}refreshSelectionInfo();}
   function readGeom(n){const o={};['x','y','width','height','cx','cy','r','x1','y1','x2','y2'].forEach(k=>o[k]=Number(n.getAttribute(k)||0));return o;}
   function selectSvg(node){state.selectedSvg=node;by('gwSvgSelectionInfoV15').textContent=node?`${node.tagName} ${node.id||''}`:'Nothing selected';refreshSvgList();}
   function refreshSvgList(){const wrap=by('gwSvgObjectListV15'),svg=by('gwVectorCanvasV15');if(!wrap||!svg)return;wrap.innerHTML='';[...svg.children].filter(n=>!['gwV153Overlay','gwV153Grid','gwV153GridDefs'].includes(n.id)).forEach((n,i)=>{const b=document.createElement('button');b.textContent=`${i+1}. ${n.tagName}`;b.className='text-left text-[10px] px-2 py-1 rounded bg-slate-900 border border-slate-700 text-slate-300';b.onclick=()=>selectSvg(n);if(n===state.selectedSvg)b.classList.add('ring-1','ring-blue-400');wrap.appendChild(b);});}
   function refreshSelectionInfo(){const n=state.selectedSvg;if(!n)return;by('gwSvgSelectionInfoV15').textContent=`${n.tagName} x=${Math.round(Number(n.getAttribute('x')||n.getAttribute('cx')||0))} y=${Math.round(Number(n.getAttribute('y')||n.getAttribute('cy')||0))}`;}
   function groupSelected(){if(!state.selectedSvg)return;const svg=by('gwVectorCanvasV15'),g=document.createElementNS(svg.namespaceURI,'g');g.setAttribute('data-gwarp-group','1');g.appendChild(state.selectedSvg);svg.appendChild(g);selectSvg(g);}
-  function rasterizeVector(){const svg=by('gwVectorCanvasV15'),canvas=by('gwBitmapCanvasV15');if(!svg||!canvas)return;const xml=gwCleanSvgXml(svg);const data='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml);const img=new Image();img.onload=()=>{const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);setCostumeMode('bitmap');saveCostumeToSprite();};img.src=data;}
+  function rasterizeVector(){const svg=by('gwVectorCanvasV15'),canvas=by('gwBitmapCanvasV15');if(!svg||!canvas)return;const xml=gwCleanSvgXml(svg);const data='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml);const img=new Image();img.onload=()=>{const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);setCostumeMode('bitmap');/* v15.48.0: keep the costume's size and rotation centre (the old save made every converted costume 80 x 80) */if(window.GW_V15_COSTUME_EDITOR?.saveBitmap)window.GW_V15_COSTUME_EDITOR.saveBitmap(true);else saveCostumeToSprite();};img.src=data;}
   function traceWrapper(){const bmp=by('gwBitmapCanvasV15'),svg=by('gwVectorCanvasV15');if(!bmp||!svg)return;clearSvg();const img=document.createElementNS(svg.namespaceURI,'image');img.setAttribute('width',512);img.setAttribute('height',384);img.setAttribute('href',bmp.toDataURL('image/png'));svg.appendChild(img);state.selectedSvg=img;refreshSvgList();setCostumeMode('vector');}
   function setCostumeMode(m){const b=document.querySelector(`#gwCostumeModeV15 [data-mode="${m}"]`);b?.click();}
   function gwCleanSvgXml(svg){const c=svg.cloneNode(true);c.querySelectorAll('#gwV153Overlay,#gwV153Grid,#gwV153GridDefs,.gw-svg-selection,.gw-svg-handle').forEach(n=>n.remove());c.querySelectorAll('.gw-v153-selected').forEach(n=>n.classList.remove('gw-v153-selected'));c.setAttribute('width','512');c.setAttribute('height','384');c.setAttribute('xmlns','http://www.w3.org/2000/svg');return new XMLSerializer().serializeToString(c);}
@@ -6869,6 +6874,7 @@ nodes.push(el);cur=b.next;}return nodes;};
   function interceptVector(){
     const s=vsvg();if(!s||s.dataset.gwV153Bound==='1')return;s.dataset.gwV153Bound='1';
     s.addEventListener('pointerdown',e=>{
+      if(window.GW_TRANSFORM)return; /* v15.48.0: the new Select tool does selection; this one dragged shapes even while painting */
       if(e.target.closest('#gwV153Overlay'))return;
       const p=point(e),tool=by('gwSvgToolsV15')?.querySelector('.active')?.dataset?.svgTool||'select';
       if(tool==='select' && (e.target===s || e.target.id==='gwV153Grid')){VS.marquee={start:p,end:p,shift:e.shiftKey};return;}
@@ -6879,8 +6885,8 @@ nodes.push(el);cur=b.next;}return nodes;};
         s.setPointerCapture?.(e.pointerId);
       }
     },true);
-    s.addEventListener('pointermove',e=>{if(VS.drag){handleMove(e);return;}if(VS.marquee){VS.marquee.end=point(e);return;}},true);
-    s.addEventListener('pointerup',e=>{if(VS.drag){handleUp();return;}if(VS.marquee){const a=VS.marquee,b=VS.marquee.end;const x=Math.min(a.start.x,b.x),y=Math.min(a.start.y,b.y),w=Math.abs(b.x-a.start.x),h=Math.abs(b.y-a.start.y);const nodes=qa('#gwVectorCanvasV15 > *').filter(n=>n.id!=='gwV153Overlay').filter(n=>{const bb=geomBBox(n);return bb.x>=x&&bb.y>=y&&bb.x+bb.width<=x+w&&bb.y+bb.height<=y+h;});if(a.shift)nodes.push(...VS.selected);setSelected(nodes);VS.marquee=null;return;}},true);
+    s.addEventListener('pointermove',e=>{if(window.GW_TRANSFORM)return;if(VS.drag){handleMove(e);return;}if(VS.marquee){VS.marquee.end=point(e);return;}},true);
+    s.addEventListener('pointerup',e=>{if(window.GW_TRANSFORM)return;if(VS.drag){handleUp();return;}if(VS.marquee){const a=VS.marquee,b=VS.marquee.end;const x=Math.min(a.start.x,b.x),y=Math.min(a.start.y,b.y),w=Math.abs(b.x-a.start.x),h=Math.abs(b.y-a.start.y);const nodes=qa('#gwVectorCanvasV15 > *').filter(n=>n.id!=='gwV153Overlay').filter(n=>{const bb=geomBBox(n);return bb.x>=x&&bb.y>=y&&bb.x+bb.width<=x+w&&bb.y+bb.height<=y+h;});if(a.shift)nodes.push(...VS.selected);setSelected(nodes);VS.marquee=null;return;}},true);
     s.addEventListener('pointercancel',()=>{VS.drag=null;VS.marquee=null;});
     drawGrid();
   }
@@ -8894,6 +8900,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     return { mode, data: clone.innerHTML };
   }
   function pushUndo() { const s = snapshot(); const last = CS.undo[CS.undo.length - 1]; if (last && last.mode === s.mode && last.data === s.data) return; CS.undo.push(s); if (CS.undo.length > 40) CS.undo.shift(); CS.redo = []; updUndo(); }
+  window.GW_COSTUME_UNDO = { push: () => pushUndo() }; // v15.48.0: the Select tool takes one undo step per move / resize / rotate
   function updUndo() { const u = by('gwCosUndo'), r = by('gwCosRedo'); if (u) u.disabled = !CS.undo.length; if (r) r.disabled = !CS.redo.length; }
   function restore(s) {
     const mode = CE()?.state?.costumeMode || 'vector'; if (s.mode !== mode) return;
@@ -8949,7 +8956,7 @@ nodes.push(el);cur=b.next;}return nodes;};
   }
   function selectCostume(i) { const s = spr(); if (!s || i === s.activeCostume) return; if (CS.saveT) flushSave(); s.activeCostume = i; afterCostumeChange(); }
   function blankCanvas() { const c = document.createElement('canvas'); c.width = 80; c.height = 80; return c; }
-  function paintCostume() { const s = spr(); if (!s) return; if (CS.saveT) flushSave(); /* v15.46.3 (Claude): "Paint new" makes a VECTOR costume like Scratch 3 (it used to make a bitmap one) */ const gwCv = blankCanvas(); s.costumes.push({ name: uniq(s.costumes, 'costume' + (s.costumes.length + 1)), canvas: gwCv, res: 2, rc: { x: 240, y: 180 }, dataFormat: 'svg', svg: '<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360" viewBox="0 0 480 360"></svg>' }); s.activeCostume = s.costumes.length - 1; afterCostumeChange(); CE()?.setMode?.('vector'); syncMode(); }
+  function paintCostume() { const s = spr(); if (!s) return; if (CS.saveT) flushSave(); /* v15.46.3 (Claude): "Paint new" makes a VECTOR costume like Scratch 3 (it used to make a bitmap one) */ const gwCv = document.createElement('canvas'); gwCv.width = 480; gwCv.height = 360; /* v15.48.0: stage-size blank (the 80 px canvas made drawings tiny and off-centre on the stage); it fits the drawing when saved */ s.costumes.push({ name: uniq(s.costumes, 'costume' + (s.costumes.length + 1)), canvas: gwCv, res: 1, gwFit: true, rc: { x: 240, y: 180 }, dataFormat: 'svg', svg: '<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360" viewBox="0 0 480 360" data-gw-editor="1" data-gw-k="1.06667" data-gw-ox="0" data-gw-oy="0"><g id="gwEditorLayer" transform="matrix(0.9375 0 0 0.9375 0 0)"></g></svg>' }); /* v15.48.0: the whole drawing area is the stage, like Scratch (its edges are the stage's edges) */ s.activeCostume = s.costumes.length - 1; afterCostumeChange(); CE()?.setMode?.('vector'); syncMode(); }
   function duplicateCostume(i) { const s = spr(); if (!s) return; if (CS.saveT) flushSave(); const src = s.costumes[i], c = blankCanvas(); c.width = src.canvas.width; c.height = src.canvas.height; c.getContext('2d').drawImage(src.canvas, 0, 0); s.costumes.splice(i + 1, 0, { ...src, name: uniq(s.costumes, src.name), canvas: c }); s.activeCostume = i + 1; afterCostumeChange(); }
   function deleteCostume(i) {
     const s = spr(); if (!s || s.costumes.length < 2) return; const removed = s.costumes.splice(i, 1)[0], owner = s;
@@ -10849,8 +10856,7 @@ nodes.push(el);cur=b.next;}return nodes;};
       const n = GW9.slotNode(slot);
       if (!p || !n) continue;
       let v = ''; try { v = GW9.evalNode(th, n, 'value', b); } catch (e) { if (e && e === RETRY()) throw e; }
-      if (typeof v === 'number') v = Math.round(v * 1e10) / 1e10;
-      p.value = String(v ?? '');
+      p.value = String(v ?? ''); // v15.48.0: numbers exactly like Scratch (0.1 + 0.2 says 0.30000000000000004; they were rounded)
     }
   }
   const waiting = (th, now) => now < (th.waitUntil || 0) || !!th.waitCondition || !!th.waitBroadcast || !!th.motionTween;
@@ -10868,7 +10874,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     const start = now; let ops = 0;
     while (true) {
       if (this.finished || !Engine.isRunning) return;
-      if (this.__pep !== GW.__wsEpoch || this.callStack.length !== this.__pcl) { pruneRemoved(this); this.__pep = GW.__wsEpoch; this.__pcl = this.callStack.length; } if (this.finished) return;
+      if (this.__pep !== GW.__wsEpoch) { pruneRemoved(this); this.__pep = GW.__wsEpoch; } if (this.finished) return; // v15.47.1: frames pushed since the last check come from blocks that are in the code area
       const f = this.callStack[this.callStack.length - 1];
       if (!f) { this.finished = true; return; }
       const nx = next(f);
@@ -10893,10 +10899,10 @@ nodes.push(el);cur=b.next;}return nodes;};
         if (e && e === RETRY()) { if (f.list) f.i = idx; else { f.cur = idx > 0 ? kids(f.c)[idx - 1] : null; f.i = Math.max(0, idx - 1); } return; } // v15.10.0: run this block again when its answer is ready
         console.warn('[G-Warp runner]', b.dataset.type, e); try { window.GW_HEALTH?.blockError?.(this, b, e); } catch {}
       }
-      now = performance.now();
-      if (waiting(this, now)) return;
+      // v15.47.1: the clock is read only when a block made the script wait, or every 8 blocks for the frame-time check
+      if (this.waitUntil || this.waitCondition || this.waitBroadcast || this.motionTween) { now = performance.now(); if (waiting(this, now)) return; }
       if (++ops > LIMIT_OPS) { if (warpOn(this)) heavy(this, start); return; }
-      if (!warpOn(this) && now - start > FRAME_MS && ops > 50) return;
+      if (ops > 50 && (ops & 7) === 0) { now = performance.now(); if (now - start > FRAME_MS && !warpOn(this)) return; }
     }
   };
   window.GW_V1580_RUNNER = { version: '15.8.0', live: true };
@@ -11226,7 +11232,9 @@ nodes.push(el);cur=b.next;}return nodes;};
   /* ---------- runner hook ---------- */
   function callInfo(th, b) {
     if (!b.dataset.proc) return null;
-    const slots = [...b.querySelectorAll('.gw-input-slot[data-arg-index]')].filter(s => s.closest('.scratch-block') === b).sort((a, c) => a.dataset.argIndex - c.dataset.argIndex);
+    // v15.47.1: the input slots of a call are found once until the code area changes (this ran for every call)
+    const ep = window.GW?.__wsEpoch; let slots = b.__gwCI && b.__gwCI.ep === ep ? b.__gwCI.slots : null;
+    if (!slots) { slots = [...b.querySelectorAll('.gw-input-slot[data-arg-index]')].filter(s => s.closest('.scratch-block') === b).sort((a, c) => a.dataset.argIndex - c.dataset.argIndex); b.__gwCI = { ep, slots }; }
     const args = slots.map(s => {
       const n = window.GW9?.slotNode?.(s), kind = s.dataset.slotKind;
       if (!n) return kind === 'boolean' ? false : '';
@@ -11479,7 +11487,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     event_whenbackdropswitchesto: ['when_backdrop', [], ['BACKDROP']], event_broadcast: ['broadcast', [], ['BROADCAST_INPUT']], event_broadcastandwait: ['broadcast_wait', [], ['BROADCAST_INPUT']],
     control_wait: ['wait', ['DURATION']], control_repeat: ['repeat', ['TIMES']], control_forever: ['forever'], control_if: ['if'], control_if_else: ['if_else'], control_wait_until: ['wait_until'], control_repeat_until: ['repeat_until'],
     control_stop: ['stop', [], ['STOP_OPTION']], control_start_as_clone: ['when_clone'], control_create_clone_of: ['create_clone', [], ['CLONE_OPTION']], control_delete_this_clone: ['delete_clone'],
-    sensing_askandwait: ['ask', ['QUESTION']], sensing_resettimer: ['reset_timer'],
+    sensing_askandwait: ['ask', ['QUESTION']], sensing_resettimer: ['reset_timer'], sensing_setdragmode: ['set_drag_mode', [], ['DRAG_MODE']], // v15.47.1: set drag mode (core Scratch block)
     data_setvariableto: ['set_var', ['VALUE'], ['VARIABLE']], data_changevariableby: ['change_var', ['VALUE'], ['VARIABLE']], data_showvariable: ['show_var', [], ['VARIABLE']], data_hidevariable: ['hide_var', [], ['VARIABLE']],
     data_addtolist: ['list_add', ['ITEM'], ['LIST']], data_deleteoflist: ['list_delete', ['INDEX'], ['LIST']], data_deletealloflist: ['list_clear', [], ['LIST']], data_insertatlist: ['list_insert', ['ITEM', 'INDEX'], ['LIST']],
     data_replaceitemoflist: ['list_replace', ['INDEX', 'ITEM'], ['LIST']], data_showlist: ['list_show', [], ['LIST']], data_hidelist: ['list_hide', [], ['LIST']],
@@ -11524,6 +11532,8 @@ nodes.push(el);cur=b.next;}return nodes;};
       return { lit: '' };
     }
     const valNode = r => r.node || lit(r.lit);
+    // v15.47.1 (Claude): a reporter dropped into a menu input (e.g. join "i found you//" (n)) - keep it, worked out when the block runs
+    const dynMenu = (b, name) => { const inp = b?.inputs?.[name]; const v = inp && inp[1]; if (typeof v !== 'string') return null; const x = B[v]; if (!x || x.shadow) return null; try { return node(v); } catch { return null; } };
     const menuVal = (b, name) => { const r = b.fields?.[name] ? { lit: field(b, name) } : input(b, name); const v = r.node ? null : r.lit; return v == null ? '' : (SEL[v] ?? v); };
     // v15.10.0: extension reporters G-Warp runs itself remember their original block, so saving writes them back
     function node(id) {
@@ -11588,16 +11598,18 @@ nodes.push(el);cur=b.next;}return nodes;};
         case 'tw_getButtonIsDown': return { type: 'mouse_button', button: String(M('MOUSE_BUTTON') ?? '0') };
         case 'tw_getLastKeyPressed': return { type: 'last_key' };
         case 'lmsclonesplus_isClone': return { type: 'is_clone' };
-        case 'lmsclonesplus_spriteCloneCount': return { type: 'clone_count', target: M('INPUT') };
-        case 'lmsLooksPlus_spriteLayerNumber': return { type: 'layer_number', target: M('TARGET') };
-        case 'lmsLooksPlus_effectValue': return { type: 'effect_value', effect: String(field(b, 'EFFECT') || 'ghost').toLowerCase(), target: M('TARGET') };
+        case 'lmsclonesplus_spriteCloneCount': return { type: 'clone_count', target: M('INPUT'), targetExpr: dynMenu(b, 'INPUT') };
+        // v15.47.1 (Claude): Clones+ "touching clone with [variable] set to [value]?" - the menu holds a variable ID; G-Warp keeps variables by name
+        case 'lmsclonesplus_touchingCloneWithVar': { const raw = field(b, 'INPUTA') ?? M('INPUTA'); const all = [target, ...(pj.targets || []).filter(x => x.isStage)]; let nm = raw; for (const t of all) { const v = t?.variables?.[raw]; if (v) { nm = v[0]; break; } } return { type: 'touch_clone_var', name: String(nm ?? ''), args: [I('INPUTB')] }; }
+        case 'lmsLooksPlus_spriteLayerNumber': return { type: 'layer_number', target: M('TARGET'), targetExpr: dynMenu(b, 'TARGET') };
+        case 'lmsLooksPlus_effectValue': return { type: 'effect_value', effect: String(field(b, 'EFFECT') || 'ghost').toLowerCase(), target: M('TARGET'), targetExpr: dynMenu(b, 'TARGET') };
         case 'strings_letters_of': return { type: 'str_letters', args: [I('LETTER1'), I('LETTER2'), I('STRING')] };
         case 'strings_indexof': return { type: 'str_indexof', args: [I('SUBSTRING'), I('STRING')] };
         case 'DTcameracontrols_getX': return { type: 'cam_x' };
         case 'DTcameracontrols_getY': return { type: 'cam_y' };
         case 'DTcameracontrols_getZoom': return { type: 'cam_zoom' };
         case 'DTcameracontrols_getDirection': return { type: 'cam_dir' };
-        case 'lmsSoundExpanded_isSoundPlaying': return { type: 'sound_playing', sound: M('SOUND') };
+        case 'lmsSoundExpanded_isSoundPlaying': return { type: 'sound_playing', sound: M('SOUND'), soundExpr: dynMenu(b, 'SOUND') }; // v15.47.1: a reporter in the menu (join "hit//" n) is kept
         case 'layerExplorer_getSpriteLayers': return { type: 'layer_list' };
         // v15.9.1: Box2D Physics reporters, camera colour
         case 'griffpatch_getVelocityX': return { type: 'phys_vx' }; case 'griffpatch_getVelocityY': return { type: 'phys_vy' };
@@ -13237,24 +13249,27 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         case 'mouse_button': return buttons.has(Number(node.button) || 0);
         case 'last_key': return lastKey;
         case 'is_clone': return !!spr(th, owner)?.isClone;
-        case 'clone_count': { const me = spr(th, owner), t = findSprite(node.target, me?.isClone ? me.cloneRoot : me); const root = t?.isClone ? t.cloneRoot : t; return E.sprites.filter(s => s.isClone && (s.cloneRoot || s.cloneOf) === root).length; }
-        case 'layer_number': { const t = findSprite(node.target, spr(th, owner)); return order().indexOf(t) + 1; }
-        case 'effect_value': return effectValue(findSprite(node.target, spr(th, owner)), node.effect);
+        case 'touch_clone_var': { const me = spr(th, owner); if (!me) return false; const root = me.isClone ? (me.cloneRoot || me.cloneOf || me) : me, want = String(ev(th, node.args?.[0], owner) ?? ''), nm = node.name;
+          for (const o of E.sprites) { if (o === me || !(o === root || (o.isClone && (o.cloneRoot || o.cloneOf) === root))) continue; const v = o.localVars && nm in o.localVars ? o.localVars[nm] : E.variables?.[nm]; if (v !== undefined && String(v) === want && o.visible !== false && GW.spritesTouch?.(me, o)) return true; }
+          return false; }
+        case 'clone_count': { const me = spr(th, owner), t = findSprite(node.targetExpr ? ev(th, node.targetExpr, owner) : node.target, me?.isClone ? me.cloneRoot : me); const root = t?.isClone ? t.cloneRoot : t; return E.sprites.filter(s => s.isClone && (s.cloneRoot || s.cloneOf) === root).length; }
+        case 'layer_number': { const t = findSprite(node.targetExpr ? ev(th, node.targetExpr, owner) : node.target, spr(th, owner)); return order().indexOf(t) + 1; }
+        case 'effect_value': return effectValue(findSprite(node.targetExpr ? ev(th, node.targetExpr, owner) : node.target, spr(th, owner)), node.effect);
         case 'str_letters': { const a = Math.round(Number(ev(th, node.args?.[0], owner)) || 1), b = Math.round(Number(ev(th, node.args?.[1], owner)) || 0), s = String(ev(th, node.args?.[2], owner) ?? ''); return s.slice(Math.max(0, a - 1), Math.max(0, b)); }
         case 'str_indexof': { const sub = String(ev(th, node.args?.[0], owner) ?? '').toLowerCase(), s = String(ev(th, node.args?.[1], owner) ?? '').toLowerCase(); return s.indexOf(sub) + 1; }
         case 'cam_x': return GW.camera.x; case 'cam_y': return GW.camera.y; case 'cam_zoom': return GW.camera.zoom; case 'cam_dir': return GW.camera.dir;
-        case 'sound_playing': { const s = spr(th, owner), a = soundOf(s, node.sound); return [...playing].some(p => p.sprite === s && p.name === (a?.name ?? node.sound)); }
+        case 'sound_playing': { const s = spr(th, owner), nm = node.soundExpr ? ev(th, node.soundExpr, owner) : node.sound, a = soundOf(s, nm), key = a?.name ?? String(nm); const m = playingBy.get(s), r = m && m.get(key); if (r && playing.has(r)) return true; for (const p of playing) if (p.sprite === s && p.name === key) return true; return false; }
         case 'layer_list': return order().filter(s => !s.isClone).map((s, i) => `${s.name}: Layer ${i}`).join(' | ');
         case 'sprite_prop': if (node.prop && !BUILTIN.has(node.prop)) { if (node.target === '_stage_') return GV[node.prop] ?? 0; const t = E.sprites.find(s => !s.isClone && s.name === node.target); return t?.localVars?.[node.prop] ?? 0; } break;
       }
       return base.apply(this, arguments);
     };
-    const bl = G9.labelFor; G9.labelFor = t => ({ list_itemnum: 'item # in', mouse_button: 'mouse button down?', last_key: 'last key pressed', is_clone: 'is clone?', clone_count: 'clone count', layer_number: 'layer #', effect_value: 'effect value', str_letters: 'letters of', str_indexof: 'index of', cam_x: '📷 camera x', cam_y: '📷 camera y', cam_zoom: '📷 camera zoom', cam_dir: '📷 camera direction', sound_playing: 'sound playing?', layer_list: 'sprite layers' })[t] || bl(t);
+    const bl = G9.labelFor; G9.labelFor = t => ({ touch_clone_var: 'touching clone with', list_itemnum: 'item # in', mouse_button: 'mouse button down?', last_key: 'last key pressed', is_clone: 'is clone?', clone_count: 'clone count', layer_number: 'layer #', effect_value: 'effect value', str_letters: 'letters of', str_indexof: 'index of', cam_x: '📷 camera x', cam_y: '📷 camera y', cam_zoom: '📷 camera zoom', cam_dir: '📷 camera direction', sound_playing: 'sound playing?', layer_list: 'sprite layers' })[t] || bl(t);
   }
   // shapes for the block renderer (round vs pointy) and readable parts
   (function registerShapes(n = 0) {
     const R = window.GW_V1571; if (!R?.parts) return n < 30 && setTimeout(() => registerShapes(n + 1), 200);
-    ['mouse_button', 'is_clone', 'sound_playing'].forEach(t => R.bool.add(t));
+    ['mouse_button', 'is_clone', 'sound_playing', 'touch_clone_var'].forEach(t => R.bool.add(t));
     ['list_itemnum', 'last_key', 'clone_count', 'layer_number', 'effect_value', 'str_letters', 'str_indexof', 'cam_x', 'cam_y', 'cam_zoom', 'cam_dir', 'layer_list'].forEach(t => R.value.add(t));
     Object.assign(R.parts, { list_itemnum: ['item # of', '$0', 'in', '@list'], str_letters: ['letters', '$0', 'to', '$1', 'of', '$2'], str_indexof: ['index of', '$0', 'in', '$1'] });
   })();
@@ -13265,6 +13280,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     ['sec-looks', 'clear_effects', `<div class="scratch-block bg-looks gw-stack-block" data-type="change_effect">change <select class="block-select">${EFFECTS.map(e => `<option value="${e}">${e}</option>`).join('')}</select> effect by <input class="block-input" type="text" value="25"/></div>`],
     ['sec-looks', 'clear_effects', `<div class="scratch-block bg-looks gw-stack-block" data-type="set_effect">set <select class="block-select">${EFFECTS.map(e => `<option value="${e}">${e}</option>`).join('')}</select> effect to <input class="block-input" type="text" value="0"/></div>`],
     ['sec-sound', 'stop_all_sounds', '<div class="scratch-block bg-sound gw-stack-block" data-type="snd_clear_effects">clear sound effects</div>'],
+    ['sec-sensing', 'ask', '<div class="scratch-block bg-sensing gw-stack-block" data-type="set_drag_mode">set drag mode <select class="block-select"><option value="draggable">draggable</option><option value="not draggable">not draggable</option></select></div>'], // v15.47.1
     ['sec-sound', 'stop_all_sounds', '<div class="scratch-block bg-sound gw-stack-block" data-type="snd_change_effect">change <select class="block-select"><option value="pitch">pitch</option><option value="pan">pan left/right</option></select> effect by <input class="block-input" type="text" value="10"/></div>'],
     ['sec-sound', 'stop_all_sounds', '<div class="scratch-block bg-sound gw-stack-block" data-type="snd_set_effect">set <select class="block-select"><option value="pitch">pitch</option><option value="pan">pan left/right</option></select> effect to <input class="block-input" type="text" value="100"/></div>']
   ];
@@ -13312,6 +13328,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       case 'set_effect': setEffect(s, sels(b)[0], num(b, 0), false); return true;
       case 'change_effect': setEffect(s, sels(b)[0], num(b, 0), true); return true;
       case 'clear_effects': s.effects = {}; break; // the original block clears ghost
+      case 'set_drag_mode': s.draggable = String(sels(b)[0] || '').toLowerCase() === 'draggable'; return true; // v15.47.1
       case 'snd_set_effect': case 'snd_change_effect': { const k = String(sels(b)[0] || 'pitch').toLowerCase().startsWith('pan') ? 'pan' : 'pitch'; s.soundFx = s.soundFx || {}; let v = (t === 'snd_change_effect' ? (Number(s.soundFx[k]) || 0) : 0) + num(b, 0); if (k === 'pan') v = Math.max(-100, Math.min(100, v)); else v = Math.max(-360, Math.min(360, v)); s.soundFx[k] = v; playing.forEach(p => { if (p.sprite === s && p.src) { try { p.src.playbackRate.value = rateOf(s); } catch {} } }); return true; }
       case 'snd_clear_effects': s.soundFx = {}; return true;
       case 'goto_target': { const to = sels(b)[0] || 'random position'; if (to === 'random position') { s.x = Math.round(Math.random() * 480 - 240); s.y = Math.round(Math.random() * 360 - 180); } else if (to === 'mouse-pointer') { s.x = Math.round(E.mouse?.x || 0); s.y = Math.round(E.mouse?.y || 0); } else { const o = findSprite(to, s); if (o) { s.x = o.x; s.y = o.y; } } return true; }
@@ -13575,7 +13592,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   function applyMenuExpr(th, b) {
     let mx = b.__gw9mx; if (!mx || mx.raw !== b.dataset.gw9MenuExpr) { try { mx = b.__gw9mx = { raw: b.dataset.gw9MenuExpr, list: JSON.parse(b.dataset.gw9MenuExpr) }; } catch { return; } }
     let own = mx.own; if (!own || own.some(x => !x.isConnected)) own = mx.own = [...b.querySelectorAll('.block-select')].filter(x => x.closest('.scratch-block') === b); // v15.46.0: look the menus up once, not every time the block runs
-    mx.list.forEach(({ i, node }) => { let v = ''; try { v = window.GW9.evalNode(th, node, 'value', b); } catch {} const sel = own[i]; if (!sel) return; const sv = String(v ?? ''); if (!sel.__gwVals) sel.__gwVals = new Set([...sel.options].map(o => o.value)); if (!sel.__gwVals.has(sv)) { if (!sel.__gwDyn || !sel.__gwDyn.isConnected) { sel.__gwDyn = new Option(sv, sv); sel.appendChild(sel.__gwDyn); } if (sel.__gwDyn.value !== sv) { sel.__gwDyn.value = sv; sel.__gwDyn.text = sv; } } if (sel.__gwLast !== sv) { sel.__gwLast = sv; sel.value = sv; } }); // v15.46.0: one reusable option for computed values (the menu used to grow by one option per new value, slowing every run)
+    mx.list.forEach(({ i, node }) => { let v = ''; try { v = window.GW9.evalNode(th, node, 'value', b); } catch {} const sel = own[i]; if (!sel) return; const sv = String(v ?? ''); if (!sel.__gwVals) sel.__gwVals = new Set([...sel.options].map(o => o.value)); if (!sel.__gwVals.has(sv)) { if (!sel.__gwDyn || !sel.__gwDyn.isConnected) { sel.__gwDyn = new Option(sv, sv); sel.appendChild(sel.__gwDyn); } if (sel.__gwDyn.value !== sv) { sel.__gwDyn.value = sv; sel.__gwDyn.label = sv; /* v15.47.1: label, not text - changing the text was a code-area change every frame (caches thrown away, undo snapshots of 130 ms) */ } } if (sel.__gwLast !== sv) { sel.__gwLast = sv; sel.value = sv; } }); // v15.46.0: one reusable option for computed values (the menu used to grow by one option per new value, slowing every run)
   }
   function pickIndex(list, cur, v, word) {
     const n = list.length; if (!n) return -1; const str = String(v ?? '');
@@ -14284,7 +14301,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const now = performance.now(); let e = alphaCache.get(cv);
     if (!e || (e.w * e.h < 600000 && now - e.t > 1000 && (e.w !== cv.width || e.h !== cv.height || now - e.t > 3000))) {
       let a = null; try { const d = cv.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, cv.width, cv.height).data; a = new Uint8Array(cv.width * cv.height); for (let i = 0, j = 3; i < a.length; i++, j += 4) a[i] = d[j]; } catch {}
-      e = { t: now, w: cv.width, h: cv.height, a }; alphaCache.set(cv, e);
+      // v15.47.1 (Claude): an 8x8-pixel tile map of where the costume has any pixels, so empty areas are skipped at once
+      let tl = null, tw = 0, thh = 0, t2 = null, tw2 = 0, th2 = 0; if (a) { tw = Math.ceil(cv.width / 8); thh = Math.ceil(cv.height / 8); tl = new Uint8Array(tw * thh); tw2 = Math.ceil(tw / 8); th2 = Math.ceil(thh / 8); t2 = new Uint8Array(tw2 * th2); for (let y = 0; y < cv.height; y++) { const row = y * cv.width, tr = (y >> 3) * tw, tr2 = (y >> 6) * tw2; for (let x = 0; x < cv.width; x++) if (a[row + x] > 8) { tl[tr + (x >> 3)] = 1; t2[tr2 + (x >> 6)] = 1; } } }
+      e = { t: now, w: cv.width, h: cv.height, a, tl, tw, th: thh, t2, tw2, th2 }; alphaCache.set(cv, e);
     }
     return e;
   }
@@ -14305,12 +14324,26 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const A = P.A || (P.A = alphaOf(cv)); if (!A.a) return true;
     return A.a[py * A.w + px] > 8;
   }
+  // how full the sprite's pixels are inside a stage rectangle: 0 = nothing there (from the tile map), 1 = unknown/full
+  function fill(P, l, r, bo, t) {
+    const A = P.A || (P.A = alphaOf(P.c.canvas)); if (!A.a || !A.tl) return 1;
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    for (let k = 0; k < 4; k++) { const X = k & 1 ? r : l, Y = k & 2 ? t : bo; let dx = (X - P.s.x) / P.sc, dy = (P.s.y - Y) / P.sc; const rx = dx * P.cs + dy * P.sn, ry = -dx * P.sn + dy * P.cs; const px = (rx * P.f - P.b.x0) * P.kx, py = (ry - P.b.y0) * P.ky; if (px < x0) x0 = px; if (px > x1) x1 = px; if (py < y0) y0 = py; if (py > y1) y1 = py; }
+    let tx0 = Math.max(0, Math.floor(x0 / 8)), tx1 = Math.min(A.tw - 1, Math.floor(x1 / 8)), ty0 = Math.max(0, Math.floor(y0 / 8)), ty1 = Math.min(A.th - 1, Math.floor(y1 / 8));
+    if (tx0 > tx1 || ty0 > ty1) return 0;
+    let T = A.tl, W = A.tw; if ((tx1 - tx0 + 1) * (ty1 - ty0 + 1) > 256) { T = A.t2; W = A.tw2; tx0 >>= 3; tx1 >>= 3; ty0 >>= 3; ty1 >>= 3; } // big areas: 64-pixel tiles
+    let on = 0, all = 0; for (let y = ty0; y <= ty1; y++) { const row = y * W; for (let x = tx0; x <= tx1; x++) { all++; if (T[row + x]) on++; } }
+    return on / all;
+  }
   function touch(PA, b) {
     const PB = prep(b); if (!PB) return false;
     const l = Math.max(PA.l, PB.l), r = Math.min(PA.r, PB.r), bo = Math.max(PA.bo, PB.bo), t = Math.min(PA.t, PB.t);
     if (l > r || bo > t) return false;
+    const fa = fill(PA, l, r, bo, t); if (!fa) return false;
+    const fb = fill(PB, l, r, bo, t); if (!fb) return false;
+    const P1 = fb < fa ? PB : PA, P2 = P1 === PA ? PB : PA; // look at the emptier one first: most points stop there
     const step = Math.max(1, Math.sqrt(((r - l) * (t - bo)) / 900));
-    for (let y = bo + step / 2; y <= t; y += step) for (let x = l + step / 2; x <= r; x += step) if (has(PA, x, y) && has(PB, x, y)) return true;
+    for (let y = bo + step / 2; y <= t; y += step) for (let x = l + step / 2; x <= r; x += step) if (has(P1, x, y) && has(P2, x, y)) return true;
     return false;
   }
   GW.spritesTouch = (a, b) => { if (!a || !b || a === b) return false; const PA = prep(a); return !!PA && touch(PA, b); };
@@ -15539,7 +15572,13 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   const costume = () => { const s = sprite(); return s?.costumes?.[s.activeCostume] || null; };
   const num = v => +(+v).toFixed(4);
   function sizeOf(c) { const r = c?.res || 1, cv = c?.canvas; return { w: Math.max(1, (cv?.width || 80) / r), h: Math.max(1, (cv?.height || 80) / r) }; }
-  function mapFor(c) { const { w, h } = sizeOf(c); const k = Math.min(AREA.w / w, AREA.h / h); return { w, h, k, ox: AREA.x + (AREA.w - w * k) / 2, oy: AREA.y + (AREA.h - h * k) / 2 }; }
+  function mapFor(c) {
+    const { w, h } = sizeOf(c);
+    // v15.48.0: a costume made in G-Warp's editor remembers where it sat in the drawing area; use that (it can grow to fit the drawing)
+    const t = c?.dataFormat === 'svg' && typeof c.svg === 'string' && c.svg.slice(0, 400);
+    if (t && t.includes('data-gw-editor="1"')) { const g = n => { const x = new RegExp('data-gw-' + n + '="([-0-9.e+]+)"').exec(t); return x ? +x[1] : NaN; }; const k = g('k'), ox = g('ox'), oy = g('oy'); if (k > 0 && Number.isFinite(ox) && Number.isFinite(oy)) return { w, h, k, ox, oy }; }
+    const k = Math.min(AREA.w / w, AREA.h / h); return { w, h, k, ox: AREA.x + (AREA.w - w * k) / 2, oy: AREA.y + (AREA.h - h * k) / 2 };
+  }
   function parse(text) { try { const d = new DOMParser().parseFromString(String(text || ''), 'image/svg+xml'); const r = d.documentElement; return r && r.localName === 'svg' && !d.getElementsByTagName('parsererror').length ? r : null; } catch { return null; } }
   const ser = n => new XMLSerializer().serializeToString(n);
   const inner = root => [...root.childNodes].map(n => (n.nodeType === 1 ? ser(n) : (n.nodeType === 3 ? n.textContent.replace(/[<&]/g, ch => (ch === '<' ? '&lt;' : '&amp;')) : ''))).join('');
@@ -15569,24 +15608,50 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   }
 
   /* ---------- save: an SVG costume at the costume's own size ---------- */
+  // v15.48.0: where the drawing is, in drawing-area units (null when it can't be measured, e.g. the editor is hidden)
+  function contentBox(svg) {
+    let M; try { const sc = svg.getScreenCTM(); if (!sc || !svg.getClientRects().length) return null; M = sc.inverse(); } catch { return null; }
+    let b = null;
+    for (const n of svg.children) {
+      if (/^(defs|style|title|metadata)$/i.test(n.localName) || /^(gwV153|gwTx|gwpe)/.test(n.id || '') || n.classList?.contains('gw-svg-selection') || n.classList?.contains('gw-svg-handle')) continue;
+      let bb; try { bb = n.getBBox(); } catch { continue; } if (!bb || (!bb.width && !bb.height)) continue;
+      if (n.localName === 'image' && bb.width >= 511 && bb.height >= 383) continue; // a picture of the whole drawing area (bitmap turned into vector) is not a drawing
+      let m2; try { m2 = M.multiply(n.getScreenCTM()); } catch { continue; }
+      for (const [x, y] of [[bb.x, bb.y], [bb.x + bb.width, bb.y], [bb.x, bb.y + bb.height], [bb.x + bb.width, bb.y + bb.height]]) { const p = new DOMPoint(x, y).matrixTransform(m2); b = b ? { x0: Math.min(b.x0, p.x), y0: Math.min(b.y0, p.y), x1: Math.max(b.x1, p.x), y1: Math.max(b.y1, p.y) } : { x0: p.x, y0: p.y, x1: p.x, y1: p.y }; }
+    }
+    return b;
+  }
   let seq = 0;
   function saveVector(silent) {
     const svg = by('gwVectorCanvasV15'), c = costume(), s = sprite(); if (!svg || !c) return;
     const m = (svg.__gwMap && svg.__gwMap.costume === c) ? svg.__gwMap : { ...mapFor(c), costume: c };
     const clean = CE()?.cleanSvgXml ? CE().cleanSvgXml(svg) : ser(svg); const croot = parse(clean);
     const shapes = croot ? inner(croot) : '';
-    const w = num(m.w), h = num(m.h), k = m.k;
-    const text = `<svg xmlns="${NS}" xmlns:xlink="http://www.w3.org/1999/xlink" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" data-gw-editor="1" data-gw-k="${num(k)}" data-gw-ox="${num(m.ox)}" data-gw-oy="${num(m.oy)}">`
-      + `<g id="gwEditorLayer" transform="matrix(${num(1 / k)} 0 0 ${num(1 / k)} ${num(-m.ox / k)} ${num(-m.oy / k)})">${shapes}</g></svg>`;
+    const k = m.k;
+    // v15.48.0 (Claude): the costume grows to hold everything you drew (it used to cut off anything outside its old
+    // box), and a costume made with "Paint new" fits its drawing exactly, like Scratch. The rotation centre moves with
+    // the box, so nothing moves on the stage.
+    let X0 = 0, Y0 = 0, X1 = m.w, Y1 = m.h; const cb = contentBox(svg);
+    if (cb) {
+      const pad = 6 / k, u0 = (cb.x0 - m.ox) / k - pad, v0 = (cb.y0 - m.oy) / k - pad, u1 = (cb.x1 - m.ox) / k + pad, v1 = (cb.y1 - m.oy) / k + pad;
+      if (c.gwFit) { X0 = Math.floor(u0); Y0 = Math.floor(v0); X1 = Math.ceil(u1); Y1 = Math.ceil(v1); }
+      else { X0 = Math.min(0, Math.floor(u0)); Y0 = Math.min(0, Math.floor(v0)); X1 = Math.max(m.w, Math.ceil(u1)); Y1 = Math.max(m.h, Math.ceil(v1)); }
+      if (!(X1 - X0 >= 1 && Y1 - Y0 >= 1) || X1 - X0 > 4000 || Y1 - Y0 > 4000) { X0 = 0; Y0 = 0; X1 = m.w; Y1 = m.h; }
+    }
+    const W = X1 - X0, H = Y1 - Y0, oxN = m.ox + X0 * k, oyN = m.oy + Y0 * k, rc0 = c.rc ? { ...c.rc } : { x: m.w / 2, y: m.h / 2 };
+    const w = num(W), h = num(H);
+    const text = `<svg xmlns="${NS}" xmlns:xlink="http://www.w3.org/1999/xlink" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" data-gw-editor="1" data-gw-k="${num(k)}" data-gw-ox="${num(oxN)}" data-gw-oy="${num(oyN)}">`
+      + `<g id="gwEditorLayer" transform="matrix(${num(1 / k)} 0 0 ${num(1 / k)} ${num(-oxN / k)} ${num(-oyN / k)})">${shapes}</g></svg>`;
     const my = ++seq;
     const im = new Image();
     im.onload = () => {
       if (my !== seq) return; // a newer save is on its way
-      const R = Math.max(1, Math.min(4, 1024 / Math.max(m.w, m.h)));
+      const R = Math.max(1, Math.min(4, 1024 / Math.max(W, H)));
       const cv = c.canvas || (c.canvas = document.createElement('canvas'));
-      cv.width = Math.max(1, Math.ceil(m.w * R)); cv.height = Math.max(1, Math.ceil(m.h * R));
+      cv.width = Math.max(1, Math.ceil(W * R)); cv.height = Math.max(1, Math.ceil(H * R));
       const g = cv.getContext('2d'); g.clearRect(0, 0, cv.width, cv.height); g.drawImage(im, 0, 0, cv.width, cv.height);
-      c.res = cv.width / m.w; c.natural = true; c.rc = c.rc || { x: m.w / 2, y: m.h / 2 }; c.svg = text; c.dataFormat = 'svg'; c.__gwHQ = null;
+      c.res = cv.width / W; c.natural = true; c.rc = { x: rc0.x - X0, y: rc0.y - Y0 }; c.svg = text; c.dataFormat = 'svg'; c.__gwHQ = null;
+      if (svg.__gwMap && svg.__gwMap.costume === c) Object.assign(svg.__gwMap, { w: W, h: H, ox: oxN, oy: oyN });
       try { window.renderSpritesGrid?.(); window.GW?.refreshStage?.(); window.GW_V1570_STUDIO?.renderCostumeList?.(true); } catch {}
       if (!silent) try { window.GW?.toast?.('Costume saved (vector)'); } catch {}
       try { dispatchEvent(new CustomEvent('gwarp-costume-saved', { detail: { sprite: s?.name, costume: c.name, vector: true } })); } catch {}
@@ -18719,7 +18784,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     // buttons that need a selection
     const n = selected(), info = by('gwSvgSelectionInfoV15'), many = info && /\b([2-9]|\d\d+)\b/.test(info.textContent || '');
     const dis = (sel, off) => document.querySelectorAll(sel).forEach(b => { b.disabled = off; });
-    dis('#gwCosHead [data-sel]', !n); dis('#gwCosHead [data-a="group"]', !(n || many)); dis('#gwCosHead [data-a="ungroup"]', !(n && n.localName === 'g' && !n.hasAttribute('transform') && !n.dataset.gwOrig));
+    dis('#gwCosHead [data-sel]', !n); dis('#gwCosHead [data-a="group"]', !(n || many)); dis('#gwCosHead [data-a="ungroup"]', !(n && n.localName === 'g' && !n.dataset.gwOrig && !n.querySelector(':scope > svg'))); /* v15.48.0: a moved group can be ungrouped too */
     dis('#gwpeMode [data-sel]', !n); dis('#gwpeMode [data-a="paste"]', !clip);
     // the tool options box
     const show = { 'select': '.gwpe-o-sel', 'gw-sel': '', brush: m === 'bitmap' ? '.gwpe-o-bsize' : '.gwpe-o-vbrush', eraser: '.gwpe-o-bsize', text: '.gwpe-o-text' };
@@ -20949,7 +21014,9 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     clearHandles(); if (!RS.el || !RS.el.isConnected) return; const m = toSvg(RS.el), s = svgEl();
     const outline = document.createElementNS(NS, 'path'); outline.id = 'gwrsLine'; outline.setAttribute('class', 'gw-svg-handle'); outline.setAttribute('d', RS.el.getAttribute('d')); outline.setAttribute('transform', `matrix(${m.a} ${m.b} ${m.c} ${m.d} ${m.e} ${m.f})`);
     Object.entries({ fill: 'none', stroke: '#8b5cf6', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke', 'pointer-events': 'none' }).forEach(([k, v]) => outline.setAttribute(k, v)); s.appendChild(outline);
-    RS.segs.forEach((sg, i) => { if (!sg.p) return; const q = new DOMPoint(sg.p[0], sg.p[1]).matrixTransform(m);
+    // v15.48.0: a closed shape ends on its first point - that is ONE point (a circle showed 5 points and tore open)
+    let start = null; const dup = new Set(); RS.segs.forEach((sg, i) => { if (sg.c === 'M') start = sg.p; else if (start && sg.p && RS.segs[i + 1]?.c === 'Z' && Math.hypot(sg.p[0] - start[0], sg.p[1] - start[1]) < 0.01) dup.add(i); });
+    RS.segs.forEach((sg, i) => { if (!sg.p || dup.has(i)) return; const q = new DOMPoint(sg.p[0], sg.p[1]).matrixTransform(m);
       const h = document.createElementNS(NS, 'circle'); h.setAttribute('class', 'gw-svg-handle'); h.dataset.gwrs = i;
       Object.entries({ cx: q.x, cy: q.y, r: 6, fill: i === RS.pick ? '#8b5cf6' : '#fff', stroke: '#8b5cf6', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', style: 'cursor:move' }).forEach(([k, v]) => h.setAttribute(k, v));
       s.appendChild(h); RS.handles.push(h); });
@@ -21525,6 +21592,307 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
 <script id="gw-v4700-report">
 (() => { const V = s => `${s} (v15.47.0, Claude)`; const ADDED = [V('Costume animation: the Animation tab (bones in vector costumes, pose frames, in-betweens, play, make costumes) is out of preview and for everyone, with the “switch to / play animation” blocks. G-Spark comes with bones and “walk” + “wave” to try. Costumes made from an animation now follow its changes, renaming an animation renames its costumes and blocks, ← → step through frames and Space plays'), V('Flipbook for frame-by-frame animation: Onion skin in the paint editor (the costume before in violet, after in green, behind your drawing, lined up by rotation centre) and ▶ Play under the costume list (plays the costumes in order: speed, loop, which costumes)')];
   function apply(n = 0) { const R = window.GW_AI_REPORT?.data; if (!R || !R.__v4640) return n < 80 && setTimeout(() => apply(n + 1), 250); if (R.__v4700) return; R.__v4700 = true; R.added = [...ADDED, ...R.added]; } apply(); })();
+</script>
+<script id="gw-v4800-transform">
+(() => {
+  'use strict';
+  /* v15.48.0 (Claude): the Select tool of the vector costume editor, rebuilt to work like Scratch 3's paint editor.
+     Owner (emergency): "when you move a letter it jumps to a completely different location; shapes go somewhere else
+     when you reshape them; Scratch lets you grab them by the points and everything follows inside the square".
+     Why things jumped before: moving text / paths / groups ADDED a new translate on every mouse move (so it piled up),
+     the box was measured without the shape's own transform, and resize / rotate threw the old transform away.
+     Now every change is one clean matrix put in front of the transform the shape had when the drag started:
+       • click a shape: a box with 8 handles + a rotate handle (G-Warp violet). Drag inside the box to move it
+         (Shift = straight line), a corner to resize from the opposite corner (Shift = keep the shape), a side to
+         stretch, the round handle to rotate (Shift = 15° steps).
+       • Shift-click adds / removes shapes; drag on empty space for a selection box; Esc or a click on empty space
+         deselects; arrow keys move 1 (Shift 10); Delete removes.
+       • Each change is one undo step and is saved into the costume.
+     The handles live in their own layer over the canvas, so they can never be saved into a costume. */
+  if (window.GW_TRANSFORM) return;
+  const by = id => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const CE = () => window.GW_V15_COSTUME_EDITOR;
+  const svgEl = () => by('gwVectorCanvasV15');
+  const wrapEl = () => by('gwCostumeCanvasWrapV15');
+  const mode = () => CE()?.state?.costumeMode || 'vector';
+  const isArt = n => { const s = svgEl(); return !!n && n.nodeType === 1 && n.parentNode === s && !/^(defs|style|title|metadata)$/i.test(n.localName) && !/^(gwV153|gwpe|gwTx|gwEr)/.test(n.id || '') && !n.classList?.contains('gw-svg-selection') && !n.classList?.contains('gw-svg-handle'); };
+  const topArt = t => { const s = svgEl(); while (t && t.parentNode && t.parentNode !== s) t = t.parentNode; return isArt(t) ? t : null; };
+  const selectToolOn = () => { if (mode() !== 'vector' || window.GW_VECTOR_TOOLS2?.tool) return false; const a = document.querySelector('#gwSvgToolsV15 button.active'); return !!a && (a.dataset.gwpe === 'select' || a.dataset.svgTool === 'select'); };
+  const typing = e => !!e.target?.closest?.('input,textarea,select,[contenteditable="true"]');
+
+  const T = window.GW_TRANSFORM = { sel: [], drag: null, marquee: null, stats: { moves: 0 } };
+
+  /* ---------- geometry (all in the canvas's own units, 512 x 384) ---------- */
+  const rootM = el => { const s = svgEl(); return s.getScreenCTM().inverse().multiply(el.getScreenCTM()); };
+  const pt = e => { const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(svgEl().getScreenCTM().inverse()); return { x: p.x, y: p.y }; };
+  function boxOf(el) {
+    let b; try { b = el.getBBox(); } catch { return null; } if (!b) return null;
+    const m = rootM(el); let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const [x, y] of [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]]) { const p = new DOMPoint(x, y).matrixTransform(m); x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y); }
+    return Number.isFinite(x0) ? { x0, y0, x1, y1 } : null;
+  }
+  function unionBox(list) {
+    let u = null; for (const el of list) { const b = boxOf(el); if (!b) continue; u = u ? { x0: Math.min(u.x0, b.x0), y0: Math.min(u.y0, b.y0), x1: Math.max(u.x1, b.x1), y1: Math.max(u.y1, b.y1) } : b; }
+    if (u) { if (u.x1 - u.x0 < 1) { u.x0 -= 0.5; u.x1 += 0.5; } if (u.y1 - u.y0 < 1) { u.y0 -= 0.5; u.y1 += 0.5; } }
+    return u;
+  }
+  const fmt = m => `matrix(${[m.a, m.b, m.c, m.d, m.e, m.f].map(v => +v.toFixed(5)).join(' ')})`;
+  const apply = (D, list) => list.forEach(({ el, t0 }) => el.setAttribute('transform', (fmt(D) + ' ' + t0).trim()));
+  function tidy(el) { try { const t = el.transform?.baseVal; if (t && t.numberOfItems > 1) t.consolidate(); } catch {} }
+
+  /* ---------- selection ---------- */
+  function setSel(list) {
+    T.sel = [...new Set(list.filter(isArt))];
+    const st = CE()?.state; if (st) st.selectedSvg = T.sel[0] || null;
+    const V = window.GW_V153_VECTOR; if (V) { V.selected = T.sel.slice(); V.handles = null; }
+    document.querySelectorAll('#gwVectorCanvasV15 > .gw-v153-selected').forEach(n => n.classList.remove('gw-v153-selected'));
+    const info = by('gwSvgSelectionInfoV15'); if (info) info.textContent = T.sel.length ? `${T.sel.length} object${T.sel.length === 1 ? '' : 's'} selected` : 'Nothing selected';
+    // the toolbar buttons that need a selection follow it right away
+    const n = T.sel[0], dis = (q, off) => document.querySelectorAll(q).forEach(b => { b.disabled = off; });
+    dis('#gwCosHead [data-sel]', !n); dis('#gwpeMode [data-sel]', !n); dis('#gwCosHead [data-a="group"]', !n);
+    dis('#gwCosHead [data-a="ungroup"]', !T.sel.some(g => g.localName === 'g' && !g.hasAttribute('data-gw-orig') && !g.querySelector(':scope > svg')));
+    draw();
+  }
+  const undoPush = () => { try { window.GW_COSTUME_UNDO?.push?.(); } catch {} };
+  const save = () => { try { CE()?.save?.(true); } catch (e) { console.warn('[select tool] save', e); } };
+
+  /* ---------- the handles layer (outside the costume) ---------- */
+  const css = document.createElement('style'); css.id = 'gw-v4800-transform-css';
+  css.textContent = `#gwV153Overlay{display:none!important}
+#gwTxOverlay{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;pointer-events:none;z-index:5}
+#gwTxOverlay .box{fill:none;stroke:#8b5cf6;stroke-width:1.5;stroke-dasharray:5 3}
+#gwTxOverlay .h{fill:#fff;stroke:#8b5cf6;stroke-width:1.5;pointer-events:all}
+#gwTxOverlay .h:hover{fill:#ede9fe}
+#gwTxOverlay .rot{fill:#fff;stroke:#4ade80;stroke-width:2;pointer-events:all;cursor:grab}
+#gwTxOverlay .rotline{stroke:#8b5cf6;stroke-width:1.5}
+#gwTxOverlay .marq{fill:rgba(139,92,246,.10);stroke:#8b5cf6;stroke-width:1;stroke-dasharray:4 3}
+#gwTxOverlay .arrow{fill:none;stroke:#16a34a;stroke-width:1.6;stroke-linecap:round;pointer-events:none}`;
+  document.head.appendChild(css);
+  let ov = null;
+  function layer() {
+    const w = wrapEl(); if (!w) return null;
+    if (!ov || ov.parentNode !== w) { ov = document.createElementNS(NS, 'svg'); ov.id = 'gwTxOverlay'; ov.setAttribute('aria-hidden', 'true'); w.appendChild(ov); }
+    return ov;
+  }
+  const HANDLES = [['nw', 0, 0, 'nwse-resize'], ['n', .5, 0, 'ns-resize'], ['ne', 1, 0, 'nesw-resize'], ['e', 1, .5, 'ew-resize'], ['se', 1, 1, 'nwse-resize'], ['s', .5, 1, 'ns-resize'], ['sw', 0, 1, 'nesw-resize'], ['w', 0, .5, 'ew-resize']];
+  function draw() {
+    const o = layer(); if (!o) return; o.textContent = '';
+    const s = svgEl(), w = wrapEl(), bmp = mode() === 'bitmap'; if (!s || !w || !w.offsetWidth) return;
+    const wr = w.getBoundingClientRect(), ox = wr.left + w.clientLeft - w.scrollLeft, oy = wr.top + w.clientTop - w.scrollTop;
+    let scr;
+    if (bmp) { const c = by('gwBitmapCanvasV15'), r = c?.getBoundingClientRect(); if (!r || !r.width) return; scr = (x, y) => [r.left + x * r.width / c.width - ox, r.top + y * r.height / c.height - oy]; }
+    else { T.sel = T.sel.filter(n => n.isConnected && isArt(n)); const S = s.getScreenCTM(); if (!S) return; scr = (x, y) => { const p = new DOMPoint(x, y).matrixTransform(S); return [p.x - ox, p.y - oy]; }; }
+    const mk = (tag, a) => { const n = document.createElementNS(NS, tag); for (const k in a) n.setAttribute(k, a[k]); o.appendChild(n); return n; };
+    if (T.marquee) { const m = T.marquee, [ax, ay] = scr(Math.min(m.a.x, m.b.x), Math.min(m.a.y, m.b.y)), [bx, by2] = scr(Math.max(m.a.x, m.b.x), Math.max(m.a.y, m.b.y)); mk('rect', { class: 'marq', x: ax, y: ay, width: Math.max(0, bx - ax), height: Math.max(0, by2 - ay) }); }
+    const b = bmp ? BS.box() : (T.sel.length ? unionBox(T.sel) : null); if (!b) return;
+    const [x0, y0] = scr(b.x0, b.y0), [x1, y1] = scr(b.x1, b.y1);
+    mk('rect', { class: 'box', x: x0, y: y0, width: x1 - x0, height: y1 - y0 });
+    const cx = (x0 + x1) / 2; mk('line', { class: 'rotline', x1: cx, y1: y0, x2: cx, y2: y0 - 22 });
+    const r = mk('circle', { class: 'rot', cx, cy: y0 - 28, r: 8, 'data-h': 'rot' }); r.appendChild(Object.assign(document.createElementNS(NS, 'title'), { textContent: 'Rotate (Shift: 15° steps)' }));
+    mk('path', { class: 'arrow', d: `M${cx - 3.5} ${y0 - 31} a4 4 0 1 1 1 5.5 M${cx - 4.5} ${y0 - 26} l1 -2.6 l2.4 1.4` });
+    for (const [id, fx, fy, cur] of HANDLES) { const hx = x0 + (x1 - x0) * fx, hy = y0 + (y1 - y0) * fy; const h = mk('rect', { class: 'h', x: hx - 5, y: hy - 5, width: 10, height: 10, rx: 2, 'data-h': id }); h.style.cursor = cur; }
+  }
+
+  /* ---------- dragging ---------- */
+  function begin(kind, e, extra = {}) {
+    const p = pt(e), box = unionBox(T.sel); if (!box) return;
+    T.drag = { kind, p0: p, box, items: T.sel.map(el => ({ el, t0: el.getAttribute('transform') || '' })), moved: false, ...extra };
+  }
+  function onMove(e) {
+    const d = T.drag;
+    if (T.marquee) { T.marquee.b = pt(e); draw(); return; }
+    if (!d) return; e.preventDefault();
+    const p = pt(e), D = deltaFor(d.kind, d.p0, p, d.box, e);
+    apply(D, d.items); d.moved = true; T.stats.moves++; draw();
+  }
+  function deltaFor(kind, p0, p, b, e) {
+    let D = new DOMMatrix(); const d = { kind, p0 };
+    if (d.kind === 'move') {
+      let dx = p.x - d.p0.x, dy = p.y - d.p0.y;
+      if (e.shiftKey) { if (Math.abs(dx) > Math.abs(dy)) dy = 0; else dx = 0; }
+      if (window.GW_V153_VECTOR?.snap) { dx = Math.round((b.x0 + dx) / 8) * 8 - b.x0; dy = Math.round((b.y0 + dy) / 8) * 8 - b.y0; }
+      D = new DOMMatrix().translate(dx, dy);
+    } else if (d.kind === 'rot') {
+      const cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2;
+      let a = (Math.atan2(p.y - cy, p.x - cx) - Math.atan2(d.p0.y - cy, d.p0.x - cx)) * 180 / Math.PI;
+      if (e.shiftKey) a = Math.round(a / 15) * 15;
+      D = new DOMMatrix().translate(cx, cy).rotate(a).translate(-cx, -cy);
+    } else { // resize from the opposite side
+      const h = d.kind, fx = h.includes('w') ? 0 : h.includes('e') ? 1 : 0.5, fy = h.includes('n') ? 0 : h.includes('s') ? 1 : 0.5;
+      const ax = b.x0 + (b.x1 - b.x0) * (1 - fx), ay = b.y0 + (b.y1 - b.y0) * (1 - fy);
+      const hx = b.x0 + (b.x1 - b.x0) * fx, hy = b.y0 + (b.y1 - b.y0) * fy;
+      const lim = v => (Math.abs(v) < 0.02 ? (v < 0 ? -0.02 : 0.02) : v);
+      let sx = fx === 0.5 ? 1 : lim((p.x - ax) / (hx - ax)), sy = fy === 0.5 ? 1 : lim((p.y - ay) / (hy - ay));
+      if (e.shiftKey && fx !== 0.5 && fy !== 0.5) { const k = Math.max(Math.abs(sx), Math.abs(sy)); sx = Math.sign(sx) * k; sy = Math.sign(sy) * k; }
+      D = new DOMMatrix().translate(ax, ay).scale(sx, sy).translate(-ax, -ay);
+    }
+    return D;
+  }
+  function onUp() {
+    if (T.marquee) {
+      const m = T.marquee; T.marquee = null; const x0 = Math.min(m.a.x, m.b.x), x1 = Math.max(m.a.x, m.b.x), y0 = Math.min(m.a.y, m.b.y), y1 = Math.max(m.a.y, m.b.y);
+      if (x1 - x0 > 2 || y1 - y0 > 2) { const hit = [...svgEl().children].filter(isArt).filter(n => { const b = boxOf(n); return b && b.x0 <= x1 && b.x1 >= x0 && b.y0 <= y1 && b.y1 >= y0; }); setSel(m.add ? [...T.sel, ...hit] : hit); }
+      else draw();
+      return;
+    }
+    const d = T.drag; T.drag = null; if (!d) return;
+    if (d.moved) { d.items.forEach(({ el }) => tidy(el)); save(); }
+    draw();
+  }
+
+  function onDown(e) {
+    if (e.button !== 0 || !selectToolOn()) return;
+    const s = svgEl(), h = e.target.closest?.('#gwTxOverlay [data-h]');
+    if (!h && !(s && (e.target === s || s.contains(e.target)))) return;
+    e.stopPropagation(); e.preventDefault();
+    try { wrapEl()?.focus?.({ preventScroll: true }); } catch {}
+    if (h) { undoPush(); begin(h.dataset.h, e); return; }
+    const t = topArt(e.target), p = pt(e);
+    if (t) {
+      if (e.shiftKey) { setSel(T.sel.includes(t) ? T.sel.filter(n => n !== t) : [...T.sel, t]); return; }
+      if (!T.sel.includes(t)) setSel([t]);
+      undoPush(); begin('move', e); return;
+    }
+    const b = T.sel.length && unionBox(T.sel);
+    if (b && p.x >= b.x0 && p.x <= b.x1 && p.y >= b.y0 && p.y <= b.y1) { undoPush(); begin('move', e); return; } // inside the box: move, like Scratch
+    if (!e.shiftKey) setSel([]);
+    T.marquee = { a: p, b: p, add: e.shiftKey };
+  }
+
+  /* ---------- keys ---------- */
+  let keyT = 0, keyUndo = false;
+  function onKey(e) {
+    if (BS.rect && bmpSelectOn() && !typing(e) && wrapEl()?.offsetWidth) {
+      const k = e.key, step = e.shiftKey ? 10 : 1, dir = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[k];
+      if (dir) { e.preventDefault(); e.stopPropagation(); if (!keyUndo) { undoPush(); keyUndo = true; } BS.lift(); BS.float.D = new DOMMatrix().translate(dir[0], dir[1]).multiply(BS.float.D); BS.render(); draw(); clearTimeout(keyT); keyT = setTimeout(() => { keyUndo = false; save(); }, 400); return; }
+      if (k === 'Delete' || k === 'Backspace') { e.preventDefault(); e.stopPropagation(); BS.erase(); return; }
+      if (k === 'Escape') { BS.clear(); return; }
+    }
+    if (!T.sel.length || typing(e) || mode() !== 'vector' || !wrapEl()?.offsetWidth || document.querySelector('#gw18Anim')) return;
+    if (!selectToolOn()) return;
+    const k = e.key, step = e.shiftKey ? 10 : 1;
+    const dir = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[k];
+    if (dir) {
+      e.preventDefault(); e.stopPropagation();
+      if (!keyUndo) { undoPush(); keyUndo = true; }
+      const D = new DOMMatrix().translate(dir[0], dir[1]); T.sel.forEach(el => { el.setAttribute('transform', (fmt(D) + ' ' + (el.getAttribute('transform') || '')).trim()); tidy(el); });
+      draw(); clearTimeout(keyT); keyT = setTimeout(() => { keyUndo = false; save(); }, 400); return;
+    }
+    if ((e.ctrlKey || e.metaKey) && k.toLowerCase() === 'g') { e.preventDefault(); e.stopPropagation(); if (e.shiftKey) ungroup(); else group(); return; }
+    if (k === 'Escape') { setSel([]); return; }
+    if (k === 'Delete' || k === 'Backspace') { e.preventDefault(); e.stopPropagation(); undoPush(); const gone = T.sel.slice(); setSel([]); gone.forEach(n => n.remove()); save(); }
+  }
+
+  /* ---------- Bitmap Select: drag a box, then move / resize / rotate those pixels (they used to stay put, and the
+     dashed box was painted INTO the costume) ---------- */
+  const bmpCanvas = () => by('gwBitmapCanvasV15');
+  const bmpSelectOn = () => mode() === 'bitmap' && document.querySelector('#gwBitmapToolsV15 button.active')?.dataset.gwpe === 'marquee';
+  const bpt = e => { const c = bmpCanvas(), r = c.getBoundingClientRect(); return { x: (e.clientX - r.left) * c.width / r.width, y: (e.clientY - r.top) * c.height / r.height }; };
+  const BS = T.bitmap = {
+    rect: null, float: null, // float: { img, base, r0, D }
+    box() {
+      if (!this.rect) return null; const r = this.rect; if (!this.float) return { x0: r.x, y0: r.y, x1: r.x + r.w, y1: r.y + r.h };
+      const { r0, D } = this.float; let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (const [x, y] of [[r0.x, r0.y], [r0.x + r0.w, r0.y], [r0.x, r0.y + r0.h], [r0.x + r0.w, r0.y + r0.h]]) { const p = new DOMPoint(x, y).matrixTransform(D); x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y); }
+      return { x0, y0, x1, y1 };
+    },
+    lift() {
+      if (this.float || !this.rect) return; const c = bmpCanvas(), g = c.getContext('2d'), r = { x: Math.round(this.rect.x), y: Math.round(this.rect.y), w: Math.max(1, Math.round(this.rect.w)), h: Math.max(1, Math.round(this.rect.h)) };
+      const img = document.createElement('canvas'); img.width = r.w; img.height = r.h; img.getContext('2d').drawImage(c, r.x, r.y, r.w, r.h, 0, 0, r.w, r.h);
+      g.clearRect(r.x, r.y, r.w, r.h); const base = g.getImageData(0, 0, c.width, c.height);
+      this.float = { img, base, r0: r, D: new DOMMatrix() }; this.rect = r; this.render();
+    },
+    render() { const f = this.float; if (!f) return; const c = bmpCanvas(), g = c.getContext('2d'); g.putImageData(f.base, 0, 0); g.save(); g.setTransform(f.D); g.imageSmoothingQuality = 'high'; g.drawImage(f.img, f.r0.x, f.r0.y); g.restore(); },
+    clear() { this.rect = null; this.float = null; draw(); },
+    erase() { if (!this.rect) return false; undoPush(); this.lift(); const f = this.float, c = bmpCanvas(); c.getContext('2d').putImageData(f.base, 0, 0); this.clear(); save(); return true; }
+  };
+  let bd = null;
+  function bmpDown(e) {
+    if (e.button !== 0 || !bmpSelectOn()) return; const c = bmpCanvas(), h = e.target.closest?.('#gwTxOverlay [data-h]');
+    if (!h && e.target !== c) return;
+    e.stopPropagation(); e.preventDefault(); const p = bpt(e), b = BS.box();
+    if (h || (b && p.x >= b.x0 && p.x <= b.x1 && p.y >= b.y0 && p.y <= b.y1)) { undoPush(); BS.lift(); bd = { kind: h ? h.dataset.h : 'move', p0: p, box: BS.box(), D0: DOMMatrix.fromMatrix(BS.float.D), moved: false }; return; }
+    BS.clear(); bd = { kind: 'marq', p0: p };
+  }
+  function bmpMove(e) {
+    if (!bd) return; e.preventDefault(); const p = bpt(e);
+    if (bd.kind === 'marq') { const a = bd.p0; BS.rect = { x: Math.min(a.x, p.x), y: Math.min(a.y, p.y), w: Math.abs(p.x - a.x), h: Math.abs(p.y - a.y) }; draw(); return; }
+    const D = deltaFor(bd.kind, bd.p0, p, bd.box, e); BS.float.D = D.multiply(bd.D0); BS.render(); bd.moved = true; draw();
+  }
+  function bmpUp() { if (!bd) return; const d = bd; bd = null; if (d.kind === 'marq') { if (!BS.rect || BS.rect.w < 2 || BS.rect.h < 2) BS.clear(); else draw(); return; } if (d.moved) save(); draw(); }
+
+  /* ---------- toolbar buttons that work on the whole selection (they only used to see one shape) ---------- */
+  const prepend = (el, D) => { el.setAttribute('transform', (fmt(D) + ' ' + (el.getAttribute('transform') || '')).trim()); tidy(el); };
+  function group() {
+    if (!T.sel.length) return false; const s = svgEl(), list = [...s.children].filter(n => T.sel.includes(n)); if (!list.length) return false;
+    undoPush(); const g = document.createElementNS(NS, 'g'); g.setAttribute('data-gwarp-group', '1');
+    list[list.length - 1].after(g); list.forEach(n => g.appendChild(n)); setSel([g]); save(); return true;
+  }
+  function ungroup() {
+    const gs = T.sel.filter(n => n.localName === 'g' && !n.hasAttribute('data-gw-orig') && !n.querySelector(':scope > svg')); if (!gs.length) return false;
+    undoPush(); const out = [];
+    gs.forEach(g => { const gt = g.getAttribute('transform') || ''; [...g.childNodes].forEach(k => { g.before(k); if (k.nodeType === 1) { if (gt) { k.setAttribute('transform', (gt + ' ' + (k.getAttribute('transform') || '')).trim()); tidy(k); } out.push(k); } }); g.remove(); });
+    setSel([...T.sel.filter(n => !gs.includes(n)), ...out]); save(); return true;
+  }
+  function removeSel() { if (!T.sel.length) return false; undoPush(); const gone = T.sel.slice(); setSel([]); gone.forEach(n => n.remove()); save(); return true; }
+  function flip(h) {
+    const b = unionBox(T.sel); if (!b) return false; undoPush(); const cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2;
+    const D = new DOMMatrix().translate(cx, cy).scale(h ? -1 : 1, h ? 1 : -1).translate(-cx, -cy); T.sel.forEach(el => prepend(el, D)); save(); draw(); return true;
+  }
+  const ACTIONS = [[/^Group \(/, group], [/^Ungroup/, ungroup], [/^Delete/, removeSel], [/^Flip Horizontal/, () => flip(true)], [/^Flip Vertical/, () => flip(false)]];
+  document.addEventListener('click', e => {
+    const b = e.target.closest?.('button'); if (!b || mode() !== 'vector' || !T.sel.length || !b.closest('#gwCostumeEditorV15, #gwCosHead, #gwCosStudio, #gwCostumeStudio')) return;
+    const t = b.title || b.getAttribute('aria-label') || ''; const a = ACTIONS.find(([re]) => re.test(t)); if (!a) return;
+    if (a[1]()) { e.preventDefault(); e.stopImmediatePropagation(); }
+  }, true);
+  T.group = group; T.ungroup = ungroup; T.flip = flip;
+
+  /* ---------- text: double-click it with Select (or click it with the Text tool) to change the words ---------- */
+  const textToolOn = () => mode() === 'vector' && document.querySelector('#gwSvgToolsV15 button.active')?.dataset.gwpe === 'gw:text';
+  async function editText(t) {
+    const D = window.GW_DIALOG; if (!D || !t) return;
+    const inp = document.createElement('input'); inp.type = 'text'; inp.className = 'gw8-q-in'; inp.maxLength = 200; inp.value = t.textContent; inp.setAttribute('aria-label', 'Text');
+    setTimeout(() => { inp.focus(); inp.select(); }, 40); inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); by('gwTxTextDlg')?.querySelector('.gw8-dlg-foot .primary')?.click(); } });
+    const ok = await D({ id: 'gwTxTextDlg', title: 'Change text', body: inp, buttons: [{ text: 'Cancel', value: false }, { text: 'OK', value: true, cls: 'ai primary' }] });
+    const v = inp.value; if (!ok || v === t.textContent) return;
+    undoPush(); if (v.trim()) t.textContent = v; else { if (T.sel.includes(t)) setSel(T.sel.filter(n => n !== t)); t.remove(); } save(); draw();
+  }
+  T.editText = editText;
+
+  /* ---------- wiring ---------- */
+  function wire(n = 0) {
+    const w = wrapEl(); if (!w) return n < 120 && setTimeout(() => wire(n + 1), 500);
+    if (w.__gwTx) return; w.__gwTx = true;
+    w.addEventListener('pointerdown', onDown, true);
+    w.addEventListener('pointerdown', bmpDown, true); addEventListener('pointermove', bmpMove, true); addEventListener('pointerup', bmpUp, true);
+    w.addEventListener('pointerdown', e => { if (e.button !== 0 || !textToolOn()) return; const t = topArt(e.target); if (t?.localName === 'text') { e.stopPropagation(); e.preventDefault(); editText(t); } }, true);
+    w.addEventListener('dblclick', e => { if (!selectToolOn()) return; const t = topArt(e.target); if (t?.localName === 'text') { e.preventDefault(); editText(t); } }, true);
+    addEventListener('pointermove', onMove, true); addEventListener('pointerup', onUp, true); addEventListener('pointercancel', onUp, true);
+    addEventListener('keydown', onKey, true);
+    document.addEventListener('click', e => { if (e.target.closest?.('#gwV153ClearSelection')) setSel([]); }, true);
+    // other tools, costume switches, undo/redo, zoom: keep the box in the right place (or drop it)
+    let sig = '';
+    (function tick() {
+      requestAnimationFrame(tick);
+      const s = svgEl(); if (!s) return;
+      if (BS.rect) { if (!bmpSelectOn()) BS.clear(); else { const c = bmpCanvas(), r = c?.getBoundingClientRect(); const k2 = r ? [r.left, r.top, r.width, wrapEl()?.scrollLeft, wrapEl()?.scrollTop].map(v => Math.round(v || 0)).join() : ''; if (k2 !== sig && !bd) { sig = k2; draw(); } } return; }
+      if (T.sel.length && (!selectToolOn() || T.sel.some(n => !n.isConnected))) { setSel(T.sel.filter(n => n.isConnected && selectToolOn())); return; }
+      if (!T.sel.length && !T.marquee) { if (ov && ov.firstChild) ov.textContent = ''; return; }
+      const m = s.getScreenCTM(); const k = m ? [m.a, m.e, m.f].map(v => v.toFixed(2)).join() + '|' + T.sel.map(n => n.getAttribute('transform') || '').join('|') + '|' + (wrapEl()?.scrollLeft || 0) + ',' + (wrapEl()?.scrollTop || 0) : '';
+      if (k !== sig && !T.drag) { sig = k; draw(); }
+    })();
+  }
+  T.select = setSel; T.draw = draw; T.box = () => unionBox(T.sel); T.boxOf = boxOf;
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => wire()); else wire();
+})();
+</script>
+<script id="gw-v4800-report">
+(() => { const V = s => `${s} (v15.48.0, Claude)`; const ADDED = [
+  V('Costume editor, Select tool like Scratch: a box with 8 handles and a rotate handle. Drag inside to move (Shift: straight), a corner to resize from the opposite corner (Shift: keep the shape), a side to stretch, the round handle to rotate (Shift: 15° steps). Text, shapes, brush strokes and imported costumes no longer jump when moved; arrow keys nudge, Delete removes, double-click text to change it'),
+  V('Costumes grow to hold everything you draw (things drawn outside the old box were cut off); a “Paint new” costume fits its drawing and sits on the sprite’s centre (it was tiny and off to the top-left on the stage); “Convert to Bitmap” keeps the costume’s size'),
+  V('Speed + compatibility from the owner’s test games: “is sound playing” with a joined name works (a zombie game looped forever and ran at 1 FPS, now ~28 FPS); faster touching; fewer code-area rebuilds while a project runs; new blocks: set drag mode, Clones+ “touching clone with variable”')];
+  function apply(n = 0) { const R = window.GW_AI_REPORT?.data; if (!R || !R.__v4700) return n < 80 && setTimeout(() => apply(n + 1), 250); if (R.__v4800) return; R.__v4800 = true; R.added = [...ADDED, ...R.added]; } apply(); })();
 </script>
 </body>
 </html>

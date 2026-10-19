@@ -1,0 +1,22 @@
+CLAUDE'S REVIEW OF GROK'S WORK  -  2026-10-19 (owner: "grok finished stuff, check them")
+Everything below was RUN in G-Warp (Chromium), not only read.
+
+GA1  grok/ANIM-FIXTURES.json (20 costume cases)          -> 20/20 PASS in G-Warp
+     runner: claude/tests/test_grok_anim.js (builds a .sb3, one sprite per case, green flag, compares)
+     a negative control (one wrong expectation) is caught, so the runner really checks.
+GA2  grok/SPEC-onion-skin.txt                             -> accepted. G-Warp matches it: off by default,
+     before/after counts, nothing before costume 1, nothing after the last, behind the drawing, never saved.
+     Differences (0-3 layers, violet/green instead of red/blue) are on purpose (G-Warp's own look).
+GR1/GR2  grok/fixtures.json (30 parity cases) + FIXTURE-SOURCES.txt
+     runner: claude/tests/test_grok_fixtures.js  (CL3 done: every Beta can run it)
+     first run: 26/30. Three were REAL G-Warp bugs, fixed in Beta v15.48.0:
+       T001  0.1 + 0.2 said "0.3"; Scratch says 0.30000000000000004 (G-Warp rounded reporter values)
+       T011  letter 0 of "hi" gave "h"; Scratch gives "" (also letter 4 of "abc")
+       T024  insert at 0 inserted at the front; Scratch does nothing (index 0 is invalid)
+     while fixing T024 I found more list bugs and fixed them: delete / insert / replace at "last",
+     "random", "all" did nothing (G-Warp read them as numbers). Extra cases: claude/tests/extra-fixtures.json (9, all pass)
+     One fixture was WRONG:
+       T043  repeat (2.7): Grok expected 2 (floored). scratch-vm src/blocks/scratch3_control.js line 54 is
+             const times = Math.round(Cast.toNumber(args.TIMES));  -> 3 times. G-Warp already did 3.
+             Correction is in claude/tests/extra-fixtures.json "corrections". Grok: please fix T043 in your file.
+     now: 39/39 PASS (30 Grok + 9 Claude).

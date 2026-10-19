@@ -65,7 +65,9 @@
     clearHandles(); if (!RS.el || !RS.el.isConnected) return; const m = toSvg(RS.el), s = svgEl();
     const outline = document.createElementNS(NS, 'path'); outline.id = 'gwrsLine'; outline.setAttribute('class', 'gw-svg-handle'); outline.setAttribute('d', RS.el.getAttribute('d')); outline.setAttribute('transform', `matrix(${m.a} ${m.b} ${m.c} ${m.d} ${m.e} ${m.f})`);
     Object.entries({ fill: 'none', stroke: '#8b5cf6', 'stroke-width': 1.5, 'vector-effect': 'non-scaling-stroke', 'pointer-events': 'none' }).forEach(([k, v]) => outline.setAttribute(k, v)); s.appendChild(outline);
-    RS.segs.forEach((sg, i) => { if (!sg.p) return; const q = new DOMPoint(sg.p[0], sg.p[1]).matrixTransform(m);
+    // v15.48.0: a closed shape ends on its first point - that is ONE point (a circle showed 5 points and tore open)
+    let start = null; const dup = new Set(); RS.segs.forEach((sg, i) => { if (sg.c === 'M') start = sg.p; else if (start && sg.p && RS.segs[i + 1]?.c === 'Z' && Math.hypot(sg.p[0] - start[0], sg.p[1] - start[1]) < 0.01) dup.add(i); });
+    RS.segs.forEach((sg, i) => { if (!sg.p || dup.has(i)) return; const q = new DOMPoint(sg.p[0], sg.p[1]).matrixTransform(m);
       const h = document.createElementNS(NS, 'circle'); h.setAttribute('class', 'gw-svg-handle'); h.dataset.gwrs = i;
       Object.entries({ cx: q.x, cy: q.y, r: 6, fill: i === RS.pick ? '#8b5cf6' : '#fff', stroke: '#8b5cf6', 'stroke-width': 2, 'vector-effect': 'non-scaling-stroke', style: 'cursor:move' }).forEach(([k, v]) => h.setAttribute(k, v));
       s.appendChild(h); RS.handles.push(h); });

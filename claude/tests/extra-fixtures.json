@@ -1,0 +1,18 @@
+{
+  "meta": { "title": "Claude's extra list / letter fixtures (same format as grok/fixtures.json)", "author": "Claude", "date": "2026-10-19",
+            "evidence": "scratch-vm src/util/cast.js toListIndex, scratch3_data.js deleteOfList / insertAtList / replaceItemOfList, scratch3_operators.js letterOf" },
+  "fixtures": [
+    { "id": "C001", "blocks": { "hat": "when_flag", "stack": [ {"type":"delete_all_of_list","list":"L"}, {"type":"add_to_list","list":"L","item":"a"}, {"type":"add_to_list","list":"L","item":"b"}, {"type":"delete_of_list","list":"L","index":"last"} ] }, "expect": { "lists": { "L": ["a"] } }, "source": "cast.js toListIndex 'last'" },
+    { "id": "C002", "blocks": { "hat": "when_flag", "stack": [ {"type":"delete_all_of_list","list":"L"}, {"type":"add_to_list","list":"L","item":"a"}, {"type":"insert_at_list","list":"L","index":"last","item":"z"} ] }, "expect": { "lists": { "L": ["a","z"] } }, "source": "insertAtList length+1 with 'last'" },
+    { "id": "C003", "blocks": { "hat": "when_flag", "stack": [ {"type":"delete_all_of_list","list":"L"}, {"type":"add_to_list","list":"L","item":"a"}, {"type":"add_to_list","list":"L","item":"b"}, {"type":"replace_item_of_list","list":"L","index":"last","item":"x"} ] }, "expect": { "lists": { "L": ["a","x"] } }, "source": "replaceItemOfList 'last'" },
+    { "id": "C004", "blocks": { "hat": "when_flag", "stack": [ {"type":"delete_all_of_list","list":"L"}, {"type":"add_to_list","list":"L","item":"a"}, {"type":"add_to_list","list":"L","item":"b"}, {"type":"delete_of_list","list":"L","index":"all"} ] }, "expect": { "lists": { "L": [] } }, "source": "deleteOfList acceptAll" },
+    { "id": "C005", "blocks": { "hat": "when_flag", "stack": [ {"type":"delete_all_of_list","list":"L"}, {"type":"add_to_list","list":"L","item":"a"}, {"type":"delete_of_list","list":"L","index":0} ] }, "expect": { "lists": { "L": ["a"] } }, "source": "index 0 is invalid" },
+    { "id": "C006", "blocks": { "hat": "when_flag", "stack": [ {"type":"delete_all_of_list","list":"L"}, {"type":"add_to_list","list":"L","item":"a"}, {"type":"insert_at_list","list":"L","index":2,"item":"b"} ] }, "expect": { "lists": { "L": ["a","b"] } }, "source": "insert at length+1 appends" },
+    { "id": "C007", "blocks": { "hat": "when_flag", "stack": [ {"type":"say","value":{"type":"letter_of","letter":2.5,"string":"abc"}} ] }, "expect": { "say": "b" }, "source": "letterOf charAt(1.5) = 'b'" },
+    { "id": "C008", "blocks": { "hat": "when_flag", "stack": [ {"type":"say","value":{"type":"letter_of","letter":4,"string":"abc"}} ] }, "expect": { "say": "" }, "source": "letterOf past the end" },
+    { "id": "C009", "blocks": { "hat": "when_flag", "stack": [ {"type":"delete_all_of_list","list":"L"}, {"type":"add_to_list","list":"L","item":"a"}, {"type":"add_to_list","list":"L","item":"b"}, {"type":"say","value":{"type":"item_of_list","list":"L","index":"last"}} ] }, "expect": { "say": "b" }, "source": "itemOfList 'last'" }
+  ],
+  "corrections": {
+    "T043": { "expect": { "say": "3", "variables": { "C": 3 } }, "why": "scratch-vm src/blocks/scratch3_control.js line 54: const times = Math.round(Cast.toNumber(args.TIMES)) - repeat 2.7 runs 3 times, not 2 (Grok's fixture said floored)" }
+  }
+}
