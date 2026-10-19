@@ -2284,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.49.0</span>
+<span class="app-version">Beta v15.49.1</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -3504,6 +3504,7 @@ IMPORTANT:
                     clonedBlock.querySelectorAll('.block-c-body').forEach(cBody => cBody.innerHTML = '');
                     draggedStack = document.createElement('div');
                     draggedStack.className = 'block-stack';
+                    draggedStack.dataset.owner = String(Engine.activeSpriteIndex || 0); /* v15.49.1: a new stack belongs to the sprite you are editing NOW (it used to jump to the next sprite you clicked) */
                     draggedStack.appendChild(clonedBlock);
                     workspaceCanvas.appendChild(draggedStack);
 
@@ -3527,6 +3528,7 @@ IMPORTANT:
                         const detached = siblings.slice(Math.max(0, idx));
                         draggedStack = document.createElement('div');
                         draggedStack.className = 'block-stack';
+                        draggedStack.dataset.owner = parentStack.dataset.owner || String(Engine.activeSpriteIndex || 0); /* v15.49.1 */
                         detached.forEach(b => draggedStack.appendChild(b));
                         workspaceCanvas.appendChild(draggedStack); gwPlace(draggedStack);
                     } else {
@@ -3538,6 +3540,7 @@ IMPORTANT:
                             const detached = siblings.slice(idx);
                             draggedStack = document.createElement('div');
                             draggedStack.className = 'block-stack';
+                            draggedStack.dataset.owner = parentStack.dataset.owner || String(Engine.activeSpriteIndex || 0); /* v15.49.1 */
                             detached.forEach(b => draggedStack.appendChild(b));
                             workspaceCanvas.appendChild(draggedStack); gwPlace(draggedStack);
                         }
@@ -4633,7 +4636,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.49.0',label:'Beta v15.49.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.49.1',label:'Beta v15.49.1',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -16438,6 +16441,19 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   window.GW_ANIM = { open, close, solve, deltas, applyPose, frameSvg, partPaths, parseTransform, makeCostumes, newAnim, undo, redo, vectorCostumes, tween, smooth, glide, mix, state: st };
 })();
 
+</script>
+<script id="gw-v4910-stack-owner">
+(() => {
+  'use strict';
+  /* v15.49.1 (Claude; QA report BUG 1-4): every script in the code area must belong to a sprite from the moment it
+     appears. Stacks made without an owner used to be given one later (to whatever sprite was active THEN), so a
+     block you just dropped could jump to the next sprite you clicked, and "Delete N Blocks" counted wrong. */
+  function claim(n) { if (n?.nodeType === 1 && n.classList?.contains('block-stack') && !n.dataset.owner) n.dataset.owner = String(window.Engine?.activeSpriteIndex || 0); }
+  function boot(k = 0) { const ws = document.getElementById('workspaceCanvas'); if (!ws) { if (k < 120) setTimeout(() => boot(k + 1), 250); return; }
+    ws.querySelectorAll(':scope > .block-stack').forEach(claim);
+    new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(claim))).observe(ws, { childList: true }); }
+  boot();
+})();
 </script>
 <script id="gw-v4900-melody-engine">
 /* v15.49.0: Gemini 3 Argon's melody engine (gemini/lab/melody-engine.js), merged by Claude: every Song maker style gets its own melody rhythm and notes (owner: "all the melodies are the same for all the modes") */
