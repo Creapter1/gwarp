@@ -4,6 +4,8 @@
  Previously documented website: https://creapter1.github.io/gwarp/ (canonical URL pending owner confirmation)   App: app.html (Beta v15.48.0)
 =====================================================================
 
+>>> MISSING vs Scratch / TurboWarp / PenguinMod: team/MISSING-LIST.txt (broken + missing features, who does each) <<<
+
 HOW THE TEAM WORKS
 - [ ] = not started, [~] = candidate/report handed in and awaiting review, [x] = completed only to the scope stated (not automatically integrated). Check MERGE-QUEUE.txt for proposal status; owner approval is required before live integration/release.
 - See MERGE-QUEUE.txt for candidate dispositions only; Claude must reconcile current evidence and the owner must approve integration.

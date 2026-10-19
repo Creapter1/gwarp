@@ -1,0 +1,64 @@
+=====================================================================
+ G-WARP MISSING LIST - what Scratch 3, TurboWarp and PenguinMod have that G-Warp doesn't (yet)
+ Kept by Claude. Started 2026-10-19 (owner: "add to the list what we are missing so far").
+ Sources: claude/REVIEW-CLICKS-2026-10-19.txt (a tester drove the real app: 133 checks - 75 work, 16 broken,
+ 31 missing, 10 different) and claude/GAP-ANALYSIS-2026-10-19.txt (the full 3-app audit, stopped early).
+ [ ] = to do   [~] = assigned / being built   [x] = done (owner should check it)
+ Owner of each job: Claude = engine / app.html, Gemini = add-on modules, Grok = Scratch specs + tests,
+ ChatGPT = docs.
+=====================================================================
+
+A. BROKEN (G-Warp has it, but it does the wrong thing) - Claude
+[x] A1  A new block jumped to another sprite when you clicked / added / duplicated a sprite.
+        Fixed in v15.49.1 (new scripts belong to their sprite at once). Same cause: "Delete N Blocks" counted wrong.
+[ ] A2  Variable and list monitors are switched on but hidden UNDER the stage picture (score is invisible).
+[ ] A3  Undo does nothing after dragging in a new block. Ctrl+Shift+Z undoes again instead of redo.
+[ ] A4  Clicking a script or a palette block does not run it (no glow, click again to stop).
+[ ] A5  Right-clicking a reporter inside a block acts on the OUTER block (Delete removes the whole "move" block,
+        Duplicate copies the whole script).
+[ ] A6  "when this sprite clicked" only works while the project is running (Scratch: also when stopped).
+[ ] A7  Block right-click menu: runs off the bottom of the window, Escape doesn't close it, can be open at the same
+        time as the empty-area menu, Duplicate also copies the blocks ABOVE and doesn't stick to the mouse.
+[ ] A8  Right-clicking a comment opens the wrong menu.
+[ ] A9  The Delete key does nothing on a clicked block.
+[ ] A10 Number inputs accept letters ("abc" in "move ( ) steps").
+
+B. MISSING - kids hit these in their first hour (most important first)
+[~] B1  Broadcast "New message…" and "Rename message…" (only message1 / message2 exist).       Gemini G-C1
+[~] B2  Rename / delete a variable or list (palette right-click + dropdown).                     Gemini G-C2
+[~] B3  Stage monitors: checkboxes for x, y, direction, costume #, size, volume, timer, answer; right-click modes
+        (normal / large / slider / slider range / hide); list import / export; drag monitors.  Gemini G-C3 (after A2)
+[~] B4  Click a reporter / boolean -> value bubble (true / false).                               Gemini G-C4 + Claude
+[ ] B5  Drag sprites around the stage in the editor.                                              Claude
+[~] B6  "Edit" for custom blocks (define hat, call block, palette).                               Gemini G-C5
+[~] B7  "Add Comment" on a block (a note attached to it).                                          Gemini G-C6
+[~] B8  Drag to reorder costumes, sounds and sprites; Move to top / bottom.                      Gemini G-C7
+[~] B9  Right-click a sound: duplicate / export / delete.                                          Gemini G-C8
+[~] B10 Export a sprite as .sprite3; Upload Sprite accepts .sprite3.                                Gemini G-C9
+[ ] B11 Costume library ("Choose a Costume"), sound library ("Choose a Sound"), Surprise buttons.  Gemini (pictures
+        + sounds, G-Warp's own) + Claude
+[ ] B12 Clean up blocks into one neat column (today it only pushes overlapping scripts apart).    Claude
+
+C. MISSING - TurboWarp / PenguinMod editor helpers (they are ahead here)
+[~] C1  Searchable dropdowns.                                                                       Gemini G-C10
+[~] C2  Save blocks as a picture (PNG / SVG).                                                       Gemini G-C11
+[~] C3  Copy / paste blocks (Ctrl+C / Ctrl+V), Alt+drag = copy, Ctrl+drag = take ONE block.        Gemini G-C12
+[ ] C4  Jump to a custom block's definition (shift-click / middle-click).                          Claude
+[ ] C5  Block switching (right-click a block -> switch to a related block, e.g. change x <-> change y).  Gemini
+[ ] C6  Insert blocks by name with Ctrl+Space (G-Warp has a search box in the right-click menu and the palette).
+[ ] C7  Swap a variable / switch its scope from the right-click menu.                              Gemini
+[ ] C8  Copy a reporter's value (from the value bubble or a monitor).                              Gemini (with B4)
+[ ] C9  Sprite folders and sound folders (costume folders exist: "walk//frame 1"), search sprites by name.
+[ ] C10 Arrow keys change the number in a focused number field.
+[ ] C11 Running script glows / gets a border (with A4).
+[ ] C12 Backpack (keep scripts / costumes / sounds to use in another project).
+[ ] C13 Snap scripts to a grid; drag a file onto the sprite pane to add it (both NOT TESTED yet).
+[ ] C14 Block count in the menu bar; comment previews on hover; ask before deleting a sprite (G-Warp has Restore).
+
+D. G-WARP ALREADY HAS (TurboWarp / PenguinMod have them too)
+    Block search box, search in the right-click menu, Ctrl+F find, zoom buttons + Ctrl+wheel, clone counter,
+    Ctrl+click flag to mute, project volume, gamepad, mouse x / y over the stage, "find on stage" in the sprite
+    menu, Restore after deleting a sprite, costume folders (v15.49.0), onion skin, bones animation, Song maker.
+
+E. FROM THE 3-APP AUDIT (claude/GAP-ANALYSIS-2026-10-19.txt)
+    (added below when the audit's partial report is in)
