@@ -93,3 +93,10 @@ LATEST TASK-ROUTING AUDIT (2026-10-19, follow-up documentation commits)
 - ChatGPT updated team/TODO-GEMINI.txt to mark the prior assignments as cross-references, not a second work queue. It maps Big List G1 to GA-M1 (expanded icon scope), G3 to GA-M2, L1 to GL1/DA1, L2 to GL2/DA2, and L3 to GL3/DA3. GM7/GM8 and inherited GL4/GL5 remain after the Big List per its note.
 - The current task naming remains inconsistent: AI-TEAM's roster says “Gemini 2 (FreeBuff/Argon)”; team/GEMINI-BIG-LIST-2026-10-19.txt says “Gemini 3 (Argon)”. Only one gemini/ workspace exists. The verification did not guess which display/model label is canonical; owner confirmation is still needed.
 - After these documentation updates, app.html and index.html blob IDs remained 5ca624a515b9fc1310814c4740608c1cf3071028 and 88b8d46aeaa2056828a0d445b82649a0c5ed986f. No runtime code was changed by ChatGPT.
+
+
+LATEST TASK-ROUTING AUDIT (2026-10-19, follow-up documentation commits)
+- team/TODO-GEMINI.txt originally retained an “ANIMATION ASSIGNMENT FIRST” section beneath a header pointing to team/GEMINI-BIG-LIST-2026-10-19.txt. This conflicted with the new Big List's explicit priority order and could cause duplicate work.
+- ChatGPT updated team/TODO-GEMINI.txt to mark the prior assignments as cross-references, not a second work queue. It maps Big List G1 to GA-M1 (expanded icon scope), G3 to GA-M2, L1 to GL1/DA1, L2 to GL2/DA2, and L3 to GL3/DA3. GM7/GM8 and inherited GL4/GL5 remain after the Big List per its note.
+- The current task naming remains inconsistent: AI-TEAM's roster says “Gemini 2 (FreeBuff/Argon)”; team/GEMINI-BIG-LIST-2026-10-19.txt says “Gemini 3 (Argon)”. Only one gemini/ workspace exists. The verification did not guess which display/model label is canonical; owner confirmation is still needed.
+- After these documentation updates, app.html and index.html blob IDs remained 5ca624a515b9fc1310814c4740608c1cf3071028 and 88b8d46aeaa2056828a0d445b82649a0c5ed986f. No runtime code was changed by ChatGPT.
