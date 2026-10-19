@@ -1,0 +1,333 @@
+{
+  "meta": {
+    "title": "G-Warp GA1 costume animation fixtures",
+    "author": "Grok",
+    "date": "2026-10-18",
+    "format": "written fixtures; not an automated runner",
+    "evidence": "SOURCE-CONFIRMED against scratchfoundation/scratch-vm develop",
+    "sources": [
+      "src/blocks/scratch3_looks.js (_setCostume, switchCostume, nextCostume, getCostumeNumberName)",
+      "src/sprites/rendered-target.js (setCostume wrapClamp + Math.round)",
+      "src/util/math-util.js (wrapClamp)",
+      "Scratch Wiki: Switch to Costume ()"
+    ],
+    "notes": [
+      "currentCostume is 0-based internally; costume [number] reporter is 1-based",
+      "setCostume(index): Math.round(index); Infinity/NaN -> 0; then wrapClamp(0, length-1)",
+      "Numeric switch costume uses 1-based input then setCostume(n-1)",
+      "next costume passes zero-index currentCostume+1 with optZeroIndex=true",
+      "String arg: name match first; else 'next costume'/'previous costume'; else numeric string",
+      "G-Warp pass/fail: NOT TESTED in this deliverable"
+    ]
+  },
+  "fixtures": [
+    {
+      "id": "A001",
+      "title": "next costume wraps last to first",
+      "setup": {
+        "costumes": ["c1", "c2", "c3"],
+        "startCostumeNumber": 3
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "next_costume" }]
+      },
+      "expect": { "costumeNumber": 1, "costumeName": "c1" },
+      "source": "scratch3_looks.js nextCostume -> _setCostume(current+1, true); rendered-target setCostume wrapClamp"
+    },
+    {
+      "id": "A002",
+      "title": "next costume from first",
+      "setup": {
+        "costumes": ["c1", "c2", "c3"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "next_costume" }]
+      },
+      "expect": { "costumeNumber": 2, "costumeName": "c2" },
+      "source": "scratch3_looks.js nextCostume"
+    },
+    {
+      "id": "A003",
+      "title": "switch costume to integer 2",
+      "setup": {
+        "costumes": ["a", "b", "c"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": 2 }]
+      },
+      "expect": { "costumeNumber": 2, "costumeName": "b" },
+      "source": "_setCostume number path: setCostume(2-1)"
+    },
+    {
+      "id": "A004",
+      "title": "switch costume to 2.6 (number) rounds to costume 3",
+      "setup": {
+        "costumes": ["a", "b", "c", "d"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": 2.6 }]
+      },
+      "expect": { "costumeNumber": 3, "costumeName": "c" },
+      "source": "number path setCostume(2.6-1=1.6) -> Math.round(1.6)=2 -> 1-based 3",
+      "notes": "If a costume were named exactly 2.6 and input were a string, name would win; pure number always indexes"
+    },
+    {
+      "id": "A005",
+      "title": "switch costume to 0 wraps to last",
+      "setup": {
+        "costumes": ["a", "b", "c"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": 0 }]
+      },
+      "expect": { "costumeNumber": 3, "costumeName": "c" },
+      "source": "setCostume(0-1=-1) -> wrapClamp(-1,0,2)=2; Wiki Switch to Costume"
+    },
+    {
+      "id": "A006",
+      "title": "switch costume to -1 wraps to second-to-last",
+      "setup": {
+        "costumes": ["a", "b", "c"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": -1 }]
+      },
+      "expect": { "costumeNumber": 2, "costumeName": "b" },
+      "source": "setCostume(-1-1=-2) wrapClamp(-2,0,2)=1 -> 1-based 2"
+    },
+    {
+      "id": "A007",
+      "title": "switch to costume name",
+      "setup": {
+        "costumes": ["run1", "run2", "idle"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": "idle" }]
+      },
+      "expect": { "costumeNumber": 3, "costumeName": "idle" },
+      "source": "_setCostume string: getCostumeIndexByName"
+    },
+    {
+      "id": "A008",
+      "title": "numeric string indexes when no matching name",
+      "setup": {
+        "costumes": ["a", "b", "c"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": "2" }]
+      },
+      "expect": { "costumeNumber": 2, "costumeName": "b" },
+      "source": "name miss then Number(string)-1"
+    },
+    {
+      "id": "A009",
+      "title": "costume named 3 wins over index when input is string",
+      "setup": {
+        "costumes": ["a", "b", "3", "d"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": "3" }]
+      },
+      "expect": { "costumeNumber": 3, "costumeName": "3" },
+      "source": "string name match before numeric fallback; Wiki note on number-named costumes"
+    },
+    {
+      "id": "A010",
+      "title": "number 3 always uses index even if a costume is named 3",
+      "setup": {
+        "costumes": ["a", "b", "3", "d"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": 3 }]
+      },
+      "expect": { "costumeNumber": 3, "costumeName": "3" },
+      "source": "typeof number path always setCostume(n-1); here index 2 is the costume named 3",
+      "notes": "With costumes [a,b,x,3] number 3 would select x (index 2), not the named 3"
+    },
+    {
+      "id": "A011",
+      "title": "string next costume equals next costume block",
+      "setup": {
+        "costumes": ["a", "b", "c"],
+        "startCostumeNumber": 2
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": "next costume" }]
+      },
+      "expect": { "costumeNumber": 3, "costumeName": "c" },
+      "source": "_setCostume requestedCostume === 'next costume'"
+    },
+    {
+      "id": "A012",
+      "title": "string previous costume",
+      "setup": {
+        "costumes": ["a", "b", "c"],
+        "startCostumeNumber": 2
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": "previous costume" }]
+      },
+      "expect": { "costumeNumber": 1, "costumeName": "a" },
+      "source": "_setCostume 'previous costume'"
+    },
+    {
+      "id": "A013",
+      "title": "costume number reporter is 1-based",
+      "setup": {
+        "costumes": ["a", "b"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "switch_costume", "costume": 2 },
+          { "type": "say", "value": { "type": "costume_number" } }
+        ]
+      },
+      "expect": { "costumeNumber": 2, "say": "2" },
+      "source": "getCostumeNumberName returns currentCostume+1"
+    },
+    {
+      "id": "A014",
+      "title": "costume name reporter",
+      "setup": {
+        "costumes": ["hello", "world"],
+        "startCostumeNumber": 2
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "say", "value": { "type": "costume_name" } }]
+      },
+      "expect": { "say": "world" },
+      "source": "getCostumeNumberName name branch"
+    },
+    {
+      "id": "A015",
+      "title": "three next costumes cycle on 3 frames",
+      "setup": {
+        "costumes": ["f1", "f2", "f3"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "next_costume" },
+          { "type": "next_costume" },
+          { "type": "next_costume" }
+        ]
+      },
+      "expect": { "costumeNumber": 1, "costumeName": "f1", "sequence": [2, 3, 1] },
+      "source": "nextCostume + wrapClamp"
+    },
+    {
+      "id": "A016",
+      "title": "index past end wraps (number 5 of 3 costumes)",
+      "setup": {
+        "costumes": ["a", "b", "c"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": 5 }]
+      },
+      "expect": { "costumeNumber": 2, "costumeName": "b" },
+      "source": "setCostume(5-1=4) wrapClamp(4,0,2)=1 -> 1-based 2"
+    },
+    {
+      "id": "A017",
+      "title": "NaN / non-numeric non-name leaves costume unchanged",
+      "setup": {
+        "costumes": ["a", "b"],
+        "startCostumeNumber": 2
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "switch_costume", "costume": "not-a-costume" }]
+      },
+      "expect": { "costumeNumber": 2, "costumeName": "b" },
+      "source": "_setCostume: name miss and isNaN string -> no setCostume call"
+    },
+    {
+      "id": "A018",
+      "title": "flipbook-style loop counts steps not wall time",
+      "setup": {
+        "costumes": ["f1", "f2", "f3", "f4"],
+        "startCostumeNumber": 1,
+        "tps": 30
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          {
+            "type": "repeat",
+            "times": 10,
+            "body": [
+              { "type": "next_costume" },
+              { "type": "wait", "seconds": 0.1 }
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "costumeNumber": 3,
+        "notes": "10 next from 1 on 4 costumes: positions after steps 2,3,4,1,2,3,4,1,2,3 -> end 3"
+      },
+      "source": "nextCostume wrap; wait yields frames; exact wall-clock depends on TPS",
+      "notes": "At 30 TPS, 0.1s wait is ~3 frames; sequence of costume numbers depends only on next count, not FPS"
+    },
+    {
+      "id": "A019",
+      "title": "TurboWarp 60 FPS does not change costume index math",
+      "setup": {
+        "costumes": ["a", "b", "c"],
+        "startCostumeNumber": 1,
+        "tps": 60
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "next_costume" },
+          { "type": "next_costume" }
+        ]
+      },
+      "expect": { "costumeNumber": 3 },
+      "source": "Costume index rules are in looks/setCostume, not sequencer TPS",
+      "notes": "60 FPS changes how many loops run per second with wait 0, not which index next costume selects"
+    },
+    {
+      "id": "A020",
+      "title": "single costume next stays on 1",
+      "setup": {
+        "costumes": ["only"],
+        "startCostumeNumber": 1
+      },
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [{ "type": "next_costume" }, { "type": "next_costume" }]
+      },
+      "expect": { "costumeNumber": 1, "costumeName": "only" },
+      "source": "wrapClamp any index into [0,0]"
+    }
+  ]
+}
