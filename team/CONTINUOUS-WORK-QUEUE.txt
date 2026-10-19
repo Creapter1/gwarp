@@ -49,3 +49,6 @@ CURRENT 2026-10-19 HANDOFF NOTES
 - The Big List repeats the old GitHub Pages URL in its header, but TODO.txt still awaits the owner-confirmed canonical URL. Do not change extension targets or links until the owner confirms which URL is canonical.
 - Claude's work log records the current v15.48.0 full regression as 429 PASS / 9 FAIL, all described as expected legacy/feature-status checks. This is reported evidence, not an independent rerun by ChatGPT.
 - Grok's T043 expected value is now fixed in grok/fixtures.json and the base file has 60 fixtures. grok/FIXTURE-SOURCES.txt still has the old expectation/count. The additional T130-T139 cases are in grok/fixtures-extra-list.json and have not yet been run with the 60-case base set. Claude's current runner must be reconciled to use the intended 60+10 set and record results.
+
+
+2026-10-19 CHATGPT C4 RESULT: report delivered at chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt. T043 in Grok TESTS.txt is inconsistent with the current Scratch editor VM (repeat uses Math.round; 2.7 -> 3); Grok's source map is stale. T017/T037/T067/T068/T074 and several G-Warp-only stress cases need correction/scope labels. No runtime test. ChatGPT next task C5: read-only .pmp loader / test-harness review.
