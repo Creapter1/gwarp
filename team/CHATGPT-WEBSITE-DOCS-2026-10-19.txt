@@ -1,0 +1,60 @@
+=====================================================================
+ CHATGPT - WEBSITE + DOCUMENTATION JOB          from Claude (team leader), 2026-10-19
+ Owner: "update the website, it's good, but we need the documentation and a lot of stuff that's missing.
+ Don't hold back."
+=====================================================================
+Live app: Beta v15.48.0 (app.html). Website: index.html (GitHub Pages). Read first: README.md, TODO.txt rules,
+AI-TEAM.txt (last 30 lines = what's new), claude/REVIEW-GROK-2026-10-19.txt.
+
+RULES
+- G-Warp's OWN look on the site (dark #0b0b14, violet #8b5cf6, electric green #4ade80, G-Spark, no cats, no Scratch
+  art/logos, no brands). Same fonts/cards/style as the current index.html - extend it, don't redesign it.
+- Only claim what is REALLY in the app. If unsure, open app.html and check, or write "coming soon".
+- Kid-friendly words (short sentences). No personal data, no keys, no tracking scripts, no ads.
+- Credit extension creators and licences. "Theirs is theirs, ours is ours".
+- Pages are plain HTML files next to index.html (GitHub Pages serves them). Every page: same header/top bar
+  ("Create your first code" / "Use your project"), same footer, works on a phone width, links back home.
+- You MAY edit index.html and add new docs pages (this job allows it). Never edit app.html.
+- Test every link. Hand in: line in AI-TEAM.txt + chatgpt/AI-CHAT-LOG.txt.
+
+PART A - WEBSITE (index.html)
+A1  "What's new" section: Beta v15.46 -> v15.48 in plain words (Power lines, costume animation: Flipbook, Onion
+    skin, Animation tab with bones, G-Spark walk/wave; new Select tool with handles; Paint new fixed; speed:
+    big clone games much faster; Scratch parity fixes; Report a bug; #scratch= links).
+A2  Feature cards for everything missing: Select tool handles, Flipbook/Onion skin, Animation tab, Song maker,
+    191 extensions with Safe/Moderate/Dangerous labels, Bug Hunter, comments, right-click search, Stage/backdrops,
+    Look like Scratch option, crash recovery, clone safety. Each card: 1 line + "How" link to the docs.
+A3  "Get started in 3 steps" with real buttons (Open the app / Load a .sb3 / Paint a costume).
+A4  FAQ (10+): Is it free? Does it work offline? Will my Scratch project open? Where is my project saved?
+    Is it safe for kids? Why is an extension marked Dangerous? How do I report a bug? Phone? (desktop only for now)
+A5  Safety + privacy page link (see B8) and an honest "Beta" note.
+A6  Credits page link (see B9).
+
+PART B - DOCUMENTATION (new pages, docs/ folder, with a left menu that links them all)
+B1  docs/index.html    - the docs home: what G-Warp is, how the docs are organized, search-free table of contents
+B2  docs/start.html    - your first project: G-Spark moves in 3 blocks, Start/Pause/Stop, save/load (.sb3)
+B3  docs/blocks.html   - every block category with what it does (Motion, Looks, Sound, Events, Control, Sensing,
+                          Operators, Variables, Lists, My Blocks, Animation blocks, GWrap AI category)
+B4  docs/costumes.html - the costume editor: every tool (Select with 8 handles + rotate, Shift tricks, arrow keys,
+                          group/ungroup, flip, Reshape, Brush, Eraser, Fill, Text + double-click to edit,
+                          Rectangle/Circle/Line), Vector vs Bitmap, Convert, rotation centre, zoom, undo
+B5  docs/animation.html - Flipbook + Onion skin, the Animation tab (Rig: bones, attach; Animate: frames,
+                          In-between, Smooth x2, Play, Make costumes), the 4 Animation blocks, tips
+B6  docs/sounds.html   - sound editor + Song maker / loop maker / instruments
+B7  docs/extensions.html - how to add an extension, the 3 safety labels and what they mean, which ones G-Warp runs itself
+B8  docs/safety.html   - privacy: no accounts, nothing sent silently, bug reports are sent by YOU on GitHub,
+                          kids under 13 need a parent's OK before data is sent, JavaScript blocks are never run,
+                          Dangerous extensions explained
+B9  docs/credits.html  - extension creators + licences (from the app's extension gallery data), AI team credits,
+                          MIT licence of G-Warp
+B10 docs/scratch.html  - "Coming from Scratch / TurboWarp / PenguinMod": what's the same, what's different (look,
+                          top bar, Power lines, Flipbook...), the "Look like Scratch" option, #scratch=<id> links
+B11 docs/troubleshoot.html - project stuck ("Keep going / Stop"), too many clones (300 limit, infinite option),
+                          slow project tips, extension blocked, how to report a bug with the built-in form
+B12 docs/shortcuts.html - every keyboard shortcut (Ctrl+O, Ctrl+Z/Y, Ctrl+G, arrows, Delete, Space in Animation...)
+B13 docs/changelog.html - every Beta version with a 1-line summary (from AI-TEAM.txt RELEASED lines)
+B14 docs/team.html     - how the AI team works (roles, rules, "continue"), for curious visitors
+
+PART C - CHECK (do it last)
+C1  Every page opens, every link works, nothing claims a feature that is not in Beta v15.48.0.
+C2  List anything you could not confirm in chatgpt/WEBSITE-OPEN-QUESTIONS.txt for Claude.
