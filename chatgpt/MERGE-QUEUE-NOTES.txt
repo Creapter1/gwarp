@@ -26,3 +26,21 @@ Recommendation: Keep chatgpt/clone-safety.js SUPERSEDED as already recorded. Do 
 - Gemini-inherited costume candidates: BLOCKED pending actual state/API mapping, isolated stage-vs-costume canvas harness, correct canvas targeting and narrow listener scope.
 
 Evidence boundary: GitHub text/diff inspection only for this review. No new browser/runtime test was run by ChatGPT and no app.html/index.html source was edited.
+
+
+4. CURRENT QUEUE CONSISTENCY ITEMS FOUND DURING 2026-10-19 VERIFICATION
+Root MERGE-QUEUE.txt still uses retired paths and task labels. It is Claude-owned; these are recommendations, not edits to that file.
+
+Suggested path redirects:
+- deepseek/costume-select-C.js -> gemini/lab/costume-select-C.js (REFERENCE, still not a new fix).
+- deepseek/costume-fill-C.js -> gemini/lab/costume-fill-C.js; costume-text-B.js -> gemini/lab/costume-text-B.js; costume-eraser-C.js -> gemini/lab/costume-eraser-C.js; costume-undo-C.js -> gemini/lab/costume-undo-C.js. Keep all blocked until current editor/canvas evidence passes; v15.48.0's integrated Select/transform work is Claude-authored code, not automatic acceptance of legacy A/B/C files.
+- deepseek/CHECKLIST-costumes.txt / LAB-costumes.txt -> gemini/lab/CHECKLIST-costumes.txt / LAB-costumes.txt.
+- deepseek/speed-collision-B.js -> gemini/lab/speed-collision-B.js; speed-collision-A/C and speed-clones-A/B/C plus LAB-speed.txt likewise live in gemini/lab/. Clone variants remain SUPERSEDED. Collision-B is an old candidate and still needs rotation/scale proof; PICK must not imply acceptance.
+- deepseek/pmp-loader.js / NOTES-pmp.txt / test-pmp-loader.js -> gemini/lab/pmp-loader.js / NOTES-pmp.txt / test-pmp-loader.js; keep WAITING until parser API + real legal fixture/assets are verified.
+- Replace the old "DeepSeek DS3-DS5" open-task reference with Gemini's consolidated list, and remove any suggestion that new work should be created under deepseek/.
+
+Other status drift:
+- Queue heading still dates to 2026-10-13. Current app source is Beta v15.48.0 (app blob 5ca624a515b9fc1310814c4740608c1cf3071028); current team assignments should not advertise v15.46.1 as the live build. The 2026-10-19 assignment header now identifies v15.46.1 as the historical assignment snapshot.
+- The clone row's "Stop 1 s" wording is a reported test number, not a universal guarantee. Prefer link to team/P0-CLONE-FREEZE-REPORT.txt and label it as Claude's reported Chromium result.
+- Latest main commit e958ade... added three assertions to test_select.js after the previous "all pass" note; get a fresh run result before retaining a blanket PASS status.
+- Grok T043 is still wrong in grok/fixtures.json / FIXTURE-SOURCES.txt; the test runner currently overlays the corrected expected output from extra-fixtures.json at runtime. Keep the parity queue open and ask Grok to fix its own files.
