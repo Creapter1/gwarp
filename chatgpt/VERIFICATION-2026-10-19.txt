@@ -1,0 +1,81 @@
+G-WARP REPOSITORY VERIFICATION — 2026-10-19
+Reviewer: ChatGPT
+Repository: Creapter1/gwarp
+Verified main snapshot: 1cffda9578c69fc45685e09b40c655e3a06832a9
+Current app.html blob: 5ca624a515b9fc1310814c4740608c1cf3071028 (2,440,120 bytes; Beta v15.48.0)
+Current index.html blob: 88b8d46aeaa2056828a0d445b82649a0c5ed986f (586,667 bytes)
+
+SCOPE AND LIMITS
+This is a GitHub source/tree/diff/document audit. ChatGPT did not run a browser or runtime test. Attempting to clone the repository into a local test workspace failed because the environment could not resolve github.com. Results below distinguish source/tree verification from test results reported by Claude. No app.html/index.html changes were made by ChatGPT in this verification cycle.
+
+RESULT SUMMARY
+- ROLE CONSOLIDATION: PASS (repository structure and task routing).
+- LEGACY FILE PRESERVATION: PASS with documented edits to three legacy lab reports.
+- APP/INDEX UNCHANGED BY CHATGPT: PASS. Their current blob IDs are recorded above; later source changes were made by separate Claude commits.
+- CURRENT V15.48.0 BEHAVIORAL VERIFICATION: PARTIAL / REPORTED TEST. Prior Claude test results exist, but a later same-version Select-tool patch added three assertions without a recorded post-patch run.
+- SCRATCH PARITY FIXTURES: PARTIAL. Claude reports 39/39 through a runner that overrides T043 in memory. The raw Grok fixture/source still contains the incorrect expectation.
+- MERGE QUEUE ROUTING: OPEN. Root MERGE-QUEUE.txt is Claude-owned and still uses historical deepseek/ paths and outdated task wording. Exact recommendations are in chatgpt/MERGE-QUEUE-NOTES.txt.
+- PERFORMANCE PLAN: CREATED, NOT A BENCHMARK RUN. The plan defines a procedure; no new comprehensive performance run was performed by ChatGPT.
+
+1. TEAM / FOLDER CONSOLIDATION
+SOURCE-VERIFIED:
+- Current tree has only deepseek/README-ARCHIVE.txt in the former folder.
+- All 28 files that existed under deepseek/ before migration have matching-name destinations under gemini/lab/.
+- 25 of those 28 retain identical Git blob hashes. Three text reports/notes were intentionally edited to add provenance headers and update stale deepseek/ paths: LAB-costumes.txt, LAB-speed.txt, NOTES-pmp.txt.
+- gemini/lab/ also contains its README and an archived copy of the former DeepSeek task list, clearly labeled NOT ACTIVE.
+- team/TODO-GEMINI.txt is the unified active list. team/TODO-DEEPSEEK.txt and team/DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt are retired redirects/history.
+- Gemini's prior visual/extension backlog remains in team/TODO-GEMINI.txt alongside inherited lab responsibilities.
+- gemini/AI-CHAT-LOG.txt now exists, but it is explicitly a ChatGPT-seeded handoff, not a Gemini conversation transcript. Gemini must append its own real task results.
+
+2. CURRENT SOURCE VERSION AND PROTECTION
+SOURCE-VERIFIED:
+- The current source is Beta v15.48.0 according to app.html's exposed build label and current TODO.
+- app.html blob is 5ca624a515b9fc1310814c4740608c1cf3071028; index.html blob is 88b8d46aeaa2056828a0d445b82649a0c5ed986f.
+- These blob IDs were unchanged through the ChatGPT documentation/verification commits listed in this work cycle.
+- Comparing the pre-consolidation tree to the migration snapshot showed no app.html/index.html edits in the role migration. Subsequent Beta v15.48.0 and same-version shape-handle source changes appear in separate Claude commits.
+- Static inspection of app.html finds the current clone guard/cloneCount cache and 5000 Infinite Clones safety ceiling, a number/letter correction, list index handling in the legacy dispatcher and active evaluator, and the Select/transform module. Static presence is not proof every edge case behaves correctly.
+
+3. CLAUDE-REPORTED TEST RESULTS — NOT INDEPENDENTLY RE-RUN
+REPORTED TEST:
+- Claude's 2026-10-19 review says Grok's 20 costume-animation fixtures passed 20/20.
+- Claude reports the parity runner passed 39/39 (30 Grok fixtures plus 9 additional fixtures).
+- Claude reports the initial v15.48.0 Select-tool test passed and older costume tests passed.
+- Claude reports performance improvements on the owner’s private test projects: zombie 2 -> 58 FPS; The worst day 23 -> 37 FPS. These values apply only to the reported project/build/environment and are not promises for other hardware/projects.
+- team/P0-CLONE-FREEZE-REPORT.txt records Claude's earlier headless Chromium clone-freeze reproduction and mitigation in v15.46.0, retained in current source. This is Claude-reported evidence, not a fresh ChatGPT run.
+Evidence files: claude/REVIEW-GROK-2026-10-19.txt, claude/tests/test_grok_anim.js, claude/tests/test_grok_fixtures.js, claude/tests/test_select.js, team/P0-CLONE-FREEZE-REPORT.txt.
+
+4. OPEN BLOCKERS / FINDINGS
+HIGH — latest Select patch needs retest:
+Commit e958ade67cdf1faac55b30a1c0912b34bc853659 added three Select-test assertions for a freshly drawn rectangle retaining handles, resizing immediately, and clicking elsewhere to draw a new shape. The previous PASS note predates that commit. No later run result was found in the repository. Re-run claude/tests/test_select.js against the current app.html, then rerun relevant costume regression and complete full regression. Do not describe the newest patch as fully verified until results are recorded.
+
+HIGH — raw T043 fixture is wrong:
+grok/fixtures.json and grok/FIXTURE-SOURCES.txt still say repeat 2.7 runs two times. Scratch uses Math.round for this repeat count, so it runs three times. Claude's runner applies a correction from claude/tests/extra-fixtures.json in memory; thus the reported 39/39 result does not fix the source fixture. Grok owns its files and should correct T043 in both files, then add the additional high-risk cases requested in team/NEXT-FOR-THE-TEAM-2026-10-19.txt. Keep parity coverage open until corrected files are committed and re-run.
+
+MEDIUM — merge queue has stale path/status entries:
+MERGE-QUEUE.txt still lists historical deepseek/ candidate paths and retired DeepSeek tasks. Claude owns that file, so ChatGPT did not edit it. Path mapping, current statuses and review recommendations are in chatgpt/MERGE-QUEUE-NOTES.txt. Legacy costume candidates remain blocked pending actual API/state mapping and isolated stage-vs-costume canvas testing. Protobuf .pmp remains incomplete pending confirmed parser API and a real legal fixture/assets. Preserve existing .sb3 and ZIP .pmp support. Legacy clone speed candidates remain superseded; collision-B is not accepted just because an older queue said PICK.
+
+MEDIUM — extension / site:
+Gemini's browser extension remains WAITING for complete packaging/icons, permission/privacy review, Chromium/Firefox checks, Scratch SPA/repeated injection checks, and end-to-end project load. The canonical website URL still awaits owner confirmation; no replacement URL should be guessed.
+
+MEDIUM — benchmarking:
+team/PERFORMANCE-BENCHMARK-PLAN.txt documents the test protocol and private-project baseline notes. It is not proof of a complete new benchmark run. Measure script-heavy and render-heavy work separately, run at least three timed samples, report median/range, record Stop/UI responsiveness, and rerun correctness checks for each optimization. Treat 60 FPS+ as an aspiration on specific tested projects and hardware.
+
+5. CONTEXT / DOCUMENTATION AUDIT
+- Root README, AI-TEAM, TODO, Gemini task list, assignments, workflow, roadmap, shared queue, current status, performance plan, and handoff logs now route active inherited lab work into Gemini's unified workspace.
+- Original Gemini visuals/extension backlog was retained as GV1-GV6 and GE1-GE4 after current assignments.
+- ChatGPT updated chatgpt/USER-GUIDE.txt to Beta v15.48.0 and added Select/transform guidance plus explicit evidence limitations.
+- Cross-AI chat histories are not automatically shared in full. The repository has a shared handoff record; it does not claim to contain the original Gemini or DeepSeek chats.
+- Historical mentions of DeepSeek in work logs are intentionally retained as history. The old task-list copy is explicitly archived and must not be followed as active instruction.
+- The product TODO now prioritizes Scratch parity/custom procedures, realistic 60 FPS performance targets, clean UI, measured CPU/GPU investigation, and GWrap AI reconstruction animation behavior. Tilemap and additional extension work remain deferred.
+
+6. REQUIRED NEXT ACTIONS
+1. Claude: rerun the newest Select test additions against current app.html, run relevant costume regressions, finish and log the full v15.48.0 regression; update the Claude-owned merge queue.
+2. Grok: correct T043 in grok/fixtures.json and grok/FIXTURE-SOURCES.txt; then complete additional assigned fixtures and re-run the parity runner.
+3. Gemini: follow team/TODO-GEMINI.txt order; keep new outputs in gemini/ or gemini/lab/ and maintain gemini/AI-CHAT-LOG.txt. Do not treat migrated code as accepted or authored by Gemini.
+4. Claude/Gemini: complete protobuf .pmp API/fixture validation, costume canvas-isolation evidence, and browser-extension packaging/real-browser checks as assigned.
+5. Performance: use team/PERFORMANCE-BENCHMARK-PLAN.txt and private test projects through their authorized private repo only. Record exact project/build/browser/hardware/settings and before/after results.
+6. Owner: confirm the canonical website URL if it has changed; do not guess it.
+7. All contributors: preserve evidence labels, do not claim tests that did not run, do not edit app.html/index.html without specific authorization, and do not integrate or release without the existing approval gates.
+
+FINAL VERDICT
+The **team-role consolidation and repository/file routing are verified at source/tree level**. The codebase is now at Beta v15.48.0, but **not all current work is fully verified**: the latest Select patch needs a fresh run, T043 in Grok's source fixtures is still wrong, the merge queue needs Claude's cleanup, the extension/.pmp tasks retain blockers, and the comprehensive performance plan still needs actual benchmark runs. ChatGPT performed static GitHub verification only and did not independently run browser/runtime tests.
