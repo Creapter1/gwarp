@@ -1,0 +1,57 @@
+G-WARP COMPILER REVIEW — 2026-10-19 FOLLOW-UP
+Reviewer: ChatGPT
+Repository: Creapter1/gwarp
+Reviewed main app blob: 5ca624a515b9fc1310814c4740608c1cf3071028 (2,440,120 bytes; Beta v15.48.0)
+Reviewed speed plan blob: fa72a658464a5a59c600183550ae59d84ec47fe
+Reviewed fixture runner blob: 3e5d56a47915f34cfde63c4e04a70869557721a2
+Reviewed base fixture blob: 9da4f9826c34fe15bf262dfb0aa7caa2b6660c1f
+Reviewed Grok list fixture blob: 0ed530eda717e46ddccea0ee2879311cf5236dcd
+Evidence: SOURCE-VERIFIED static blob/tree inspection. No browser, Playwright run or benchmark was executed by ChatGPT.
+
+STATUS
+No new statement-cache or core-block JavaScript-compiler implementation has landed in the current app blob. The latest app source remains Beta v15.48.0 and contains the interpreter/wrapper path described below. The existing small DOM/slot caches are genuine groundwork, but do not satisfy all four performance-plan steps or prove a speedup. Treat compiler work as NOT YET READY FOR ACCEPTANCE until a changed implementation and new test/benchmark evidence are available.
+
+NUMBERED REVIEW FINDINGS
+
+1. HIGH — The planned statement/script snapshot cache is not present.
+   Current source has no statementCache/expressionCache/compileBlock/compileStack/compiledScripts implementation. Script execution still dispatches through several layered `ScriptThread.prototype.executeBlock` wrappers; reporters and conditions still reach `GW8.resolveInput`, `GW8.evalCondForThread`, and/or `GW9.evalNode`. Repeated DOM and evaluator work therefore remains in the core path. This is a source finding; runtime cost was not measured by ChatGPT.
+   Acceptance: compile/cache one clearly scoped path behind a reversible flag; show the diff and before/after profile before saying the planned step is done.
+
+2. HIGH — `GW.__wsEpoch` is a structural-DOM epoch, not a complete “all script edits” version.
+   The observer in app.html increments the epoch for `childList: true, subtree: true`; it does not observe attributes. Existing block input values, select values and serialized expression text can change while their DOM nodes remain. A new snapshot that copies those values and invalidates only on this epoch can execute stale values.
+   Acceptance: either add a reliable change-version pathway for every relevant edit/input/dropdown/slot change, or validate a per-script/per-slot signature. Test changing a number input, dropdown, variable name, nested expression, connected body and block type after first execution, including while a script is running. Confirm undo/redo, duplicate, delete and project replacement invalidate cached snapshots.
+
+3. MEDIUM — Existing caches help, but are narrower than the planned compiler.
+   `GW.ownParts` caches references to a block's own inputs/selects/boolean slot in a WeakMap keyed by the workspace epoch. `kids(c)` caches direct child block arrays under the same epoch. `GW9.slotNode` caches the parsed expression node by the raw `slot.dataset.expr` string. These avoid repeated element discovery / JSON.parse in those specific paths; they are not compiled JavaScript functions or a full statement snapshot.
+   Acceptance: retain this behavior where useful, test invalidation, and report the cost of each new layer separately. Do not describe existing part/AST memoization as “the compiler” or claim Step 1/2 complete without showing what new work remains.
+
+4. HIGH — Protect interpreter semantics and thread state when adding compiled functions.
+   The current engine has multiple overrides of `ScriptThread.prototype.executeBlock`, a call stack, custom procedure/local-variable handling, waits, repeat/if frames, and a recursion-based typed expression evaluator. Compile only known, normalized internal node types and preserve the current fallback for unknown/extension blocks. A generated function must not bypass scheduler yield, stop, pause, wait, warp guard, broadcasts, clone ownership or per-sprite context.
+   Acceptance: compare cached/compiled and interpreter results on the same fixtures. Add tests for stop during loop, wait/resume, edit-while-running, custom procedures/locals, clone hats, broadcast receiver, nested if/else, repeat-until, extension fallback and malformed/missing inputs. Do not eval or execute project text as generated source.
+
+5. HIGH — The current parity runner does not load all listed Grok fixture families.
+   `grok/fixtures.json` contains 60 base fixtures and T043 now expects 3 iterations. `claude/tests/test_grok_fixtures.js` loads the selected fixture file and, by default, adds the 9 fixtures in `claude/tests/extra-fixtures.json` while applying its corrections map. It does not load `grok/fixtures-extra-list.json`, which contains ten T130–T139 cases. Thus the checked-in default run uses 60 + 9 (69 fixtures), not the intended 60 + 10 Grok list additions (and not all three collections together). Current repository verification already marks a current 60+10 run as pending.
+   Acceptance: Claude should reconcile runner arguments or add an explicit fixture-combining step, print every input file and per-file case count, reject duplicate IDs, then record the exact total and test result. Keep the nine Claude-specific fixtures/corrections too; don't silently discard them.
+
+6. HIGH — T043 and list-index edge cases must gate performance work, not just the happy path.
+   The current base fixture records T043 as 3 iterations, and the extra-list family targets last on empty/non-empty lists, delete-last, delete-all, insert-last, replace-last, number/text list comparison, insert-all no-op and out-of-range letter access. Any compiler branch that reimplements list-index coercion instead of sharing the normalized semantics can drift from Scratch or from the current interpreter.
+   Acceptance: include T043 and T130–T139 in every relevant compiler parity gate, plus the 60 base cases and Claude-specific extras. Confirm `last`, `random`, `all`, empty lists, 1-based indexing, out-of-range letter access, string/number comparison and missing input handling. If fixture sources and prose disagree, resolve the expectation before treating a failure as a compiler regression.
+
+7. HIGH — Performance plan's before/after protocol still needs actual evidence for each stage.
+   `team/SPEED-PLAN.txt` requests correctness fixtures plus a same-project zombie.sb3 FPS check after each stage. I found no new compiler patch or new benchmark result in the current app tree. Prior reported figures are background evidence only; they do not establish a new cache/compiler speedup.
+   Acceptance: on the same machine, Chromium version, viewport, test project, settings and duration, collect at least three before/after samples; report median/range FPS or throughput, worst frame stall, UI/Stop latency, errors and functional outputs. Keep correctness output identical. Don't promise 30–60 FPS or a multiplier unless measured on the stated setup.
+
+8. MEDIUM — Make the optimization reversible and limit scope.
+   Apply one stage at a time: statement snapshot/cache, then expression cache only if still needed, then compile one high-frequency block family at a time, followed by warp loops. Keep a switch/fallback until parity and profiling pass. Avoid broad changes to the costume/editor code in the same patch so speed and correctness regressions can be attributed.
+   Acceptance: each patch names the covered block families, fallback behavior, cache key/invalidation contract, focused regression command, fixture count, and measured performance delta.
+
+RECOMMENDED NEXT REVIEW WHEN CLAUDE PUSHES A PATCH
+- Re-fetch the changed app blob and diff against `5ca624a515b9fc1310814c4740608c1cf3071028`.
+- Identify whether the change is a statement cache, AST cache, compiled function or only DOM lookup caching; map it to the plan step actually completed.
+- Check epoch invalidation and dynamic state semantics before reading benchmark claims.
+- Confirm the exact fixture inputs, total cases, duplicates, runner command and current app SHA.
+- Read the new test/benchmark output. A test file existing is not a test result; an old reported PASS does not apply to a new app blob.
+- Report findings in ChatGPT's `chatgpt/` files. Do not edit `app.html`, `claude/tests/*`, or Claude-owned `MERGE-QUEUE.txt` from this review.
+
+FINAL VERDICT
+CG2 review is currently BLOCKED on a new compiler/cache patch: none is present in the app blob inspected. The key risks are incomplete cache invalidation if `GW.__wsEpoch` is used alone, compiler semantics drifting from the interpreter/Scratch fixtures, and incomplete fixture-family coverage. Existing DOM/AST memoization is present, but its correctness/performance must be separated from the planned statement snapshot and JavaScript compilation. This review is static only and does not claim the new plan was runtime-tested.
