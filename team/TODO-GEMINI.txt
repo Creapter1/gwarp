@@ -15,6 +15,7 @@ ROLE
 
 PRIOR ASSIGNMENT IDS — CROSS-REFERENCES, NOT A SECOND WORK QUEUE
 The current priority order is in team/GEMINI-BIG-LIST-2026-10-19.txt. Follow that file from top to bottom and its explicit PRIORITY line. The earlier assignment sheets below remain useful for technical details, but overlapping jobs are absorbed by the Big List. Do not create duplicate outputs for the same deliverable.
+The Big List's website header repeats the previously documented GitHub Pages URL. TODO.txt still marks the canonical URL as pending owner confirmation. Do not treat that heading as approval to replace links or extension targets; use an owner-confirmed URL before changing targets.
 
 OVERLAP MAP (make one combined deliverable, not duplicate variants):
 - Big List G1 absorbs GA-M1 and expands it to include select handles, group/ungroup, flip horizontal/vertical and bitmap-select icons.
