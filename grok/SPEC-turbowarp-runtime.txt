@@ -1,0 +1,145 @@
+=====================================================================
+ SPEC: TurboWarp-only runtime options (vs Scratch 3)
+ Author: Grok | 2026-10-18 | Batch: S3
+ Evidence: docs.turbowarp.org + TurboWarp/scratch-vm runtime.js +
+   TurboWarp/scratch-render RenderWebGL.js + extensions/runtime-options.js
+ G-Warp support: NOT audited line-by-line this session (see §8)
+=====================================================================
+
+Scratch baseline defaults (for comparison):
+  Framerate: 30 TPS (currentStepTime ≈ 1000/30)
+  MAX_CLONES: 300
+  Fencing: on (sprites kept on stage; size clamped)
+  Pen: stage resolution 480×360 logical
+  Stage size: 480×360
+  Interpolation: none
+  Compiler: none (interpreter only)
+  Warp: threads may run without yield in "run without screen refresh";
+        Scratch sequencer WARP_TIME ≈ 500ms before forcing yield
+
+---------------------------------------------------------------------
+1. CUSTOM FPS / 60 FPS
+---------------------------------------------------------------------
+Docs: https://docs.turbowarp.org/custom-fps
+Code: Runtime.setFramerate(framerate) → frameLoop.setFramerate
+  Clamp: 1..250; 0 = match display refresh (rAF); scripts may pause when tab hidden
+
+Effect: scripts step N times per second instead of 30.
+  Example: move 1 step in a forever loop → 30 steps/s at 30 FPS, 60 at 60 FPS.
+Most projects break if they assume 30; prefer **interpolation** for smoothness
+without changing game speed. Delta-time patterns needed for true FPS-independent motion.
+
+---------------------------------------------------------------------
+2. INTERPOLATION
+---------------------------------------------------------------------
+Docs: https://docs.turbowarp.org/interpolation
+Code: runtime.interpolationEnabled; setInterpolation();
+  frameLoop interpolates drawable positions between steps
+  progressInFrame = timeSinceStart / currentStepTime
+
+Effect: **visual** smoothness only; script rate unchanged (still 30 unless FPS changed).
+Avoid on: 3D, raytracers, pen-heavy, already-laggy projects (can't interpolate pen;
+  costs CPU). May add up to ~1/30s input latency; rare glitches on scrollers.
+
+---------------------------------------------------------------------
+3. INFINITE CLONES
+---------------------------------------------------------------------
+Docs: https://docs.turbowarp.org/infinite-clones
+Code: runtimeOptions.maxClones (default MAX_CLONES=300);
+  clonesAvailable(): _cloneCounter < runtimeOptions.maxClones
+  "Infinite" ≈ very large maxClones (or effectively unlimited in UI)
+
+Effect: create clone past 300 succeeds.
+Breaks projects that rely on the 300 wall as a soft stop.
+
+---------------------------------------------------------------------
+4. REMOVE FENCING
+---------------------------------------------------------------------
+Docs: https://docs.turbowarp.org/remove-fencing
+Code: runtimeOptions.fencing (default true);
+  setRuntimeOptions({ fencing: false })
+  renderer.offscreenTouching = !fencing
+
+Effect when fencing false:
+  - Sprites may leave the stage
+  - Size limits relaxed (with misc limits interaction)
+  - Touching works offscreen (offscreenTouching true)
+May help performance slightly; can break edge-bounce / on-stage assumptions.
+
+---------------------------------------------------------------------
+5. HIGH QUALITY PEN
+---------------------------------------------------------------------
+Docs: https://docs.turbowarp.org/high-quality-pen
+Code: renderer.useHighQualityRender; setUseHighQualityRender(enabled);
+  drawables get setHighQuality(...)
+
+Effect: pen not stuck at 480×360 pixel grid; less coordinate rounding in editor.
+Cost: many more pixels in fullscreen → large FPS drop possible.
+Not always visually better.
+
+---------------------------------------------------------------------
+6. CUSTOM STAGE SIZE
+---------------------------------------------------------------------
+Docs: https://docs.turbowarp.org/custom-stage-size
+Code: runtime.stageWidth / stageHeight (defaults 480 / 360 from STAGE_* getters)
+
+Effect: stage pixel dimensions change (e.g. 640×360 for 16:9).
+Most projects mis-align (go to x:240 assumes half of 480).
+Docs recommend modest sizes + fullscreen upscale rather than 1080p stage.
+Projects can detect size via sensing tricks / runtime options extension.
+
+---------------------------------------------------------------------
+7. WARP TIMER ("stuck checking")
+---------------------------------------------------------------------
+Docs: https://docs.turbowarp.org/warp-timer
+Code: compilerOptions.warpTimer (default **false** in VM construct;
+  enabled by default in **editor** UI per docs)
+
+Effect: long/infinite loops inside "run without screen refresh" / warp yield
+periodically so the tab stays responsive (demo ~2 FPS instead of freeze).
+Significant performance cost → off in player by default, on in editor.
+Formerly named "Stuck Checking".
+
+Note: Scratch's interpreter also has WARP_TIME (~500ms) in sequencer; TurboWarp
+compiler path is separate but same user-facing goal (don't freeze the page).
+
+---------------------------------------------------------------------
+8. RELATED TURBOWARP OPTIONS (brief)
+---------------------------------------------------------------------
+Turbo mode: skips screen refresh waits (Scratch also has turbo).
+Remove misc limits: runtimeOptions.miscLimits false — list length / other caps.
+Compiler: compilerOptions.enabled (default true) — JS compile of scripts;
+  ?nocompile URL disables.
+Runtime Options extension (id runtimeoptions): get/set turbo, interpolation,
+  fencing, misc limits, HQ pen, framerate, clone limit, stage size from blocks.
+
+---------------------------------------------------------------------
+9. IMPLICATIONS FOR G-WARP
+---------------------------------------------------------------------
+If G-Warp aims TurboWarp parity for imported projects:
+  - Store per-project flags: fps, interpolation, maxClones, fencing, hqPen,
+    stageW/H, warpTimer
+  - Default to Scratch-safe: 30 FPS, clones 300, fencing on, 480×360
+  - Interpolation is safest "make it smooth" toggle without breaking timers
+  - Document that 60 FPS doubles forever-loop motion unless delta-time used
+  - Pen HQ needs higher-res pen layer / OffscreenCanvas strategy (costly)
+  - exportSB3 does not encode these flags (TurboWarp stores in URL / cloud
+    meta outside standard sb3 schema) — G-Warp may need gwarp-project.json
+    sidecar (already used for G-Warp-only data)
+
+---------------------------------------------------------------------
+10. SOURCES
+---------------------------------------------------------------------
+- https://docs.turbowarp.org/custom-fps
+- https://docs.turbowarp.org/interpolation
+- https://docs.turbowarp.org/infinite-clones
+- https://docs.turbowarp.org/remove-fencing
+- https://docs.turbowarp.org/high-quality-pen
+- https://docs.turbowarp.org/custom-stage-size
+- https://docs.turbowarp.org/warp-timer
+- https://github.com/TurboWarp/scratch-vm/blob/develop/src/engine/runtime.js
+- https://github.com/TurboWarp/extensions/blob/master/extensions/runtime-options.js
+
+UNSURE
+- Exact default maxClones value when UI says "Infinite" (likely Number.MAX_SAFE_INTEGER or similar)
+- G-Warp Beta current support matrix for each flag (needs code search / live check)
