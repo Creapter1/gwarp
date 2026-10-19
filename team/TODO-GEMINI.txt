@@ -1,46 +1,44 @@
-FOCUS NOW (2026-10-18, owner: "work on the animation for costumes"): do GA-M1, GA-M2 in team/ASSIGNMENTS-ANIMATION-2026-10-18.txt FIRST, then your older jobs.
-NEW (2026-10-18, from Claude/leader): your next jobs are GM7, GM8 in team/ASSIGNMENTS-2026-10-19.txt - do those first.
 
-=====================================================================
- G-WARP TO-DO LIST FOR GEMINI  (icons + pictures designer)
- ALWAYS CHECK FIRST: ../AI-TEAM.txt (rules + work log), ../TODO.txt (RULES),
- ../team/AI-WORK-PLAN.txt, and this file. Put deliverables in gemini/ only.
-=====================================================================
+G-WARP GEMINI 2 — COMBINED TEAM TASKS
+Owner: Creapter1
+Active role confirmed: 2026-10-18. Gemini inherits all active work formerly assigned to DeepSeek.
+One active work folder: gemini/. Put all new Gemini deliverables, lab candidates, harnesses and notes there.
+Read first: ../AI-TEAM.txt, ../TODO.txt, AI-WORK-PLAN.txt, CONTINUOUS-WORK-QUEUE.txt, ENGINE-MAP.txt as relevant, and the assignment document for your active task.
 
-HOW GEMINI WORKS
-- For every idea, give 3 DIFFERENT OPTIONS as SVG CODE (not images,
-  not descriptions). The owner picks one; Claude cleans it up.
-- Each SVG: viewBox set, no outside links/fonts/images, no scripts,
-  under 4 KB, readable small (24px) and big (128px).
-- G-Warp style: dark #0b0b14 backgrounds, violet #8b5cf6 / #a855f7,
-  electric green #4ade80, white. Bold, simple, "electric" feel.
-- G-Spark mascot = rounded violet square, big white "G", small stick
-  arms and legs. Keep him the same in every picture.
-- NO Scratch art, NO cats, nothing that looks like Scratch's icons.
-- Name files: gemini/<job>-A.svg, -B.svg, -C.svg
+ROLE
+- Original G-Warp visuals/icons and character art (old Gemini role).
+- Browser extension prototype packaging and compatibility (old Gemini role).
+- Research, A/B/C implementation candidates, lab reports, test harnesses and project-format research formerly assigned to DeepSeek.
+- Cross-review work when explicitly assigned; report findings without editing other contributor folders.
+- Never edit app.html/index.html unless Claude has verified the allowed integration role and the owner explicitly authorizes the exact change. Keep candidates disconnected from live runtime.
 
-JOBS (claim in AI-TEAM.txt before starting)
-[ ] GM1. Extension icon (G-Spark, must read clearly at 16px)
-[ ] GM2. G-Warp favicon for the website + app (tiny, simple)
-[ ] GM3. Category icons for the block palette (Motion, Looks, Sound,
-         Events, Control, Sensing, Operators, Variables, My Blocks) -
-         G-Warp's own electric style, not Scratch's
-[ ] GM4. Achievement badges: Bug Hunter (+ 3 more ideas)
-[ ] GM5. G-Spark poses: waving, running, celebrating, thinking
-[ ] GM6. Website hero art: G-Spark + electric wire background (wide)
+CURRENT ORDER — ANIMATION ASSIGNMENT FIRST
+1. team/ASSIGNMENTS-ANIMATION-2026-10-18.txt:
+   - GA-M1: animation/flipbook icon options.
+   - GA-M2: three original riggable starter characters.
+   - GL1 (formerly DA1): easing options for GW_ANIM.mix + visual lab.
+   - GL2 (formerly DA2): auto-rig candidate options + tests on original drawings.
+   - GL3 (formerly DA3): Make Costumes speed options + timing evidence.
+   IDs DA1-DA3 remain in old history only; the current ownership and output path are Gemini/gemini/lab.
+2. team/ASSIGNMENTS-2026-10-19.txt after the animation task:
+   - GM7: extension icons in original G-Spark style.
+   - GM8: extension target/SPA lifecycle fixes and Chromium test steps, using the exact approved target documented there.
+   - GL4 (formerly DS6): clone thread/cleanup performance candidates. Respect the merge queue; old clone variants are superseded unless Claude reauthorizes comparison.
+   - GL5 (formerly DS7): costume fixes using the exact editor API in the assignment; canvas-only event scope.
+   IDs DS6-DS7 are historical cross-references, not active DeepSeek assignments.
+3. After assigned work, check this file and CONTINUOUS-WORK-QUEUE.txt for remaining unclaimed Gemini-compatible jobs. Do not duplicate Claude's compiler/custom-block work while it is active.
 
-IDEAS (Gemini can add here)
--
+LAB RULES
+- For a lab task requesting A/B/C, give three meaningfully different, self-contained candidates plus one lab report and a test harness when specified. Compare expected behavior, performance, safety, size and risks. Do not generate A/B/C if the assignment doesn't ask for them.
+- Verify every G-Warp API against current source/ENGINE-MAP; write UNSURE when unknown. Never target Scratch's window.vm/runtime.sequencer.
+- Keep project tests and owner files private. Do not copy private test-project art, sounds, scripts or assets into this public repository; report by project name only.
+- Do not claim execution from static inspection. Label evidence SOURCE-VERIFIED, STATIC-ANALYSIS, REPORTED TEST, BROWSER-VERIFIED or NOT TESTED.
+- All SVG assets must be original, self-contained, script-free, with no remote fonts/images, and follow STYLE-GUIDE.txt. No Scratch artwork/logos/cat or other protected characters.
+- Do not change another AI's folder. The previous DeepSeek artifacts have been migrated to gemini/lab/ as legacy inputs; inspect and test before reuse. Their location or prior "PICK" does not prove correctness or integration.
+- Before ending, update gemini/AI-CHAT-LOG.txt with task, exact files, evidence, blockers and next step. Never log secrets or unnecessary private data.
 
-
-CROSS-AI REVIEW + CONTINUOUS WORK (2026-10-15)
-Read ../CROSS-AI-REVIEW-2026-10-15.txt and ../CONTINUOUS-WORK-QUEUE.txt first. The browser extension remains a prototype and WAITING until packaging, privacy, browser compatibility and end-to-end tests are complete.
-[ ] GM1 (NEXT): generate real icon16/32/48/128 PNG files from reviewed original G-Spark artwork, or make packaging reproducibly generate them; the manifest currently references PNGs absent from the repository tree. Replace the placeholder bolt only with an owner-compatible G-Spark design.
-[ ] GM2: test Chromium MV3 and Firefox target, including chrome/browser namespace, context menu, popup toggle, hide/re-enable behavior, manifest permissions and storage failures.
-[ ] GM3: test Scratch single-page-app navigation and repeated content-script injection; check history wrappers do not disrupt navigation and are safely managed.
-[ ] GM4: end-to-end test from Scratch project page through the G-Warp hash prompt and project loading, coordinating with the ChatGPT scratch-link candidate. Do not claim success unless tested on a build with the handler.
-[ ] GM5: after blockers, create three original SVG favicon options and a separate set of category icons in G-Warp style.
-[ ] GM6: cross-review DeepSeek costume proposals for canvas targeting and visual/coordinate issues; report findings without editing deepseek/.
-If time remains after one task, claim the next unclaimed in-scope task. Record browser/version and exact results; do not infer release readiness from static inspection.
-
-[ ] GM7. WEBSITE TARGET RECHECK: the extension currently references the previously documented https://creapter1.github.io/gwarp/app.html target. Wait for the owner to provide the new canonical URL, then update only the extension/docs references assigned to Gemini, test the exact target, and report the files changed. Do not guess a replacement URL or assume gwarper.com is live.
+PRODUCT PRIORITIES
+1. Exact Scratch-compatible behavior, especially custom blocks/procedures and their arguments, recursion, yielding, event order, clones and save/load. Claude currently owns the implementation/integration stream; Gemini should provide bounded research/candidates when assigned, not race it.
+2. Performance target: 60 FPS+ on representative projects/hardware when feasible; an aspiration, not a universal guarantee. Benchmark and report before/after values.
+3. Keep the primary UI clean and understandable. Tilemap and extensions beyond the current browser extension assignment remain deferred unless the owner reprioritizes them.
+4. GWrap AI block/script reconstruction animation: proposed behavior should animate newly reconstructed blocks into place by default, offer Skip/instant, and expose More -> Settings with default On. It must never block execution or leave partial scripts when skipped. This is a backlog design/research item until separately assigned.
