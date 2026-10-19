@@ -1,0 +1,137 @@
+=====================================================================
+ GEMINI - GWRAP AI: 300+ QUESTIONS AND POSSIBILITIES          from Claude (team leader), 2026-10-19
+ Owner: "add at minimum 300 questions and possibilities to the chat, like: create an animation, move,
+ and connect it to the block (whatever the block name is) and do this. It needs a lot of work. Don't hold back."
+ TOP PRIORITY: do this before the other jobs in team/NEXT-AFTER-v15.49-2026-10-19.txt.
+=====================================================================
+
+WHAT GWRAP AI IS TODAY
+GWrap AI is the helper in the block palette (the "GWrap AI" category). A kid types what they want ("make it jump").
+It works OFFLINE: it matches the words to a list of RECIPES (they BUILD real scripts in the code area when the kid
+presses "Add these blocks") and TIPS (short answers with an optional button). Today there are only 13 recipes and
+6 tips (ids: arrows, jump, bounce, animate, hello, score, music, follow, spin, edge, grow, ghost, teleport;
+tip-if, tip-draw, tip-record, tip-song, tip-save, tip-undo). Your job: make it know 300+ things.
+
+FILES YOU MUST READ FIRST
+- team/gwrap-blocks.json : EVERY block that exists in G-Warp (type id, category, text, inputs, dropdown options,
+  shape). Use ONLY these block types. A block type that is not in this file = the recipe breaks.
+- team/FUTURE-IDEAS.txt (section OWNER IDEAS 2026-10-19) and docs/costumes.html, docs/animation.html,
+  docs/sounds.html : what the app can do (costume tabs, Tiles, Animation tab with bones / frames / Glide /
+  In-between / Smooth x2 / Make costumes, Flipbook + onion skin, Song maker, backdrop library...).
+
+WHAT TO MAKE  ->  gemini/gwrap-ai/knowledge-pack.json   (ONE JSON file, must parse with JSON.parse)
+{
+  "version": 1,
+  "recipes": [ ...at least 160... ],
+  "tips":    [ ...at least 160... ]
+}
+Total at least 320 entries. Every entry has at least 3 example questions ("q") the way a kid would type them,
+including misspellings kids really make ("jumpp", "animashun", "colour").
+
+RECIPE (builds a working script)
+{
+  "id": "r-walk-animate-arrows",          // unique, starts with r-
+  "emoji": "🚶",
+  "title": "Walk with the arrow keys and animate",
+  "keys": ["walk","animate","arrow","arrows","costume","move"],   // single words, lower case
+  "q": ["make my character walk with arrows and change costumes", "walking animation when i press right",
+        "how do i make him move and animate at the same time"],
+  "steps": ["When the green flag is clicked, keep checking forever.",
+            "If the right arrow is pressed: face right, move 5 steps, show the next costume.",
+            "Same for the left arrow. Add more costumes for a smoother walk."],
+  "prep": { "vars": ["score"], "lists": [], "messages": ["game over"] },   // optional: things to create first
+  "script": [ STACK, STACK, ... ]          // one or more scripts
+}
+STACK = [ BLOCK, BLOCK, ... ]   (the first block is normally a hat: when_flag, when_key, when_clicked, when_broadcast,
+                                 when_clone, when_backdrop)
+BLOCK = [ "type", [inputs...], [menus...], { "body": STACK, "else": STACK, "cond": NODE } ]
+        - inputs: the typed values in order, as strings: ["10"], ["Hello!","2"]
+        - menus: the dropdown values in order: ["right arrow"], ["mouse-pointer"], ["score"]
+        - an input can be a nested round block instead of a string: {"r": ["op_random", ["-200","200"]]}
+        - the 4th part is only for C-blocks: repeat / forever / if / if_else / repeat_until (body, else, cond)
+          and for wait_until (cond).
+NODE (the pointy condition in if / wait until / repeat until):
+  {"type":"key_pressed","key":"space"}           {"type":"touching_edge"}
+  {"type":"touching_pointer"}                      {"type":"touching_sprite","target":"OTHER_SPRITE"}
+  {"type":"mouse_down"}
+  {"type":"op_gt","args":[A,B]}   {"type":"op_eq","args":[A,B]}   (for "less than" swap A and B in op_gt)
+  {"type":"op_and","args":[C1,C2]} {"type":"op_or","args":[C1,C2]} {"type":"op_not","args":[C]}
+  A/B values: {"type":"literal","value":"10"} {"type":"get_var","name":"score"} {"type":"x_position"}
+              {"type":"y_position"} {"type":"timer"} {"type":"answer"} {"type":"mouse_x"} {"type":"mouse_y"}
+              {"type":"costume_number"} {"type":"size_reporter"}
+              {"type":"op_random","args":[{"type":"literal","value":"1"},{"type":"literal","value":"10"}]}
+  Use "OTHER_SPRITE" when the recipe needs another sprite; Claude's loader puts in the real name.
+
+EXAMPLE (the owner's own example: animation + move + connected blocks)
+{ "id":"r-walk-animate-arrows", "emoji":"🚶", "title":"Walk with the arrow keys and animate",
+  "keys":["walk","animate","arrow","arrows","costume","move","run"],
+  "q":["make him walk and animate with arrow keys","walking animashun","move right and change costume"],
+  "steps":["Green flag: keep checking forever.","Right arrow: face right, move, next costume.","Left arrow: the same, facing left."],
+  "script":[[ ["when_flag"],
+              ["set_rotation_style",[],["left-right"]],
+              ["forever",[],[],{"body":[
+                 ["if",[],[],{"cond":{"type":"key_pressed","key":"right arrow"},"body":[
+                    ["point_direction",["90"]],["move",["5"]],["next_costume"],["wait",["0.05"]] ]}],
+                 ["if",[],[],{"cond":{"type":"key_pressed","key":"left arrow"},"body":[
+                    ["point_direction",["-90"]],["move",["5"]],["next_costume"],["wait",["0.05"]] ]}]
+              ]}] ]] }
+
+TIP (an answer, no blocks)
+{
+  "id": "t-onion-skin",                    // unique, starts with t-
+  "emoji": "🧅",
+  "title": "What is onion skin?",
+  "keys": ["onion","skin","ghost","frames","flipbook"],
+  "q": ["what is onion skin", "how do i see the costume before", "onion skin not working"],
+  "text": "2-4 short sentences a 10-year-old understands. Say WHERE to click (tab / button names exactly as in the app).",
+  "action": "costumes"     // optional button: one of code | costumes | sounds | song | animation | tiles | backdrops | save | undo
+}
+
+WHAT TO COVER (minimum numbers; more is better)
+RECIPES (160+):
+  Motion 15 - arrows, WASD, 8 directions, smooth glide, follow mouse slowly, circle path, patrol left-right,
+             wrap around the screen, go to the mouse on click, random wander, chase OTHER_SPRITE...
+  Looks + animation 25 - walk/run/idle/jump animations, blink, dance, flash colours, grow/shrink on click,
+             fade in/out, speech conversations between 2 sprites (broadcasts), costume changes on keys,
+             "create animation, move and connect" combos (the owner's example), layers front/back...
+  Sound + music 10 - play on click, background music loop, volume up/down keys, pitch effects, sound on jump
+  Events + broadcasts 15 - start game message, game over message, next level, button sprites that send
+             messages, "when backdrop switches to", chained messages (broadcast and wait)
+  Control 15 - timers/countdowns, repeat until, wait until key, stop all, spawn things over time
+  Sensing 15 - touching edge/mouse/OTHER_SPRITE, mouse down, ask + answer quiz, distance, key any, drag mode
+  Variables + lists 20 - score, lives, health, levels, high score, coins, inventory list, shopping list,
+             random fact from a list, count clicks, speed variable
+  Clones 10 - rain, stars, bullets/shooting, enemies spawning, particles, delete at the edge
+  Games (whole small games, 2-4 scripts each) 25 - clicker, catch the falling object, dodge, maze (touching
+             colour is NOT available - use touching edge / OTHER_SPRITE), platformer jump with gravity variable,
+             flappy-style, pong paddle, quiz, memory, race timer, whack-a-mole, shooter, collector...
+  Camera / physics / tiles / stage 10 - camera follows the sprite (cam_goto myself), zoom, physics bounce
+             (phys_* blocks), set a tile, backdrop colour, next backdrop on a key, frame rate 60
+TIPS (160+):
+  How the app works 40 - every tab, Start/Pause/Stop, save/load .sb3, undo/redo, Add Sprite, backdrops,
+             stage size buttons, full screen, HQ, sprite x/y/size/direction fields, Report a bug, Look like Scratch
+  Costume editor 30 - every tool (Select with 8 handles + rotate, Reshape, Brush, Eraser, Fill, Text, Line,
+             Circle, Rectangle), Vector vs Bitmap, Convert to Bitmap, group/ungroup, flip, front/back, zoom,
+             rotation centre, the Costumes | Tiles | Animation tabs, the Tiles rules, folders (walk//frame 1)
+  Animation 25 - Rig, bones, attach shapes, Attach automatically, Animate, frames, In-between, Smooth x2,
+             Glide, Play, FPS, Loop, Make costumes, onion skin, Flipbook Play, the Animation blocks
+  Sounds 15 - record, upload, effects, Song maker styles (Lo-Fi, Synthwave, Upbeat Pop, Dark Arcade,
+             Ambient, Electro House, Neo Jazz, Chiptune, Rock, Trap, Cinematic), moods, Generate, Save to sprite
+  Block explanations 40 - what each important block does in one or two sentences (forever vs repeat,
+             broadcast vs broadcast and wait, if vs if-else, say vs say for secs, glide, clones, variables
+             "for all sprites" vs "this sprite only", lists, operators, join, pick random, mod, round...)
+  Fixing problems 20 - "my sprite doesn't move" (no hat block / not started), "my clone doesn't move",
+             "too many clones (300 limit)", "the game is slow", "my sound doesn't play", "it says a block is
+             missing", "the project won't load", "my costume is tiny", "the extension is Dangerous - why?"
+
+RULES
+- Use ONLY block types from team/gwrap-blocks.json, with inputs and menus in the same order as listed there.
+- Every script must start with a hat block, and must work when the kid presses Start. Keep numbers sensible
+  (stage is 480 x 360, x from -240 to 240, y from -180 to 180).
+- No Scratch cat, no brand names, no famous characters, nothing copied. Kid-friendly words, short sentences.
+- No personal data, no web links in answers.
+- No duplicate ids. No two entries with the same title.
+- Push to GitHub after every 50 entries (gemini/gwrap-ai/knowledge-pack.json, the whole file each time) and
+  check it on GitHub. If you can't push, paste the file in parts with the file name on top.
+- Hand in: one line at the bottom of AI-TEAM.txt: 2026-10-19 | DONE | Gemini | GWRAP-300 | <counts>
+  Claude writes the loader that turns your JSON into real blocks, tests every recipe in the app, and merges it.

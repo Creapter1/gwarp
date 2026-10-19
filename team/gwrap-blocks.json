@@ -1,0 +1,1869 @@
+{
+"note": "G-Warp Beta v15.49.0 palette, dumped from the live app by Claude 2026-10-19. \"inputs\" = number of typed inputs in order; \"menus\" = dropdown options in order (a custom name like a variable, sprite, costume or message is allowed in menus that list names). Pen/Music/Animation extension blocks are not in the default palette.",
+"blocks": [
+{
+"type": "move",
+"category": "motion",
+"text": "move (10) steps",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "turn_cw",
+"category": "motion",
+"text": "turn (15) degrees",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "turn_ccw",
+"category": "motion",
+"text": "turn (15) degrees",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "goto_xy",
+"category": "motion",
+"text": "go to x: (0) y: (0)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "goto_target",
+"category": "motion",
+"text": "go to [random position]",
+"inputs": 0,
+"menus": [
+[
+"random position",
+"mouse-pointer"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "point_direction",
+"category": "motion",
+"text": "point in direction (90)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "change_x",
+"category": "motion",
+"text": "change x by (10)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "set_x",
+"category": "motion",
+"text": "set x to (0)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "change_y",
+"category": "motion",
+"text": "change y by (10)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "set_y",
+"category": "motion",
+"text": "set y to (0)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "bounce",
+"category": "motion",
+"text": "if on edge, bounce",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "set_rotation_style",
+"category": "motion",
+"text": "set rotation style [left-right]",
+"inputs": 0,
+"menus": [
+[
+"left-right",
+"don't rotate",
+"all around"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "glide_xy",
+"category": "motion",
+"text": "glide (1) secs to x: (0) y: (0)",
+"inputs": 3,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "goto_random",
+"category": "motion",
+"text": "go to random position",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "point_towards",
+"category": "motion",
+"text": "point towards [mouse-pointer]",
+"inputs": 0,
+"menus": [
+[
+"mouse-pointer",
+"random direction"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "x_position",
+"category": "motion",
+"text": "x position",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "y_position",
+"category": "motion",
+"text": "y position",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "direction",
+"category": "motion",
+"text": "direction",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "say",
+"category": "looks",
+"text": "say (Hello!) for (2) secs",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "say_only",
+"category": "looks",
+"text": "say (Hello!)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "think",
+"category": "looks",
+"text": "think (Hmm...)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "think_secs",
+"category": "looks",
+"text": "think (Hmm...) for (2) secs",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "switch_costume",
+"category": "looks",
+"text": "switch costume to [costume1]",
+"inputs": 0,
+"menus": [
+[
+"costume1"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "next_costume",
+"category": "looks",
+"text": "next costume",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "change_size",
+"category": "looks",
+"text": "change size by (10)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "set_size",
+"category": "looks",
+"text": "set size to (100)%",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "show",
+"category": "looks",
+"text": "show",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "hide",
+"category": "looks",
+"text": "hide",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "change_ghost",
+"category": "looks",
+"text": "change ghost effect by (10)%",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "set_ghost",
+"category": "looks",
+"text": "set ghost effect to (0)%",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "clear_effects",
+"category": "looks",
+"text": "clear graphic effects",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "set_effect",
+"category": "looks",
+"text": "set [color] effect to (0)",
+"inputs": 1,
+"menus": [
+[
+"color",
+"fisheye",
+"whirl",
+"pixelate",
+"mosaic",
+"brightness",
+"ghost"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "change_effect",
+"category": "looks",
+"text": "change [color] effect by (25)",
+"inputs": 1,
+"menus": [
+[
+"color",
+"fisheye",
+"whirl",
+"pixelate",
+"mosaic",
+"brightness",
+"ghost"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "go_front_back",
+"category": "looks",
+"text": "go to [front] layer",
+"inputs": 0,
+"menus": [
+[
+"front",
+"back"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "go_layers",
+"category": "looks",
+"text": "go [forward] (1) layers",
+"inputs": 1,
+"menus": [
+[
+"forward",
+"backward"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "costume_number",
+"category": "looks",
+"text": "costume #",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "costume_name",
+"category": "looks",
+"text": "costume name",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "size_reporter",
+"category": "looks",
+"text": "size",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "play_sound",
+"category": "sound",
+"text": "play sound [Zap] until done",
+"inputs": 0,
+"menus": [
+[
+"Zap",
+"Pop"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "start_sound",
+"category": "sound",
+"text": "start sound [Zap]",
+"inputs": 0,
+"menus": [
+[
+"Zap",
+"Pop"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "stop_all_sounds",
+"category": "sound",
+"text": "stop all sounds",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "snd_set_effect",
+"category": "sound",
+"text": "set [pitch] effect to (100)",
+"inputs": 1,
+"menus": [
+[
+"pitch",
+"pan"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "snd_change_effect",
+"category": "sound",
+"text": "change [pitch] effect by (10)",
+"inputs": 1,
+"menus": [
+[
+"pitch",
+"pan"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "snd_clear_effects",
+"category": "sound",
+"text": "clear sound effects",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "change_volume",
+"category": "sound",
+"text": "change volume by (-10)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "set_volume",
+"category": "sound",
+"text": "set volume to (100)%",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "volume_reporter",
+"category": "sound",
+"text": "volume",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "when_flag",
+"category": "events",
+"text": "when clicked",
+"inputs": 0,
+"menus": [],
+"shape": "hat",
+"conditionSlot": false
+},
+{
+"type": "when_key",
+"category": "events",
+"text": "when key [space] pressed",
+"inputs": 0,
+"menus": [
+[
+"space",
+"up arrow",
+"down arrow",
+"right arrow",
+"left arrow",
+"any",
+"a",
+"b",
+"c",
+"d",
+"e",
+"f"
+]
+],
+"shape": "hat",
+"conditionSlot": false
+},
+{
+"type": "when_clicked",
+"category": "events",
+"text": "when this sprite clicked",
+"inputs": 0,
+"menus": [],
+"shape": "hat",
+"conditionSlot": false
+},
+{
+"type": "broadcast",
+"category": "events",
+"text": "broadcast [message1]",
+"inputs": 0,
+"menus": [
+[
+"message1",
+"message2"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "broadcast_wait",
+"category": "events",
+"text": "broadcast [message1] and wait",
+"inputs": 0,
+"menus": [
+[
+"message1",
+"message2"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "when_broadcast",
+"category": "events",
+"text": "when I receive [message1]",
+"inputs": 0,
+"menus": [
+[
+"message1",
+"message2"
+]
+],
+"shape": "hat",
+"conditionSlot": false
+},
+{
+"type": "when_clone",
+"category": "events",
+"text": "when I start as a clone",
+"inputs": 0,
+"menus": [],
+"shape": "hat",
+"conditionSlot": false
+},
+{
+"type": "when_backdrop",
+"category": "events",
+"text": "when backdrop switches to [stage1]",
+"inputs": 0,
+"menus": [
+[
+"stage1"
+]
+],
+"shape": "hat",
+"conditionSlot": false
+},
+{
+"type": "wait",
+"category": "control",
+"text": "wait (1) seconds",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "repeat",
+"category": "control",
+"text": "repeat (10)",
+"inputs": 1,
+"menus": [],
+"shape": "C",
+"conditionSlot": false
+},
+{
+"type": "forever",
+"category": "control",
+"text": "forever",
+"inputs": 0,
+"menus": [],
+"shape": "C",
+"conditionSlot": false
+},
+{
+"type": "if",
+"category": "control",
+"text": "if then",
+"inputs": 0,
+"menus": [],
+"shape": "C",
+"conditionSlot": true
+},
+{
+"type": "if_else",
+"category": "control",
+"text": "if then else",
+"inputs": 0,
+"menus": [],
+"shape": "C",
+"conditionSlot": true
+},
+{
+"type": "wait_until",
+"category": "control",
+"text": "wait until",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": true
+},
+{
+"type": "repeat_until",
+"category": "control",
+"text": "repeat until",
+"inputs": 0,
+"menus": [],
+"shape": "C",
+"conditionSlot": true
+},
+{
+"type": "stop",
+"category": "control",
+"text": "stop [all]",
+"inputs": 0,
+"menus": [
+[
+"all",
+"this script",
+"other scripts in sprite"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "create_clone",
+"category": "control",
+"text": "create clone of [myself]",
+"inputs": 0,
+"menus": [
+[
+"myself"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "delete_clone",
+"category": "control",
+"text": "delete this clone",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "touching_pointer",
+"category": "sensing",
+"text": "touching [mouse-pointer]?",
+"inputs": 0,
+"menus": [
+[
+"mouse-pointer",
+"edge"
+]
+],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "key_pressed",
+"category": "sensing",
+"text": "key [space] pressed?",
+"inputs": 0,
+"menus": [
+[
+"space",
+"up arrow",
+"down arrow",
+"left arrow",
+"right arrow",
+"any",
+"a",
+"b",
+"c",
+"d",
+"e",
+"f"
+]
+],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "mouse_down",
+"category": "sensing",
+"text": "mouse down?",
+"inputs": 0,
+"menus": [],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "mouse_x",
+"category": "sensing",
+"text": "mouse x",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "mouse_y",
+"category": "sensing",
+"text": "mouse y",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "touching_sprite",
+"category": "sensing",
+"text": "touching sprite [mouse-pointer]?",
+"inputs": 0,
+"menus": [
+[
+"mouse-pointer",
+"edge"
+]
+],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "distance_to",
+"category": "sensing",
+"text": "distance to [mouse-pointer]",
+"inputs": 0,
+"menus": [
+[
+"mouse-pointer"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "sprite_prop",
+"category": "sensing",
+"text": "[x position] of [_stage_]",
+"inputs": 0,
+"menus": [
+[
+"x position",
+"y position",
+"direction",
+"costume #",
+"costume name",
+"size",
+"volume",
+"backdrop #",
+"backdrop name"
+],
+[
+"_stage_"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "ask",
+"category": "sensing",
+"text": "ask (What's your name?) and wait",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "set_drag_mode",
+"category": "sensing",
+"text": "set drag mode [draggable]",
+"inputs": 0,
+"menus": [
+[
+"draggable",
+"not draggable"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "answer",
+"category": "sensing",
+"text": "answer",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "reset_timer",
+"category": "sensing",
+"text": "reset timer",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "timer",
+"category": "sensing",
+"text": "timer",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "username",
+"category": "sensing",
+"text": "username",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "current_time",
+"category": "sensing",
+"text": "current time",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_add",
+"category": "operators",
+"text": "() + ()",
+"inputs": 2,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_gt",
+"category": "operators",
+"text": "() > 50(50)",
+"inputs": 2,
+"menus": [],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "op_sub",
+"category": "operators",
+"text": "() \u2212 ()",
+"inputs": 2,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_mul",
+"category": "operators",
+"text": "() \u00d7 ()",
+"inputs": 2,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_div",
+"category": "operators",
+"text": "() \u00f7 1(1)",
+"inputs": 2,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_eq",
+"category": "operators",
+"text": "() = ()",
+"inputs": 2,
+"menus": [],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "op_and",
+"category": "operators",
+"text": "and",
+"inputs": 0,
+"menus": [],
+"shape": "boolean",
+"conditionSlot": true
+},
+{
+"type": "op_or",
+"category": "operators",
+"text": "or",
+"inputs": 0,
+"menus": [],
+"shape": "boolean",
+"conditionSlot": true
+},
+{
+"type": "op_not",
+"category": "operators",
+"text": "not",
+"inputs": 0,
+"menus": [],
+"shape": "boolean",
+"conditionSlot": true
+},
+{
+"type": "op_mod",
+"category": "operators",
+"text": "10(10) mod 3(3)",
+"inputs": 2,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_round",
+"category": "operators",
+"text": "round (3.14)",
+"inputs": 1,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_abs",
+"category": "operators",
+"text": "abs (-5)",
+"inputs": 1,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_join",
+"category": "operators",
+"text": "join hello (hello ) world(world)",
+"inputs": 2,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_length",
+"category": "operators",
+"text": "length of hello(hello)",
+"inputs": 1,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_letter",
+"category": "operators",
+"text": "1(1) letter of hello(hello)",
+"inputs": 2,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_random",
+"category": "operators",
+"text": "pick random 1(1) to 10(10)",
+"inputs": 2,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "set_backdrop",
+"category": "stage",
+"text": "switch backdrop to [stage1]",
+"inputs": 0,
+"menus": [
+[
+"stage1"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "next_backdrop",
+"category": "stage",
+"text": "next backdrop",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "change_backdrop_color",
+"category": "stage",
+"text": "set backdrop color to (#ffffff)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "list_add",
+"category": "lists",
+"text": "add (item) to [my list]",
+"inputs": 1,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "list_delete",
+"category": "lists",
+"text": "delete item (1) of [my list]",
+"inputs": 1,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "list_insert",
+"category": "lists",
+"text": "insert (item) at (1) of [my list]",
+"inputs": 2,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "list_replace",
+"category": "lists",
+"text": "replace item (1) of [my list] with (item)",
+"inputs": 2,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "list_clear",
+"category": "lists",
+"text": "delete all of [my list]",
+"inputs": 0,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "list_show",
+"category": "lists",
+"text": "show list [my list]",
+"inputs": 0,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "list_hide",
+"category": "lists",
+"text": "hide list [my list]",
+"inputs": 0,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "list_item",
+"category": "lists",
+"text": "item (1) of [my list]",
+"inputs": 1,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "list_length",
+"category": "lists",
+"text": "length of [my list]",
+"inputs": 0,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "list_contains",
+"category": "lists",
+"text": "[my list] contains (item)?",
+"inputs": 1,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "define_custom",
+"category": "myblocks",
+"text": "define (do something) args ()",
+"inputs": 2,
+"menus": [],
+"shape": "C",
+"conditionSlot": false
+},
+{
+"type": "call_custom",
+"category": "myblocks",
+"text": "call (do something) args ()",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "get_var",
+"category": "myblocks",
+"text": "value of [my variable]",
+"inputs": 0,
+"menus": [
+[
+"my variable"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "set_var",
+"category": "variables",
+"text": "set [my variable] to (0)",
+"inputs": 1,
+"menus": [
+[
+"my variable"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "change_var",
+"category": "variables",
+"text": "change [my variable] by (1)",
+"inputs": 1,
+"menus": [
+[
+"my variable"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "show_var",
+"category": "variables",
+"text": "show variable [my variable]",
+"inputs": 0,
+"menus": [
+[
+"my variable"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "hide_var",
+"category": "variables",
+"text": "hide variable [my variable]",
+"inputs": 0,
+"menus": [
+[
+"my variable"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "tile_set",
+"category": "tilemap",
+"text": "set tile at row (0) col (0) to tile (1) [solid]",
+"inputs": 3,
+"menus": [
+[
+"solid",
+"background",
+"foreground"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "tile_at",
+"category": "tilemap",
+"text": "tile at row (0) col (0) [solid]",
+"inputs": 2,
+"menus": [
+[
+"solid",
+"background",
+"foreground"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "tile_is_solid",
+"category": "tilemap",
+"text": "tile at row (0) col (0) is solid? [solid]",
+"inputs": 2,
+"menus": [
+[
+"solid",
+"background",
+"foreground"
+]
+],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "tile_clear_layer",
+"category": "tilemap",
+"text": "clear tilemap layer [solid]",
+"inputs": 0,
+"menus": [
+[
+"solid",
+"background",
+"foreground"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "touching_tile",
+"category": "tilemap",
+"text": "touching a tile?",
+"inputs": 0,
+"menus": [],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "behavior_get_attr",
+"category": "behaviors",
+"text": "behavior attribute (speed)",
+"inputs": 1,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "behavior_set_attr",
+"category": "behaviors",
+"text": "set behavior attribute (speed) to (5)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "behavior_change_attr",
+"category": "behaviors",
+"text": "change behavior attribute (speed) by (1)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "behavior_event_actor_name",
+"category": "behaviors",
+"text": "colliding actor name",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "behavior_event_tile",
+"category": "behaviors",
+"text": "colliding tile id",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "cam_set_xy",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 set camera to x: (0) y: (0)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_set_x",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 set camera x to (0)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_set_y",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 set camera y to (0)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_change_x",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 change camera x by (10)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_change_y",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 change camera y by (10)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_set_zoom",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 set camera zoom to (100) %",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_change_zoom",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 change camera zoom by (10)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_goto",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 move camera to [myself]",
+"inputs": 0,
+"menus": [
+[
+"myself"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_move",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 move camera (10) steps",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_set_dir",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 set camera direction to (90)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_turn_cw",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 turn camera \u21bb (15) degrees",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_turn_ccw",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 turn camera \u21ba (15) degrees",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "ext_set_layer",
+"category": "gw9-ext",
+"text": "set layer of [myself] to (1)",
+"inputs": 1,
+"menus": [
+[
+"myself"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "rt_set_fps",
+"category": "gw9-ext",
+"text": "set frame rate to (60)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "rt_set_size",
+"category": "gw9-ext",
+"text": "set stage size width: (480) height: (360)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "snd_stop_one",
+"category": "gw9-ext",
+"text": "stop sound []",
+"inputs": 0,
+"menus": [
+[
+""
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "snd_loop",
+"category": "gw9-ext",
+"text": "start looping [] from (0) s",
+"inputs": 1,
+"menus": [
+[
+""
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "key_sim",
+"category": "gw9-ext",
+"text": "press key [space] for (0.1) seconds [without waiting]",
+"inputs": 1,
+"menus": [
+[
+"space"
+],
+[
+"without waiting",
+"and wait"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_set_stage",
+"category": "gw9-ext",
+"text": "\u269b setup stage [boxed]",
+"inputs": 0,
+"menus": [
+[
+"boxed",
+"floor",
+"open"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_set_gravity",
+"category": "gw9-ext",
+"text": "\u269b set gravity to x: (0) y: (-10)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_enable",
+"category": "gw9-ext",
+"text": "\u269b enable for [costume] mode [normal]",
+"inputs": 0,
+"menus": [
+[
+"costume",
+"circle",
+"polygon",
+"all"
+],
+[
+"normal",
+"bullet"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_disable",
+"category": "gw9-ext",
+"text": "\u269b disable physics for this sprite",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_tick",
+"category": "gw9-ext",
+"text": "\u269b step simulation",
+"inputs": 0,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_set_tickrate",
+"category": "gw9-ext",
+"text": "\u269b set simulation rate to (30) /s",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_set_pos",
+"category": "gw9-ext",
+"text": "\u269b go to x: (0) y: (0) [world]",
+"inputs": 2,
+"menus": [
+[
+"world",
+"stage",
+"relative"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_set_vel",
+"category": "gw9-ext",
+"text": "\u269b set velocity to sx: (0) sy: (0)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_change_vel",
+"category": "gw9-ext",
+"text": "\u269b change velocity by sx: (0) sy: (0)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_push",
+"category": "gw9-ext",
+"text": "\u269b push with force (25) in direction (0)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_spin",
+"category": "gw9-ext",
+"text": "\u269b spin with force (500)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_set_spin",
+"category": "gw9-ext",
+"text": "\u269b set angular velocity to (30)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_set_fixed",
+"category": "gw9-ext",
+"text": "\u269b set fixed [dynamic]",
+"inputs": 0,
+"menus": [
+[
+"dynamic",
+"static",
+"pinned"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_density",
+"category": "gw9-ext",
+"text": "\u269b set density [25]",
+"inputs": 0,
+"menus": [
+[
+"25",
+"50",
+"100",
+"200",
+"400"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_density_n",
+"category": "gw9-ext",
+"text": "\u269b set density to (100)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_friction",
+"category": "gw9-ext",
+"text": "\u269b set friction [0]",
+"inputs": 0,
+"menus": [
+[
+"0",
+"20",
+"50",
+"75",
+"100"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_friction_n",
+"category": "gw9-ext",
+"text": "\u269b set friction to (50)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_bounce",
+"category": "gw9-ext",
+"text": "\u269b set bounce [0]",
+"inputs": 0,
+"menus": [
+[
+"0",
+"10",
+"20",
+"40",
+"70",
+"100"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_bounce_n",
+"category": "gw9-ext",
+"text": "\u269b set bounce to (20)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_props",
+"category": "gw9-ext",
+"text": "\u269b set density [25] roughness [0] bounce [0]",
+"inputs": 0,
+"menus": [
+[
+"25",
+"50",
+"100",
+"200",
+"400"
+],
+[
+"0",
+"20",
+"50",
+"75",
+"100"
+],
+[
+"0",
+"10",
+"20",
+"40",
+"70",
+"100"
+]
+],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_set_scroll",
+"category": "gw9-ext",
+"text": "\u269b set scroll x: (0) y: (0)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "phys_change_scroll",
+"category": "gw9-ext",
+"text": "\u269b change scroll by x: (0) y: (0)",
+"inputs": 2,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "cam_set_col",
+"category": "gw9-ext",
+"text": "\ud83d\udcf7 set background color to (#ffffff)",
+"inputs": 1,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "angle_costume",
+"category": "gw9-ext",
+"text": "switch (plane_) to closest (90) using angles (0, 30, 50, 70, 90, 110, 130, 150, 180, -160,",
+"inputs": 3,
+"menus": [],
+"shape": "stack",
+"conditionSlot": false
+}
+]
+}
