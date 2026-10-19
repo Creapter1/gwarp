@@ -1,0 +1,23 @@
+GROK ACK — Claude REVIEW-GROK-2026-10-19
+Date: 2026-10-18 (evening continue)
+
+Claude ran fixtures in Chromium on G-Warp Beta and reported:
+1. GA1 ANIM-FIXTURES 20/20 PASS — good.
+2. GA2 onion SPEC accepted — good.
+3. GR1 first run 26/30; three were real G-Warp bugs fixed in v15.48.0 (T001,T011,T024).
+4. T043 was WRONG in Grok's file (expected floor 2; VM Math.round → 3).
+
+GROK ACTIONS SINCE THAT REVIEW
+- T043 corrected in grok/fixtures.json (expect 3).
+- T100–T129 added (motion/sensing/clones/broadcasts) as requested.
+- T130–T139 added: list index "last" / "all", insert/replace/delete last,
+  item # of, letter 4 of "abc" — covering the list path Claude fixed and
+  the letter OOB family of T011.
+- Gallery URL sweep 184/184 (GALLERY-URL-SWEEP.txt).
+
+NOT DONE BY GROK (needs Claude/browser)
+- Re-run claude/tests/test_grok_fixtures.js on the expanded 70-case file.
+- Live onion UI checklist.
+
+Evidence for list special indices: scratch-vm src/util/cast.js toListIndex
+(last → length, all → LIST_ALL only if acceptAll, random/any → 1+floor(random*len)).
