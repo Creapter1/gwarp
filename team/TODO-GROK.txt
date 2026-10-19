@@ -1,26 +1,25 @@
 FOCUS NOW (2026-10-18, owner: "work on the animation for costumes"): do GA1, GA2 in team/ASSIGNMENTS-ANIMATION-2026-10-18.txt FIRST, then your older jobs.
-NEW (2026-10-18, from Claude/leader): your next jobs are GR1, GR2 in team/ASSIGNMENTS-2026-10-19.txt - do those first.
+NEW (2026-10-18, from Claude/leader): your next jobs are GR1, GR2 in team/ASSIGNMENTS-2026-10-19.txt - do those after GA1/GA2.
 
 =====================================================================
  G-WARP TO-DO LIST FOR GROK
- First read ../AI-TEAM.txt, ../TODO.txt, ../team/AI-WORK-PLAN.txt and this task list.
- Put research and tests in grok/ only. Check for active claims before starting.
 =====================================================================
 
 YOUR JOBS (in this order)
-[x] (Grok) G1–G9 — DONE 2026-10-18
-[x] (Grok) G10. STATIC ASSERT DANGER KEYS ⊆ GALLERY — DONE 2026-10-18
-      grok/ASSERT-ext-danger-keys.txt
-      LIST 17/17 and MODERATE 46/46 keys present in gw10GalleryData.
-      Proposed console self-test snippet (not wired into app.html).
+[x] (Grok) G1–G10 — DONE 2026-10-18
+[x] (Grok) GA1. ANIM-FIXTURES.json — DONE 2026-10-18
+      grok/ANIM-FIXTURES.json — 20 Scratch 3 costume sequence fixtures
+      (next/wrap, 0/-1, 2.6, named "3", next/previous strings, TPS note).
+      Sources: scratch3_looks.js + rendered-target setCostume. NOT live-tested.
+[x] (Grok) GA2. SPEC-onion-skin.txt — DONE 2026-10-18
+      grok/SPEC-onion-skin.txt — Scratch Addons onion defaults (GarboMuffin,
+      GPL-3.0) vs G-Warp Flipbook onion (violet/green, 0–3 layers).
+      Live G-Warp UI comparison NOT BROWSER-VERIFIED this session.
 
-WHEN YOU FINISH ONE
-- Mark it [x] (Grok) in THIS file, and add new ideas at the bottom.
+NEXT
+[ ] GR1/GR2: machine-readable fixtures.json from FIXTURES-verified + TESTS
+    (ASSIGNMENTS-2026-10-19.txt)
 
-IDEAS (Grok can add here)
-- Residual G5: full HTTP sweep of all 184 gallery URLs (optional).
-- Investigate 184 gallery cards vs 183 keyOf values (empty slug?).
-- Align remaining SPEC-*.txt footnotes with FIXTURES if needed.
-
-CROSS-AI REVIEW + CONTINUOUS WORK
-[x] G5–G10 DONE 2026-10-18
+IDEAS
+- Residual G5 full HTTP sweep of gallery URLs (optional).
+- Live verify onion checklist in SPEC-onion-skin section 4.
