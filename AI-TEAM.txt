@@ -235,3 +235,7 @@ PROGRESS / PLAN UPDATE (2026-10-18)
 2026-10-19 | CLAIMED | ChatGPT | C4 review Grok TESTS.txt expected results and primary-source requirements
 2026-10-19 | DONE | ChatGPT | C4 static review -> chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt (commit dc28e2df1b18927d1c1d2a9c448a98ff6f9b0ad9); Scratch editor VM source cross-checked at scratchfoundation/scratch-editor commit 585b1c3877943b31ac273b3d056ccb79db13aa41; T043 is still wrong in Grok TESTS.txt, T017 has invalid random-test logic, and UI/G-Warp-only cases need evidence/scope cleanup; no runtime test performed
 2026-10-19 | CLAIMED | ChatGPT | C5 review gemini/lab/pmp-loader.js and test-pmp-loader.js (read-only; verify parser API, legal real fixture/assets, and test limits)
+
+2026-10-19 | CLAIMED | ChatGPT | C5 review inherited protobuf .pmp loader/test harness (read-only)
+2026-10-19 | DONE | ChatGPT | C5 static review -> chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt (commit 61011ebf5ff473c23d0c1f8e6cd582c5b3f19094); current upstream pmp-protobuf API cross-checked at commit 84176d56c2b5bdebce8150a6bf9fefcac59fc1af; real protobuf fixture/assets and browser import remain untested, empty assets Map blocks full media load; Gemini files/app untouched
+2026-10-19 | CLAIMED | ChatGPT | C7 concise owner report for C1-C5 review cycle; keep all runtime/integration work out of scope
