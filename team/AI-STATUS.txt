@@ -84,3 +84,7 @@ CHATGPT C2 — 2026-10-19 (STATIC REVIEW COMPLETE; CANDIDATE REMAINS SUPERSEDED)
 - Created chatgpt/REVIEW-clone-safety-2026-10-19.txt. It reviews chatgpt/clone-safety.js against current app v15.48.0 source, the handoff notes and ENGINE-MAP, and includes an unchecked P0/P1 clone/Stop/settings/cache regression list.
 - Key issues: candidate bypasses the current 5,000 safety ceiling when Infinite Clones is on; document-capture Stop handler empties threads before native Stop marks them finished; it reimplements the native clone function without maintaining native clone-count cache fields; and it truncates loaded project clone limits above 300.
 - Current queue explicitly marks this module SUPERSEDED. No code was changed and no tests were run. Do not revive. Next assignment follows team/TODO-CHATGPT.txt.
+CHATGPT C3 — 2026-10-19 (STATIC REVIEW COMPLETE; EXTENSION TESTS NOT RUN)
+- Created chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt. Current app hash handler already exists in the reviewed v15.48.0 blob; do not duplicate chatgpt/scratch-link.js.
+- Extension issues for follow-up: referenced PNG icons absent from current tree, popup setting changes do not update existing tabs immediately, history wrappers remain installed when toggled off, no explicit hashchange observer, context-menu project parser should validate origin, privacy wording should distinguish browser sync preference storage from later G-Warp fetch.
+- Chrome/Firefox, prompt/cancel, failure, popup and package tests were NOT RUN. Next: C4 Grok expected-result/source evidence review.
