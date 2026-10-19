@@ -13,14 +13,14 @@ GR1. Turn grok/FIXTURES-verified.txt + TESTS.txt into ONE machine-readable file:
      Start with the 30 HIGHEST-RISK cases (number/text compare, round, mod, list index, join, random range).
 GR2. For each case say SOURCE (Scratch source file/line or Scratch Wiki) for the expected value.
 
-=== DEEPSEEK  (lab: fixes with 3 versions) ===
-DS6. Clones speed redo: skip threads that are finished or waiting (performance.now() < waitUntil),
+=== GEMINI LAB (inherited former DeepSeek assignment IDs; current owner is Gemini) ===
+GL4 (legacy ID DS6). Clones speed redo: skip threads that are finished or waiting (performance.now() < waitUntil),
      and remove finished threads in ONE pass. Real fields: ScriptThread {sprite, blocks, pc,
-     callStack, waitUntil, finished}. Don't skip by visibility. A/B/C + LAB file.
-DS7. Costume fixes v2: rewrite your picks (select-C, fill-C, text-B, eraser-C, undo-C) with the REAL
+     callStack, waitUntil, finished}. Don't skip by visibility. A/B/C + LAB file in gemini/lab/.
+GL5 (legacy ID DS7). Costume fixes v2: rewrite your picks (select-C, fill-C, text-B, eraser-C, undo-C) with the REAL
      editor names: GW_V15_COSTUME_EDITOR.state = {tab, zoom, pan, costumeMode, selectedSvg,
      bitmapTool, svgTool, svgDrag, selectionRect}. Never attach listeners to the whole document;
-     only to the costume canvas. One file per fix + what you tested.
+     only to the costume canvas. One file per fix under gemini/lab/ + what you tested.
 
 === GEMINI  (pictures + the extension) ===
 GM7. Extension: make the 4 PNG icons (16/32/48/128) from G-Spark (rounded violet square, big white
@@ -44,3 +44,7 @@ CL3. Turn Grok's fixtures.json into an automatic test that every Beta must pass.
 
 HOW TO HAND IN: your folder + one line at the bottom of AI-TEAM.txt:
   <date> | DONE | <AI> | <job id> | <files>
+
+
+OWNER REASSIGNMENT ADDENDUM — 2026-10-18
+GL4/GL5 are owned by Gemini and replace active ownership of legacy DS6/DS7. The DS identifiers remain only to explain earlier references; all new candidates/tests/reports go in gemini/lab/. Clone variants previously marked SUPERSEDED must not be revived without Claude's explicit reauthorization and current-source evidence.
