@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark"><title>Parents and teachers · G-Warp</title><style>
+:root{color-scheme:dark;--bg:#0b0b14;--panel:#141425;--line:#2a2a48;--text:#ececf6;--muted:#a3a3c2;--violet:#8b5cf6;--wire:#4ade80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}a{color:#c2afff}a:focus-visible,summary:focus-visible{outline:2px solid var(--wire);outline-offset:3px}header,footer{background:#10101d;border-bottom:1px solid var(--line);padding:14px 20px}header a{font-weight:800;text-decoration:none;color:var(--text)}.layout{max-width:1180px;margin:auto;padding:22px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px}aside,main{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}aside a{display:block;padding:5px 0;text-decoration:none}aside a[aria-current=page]{color:var(--wire);font-weight:700}h1,h2,h3{line-height:1.2}h1{margin-top:0}h2{margin-top:1.7em;color:#d8c7ff}p,li{max-width:78ch}.toplinks{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:.9rem}footer{border-top:1px solid var(--line);border-bottom:0;color:var(--muted)}.note{border-left:3px solid var(--wire);padding:10px 14px;background:#10101d;border-radius:6px;margin:18px 0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.card{background:#10101d;border:1px solid var(--line);border-radius:10px;padding:16px}li{margin:6px 0}@media(max-width:760px){.layout{grid-template-columns:1fr;padding:12px}aside{padding:14px}aside nav{columns:2}main{padding:16px}header{padding:12px}}
+</style></head><body>
+<header><a href="../index.html">⚡ G-Warp</a><div class="toplinks"><a href="../app.html">Open the app</a><a href="index.html">Documentation home</a><a href="tutorials/index.html">Tutorials</a></div></header>
+<div class="layout"><aside><b>Documentation</b><nav>
+<a href="index.html">Docs home</a><a href="start.html">Start here</a><a href="blocks.html">Blocks</a><a href="costumes.html">Costumes</a><a href="animation.html">Animation</a><a href="sounds.html">Sounds + Song maker</a><a href="extensions.html">Extensions</a><a href="safety.html">Safety + privacy</a><a href="credits.html">Credits</a><a href="scratch.html">From Scratch</a><a href="troubleshoot.html">Troubleshooting</a><a href="shortcuts.html">Keyboard shortcuts</a><a href="changelog.html">Changelog</a><a href="team.html">AI team</a><a href="tutorials/index.html">Tutorials</a><a href="glossary.html">Glossary</a><a href="parents.html" aria-current="page">Parents &amp; teachers</a>
+</nav></aside><main><h1>For parents and teachers</h1>
+<p>G-Warp is a beta block-coding and game-making app. Learners build scripts by connecting blocks, draw costumes, make music, and experiment with animation. Its interface is G-Warp's own; Scratch/TurboWarp/PenguinMod compatibility is a goal, not a guarantee for every project or extension.</p>
+<p class="note"><b>Classroom rule:</b> the editor does not require an account for basic local use, but a project or feature may still contact external services. Before using G-Warp with children, test the exact build and features you plan to use and follow your school’s privacy rules.</p>
+<h2>Privacy: what we can and cannot promise</h2>
+<ul>
+<li><b>No account is required to use the local editor.</b> That is not the same as proving that no network requests happen.</li>
+<li><b>Do not enter or share secrets.</b> Never put passwords, private keys, student addresses, school IDs, private URLs, or identifying information into a project, an AI prompt, or a bug report.</li>
+<li><b>Review before reporting.</b> A bug report may involve GitHub and may include the information or files you choose to attach. Make a small, sanitized reproduction project and inspect it before submitting.</li>
+<li><b>Some features may use the network.</b> Web project loading, extensions that use the internet, externally hosted resources, or any AI/service you intentionally configure can make network requests. Read each extension's description and warning first.</li>
+<li><b>We have not independently verified every outbound request for every feature in every build.</b> Because of that, this guide does not claim that a specific category of data is “never sent” universally. Check the current build’s privacy/network behavior before a classroom rollout.</li>
+</ul>
+<h2>Children under 13</h2>
+<p>The project’s safety guidance says children under 13 should have a parent or guardian’s help/OK before sending personal information online. For a classroom, apply the school’s policy and obtain the required parent/guardian permission before using any online feature or asking children to submit reports. The safest default is to use sample names and avoid sharing personal data at all.</p>
+<h2>Suggested first lessons</h2>
+<div class="cards">
+<div class="card"><h3>1. Make G-Spark walk</h3><p>Practise drawing a few poses, comparing them with Onion skin, and looping <code>next costume</code> with a short <code>wait</code>.</p><p><a href="tutorials/01-g-spark-walk.html">Open the lesson →</a></p></div>
+<div class="card"><h3>2. Build a clicker game</h3><p>Introduce a score variable, click events and a sound effect. Learners can change the scoring rule after the basic version works.</p><p><a href="tutorials/02-clicker-game.html">Open the lesson →</a></p></div>
+<div class="card"><h3>6. Make falling stars</h3><p>Teach clones and cleanup. Discuss why each temporary clone should eventually run <code>delete this clone</code>.</p><p><a href="tutorials/06-falling-stars.html">Open the lesson →</a></p></div>
+</div>
+<h2>Before a lesson</h2>
+<ol>
+<li>Open the exact version that students will use and test it with a sample project.</li>
+<li>Start with built-in blocks; avoid adding an extension unless the lesson needs it.</li>
+<li>Save a backup copy of any demonstration project. Have students use copies too.</li>
+<li>Explain how to Stop a running project, how to report a bug without personal details, and why an extension warning matters.</li>
+<li>Plan a no-network alternative if the class network or an extension service is unavailable.</li>
+</ol>
+<h2>Beta expectations</h2>
+<p>Controls, compatibility and edge cases may change. Test saving/reopening, the browser/PC you will use, and any sound/microphone or online feature before class. If something differs from the instructions, capture the build/version and simple steps; do not assume the learner did something wrong.</p>
+<p><a href="safety.html">Read Safety + privacy →</a> · <a href="glossary.html">Open the glossary →</a> · <a href="tutorials/index.html">All tutorials →</a></p>
+</main></div><footer><a href="index.html">Documentation home</a> · <a href="glossary.html">Glossary</a> · <a href="tutorials/index.html">Tutorials</a> · <a href="../index.html">Back to G-Warp</a></footer></body></html>
