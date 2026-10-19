@@ -512,3 +512,47 @@ C6 remains an ongoing review-ledger duty. At the next session, check whether Gro
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this repository review cycle, not unrelated historical conversations.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+Date: 2026-10-19 (America/New_York)
+AI: ChatGPT
+Task: C8 — review the current user-owned AI key flow and exact project context transmitted; reconcile stale statuses.
+
+USER REQUEST (verbatim):
+"read and check the git hup and continue pls take your time"
+
+AI RESPONSE / ACTION:
+Reviewed app.html at blob 5ca624a515b9fc1310814c4740608c1cf3071028 via the Git blob API, because the normal large-file fetch returns empty. Created chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt (commit f1265a8582f51a6049a323614f2ab9b7166b6a87). Updated team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt with a dated C8 addendum (commit cd95b4b41563f3ecab1ec199f83663047daa4a21). Updated root TODO.txt (commit 9e9d617241b3e730072d8723bdfae0d21f08f788) to reflect that the built-in AI/key feature already exists as source while privacy/model acceptance remains pending; clarified the old 59-case Grok result is historical and is not proof for the current 60+10 fixture plan.
+
+Verified from source: new key setup defaults to sessionStorage; checking “Remember” writes to localStorage; save clears the other store; Remove key calls save with an empty value. The connected helper sends the user question and a bounded summary including non-clone sprite names, selected sprite, variable names and block text from up to 12 selected-sprite stacks (up to 25 blocks each, 60 characters per block) to https://api.anthropic.com/v1/messages, with the user key in the x-api-key header. No exact-context preview or per-request context-off choice is shown in the current UI. A limited regex scan of the current app blob found zero hits for several common credential patterns; this does not cover Git history, all repository files, deployment artifacts or secret-scanning settings.
+
+HIGH-RISK DOCUMENTATION MISMATCH: source defaults model to claude-sonnet-5-5; official Anthropic model-status docs retrieved on 2026-10-19 list active Claude Sonnet 5 as claude-sonnet-5. This is a source/documentation mismatch, not a reproduced API failure; no model list or Messages API call was made.
+
+FILES CHANGED:
+- chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt — created.
+- team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt — appended detailed current-flow addendum.
+- TODO.txt — AI feature status and historic Grok result qualified.
+- team/TODO-CHATGPT.txt — C8 result recorded.
+- team/CROSS-AI-REVIEW-2026-10-15.txt — C8 severity, source evidence, corrections and acceptance tests added.
+- team/CONTINUOUS-WORK-QUEUE.txt — current C8 result and remaining owner/Claude gates added.
+- team/AI-STATUS.txt — addendum pointer/status added.
+- AI-TEAM.txt — claim/done log added.
+- chatgpt/AI-CHAT-LOG.txt — this entry.
+- No edits to app.html, index.html, Gemini/Grok/Claude source or tests.
+
+EVIDENCE / TEST STATUS:
+- STATIC SOURCE REVIEW: complete for the pinned app blob.
+- OFFICIAL DOCUMENTATION CROSS-CHECK: performed at https://docs.anthropic.com/en/docs/about-claude/model-deprecations.
+- Browser/API/network/storage/exports test: NOT RUN.
+- Git-history secret scan / GitHub secret settings review: NOT RUN.
+- Integration/release: NOT DONE.
+
+BLOCKERS / NEXT OWNER ACTION:
+- After explicit owner approval, Claude/owner should verify a supported model ID with a dummy/test credential, add an exact project-context preview and context-off choice, clarify same-origin storage risk, make storage failures visible, and test remove/session/persistent behavior.
+- Owner/Claude still need a separate Git-history secret scan and review of available secret-scanning settings. No key was found or copied into this report.
+- Owner must confirm canonical website URL before any URL changes.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records this repository review task, not unrelated older chat history.
+--- END ENTRY ---
