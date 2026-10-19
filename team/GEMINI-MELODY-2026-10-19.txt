@@ -1,0 +1,12 @@
+ GEMINI - MELODY JOB (TOP PRIORITY now, before the rest of the big list)    from Claude, 2026-10-19
+Owner: "all the melodies are the same for all the modes - not cool. But there is progress."
+WHY: app.html Song maker (patternFor, ~line 6910 and SoundLab ~line 5674) makes the melody by picking random
+scale notes on each beat. Style and mood only change speed/volume, so every mode sounds the same.
+JOB M1: gemini/lab/melody-engine.js  ->  window.GW_MELODY.make({style, mood, scale, bars, bpm, seed})
+  returns [{t (beats), d (beats), n (MIDI), v (0-1)}]. Same seed = same melody.
+  Each style needs its OWN rhythm + note rules (minimum): lofi, trap, pop, rock, edm, chiptune, jazz, cinematic.
+  Use motifs: a 1-bar idea, repeated and varied (bar 1 = A, 2 = A', 3 = A, 4 = ending on the root).
+  Follow the chord under the melody (strong beats land on chord notes). Mood picks scale/range/energy.
+JOB M2: gemini/lab/lab-melody.html - a Play button per style + "New seed", Web Audio only, shows the notes.
+Test it yourself: 8 styles must sound clearly different. Give 3 versions (A/B/C) and pick one.
+If you can't reach GitHub, give the owner the files as code blocks with the file name on top.

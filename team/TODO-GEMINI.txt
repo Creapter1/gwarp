@@ -1,3 +1,4 @@
+>>> TOP PRIORITY 2026-10-19: team/GEMINI-MELODY-2026-10-19.txt (melody engine) <<<
 BIG LIST (2026-10-19, owner: "give Gemini 3 Argon stuff to work on, don't hold back"): do team/GEMINI-BIG-LIST-2026-10-19.txt top to bottom (priority line at the end).
 
 G-WARP GEMINI 2 — COMBINED TEAM TASKS
