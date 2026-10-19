@@ -94,3 +94,9 @@ CHATGPT C3 — 2026-10-19 (STATIC REVIEW COMPLETE; EXTENSION TESTS NOT RUN)
 - Current app source blob 5ca624a515b9fc1310814c4740608c1cf3071028 has a user-owned Anthropic key flow: sessionStorage by default, localStorage only when Remember is checked, Remove key clears both; no hard-coded credential-pattern hits in the inspected app blob. A same-origin script could read either store.
 - A user click on Ask the connected AI sends the question plus non-clone sprite names, selected sprite, variable names and bounded selected-sprite block text to api.anthropic.com. The current UI lacks exact context preview and a context-off choice. Source default claude-sonnet-5-5 conflicts with the official docs' current active model ID claude-sonnet-5; actual API behavior is NOT TESTED.
 - Detailed report: chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt; maintained review: team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. app.html/index.html were not edited. Browser/API, exports, full Git history and repository secret settings remain untested.
+
+
+LATEST GEMINI ANIMATION/LAB REVIEW — 2026-10-19 (ChatGPT C9, STATIC)
+- Reviewed commit b05973868839921586c844a93c4e1546c75c1c5c (37 new Gemini files); app.html/index.html were untouched in that commit and remain outside this review's edit scope.
+- Animation-lab acceptance is not complete: required current melody paths and pivots.json are absent; auto-rig-C's generic root fallback can create a self-parent cycle; pivot values in the existing harness are printed, not asserted; A/B/C variants conflict with the current sprint rule; flipbook file paths differ from the assignment.
+- Gemini's prior XML/Node test notes are reported evidence only. ChatGPT did not independently execute Node or browser tests. Full review: chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt.
