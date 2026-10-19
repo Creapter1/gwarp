@@ -63,7 +63,7 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 [x] U1. UI must work 1-to-1 like Scratch/TurboWarp/PenguinMod (function,
         not look). (ChatGPT) static behavior audit delivered: chatgpt/UI-AUDIT.txt.
         Browser verification remains for Claude/U3; see audit test plan.
-[~] U2. (DeepSeek candidate delivered; integration blocked pending source/API evidence and isolated canvas tests) COSTUMES / paint editor must work like Scratch's (tools, select,
+[~] U2. (legacy lab candidates inherited by Gemini; integration blocked pending source/API evidence and isolated canvas tests) COSTUMES / paint editor must work like Scratch's (tools, select,
         reshape, fill, text, eraser, layers, undo, bitmap<->vector,
         rotation centre, costume list). See team/CROSS-AI-REVIEW-2026-10-15.txt; acceptance remains pending.
 [ ] U3. Claude: bug hunting + clean-up + merge -> new Beta on the website.
@@ -91,10 +91,11 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
       Scratch 3 (number/text rules, list indexes, rounding, pen colours,
       clone rules, hat restarts, broadcast order...). Make small test
       projects with the exact expected result.
-[x] (DeepSeek) 5. .pmp research + notes + test harness -> deepseek/
-      (NOTES-pmp.txt, test-pmp-loader.js, and protobuf-only pmp-loader.js are
-      present. Claude still needs to test the candidate with real protobuf
-      fixtures before any integration. Existing ZIP-type .pmp support must stay.)
+[~] (Gemini inherited) 5. .pmp research + notes + test harness -> gemini/lab/
+      (NOTES-pmp.txt, test-pmp-loader.js and protobuf-only pmp-loader.js are
+      legacy candidate material, NOT accepted or integrated. Claude still needs
+      a confirmed parser API plus a real legal fixture/assets. Existing ZIP-type
+      .pmp support must stay.)
 [ ] 6. TurboWarp / PenguinMod gallery extensions: test that they load on
       the real website (github.io), list any that fail.
 
@@ -103,6 +104,7 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 =====================================================================
 [ ] GWrap AI: built-in AI helper + "use your own API key" option
     (kids under 13: parent's OK first; never send data silently).
+[ ] GWrap AI block/script reconstruction animation: briefly animate created blocks into the workspace by default; show a Skip/instant control, plus More -> Settings preference. Default On. Must not delay execution or leave partial scripts if skipped; test cancellation, long scripts and accessibility/reduced motion.
 [x] (Claude) COSTUME ANIMATION (v15.47.0, owner's focus): Flipbook (Onion skin + Play) in the
     Costumes tab; Animation tab (bones) + Animation blocks out of preview for everyone; G-Spark
     has ready-made walk + wave; made costumes follow changes. claude/flipbook4700.js,
@@ -111,7 +113,7 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
     between broadcast -> when I receive, and my block -> define; start blocks get a
     sparking pole; More -> Settings -> "Power lines" switch. claude/powerlines4640.js
 [ ] Developer mode vs normal mode.
-[ ] 60 FPS or more, even on big projects.
+[ ] Aim for 60 FPS or better on representative projects/hardware when feasible; this is a target, not a universal promise. Benchmark script-heavy and render-heavy projects separately.
 [ ] Report-a-bug link on the website (GitHub Issues).
 [ ] Short showcase video / GIF of G-Warp for the website.
 [ ] gwarper.com domain (owner + dad).
@@ -148,3 +150,6 @@ The URL above is the previously documented GitHub Pages address, not a confirmed
 
 
 AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17): Every AI must append the user's request and its own response/handoff to <own-folder>/AI-CHAT-LOG.txt for each task/session, including date, task, changed files, evidence status, blockers, and next step. Read the log before continuing. Preserve exact wording where practical; separate user quotes from AI summaries; never invent missing context. Do not log secrets or unnecessary sensitive data. If history is missing, say so and ask rather than guessing. Use team/AI-CHAT-LOG-TEMPLATE.txt. This does not grant cross-folder editing or integration permission.
+
+
+TEAM ROLE CHANGE (2026-10-18): DeepSeek is retired from active assignments. Gemini 2 now owns its lab/research/A-B-C candidate work. See team/TODO-GEMINI.txt and gemini/lab/. Legacy candidates remain unverified until tested; no automatic integration.
