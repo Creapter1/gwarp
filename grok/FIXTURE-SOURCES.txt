@@ -1,0 +1,145 @@
+G-WARP GR2 — SOURCE MAP FOR fixtures.json
+Author: Grok  |  Date: 2026-10-18
+Branch reference: scratchfoundation/scratch-vm develop
+Evidence class: SOURCE-CONFIRMED (static). G-Warp execution: NOT TESTED.
+
+Repo paths are relative to the scratch-vm root.
+Line numbers from develop branch snapshot retrieved 2026-10-18.
+
+=====================================================================
+OPERATORS
+=====================================================================
+T001 add 0.1+0.2
+  FILE: src/blocks/scratch3_operators.js
+  LINE: add L40–41; Cast.toNumber in src/util/cast.js L22–40
+  NOTE: IEEE-754 sum; do not force display 0.3
+
+T002 round(-2.5) → -2
+  FILE: src/blocks/scratch3_operators.js
+  LINE: round L127–128 → Math.round(Cast.toNumber(NUM))
+  VERIFY: ES Math.round(-2.5) === -2
+
+T003 round(2.5) → 3
+  FILE: src/blocks/scratch3_operators.js L127–128
+
+T004 10 mod 3 → 1
+  FILE: src/blocks/scratch3_operators.js
+  LINE: mod L118–124 (floored adjustment)
+
+T005 (-10) mod 3 → 2
+  FILE: src/blocks/scratch3_operators.js L118–124
+  RULE: result = n % modulus; if (result/modulus < 0) result += modulus
+
+T006 10 mod (-3) → -2
+  FILE: src/blocks/scratch3_operators.js L118–124
+
+T007 "10" = 10 → true
+  FILE: src/blocks/scratch3_operators.js equals L60–61
+        src/util/cast.js compare L121–149 (numeric path)
+
+T008 "10" = "10.0" → true
+  FILE: cast.js compare L121–149
+
+T009 "abc" = "ABC" → true
+  FILE: cast.js compare L129–139 (toLowerCase when either side NaN as number)
+
+T010 join empty → ""
+  FILE: scratch3_operators.js join L93–94
+
+T011 letter 0 of "hi" → ""
+  FILE: scratch3_operators.js letterOf L97–104
+
+T012 letter 1 of "hi" → "h"
+  FILE: scratch3_operators.js letterOf L97–104
+
+T013 length of "" → 0
+  FILE: scratch3_operators.js length L107–108
+
+T014 "Hello" contains "hello" → true
+  FILE: scratch3_operators.js contains L111–115
+
+T015 not (1=2) → true
+  FILE: scratch3_operators.js not L76–77; equals L60–61
+
+T017 pick random 1 to 3 inclusive ints
+  FILE: scratch3_operators.js random L80–90
+  RULE: both isInt → integer low..high inclusive
+
+T018 abs(-7) → 7
+  FILE: scratch3_operators.js mathop L131–135 case 'abs'
+
+T019a floor(3.9) → 3
+  FILE: scratch3_operators.js mathop case 'floor' L136
+
+T019b ceiling(3.1) → 4
+  FILE: scratch3_operators.js mathop case 'ceiling' L137
+
+=====================================================================
+DATA / LISTS
+=====================================================================
+T021 item (0) of list → ""
+  FILE: src/util/cast.js toListIndex L193–214 (index < 1 → LIST_INVALID)
+        src/blocks/scratch3_data.js getItemOfList L187–194 → ''
+
+T022 item (2) of [a,b] → "b"
+  FILE: scratch3_data.js getItemOfList L187–194
+
+T023 item (99) past end → ""
+  FILE: cast.js toListIndex; data.js getItemOfList
+
+T024 insert at 0 → no-op
+  FILE: scratch3_data.js insertAtList L156–172
+        cast.js toListIndex with length+1; 0 invalid
+
+T026 length of empty list → 0
+  FILE: scratch3_data.js lengthOfList L225–228
+
+T028 list ["10"] contains 10 → true
+  FILE: scratch3_data.js listContainsItem L231–245 + cast.js compare
+
+T029 join (var 10) "!" → "10!"
+  FILE: operators join L93–94; data setVariable stores raw value
+
+T075 item (1) of empty → ""
+  FILE: getItemOfList + toListIndex
+
+=====================================================================
+CONTROL
+=====================================================================
+T042 repeat 0 → body never runs
+  FILE: src/blocks/scratch3_control.js repeat L53+
+  (loopCounter initialized; 0 iterations)
+
+T043 repeat 2.7 → 2 iterations
+  FILE: scratch3_control.js repeat (count floored via Cast/toNumber path)
+
+T049 if (1=2) else → else branch
+  FILE: scratch3_control.js ifElse L131+
+
+=====================================================================
+LIMITS (constants; optional stress)
+=====================================================================
+T030 list cap 200000
+  FILE: scratch3_data.js LIST_ITEM_LIMIT L252–254
+
+T046 clone cap 300
+  FILE: src/engine/runtime.js MAX_CLONES L732–733
+
+=====================================================================
+RELATED ANIMATION FIXTURES (GA1, not in fixtures.json 30-set)
+=====================================================================
+See grok/ANIM-FIXTURES.json meta.sources:
+  src/blocks/scratch3_looks.js _setCostume ~L389–412, nextCostume ~L468–471
+  src/sprites/rendered-target.js setCostume ~L433–450 (Math.round + wrapClamp)
+
+=====================================================================
+WIKI (secondary; VM source wins on conflict)
+=====================================================================
+- Switch to Costume (): https://en.scratch-wiki.info/wiki/Switch_to_Costume_()_(block)
+  (wrap on 0 / number-named costumes) — used for GA1 only
+
+=====================================================================
+GR1 FILE STATUS
+=====================================================================
+Primary machine-readable file: grok/fixtures.json (30 cases; each has source field).
+This file is the expanded GR2 line/file map for Claude's automated runner.
