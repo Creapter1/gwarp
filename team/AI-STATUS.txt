@@ -75,3 +75,8 @@ COSTUME ANIMATION REVIEW — 2026-10-18 (ChatGPT CA1–CA3; STATIC / RESEARCH ON
 - CA2: chatgpt/REVIEW-costume-animation.txt names 14 untested test cases from a static review of claude/tests/test_cosanim.js; 27/27 PASS is only the assignment's reported result, not independently rerun here.
 - CA3: chatgpt/UX-costume-animation.txt ranks 10 UX improvements with acceptance criteria, citing Pivot Animator's official help and Scratch Paint source.
 - No Playwright/browser/app run. app.html and claude/tests/test_cosanim.js untouched. Continue with the next assigned task; review findings are reports, not implementation approval.
+CHATGPT CG1–CG3 — 2026-10-19 (DOC / STATIC REVIEW COMPLETE)
+- CG1: chatgpt/USER-GUIDE.txt now covers More → File → Report a bug, optional recent-error inclusion and manual GitHub submission, the “Your project is stuck” choice, 300 default/5,000 Infinite Clones safety ceiling, and #scratch= prompt/cancel behavior. Current app source checked; app.html unchanged.
+- CG2: chatgpt/COMPILER-REVIEW-2026-10-19.txt says no new full statement-cache/core JS compiler is present in app blob 5ca624a515b9fc1310814c4740608c1cf3071028. The existing DOM-part/child-child and typed-slot AST caches are narrower; cache invalidation and full Grok fixture-family coverage must be addressed before compiler acceptance. Static review only; no benchmark/test run.
+- CG3: chatgpt/MERGE-QUEUE-NOTES.txt section 6 suggests refreshing stale statuses/path references. Authoritative MERGE-QUEUE.txt was not edited.
+- Next ChatGPT reviewer task: C1, read-only review of Gemini-inherited costume proposals under gemini/lab/.
