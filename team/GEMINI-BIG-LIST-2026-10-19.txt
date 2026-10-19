@@ -1,0 +1,85 @@
+=====================================================================
+ GEMINI 3 (Argon) - THE BIG JOB LIST          from Claude (team leader), 2026-10-19
+ Owner: Creapter1. Live app: Beta v15.48.0 (app.html). Website: creapter1.github.io/gwarp
+=====================================================================
+You are G-Warp's PICTURE DESIGNER + LAB SCIENTIST (you took over DeepSeek's lab jobs).
+Work top to bottom. When a job is done, start the next one. Never wait.
+
+RULES (cannot be broken)
+- "Same same but different": works like Scratch / TurboWarp / PenguinMod, but G-Warp's OWN look:
+  dark #0b0b14, violet #8b5cf6, electric green #4ade80, white, G-Spark mascot (purple rounded square with a
+  big white "G", small dark arms + legs, NO face).
+- Theirs is theirs, ours is ours: no Scratch art, no cats, no brands, no famous characters, nothing copied.
+- Always give 3 OPTIONS (A, B, C) for every picture or piece of code, then say which one you'd pick and why.
+- CHECK your work: every SVG must open in a browser without errors; every code file must run.
+- Your files go in gemini/ only (pictures in gemini/<job-folder>/, code in gemini/lab/). Never edit app.html,
+  index.html or another AI's folder. Claude tests and merges.
+- No real keys, passwords or personal data anywhere.
+- Hand in: one line at the bottom of AI-TEAM.txt:  <date> | DONE | Gemini | <job id> | <files>
+  and add what you did to gemini/AI-CHAT-LOG.txt.
+- If you can't reach GitHub, give the owner the files as code blocks with the file name on top.
+
+SVG FORMAT (pictures)
+- Icons: viewBox="0 0 24 24", stroke-width 1.8-2, round caps, use currentColor for the main lines so the icon
+  follows the theme, violet/green only as small accents. Must read clearly at 16 px.
+- Sprites/characters: about 120 x 120, every body part in its own <g id="...">.
+- Backdrops: 480 x 360.
+
+---------------------------------------------------------------------
+ PART 1 - PICTURES (do these first)
+---------------------------------------------------------------------
+G1  Costume-editor icons (3 options each) -> gemini/icons-animation/
+      onion skin, flipbook play, animation (bones), in-between, smooth x2, make costumes,
+      select-box rotate handle, group, ungroup, flip horizontal, flip vertical, bitmap select
+G2  Browser-extension icons (16 / 32 / 48 / 128 px) from G-Spark -> gemini/extension/icons/
+      give the SVG + exact steps to export the PNGs
+G3  3 rig-ready characters for the Animation tab -> gemini/rig-characters/
+      "Volt" the robot, a lightning bug, a battery buddy (G-Warp originals). Parts: head, body, armL, armR,
+      legL, legR (each its own <g id>). Write where each joint (pivot) is, e.g. armL pivot = (34, 52).
+G4  6 flipbook sprites with 3-6 costumes each (frame by frame) -> gemini/flipbook-sprites/
+      spinning coin (6 frames), flickering spark bolt (4), rocket with a flame (3), bouncing ball squash (4),
+      waving flag (4), G-Spark blinking its "G" glow (3). Same size and rotation centre in every frame.
+G5  3 new backdrops (480 x 360) -> gemini/backdrops/
+      circuit board night, electric city rooftop, neon game arcade floor. Simple shapes, few colours.
+G6  Empty-state pictures with G-Spark (3 options each) -> gemini/empty-states/
+      "No costumes yet - paint one!", "No sounds yet", "Your code area is empty - drag a block here"
+G7  Website pictures -> gemini/website/
+      3 hero banner options (1200 x 500), 1 social preview (1200 x 630), a favicon (32 x 32)
+
+---------------------------------------------------------------------
+ PART 2 - LAB (3 versions each, with a test page that shows the difference)
+---------------------------------------------------------------------
+L1  Easing for "In-between" frames (Animation tab).
+      Today GW_ANIM.mix(A, B, t) makes the exact half-way pose. Make 3 ease options (linear, ease in-out,
+      springy) as pure functions + gemini/lab/lab-easing.html that draws G-Spark's bones for t = 0..1.
+      Use G-Spark's real rig: GW_MASCOT.bones(), GW_MASCOT.walkFrames(). Bones turn the short way round.
+L2  Auto-rig: guess bones for a costume a kid drew. Input = SVG text, output = { bones:[...], parts:{...} }
+      in the GW_ANIM format (see team/ASSIGNMENTS-ANIMATION-2026-10-18.txt). 3 ways (one bone per shape along
+      its longest side / chain overlapping shapes / your idea). Test on G3's three characters.
+L3  Faster "Make costumes": turning 8 / 30 / 120 frames into pictures. 3 faster versions (reuse one Image,
+      createImageBitmap, only redraw moving parts). Same pictures, measured times in a table.
+L4  On-canvas text typing like Scratch (today a box pops up to type the text).
+      Prototype in a standalone page with an <svg viewBox="0 0 512 384">: click to place a caret, type,
+      Backspace, Enter = new line, click away = done; click existing text to edit it. 3 versions.
+L5  Bitmap Select extras: copy / paste / flip / delete for the selected pixels. 3 versions in a standalone
+      page with a 512 x 384 canvas (the app's bitmap editor is the same size).
+L6  Sharper bitmap costumes: the bitmap editor canvas is 512 x 384, so a full-stage bitmap is saved at only
+      0.8x. Propose 3 ways to paint at 2x (bigger hidden canvas, scaled drawing, tiles) with a demo page.
+L7  Faster touching for 1000 clones: today every "touching?" checks pixels of both sprites. 3 ways to skip
+      most checks (grid of cells, sort by x, bounding circles first) - benchmark page with 1000 moving boxes.
+L8  Better music for the Song maker (owner: it must sound like teen / adult music, not "baby" music).
+      3 generators for a 4-bar loop: melody + bass + drums, in a key, using Web Audio only. Demo page with a
+      Play button for each.
+
+---------------------------------------------------------------------
+ PART 3 - WORDS (when Part 1 and 2 are waiting for Claude)
+---------------------------------------------------------------------
+W1  GWrap AI knowledge: 40 short questions + answers a kid would ask about G-Warp ("how do I make my sprite
+      jump?", "what is onion skin?", "why does my clone not move?"). Only about G-Warp. -> gemini/gwrap-qa.txt
+W2  Accessibility check of the costume editor: every button has a clear name, works with the keyboard, has
+      enough contrast on the dark theme. List problems with the button name and a fix. -> gemini/a11y-costumes.txt
+W3  Kid test script: 10 small things a new user should be able to do in the costume editor in 5 minutes,
+      each with "how we know it worked". -> gemini/kid-costume-test.txt
+
+PRIORITY: G1 > G3 > L1 > L2 > G4 > L4 > G2 > L5 > L7 > G5 > L3 > L6 > L8 > G6 > G7 > W1 > W2 > W3
+Old jobs (GM7, GM8, the costume lab files in gemini/lab/) still count - finish them when you get there.
