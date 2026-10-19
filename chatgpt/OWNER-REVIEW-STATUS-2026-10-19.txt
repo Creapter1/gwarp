@@ -1,0 +1,79 @@
+G-WARP OWNER HANDOFF — C1–C5 INDEPENDENT REVIEW CYCLE
+Date: 2026-10-19
+Prepared by: ChatGPT
+Scope: static review of contributor candidates / test specifications only.
+Production app changes: NONE by ChatGPT.
+Browser/G-Warp runtime tests run by ChatGPT: NONE.
+
+CURRENT READ
+The review cycle found useful source research, but none of the reviewed candidates should be treated as integration-ready solely because a note says PICK, winner, verified, or complete. Keep the reports and evidence classes separate. Claude remains responsible for official current-build integration/runtime evidence; the owner approves any live integration or release.
+
+REVIEW RESULTS
+
+C1 — Gemini-inherited costume candidates
+Report: chatgpt/REVIEW-GEMINI-COSTUME-CANDIDATES-2026-10-19.txt
+Verdict: BLOCKED / HIGH RISK.
+Current editor selector/state mismatches, missing shape assumptions, incomplete mapping/persistence, global or duplicate event handlers, CSS-pixel vs costume coordinate assumptions, and non-costume-local undo make the five inherited tools unsafe as-is. The current native v15.48.0 editor already includes an integrated Select/transform path, so do not add another script layer just because a legacy lab candidate exists.
+Evidence: STATIC SOURCE REVIEW. No candidate/browser test by ChatGPT.
+
+C2 — ChatGPT clone-safety candidate
+Report: chatgpt/REVIEW-clone-safety-2026-10-19.txt
+Verdict: SUPERSEDED; DO NOT REINTEGRATE.
+The candidate can remove the native 5,000 ceiling in Infinite Clones mode, may clear thread arrays before normal Stop cleanup marks threads finished, diverges from native clone-count bookkeeping and can alter imported clone-limit semantics. Claude's active clone/Stop path is already present in current app source.
+Evidence: SOURCE REVIEW + STATIC ANALYSIS; no stress/latency test by ChatGPT.
+
+C3 — Scratch link handoff + Gemini browser extension
+Report: chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt
+Verdict: extension remains NOT PACKAGE-READY; app-side hash handler is already integrated.
+Do not inject chatgpt/scratch-link.js a second time. Current repository lacks the PNG icons referenced by the manifest; popup preferences don't synchronize with already-open tabs; history wrappers lack a clear cleanup route; hashchange and origin validation need coverage; privacy wording and canonical destination URL need review.
+Evidence: SOURCE REVIEW + STATIC ANALYSIS. No browser, package, permission, or network test by ChatGPT.
+
+C4 — Grok Scratch expected-result suite
+Report: chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt
+Verdict: ACTION REQUIRED before this can act as an exact-result parity suite.
+BLOCKER: grok/TESTS.txt T043 still expects repeat 2.7 -> 2, but the pinned Scratch VM source uses Math.round, yielding 3. grok/fixtures.json was corrected to 3, while grok/FIXTURE-SOURCES.txt retains a stale expectation and old case-count description. T017's random logic is invalid; T037's 330-character bubble rule is not VM-source-proven; T067/T068 are vague/unbuildable; T071–T074 are G-Warp safety/performance cases rather than Scratch parity fixtures. ChatGPT did not edit Grok's files or run the G-Warp suite.
+
+C5 — Inherited protobuf .pmp loader
+Report: chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt
+Verdict: BLOCKED / INCOMPLETE.
+The harness only classifies fake bytes and never decodes a real fixture; no legal real fixture/assets are supplied; the loader returns an empty assets Map; the remote import is a guessed v1.6.0 CDN URL while the reviewed upstream repository/package reports 1.8.8; browser import/export shape is unverified; all non-ZIP bytes are labelled protobuf; the test still refers to the retired deepseek path. Keep this disconnected and preserve existing .sb3/ZIP .pmp behavior.
+
+MOST IMPORTANT NEXT ACTIONS
+
+1. Grok — repair and reconcile expected results first.
+   - Correct T043 in grok/TESTS.txt and grok/FIXTURE-SOURCES.txt to repeat 2.7 => 3.
+   - Synchronize source map, 60-case fixtures and the additional T130–T139 list.
+   - Have Claude reconcile the runner to the intended 60+10 set and record the exact app SHA, fixture list, runner revision and outputs. Historical 30+9 / 39-of-39 output must not be described as a pass for 60+10.
+
+2. Gemini — turn the PMP draft into a testable isolated candidate, not a live integration.
+   - Provide a legally shareable protobuf project fixture with provenance/checksum and its separate asset files, including at least one costume and one sound.
+   - Verify the parser version and real browser export shape, implement/document media resolution, and test malformed inputs plus ZIP .pmp / .sb3 regression.
+   - Separately finish extension packaging (manifest-referenced PNGs) and the end-to-end browser test matrix before calling that extension ready.
+   - Update Gemini-owned files only; ChatGPT has not altered gemini/ or approved any candidate.
+
+3. Claude — perform official tests only when fixtures and owner-approved targets are available.
+   - Re-run the current v15.48.0 regression after the three fresh-shape assertions mentioned in team status; the existing 429 PASS / 9 expected FAIL result is reported evidence for its exact run, not an independent ChatGPT test.
+   - Run the intended Grok fixture set after reconciliation.
+   - Only test the protobuf loader once a real legal fixture/assets are supplied and the parser route is pinned.
+   - For the extension, test install/permissions, packaged icons, preference sync, SPA/hash navigation, network failures and project handoff against the owner-confirmed canonical website URL.
+   - Verify the active model label is exactly Claude Opus 5.5 and obtain explicit owner approval before any integration/release.
+
+4. Owner — one website decision remains open.
+   TODO.txt still says the canonical website URL awaits confirmation. Do not replace extension targets or website links based on an old header or guess. Confirm the exact canonical URL and whether the old GitHub Pages address should remain as a fallback.
+
+EVIDENCE LIMITS
+- These reports are static reviews unless explicitly called SOURCE-VERIFIED from a pinned upstream source.
+- ChatGPT did not run a browser, Playwright, real project fixture, performance benchmark, packaged extension, or current G-Warp regression suite in this review cycle.
+- No changes to app.html, index.html, Gemini candidate files, Grok files or Claude test files were made.
+- A review report is not integration approval, and the owner decides what goes in.
+
+SOURCE REPORTS / START HERE
+- C1: chatgpt/REVIEW-GEMINI-COSTUME-CANDIDATES-2026-10-19.txt
+- C2: chatgpt/REVIEW-clone-safety-2026-10-19.txt
+- C3: chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt
+- C4: chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt
+- C5: chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt
+- Shared ledger: team/CROSS-AI-REVIEW-2026-10-15.txt
+- Routing: team/CONTINUOUS-WORK-QUEUE.txt and team/TODO-CHATGPT.txt
+
+STATUS: owner handoff report complete. C6 review-ledger maintenance remains ongoing. Runtime/integration gates remain with Claude and owner.
