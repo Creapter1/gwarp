@@ -41,3 +41,30 @@ SEC5 ChatGPT: keep statuses distinct: CANDIDATE, STATIC REVIEWED, TESTED, OWNER-
 
 LIMITATIONS
 No candidate code was executed. No browser, extension, network, deployment, repository secret settings, or full Git history was tested. The scan found no matching hard-coded secret patterns in the current scanned files; this is not a security certification.
+
+
+SECURITY REVIEW ADDENDUM — 2026-10-19 (C8; STATIC, NOT RUNTIME-TESTED)
+
+Current source baseline: app.html blob 5ca624a515b9fc1310814c4740608c1cf3071028 (Beta v15.48.0). Case-level report: chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt (commit f1265a8582f51a6049a323614f2ab9b7166b6a87).
+
+Verified source flow:
+- The key is user-supplied and looked up from sessionStorage before localStorage. New setup defaults the “Remember the key on this computer” box to unchecked; checked stores the key in localStorage, unchecked stores it in sessionStorage; save clears the other store. “Remove key” empties the input and calls that save path, which removes both saved copies.
+- A direct POST is made to https://api.anthropic.com/v1/messages with the key in the x-api-key header, not the JSON prompt body. The call is gated by Developer mode, a stored key, an offline-helper “none” result and an explicit “Ask the connected AI” button click.
+- Request prompt context includes the question, all non-clone sprite names, selected sprite name, variable names (not variable values via this helper), and rendered text/type from up to 12 top-level stacks for the selected sprite, up to 25 descendant blocks per stack, with each block string truncated to 60 characters. No complete project file or asset bytes are explicitly added by projectSummary(). The current UI does not preview that payload or offer a per-request context-off choice.
+- Source copy says the key stays in the browser and is sent only to the AI service, but doesn't adequately explain same-origin script access to browser storage or itemize transmitted context. sessionStorage is a useful default but is still readable by scripts running in the same origin; localStorage is persistent and also not a secure vault.
+- A limited pattern scan of the current app.html blob found zero matches for common Anthropic-looking keys, AWS access-key IDs, private-key headers, long bearer tokens and Google API keys. This is an app-blob-only scan, not a full repository/history/deployment scan. No secret value was found or included in the report.
+
+HIGH-RISK MODEL-ID MISMATCH:
+app.html defaults the editable model field to claude-sonnet-5-5. The official Anthropic model-deprecations/model-status documentation retrieved on 2026-10-19 lists active Claude Sonnet 5 as claude-sonnet-5, not claude-sonnet-5-5: https://docs.anthropic.com/en/docs/about-claude/model-deprecations. This is a source/documentation mismatch that may break first-use API requests; it is not a reproduced API failure. No Messages API request or model-list endpoint call was made. Verify against the API access tier and only then change the default with owner approval.
+
+REQUIRED CORRECTIONS / ACCEPTANCE:
+1. Keep the key user-owned; never add a shared secret to browser code. Preserve session-only default and explicitly state local/session storage is accessible to same-origin scripts and is not a secure vault. Report save/remove failures instead of silently showing “Saved” if storage throws.
+2. Before sending project context, show a concise preview of the exact fields above and provide a user choice to omit context. Privacy-first default should send only the question unless the user opts in to project context. Test that Cancel/context-off triggers no project-context request and that the actual JSON body matches the preview.
+3. Confirm a model ID supported by the current Anthropic API, then test success/invalid key/unsupported model/network failure with a dummy credential in a controlled browser. Do not log/capture a real key or request authorization headers.
+4. Test unchecked=sessionStorage only, checked=localStorage only, Remove key clears both, and denied storage generates a clear message. Verify keys never appear in project exports, bug/AI reports, diagnostics, console logs or test artifacts.
+5. Owner/Claude must run a separate Git-history secret scan and inspect available GitHub secret-scanning alerts/settings; the current-file scan cannot close this risk.
+
+CONSISTENCY CHANGE:
+Root TODO.txt now marks the built-in AI/user-key feature as candidate-present but acceptance-pending, referencing this audit and the C8 report, instead of saying it is not started. The old 59-case Grok result is explicitly qualified as historical and not a pass for the current 60+10 fixture plan. The canonical website URL remains pending owner confirmation; no website URL or extension target was changed.
+
+Limitations remain: no browser, network, API, storage-permission, export-leak, Git-history or repository-secrets-settings test was run by ChatGPT. app.html and index.html were not edited.
