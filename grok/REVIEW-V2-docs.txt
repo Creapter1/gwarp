@@ -1,0 +1,97 @@
+=====================================================================
+ V2 — Website docs vs Scratch / G-Warp
+ Author: Grok | 2026-10-19
+ Scope: docs/*.html (focus: blocks, costumes, scratch, animation,
+   glossary, extensions, start, sounds)
+ Method: static read of raw HTML on main; compared to scratch-vm develop
+   and prior Grok fixtures/SPECs. Live app UI not clicked this session.
+=====================================================================
+
+SUMMARY
+Most pages carefully hedge ("beta", "verify on current build", "not a
+parity guarantee"). That is good. Issues below are either (a) residual
+wrong/outdated Scratch claims, (b) internal contradictions in the docs,
+or (c) claims that overstate G-Warp vs Scratch.
+
+---------------------------------------------------------------------
+NUMBERED FINDINGS
+---------------------------------------------------------------------
+
+1. [CONTRADICTION / OUTDATED] docs/blocks.html — repeat (2.7)
+   Text still says machine-readable fixtures expect 3 runs but
+   "grok/TESTS.txt still says 2" and calls the mismatch unresolved.
+   Scratch truth: Math.round(2.7) → 3 (scratch3_control.js:54).
+   Grok fixtures.json T043 / C022 already expect 3.
+   Action: Remove the "still says 2" story; state clearly that Scratch
+   and current fixtures use Math.round → 3 times. Keep only "confirm on
+   Beta" if G-Warp runtime not re-run.
+
+2. [OK IF LABELED] docs/blocks.html — Infinite Clones ceiling 5,000
+   Docs: regular limit 300; Infinite Clones safety ceiling 5,000.
+   Scratch: hard MAX_CLONES = 300.
+   TurboWarp: maxClones configurable (often "infinite" >> 5000).
+   Action: Label 5,000 as **G-Warp's** safety cap, not Scratch/TurboWarp.
+   If G-Warp has no such cap, delete the number.
+
+3. [OK / CAREFUL] docs/blocks.html — operators gotcha
+   round(-2.5) → -2 and (-10) mod 3 → 2 match Scratch (Math.round;
+   floored mod). join has no auto space — correct.
+   [abc] = [ABC] same — matches Cast.compare case-insensitive.
+   No change required if fixtures still pass on Beta.
+
+4. [OK / HEDGED] docs/blocks.html — lists gotcha
+   insert at 0 no-op; item # of missing → 0 — matches Scratch.
+   last/random only where supported — correct.
+   Keep "verify on current build" until GW.list_item path is unified
+   (see REVIEW-V1 issue #2).
+
+5. [VAGUE vs SCRATCH] docs/costumes.html — Select Shift/arrows
+   Says modifier/arrow behavior "may depend on the active tool".
+   Scratch Select is specific: corner default locks aspect; Shift unlocks;
+   rotate Shift = 45°; nudge 1/zoom (Shift ×15).
+   G-Warp transform4800 differs (SPEC-select-tool / V1).
+   Action: Either document G-Warp's actual rules or link to a "vs Scratch"
+   note so users are not surprised.
+
+6. [OK] docs/scratch.html — parity not guaranteed
+   Correctly states familiar workflow but not full parity; G-Warp-only
+   tools may not export. Aligns with exportSB3 dropped-opcode warning.
+
+7. [OK] docs/animation.html — G-Warp-specific animation
+   Correctly says animation blocks are G-Warp-specific; do not assume
+   Scratch import. Good.
+
+8. [SOFT] docs/glossary.html — Clone definition
+   "Temporary copy of a sprite" — OK. Does not mention 300 limit or that
+   delete this clone no-ops on the original. Optional one-line add.
+
+9. [SOFT] docs/glossary.html — Modulo
+   "Remainder using the project's modulo rule" without saying Scratch uses
+   floored mod (sign follows divisor). Optional: add example (-10) mod 3 = 2.
+
+10. [CHECK APP] docs/blocks.html — "Motion blocks do nothing on Stage"
+    Matches Scratch (setXY/setDirection return on isStage). OK if G-Warp
+    matches; if Stage ever moves, docs would be wrong.
+
+11. [NO FALSE CLAIM FOUND] docs/extensions.html
+    Catalog mixes sources; support ≠ identical behavior. Correct.
+
+12. [NO CONFLICT] docs/start.html, sounds.html, parents, safety, etc.
+    Procedural / product copy without hard Scratch math claims.
+
+---------------------------------------------------------------------
+NOT REVIEWED IN DEPTH
+---------------------------------------------------------------------
+- docs/tutorials/* (EXTRA E1 when tutorials land)
+- docs/ENGINEERING-REFERENCE.md (internal, not end-user site)
+- Live Beta wording vs docs screenshots
+
+---------------------------------------------------------------------
+PRIORITY FIXES FOR CHATGPT (docs owner)
+---------------------------------------------------------------------
+P0  Fix finding #1 (repeat 2.7 / TESTS.txt story).
+P1  Clarify #2 (5000 = G-Warp only) and #5 (Select modifiers).
+P2  Optional glossary tips #8–#9.
+
+Sources: scratch-vm control.js:54, operators.js, cast.js; grok fixtures;
+SPEC-select-tool.txt; REVIEW-V1; app exportSB3 notes.
