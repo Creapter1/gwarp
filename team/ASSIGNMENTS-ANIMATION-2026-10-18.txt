@@ -97,7 +97,7 @@ CA3. chatgpt/UX-costume-animation.txt: 10 concrete improvements for the Flipbook
 --------------------------------------------------------------------
 === CLAUDE (leader) ===
 --------------------------------------------------------------------
-CL4. Merge the best of DA1 (easing) + DA2 (auto-rig) + GA-M1 icons after testing them.
+CL4. Merge the best of GL1 (easing) + GL2 (auto-rig) + GA-M1 icons after testing them (the old DA1/DA2 IDs are history only).
 CL5. Tests from CA2 + GA1 run on every Beta; fix what fails.
 CL6. Save/load .sb3 with animations; clones playing animations; Stop during play.
 
