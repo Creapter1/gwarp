@@ -4,9 +4,9 @@ PRIORITY: R0 > R3 > R1 > R2 > R4 > R5 > S1 > ...
 [x] R0 T043
 [x] R3 control — fixtures-control.json
 [x] R1 operators-2 — fixtures-operators-2.json
-[x] R2 variables+lists-2 — fixtures-lists-2.json (30 cases)
-      item #, contains, last/random/all, list-as-text join rules,
-      change var on text, list limit doc
-[ ] R4 clones — NEXT
-[ ] R5 events
+[x] R2 lists-2 — fixtures-lists-2.json
+[x] R4 clones — fixtures-clones.json (30 cases)
+      copy props, MAX_CLONES 300, stage no-clone, delete original no-op,
+      start-as-clone hat, broadcast to clones, local vars
+[ ] R5 events — NEXT
 [ ] S1 select tool SPEC
