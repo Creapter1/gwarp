@@ -123,6 +123,9 @@ TIPS (160+):
   Block explanations 40 - what each important block does in one or two sentences (forever vs repeat,
              broadcast vs broadcast and wait, if vs if-else, say vs say for secs, glide, clones, variables
              "for all sprites" vs "this sprite only", lists, operators, join, pick random, mod, round...)
+  Coming from Scratch / TurboWarp / PenguinMod 15 - the two apps we want to beat: "where is X that TurboWarp
+             has?", opening .sb3 files from them, 60 FPS (rt_set_fps), camera blocks, physics, what is the same and what
+             is different in G-Warp (only say what docs/scratch.html confirms)
   Fixing problems 20 - "my sprite doesn't move" (no hat block / not started), "my clone doesn't move",
              "too many clones (300 limit)", "the game is slow", "my sound doesn't play", "it says a block is
              missing", "the project won't load", "my costume is tiny", "the extension is Dangerous - why?"
