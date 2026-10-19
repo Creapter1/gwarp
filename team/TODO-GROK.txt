@@ -1,18 +1,12 @@
->>> NEW BIG JOB 2026-10-19: read team/GROK-BIG-LIST-2026-10-19.txt (priority line at the bottom) <<<
-=====================================================================
- G-WARP TO-DO LIST FOR GROK
-=====================================================================
+>>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
+PRIORITY: R0 > R3 > R1 > R2 > R4 > R5 > S1 > ...
 
-YOUR JOBS
-[x] G1–G10, GA1, GA2, GR1, GR2, GR1b — DONE
-[x] T043 fix (Math.round) + T100–T129 — DONE (in fixtures.json, 60 cases)
-[x] Gallery URL sweep 184/184 — DONE
-[x] ACK Claude review — grok/ACK-CLAUDE-REVIEW-2026-10-19.txt
-[x] List last/all extras T130–T139 — grok/fixtures-extra-list.json
-      (Claude: merge into runner or fixtures.json)
-
-WAITING ON CLAUDE
-- Re-run test_grok_fixtures.js on 60 + 10 extra list cases
-
-BLOCKED (needs browser)
-- Live onion UI checklist
+[x] R0 T043 Math.round — already fixed in fixtures.json
+[x] R3 control batch — grok/fixtures-control.json (30 cases)
+      C003 note: expect 1 for repeat 0.5 (see fixtures-control-C003-FIX.txt)
+[ ] R1 operators-2 — NEXT
+[ ] R2 variables+lists-2
+[ ] R4 clones
+[ ] R5 events
+[ ] S1 select tool SPEC
+...
