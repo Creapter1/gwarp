@@ -1,0 +1,34 @@
+WEBSITE / DOCUMENTATION OPEN QUESTIONS — 2026-10-19
+Owner: Creapter1
+Author: ChatGPT
+Evidence: static GitHub source/document review only. No browser test was run.
+
+1. Canonical website URL
+   TODO.txt says the previously documented GitHub Pages URL may be stale and requires owner confirmation. The new docs link to relative paths and the website's existing app.html; do not replace external canonical links until the owner confirms the URL.
+
+2. Extension count and gallery details
+   Existing homepage metadata/older copy says 191 extensions. Catalog count and each extension's creator/licence/safety behavior should be generated from the current gallery or verified in the live app before asserting a fixed count. The new guide intentionally avoids claiming the number.
+
+3. Current keyboard shortcut behavior
+   The task notes list Ctrl+O, Ctrl+Z/Y, Ctrl+G, arrows, Delete and Space in Animation. This documentation marks shortcuts as build/focus-dependent where not independently verified. Confirm each shortcut in the current Beta v15.48.0 UI and update shortcuts.html with observed behavior.
+
+4. GWrap AI availability and settings
+   Existing homepage describes GWrap AI as in the works. The owner-requested block reconstruction animation preference (default On, Skip/instant, More -> Settings) needs confirmation in the current app before the website should describe it as shipped. Do not claim that preference is implemented based only on the requirement.
+
+5. Offline behavior
+   The website now says the app is a local HTML file but some features/resources may need internet. Verify which dependencies and features work fully offline before making a stronger promise.
+
+6. Bug-report data flow and privacy wording
+   Safety copy reflects shared project rules, not an independent network audit. Verify exactly what the built-in bug report sends, where it goes, and whether project attachments are included before making stronger privacy claims.
+
+7. Current app interaction checks
+   The pages describe the v15.48.0 Select handles, flipbook/onion skin, rig/animation tools, Song maker, clone limit and Power lines based on existing release/team notes. These are not independently browser-tested by ChatGPT. Claude's reported regression is recorded separately in team/AI-STATUS.txt.
+
+8. Live link and mobile verification
+   Internal links were checked for repository path existence where possible, but no published-site browser test or phone-width browser test was run. Confirm the deployed site and every navigation path before treating website acceptance as complete.
+
+9. Exact feature list / animation block names
+   The assignment refers to “the 4 Animation blocks” but does not list their exact visible names. Confirm from the live app's Animation palette before publishing a name-by-name list.
+
+10. Credits
+    The docs link to the repository LICENSE and tell users to check each extension's own creator/licence. Confirm the actual root licence filename and derive per-extension credits from the current extension gallery data before claiming the credits page is exhaustive.
