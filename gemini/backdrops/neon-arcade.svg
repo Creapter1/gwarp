@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" width="480" height="360">
+  <defs>
+    <linearGradient id="naBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07070e"/>
+      <stop offset="0.6" stop-color="#0b0b14"/>
+      <stop offset="1" stop-color="#141425"/>
+    </linearGradient>
+    <radialGradient id="naStageGlow" cx="0.5" cy="0.55" r="0.5">
+      <stop offset="0" stop-color="#a855f7" stop-opacity="0.32"/>
+      <stop offset="0.55" stop-color="#4ade80" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#0b0b14" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Arcade Room Dark Wall & Glow -->
+  <rect width="480" height="360" fill="url(#naBg)"/>
+  <rect width="480" height="360" fill="url(#naStageGlow)"/>
+
+  <!-- Top Neon Marquee Banner -->
+  <rect x="86" y="16" width="308" height="42" rx="12" fill="#141425" stroke="#8b5cf6" stroke-width="3"/>
+  <rect x="92" y="22" width="296" height="30" rx="8" fill="#0b0b14" stroke="#4ade80" stroke-width="1.5"/>
+  <!-- Geometric Synth Wave + Bolts inside Marquee -->
+  <polygon points="122,27 110,39 120,39 115,49 130,35 120,35" fill="#facc15"/>
+  <polyline points="148,37 166,29 184,45 202,29 220,45 238,29 256,45 274,29 292,45 310,29 328,37" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <polygon points="360,27 348,39 358,39 353,49 368,35 358,35" fill="#facc15"/>
+
+  <!-- Left Arcade Cabinet -->
+  <g transform="translate(26,78)">
+    <polygon points="8,0 92,0 104,34 104,162 0,162 0,34" fill="#141425" stroke="#8b5cf6" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="12" y="8" width="76" height="16" rx="4" fill="#a855f7"/>
+    <rect x="14" y="32" width="76" height="54" rx="6" fill="#0b0b14" stroke="#4ade80" stroke-width="2"/>
+    <!-- Screen Pixel Space Wave -->
+    <path d="M24 68 L40 48 L56 62 L76 42" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="76" cy="42" r="3.5" fill="#facc15"/>
+    <!-- Joystick & Buttons -->
+    <polygon points="6,92 98,92 104,108 0,108" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.5"/>
+    <line x1="30" y1="100" x2="30" y2="86" stroke="#ececf6" stroke-width="2.5"/>
+    <circle cx="30" cy="84" r="4.5" fill="#facc15"/>
+    <circle cx="64" cy="99" r="3.5" fill="#4ade80"/>
+    <circle cx="78" cy="97" r="3.5" fill="#a855f7"/>
+    <!-- Coin Door -->
+    <rect x="30" y="120" width="44" height="32" rx="4" fill="#0b0b14" stroke="#2a2a48" stroke-width="2"/>
+    <rect x="40" y="128" width="8" height="14" rx="2" fill="#facc15"/>
+    <rect x="56" y="128" width="8" height="14" rx="2" fill="#facc15"/>
+  </g>
+
+  <!-- Center Dance / Synth Stage Portal -->
+  <g transform="translate(158,74)">
+    <rect x="0" y="0" width="164" height="166" rx="16" fill="#141425" stroke="#4ade80" stroke-width="2.5"/>
+    <rect x="12" y="12" width="140" height="142" rx="10" fill="#0b0b14" stroke="#8b5cf6" stroke-width="2"/>
+    <!-- Equalizer Bars -->
+    <g fill="#8b5cf6">
+      <rect x="26" y="96" width="14" height="44" rx="3"/>
+      <rect x="46" y="72" width="14" height="68" rx="3" fill="#4ade80"/>
+      <rect x="66" y="50" width="14" height="90" rx="3" fill="#a855f7"/>
+      <rect x="86" y="64" width="14" height="76" rx="3" fill="#4ade80"/>
+      <rect x="106" y="42" width="14" height="98" rx="3" fill="#facc15"/>
+      <rect x="126" y="82" width="14" height="58" rx="3"/>
+    </g>
+    <!-- Neon Star / Spark Emblem -->
+    <polygon points="82,18 87,30 100,30 90,38 94,50 82,42 70,50 74,38 64,30 77,30" fill="#facc15"/>
+  </g>
+
+  <!-- Right Arcade Cabinet -->
+  <g transform="translate(350,78)">
+    <polygon points="12,0 96,0 104,34 104,162 0,162 0,34" fill="#141425" stroke="#8b5cf6" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="16" y="8" width="76" height="16" rx="4" fill="#4ade80"/>
+    <rect x="14" y="32" width="76" height="54" rx="6" fill="#0b0b14" stroke="#a855f7" stroke-width="2"/>
+    <!-- Screen Vector Target -->
+    <circle cx="52" cy="59" r="16" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="52" cy="59" r="5" fill="#4ade80"/>
+    <!-- Joystick & Buttons -->
+    <polygon points="6,92 98,92 104,108 0,108" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.5"/>
+    <line x1="32" y1="100" x2="32" y2="86" stroke="#ececf6" stroke-width="2.5"/>
+    <circle cx="32" cy="84" r="4.5" fill="#4ade80"/>
+    <circle cx="66" cy="99" r="3.5" fill="#facc15"/>
+    <circle cx="80" cy="97" r="3.5" fill="#8b5cf6"/>
+    <!-- Coin Door -->
+    <rect x="30" y="120" width="44" height="32" rx="4" fill="#0b0b14" stroke="#2a2a48" stroke-width="2"/>
+    <rect x="40" y="128" width="8" height="14" rx="2" fill="#facc15"/>
+    <rect x="56" y="128" width="8" height="14" rx="2" fill="#facc15"/>
+  </g>
+
+  <!-- Neon Perspective Arcade Floor Grid -->
+  <polygon points="0,240 480,240 480,360 0,360" fill="#0b0b14"/>
+  <line x1="0" y1="240" x2="480" y2="240" stroke="#4ade80" stroke-width="3"/>
+
+  <!-- Perspective Horizontal & Radial Lines -->
+  <g stroke="#8b5cf6" stroke-width="1.6" opacity="0.75">
+    <line x1="0" y1="258" x2="480" y2="258"/>
+    <line x1="0" y1="280" x2="480" y2="280"/>
+    <line x1="0" y1="306" x2="480" y2="306"/>
+    <line x1="0" y1="336" x2="480" y2="336"/>
+    <line x1="240" y1="240" x2="240" y2="360" stroke="#4ade80"/>
+    <line x1="200" y1="240" x2="120" y2="360"/>
+    <line x1="280" y1="240" x2="360" y2="360"/>
+    <line x1="160" y1="240" x2="0" y2="360"/>
+    <line x1="320" y1="240" x2="480" y2="360"/>
+    <line x1="110" y1="240" x2="0" y2="310"/>
+    <line x1="370" y1="240" x2="480" y2="310"/>
+  </g>
+</svg>

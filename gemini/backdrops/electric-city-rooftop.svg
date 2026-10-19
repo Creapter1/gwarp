@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" width="480" height="360">
+  <defs>
+    <linearGradient id="ecSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07070f"/>
+      <stop offset="0.55" stop-color="#0b0b14"/>
+      <stop offset="1" stop-color="#1b1b31"/>
+    </linearGradient>
+    <radialGradient id="ecMoon" cx="0.78" cy="0.22" r="0.22">
+      <stop offset="0" stop-color="#a855f7" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#8b5cf6" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#0b0b14" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ecRoof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141425"/>
+      <stop offset="1" stop-color="#080810"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Night Sky & Violet Halo -->
+  <rect width="480" height="360" fill="url(#ecSky)"/>
+  <rect width="480" height="360" fill="url(#ecMoon)"/>
+
+  <!-- Stars -->
+  <g fill="#ececf6" opacity="0.75">
+    <circle cx="38" cy="30" r="1.4"/>
+    <circle cx="88" cy="54" r="1.1"/>
+    <circle cx="144" cy="24" r="1.6"/>
+    <circle cx="206" cy="46" r="1.2"/>
+    <circle cx="268" cy="28" r="1.5"/>
+    <circle cx="436" cy="40" r="1.4"/>
+  </g>
+
+  <!-- Neon Cyber Moon -->
+  <circle cx="374" cy="78" r="34" fill="#141425" stroke="#8b5cf6" stroke-width="3"/>
+  <path d="M344 70 H404 M348 84 H400" stroke="#4ade80" stroke-width="2" opacity="0.65"/>
+
+  <!-- Sky-high Lightning Bolt -->
+  <polyline points="122,0 98,52 126,56 92,118" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+
+  <!-- Distant City Skyline Silhouette -->
+  <g fill="#101020" stroke="#2a2a48" stroke-width="1.5">
+    <rect x="12" y="132" width="54" height="140"/>
+    <rect x="62" y="96" width="64" height="176"/>
+    <rect x="122" y="142" width="48" height="130"/>
+    <rect x="166" y="78" width="74" height="194"/>
+    <rect x="236" y="118" width="58" height="154"/>
+    <rect x="290" y="90" width="70" height="182"/>
+    <rect x="356" y="128" width="56" height="144"/>
+    <rect x="408" y="104" width="62" height="168"/>
+  </g>
+
+  <!-- Spire Antennas -->
+  <g stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round">
+    <line x1="94" y1="64" x2="94" y2="96"/>
+    <line x1="203" y1="42" x2="203" y2="78"/>
+    <line x1="325" y1="56" x2="325" y2="90"/>
+  </g>
+  <g fill="#4ade80">
+    <circle cx="94" cy="62" r="3.5"/>
+    <circle cx="203" cy="40" r="4"/>
+    <circle cx="325" cy="54" r="3.5"/>
+  </g>
+
+  <!-- Glowing Building Windows -->
+  <g fill="#8b5cf6" opacity="0.75">
+    <rect x="74" y="110" width="10" height="6" rx="1"/>
+    <rect x="92" y="110" width="10" height="6" rx="1"/>
+    <rect x="74" y="126" width="10" height="6" rx="1"/>
+    <rect x="104" y="142" width="10" height="6" rx="1"/>
+    <rect x="180" y="94" width="12" height="6" rx="1"/>
+    <rect x="202" y="94" width="12" height="6" rx="1"/>
+    <rect x="180" y="112" width="12" height="6" rx="1"/>
+    <rect x="214" y="130" width="12" height="6" rx="1"/>
+    <rect x="304" y="106" width="12" height="6" rx="1"/>
+    <rect x="326" y="122" width="12" height="6" rx="1"/>
+  </g>
+  <g fill="#4ade80" opacity="0.85">
+    <rect x="26" y="148" width="10" height="6" rx="1"/>
+    <rect x="92" y="158" width="10" height="6" rx="1"/>
+    <rect x="180" y="148" width="12" height="6" rx="1"/>
+    <rect x="252" y="136" width="10" height="6" rx="1"/>
+    <rect x="304" y="140" width="12" height="6" rx="1"/>
+    <rect x="424" y="122" width="10" height="6" rx="1"/>
+    <rect x="442" y="140" width="10" height="6" rx="1"/>
+  </g>
+  <g fill="#facc15" opacity="0.85">
+    <rect x="136" y="158" width="10" height="6" rx="1"/>
+    <rect x="202" y="112" width="12" height="6" rx="1"/>
+    <rect x="372" y="146" width="10" height="6" rx="1"/>
+  </g>
+
+  <!-- Overhead Power Cables Across Skyline -->
+  <g fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="5 4">
+    <path d="M0 190 Q120 218 240 186 T480 196"/>
+    <path d="M0 212 Q150 236 310 206 T480 218" stroke="#8b5cf6"/>
+  </g>
+
+  <!-- Foreground Rooftop Deck (Stage Floor) -->
+  <polygon points="0,254 480,254 480,360 0,360" fill="url(#ecRoof)"/>
+  <line x1="0" y1="254" x2="480" y2="254" stroke="#8b5cf6" stroke-width="3.5"/>
+
+  <!-- Rooftop Safety Railing & Neon Transformer Boxes -->
+  <g stroke="#2a2a48" stroke-width="3">
+    <line x1="0" y1="230" x2="480" y2="230"/>
+    <path d="M36 230V254 M96 230V254 M156 230V254 M216 230V254 M276 230V254 M336 230V254 M396 230V254 M456 230V254"/>
+  </g>
+  <line x1="0" y1="230" x2="480" y2="230" stroke="#4ade80" stroke-width="1.5" opacity="0.8"/>
+
+  <!-- Left & Right Rooftop Generator Units -->
+  <rect x="22" y="212" width="58" height="42" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="2"/>
+  <path d="M32 224 H70 M32 234 H70" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="400" y="206" width="56" height="48" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="2"/>
+  <polygon points="430,214 418,230 429,230 424,244 438,226 427,226" fill="#facc15"/>
+
+  <!-- Perspective Rooftop Floor Grid -->
+  <g stroke="#2a2a48" stroke-width="1.5">
+    <line x1="0" y1="278" x2="480" y2="278"/>
+    <line x1="0" y1="308" x2="480" y2="308"/>
+    <line x1="0" y1="342" x2="480" y2="342"/>
+    <line x1="240" y1="254" x2="240" y2="360" stroke="#4ade80" opacity="0.5"/>
+    <line x1="180" y1="254" x2="110" y2="360"/>
+    <line x1="300" y1="254" x2="370" y2="360"/>
+    <line x1="110" y1="254" x2="0" y2="350"/>
+    <line x1="370" y1="254" x2="480" y2="350"/>
+  </g>
+</svg>

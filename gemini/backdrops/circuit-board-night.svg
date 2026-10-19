@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" width="480" height="360">
+  <defs>
+    <linearGradient id="cbSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07070d"/>
+      <stop offset="0.6" stop-color="#0b0b14"/>
+      <stop offset="1" stop-color="#141425"/>
+    </linearGradient>
+    <radialGradient id="cbCoreGlow" cx="0.5" cy="0.45" r="0.45">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.38"/>
+      <stop offset="0.6" stop-color="#4ade80" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#0b0b14" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cbChip" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b1b31"/>
+      <stop offset="1" stop-color="#0b0b14"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Night PCB Background -->
+  <rect width="480" height="360" fill="url(#cbSky)"/>
+  <rect width="480" height="360" fill="url(#cbCoreGlow)"/>
+
+  <!-- Subtle Background Grid -->
+  <g stroke="#1b1b31" stroke-width="1">
+    <path d="M0 45H480M0 90H480M0 135H480M0 180H480M0 225H480M0 270H480M0 315H480"/>
+    <path d="M60 0V360M120 0V360M180 0V360M240 0V360M300 0V360M360 0V360M420 0V360"/>
+  </g>
+
+  <!-- Distant Night Data Stars -->
+  <g fill="#ececf6" opacity="0.55">
+    <circle cx="42" cy="28" r="1.5"/>
+    <circle cx="105" cy="18" r="1.2"/>
+    <circle cx="168" cy="36" r="1.8"/>
+    <circle cx="312" cy="22" r="1.4"/>
+    <circle cx="395" cy="34" r="1.6"/>
+    <circle cx="448" cy="16" r="1.2"/>
+  </g>
+
+  <!-- Violet Secondary Circuit Traces -->
+  <g fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8">
+    <path d="M0 72 H68 L96 100 H156"/>
+    <path d="M480 68 H402 L374 96 H324"/>
+    <path d="M180 0 V44 L212 76 V112"/>
+    <path d="M300 0 V44 L268 76 V112"/>
+    <path d="M0 250 H84 L120 214 H176"/>
+    <path d="M480 246 H392 L356 210 H304"/>
+    <path d="M140 360 V302 L182 260 H216"/>
+    <path d="M340 360 V302 L298 260 H264"/>
+  </g>
+
+  <!-- Glowing Electric Green Primary Traces -->
+  <g fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 144 H92 L124 176 H184"/>
+    <path d="M480 144 H388 L356 176 H296"/>
+    <path d="M0 198 H70 L102 166 H150"/>
+    <path d="M480 198 H410 L378 166 H330"/>
+    <path d="M240 0 V110"/>
+    <path d="M240 242 V360"/>
+    <path d="M64 360 V288 L112 240 H192"/>
+    <path d="M416 360 V288 L368 240 H288"/>
+  </g>
+
+  <!-- Animated-look Dashed Energy Pulses -->
+  <g fill="none" stroke="#facc15" stroke-width="2" stroke-dasharray="6 8" stroke-linecap="round">
+    <path d="M16 144 H92 L124 176 H184"/>
+    <path d="M464 144 H388 L356 176 H296"/>
+    <path d="M240 20 V108"/>
+    <path d="M240 246 V344"/>
+  </g>
+
+  <!-- Peripheral IC Microchips -->
+  <g fill="#141425" stroke="#2a2a48" stroke-width="2">
+    <rect x="34" y="92" width="52" height="34" rx="5"/>
+    <rect x="394" y="92" width="52" height="34" rx="5"/>
+    <rect x="42" y="264" width="60" height="40" rx="6"/>
+    <rect x="378" y="264" width="60" height="40" rx="6"/>
+  </g>
+  <g stroke="#8b5cf6" stroke-width="2">
+    <path d="M44 86V92M60 86V92M76 86V92M44 126V132M60 126V132M76 126V132"/>
+    <path d="M404 86V92M420 86V92M436 86V92M404 126V132M420 126V132M436 126V132"/>
+  </g>
+
+  <!-- Central G-Warp Quantum Processor Socket -->
+  <g>
+    <!-- Gold/Green Contact Pins -->
+    <g stroke="#4ade80" stroke-width="3" stroke-linecap="round">
+      <path d="M196 102V116M218 102V116M240 102V116M262 102V116M284 102V116"/>
+      <path d="M196 236V250M218 236V250M240 236V250M262 236V250M284 236V250"/>
+      <path d="M170 132H184M170 154H184M170 176H184M170 198H184M170 220H184"/>
+      <path d="M296 132H310M296 154H310M296 176H310M296 198H310M296 220H310"/>
+    </g>
+    <rect x="182" y="114" width="116" height="124" rx="16" fill="url(#cbChip)" stroke="#8b5cf6" stroke-width="3.5"/>
+    <rect x="194" y="126" width="92" height="100" rx="10" fill="#0b0b14" stroke="#4ade80" stroke-width="2"/>
+    <!-- Central Lightning Core -->
+    <polygon points="246,140 220,178 242,178 232,212 262,172 240,172" fill="#4ade80" stroke="#ececf6" stroke-width="1.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Solder Pads / Via Nodes -->
+  <g fill="#0b0b14" stroke="#4ade80" stroke-width="2.5">
+    <circle cx="92" cy="144" r="4.5"/>
+    <circle cx="388" cy="144" r="4.5"/>
+    <circle cx="150" cy="166" r="4.5"/>
+    <circle cx="330" cy="166" r="4.5"/>
+    <circle cx="112" cy="240" r="4.5"/>
+    <circle cx="368" cy="240" r="4.5"/>
+  </g>
+  <g fill="#facc15">
+    <circle cx="156" cy="100" r="3.5"/>
+    <circle cx="324" cy="96" r="3.5"/>
+    <circle cx="176" cy="214" r="3.5"/>
+    <circle cx="304" cy="210" r="3.5"/>
+    <circle cx="216" cy="260" r="3.5"/>
+    <circle cx="264" cy="260" r="3.5"/>
+  </g>
+</svg>
