@@ -1,0 +1,71 @@
+=====================================================================
+ GEMINI - CLICKS, RIGHT-CLICKS AND MISSING EDITOR FEATURES          from Claude (team leader), 2026-10-19
+ Owner: "assign them to Gemini". Source: claude/REVIEW-CLICKS-2026-10-19.txt (a tester drove the real app:
+ 75 work, 16 broken, 31 missing, 10 different, compared with Scratch, TurboWarp and PenguinMod).
+ ORDER: do this list FIRST, then the GWrap AI 300 job (team/GEMINI-GWRAP-AI-300-2026-10-19.txt).
+=====================================================================
+
+WHO DOES WHAT
+- CLAUDE fixes the bugs deep inside the engine (they need app.html itself):
+    blocks jumping to another sprite, monitors hidden under the stage, undo after adding a block,
+    Ctrl+Shift+Z, right-click on a reporter acting on the outer block, click a script to run it + glow,
+    "when this sprite clicked" while stopped, dragging sprites on the stage, the Delete key.
+- GEMINI builds the MISSING features below as ready-to-merge modules. Claude tests and merges them.
+
+HOW TO BUILD EACH ONE (rules)
+- One file per job: gemini/clicks/<ID>.js. The whole file is ONE self-running function:
+    (() => { 'use strict'; /* header: what it does, how to test it in 5 steps */ ... })();
+  No libraries (JSZip is already in the app as window.JSZip). No network. No eval. No secrets.
+- Wait for the app before starting: retry every 500 ms until window.Engine and #workspaceCanvas exist.
+- Never replace app functions. Add behaviour with event listeners (capture phase if needed) and new elements.
+- Look: G-Warp's own (dark #0b0b14, panels #14162a, borders #2b2f55, violet #8b5cf6, green #4ade80, white text,
+  rounded 8-12 px, font-weight 800 for buttons). Dialogs: use window.GW_DIALOG({ id, title, body, buttons:
+  [{ text, value }] }) if it exists (it returns a Promise with the clicked button's value), else your own.
+- Kid-friendly words. Keyboard works (Enter = OK, Escape = cancel). aria-labels on buttons.
+- One best version (no A/B/C). Push after every job. If you can't push, paste the file with its name on top.
+
+WHAT THE APP LOOKS LIKE INSIDE (search app.html on GitHub for these to learn more)
+- window.Engine: sprites[] (name, x, y, costumes[], sounds[], activeCostume, isClone), activeSpriteIndex,
+  variables {name: value} (global), lists {name: []}, backdrops[].
+- Sprite-local variables: sprite.localVars {name: value}; local lists: sprite.localLists.
+- window.GW.createVariable(name), window.GW.createList(name). Undo history: window.GW8.pushHistory(label).
+- Code area: #workspaceCanvas > .block-stack (data-owner = sprite index) > .scratch-block (data-type = block id,
+  see team/gwrap-blocks.json). Text inputs: .block-input. Dropdowns: <select class="block-select">.
+  C-blocks hold children in .block-c-body. Palette: #paletteContainer .cat-section [data-type].
+- Broadcast blocks: data-type broadcast / broadcast_wait / when_broadcast, the message is the .block-select value.
+- Variable blocks: set_var / change_var / show_var / hide_var / get_var, the variable is the .block-select value.
+- Costume list items: .gw7-cos-item (data-index). Sprite pane: "YOUR SPRITES".
+- Stage monitors: search app.html for "monitor" to find how they are drawn.
+
+JOBS (most important for kids first)
+G-C1  New message: every broadcast dropdown gets "New message…" at the bottom -> a dialog asks the name -> the
+      message is added and selected in that block. Also "Rename message…" (renames it in every block).
+G-C2  Rename / delete a variable or list: right-click a variable or list block in the palette -> "Rename" /
+      "Delete". Every variable dropdown also gets "Rename variable…" and "Delete the “x” variable".
+      Renaming must update Engine.variables (or the sprite's localVars), every block that uses it, and monitors.
+      Deleting also removes the blocks that use it (ask first: "Delete “score” and 3 blocks that use it?").
+G-C3  Monitors: checkboxes next to the built-in reporters in the palette (x position, y position, direction,
+      costume #, size, volume, timer, answer, loudness if present) that show/hide a stage monitor; right-click a
+      monitor -> normal readout / large readout / slider / change slider range / hide; list monitors ->
+      import (.txt, one item per line) / export / hide; monitors can be dragged on the stage.
+G-C4  Value bubble: a small function window.GW_VALUE_BUBBLE.show(blockElement, value) that draws a speech bubble
+      under a block with the value (true/false in green/red for booleans) and hides it on the next click or
+      after 4 s. Claude wires it to clicks.
+G-C5  Edit a custom block: right-click "define" / a call block / the palette block -> "Edit" opens the same kind
+      of dialog as "Make a Block" (name, add number/text input, add boolean input, add label, "run without
+      screen refresh"). Search app.html for "Make a Block" / "define_custom" / "GW_V1580_MYBLOCKS" first and
+      reuse its data. Changing it updates the define hat and every call block.
+G-C6  Comments on blocks: block right-click menu gets "Add Comment" -> a yellow note attached to that block
+      (moves with it, can be minimised, right-click -> delete). Saved with the project if possible.
+G-C7  Reorder by dragging: costumes, sounds and sprites can be dragged up/down in their lists (update the arrays
+      and activeCostume so the right costume stays selected). Also right-click -> "Move to top" / "Move to bottom".
+G-C8  Sound right-click menu: duplicate / export (.wav or the original file) / delete / move to top / bottom.
+G-C9  Sprites as files: right-click a sprite -> "Export" saves a .sprite3 (zip: sprite.json + costume and
+      sound files, Scratch 3 format); "Upload Sprite" also accepts .sprite3.
+G-C10 Searchable dropdowns: when a block dropdown with more than 8 options opens, a search box filters it
+      (TurboWarp / PenguinMod have this).
+G-C11 Save blocks as a picture: right-click a script -> "Save as PNG" / "Save as SVG".
+G-C12 Copy / paste blocks: Ctrl+C on a clicked block copies it with the blocks below; Ctrl+V pastes at the
+      mouse, in the current sprite. Alt+drag = drag a copy.
+
+HAND IN: one line per job at the bottom of AI-TEAM.txt: 2026-10-19 | DONE | Gemini | G-C<n> | gemini/clicks/<file>

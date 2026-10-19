@@ -1,3 +1,4 @@
+>>> FIRST 2026-10-19: team/GEMINI-CLICKS-2026-10-19.txt (12 missing click/right-click features as modules), THEN the GWrap AI 300 job <<<
 >>> TOP PRIORITY 2026-10-19: team/GEMINI-GWRAP-AI-300-2026-10-19.txt - GWrap AI 300+ questions (block list: team/gwrap-blocks.json) <<<
 >>> NEXT 2026-10-19 (after v15.49.0): team/NEXT-AFTER-v15.49-2026-10-19.txt - Gemini section <<<
 >>> SPRINT 2026-10-19 (35 min): team/GEMINI-SPRINT-2026-10-19.txt - melody engine first <<<
