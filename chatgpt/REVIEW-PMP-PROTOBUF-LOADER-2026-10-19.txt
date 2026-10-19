@@ -1,0 +1,112 @@
+G-WARP C5 REVIEW — INHERITED PROTOBUF .PMP LOADER
+Date: 2026-10-19 (America/New_York)
+Reviewer: ChatGPT
+Task: team/TODO-CHATGPT.txt C5
+Evidence class: STATIC SOURCE REVIEW + UPSTREAM API CROSS-CHECK
+G-Warp browser/runtime test: NOT RUN
+Real protobuf fixture test: NOT RUN
+Gemini files edited: NO
+app.html / index.html edited: NO
+
+ARTIFACTS AND PINS
+G-Warp repository main HEAD at start of review:
+- Commit: 8987510d4804fd7488d4a1d77d0f21f77e28ff98
+- gemini/lab/pmp-loader.js blob: d0a2749c69c29177305350162509099a07099448
+- gemini/lab/NOTES-pmp.txt blob: beb80d426845e503f6cf67deb53922d541c6a6e0
+- gemini/lab/test-pmp-loader.js blob: b9495897382c7a6439d44a4ea3c0c90e3dbd458a
+
+Upstream references checked:
+- PenguinMod/pmp-protobuf main HEAD: 84176d56c2b5bdebce8150a6bf9fefcac59fc1af
+  * index.js: https://github.com/PenguinMod/pmp-protobuf/blob/84176d56c2b5bdebce8150a6bf9fefcac59fc1af/index.js
+  * README: https://github.com/PenguinMod/pmp-protobuf/blob/84176d56c2b5bdebce8150a6bf9fefcac59fc1af/README.md
+  * package.json: https://github.com/PenguinMod/pmp-protobuf/blob/84176d56c2b5bdebce8150a6bf9fefcac59fc1af/package.json
+- PenguinMod official project fetcher, current develop file:
+  https://github.com/PenguinMod/penguinmod.github.io/blob/develop/src/lib/project-fetcher-hoc.jsx
+- Upstream readme / licence / API summary: https://github.com/PenguinMod/pmp-protobuf
+
+VERDICT
+BLOCKED / HIGH RISK — useful research skeleton only; not a verified protobuf loader, not integrated, and not suitable to mark ready or PICK for integration. No real protobuf project or asset set is present in the harness, and no runtime test was run.
+
+FINDINGS
+
+1. BLOCKER — No test actually decodes a protobuf.
+Exact file: gemini/lab/test-pmp-loader.js.
+The four-byte fake value [0x08,0x01,0x12,0x03] only exercises detect(); it never calls toProjectJson() on those bytes. The test therefore proves only that a non-ZIP buffer is labelled protobuf. The one-byte value exercises the early unknown branch, not parser error handling. The real-file test is commented out and contains a placeholder instead of a fixture. No parser invocation, JSON assertion, asset assertion, project open, or save/reopen round trip has been run.
+Minimum correction: build a separate harness with one legally shareable, known-good protobuf .pmp fixture and its required costume/sound asset files; execute the real parse/load path and assert concrete project structure and assets. Keep fixture provenance/licence and source SHA/checksum in the test notes.
+Acceptance: test logs the fixture identity/checksum, parser version, expected/actual target/block/costume/sound counts, asset resolution results, and a successful open/save/reopen or equivalent round trip. Until then, parser correctness = NOT TESTED.
+
+2. BLOCKER — assets: new Map() makes the result incomplete for real projects with media.
+Exact file/function: gemini/lab/pmp-loader.js, GW_PMP._protobuf().
+Upstream pmp-protobuf defines protobufToJson(buffer) as a project JSON conversion and separately documents protobufToPMP(protobuf, assets) / jsonToPMP(project_json, assets); assets is an independent input, not automatically reconstructed by protobufToJson. The upstream conversion carries costumes/sounds metadata such as asset IDs, formats and paths, but this code deliberately returns an empty Map. The original notes themselves admit costumes/sounds would be missing.
+Minimum correction: map out the actual asset source/contract for protobuf projects, then fetch or supply the referenced media according to an approved source and validate every asset reference before handing the project to G-Warp. Do not report “protobuf load support” if the project JSON loads without media.
+Acceptance: real project with at least one bitmap/vector costume and one sound opens with correct content; all referenced assets resolve; missing/failed media causes a clear error, not a silently broken project. Preserve existing .sb3 and ZIP-style .pmp paths.
+
+3. HIGH — The library URL is a guess and version is stale relative to current upstream source.
+Exact file/function: gemini/lab/pmp-loader.js, dynamic import() in _protobuf().
+The candidate hardcodes https://cdn.jsdelivr.net/npm/pmp-protobuf@1.6.0/+esm, with a comment saying the URL is only “most likely” to work. The current upstream repository head inspected for this review declares package version 1.8.8 and documents ESM-style named imports (import { protobufToJson } from "pmp-protobuf"). This source review does NOT establish that the old 1.6.0 CDN URL returns, exposes the exact named export, or can be imported from G-Warp's deployment context. Attempts to inspect the +esm URL through the available browser lookup were inaccessible; no browser request or module import was run.
+Minimum correction: select and pin a reviewed package version; verify the actual CDN/bundled module exports protobufToJson in the target browsers and deployment mode, and record the exact response/version. Prefer a reproducibly bundled, locally served dependency for the single-file/offline goal rather than relying on an unverified remote dynamic import.
+Acceptance: test fresh online load, repeat import, module failure/404, offline start, local-file/file:// mode if supported, and a restrictive CSP if used. A loader must fail clearly and must not prevent normal .sb3 or ZIP .pmp loading when the optional protobuf path is unavailable.
+
+4. HIGH — window.pmpProtobuf global is not established by upstream API docs.
+Exact file/function: gemini/lab/pmp-loader.js, initial const pb = window.pmpProtobuf branch.
+The upstream library README documents named module imports; its current index.js exports functions through module.exports. The repository/source reviewed does not prove that including the suggested UMD URL creates window.pmpProtobuf. The candidate's fallback may be fine as an optional integration seam, but must not be treated as the confirmed library loading contract.
+Minimum correction: explicitly document and verify the chosen import route. If a bundled browser global is chosen, build/inspect that bundle and assert the actual global/property shape; otherwise use the verified named-export import. Avoid relying on both undocumented shapes.
+Acceptance: a minimal harness asserts typeof imported.protobufToJson === 'function' or the exact documented global path before calling the decoder; test evidence records the actual module source/version.
+
+5. HIGH — detect() calls every non-ZIP buffer of length >=2 a “protobuf” file.
+Exact file/function: gemini/lab/pmp-loader.js, GW_PMP.detect().
+The code comment acknowledges no validated protobuf magic. This means arbitrary bytes, an unrelated binary, or a corrupt file is classified as protobuf; the current fake-proto test reinforces that false confidence. This does not demonstrate a crash by itself because the decoder error is caught, but it makes the detection result semantically unreliable.
+Minimum correction: return a neutral candidate/unknown state until parser validation succeeds, or use a documented signature/container check supported by the format. Do not invent magic bytes. Keep decoder failure as a distinct, tested error.
+Acceptance: test valid ZIP PMP, valid protobuf fixture, random binary, empty/one-byte input, truncated real protobuf, and wrong-format .pmp; only validated input is reported as a successful protobuf project. Existing ZIP .pmp continues to route to the existing ZIP loader.
+
+6. HIGH — The harness cannot run as its comment suggests without manually loading the candidate.
+Exact file: gemini/lab/test-pmp-loader.js.
+Its header says “Run this in the browser console after loading app.html” but the current app candidate is not shown to load gemini/lab/pmp-loader.js; the later comment still references deepseek/pmp-loader.js, a retired path. In a normal unmodified app session window.GW_PMP may be undefined, so the harness can fail before its assertions. A stale path also makes handoff instructions misleading.
+Minimum correction: document an exact isolated test procedure that explicitly loads the candidate file before running the test, or provide a self-contained harness. Update the old path in Gemini's own file when its author revises it; ChatGPT has not edited Gemini files.
+Acceptance: clean browser profile / app load, explicit candidate injection, harness run, and documented results with console errors captured. Separately confirm the candidate remains disconnected from the production app until approval.
+
+7. MEDIUM — Decoder output is only checked as a generic object.
+Exact file/function: GW_PMP._protobuf().
+The code checks json && typeof json === 'object', but that would allow {} or another object without valid targets, meta, costumes/sounds or required schema fields. The downstream loader's real acceptance contract is not documented in the candidate.
+Minimum correction: validate minimum expected top-level/project structure and required metadata; return actionable errors when it is missing or malformed. Do not try to silently repair unknown fields until compatibility scope is decided.
+Acceptance: reject {}, null, arrays, and truncated/corrupt decoder outputs; accept the known-good fixture and assert targets, meta, block dictionaries, costume/sound records and extension metadata as applicable.
+
+8. MEDIUM — The candidate relies on a network request while its note claims no user-data transfer.
+Exact file/function: dynamic import in _protobuf().
+The code does not explicitly send the user's project buffer as a request body; however, importing the library from jsDelivr means the feature does contact an external host for code and requires network availability unless the global is preloaded. The statement “Never sends user data anywhere” should not be stretched into “no network requests.”
+Minimum correction: use an auditable local/bundled dependency where feasible, and document that the CDN route downloads code only. Add a network/offline test and ensure project bytes are never included in the dependency request.
+Acceptance: network trace shows only the library asset request (if remote loading is intentionally retained), with no project payload; offline behavior is deliberate and clear.
+
+SOURCE-VERIFIED UPSTREAM FACTS
+- At the pinned pmp-protobuf source revision, protobufToJson is an exported helper that decodes a protobuf byte buffer into the JSON representation.
+- protobufToPMP calls protobufToJson then jsonToPMP, and the latter takes a separate assets array with {buffer, id} entries and puts those files into a ZIP.
+- PMPToParts extracts project.json plus binary assets from ZIP-style PMP files; it is not a protobuf decoder for external assets.
+- The package.json at the repository revision declares version 1.8.8 and MIT licence. The published npm listing also reports 1.8.8 (Socket index, published about three weeks before this review); CDN version 1.6.0 in the candidate is not the latest version found during this review.
+- PenguinMod's official project fetcher imports protobufToJson from the package and defines a distinct asset host. This is useful architectural evidence, but not proof that G-Warp can reuse the same fetch endpoint or assets without a compatible implementation.
+References:
+https://github.com/PenguinMod/pmp-protobuf/blob/84176d56c2b5bdebce8150a6bf9fefcac59fc1af/index.js
+https://github.com/PenguinMod/pmp-protobuf/blob/84176d56c2b5bdebce8150a6bf9fefcac59fc1af/README.md
+https://github.com/PenguinMod/pmp-protobuf/blob/84176d56c2b5bdebce8150a6bf9fefcac59fc1af/package.json
+https://github.com/PenguinMod/penguinmod.github.io/blob/develop/src/lib/project-fetcher-hoc.jsx
+https://github.com/PenguinMod/PenguinMod-Vm/blob/develop/src/serialization/sb3.js
+https://socket.dev/npm/package/pmp-protobuf/versions
+
+MINIMUM ACCEPTANCE PLAN (AUTHOR + CLAUDE)
+[ ] Choose/pin a verified parser version and prove the browser export shape.
+[ ] Provide one legally shareable real protobuf project fixture and identify its provenance/checksum.
+[ ] Determine the real asset acquisition/mapping contract and include at least one costume and one sound in the fixture.
+[ ] Add automated assertions for valid decode, structural schema, asset count/hash/content, error cases and round-trip.
+[ ] Test random/truncated/wrong-format files and make detection semantics honest.
+[ ] Verify that current ZIP .pmp and .sb3 import routes remain unchanged.
+[ ] Run in the actual target browser (and offline mode if promised); record browser, commit, fixture hash, expected vs actual and console/network results.
+[ ] Keep the candidate isolated until Claude's approved test gate and owner authorization. Do not integrate from this report alone.
+
+NEXT OWNER/AUTHOR ACTION
+Gemini should revise the inherited candidate in its own folder and attach parser/export evidence plus a legally shareable real fixture/assets. Claude should only run controlled end-to-end tests after the parser and fixture gates exist. ChatGPT has not touched Gemini files, the production app, or any test runner.
+
+OVERALL
+STATIC REVIEW: COMPLETE; candidate remains BLOCKED / INCOMPLETE.
+UPSTREAM API CHECK: SOURCE-VERIFIED, pinned above.
+REAL FIXTURE / ASSET TEST: NOT TESTED; no usable real fixture supplied in the reviewed files.
+G-WARP BROWSER/RUNTIME: NOT TESTED.
+INTEGRATION / RELEASE: NOT DONE.
