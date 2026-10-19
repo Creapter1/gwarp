@@ -2284,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.48.0</span>
+<span class="app-version">Beta v15.49.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -2621,7 +2621,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <span class="text-[9px] font-black px-2 py-1 rounded-full bg-pink-950/60 text-pink-200 border border-pink-800/60">LOCAL AUDIO</span>
 </div>
 <div class="grid grid-cols-3 gap-2">
-<label class="text-[10px] font-bold text-slate-400">Style<select class="gw-music-select" id="gwMusicStyle"><option value="lofi">Lo-Fi</option><option value="synthwave">Synthwave</option><option value="upbeat">Upbeat Pop</option><option value="dark">Dark Arcade</option><option value="ambient">Ambient</option><option value="house">Electro House</option><option value="jazz">Neo Jazz</option></select></label>
+<label class="text-[10px] font-bold text-slate-400">Style<select class="gw-music-select" id="gwMusicStyle"><option value="lofi">Lo-Fi</option><option value="synthwave">Synthwave</option><option value="upbeat">Upbeat Pop</option><option value="dark">Dark Arcade</option><option value="ambient">Ambient</option><option value="house">Electro House</option><option value="jazz">Neo Jazz</option><option value="chiptune">Chiptune</option><option value="rock">Rock</option><option value="trap">Trap</option><option value="cinematic">Cinematic</option></select></label>
 <label class="text-[10px] font-bold text-slate-400">Mood<select class="gw-music-select" id="gwMusicMood"><option value="relaxed">Relaxed</option><option value="intense">Intense</option><option value="happy">Happy</option><option value="mysterious">Mysterious</option><option value="euphoric">Euphoric</option><option value="dark">Dark</option><option value="dreamy">Dreamy</option><option value="restless">Restless</option></select></label>
 <label class="text-[10px] font-bold text-slate-400">Duration<select class="gw-music-select" id="gwMusicDuration"><option value="5">5 seconds</option><option value="4bars">4 bars</option><option value="8bars">8 bars</option></select></label>
 <label class="text-[10px] font-bold text-slate-400 col-span-1">BPM<input class="gw-music-range" id="gwMusicBpm" max="160" min="60" type="range" value="120"/><span class="text-white ml-1" id="gwMusicBpmVal">120</span></label>
@@ -4633,7 +4633,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.48.0',label:'Beta v15.48.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.49.0',label:'Beta v15.49.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -5619,7 +5619,10 @@ nodes.push(el);cur=b.next;}return nodes;};
     dark:{wave:'sawtooth',bass:'square',lead:'square',drumScale:1.15},
     ambient:{wave:'sine',bass:'sine',lead:'triangle',drumScale:.42},
     house:{wave:'sawtooth',bass:'square',lead:'square',drumScale:1.18},
-    jazz:{wave:'triangle',bass:'sine',lead:'triangle',drumScale:.86}
+    jazz:{wave:'triangle',bass:'sine',lead:'triangle',drumScale:.86},
+    rock:{wave:'sawtooth',bass:'square',lead:'sawtooth',drumScale:1.15},
+    trap:{wave:'sine',bass:'sine',lead:'triangle',drumScale:1.1},
+    cinematic:{wave:'triangle',bass:'sine',lead:'sine',drumScale:.5}
   };
 
   const el = id => document.getElementById(id);
@@ -5696,6 +5699,8 @@ nodes.push(el);cur=b.next;}return nodes;};
       const fifth=scale[(degree+4)%scale.length];
       chords.push({t:beat,d:Math.min(chordDur,beats-beat),notes:[base,third,fifth].map(n=>n+12),v:.16+.12*mood.energy});
     }
+    /* v15.49.0 (Claude, with Gemini's melody engine): each style has its own melody - rhythm, scale, range, motif A / A' / A / ending */
+    try{if(window.GW_MELODY){const MAP={lofi:'lofi',synthwave:'edm',upbeat:'pop',dark:'trap',ambient:'cinematic',house:'edm',jazz:'jazz',chiptune:'chiptune',rock:'rock',trap:'trap',cinematic:'cinematic'};const MM={relaxed:'chill',happy:'happy',intense:'energetic',mysterious:'sad',euphoric:'energetic',dark:'dark',dreamy:'chill',restless:'epic'};const KEYS=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];const bars=Math.max(1,Math.ceil(beats/4));const notes=GW_MELODY.make({style:MAP[st.style]||'pop',mood:MM[st.mood]||'happy',key:KEYS[((root%12)+12)%12],bars,seed:st.seed+({synthwave:101,trap:211,cinematic:307}[st.style]||0)});if(notes&&notes.length){melody.length=0;notes.forEach(e=>{if(e.t<beats)melody.push({t:e.t,d:Math.max(.08,Math.min(e.d,beats-e.t)),n:e.n,v:Math.min(.62,.18+e.v*.42)});});}}}catch(err){console.warn('G-Warp melody engine',err);}
     st.patterns={melody,bass,drums,chords};
     drawPattern();
     el('gwMusicStatus')&&(el('gwMusicStatus').textContent=`Generated ${st.duration.toFixed(2)}s • ${st.bpm} BPM • ${st.style} / ${st.mood}`);
@@ -11952,7 +11957,7 @@ nodes.push(el);cur=b.next;}return nodes;};
         costumes: (s.costumes || []).map(c => ({ name: c.name, data: dataURL(c.canvas), natural: !!(c.natural && c.rc), rc: c.rc || null, res: c.res || 1, w: c.canvas?.width, h: c.canvas?.height, dataFormat: c.dataFormat || null, svg: (c.dataFormat === 'svg' && c.svg) ? c.svg : undefined, gwAnimFrame: c.gwAnimFrame || undefined })), // v15.16.2: vector costumes stay vectors after saving
         localVars: { ...(s.localVars || {}) }, localLists: JSON.parse(JSON.stringify(s.localLists || {})), effects: { ...(s.effects || {}) },
         sounds: (s.sounds || []).map(a => ({ ...a })), behaviors: (s.behaviors || []).map(a => ({ behaviorId: a.behaviorId, attributes: { ...(a.attributes || {}) } })),
-        gwAnimations: s.gwAnimations?.length ? JSON.parse(JSON.stringify(s.gwAnimations)) : undefined // v15.16.2: Animation (preview)
+        gwAnimations: s.gwAnimations?.length ? JSON.parse(JSON.stringify(s.gwAnimations)) : undefined, gwTileSprite: s.gwTileSprite ? { ...s.gwTileSprite } : undefined // v15.49.0 Tiles tab; v15.16.2: Animation (preview)
       })),
       stacks: [...document.querySelectorAll('#workspaceCanvas > .block-stack')].map(st => ({ left: st.style.left, top: st.style.top, owner: st.dataset.owner || '0', html: st.innerHTML })),
       ast: (() => { try { return window.GW9?.captureAST?.(); } catch { return null; } })(), soundLab: window.GW_SOUND_LAB?.state || null,
@@ -11976,7 +11981,7 @@ nodes.push(el);cur=b.next;}return nodes;};
         for (let i = 0; i < non.length; i++) {
           const src = data.sprites?.[i], s = non[i]; if (!src) continue;
           if (src.rotationStyle) s.rotationStyle = src.rotationStyle; if (src.layer != null) s.layer = src.layer; s.draggable = !!src.draggable; if (src.stageProxy) s.stageProxy = true;
-          s.localVars = { ...(src.localVars || {}) }; s.gwAnimations = Array.isArray(src.gwAnimations) ? JSON.parse(JSON.stringify(src.gwAnimations)) : undefined; // v15.16.2 s.localLists = JSON.parse(JSON.stringify(src.localLists || {})); s.effects = { ...(src.effects || {}) };
+          s.localVars = { ...(src.localVars || {}) }; s.gwAnimations = Array.isArray(src.gwAnimations) ? JSON.parse(JSON.stringify(src.gwAnimations)) : undefined; s.gwTileSprite = src.gwTileSprite ? { ...src.gwTileSprite } : undefined; // v15.16.2 s.localLists = JSON.parse(JSON.stringify(src.localLists || {})); s.effects = { ...(src.effects || {}) };
           for (let j = 0; j < (src.costumes || []).length; j++) {
             const c = src.costumes[j]; if (c?.svg && s.costumes[j]) { s.costumes[j].svg = c.svg; s.costumes[j].dataFormat = 'svg'; if (c.gwAnimFrame) s.costumes[j].gwAnimFrame = c.gwAnimFrame; } // v15.16.2: the vector data comes back
             if (!c?.natural || !c.data || !s.costumes[j]) continue;
@@ -15748,7 +15753,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   const making = new WeakMap();
   function frameIdx(s, anim) {
     const cs = s.costumes || rootOf(s)?.costumes || [], out = [];
-    for (let i = 0; i < anim.frames.length; i++) { const k = cs.findIndex(c => c && c.name === `${anim.name} ${i + 1}`); if (k < 0) return null; const g = cs[k].gwAnimFrame; if (g && g.anim === anim.id && (g.rev ?? 0) !== (anim.rev || 0)) return null; /* v15.47.0: out of date → made again */ out.push(k); }
+    for (let i = 0; i < anim.frames.length; i++) { const k = cs.findIndex(c => c && c.name === `${anim.name}//frame ${i + 1}`); /* v15.49.0: folder names like TurboWarp: walk//frame 1 */ if (k < 0) return null; const g = cs[k].gwAnimFrame; if (g && g.anim === anim.id && (g.rev ?? 0) !== (anim.rev || 0)) return null; /* v15.47.0: out of date → made again */ out.push(k); }
     return out;
   }
   async function ensureFrames(s, anim) {
@@ -16068,7 +16073,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
       const im = await new Promise(r => { const x = new Image(); x.onload = () => r(x); x.onerror = () => r(null); x.src = dataUri(text); });
       const w = Math.max(1, im?.naturalWidth || 1), hh = Math.max(1, im?.naturalHeight || 1), R = Math.max(0.25, Math.min(w * hh > 1.5e6 ? 1 : 2, 4096 / Math.max(w, hh)));
       const cv = document.createElement('canvas'); cv.width = Math.ceil(w * R); cv.height = Math.ceil(hh * R); if (im) cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
-      const name = `${anim.name} ${i + 1}`;
+      const name = `${anim.name}//frame ${i + 1}`; // v15.49.0 (owner): TurboWarp-style folder: <animation>//frame N
       const c = { name, canvas: cv, rc: { ...(src?.rc || anim.rc || { x: w / 2, y: hh / 2 }) }, res: R, natural: true, dataFormat: 'svg', svg: text, gwAnimFrame: { anim: anim.id, frame: i, rev: anim.rev || 0 } };
       const at = s.costumes.findIndex(x => x.name === name); if (at >= 0) s.costumes[at] = c; else s.costumes.push(c);
       made.push(name);
@@ -16237,6 +16242,26 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     st.anim.frames = out; st.frame = Math.min(st.frame * 2, out.length - 1); if (st.anim.fps && st.anim.fps <= 15) st.anim.fps = Math.min(30, st.anim.fps * 2);
     toast(`Smoother: ${out.length} frames at ${st.anim.fps || 8} FPS (same speed).`); setMode('animate');
   }
+  /* v15.49.0 (Claude; owner: "frame 1 is where it starts, frame 2 is the new location - the character GLIDES there
+     slowly instead of popping"; the ease-in-out curve is the one from Gemini's easing lab). Glide puts 3 eased
+     in-between frames into every gap (bones turn the short way, the base slides) and speeds the FPS up so a move
+     takes the same time. Pressing Glide again takes the glide frames out (back to the key frames). */
+  const easeIO = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  function glide() {
+    if (!st.anim?.bones.length) return toast('Add bones first (Rig).');
+    const f = st.anim.frames;
+    if (f.some(x => x && x.glide)) {
+      snap(); const keys = f.filter(x => !x.glide), div = Math.max(1, Math.round(f.length / Math.max(1, keys.length)));
+      st.anim.frames = keys; st.frame = Math.min(Math.floor(st.frame / div), keys.length - 1); if (st.anim.fps) st.anim.fps = Math.max(1, Math.round(st.anim.fps / div));
+      toast(`Glide off: back to ${keys.length} key frames.`); setMode('animate'); return;
+    }
+    if (f.length < 2) return toast('Make at least two frames: where it starts and where it goes.');
+    const steps = 3, n = f.length + (loops() ? f.length : f.length - 1) * steps; if (n > 240) return toast('That would make more than 240 frames.');
+    snap(); const out = [];
+    f.forEach((x, i) => { out.push(x); if (i < f.length - 1 || loops()) for (let k = 1; k <= steps; k++) out.push(Object.assign(mix(x, f[(i + 1) % f.length], easeIO(k / (steps + 1))), { glide: 1 })); });
+    st.anim.frames = out; st.frame = Math.min(st.frame * (steps + 1), out.length - 1); st.anim.fps = Math.min(30, (st.anim.fps || 8) * (steps + 1));
+    toast(`Glide on: ${out.length} frames - every move glides smoothly to the next key frame.`); setMode('animate');
+  }
   async function offerMascot() {
     if (!window.GW_MASCOT?.make || !window.GW_CONFIRM) return;
     const ok = await window.GW_CONFIRM('Try the G mascot?', 'Animation works with vector costumes, and this sprite has none. Add the G mascot? It already has bones and two animations (walk and wave) to look at and change.', 'Add the G mascot', 'Not now');
@@ -16318,7 +16343,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
       h('div', { class: 'gw18-foot' },
         h('div', { id: 'gw18Frames', class: 'gw18-frames' }),
         h('div', { class: 'gw18-frame-tools' }, btn(ic('fa-plus', 'Frame'), () => addFrame(), { id: 'gw18AddFrame', title: 'Copy this frame after it' }), btn(h('i', { class: 'fa-solid fa-chevron-left', 'aria-hidden': 'true' }), () => moveFrame(-1), { title: 'Move frame left', 'aria-label': 'Move frame left' }), btn(h('i', { class: 'fa-solid fa-chevron-right', 'aria-hidden': 'true' }), () => moveFrame(1), { title: 'Move frame right', 'aria-label': 'Move frame right' }), btn(h('i', { class: 'fa-solid fa-trash', 'aria-hidden': 'true' }), () => delFrame(), { title: 'Delete frame', 'aria-label': 'Delete frame' }),
-          btn(ic('fa-wand-magic-sparkles', 'In-between'), () => tween(), { id: 'gw18Tween', title: 'Add a frame half-way between this frame and the next one (smoother motion)' }), btn(ic('fa-water', 'Smooth ×2'), () => smooth(), { id: 'gw18Smooth', title: 'Put an in-between frame after every frame: twice the frames, same speed, smoother motion' }),
+          btn(ic('fa-wand-magic-sparkles', 'In-between'), () => tween(), { id: 'gw18Tween', title: 'Add a frame half-way between this frame and the next one (smoother motion)' }), btn(ic('fa-water', 'Smooth ×2'), () => smooth(), { id: 'gw18Smooth', title: 'Put an in-between frame after every frame: twice the frames, same speed, smoother motion' }), btn(ic('fa-feather', 'Glide'), () => glide(), { id: 'gw18Glide', title: 'Glide: the character slides smoothly from each key frame to the next (press again to turn it off)' }),
           btn('▶ Play', () => play(!st.play), { id: 'gw18Play', title: 'Play the frames (the button turns into Stop)' }), h('label', { class: 'gw18-lab' }, 'FPS ', h('input', { id: 'gw18Fps', type: 'number', min: '1', max: '30', value: '8', onchange: e => { if (st.anim) st.anim.fps = Math.max(1, Math.min(30, +e.target.value || 8)); if (st.play) play(true); } })),
           h('label', { class: 'gw18-lab' }, h('input', { id: 'gw18OnionOn', type: 'checkbox', checked: 'checked', onchange: e => { st.onion = e.target.checked; showPose(); } }), ' Onion skin'),
           h('label', { class: 'gw18-lab', title: 'Loop: the preview (and in-betweens) go from the last frame back to the first' }, h('input', { id: 'gw18Loop', type: 'checkbox', checked: 'checked', onchange: e => { if (st.anim) { snap(); st.anim.loop = e.target.checked; paintHeader(); } } }), ' Loop'),
@@ -16334,7 +16359,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     const n = inp.value.trim().slice(0, 40); if (ok && n && st.anim && n !== st.anim.name) {
       if ((st.s.gwAnimations || []).some(a => a !== st.anim && a.name === n)) return toast(`There is already an animation called “${n}”.`);
       const old = st.anim.name; snap(); st.anim.name = n;
-      madeOf(st.s, st.anim).forEach(c => { c.name = `${n} ${c.gwAnimFrame.frame + 1}`; c.gwAnimFrame.rev = st.anim.rev || 0; });
+      madeOf(st.s, st.anim).forEach(c => { c.name = `${n}//frame ${c.gwAnimFrame.frame + 1}`; c.gwAnimFrame.rev = st.anim.rev || 0; });
       document.querySelectorAll('#workspaceCanvas select.gw19-anim-menu').forEach(sel => { if (sel.value === old) sel.innerHTML = `<option value="${n.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]))}" selected></option>`, sel.options[0].textContent = n; });
       try { window.GW_V1570_STUDIO?.renderCostumeList?.(true); } catch {}
       refreshAll(); }
@@ -16396,9 +16421,639 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   (function boot(n = 0) { if (!addEntry() && n < 120) setTimeout(() => boot(n + 1), 500); })();
   new MutationObserver(() => { if (!by('gw18AnimBtn')) addEntry(); }).observe(document.body, { childList: true, subtree: true });
 
-  window.GW_ANIM = { open, close, solve, deltas, applyPose, frameSvg, partPaths, parseTransform, makeCostumes, newAnim, undo, redo, vectorCostumes, tween, smooth, mix, state: st };
+  window.GW_ANIM = { open, close, solve, deltas, applyPose, frameSvg, partPaths, parseTransform, makeCostumes, newAnim, undo, redo, vectorCostumes, tween, smooth, glide, mix, state: st };
 })();
 
+</script>
+<script id="gw-v4900-melody-engine">
+/* v15.49.0: Gemini 3 Argon's melody engine (gemini/lab/melody-engine.js), merged by Claude: every Song maker style gets its own melody rhythm and notes (owner: "all the melodies are the same for all the modes") */
+(() => {
+  'use strict';
+  /**
+   * G-Warp Melody Engine — gemini/lab/melody-engine.js
+   * Exposes window.GW_MELODY.make({ style, mood, key, bars, seed }) -> [{ t, d, n, v }]
+   * - t: start time in beats (0 .. bars*4)
+   * - d: duration in beats
+   * - n: MIDI note number (int)
+   * - v: velocity (0 .. 1)
+   * Deterministic PRNG: same seed + options always returns the exact same melody.
+   * Phrase structure: Bar 1 = Idea A, Bar 2 = Idea A varied, Bar 3 = Idea A again, Bar 4 = cadence ending on root.
+   */
+
+  const KEY_OFFSETS = {
+    C: 0, 'C#': 1, Db: 1, D: 2, 'D#': 3, Eb: 3, E: 4, F: 5,
+    'F#': 6, Gb: 6, G: 7, 'G#': 8, Ab: 8, A: 9, 'A#': 10, Bb: 10, B: 11
+  };
+
+  const SCALES = {
+    major:           [0, 2, 4, 5, 7, 9, 11],
+    minor:           [0, 2, 3, 5, 7, 8, 10],
+    minorPentatonic: [0, 3, 5, 7, 10],
+    blues:           [0, 3, 5, 6, 7, 10],
+    dorian:          [0, 2, 3, 5, 7, 9, 10],
+    harmonicMinor:   [0, 2, 3, 5, 7, 8, 11],
+    phrygianDark:    [0, 1, 3, 5, 7, 8, 10],
+    lydianBright:    [0, 2, 4, 6, 7, 9, 11]
+  };
+
+  const MOOD_PROFILES = {
+    happy:     { octaveShift: +12, velBase: 0.80, velSpan: 0.16, densityMul: 1.08, scaleOverride: null,       preferBright: true  },
+    sad:       { octaveShift:   0, velBase: 0.56, velSpan: 0.14, densityMul: 0.78, scaleOverride: 'minor',    preferBright: false },
+    dark:      { octaveShift: -12, velBase: 0.72, velSpan: 0.18, densityMul: 0.85, scaleOverride: 'phrygianDark', preferBright: false },
+    epic:      { octaveShift:   0, velBase: 0.86, velSpan: 0.14, densityMul: 1.05, scaleOverride: 'harmonicMinor', preferBright: false },
+    chill:     { octaveShift:   0, velBase: 0.58, velSpan: 0.12, densityMul: 0.75, scaleOverride: null,       preferBright: false },
+    energetic: { octaveShift: +12, velBase: 0.88, velSpan: 0.12, densityMul: 1.22, scaleOverride: null,       preferBright: true  }
+  };
+
+  const STYLE_SPECS = {
+    lofi: {
+      bpm: 78,
+      baseMidi: 60, // C4
+      scale: 'minorPentatonic',
+      chordExtensions: [0, 3, 7, 10, 14], // min7 / min9 color tones
+      swing: 0.08, // lazy swung 8ths
+      chords: [[0, 3, 7, 10], [5, 8, 12, 15], [3, 7, 10, 14], [7, 10, 14, 17]],
+      desc: 'Lazy swung 8ths, lots of rests, minor pentatonic + 7th/9th color tones, compact range'
+    },
+    trap: {
+      bpm: 140,
+      baseMidi: 48, // C3 (low-middle range)
+      scale: 'phrygianDark',
+      chordExtensions: [0, 1, 7, 8],
+      swing: 0,
+      chords: [[0, 3, 7], [8, 12, 15], [0, 3, 7], [7, 10, 14]],
+      desc: 'Sparse & dark minor/phrygian, long held notes + rapid 1/6-beat triplet rolls, low-mid range'
+    },
+    pop: {
+      bpm: 118,
+      baseMidi: 60, // C4
+      scale: 'major',
+      chordExtensions: [0, 4, 7, 9],
+      swing: 0,
+      chords: [[0, 4, 7], [7, 11, 14], [9, 12, 16], [5, 9, 12]],
+      desc: 'Catchy 2-bar hook, syncopated 8ths, major scale, chord tones anchored on beats 1 and 3'
+    },
+    rock: {
+      bpm: 128,
+      baseMidi: 48, // C3
+      scale: 'blues',
+      chordExtensions: [0, 3, 5, 6, 7],
+      swing: 0,
+      chords: [[0, 7, 12], [3, 10, 15], [5, 12, 17], [7, 14, 19]],
+      desc: 'Short repeated riff, minor pentatonic + flat-5 blues note, driving straight 8ths'
+    },
+    edm: {
+      bpm: 128,
+      baseMidi: 60, // C4
+      scale: 'minor',
+      chordExtensions: [0, 3, 7, 12],
+      swing: 0,
+      chords: [[0, 3, 7], [8, 12, 15], [3, 7, 10], [10, 14, 17]],
+      desc: 'Driving 16th-note chord arpeggios, octave jumps, rising pitch/velocity build-up in bar 4'
+    },
+    chiptune: {
+      bpm: 150,
+      baseMidi: 72, // C5
+      scale: 'major',
+      chordExtensions: [0, 4, 7, 12],
+      swing: 0,
+      chords: [[0, 4, 7], [5, 9, 12], [7, 11, 14], [0, 4, 7]],
+      desc: 'Fast 16th arpeggio bursts, wide 1-octave jumps, major key, crisp staccato bounce'
+    },
+    jazz: {
+      bpm: 112,
+      baseMidi: 60, // C4
+      scale: 'dorian',
+      chordExtensions: [0, 3, 7, 10, 14], // dorian 7ths and 9ths
+      swing: 0.085,
+      chords: [[2, 5, 9, 12], [7, 11, 14, 17], [0, 4, 7, 11], [9, 12, 16, 19]],
+      desc: 'Swung 8ths, dorian mode, 7th & 9th extensions, chromatic approach passing notes'
+    },
+    cinematic: {
+      bpm: 84,
+      baseMidi: 60, // C4
+      scale: 'harmonicMinor',
+      chordExtensions: [0, 3, 7, 11, 12],
+      swing: 0,
+      chords: [[0, 3, 7], [8, 12, 15], [5, 8, 12], [7, 11, 14]],
+      desc: 'Slow sustained notes, wide 5th/octave leaps, rising sequence, harmonic minor drama'
+    }
+  };
+
+  function hashSeed(input) {
+    const str = String(input == null ? 'gwarp-2026' : input);
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0) || 0x9e3779b9;
+  }
+
+  function makeRng(seedVal) {
+    let a = hashSeed(seedVal);
+    return function next() {
+      a |= 0;
+      a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function resolveScaleIntervals(styleKey, moodKey) {
+    const spec = STYLE_SPECS[styleKey] || STYLE_SPECS.pop;
+    const mood = MOOD_PROFILES[moodKey] || MOOD_PROFILES.happy;
+    if (styleKey === 'lofi') return SCALES.minorPentatonic;
+    if (styleKey === 'rock') return SCALES.blues;
+    if (styleKey === 'jazz') return SCALES.dorian;
+    if (styleKey === 'cinematic') return moodKey === 'happy' ? SCALES.lydianBright : SCALES.harmonicMinor;
+    if (styleKey === 'pop' || styleKey === 'chiptune') {
+      if (moodKey === 'sad' || moodKey === 'dark') return SCALES.minor;
+      return SCALES.major;
+    }
+    if (mood.scaleOverride && SCALES[mood.scaleOverride]) {
+      return SCALES[mood.scaleOverride];
+    }
+    return SCALES[spec.scale] || SCALES.minor;
+  }
+
+  function clampMidi(n, lo = 36, hi = 96) {
+    return Math.max(lo, Math.min(hi, Math.round(n)));
+  }
+
+  function clampVel(v) {
+    return Math.round(Math.max(0.12, Math.min(1, v)) * 1000) / 1000;
+  }
+
+  function roundBeat(x) {
+    return Math.round(x * 1000) / 1000;
+  }
+
+  function pick(rng, arr) {
+    return arr[Math.floor(rng() * arr.length) % arr.length];
+  }
+
+  function buildIdeaABar(styleKey, moodKey, rootMidi, scale, spec, mood, rng) {
+    const notes = [];
+    const vel0 = mood.velBase;
+
+    if (styleKey === 'lofi') {
+      const pool = [0, 3, 5, 7, 10, 14];
+      const slots = [0, 0.5, 1.5, 2.5, 3.0];
+      for (let i = 0; i < slots.length; i++) {
+        if (i > 0 && rng() > 0.72 * mood.densityMul) continue;
+        const rawBeat = slots[i];
+        const isOffbeat = Math.abs((rawBeat % 1) - 0.5) < 0.01;
+        const t = rawBeat + (isOffbeat ? spec.swing : 0);
+        const d = i === slots.length - 1 ? 0.75 : (isOffbeat ? 0.42 : 0.48);
+        const interval = i === 0 ? pick(rng, [0, 3, 7, 10]) : pick(rng, pool);
+        notes.push({
+          t,
+          d,
+          n: rootMidi + interval,
+          v: vel0 + (rng() - 0.5) * mood.velSpan
+        });
+      }
+      if (notes.length >= 2) {
+        notes[1].n = rootMidi + (rng() < 0.5 ? 10 : 14);
+      }
+    } else if (styleKey === 'trap') {
+      const darkPool = [0, 1, 3, 7, 8];
+      notes.push({ t: 0, d: 1.5, n: rootMidi + pick(rng, [0, 7]), v: vel0 + 0.06 });
+      const rollBase = rootMidi + pick(rng, [7, 8, 3]);
+      const trip = 1 / 6;
+      for (let k = 0; k < 3; k++) {
+        notes.push({
+          t: 1.5 + k * trip,
+          d: trip * 0.92,
+          n: rollBase - (k === 1 ? 1 : k === 2 ? 3 : 0),
+          v: vel0 - 0.08 + k * 0.05
+        });
+      }
+      notes.push({ t: 2.0, d: 1.75, n: rootMidi + pick(rng, darkPool), v: vel0 });
+    } else if (styleKey === 'pop') {
+      const chordTones = [0, 4, 7, 12];
+      const scaleTones = [0, 2, 4, 7, 9, 12];
+      notes.push({ t: 0.0, d: 0.75, n: rootMidi + pick(rng, chordTones), v: vel0 + 0.06 });
+      notes.push({ t: 0.75, d: 0.75, n: rootMidi + pick(rng, scaleTones), v: vel0 });
+      notes.push({ t: 1.5, d: 0.5, n: rootMidi + pick(rng, scaleTones), v: vel0 - 0.04 });
+      notes.push({ t: 2.0, d: 0.75, n: rootMidi + pick(rng, chordTones), v: vel0 + 0.05 });
+      notes.push({ t: 2.75, d: 0.5, n: rootMidi + pick(rng, scaleTones), v: vel0 });
+      notes.push({ t: 3.25, d: 0.5, n: rootMidi + pick(rng, [2, 4, 7]), v: vel0 - 0.03 });
+    } else if (styleKey === 'rock') {
+      const riffDegrees = [0, 0, 3, 5, 6, 7, 5, 3];
+      for (let i = 0; i < 8; i++) {
+        const deg = i === 4 ? 6 : (rng() < 0.7 ? riffDegrees[i] : pick(rng, SCALES.blues));
+        notes.push({
+          t: i * 0.5,
+          d: 0.45,
+          n: rootMidi + deg,
+          v: vel0 + (i % 2 === 0 ? 0.08 : -0.04)
+        });
+      }
+    } else if (styleKey === 'edm') {
+      const arp = [0, 3, 7, 12, 7, 3, 12, 7, 0, 3, 7, 15, 12, 7, 3, 7];
+      for (let i = 0; i < 16; i++) {
+        if (i === 6 || i === 14) {
+          if (rng() > 0.75 * mood.densityMul) continue;
+        }
+        const semi = arp[i % arp.length] + (i === 3 || i === 11 ? 12 : 0);
+        notes.push({
+          t: i * 0.25,
+          d: 0.22,
+          n: rootMidi + semi,
+          v: vel0 + (i % 4 === 0 ? 0.09 : -0.04)
+        });
+      }
+    } else if (styleKey === 'chiptune') {
+      const chipPattern = [0, 4, 7, 12, 16, 12, 7, 4, 2, 7, 11, 14, 19, 14, 11, 7];
+      for (let i = 0; i < 16; i++) {
+        const jump = (i === 4 || i === 12) ? 12 : 0;
+        notes.push({
+          t: i * 0.25,
+          d: 0.18,
+          n: rootMidi + chipPattern[i] + jump,
+          v: vel0 + (i % 2 === 0 ? 0.06 : -0.04)
+        });
+      }
+    } else if (styleKey === 'jazz') {
+      const swing = spec.swing;
+      const jazzLine = [
+        { t: 0.0,            d: 0.55, semi: 3 },
+        { t: 0.5 + swing,    d: 0.40, semi: 6 },
+        { t: 1.0,            d: 0.55, semi: 7 },
+        { t: 1.5 + swing,    d: 0.40, semi: 9 },
+        { t: 2.0,            d: 0.55, semi: 10 },
+        { t: 2.5 + swing,    d: 0.40, semi: 14 },
+        { t: 3.0,            d: 0.85, semi: pick(rng, [7, 9, 10, 12]) }
+      ];
+      for (const item of jazzLine) {
+        notes.push({
+          t: item.t,
+          d: item.d,
+          n: rootMidi + item.semi,
+          v: vel0 + (rng() - 0.5) * mood.velSpan
+        });
+      }
+    } else if (styleKey === 'cinematic') {
+      notes.push({ t: 0.0, d: 1.5, n: rootMidi + 0,  v: vel0 });
+      notes.push({ t: 1.5, d: 1.5, n: rootMidi + 7,  v: vel0 + 0.05 });
+      notes.push({ t: 3.0, d: 1.0, n: rootMidi + 8,  v: vel0 + 0.08 });
+    } else {
+      for (let i = 0; i < 4; i++) {
+        notes.push({ t: i, d: 0.8, n: rootMidi + pick(rng, scale), v: vel0 });
+      }
+    }
+
+    return notes;
+  }
+
+  function mutateBarForIdeaB(ideaA, styleKey, rootMidi, scale, spec, mood, rng) {
+    const cloned = ideaA.map((ev) => ({ ...ev }));
+
+    if (styleKey === 'cinematic') {
+      return [
+        { t: 0.0, d: 1.5, n: rootMidi + 3,  v: mood.velBase + 0.04 },
+        { t: 1.5, d: 1.5, n: rootMidi + 11, v: mood.velBase + 0.09 },
+        { t: 3.0, d: 1.0, n: rootMidi + 12, v: mood.velBase + 0.12 }
+      ];
+    }
+
+    if (styleKey === 'pop') {
+      return cloned.map((ev, idx) => {
+        let n = ev.n;
+        if (Math.abs(ev.t - 0) < 0.01) n = rootMidi + 7;
+        else if (Math.abs(ev.t - 2.0) < 0.01) n = rootMidi + 4;
+        else if (idx >= cloned.length - 2) n = rootMidi + (idx === cloned.length - 1 ? 9 : 7);
+        return { ...ev, n };
+      });
+    }
+
+    if (styleKey === 'rock') {
+      return cloned.map((ev, idx) => {
+        if (idx >= 5) {
+          const tail = [10, 7, 6][idx - 5] || 7;
+          return { ...ev, n: rootMidi + tail };
+        }
+        return ev;
+      });
+    }
+
+    return cloned.map((ev, idx) => {
+      if (idx >= Math.floor(cloned.length / 2)) {
+        const delta = (idx % 2 === 0) ? 2 : -2;
+        return { ...ev, n: ev.n + delta };
+      }
+      return ev;
+    });
+  }
+
+  function buildEndingBar4(ideaA, styleKey, rootMidi, scale, spec, mood, rng) {
+    const vel0 = mood.velBase;
+
+    if (styleKey === 'edm') {
+      const notes = [];
+      const ladder = [0, 2, 3, 5, 7, 8, 10, 12, 12, 14, 15, 17, 19, 20];
+      for (let i = 0; i < 14; i++) {
+        notes.push({
+          t: i * 0.25,
+          d: 0.20,
+          n: rootMidi + ladder[i],
+          v: Math.min(1, 0.55 + i * 0.032)
+        });
+      }
+      notes.push({
+        t: 3.5,
+        d: 0.5,
+        n: rootMidi,
+        v: 0.98
+      });
+      return notes;
+    }
+
+    if (styleKey === 'cinematic') {
+      return [
+        { t: 0.0, d: 1.0, n: rootMidi + 8,  v: vel0 + 0.06 },
+        { t: 1.0, d: 1.0, n: rootMidi + 11, v: vel0 + 0.10 },
+        { t: 2.0, d: 2.0, n: rootMidi,      v: Math.min(1, vel0 + 0.12) }
+      ];
+    }
+
+    if (styleKey === 'trap') {
+      const trip = 1 / 6;
+      return [
+        { t: 0.0, d: 1.0, n: rootMidi + 8, v: vel0 },
+        { t: 1.0, d: trip * 0.9, n: rootMidi + 7, v: vel0 - 0.05 },
+        { t: 1.0 + trip, d: trip * 0.9, n: rootMidi + 3, v: vel0 },
+        { t: 1.0 + 2 * trip, d: trip * 0.9, n: rootMidi + 1, v: vel0 + 0.05 },
+        { t: 2.0, d: 2.0, n: rootMidi, v: Math.min(1, vel0 + 0.1) }
+      ];
+    }
+
+    if (styleKey === 'pop') {
+      return [
+        { t: 0.0,  d: 0.75, n: rootMidi + 4, v: vel0 + 0.05 },
+        { t: 0.75, d: 0.75, n: rootMidi + 2, v: vel0 },
+        { t: 1.5,  d: 0.5,  n: rootMidi + 7, v: vel0 + 0.02 },
+        { t: 2.0,  d: 2.0,  n: rootMidi,     v: Math.min(1, vel0 + 0.1) }
+      ];
+    }
+
+    const half = ideaA.filter(ev => ev.t < 2.0).map(ev => ({ ...ev }));
+    half.push({
+      t: 2.0,
+      d: 0.5,
+      n: rootMidi + (scale.includes(7) ? 7 : scale[scale.length - 1]),
+      v: vel0
+    });
+    half.push({
+      t: 2.5,
+      d: 1.5,
+      n: rootMidi,
+      v: Math.min(1, vel0 + 0.08)
+    });
+    return half;
+  }
+
+  function make(opts = {}) {
+    const styleKey = String(opts.style || 'pop').toLowerCase();
+    const moodKey = String(opts.mood || 'happy').toLowerCase();
+    const keyName = String(opts.key || 'C');
+    const bars = Math.max(1, Math.min(32, Number(opts.bars) || 4));
+    const seed = opts.seed !== undefined ? opts.seed : 'gwarp-seed-1';
+
+    const spec = STYLE_SPECS[styleKey] || STYLE_SPECS.pop;
+    const mood = MOOD_PROFILES[moodKey] || MOOD_PROFILES.happy;
+    const keyOffset = KEY_OFFSETS[keyName] != null ? KEY_OFFSETS[keyName] : 0;
+
+    let rootMidi = spec.baseMidi + keyOffset + mood.octaveShift;
+    while (rootMidi < 42) rootMidi += 12;
+    while (rootMidi > 74) rootMidi -= 12;
+    const scale = resolveScaleIntervals(styleKey, moodKey);
+    const rng = makeRng(`${styleKey}|${moodKey}|${keyName}|${seed}`);
+
+    const bar1IdeaA = buildIdeaABar(styleKey, moodKey, rootMidi, scale, spec, mood, rng);
+    const bar2IdeaB = mutateBarForIdeaB(bar1IdeaA, styleKey, rootMidi, scale, spec, mood, rng);
+    const bar3IdeaA = bar1IdeaA.map(ev => ({ ...ev }));
+    const bar4End   = buildEndingBar4(bar1IdeaA, styleKey, rootMidi, scale, spec, mood, rng);
+
+    const fourBarTemplates = [bar1IdeaA, bar2IdeaB, bar3IdeaA, bar4End];
+    const out = [];
+
+    for (let b = 0; b < bars; b++) {
+      const tpl = (b === bars - 1 && bars > 1)
+        ? bar4End
+        : fourBarTemplates[b % 4];
+      const barOffset = b * 4;
+      for (let i = 0; i < tpl.length; i++) {
+        const ev = tpl[i];
+        out.push({
+          t: roundBeat(barOffset + ev.t),
+          d: roundBeat(Math.max(0.08, ev.d)),
+          n: clampMidi(ev.n),
+          v: clampVel(ev.v)
+        });
+      }
+    }
+
+    if (out.length > 0) {
+      out[out.length - 1].n = rootMidi;
+    }
+
+    return out;
+  }
+
+  function getBackingForStyle(opts = {}) {
+    const styleKey = String(opts.style || 'pop').toLowerCase();
+    const moodKey = String(opts.mood || 'happy').toLowerCase();
+    const keyName = String(opts.key || 'C');
+    const bars = Math.max(1, Math.min(32, Number(opts.bars) || 4));
+    const spec = STYLE_SPECS[styleKey] || STYLE_SPECS.pop;
+    const keyOffset = KEY_OFFSETS[keyName] != null ? KEY_OFFSETS[keyName] : 0;
+    const baseRoot = 48 + keyOffset + (moodKey === 'dark' ? -12 : 0);
+
+    const chords = [];
+    for (let b = 0; b < bars; b++) {
+      const tones = spec.chords[b % spec.chords.length];
+      chords.push({
+        t: b * 4,
+        d: 4,
+        notes: tones.map(semi => baseRoot + semi)
+      });
+    }
+    return {
+      bpm: Math.round(spec.bpm * (moodKey === 'energetic' ? 1.08 : moodKey === 'chill' || moodKey === 'sad' ? 0.92 : 1)),
+      swing: spec.swing,
+      rootMidi: baseRoot + 12,
+      description: spec.desc,
+      chords
+    };
+  }
+
+  const API = {
+    STYLES: Object.keys(STYLE_SPECS),
+    MOODS: Object.keys(MOOD_PROFILES),
+    KEYS: ['C', 'D', 'Eb', 'E', 'F', 'G', 'A', 'Bb'],
+    STYLE_SPECS,
+    MOOD_PROFILES,
+    make,
+    getBackingForStyle
+  };
+
+  if (typeof window !== 'undefined') window.GW_MELODY = API;
+  if (typeof module !== 'undefined' && module.exports) module.exports = API;
+})();
+
+</script>
+<script id="gw-v4900-costume-tabs">
+(() => {
+  'use strict';
+  /* G-Warp v15.49.0 - Costume tabs (written by Claude; owner, 2026-10-19: "just like Sounds has different tabs,
+     on Costumes we are going to add tabs, right on top of the costume section").
+       Costumes (default) | Tiles | Animation
+     Owner's rules:
+     - Tiles is only available for a blank sprite (no costumes, or only empty costumes).
+     - Tiles tab -> "Turn this sprite into a tile map". After that Costumes and Animation are unavailable:
+       the sprite only has Tiles.
+     - It can be turned back into a normal sprite at any time - unless a costume was added to it.
+     - Animation is now a real tab (before it was a button that looked like a label); it opens the Animation
+       editor (bones + frames).
+     Note: the tile map data itself is still the project's one tile map (Engine.tilemap); a map per sprite is
+     the next step (team/FUTURE-IDEAS.txt). The sprite remembers its mode in s.gwTileSprite. */
+  const by = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+  const spr = () => (window.Engine && Engine.sprites && Engine.sprites[Engine.activeSpriteIndex]) || null;
+  const toast = m => { try { (window.showToast || window.gwToast || (x => console.log(x)))(m); } catch {} };
+  const BLANK = new WeakMap();
+  function isBlankCostume(c) {
+    if (!c) return true;
+    if (BLANK.has(c) && BLANK.get(c).k === (c.svg || '').length + ':' + (c.canvas?.width || 0)) return BLANK.get(c).v;
+    let v = false;
+    if (c.dataFormat === 'svg' || c.svg) {
+      const s = String(c.svg || '').replace(/<defs[\s\S]*?<\/defs>/gi, '');
+      v = !/<(path|rect|circle|ellipse|line|polyline|polygon|text|image|use)\b/i.test(s);
+    } else if (c.canvas && c.canvas.width && c.canvas.height) {
+      try { const t = document.createElement('canvas'); t.width = t.height = 32; const x = t.getContext('2d'); x.drawImage(c.canvas, 0, 0, 32, 32);
+        const d = x.getImageData(0, 0, 32, 32).data; v = true; for (let i = 3; i < d.length; i += 4) if (d[i]) { v = false; break; } } catch { v = false; }
+    } else v = true;
+    BLANK.set(c, { k: (c.svg || '').length + ':' + (c.canvas?.width || 0), v }); return v;
+  }
+  const blank = s => !s || !s.costumes || !s.costumes.length || s.costumes.every(isBlankCostume);
+  const isTile = s => !!(s && s.gwTileSprite);
+  let tab = 'costumes';
+
+  function css() {
+    if (by('gwCosTabsCss')) return;
+    const st = document.createElement('style'); st.id = 'gwCosTabsCss';
+    st.textContent = `
+#gwCostumeStudio{height:calc(100% - 50px)!important}
+#gwCosTabs{display:flex;align-items:center;gap:4px;padding:4px;margin-bottom:8px;border:1px solid var(--gw7-line,#262a45);border-radius:12px;background:var(--gw7-ink0,#0b0b14);flex:0 0 auto}
+#gwCosTabs .gw-costab{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 14px;border:1px solid transparent;border-radius:9px;background:transparent;color:#94a3b8;font-size:12px;font-weight:800;cursor:pointer}
+#gwCosTabs .gw-costab:hover:not(:disabled){background:#1b1d33;color:#fff}
+#gwCosTabs .gw-costab.active{background:var(--gw7-looks,#8b5cf6);color:#fff;border-color:rgba(255,255,255,.12);box-shadow:0 2px 10px rgba(139,92,246,.35)}
+#gwCosTabs .gw-costab:disabled{opacity:.38;cursor:not-allowed}
+#gwCosTabs .gw-costab:focus-visible{outline:2px solid #4ade80;outline-offset:2px}
+#gwCosTabs .gw-costab-note{margin-left:auto;padding-right:8px;font-size:11px;color:#64748b}
+#gw18AnimBtn{display:none!important}
+#gwTilesPane{flex:1 1 auto;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px;border:1px solid var(--gw7-line,#262a45);border-radius:14px;background:#0d0f1c;min-height:320px}
+#gwTilesPane[hidden]{display:none}
+#gwTilesPane .gw-tiles-card{max-width:560px;width:100%;padding:22px;border:1px solid #2b2f55;border-radius:14px;background:linear-gradient(180deg,#14162a,#0f1122)}
+#gwTilesPane h3{margin:0 0 8px;font-size:17px;font-weight:900;color:#fff;display:flex;gap:9px;align-items:center}
+#gwTilesPane h3 i{color:#4ade80}
+#gwTilesPane p{margin:6px 0;color:#cbd5e1;font-size:13px;line-height:1.5}
+#gwTilesPane .gw-tiles-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin:14px 0}
+#gwTilesPane .gw-tiles-grid span{aspect-ratio:1;border-radius:3px;background:#1b1d33}
+#gwTilesPane .gw-tiles-grid span.g{background:#4ade80}#gwTilesPane .gw-tiles-grid span.v{background:#8b5cf6}
+#gwTilesPane .gw-tiles-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+#gwTilesPane .gw-tiles-btn{height:36px;padding:0 16px;border-radius:9px;border:1px solid #34344a;background:#1b1d33;color:#e5e7eb;font-weight:800;font-size:13px;cursor:pointer}
+#gwTilesPane .gw-tiles-btn.primary{background:#6d4bd3;border-color:#8b5cf6;color:#fff}
+#gwTilesPane .gw-tiles-btn:hover:not(:disabled){filter:brightness(1.15)}
+#gwTilesPane .gw-tiles-btn:disabled{opacity:.4;cursor:not-allowed}
+#gwTilesPane .gw-tiles-note{font-size:12px;color:#94a3b8}
+#gwTilesPane .gw-tiles-warn{font-size:12px;color:#fde68a}`;
+    document.head.appendChild(st);
+  }
+
+  function build() {
+    const studio = by('gwCostumeStudio'); if (!studio || !studio.parentElement) return false;
+    if (by('gwCosTabs')) return true;
+    css();
+    const bar = document.createElement('div'); bar.id = 'gwCosTabs'; bar.setAttribute('role', 'tablist'); bar.setAttribute('aria-label', 'Costume tools');
+    bar.innerHTML = [['costumes', 'fa-shirt', 'Costumes'], ['tiles', 'fa-border-all', 'Tiles'], ['animation', 'fa-bone', 'Animation']]
+      .map(([k, i, t]) => `<button type="button" role="tab" class="gw-costab" data-tab="${k}" id="gwCosTab-${k}" aria-selected="false"><i class="fa-solid ${i}" aria-hidden="true"></i>${t}</button>`).join('')
+      + '<span class="gw-costab-note" id="gwCosTabNote"></span>';
+    studio.parentElement.insertBefore(bar, studio);
+    bar.addEventListener('click', e => { const b = e.target.closest('.gw-costab'); if (b && !b.disabled) choose(b.dataset.tab); });
+    const tp = document.createElement('div'); tp.id = 'gwTilesPane'; tp.hidden = true; tp.setAttribute('role', 'tabpanel');
+    studio.parentElement.insertBefore(tp, studio.nextSibling);
+    tp.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b || b.disabled) return; const s = spr(); if (!s) return;
+      if (b.id === 'gwTilesMake') makeTile(s);
+      else if (b.id === 'gwTilesUndo') unTile(s);
+      else if (b.id === 'gwTilesOpen') { try { window.openTilemap?.(); } catch (err) { console.warn(err); } }
+    });
+    refresh(true); return true;
+  }
+
+  function makeTile(s) {
+    if (!blank(s)) { toast('Tiles only works on an empty sprite (no costumes).'); return; }
+    s.gwTileSprite = { on: true, made: new Date().toISOString() };
+    try { window.GW12?.ensureTilemap?.(); } catch {}
+    tab = 'tiles'; refresh(true); toast(`“${s.name}” is now a tile map.`);
+  }
+  function unTile(s) {
+    if (!blank(s)) { toast('This sprite has a costume now, so it can’t be turned back.'); return; }
+    delete s.gwTileSprite; tab = 'costumes'; refresh(true); toast(`“${s.name}” is a normal sprite again.`);
+  }
+
+  function choose(k) {
+    if (k === 'animation') { try { window.GW_ANIM?.open?.(); } catch (err) { console.warn(err); } return; }
+    tab = k; refresh(true);
+  }
+
+  function renderTiles(s) {
+    const tp = by('gwTilesPane'); if (!tp || !s) return;
+    const grid = '<div class="gw-tiles-grid" aria-hidden="true">' + Array.from({ length: 36 }, (_, i) => `<span class="${i >= 24 ? 'g' : (i === 17 || i === 18 ? 'v' : '')}"></span>`).join('') + '</div>';
+    if (isTile(s)) {
+      const locked = !blank(s);
+      tp.innerHTML = `<div class="gw-tiles-card"><h3><i class="fa-solid fa-border-all" aria-hidden="true"></i>“${esc(s.name)}” is a tile map</h3>
+        <p>This sprite holds tiles instead of costumes. Paint your level with tiles: floors, walls, coins.</p>${grid}
+        <div class="gw-tiles-row"><button type="button" class="gw-tiles-btn primary" id="gwTilesOpen"><i class="fa-solid fa-pen" aria-hidden="true"></i> Open the tile map editor</button>
+        <button type="button" class="gw-tiles-btn" id="gwTilesUndo" ${locked ? 'disabled' : ''}>Turn back into a normal sprite</button></div>
+        ${locked ? '<p class="gw-tiles-warn">This sprite has a costume now, so it can’t be turned back.</p>' : '<p class="gw-tiles-note">You can turn it back into a normal sprite as long as it has no costumes.</p>'}</div>`;
+    } else {
+      tp.innerHTML = `<div class="gw-tiles-card"><h3><i class="fa-solid fa-border-all" aria-hidden="true"></i>Tiles</h3>
+        <p>Build a level out of small square tiles instead of drawing costumes.</p>${grid}
+        <div class="gw-tiles-row"><button type="button" class="gw-tiles-btn primary" id="gwTilesMake">Turn this sprite into a tile map</button></div>
+        <p class="gw-tiles-note">After this, Costumes and Animation are turned off for this sprite. You can turn it back as long as it has no costumes.</p></div>`;
+    }
+  }
+
+  let lastSig = '';
+  function refresh(force) {
+    const bar = by('gwCosTabs'), studio = by('gwCostumeStudio'), tp = by('gwTilesPane'), s = spr(); if (!bar || !studio || !tp) return;
+    const tile = isTile(s), canT = !!s && (tile || blank(s)), hasAnim = !!window.GW_ANIM;
+    const sig = [Engine.activeSpriteIndex, s?.costumes?.length, tile, canT, tab].join('|');
+    if (!force && sig === lastSig) return; lastSig = sig;
+    if (tile && tab === 'costumes') tab = 'tiles';
+    if (!tile && tab === 'tiles' && !canT) tab = 'costumes';
+    const set = (k, dis, title) => { const b = by('gwCosTab-' + k); if (!b) return; b.disabled = !!dis; b.title = title; const on = tab === k; b.classList.toggle('active', on); b.setAttribute('aria-selected', String(on)); };
+    set('costumes', tile, tile ? 'This sprite is a tile map, so it has no costumes' : 'Draw and edit costumes');
+    set('tiles', !canT, canT ? 'Tiles: turn this sprite into a tile map' : 'Tiles: only for an empty sprite (no costumes)');
+    set('animation', tile || !hasAnim, tile ? 'This sprite is a tile map' : 'Animation: bones and frames for a vector costume');
+    by('gwCosTabNote').textContent = tile ? 'Tile map sprite' : (canT ? '' : 'Tiles needs an empty sprite');
+    studio.style.display = tab === 'costumes' ? '' : 'none';
+    tp.hidden = tab !== 'tiles';
+    if (tab === 'tiles') renderTiles(s);
+  }
+
+  (function boot(n = 0) { if (!build() && n < 240) setTimeout(() => boot(n + 1), 500); })();
+  new MutationObserver(() => { if (!by('gwCosTabs')) build(); }).observe(document.body, { childList: true, subtree: true });
+  setInterval(() => { const p = by('gwCosTabs'); if (p && p.offsetParent) refresh(false); }, 400);
+
+  window.GW_COSTABS = { choose, refresh: () => refresh(true), isBlankCostume, blank, makeTile, unTile, get tab() { return tab; } };
+})();
 </script>
 <script id="gw-v15161-fullscreen">
 (() => {
@@ -20690,7 +21345,10 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     ['Underwater', S(`<defs><linearGradient id="u" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0891b2"/><stop offset="1" stop-color="#083344"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#u)"/><path d="M0 330q60-30 120 0t120 0 120 0 120 0V360H0z" fill="#fde68a"/><g fill="none" stroke="#22c55e" stroke-width="6" stroke-linecap="round"><path d="M60 340q-15-40 0-80t0-70"/><path d="M420 345q15-40 0-80"/></g><g fill="#a5f3fc" opacity=".6"><circle cx="200" cy="200" r="5"/><circle cx="210" cy="170" r="3"/><circle cx="330" cy="120" r="4"/></g>`)],
     ['Desert', S(`<rect width="${W}" height="${H}" fill="#fde68a"/><rect width="${W}" height="200" fill="#fdba74"/><circle cx="240" cy="190" r="50" fill="#fb923c"/><path d="M0 230q120-40 240 0t240 0V360H0z" fill="#f59e0b"/><g fill="#15803d"><rect x="90" y="240" width="14" height="60" rx="7"/><rect x="74" y="256" width="10" height="26" rx="5"/><rect x="110" y="250" width="10" height="24" rx="5"/></g>`)],
     ['Sunset', S(`<defs><linearGradient id="t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset=".55" stop-color="#f97316"/><stop offset="1" stop-color="#fde047"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#t)"/><circle cx="240" cy="250" r="60" fill="#fef08a" opacity=".9"/><rect y="270" width="${W}" height="90" fill="#1e1b4b"/><g fill="#fde047" opacity=".5"><rect x="190" y="285" width="100" height="4"/><rect x="210" y="300" width="60" height="4"/></g>`)],
-    ['Grid', S(`<rect width="${W}" height="${H}" fill="#f8fafc"/><g stroke="#cbd5e1" stroke-width="1">${Array.from({ length: 13 }, (_, i) => `<line x1="${i * 40}" y1="0" x2="${i * 40}" y2="${H}"/>`).join('')}${Array.from({ length: 10 }, (_, i) => `<line x1="0" y1="${i * 40}" x2="${W}" y2="${i * 40}"/>`).join('')}</g><g stroke="#64748b" stroke-width="2"><line x1="240" y1="0" x2="240" y2="${H}"/><line x1="0" y1="180" x2="${W}" y2="180"/></g>`)]
+    ['Grid', S(`<rect width="${W}" height="${H}" fill="#f8fafc"/><g stroke="#cbd5e1" stroke-width="1">${Array.from({ length: 13 }, (_, i) => `<line x1="${i * 40}" y1="0" x2="${i * 40}" y2="${H}"/>`).join('')}${Array.from({ length: 10 }, (_, i) => `<line x1="0" y1="${i * 40}" x2="${W}" y2="${i * 40}"/>`).join('')}</g><g stroke="#64748b" stroke-width="2"><line x1="240" y1="0" x2="240" y2="${H}"/><line x1="0" y1="180" x2="${W}" y2="180"/></g>`)],
+    ["Circuit Night", "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 480 360\" width=\"480\" height=\"360\"><defs><linearGradient id=\"cbSky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#07070d\"/><stop offset=\"0.6\" stop-color=\"#0b0b14\"/><stop offset=\"1\" stop-color=\"#141425\"/></linearGradient><radialGradient id=\"cbCoreGlow\" cx=\"0.5\" cy=\"0.45\" r=\"0.45\"><stop offset=\"0\" stop-color=\"#8b5cf6\" stop-opacity=\"0.38\"/><stop offset=\"0.6\" stop-color=\"#4ade80\" stop-opacity=\"0.12\"/><stop offset=\"1\" stop-color=\"#0b0b14\" stop-opacity=\"0\"/></radialGradient><linearGradient id=\"cbChip\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#1b1b31\"/><stop offset=\"1\" stop-color=\"#0b0b14\"/></linearGradient></defs><!-- Night PCB Background --><rect width=\"480\" height=\"360\" fill=\"url(#cbSky)\"/><rect width=\"480\" height=\"360\" fill=\"url(#cbCoreGlow)\"/><!-- Subtle Background Grid --><g stroke=\"#1b1b31\" stroke-width=\"1\"><path d=\"M0 45H480M0 90H480M0 135H480M0 180H480M0 225H480M0 270H480M0 315H480\"/><path d=\"M60 0V360M120 0V360M180 0V360M240 0V360M300 0V360M360 0V360M420 0V360\"/></g><!-- Distant Night Data Stars --><g fill=\"#ececf6\" opacity=\"0.55\"><circle cx=\"42\" cy=\"28\" r=\"1.5\"/><circle cx=\"105\" cy=\"18\" r=\"1.2\"/><circle cx=\"168\" cy=\"36\" r=\"1.8\"/><circle cx=\"312\" cy=\"22\" r=\"1.4\"/><circle cx=\"395\" cy=\"34\" r=\"1.6\"/><circle cx=\"448\" cy=\"16\" r=\"1.2\"/></g><!-- Violet Secondary Circuit Traces --><g fill=\"none\" stroke=\"#8b5cf6\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.8\"><path d=\"M0 72 H68 L96 100 H156\"/><path d=\"M480 68 H402 L374 96 H324\"/><path d=\"M180 0 V44 L212 76 V112\"/><path d=\"M300 0 V44 L268 76 V112\"/><path d=\"M0 250 H84 L120 214 H176\"/><path d=\"M480 246 H392 L356 210 H304\"/><path d=\"M140 360 V302 L182 260 H216\"/><path d=\"M340 360 V302 L298 260 H264\"/></g><!-- Glowing Electric Green Primary Traces --><g fill=\"none\" stroke=\"#4ade80\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M0 144 H92 L124 176 H184\"/><path d=\"M480 144 H388 L356 176 H296\"/><path d=\"M0 198 H70 L102 166 H150\"/><path d=\"M480 198 H410 L378 166 H330\"/><path d=\"M240 0 V110\"/><path d=\"M240 242 V360\"/><path d=\"M64 360 V288 L112 240 H192\"/><path d=\"M416 360 V288 L368 240 H288\"/></g><!-- Animated-look Dashed Energy Pulses --><g fill=\"none\" stroke=\"#facc15\" stroke-width=\"2\" stroke-dasharray=\"6 8\" stroke-linecap=\"round\"><path d=\"M16 144 H92 L124 176 H184\"/><path d=\"M464 144 H388 L356 176 H296\"/><path d=\"M240 20 V108\"/><path d=\"M240 246 V344\"/></g><!-- Peripheral IC Microchips --><g fill=\"#141425\" stroke=\"#2a2a48\" stroke-width=\"2\"><rect x=\"34\" y=\"92\" width=\"52\" height=\"34\" rx=\"5\"/><rect x=\"394\" y=\"92\" width=\"52\" height=\"34\" rx=\"5\"/><rect x=\"42\" y=\"264\" width=\"60\" height=\"40\" rx=\"6\"/><rect x=\"378\" y=\"264\" width=\"60\" height=\"40\" rx=\"6\"/></g><g stroke=\"#8b5cf6\" stroke-width=\"2\"><path d=\"M44 86V92M60 86V92M76 86V92M44 126V132M60 126V132M76 126V132\"/><path d=\"M404 86V92M420 86V92M436 86V92M404 126V132M420 126V132M436 126V132\"/></g><!-- Central G-Warp Quantum Processor Socket --><g><!-- Gold/Green Contact Pins --><g stroke=\"#4ade80\" stroke-width=\"3\" stroke-linecap=\"round\"><path d=\"M196 102V116M218 102V116M240 102V116M262 102V116M284 102V116\"/><path d=\"M196 236V250M218 236V250M240 236V250M262 236V250M284 236V250\"/><path d=\"M170 132H184M170 154H184M170 176H184M170 198H184M170 220H184\"/><path d=\"M296 132H310M296 154H310M296 176H310M296 198H310M296 220H310\"/></g><rect x=\"182\" y=\"114\" width=\"116\" height=\"124\" rx=\"16\" fill=\"url(#cbChip)\" stroke=\"#8b5cf6\" stroke-width=\"3.5\"/><rect x=\"194\" y=\"126\" width=\"92\" height=\"100\" rx=\"10\" fill=\"#0b0b14\" stroke=\"#4ade80\" stroke-width=\"2\"/><!-- Central Lightning Core --><polygon points=\"246,140 220,178 242,178 232,212 262,172 240,172\" fill=\"#4ade80\" stroke=\"#ececf6\" stroke-width=\"1.5\" stroke-linejoin=\"round\"/></g><!-- Solder Pads / Via Nodes --><g fill=\"#0b0b14\" stroke=\"#4ade80\" stroke-width=\"2.5\"><circle cx=\"92\" cy=\"144\" r=\"4.5\"/><circle cx=\"388\" cy=\"144\" r=\"4.5\"/><circle cx=\"150\" cy=\"166\" r=\"4.5\"/><circle cx=\"330\" cy=\"166\" r=\"4.5\"/><circle cx=\"112\" cy=\"240\" r=\"4.5\"/><circle cx=\"368\" cy=\"240\" r=\"4.5\"/></g><g fill=\"#facc15\"><circle cx=\"156\" cy=\"100\" r=\"3.5\"/><circle cx=\"324\" cy=\"96\" r=\"3.5\"/><circle cx=\"176\" cy=\"214\" r=\"3.5\"/><circle cx=\"304\" cy=\"210\" r=\"3.5\"/><circle cx=\"216\" cy=\"260\" r=\"3.5\"/><circle cx=\"264\" cy=\"260\" r=\"3.5\"/></g></svg>"], // v15.49.0: drawn by Gemini 3 Argon (gemini/backdrops/circuit-board-night.svg)
+    ["City Rooftop", "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 480 360\" width=\"480\" height=\"360\"><defs><linearGradient id=\"ecSky\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#07070f\"/><stop offset=\"0.55\" stop-color=\"#0b0b14\"/><stop offset=\"1\" stop-color=\"#1b1b31\"/></linearGradient><radialGradient id=\"ecMoon\" cx=\"0.78\" cy=\"0.22\" r=\"0.22\"><stop offset=\"0\" stop-color=\"#a855f7\" stop-opacity=\"0.55\"/><stop offset=\"0.5\" stop-color=\"#8b5cf6\" stop-opacity=\"0.2\"/><stop offset=\"1\" stop-color=\"#0b0b14\" stop-opacity=\"0\"/></radialGradient><linearGradient id=\"ecRoof\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#141425\"/><stop offset=\"1\" stop-color=\"#080810\"/></linearGradient></defs><!-- Night Sky & Violet Halo --><rect width=\"480\" height=\"360\" fill=\"url(#ecSky)\"/><rect width=\"480\" height=\"360\" fill=\"url(#ecMoon)\"/><!-- Stars --><g fill=\"#ececf6\" opacity=\"0.75\"><circle cx=\"38\" cy=\"30\" r=\"1.4\"/><circle cx=\"88\" cy=\"54\" r=\"1.1\"/><circle cx=\"144\" cy=\"24\" r=\"1.6\"/><circle cx=\"206\" cy=\"46\" r=\"1.2\"/><circle cx=\"268\" cy=\"28\" r=\"1.5\"/><circle cx=\"436\" cy=\"40\" r=\"1.4\"/></g><!-- Neon Cyber Moon --><circle cx=\"374\" cy=\"78\" r=\"34\" fill=\"#141425\" stroke=\"#8b5cf6\" stroke-width=\"3\"/><path d=\"M344 70 H404 M348 84 H400\" stroke=\"#4ade80\" stroke-width=\"2\" opacity=\"0.65\"/><!-- Sky-high Lightning Bolt --><polyline points=\"122,0 98,52 126,56 92,118\" fill=\"none\" stroke=\"#4ade80\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" opacity=\"0.85\"/><!-- Distant City Skyline Silhouette --><g fill=\"#101020\" stroke=\"#2a2a48\" stroke-width=\"1.5\"><rect x=\"12\" y=\"132\" width=\"54\" height=\"140\"/><rect x=\"62\" y=\"96\" width=\"64\" height=\"176\"/><rect x=\"122\" y=\"142\" width=\"48\" height=\"130\"/><rect x=\"166\" y=\"78\" width=\"74\" height=\"194\"/><rect x=\"236\" y=\"118\" width=\"58\" height=\"154\"/><rect x=\"290\" y=\"90\" width=\"70\" height=\"182\"/><rect x=\"356\" y=\"128\" width=\"56\" height=\"144\"/><rect x=\"408\" y=\"104\" width=\"62\" height=\"168\"/></g><!-- Spire Antennas --><g stroke=\"#8b5cf6\" stroke-width=\"2.5\" stroke-linecap=\"round\"><line x1=\"94\" y1=\"64\" x2=\"94\" y2=\"96\"/><line x1=\"203\" y1=\"42\" x2=\"203\" y2=\"78\"/><line x1=\"325\" y1=\"56\" x2=\"325\" y2=\"90\"/></g><g fill=\"#4ade80\"><circle cx=\"94\" cy=\"62\" r=\"3.5\"/><circle cx=\"203\" cy=\"40\" r=\"4\"/><circle cx=\"325\" cy=\"54\" r=\"3.5\"/></g><!-- Glowing Building Windows --><g fill=\"#8b5cf6\" opacity=\"0.75\"><rect x=\"74\" y=\"110\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"92\" y=\"110\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"74\" y=\"126\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"104\" y=\"142\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"180\" y=\"94\" width=\"12\" height=\"6\" rx=\"1\"/><rect x=\"202\" y=\"94\" width=\"12\" height=\"6\" rx=\"1\"/><rect x=\"180\" y=\"112\" width=\"12\" height=\"6\" rx=\"1\"/><rect x=\"214\" y=\"130\" width=\"12\" height=\"6\" rx=\"1\"/><rect x=\"304\" y=\"106\" width=\"12\" height=\"6\" rx=\"1\"/><rect x=\"326\" y=\"122\" width=\"12\" height=\"6\" rx=\"1\"/></g><g fill=\"#4ade80\" opacity=\"0.85\"><rect x=\"26\" y=\"148\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"92\" y=\"158\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"180\" y=\"148\" width=\"12\" height=\"6\" rx=\"1\"/><rect x=\"252\" y=\"136\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"304\" y=\"140\" width=\"12\" height=\"6\" rx=\"1\"/><rect x=\"424\" y=\"122\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"442\" y=\"140\" width=\"10\" height=\"6\" rx=\"1\"/></g><g fill=\"#facc15\" opacity=\"0.85\"><rect x=\"136\" y=\"158\" width=\"10\" height=\"6\" rx=\"1\"/><rect x=\"202\" y=\"112\" width=\"12\" height=\"6\" rx=\"1\"/><rect x=\"372\" y=\"146\" width=\"10\" height=\"6\" rx=\"1\"/></g><!-- Overhead Power Cables Across Skyline --><g fill=\"none\" stroke=\"#4ade80\" stroke-width=\"2\" stroke-dasharray=\"5 4\"><path d=\"M0 190 Q120 218 240 186 T480 196\"/><path d=\"M0 212 Q150 236 310 206 T480 218\" stroke=\"#8b5cf6\"/></g><!-- Foreground Rooftop Deck (Stage Floor) --><polygon points=\"0,254 480,254 480,360 0,360\" fill=\"url(#ecRoof)\"/><line x1=\"0\" y1=\"254\" x2=\"480\" y2=\"254\" stroke=\"#8b5cf6\" stroke-width=\"3.5\"/><!-- Rooftop Safety Railing & Neon Transformer Boxes --><g stroke=\"#2a2a48\" stroke-width=\"3\"><line x1=\"0\" y1=\"230\" x2=\"480\" y2=\"230\"/><path d=\"M36 230V254 M96 230V254 M156 230V254 M216 230V254 M276 230V254 M336 230V254 M396 230V254 M456 230V254\"/></g><line x1=\"0\" y1=\"230\" x2=\"480\" y2=\"230\" stroke=\"#4ade80\" stroke-width=\"1.5\" opacity=\"0.8\"/><!-- Left & Right Rooftop Generator Units --><rect x=\"22\" y=\"212\" width=\"58\" height=\"42\" rx=\"5\" fill=\"#141425\" stroke=\"#8b5cf6\" stroke-width=\"2\"/><path d=\"M32 224 H70 M32 234 H70\" stroke=\"#4ade80\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><rect x=\"400\" y=\"206\" width=\"56\" height=\"48\" rx=\"5\" fill=\"#141425\" stroke=\"#8b5cf6\" stroke-width=\"2\"/><polygon points=\"430,214 418,230 429,230 424,244 438,226 427,226\" fill=\"#facc15\"/><!-- Perspective Rooftop Floor Grid --><g stroke=\"#2a2a48\" stroke-width=\"1.5\"><line x1=\"0\" y1=\"278\" x2=\"480\" y2=\"278\"/><line x1=\"0\" y1=\"308\" x2=\"480\" y2=\"308\"/><line x1=\"0\" y1=\"342\" x2=\"480\" y2=\"342\"/><line x1=\"240\" y1=\"254\" x2=\"240\" y2=\"360\" stroke=\"#4ade80\" opacity=\"0.5\"/><line x1=\"180\" y1=\"254\" x2=\"110\" y2=\"360\"/><line x1=\"300\" y1=\"254\" x2=\"370\" y2=\"360\"/><line x1=\"110\" y1=\"254\" x2=\"0\" y2=\"350\"/><line x1=\"370\" y1=\"254\" x2=\"480\" y2=\"350\"/></g></svg>"], // v15.49.0: drawn by Gemini 3 Argon (gemini/backdrops/electric-city-rooftop.svg)
+    ["Neon Arcade", "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 480 360\" width=\"480\" height=\"360\"><defs><linearGradient id=\"naBg\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#07070e\"/><stop offset=\"0.6\" stop-color=\"#0b0b14\"/><stop offset=\"1\" stop-color=\"#141425\"/></linearGradient><radialGradient id=\"naStageGlow\" cx=\"0.5\" cy=\"0.55\" r=\"0.5\"><stop offset=\"0\" stop-color=\"#a855f7\" stop-opacity=\"0.32\"/><stop offset=\"0.55\" stop-color=\"#4ade80\" stop-opacity=\"0.1\"/><stop offset=\"1\" stop-color=\"#0b0b14\" stop-opacity=\"0\"/></radialGradient></defs><!-- Arcade Room Dark Wall & Glow --><rect width=\"480\" height=\"360\" fill=\"url(#naBg)\"/><rect width=\"480\" height=\"360\" fill=\"url(#naStageGlow)\"/><!-- Top Neon Marquee Banner --><rect x=\"86\" y=\"16\" width=\"308\" height=\"42\" rx=\"12\" fill=\"#141425\" stroke=\"#8b5cf6\" stroke-width=\"3\"/><rect x=\"92\" y=\"22\" width=\"296\" height=\"30\" rx=\"8\" fill=\"#0b0b14\" stroke=\"#4ade80\" stroke-width=\"1.5\"/><!-- Geometric Synth Wave + Bolts inside Marquee --><polygon points=\"122,27 110,39 120,39 115,49 130,35 120,35\" fill=\"#facc15\"/><polyline points=\"148,37 166,29 184,45 202,29 220,45 238,29 256,45 274,29 292,45 310,29 328,37\" fill=\"none\" stroke=\"#4ade80\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><polygon points=\"360,27 348,39 358,39 353,49 368,35 358,35\" fill=\"#facc15\"/><!-- Left Arcade Cabinet --><g transform=\"translate(26,78)\"><polygon points=\"8,0 92,0 104,34 104,162 0,162 0,34\" fill=\"#141425\" stroke=\"#8b5cf6\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><rect x=\"12\" y=\"8\" width=\"76\" height=\"16\" rx=\"4\" fill=\"#a855f7\"/><rect x=\"14\" y=\"32\" width=\"76\" height=\"54\" rx=\"6\" fill=\"#0b0b14\" stroke=\"#4ade80\" stroke-width=\"2\"/><!-- Screen Pixel Space Wave --><path d=\"M24 68 L40 48 L56 62 L76 42\" fill=\"none\" stroke=\"#4ade80\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><circle cx=\"76\" cy=\"42\" r=\"3.5\" fill=\"#facc15\"/><!-- Joystick & Buttons --><polygon points=\"6,92 98,92 104,108 0,108\" fill=\"#1b1b31\" stroke=\"#8b5cf6\" stroke-width=\"1.5\"/><line x1=\"30\" y1=\"100\" x2=\"30\" y2=\"86\" stroke=\"#ececf6\" stroke-width=\"2.5\"/><circle cx=\"30\" cy=\"84\" r=\"4.5\" fill=\"#facc15\"/><circle cx=\"64\" cy=\"99\" r=\"3.5\" fill=\"#4ade80\"/><circle cx=\"78\" cy=\"97\" r=\"3.5\" fill=\"#a855f7\"/><!-- Coin Door --><rect x=\"30\" y=\"120\" width=\"44\" height=\"32\" rx=\"4\" fill=\"#0b0b14\" stroke=\"#2a2a48\" stroke-width=\"2\"/><rect x=\"40\" y=\"128\" width=\"8\" height=\"14\" rx=\"2\" fill=\"#facc15\"/><rect x=\"56\" y=\"128\" width=\"8\" height=\"14\" rx=\"2\" fill=\"#facc15\"/></g><!-- Center Dance / Synth Stage Portal --><g transform=\"translate(158,74)\"><rect x=\"0\" y=\"0\" width=\"164\" height=\"166\" rx=\"16\" fill=\"#141425\" stroke=\"#4ade80\" stroke-width=\"2.5\"/><rect x=\"12\" y=\"12\" width=\"140\" height=\"142\" rx=\"10\" fill=\"#0b0b14\" stroke=\"#8b5cf6\" stroke-width=\"2\"/><!-- Equalizer Bars --><g fill=\"#8b5cf6\"><rect x=\"26\" y=\"96\" width=\"14\" height=\"44\" rx=\"3\"/><rect x=\"46\" y=\"72\" width=\"14\" height=\"68\" rx=\"3\" fill=\"#4ade80\"/><rect x=\"66\" y=\"50\" width=\"14\" height=\"90\" rx=\"3\" fill=\"#a855f7\"/><rect x=\"86\" y=\"64\" width=\"14\" height=\"76\" rx=\"3\" fill=\"#4ade80\"/><rect x=\"106\" y=\"42\" width=\"14\" height=\"98\" rx=\"3\" fill=\"#facc15\"/><rect x=\"126\" y=\"82\" width=\"14\" height=\"58\" rx=\"3\"/></g><!-- Neon Star / Spark Emblem --><polygon points=\"82,18 87,30 100,30 90,38 94,50 82,42 70,50 74,38 64,30 77,30\" fill=\"#facc15\"/></g><!-- Right Arcade Cabinet --><g transform=\"translate(350,78)\"><polygon points=\"12,0 96,0 104,34 104,162 0,162 0,34\" fill=\"#141425\" stroke=\"#8b5cf6\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><rect x=\"16\" y=\"8\" width=\"76\" height=\"16\" rx=\"4\" fill=\"#4ade80\"/><rect x=\"14\" y=\"32\" width=\"76\" height=\"54\" rx=\"6\" fill=\"#0b0b14\" stroke=\"#a855f7\" stroke-width=\"2\"/><!-- Screen Vector Target --><circle cx=\"52\" cy=\"59\" r=\"16\" fill=\"none\" stroke=\"#8b5cf6\" stroke-width=\"2\"/><circle cx=\"52\" cy=\"59\" r=\"5\" fill=\"#4ade80\"/><!-- Joystick & Buttons --><polygon points=\"6,92 98,92 104,108 0,108\" fill=\"#1b1b31\" stroke=\"#8b5cf6\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"100\" x2=\"32\" y2=\"86\" stroke=\"#ececf6\" stroke-width=\"2.5\"/><circle cx=\"32\" cy=\"84\" r=\"4.5\" fill=\"#4ade80\"/><circle cx=\"66\" cy=\"99\" r=\"3.5\" fill=\"#facc15\"/><circle cx=\"80\" cy=\"97\" r=\"3.5\" fill=\"#8b5cf6\"/><!-- Coin Door --><rect x=\"30\" y=\"120\" width=\"44\" height=\"32\" rx=\"4\" fill=\"#0b0b14\" stroke=\"#2a2a48\" stroke-width=\"2\"/><rect x=\"40\" y=\"128\" width=\"8\" height=\"14\" rx=\"2\" fill=\"#facc15\"/><rect x=\"56\" y=\"128\" width=\"8\" height=\"14\" rx=\"2\" fill=\"#facc15\"/></g><!-- Neon Perspective Arcade Floor Grid --><polygon points=\"0,240 480,240 480,360 0,360\" fill=\"#0b0b14\"/><line x1=\"0\" y1=\"240\" x2=\"480\" y2=\"240\" stroke=\"#4ade80\" stroke-width=\"3\"/><!-- Perspective Horizontal & Radial Lines --><g stroke=\"#8b5cf6\" stroke-width=\"1.6\" opacity=\"0.75\"><line x1=\"0\" y1=\"258\" x2=\"480\" y2=\"258\"/><line x1=\"0\" y1=\"280\" x2=\"480\" y2=\"280\"/><line x1=\"0\" y1=\"306\" x2=\"480\" y2=\"306\"/><line x1=\"0\" y1=\"336\" x2=\"480\" y2=\"336\"/><line x1=\"240\" y1=\"240\" x2=\"240\" y2=\"360\" stroke=\"#4ade80\"/><line x1=\"200\" y1=\"240\" x2=\"120\" y2=\"360\"/><line x1=\"280\" y1=\"240\" x2=\"360\" y2=\"360\"/><line x1=\"160\" y1=\"240\" x2=\"0\" y2=\"360\"/><line x1=\"320\" y1=\"240\" x2=\"480\" y2=\"360\"/><line x1=\"110\" y1=\"240\" x2=\"0\" y2=\"310\"/><line x1=\"370\" y1=\"240\" x2=\"480\" y2=\"310\"/></g></svg>"], // v15.49.0: drawn by Gemini 3 Argon (gemini/backdrops/neon-arcade.svg)
   ];
   const loadImg = src => new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; });
   async function add(i) {

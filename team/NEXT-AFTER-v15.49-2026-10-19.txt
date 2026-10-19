@@ -1,0 +1,54 @@
+=====================================================================
+ NEXT JOBS AFTER BETA v15.49.0          from Claude (team leader), 2026-10-19, 1:45 a.m. owner time
+ New in the app tonight: Costume tabs (Costumes | Tiles | Animation), tile sprites v1, Glide button in the
+ Animation editor, animation costumes in folders ("walk//frame 1"), Gemini's melody engine in the Song maker
+ (+ Chiptune, Rock, Trap, Cinematic), Gemini's 3 backdrops in "Choose a Backdrop".
+ Owner's new ideas: team/FUTURE-IDEAS.txt, section "OWNER IDEAS - 2026-10-19" (OI-1 ... OI-5).
+ What was merged / what is ready: MERGE-QUEUE.txt, section "READY LIST - 2026-10-19 night".
+=====================================================================
+
+RULE FOR EVERYONE (new, after ChatGPT crashed tonight)
+- Do YOUR list only. Do not re-review the whole repo, do not rewrite ledgers/status files, do not check
+  every other AI's commit. Read at most the files your job names.
+- ONE commit per finished job. If a push looks stuck, look at GitHub first; never push the same thing twice.
+- Save often (every job), so a crash or a usage limit loses nothing.
+
+---------------------------------------------------------------------
+ GEMINI 3 (Argon)  - pictures + lab   (folder gemini/)
+---------------------------------------------------------------------
+N-G1 Ground line lab (owner idea OI-4) -> gemini/lab/ground-line.html + ground-line.js
+     A floor line you can drag up/down. A 2-bone leg (hip -> knee -> foot). Drag the hip down: the foot stays ON
+     the line and the knee bends (2-bone IK); nothing ever goes below the line; lift the hip above and the leg
+     straightens. Two legs at once. Pure functions: solveLeg(hip, thighLen, shinLen, footTarget, bendDir).
+N-G2 Costume folders look (OI-5) -> gemini/costume-folders/mockup.html
+     How the costume list shows "walk//frame 1 ... 8" as ONE folder that opens and closes (thumbnail of frame 1,
+     "walk - 8 frames", a play preview on hover). G-Warp's own look. One best version.
+N-G3 Pick the winners from your 36 icons -> gemini/icons-animation/PICKS.txt (one of A/B/C per icon and why),
+     plus 2 new icons: "Glide" and "Ground line".
+N-G4 Tiles tab art -> gemini/tiles/: a 16x16 starter tile set (grass, dirt, stone, brick, water, coin, spike,
+     ladder) as SVG, all in the same style, so a new tile sprite has nice tiles right away.
+N-G5 Melody engine v2 (gemini/lab/melody-engine.js): bass + drums per style (getBackingForStyle already
+     exists - make it match each style: trap hi-hat rolls, rock backbeat, jazz walking bass, edm four-on-floor).
+PRIORITY: N-G1 > N-G5 > N-G2 > N-G4 > N-G3
+
+---------------------------------------------------------------------
+ GROK  - Scratch detective + engine   (folder grok/)
+---------------------------------------------------------------------
+Your BIG LIST 2 (team/GROK-BIG-LIST-2-2026-10-19.txt) still stands - you had no time to start it. Changes:
+- K8 music data is now for the BACKING (bass, drums, chords): the melody engine is already merged.
+- NEW N-K1 (do right after K0): spec for the Ground line (OI-4): 2-bone IK math (law of cosines), knee
+  direction, what happens when the hip is too far from the floor (leg straight), the clamp rule.
+  -> grok/SPEC-ground-line.txt with 15 numbered test cases (hip position -> expected knee angle).
+- NEW N-K2: spec for TurboWarp's costume folders ("folder//name"): how names are split, sorting, what blocks
+  see (the full name!), what happens on rename / duplicate / .sb3 save. -> grok/SPEC-costume-folders.txt
+ORDER: K0 > N-K1 > N-K2 > K1 > K2 > K3 > K5 > (rest of BIG LIST 2)
+
+---------------------------------------------------------------------
+ CHATGPT  - website + docs   (folder docs/ and chatgpt/)  - SMALL, BOUNDED JOBS ONLY
+---------------------------------------------------------------------
+N-C1 docs/costumes.html + docs/animation.html: add the new parts of v15.49.0 - Costume tabs, the Tiles tab
+     rules (only an empty sprite; turn back unless it has a costume), the Glide button, folder names
+     ("walk//frame 1"). Read only: this file + team/FUTURE-IDEAS.txt OI-1..OI-5.
+N-C2 docs/sounds.html: the Song maker styles now each have their own melody; list the 11 styles.
+N-C3 docs/changelog.html + index.html "What's new": a v15.49.0 entry (same facts as above).
+N-C4 Stop there. Write one line in AI-TEAM.txt. Do NOT start a review ledger pass.

@@ -13,7 +13,7 @@ const [file, shots] = process.argv.slice(2);
   await p.evaluate(() => [...document.querySelectorAll('button')].find(x => /^\s*Costumes\s*$/.test(x.textContent))?.click()); await p.waitForTimeout(900);
 
   /* ---------- A. Animation tab, normal user ---------- */
-  ok(await p.evaluate(() => document.body.classList.contains('gw8-user-mode') && (document.getElementById('gw18AnimBtn')?.offsetWidth || 0) > 0), 'Animation button shows for everyone (not Developer mode)');
+  ok(await p.evaluate(() => document.body.classList.contains('gw8-user-mode') && (document.getElementById('gwCosTab-animation')?.offsetWidth || 0) > 0), 'Animation button shows for everyone (not Developer mode)');
   await p.evaluate(() => document.getElementById('gw18AnimBtn').click()); await p.waitForTimeout(1200);
   let r = await p.evaluate(() => ({ open: !!document.getElementById('gw18Anim'), mode: GW_ANIM.state.mode, anim: GW_ANIM.state.anim?.name, frames: GW_ANIM.state.anim?.frames.length, bones: GW_ANIM.state.anim?.bones.length, badge: document.querySelector('#gw18Anim .gw18-badge')?.textContent, list: (Engine.sprites[Engine.activeSpriteIndex].gwAnimations || []).map(a => a.name) }));
   ok(r.open && r.mode === 'animate' && r.anim === 'walk' && r.frames === 8 && r.bones === 5, 'G-Spark opens with ready-made bones + walk/wave ' + JSON.stringify(r));
@@ -27,19 +27,19 @@ const [file, shots] = process.argv.slice(2);
   ok(pl.playing && !st2, 'Space plays and stops the preview ' + JSON.stringify(pl));
   // Make costumes
   await p.evaluate(() => [...document.querySelectorAll('#gw18Anim button')].find(x => /Make costumes/.test(x.textContent)).click()); await p.waitForTimeout(1500);
-  let c = await S(); ok(c.names.filter(n => /^walk \d$/.test(n)).length === 8, 'Make costumes → walk 1…8: ' + c.names.join(','));
+  let c = await S(); ok(c.names.filter(n => /^walk\/\/frame \d$/.test(n)).length === 8, 'Make costumes → walk 1…8: ' + c.names.join(','));
   // change the animation (delete a frame), close → made costumes follow
   await p.evaluate(() => { GW_ANIM.state.frame = 7; [...document.querySelectorAll('#gw18Anim button')].find(x => x.querySelector('.fa-trash') && !/bone/i.test(x.textContent) && x.closest('.gw18-frame-tools'))?.click(); });
   await p.waitForTimeout(200); const fr = await p.evaluate(() => GW_ANIM.state.anim.frames.length);
   await p.evaluate(() => GW_ANIM.close()); await p.waitForTimeout(1800);
-  c = await S(); ok(fr === 7 && c.names.filter(n => /^walk \d$/.test(n)).length === 7 && !c.names.includes('walk 8'), 'after deleting a frame, closing updates the costumes (7 left): ' + c.names.filter(n => /^walk/.test(n)).join(','));
+  c = await S(); ok(fr === 7 && c.names.filter(n => /^walk\/\/frame \d$/.test(n)).length === 7 && !c.names.includes('walk//frame 8'), 'after deleting a frame, closing updates the costumes (7 left): ' + c.names.filter(n => /^walk/.test(n)).join(','));
   ok(await p.evaluate(() => { const s = Engine.sprites[Engine.activeSpriteIndex], a = s.gwAnimations[0]; return s.costumes.filter(x => x.gwAnimFrame?.anim === a.id).every(x => x.gwAnimFrame.rev === (a.rev || 0)); }), 'updated costumes carry the animation\'s version');
   // rename walk → run renames its costumes
   await p.evaluate(() => GW_ANIM.open()); await p.waitForTimeout(800);
   await p.evaluate(() => [...document.querySelectorAll('#gw18Anim button')].find(x => x.textContent.trim() === 'Rename').click()); await p.waitForTimeout(400);
   await p.evaluate(() => { const i = document.querySelector('#gw18Rename input'); i.value = 'run'; i.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })); }); await p.waitForTimeout(500);
   await p.evaluate(() => GW_ANIM.close()); await p.waitForTimeout(800);
-  c = await S(); ok(c.anims.includes('run/7') && c.names.filter(n => /^run \d$/.test(n)).length === 7 && !c.names.some(n => /^walk/.test(n)), 'rename walk → run renames its costumes: ' + c.names.join(','));
+  c = await S(); ok(c.anims.includes('run/7') && c.names.filter(n => /^run\/\/frame \d$/.test(n)).length === 7 && !c.names.some(n => /^walk/.test(n)), 'rename walk → run renames its costumes: ' + c.names.join(','));
   // blocks: palette for everyone; the player uses fresh frames
   await p.evaluate(() => [...document.querySelectorAll('button')].find(x => /^\s*Code\s*$/.test(x.textContent))?.click()); await p.waitForTimeout(900);
   r = await p.evaluate(() => { const sec = document.querySelector('[data-ext-section="gwarpAnimation"]'); return { shown: !!sec && sec.style.display !== 'none', opts: [...(sec?.querySelector('select')?.options || [])].map(o => o.value) }; });
@@ -47,7 +47,7 @@ const [file, shots] = process.argv.slice(2);
   r = await p.evaluate(async () => { const s = Engine.sprites[Engine.activeSpriteIndex], a = s.gwAnimations.find(x => x.name === 'run'); a.rev = (a.rev || 0) + 1; const stale = GW_ANIM_BLOCKS.frameIdx(s, a) === null; const idx = await GW_ANIM_BLOCKS.ensureFrames(s, a); return { stale, idx: idx && idx.length, fresh: s.costumes.filter(x => x.gwAnimFrame?.anim === a.id).every(x => x.gwAnimFrame.rev === a.rev) }; });
   ok(r.stale && r.idx === 7 && r.fresh, 'blocks never play out-of-date frames (they are made again) ' + JSON.stringify(r));
   r = await p.evaluate(async () => { document.getElementById('greenFlagBtn').click(); await new Promise(r => setTimeout(r, 200)); const s = Engine.sprites[Engine.activeSpriteIndex]; GW_ANIM_BLOCKS.start(s, 'run', 1, true); const seen = new Set(); for (let i = 0; i < 30; i++) { await new Promise(r => setTimeout(r, 50)); seen.add(s.costumes[s.activeCostume]?.name); } document.getElementById('stopBtn').click(); return [...seen]; });
-  ok(r.filter(n => /^run \d$/.test(n)).length >= 5, '“play animation [run] over and over” flips through its frames: ' + r.join(','));
+  ok(r.filter(n => /^run\/\/frame \d$/.test(n)).length >= 5, '“play animation [run] over and over” flips through its frames: ' + r.join(','));
   await p.evaluate(() => [...document.querySelectorAll('button')].find(x => /^\s*Costumes\s*$/.test(x.textContent))?.click()); await p.waitForTimeout(900);
 
   /* ---------- B. a costume drawn in G-Warp's vector editor gets bones ---------- */
@@ -84,11 +84,11 @@ const [file, shots] = process.argv.slice(2);
 
   /* ---------- C. Flipbook: onion skin + Play ---------- */
   ok(await p.evaluate(() => !!document.getElementById('gwpeOnion') && !!document.getElementById('gwCosPlayBtn')), 'Onion skin button + Play button are there');
-  // pick "run 3" so there is a costume before it
-  await p.evaluate(() => { const s = Engine.sprites[Engine.activeSpriteIndex]; const i = s.costumes.findIndex(c => c.name === 'run 3'); [...document.querySelectorAll('.gw7-cos-item')][i]?.click(); }); await p.waitForTimeout(900);
+  // pick "run//frame 3" so there is a costume before it
+  await p.evaluate(() => { const s = Engine.sprites[Engine.activeSpriteIndex]; const i = s.costumes.findIndex(c => c.name === 'run//frame 3'); [...document.querySelectorAll('.gw7-cos-item')][i]?.click(); }); await p.waitForTimeout(900);
   await p.evaluate(() => document.getElementById('gwpeOnion').click()); await p.waitForTimeout(900);
   r = await p.evaluate(() => { const v = document.getElementById('gwVectorCanvasV15'); return { on: GW_FLIPBOOK.settings.onion, bar: !!document.getElementById('gwOnionBar'), bg: v.style.getPropertyValue('background-image').slice(0, 60), cur: Engine.sprites[Engine.activeSpriteIndex].costumes[Engine.sprites[Engine.activeSpriteIndex].activeCostume].name }; });
-  ok(r.on && r.bar && /^url\("blob:/.test(r.bg) && r.cur === 'run 3', 'onion skin shows the costume before behind the drawing ' + JSON.stringify(r));
+  ok(r.on && r.bar && /^url\("blob:/.test(r.bg) && r.cur === 'run//frame 3', 'onion skin shows the costume before behind the drawing ' + JSON.stringify(r));
   // the onion pixels really show: compare the editor with onion on vs off
   const px = async () => p.evaluate(async () => { const v = document.getElementById('gwVectorCanvasV15'), r = v.getBoundingClientRect(); return [r.x, r.y, r.width, r.height]; });
   const area = await px(); const clip = { x: area[0], y: area[1], width: area[2], height: area[3] };

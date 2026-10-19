@@ -43,3 +43,31 @@ U2 costume editor  (Claude tested the REAL editor with DeepSeek's checklist: sel
 --- NOT STARTED / OPEN --------------------------------------------
 Grok G5 extension list check, Gemini GM1-GM6 icons, TODO NOW 6,
 DeepSeek DS3-DS5, new-AI jobs J1-J7 (see the briefing file).
+
+=====================================================================
+ READY LIST - 2026-10-19 night (Claude read everything the team handed in)
+ MERGED = in the app now (Beta v15.49.0)   READY = checked, next to merge   REFERENCE = Claude uses it
+=====================================================================
+GEMINI
+  gemini/lab/melody-engine.js          MERGED  (Song maker: every style its own melody; +Chiptune/Rock/Trap/Cinematic)
+  gemini/lab/lab-melody.html           REFERENCE (demo page)
+  gemini/lab/easing.js (+A/B/C)        MERGED the ease-in-out curve (Glide button); READY: linear/springy choice
+  gemini/icons-animation/ (36 SVG)     READY  - pick one of A/B/C per icon for the costume editor + Animation tab
+  gemini/rig-characters/ (3 + pivots)  READY  - "ready-made characters" in the Animation tab (like G-Spark's bones)
+  gemini/flipbook-sprites/ (6 sets)    READY  - sprite library: coin, spark, rocket, ball, flag, G-Spark blink
+  gemini/backdrops/ (3 SVG)            READY  - backdrop library: circuit night, city rooftop, neon arcade
+  gemini/lab/auto-rig-A/B/C.js         REFERENCE (ChatGPT review: chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt)
+GROK
+  grok/fixtures-*.json (9 files, ~250) READY  - Claude adds the new step types to the runner, then runs them all
+  grok/fixtures-tutorials.json         READY  - same
+  grok/REVIEW-V1 (list_item index 0,   READY  - real bugs for Claude to fix (list_item 0 -> "", list_contains
+    list_contains strict compare)               compares like Scratch)
+  grok/SPEC-select-tool / sb3-roundtrip / turbowarp-runtime / EXTENSIONS-check-2   REFERENCE
+  grok/REVIEW-V2-docs, REVIEW-TUTORIALS          REFERENCE for ChatGPT's next docs pass
+CHATGPT
+  docs/ (14 pages + 8 tutorials + glossary + parents)  LIVE on the website (owner should look at it on a phone)
+  chatgpt/REVIEW-* (C1-C9)             REFERENCE
+  chatgpt/WEBSITE-OPEN-QUESTIONS.txt   Claude answers: shortcuts, Animation block names, live/phone check
+CLAUDE (v15.49.0, this night)
+  Costume tabs (Costumes | Tiles | Animation), tile sprites v1, Glide button, animation costumes in folders
+  ("walk//frame 1"), Gemini's melody engine in the Song maker.

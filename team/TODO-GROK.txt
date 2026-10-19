@@ -1,3 +1,4 @@
+>>> NEXT 2026-10-19 (after v15.49.0): team/NEXT-AFTER-v15.49-2026-10-19.txt - Grok section (K0, then N-K1, N-K2, then BIG LIST 2) <<<
 >>> NEW 2026-10-19: BIG LIST 2 -> team/GROK-BIG-LIST-2-2026-10-19.txt (engine/compiler, bug hunt, coverage, music data) <<<
 >>> BIG LIST + EXTRA — COMPLETE for 2026-10-19 <<<
 

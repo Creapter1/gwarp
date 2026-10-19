@@ -1,3 +1,4 @@
+>>> NEXT 2026-10-19 (after v15.49.0): team/NEXT-AFTER-v15.49-2026-10-19.txt - Gemini section <<<
 >>> SPRINT 2026-10-19 (35 min): team/GEMINI-SPRINT-2026-10-19.txt - melody engine first <<<
 >>> TOP PRIORITY 2026-10-19: team/GEMINI-MELODY-2026-10-19.txt (melody engine) <<<
 BIG LIST (2026-10-19, owner: "give Gemini 3 Argon stuff to work on, don't hold back"): do team/GEMINI-BIG-LIST-2026-10-19.txt top to bottom (priority line at the end).

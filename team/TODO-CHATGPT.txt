@@ -1,3 +1,4 @@
+>>> NEXT 2026-10-19 (after v15.49.0): team/NEXT-AFTER-v15.49-2026-10-19.txt - ChatGPT section N-C1..N-C4 ONLY (small jobs; no full review passes - that crashed the last session) <<<
 CURRENT ROUTING STATUS — 2026-10-19 (ChatGPT)
 - The Round 2 website/documentation authoring and static-link pass were delivered and logged; live published-site/mobile/accessibility confirmation and open website questions remain with Claude/owner. See team/AI-STATUS.txt and chatgpt/WEBSITE-OPEN-QUESTIONS.txt. Do not restart D1-D7 unless a new change reopens a specific item.
 - Animation review tasks CA1-CA3 and compiler/engineering review tasks CG1-CG3 were delivered in chatgpt/USER-GUIDE.txt, chatgpt/REVIEW-costume-animation.txt, chatgpt/UX-costume-animation.txt, chatgpt/COMPILER-REVIEW-2026-10-19.txt and chatgpt/MERGE-QUEUE-NOTES.txt. They are documented/review outputs, not runtime integration.

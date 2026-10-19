@@ -42,3 +42,42 @@ Risks / performance / security / child-safety concerns: Browser storage is not a
 Overlap with existing G-Warp feature: Existing Developer mode → Connect a real AI feature.
 Suggested next step: Review the current implementation and propose minimal options; do not change live code until owner approves.
 Status: WAITING FOR OWNER
+
+=====================================================================
+ OWNER IDEAS - 2026-10-19 (1 a.m. session, written down by Claude)
+ Status words here: OWNER APPROVED = the owner asked for it; BUILT v1 = first version is in the app.
+=====================================================================
+ID: OI-1  Costume tabs (like the Sounds tabs)
+Description: tabs on top of the costume section: Costumes (default) | Tiles | Animation | (more later).
+Status: BUILT v1 in Beta v15.49.0 (claude/costabs4900.js). Animation is now a real tab (was a label-looking button).
+
+ID: OI-2  Tile sprites
+Description: a NEW sprite starts blank (no costumes). Only a blank sprite can use the Tiles tab ->
+  "Turn this sprite into a tile map". Then Costumes + Animation are unavailable for that sprite; it only has
+  Tiles. It can be turned back into a normal sprite at any time UNLESS a costume was added to it.
+Status: BUILT v1 (rules + tab + "Open the tile map editor"). Still to do:
+  - each tile sprite gets ITS OWN tile map (today there is one project tile map, Engine.tilemap)
+  - the tile map editor inside the Tiles tab (today it opens the old full-screen tile map window)
+  - "Add Sprite" makes a blank sprite (check every place that assumes a sprite has a costume first)
+  - save s.gwTileSprite inside .sb3 (it is kept in the autosave / crash recovery already)
+
+ID: OI-3  Glide animation (keyframes that glide)
+Description: frame 1 = start pose, frame 2 = new pose; instead of popping, the character GLIDES smoothly
+  from one to the other.
+Status: BUILT v1: "Glide" button in the Animation editor (3 eased in-between frames per gap, FPS sped up so the
+  move takes the same time; press again = back to key frames). Next: choose how many glide steps + the ease
+  (linear / smooth / springy from Gemini's easing lab), and mark glide frames differently in the frame strip.
+
+ID: OI-4  Ground line
+Description: a floor line in the Animation editor (not part of the costume). With it ON, no part of the
+  character can go below the line: if you push the body down, the legs SQUISH (the bones bend - knees) instead
+  of going through the floor; lift it above the line and it is free again. A guide for walking, running and
+  jumping animations.
+Status: OWNER APPROVED, not built. Needs: a draggable horizontal line, "feet" = lowest points of leg bones, a
+  2-bone IK solver (thigh + shin) so the knee bends when the hip goes down, clamp so nothing crosses the line.
+
+ID: OI-5  Animation costumes in folders (TurboWarp style)
+Description: TurboWarp groups costumes with "folder//name". Made animation costumes are named
+  "<animation>//frame 1", "<animation>//frame 2" ...
+Status: BUILT in v15.49.0 (Make costumes, rename and the animation blocks use the new names). Next: the
+  costume list shows each folder as one group that opens/closes (like TurboWarp's folders addon, own look).
