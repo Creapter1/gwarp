@@ -1,0 +1,866 @@
+G-WARP CLICK + RIGHT-CLICK REVIEW   -   2026-10-19   (QA tester: Claude)
+=========================================================================
+App tested : /home/claude/gwarp/app.html   (Beta v15.49.0)
+How        : the REAL app in headless Chromium (Playwright), window 1440 x 900,
+             real mouse clicks, right-clicks, drags and keys (p.mouse / p.keyboard).
+Compared   : Scratch 3, TurboWarp, PenguinMod.
+Tests      : /tmp/claude-0/-home-claude/89a5354a-15ce-5dfe-8bd9-593b440e36e9/scratchpad/qa-clicks/
+             screenshots are in the shots/ folder there.
+Rules kept : report only. app.html was NOT changed. Nothing committed or pushed.
+Page errors: NONE in any test run (pageerror listener was on in every script).
+
+
+THE SCORE
+---------
+Compared with Scratch 3 (122 checks):
+   WORKS      72
+   BROKEN     16
+   MISSING    23
+   DIFFERENT  10
+   NOT TESTED  1
+TurboWarp / PenguinMod extras (11 checks; Scratch 3 itself does not have these):
+   G-Warp has 3  (block search box, right-click search, Ctrl+F find)
+   G-Warp is missing 8
+All together: 133 checks -> WORKS 75, BROKEN 16, MISSING 31, DIFFERENT 10, NOT TESTED 1.
+
+Words used:
+   WORKS     = does what Scratch does (or better).
+   BROKEN    = G-Warp has the feature but it does the wrong thing.
+   MISSING   = Scratch (or TurboWarp / PenguinMod) has it, G-Warp does not.
+   DIFFERENT = works, but not like Scratch. Might be OK on purpose.
+
+
+TOP 10 PROBLEMS (most important for kids first)
+-----------------------------------------------
+ 1. A block you just dragged in JUMPS TO ANOTHER SPRITE when you click / add /
+    duplicate a sprite. The first sprite loses it.               (BROKEN, OWN.*)
+ 2. Variable and list monitors never show on the stage. They are hidden
+    under the stage picture. "score" boxes are invisible.        (BROKEN, A6.visible)
+ 3. Undo does not undo dragging in a new block (Ctrl+Z and menu Undo).
+    Ctrl+Shift+Z does UNDO instead of redo.                      (BROKEN, B7.undo.add, A2.undo, B7.redo.shiftz)
+ 4. Clicking a script does not run it. No glow, clicking a reporter
+    shows no value bubble, clicking a palette block does nothing. (MISSING, B1.*)
+ 5. Right-click a reporter inside a block -> "Delete Block" deletes the
+    WHOLE outer block; "Duplicate" copies the whole script.     (BROKEN, A1.rep.*)
+ 6. Broadcasts: only "message1" and "message2". No "New message". (MISSING, C.newmsg)
+ 7. Variables cannot be renamed or deleted (no right-click menu,
+    no "Rename variable" in the dropdown).                       (MISSING, A3.var, C.renamevar)
+ 8. "when this sprite clicked" only works while the project runs;
+    sprites cannot be dragged on the stage in the editor.        (BROKEN B9.click.stopped, MISSING B9.drag)
+ 9. Custom blocks have no "Edit" (right-click define / call / palette). (MISSING, A1.custom.*, A3.custom)
+10. Block right-click menu: no "Add Comment"; "Duplicate" copies the whole
+    script (also the blocks ABOVE) and does not stick to the mouse;
+    menu falls off the bottom of the window; Escape does not close it;
+    two menus can be open at once.                               (DIFFERENT/BROKEN, A1.*)
+
+
+1. SUMMARY TABLE
+================
+S3 = Scratch 3, TW = TurboWarp, PM = PenguinMod.
+=S3   = same as Scratch 3 (from memory, not checked; TW and PM are built on the
+        Scratch 3 editor).
+[TWD] = desktop.turbowarp.org feature list (checked 2026-10-19)
+[PMW] = wiki.penguinmod.com/wiki/Addons (checked 2026-10-19)
+[GDT] = griffpatch "Scratch 3 Developer Tools" page (addons.mozilla.org) - this is
+        the "Developer tools" addon inside TW / PM (checked 2026-10-19)
+mem   = from memory, not checked.
+
+ID              | AREA                                | S3                                   | TW                              | PM                                   | G-WARP (what the test saw)                          | STATUS
+----------------+-------------------------------------+--------------------------------------+---------------------------------+--------------------------------------+-----------------------------------------------------+----------
+A. RIGHT-CLICK MENUS
+A1.menu         | right-click a block                 | Duplicate, Add Comment, Delete Block | =S3 + block switching [TWD]     | =S3 + block switching, colours [PMW] | Duplicate, Delete Block, Delete Full Stack          | DIFFERENT
+A1.esc          | Escape on the block menu            | closes it (mem)                      | =S3                             | =S3                                  | menu stays open                                     | BROKEN
+A1.edge         | block menu near window bottom       | stays on screen (mem)                | =S3                             | =S3                                  | runs off screen (bottom at 986 of 900 px)           | BROKEN
+A1.twomenus     | block menu open, right-click empty  | old menu closes                      | =S3                             | =S3                                  | both menus open at the same time                    | BROKEN
+A1.dup.what     | Duplicate on a middle block         | copies it + blocks below             | =S3                             | =S3 + Alt-drag duplicate [PMW]       | copies the WHOLE script, hat above too              | DIFFERENT
+A1.dup.mouse    | Duplicate: copy follows the mouse   | yes, until you click                 | =S3                             | =S3                                  | copy placed 25 px away, does not follow             | DIFFERENT
+A1.del.mid      | Delete Block (middle block)         | only that block, gap closes          | =S3                             | =S3                                  | same                                                | WORKS
+A1.del.undo     | Ctrl+Z after Delete Block           | block comes back                     | =S3                             | =S3                                  | comes back                                          | WORKS
+A1.del.hat      | Delete Block on a hat               | only the hat goes                    | =S3                             | =S3                                  | only the hat goes                                   | WORKS
+A1.del.c        | Delete on C-block with 2 inside     | "Delete 3 Blocks", C + inside go     | =S3                             | =S3                                  | C + inside go; menu shows no number                 | DIFFERENT
+A1.rep.del      | reporter in a slot > Delete Block   | only the reporter goes               | =S3                             | =S3                                  | the OUTER block ("move") is deleted                 | BROKEN
+A1.rep.dup      | reporter in a slot > Duplicate      | copies only the reporter             | =S3                             | =S3                                  | copies the whole script                             | BROKEN
+A1.custom.define| right-click "define" hat            | Add Comment, Edit (mem)              | =S3 + jump to definition [TWD]  | =S3 + jump to definition [PMW]       | Duplicate/Delete only, no Edit                      | MISSING
+A1.custom.call  | right-click a custom block          | Duplicate, Comment, Delete, Edit     | =S3                             | =S3                                  | no Edit                                             | MISSING
+A2.menu         | right-click empty code area         | Undo, Redo, Clean up, Comment, Del N | =S3 + more (mem)                | =S3 + save as image, devtools [PMW]  | all 5 items + a block search box                    | WORKS
+A2.search       | type-to-add search in that menu     | (none)                               | Insert blocks by name [TWD]     | Insert blocks by name [PMW]          | typing "glide" + Enter adds the block               | WORKS (extra)
+A2.undo         | menu Undo after dragging a block in | the new block goes                   | =S3                             | =S3                                  | nothing changes                                     | BROKEN
+A2.undo2        | menu Undo after Delete Block        | block comes back                     | =S3                             | =S3                                  | comes back                                          | WORKS
+A2.redo         | menu Redo after that Undo           | deleted again                        | =S3                             | =S3                                  | deleted again                                       | WORKS
+A2.clean        | Clean up (stacks far apart)         | one neat column on the left          | =S3                             | =S3 + better clean up [PMW][GDT]     | stacks that do not overlap are not moved            | DIFFERENT
+A2.clean2       | Clean up (2 stacks on top)          | separated                            | =S3                             | =S3                                  | separated                                           | WORKS
+A2.comment      | Add Comment                         | note where you clicked               | =S3                             | =S3                                  | note appears, you can type                          | WORKS
+A2.delall       | Delete N Blocks                     | right count, deletes all             | =S3                             | =S3                                  | says "Delete 2" for 3 blocks; 1 block stays         | BROKEN
+A2.delall.undo  | Ctrl+Z after Delete N Blocks        | all come back                        | =S3                             | =S3                                  | all come back                                       | WORKS
+A3.block        | right-click a palette block         | no menu                              | =S3                             | =S3                                  | no menu                                             | WORKS
+A3.var          | right-click variable in palette     | rename / delete variable             | =S3                             | =S3 + switch scope [PMW]             | no menu                                             | MISSING
+A3.custom       | right-click custom block in palette | Edit                                 | =S3                             | =S3                                  | no menu                                             | MISSING
+A4.menu         | right-click sprite thumbnail        | duplicate, export, delete            | =S3 (+ folders [TWD])           | =S3 + folders, delete confirm [PMW]  | duplicate, find on stage, delete (no export)        | DIFFERENT
+A4.dup          | sprite menu: duplicate              | copy with scripts                    | =S3                             | =S3                                  | G-Spark2 with the script                            | WORKS
+A4.del          | sprite menu: delete (2nd sprite)    | deletes it                           | =S3                             | =S3 (+ confirm addon [PMW])          | deletes it, no question                             | WORKS
+A5.cos.menu     | right-click costume                 | duplicate, export, delete            | =S3                             | =S3 + move to top/bottom [PMW]       | duplicate, export, delete                           | WORKS
+A5.cos.dup      | costume menu: duplicate             | copy added                           | =S3                             | =S3                                  | "costume1 2" added                                  | WORKS
+A5.cos.export   | costume menu: export                | saves the file                       | =S3                             | =S3                                  | downloads "costume1 2.svg"                          | WORKS
+A5.cos.del      | costume menu: delete                | removed                              | =S3                             | =S3                                  | removed                                             | WORKS
+A5.cos.delLast  | delete the only costume             | not allowed                          | =S3                             | =S3                                  | "delete" is greyed out                              | WORKS
+A5.snd.menu     | right-click a sound                 | duplicate, export, delete            | =S3                             | =S3 + move to top/bottom [PMW]       | no menu at all                                      | MISSING
+A6.visible      | variable / list monitor on stage    | shows "my variable 0" box            | =S3                             | =S3                                  | box exists but is UNDER the stage canvas (hidden)   | BROKEN
+A6.menu         | right-click variable monitor        | normal, large, slider, range, hide   | =S3                             | =S3 + copy value [PMW]               | no menu (pointer-events: none)                      | MISSING
+A6.list         | right-click list monitor            | import, export, hide                 | =S3                             | =S3                                  | no menu; list monitor is one text line              | MISSING
+A6.drag         | drag a monitor                      | it moves                             | =S3                             | =S3                                  | does not move                                       | MISSING
+A7.menu         | right-click a comment               | Delete                               | =S3                             | =S3                                  | opens the empty-area menu ("Delete 0 Blocks")       | BROKEN
+A7.resize       | resize a comment                    | drag corner, both ways               | =S3                             | =S3                                  | taller only (textarea resize: vertical)             | WORKS
+A7.fold         | minimize a comment                  | folds                                | =S3                             | =S3 + hover preview [PMW]            | folds                                               | WORKS
+A7.drag         | drag comment by its top bar         | moves                                | =S3                             | =S3                                  | moves                                               | WORKS
+A7.delete       | x button on a comment               | (S3 uses the menu)                   | =S3                             | =S3                                  | removed                                             | WORKS
+A8.bd.thumb     | right-click Stage card / thumbnail  | no menu (mem)                        | =S3                             | =S3                                  | no menu                                             | WORKS
+A8.bd.list      | right-click backdrop (Backdrops tab)| duplicate, export, delete            | =S3                             | =S3                                  | duplicate, export, delete                           | WORKS
+A8.canvas       | right-click the stage picture       | no custom menu                       | =S3                             | =S3                                  | no menu, browser menu blocked                       | WORKS
+B. CLICKS
+B1.click        | click a script                      | it runs                              | =S3                             | =S3                                  | nothing happens                                     | MISSING
+B1.glow         | running script glows                | yellow glow                          | =S3                             | =S3 (+ running border, unreleased)   | no glow class/style                                 | MISSING
+B1.stop         | click a running script again        | it stops                             | =S3                             | =S3                                  | cannot start a script by clicking                   | NOT TESTED
+B1.reporter     | click "x position"                  | bubble with the value                | =S3                             | =S3 + copy value [PMW]               | nothing shown                                       | MISSING
+B1.boolean      | click "mouse down?"                 | bubble true / false                  | =S3                             | =S3                                  | nothing shown                                       | MISSING
+B1.palette      | click "move 10" in the palette      | sprite moves                         | =S3                             | =S3                                  | nothing happens                                     | MISSING
+B2.middle       | drag from middle of a stack         | takes it + blocks below              | =S3                             | =S3 (+ Ctrl single block [PMW])      | same                                                | WORKS
+B2.between      | drop between two blocks             | goes in the middle                   | =S3                             | =S3                                  | same                                                | WORKS
+B2.end          | drop at the end                     | snaps to bottom                      | =S3                             | =S3                                  | same                                                | WORKS
+B2.cbody        | drop into "if"                      | goes inside                          | =S3                             | =S3                                  | same                                                | WORKS
+B2.bool         | boolean into "if" slot              | fits                                 | =S3                             | =S3                                  | fits                                                | WORKS
+B2.reporter     | reporter into number input          | fits                                 | =S3                             | =S3                                  | fits                                                | WORKS
+B2.hat          | hat dropped under a stack           | does not snap                        | =S3                             | =S3                                  | does not snap                                       | WORKS
+B2.trash        | drag block onto the palette         | deleted                              | =S3                             | =S3                                  | deleted                                             | WORKS
+B3.motion       | checkbox by x position, size, timer | shows a monitor                      | =S3                             | =S3                                  | no checkbox (only variables have one)               | MISSING
+B3.var          | variable checkbox                   | shows / hides monitor                | =S3                             | =S3                                  | on/off works (but monitor is hidden, A6)            | WORKS
+B3.list         | list checkbox in palette            | shows / hides list monitor           | =S3                             | =S3                                  | no list reporter, no checkbox                       | MISSING
+B4.var.dlg      | Make a Variable dialog              | all sprites / this sprite / cloud    | =S3                             | =S3                                  | same 3 choices                                      | WORKS
+B4.var.make     | make "score"                        | new block + checkbox                 | =S3                             | =S3                                  | same                                                | WORKS
+B4.var.dupname  | same name again                     | "already exists"                     | =S3                             | =S3                                  | "There is already a variable called score"          | WORKS
+B4.var.local    | "For this sprite only"              | local variable                       | =S3                             | =S3                                  | stored on G-Spark, shown under "G-SPARK ONLY"       | WORKS
+B4.list.dlg     | Make a List dialog                  | all sprites / this sprite            | =S3                             | =S3                                  | same                                                | WORKS
+B4.list.make    | make "scores"                       | list made                            | =S3                             | =S3                                  | made                                                | WORKS
+B4.block.dlg    | Make a Block dialog                 | input num/text, bool, label, no-refresh| =S3                           | =S3 + reorder inputs [PMW]           | all 4 options                                       | WORKS
+B4.block.make   | make "jump" + number input          | define hat + block                   | =S3                             | =S3                                  | define hat in code area, "jump" in palette          | WORKS
+B5.select       | click a sprite thumbnail            | selects it                           | =S3                             | =S3                                  | selects it                                          | WORKS
+B5.stage        | click the Stage                     | Stage selected, no motion blocks     | =S3                             | =S3                                  | same (label, "1 backdrop" and thumbnail all work)   | WORKS
+B5.delx         | x on the selected sprite            | deletes                              | =S3                             | =S3                                  | deletes                                             | WORKS
+B5.restore      | get a deleted sprite back           | Edit > Restore Sprite                | =S3                             | =S3                                  | "Restore" button brings it back                     | WORKS
+B5.addmenu      | Add Sprite menu                     | Choose, Paint, Surprise, Upload      | =S3                             | =S3                                  | Choose, Upload, Surprise, Paint, Plain              | WORKS
+B5.choose       | Choose a Sprite                     | library opens                        | =S3                             | =S3                                  | G-Warp's own library opens                          | WORKS
+B5.xfield       | type 100 in the x box               | sprite moves                         | =S3                             | =S3                                  | x = 100                                             | WORKS
+B5.rename       | type a name in the name box         | renamed                              | =S3                             | =S3                                  | "Hero" (tile too)                                   | WORKS
+B6.cos.select   | click a costume                     | becomes current                      | =S3                             | =S3                                  | becomes current                                     | WORKS
+B6.cos.reorder  | drag costume 3 to the top           | order changes                        | =S3                             | =S3 + move to top/bottom [PMW]       | order unchanged                                     | MISSING
+B6.cos.buttons  | costume add buttons                 | Choose, Paint, Surprise, Upload, Cam | =S3                             | =S3                                  | Paint new, Upload, Play (no library)                | DIFFERENT
+B6.cos.paint    | Paint new                           | blank costume                        | =S3                             | =S3                                  | blank costume added                                 | WORKS
+B6.cos.upload   | Upload                              | file picker                          | =S3                             | =S3                                  | file picker opens                                   | WORKS
+B6.snd.select   | click a sound                       | selects it                           | =S3                             | =S3                                  | selects it                                          | WORKS
+B6.snd.reorder  | drag sound 2 above sound 1          | order changes                        | =S3                             | =S3 + move to top/bottom [PMW]       | order unchanged                                     | MISSING
+B6.snd.buttons  | sound add buttons                   | Choose, Record, Surprise, Upload     | =S3                             | =S3                                  | Upload, Record (+ Instruments/Loop/Song makers)     | DIFFERENT
+B6.snd.delete   | delete a sound                      | x on the sound or right-click        | =S3                             | =S3                                  | "Delete" button in the sound editor works           | WORKS
+B7.dbl          | double-click a block                | like 2 clicks (run, stop)            | =S3                             | =S3                                  | nothing happens                                     | DIFFERENT
+B7.shift        | shift-click a block                 | nothing special                      | =S3 (insert blocks addon [TWD]) | shift-click addons [PMW]             | nothing special                                     | WORKS
+B7.delkey       | click a block, press Delete         | block deleted                        | =S3                             | =S3                                  | nothing happens                                     | MISSING
+B7.undo.add     | Ctrl+Z after dragging a block in    | new block goes                       | =S3                             | =S3                                  | nothing changes (pressed 2 times)                   | BROKEN
+B7.redo         | Delete, Ctrl+Z, Ctrl+Y              | deleted again                        | =S3                             | =S3                                  | works                                               | WORKS
+B7.redo.shiftz  | Ctrl+Shift+Z after an undo          | redo                                 | =S3                             | =S3                                  | does ANOTHER undo                                   | BROKEN
+B8.key          | key dropdown in "when key pressed"  | list of keys                         | =S3 + searchable [TWD]          | =S3 + searchable, extra keys [PMW]   | 42 keys, choosing works                             | WORKS
+B8.costume      | costume dropdown                    | the costumes                         | =S3                             | =S3                                  | "costume1"                                          | WORKS
+B8.number       | type 25 in "move 10"                | kept                                 | =S3                             | =S3 (+ arrow keys, unreleased [PMW]) | 25                                                  | WORKS
+B8.numletters   | type "abc" in a number input        | only numbers allowed                 | =S3                             | =S3                                  | "abc" is kept                                       | DIFFERENT
+B8.goto         | "go to" dropdown                    | random, mouse, sprites               | =S3                             | =S3                                  | random position, mouse-pointer                      | WORKS
+B9.click.running| click sprite on stage (running)     | "when this sprite clicked" runs      | =S3                             | =S3                                  | runs (x 0 -> 10)                                    | WORKS
+B9.click.stopped| click sprite on stage (stopped)     | still runs                           | =S3                             | =S3                                  | nothing happens                                     | BROKEN
+B9.drag         | drag a sprite on the stage (editor) | sprite moves                         | =S3                             | =S3 (addon can turn it off [PMW])    | sprite does not move                                | MISSING
+C. EDITOR HELPERS
+C.file.save     | save to computer                    | File menu                            | =S3                             | =S3                                  | More > Save (Ctrl+S), Save as                       | WORKS
+C.file.load     | load from computer                  | File menu                            | =S3                             | =S3                                  | More > Load (Ctrl+O)                                | WORKS
+C.turbo         | Turbo mode                          | Edit menu                            | =S3                             | =S3                                  | More > Turbo Mode                                   | WORKS
+C.zoom          | zoom + / - / = buttons              | yes                                  | =S3                             | =S3 + custom zoom [PMW]              | 1 -> 1.2 -> 0.83 -> 1                               | WORKS
+C.zoomwheel     | Ctrl + mouse wheel                  | zooms                                | =S3                             | =S3                                  | zooms                                               | WORKS
+C.search        | search box in the palette           | (none)                               | Insert blocks by name [TWD]     | same [PMW]                           | "glide" shows only glide                            | WORKS (extra)
+C.newmsg        | broadcast "New message"             | in the dropdown                      | =S3                             | =S3                                  | only message1, message2                             | MISSING
+C.renamemsg     | rename a broadcast                  | (none)                               | addon (mem)                     | not in [PMW] list                    | not there                                           | MISSING (TW)
+C.renamevar     | rename / delete a variable          | dropdown + palette menu              | =S3                             | =S3                                  | dropdown only lists names                           | MISSING
+C.copyToSprite  | drag script onto other sprite tile  | copies it                            | =S3                             | =S3                                  | copied, original stays                              | WORKS
+C.spriteReorder | drag sprites to reorder             | yes                                  | =S3                             | =S3                                  | order unchanged                                     | MISSING
+C.bgdrag        | drag empty code-area background     | scrolls                              | =S3                             | =S3                                  | scrolls                                             | WORKS
+C.importSprite  | Upload Sprite takes .sprite3        | yes                                  | =S3                             | =S3                                  | file picker accept="image/*" (pictures only)        | MISSING
+C.stagesize     | Small / Normal stage                | yes                                  | =S3                             | =S3                                  | 478 -> 238 px                                       | WORKS
+C.flagstop      | green flag, then Stop               | starts / stops                       | =S3                             | =S3                                  | starts / stops                                      | WORKS
+C.middleclick   | middle-click / Alt+drag duplicate   | (none)                               | addon (mem)                     | Alt-drag duplicate [PMW]             | Alt+drag just moves the block                       | MISSING (TW/PM)
+OWN. SPRITE OWNERSHIP OF NEW BLOCKS
+OWN.switch      | drop a block, click other sprite    | block stays with sprite 1            | =S3                             | =S3                                  | block moves to Sprite2                              | BROKEN
+OWN.add         | drop a block, Add Sprite > Plain    | block stays with sprite 1            | =S3                             | =S3                                  | block moves to the new sprite                       | BROKEN
+OWN.dup         | drop a block, duplicate sprite      | both have it                         | =S3                             | =S3                                  | original LOSES it, copy has it                      | BROKEN
+OWN.count       | "Delete N Blocks" with a new block  | counts 3                             | =S3                             | =S3                                  | says 2; new block not deleted                       | BROKEN
+TW. TURBOWARP / PENGUINMOD SHORTCUTS
+TW.ctrlspace    | Ctrl+Space                          | (none)                               | Insert blocks by name [TWD]     | Ctrl+Space popup [PMW]               | nothing opens (use right-click search)              | MISSING (TW/PM)
+TW.ctrlf        | Ctrl+F, type "say"                  | (none)                               | find bar [TWD]                  | find bar [PMW]                       | "Find blocks..." box, "1 of 1", block highlighted   | WORKS (extra)
+TW.ctrldrag     | Ctrl+drag a middle block            | (none)                               | addon (mem)                     | grab single block [PMW]              | takes the block + all below                         | MISSING (TW/PM)
+TW.copypaste    | Ctrl+C / Ctrl+V a block             | (none)                               | devtools (mem)                  | devtools copy/paste [PMW][GDT]       | nothing pasted                                      | MISSING (TW/PM)
+TW.arrows       | Arrow Up in a number input          | (none)                               | addon (mem)                     | arrow keys, unreleased [PMW]         | stays 10                                            | MISSING (TW/PM)
+TW.jumpdef      | shift / middle-click custom block   | (none)                               | jump to definition [TWD]        | jump to definition [PMW]             | code area does not move                             | MISSING (TW/PM)
+TW.searchdrop   | search inside a dropdown            | (none)                               | searchable dropdowns [TWD]      | searchable dropdowns [PMW]           | plain browser <select> lists                        | MISSING (TW/PM)
+
+
+2. BROKEN - HOW TO MAKE EACH BUG HAPPEN
+=======================================
+Page errors: none for any of these (no JavaScript errors were thrown).
+"Hint" lines come from reading app.html after the test failed. They are hints,
+not tested fixes.
+
+BUG 1  A new block jumps to another sprite                     (OWN.switch)
+  Steps : 1. Add Sprite > Plain sprite (now 2 sprites). 2. Click the G-Spark tile.
+          3. Drag "when green flag clicked" from the palette onto empty code area.
+          4. Click the Sprite2 tile.  5. Click the G-Spark tile again.
+  Saw   : the hat is gone from G-Spark and is now in Sprite2's code.
+  Want  : the hat stays with G-Spark.
+  Shot  : shots/OWN-script-jumped-to-sprite2.png
+  Hint  : a stack made from a palette drop has no data-owner. Its owner is only set
+          later (GW.stackOwner gives it the sprite that is active THEN). The next drag
+          on the same sprite fixes it, so the bug hits when the LAST thing you did
+          was dropping a new block on empty space. Setting
+          draggedStack.dataset.owner = String(Engine.activeSpriteIndex) when the
+          palette drag starts (setupDragAndDrop, pointerdown) would likely fix
+          BUG 1-4.
+
+BUG 2  Same, with Add Sprite                                   (OWN.add)
+  Steps : drag "when [space] key pressed" onto empty code area, then
+          Add Sprite > Plain sprite.
+  Saw   : the new sprite has the hat; G-Spark has nothing.
+
+BUG 3  Duplicate sprite steals the script                      (OWN.dup)
+  Steps : fresh project. Drag "when green flag clicked" onto empty code area.
+          Right-click the G-Spark tile > duplicate.
+  Saw   : G-Spark: no scripts. G-Spark2: the hat.
+  Want  : both sprites have the hat.
+
+BUG 4  "Delete N Blocks" counts wrong and leaves a block       (OWN.count, A2.delall)
+  Steps : make "when flag clicked > move 10" and then drop "say Hello! for 2 secs"
+          alone on empty space. Right-click empty space.
+  Saw   : menu says "Delete 2 Blocks" (there are 3). After Delete + confirm,
+          "say" is still there.
+  Shot  : shots/A2-workspace-menu.png
+  Hint  : same missing data-owner as BUG 1 (the menu only counts stacks whose
+          owner is the current sprite).
+
+BUG 5  Variable / list monitors are invisible                  (A6.visible)
+  Steps : open the app. "my variable" checkbox is ticked (Engine.variableVisible
+          says true). Look at the top-left of the stage.
+  Saw   : nothing. The monitor div has display:block and text "my variable: 0",
+          but document.elementFromPoint() at its centre returns #stageCanvas.
+  Shot  : shots/A6-stage-with-monitors-on.png
+  Hint  : [data-var-monitor] / [data-list-monitor] in #gw154StageFrame have
+          z-index auto; the canvases get z-index 1-3 !important and #stageCanvas
+          has a white background.
+
+BUG 6  Undo does not undo adding a block                       (B7.undo.add, A2.undo)
+  Steps : make "when flag clicked > move 10", wait 1 s, drag "say" onto empty
+          space, wait 1 s, click empty space, press Ctrl+Z (also try twice,
+          also try right-click > Undo).
+  Saw   : "say" stays. Nothing changes.
+  Want  : "say" goes away.
+  Note  : Undo DOES work after "Delete Block" and after "Delete N Blocks".
+  Hint  : during the test GW8.history got two entries for one drop
+          ("workspace mutation" then "drag/drop"), and both already contain the new
+          block, so one undo lands on the same picture. GW8.restore() also calls
+          scheduleHistory('post-restore'), which can push again and clear redo.
+
+BUG 7  Ctrl+Shift+Z does undo, not redo                        (B7.redo.shiftz)
+  Steps : script "when flag > move > say > turn". Right-click "move" > Delete Block.
+          Ctrl+Z (move comes back). Press Ctrl+Shift+Z.
+  Saw   : script goes one step FURTHER back (["when_flag > move > say","turn_cw"]).
+  Want  : "move" deleted again (redo). Ctrl+Y does redo correctly (B7.redo).
+  Hint  : the keydown handler (window keydown, GW8 section) checks
+          e.key.toLowerCase()==='z' for undo BEFORE it looks at shiftKey.
+
+BUG 8  Delete on a reporter deletes the outer block            (A1.rep.del)
+  Steps : "when flag clicked > move (10) steps". Drag "x position" into the 10.
+          Right-click the "x position" chip > Delete Block.
+  Saw   : the whole "move" block is deleted, only the hat stays.
+  Want  : only "x position" goes and the number slot comes back.
+  Shot  : shots/A1-reporter-menu.png
+  Hint  : a nested reporter is a .gw7-chip inside the outer block, and the block
+          menu uses e.target.closest('.scratch-block'), which is the outer block.
+
+BUG 9  Duplicate on a reporter copies the whole script         (A1.rep.dup)
+  Steps : as BUG 8, but choose Duplicate.
+  Saw   : a second "when flag > move (x position)" script.
+  Want  : just a loose "x position" reporter (stuck to the mouse).
+
+BUG 10 "when this sprite clicked" needs the project running    (B9.click.stopped)
+  Steps : script "when this sprite clicked > change x by 10". Press Stop (or never
+          press Start). Click G-Spark on the stage.
+  Saw   : x stays the same. (With the green flag running it works: x 0 -> 10.)
+  Want  : Scratch runs it any time you click the sprite.
+  Hint  : GW.stageClick returns at once when Engine.isRunning is false.
+
+BUG 11 Right-click on a comment opens the wrong menu           (A7.menu)
+  Steps : right-click empty code area > Add Comment, type. Right-click the
+          comment's top bar.
+  Saw   : the empty-area menu (Undo, Redo, Clean up, Add Comment, "Delete 0 Blocks").
+  Want  : a comment menu with "Delete".
+  Shot  : shots/A7-comment-rclick.png
+  Note  : the comment's own x button and fold button work.
+
+BUG 12 Two menus open at once                                  (A1.twomenus)
+  Steps : right-click a block (block menu opens). Then right-click empty space.
+  Saw   : block menu AND empty-area menu both on screen.
+  Shot  : shots/A1-two-menus-open.png
+  Hint  : #blockContextMenu only closes on a document "click".
+
+BUG 13 Block menu falls off the bottom of the window           (A1.edge)
+  Steps : window 1440x900. Drop "move" at the bottom of the code area (y about 870).
+          Right-click it.
+  Saw   : menu top 874, bottom 986: "Delete Block" and "Delete Full Stack" are
+          off screen.
+  Shot  : shots/A1-menu-bottom-edge.png
+  Hint  : the sprite / costume / empty-area menus already keep themselves inside
+          the window; the block menu uses clientX/clientY as they are.
+
+BUG 14 Escape does not close the block menu                    (A1.esc)
+  Steps : right-click a block, press Escape.
+  Saw   : menu stays open (it closes when you click somewhere).
+
+
+3. MISSING - MOST IMPORTANT FOR KIDS FIRST
+==========================================
+ 1. Click a script (or a palette block) to run it; running script glows;
+    click again to stop.                                  (B1.click, B1.palette, B1.glow)
+ 2. Broadcast "New message" - only message1 / message2 exist. (C.newmsg)
+ 3. Click a reporter / boolean to see its value bubble.   (B1.reporter, B1.boolean)
+ 4. Stage monitors: checkboxes for x position, y position, direction,
+    costume #, size, volume, timer, answer...; list checkbox; right-click
+    modes (normal / large / slider / slider range / hide); list import /
+    export; dragging monitors.                            (B3.motion, B3.list, A6.menu, A6.list, A6.drag)
+    (fix BUG 5 first - monitors are not visible at all)
+ 5. Drag a sprite around the stage in the editor.         (B9.drag)
+ 6. Rename / delete a variable (palette right-click and dropdown). (A3.var, C.renamevar)
+ 7. Edit a custom block (right-click define / call / palette > Edit). (A1.custom.*, A3.custom)
+ 8. Add Comment on a block (comment attached to a block). The block menu
+    has no "Add Comment"; only free comments exist.      (A1.menu)
+ 9. Delete key removes the clicked block.                 (B7.delkey)
+10. Drag to reorder costumes, sounds and sprites.         (B6.cos.reorder, B6.snd.reorder, C.spriteReorder)
+11. Right-click a sound: duplicate / export / delete.     (A5.snd.menu)
+12. Export a sprite (.sprite3) from the sprite menu, and Upload Sprite
+    accepting .sprite3 (it only takes pictures).          (A4.menu, C.importSprite)
+13. Costume library ("Choose a Costume") and sound library ("Choose a
+    Sound"), Surprise buttons.                           (B6.cos.buttons, B6.snd.buttons - DIFFERENT)
+14. Number inputs that refuse letters.                    (B8.numletters - DIFFERENT)
+
+
+4. DIFFERENT (works, but not like Scratch) - decide if on purpose
+=================================================================
+ - A1.menu      block menu: no Add Comment; extra "Delete Full Stack".
+ - A1.dup.what  Duplicate copies the whole script, also blocks ABOVE the clicked one.
+ - A1.dup.mouse the copy is placed 25 px away; Scratch sticks it to the mouse.
+ - A1.del.c     menu never shows "Delete 3 Blocks"; it is always "Delete Block".
+ - A2.clean     Clean up only pushes overlapping stacks apart; Scratch makes one
+                neat column on the left.
+ - A4.menu      sprite menu has "find on stage" (nice extra) but no "export".
+ - B6.cos.buttons / B6.snd.buttons  no library buttons (G-Warp has song / loop /
+                instrument makers instead for sounds).
+ - B7.dbl       double-click does nothing. (app.html has a dblclick -> breakpoint
+                handler, but no breakpoint was set in the test.)
+ - B8.numletters "abc" can be typed into "move ( ) steps".
+
+
+5. WHAT TURBOWARP / PENGUINMOD HAVE THAT G-WARP DOESN'T (clicks, right-clicks, editor helpers)
+==============================================================================================
+G-Warp result is from my tests unless it says "not tested".
+ Feature                                   Source                 G-Warp
+ ----------------------------------------- ---------------------- ---------------------------------------------
+ Jump to custom block definition           [TWD] [PMW] [GDT]      MISSING - shift/middle-click does nothing (TW.jumpdef)
+   (middle-click / shift-click)
+ Searchable dropdowns                      [TWD] [PMW]            MISSING - plain browser lists (TW.searchdrop)
+ Block switching (right-click a block,     [TWD] [PMW]            MISSING - block menu has 3 items only (A1.menu)
+   switch to a related block)
+ Insert blocks by name popup               [TWD] [PMW]            PARTLY - right-click empty space has a search box
+   (Ctrl+Space / middle-click / shift-click)                      (A2.search) and the palette has one (C.search);
+                                                                  Ctrl+Space does nothing (TW.ctrlspace)
+ Find bar (Ctrl+F)                         [TWD] [PMW] [GDT]      HAS IT for blocks (TW.ctrlf). Costumes / sounds not
+                                                                  searched (code reading, not tested)
+ Copy / paste blocks (Developer tools)     [PMW] [GDT]            MISSING - Ctrl+C / Ctrl+V does nothing (TW.copypaste)
+ Better clean up / "tidy up"               [PMW] [GDT]            DIFFERENT - only separates overlaps (A2.clean)
+ Duplicate with Alt+drag; Ctrl+drag takes  [PMW]                  MISSING - both just do a normal drag (C.middleclick,
+   ONE block                                                      TW.ctrldrag)
+ Save blocks as image (PNG / SVG)          [PMW] (TW: mem)        MISSING - not in the right-click menu (A2.menu)
+ Switch variable scope / swap a variable   [PMW] [GDT]            MISSING - no variable menu (A3.var)
+ Copy reporter values                      [PMW]                  MISSING - no value bubble, monitors not clickable
+ Move costume / sound to top or bottom     [PMW] [GDT]            MISSING - costume menu: duplicate/export/delete only;
+   (right-click)                                                  no sound menu (A5.*)
+ Rename broadcast                          TW addon (mem)         MISSING - and no "New message" at all (C.newmsg)
+ Sprite / costume / sound folders          [TWD] [PMW]            costume folders exist by naming "walk//frame 1"
+                                                                  (v15.49.0, code reading, NOT TESTED); no sprite or
+                                                                  sound folders seen
+ Search sprites by name                    [TWD] [PMW]            not seen in the sprite pane (not tested further)
+ Arrow keys change number fields           [PMW] (unreleased)     MISSING (TW.arrows)
+ Running block border / glow               [PMW] (unreleased);    MISSING (B1.glow)
+                                           Scratch has a glow
+ Editor comment previews (hover)           [PMW]                  no block comments exist, so no previews
+ Sprite delete confirmation                [PMW]                  deletes at once, but "Restore" works (B5.restore)
+ Backpack                                  [TWD]                  not seen in the editor (only mentioned in a text
+                                                                  manifest inside app.html; not tested further)
+ Snap scripts to grid                      [TWD] [PMW]            NOT TESTED
+ File drag and drop into sprite pane       [PMW]                  NOT TESTED
+ Block count in menu bar                   [PMW]                  not seen
+ G-Warp HAS these (TW/PM have them too): clone counter, Ctrl+click flag to mute,
+   project volume, gamepad (all in More > Addons, code reading); mouse X / Y over
+   the stage (seen in screenshots); zoom buttons and Ctrl+wheel (C.zoom); a block
+   search box (C.search); Ctrl+F find (TW.ctrlf).
+
+Sources
+ [TWD] https://desktop.turbowarp.org/  (feature list: "Searchable dropdowns, find bar,
+       jump to block definition, folders, block switching", "Insert blocks by name",
+       "Search sprites by name", debugger, snapping to grid, backpack, onion skinning)
+ [PMW] https://wiki.penguinmod.com/wiki/Addons  (full addon list)
+ [GDT] https://addons.mozilla.org/nl/firefox/addon/scratch-3-developer-tools/
+ Could NOT be read: https://docs.turbowarp.org/addons (permission request timed
+ out), https://turbowarp.org/addons (needs JavaScript),
+ https://scratch.mit.edu/discuss/post/8019859 (fetch error).
+ Everything marked "mem" or "=S3" above is from memory, not checked.
+
+
+6. NOT TESTED
+=============
+ - B1.stop  "click a running script to stop it": scripts cannot be started by
+            clicking (B1.click), so there was nothing to stop.
+ - Costume folders, snap to grid, file drag-and-drop, cloud variables online,
+   the sound editor's own buttons, the paint editor (other reviews cover it).
+
+
+7. TEST SCRIPTS AND THEIR FINAL OUTPUT
+======================================
+Folder: /tmp/claude-0/-home-claude/89a5354a-15ce-5dfe-8bd9-593b440e36e9/scratchpad/qa-clicks/
+ run-all.sh     runs every test, writes all-output.txt, then merge.js
+ lib.js         helpers: open app, drag from palette, read the code area, find menus
+ harness.js / tw.css   offline Tailwind / Font Awesome / JSZip (copied from scratchpad/w)
+ testA1.js      block menu, empty-area menu, palette right-click, undo / redo keys
+ testA4.js      sprite / costume / sound / backdrop menus, stage, monitors, comments
+ testB1.js      click to run, drag & drop, double/shift click, Delete key, dropdowns
+ testB3.js      checkboxes, Make a Variable / List / Block, custom block menus,
+                sprite select / delete, costume and sound lists
+ testB9.js      stage clicks, stage dragging, Stage card, sound select
+ testC.js       More menu, zoom, search, broadcast / variable dropdowns, copy to
+                sprite, reorder sprites, Alt-drag, Upload Sprite, sprite fields
+ testOwner.js   new-block ownership bug, Delete N count, Restore sprite
+ testTW.js      TurboWarp / PenguinMod shortcuts
+ merge.js       joins the *.results.json files -> merged.json + counts
+Run: cd <folder>; sh run-all.sh /home/claude/gwarp/app.html   (about 4-5 minutes)
+
+----- all-output.txt (final run) -----
+===== testA1 =====
+built ["when_flag > move > say > turn_cw"]
+block menu items ["Duplicate","Delete Block","Delete Full Stack"]
+menus seen [{"id":"blockContextMenu","cls":"","items":["Duplicate","Delete Block","Delete Full Stack"],"text":""}]
+[DIFFERENT] A1.menu Right-click block :: items: ["Duplicate","Delete Block","Delete Full Stack"] -- no Add Comment; extra "Delete Full Stack" (shots/A1-block-menu.png)
+after Escape menu still open? true
+[BROKEN] A1.esc Block menu: Escape key :: menu stays open after Escape
+dup before ["when_flag > move > say > turn_cw"] after ["when_flag > move > say > turn_cw","when_flag > move > say > turn_cw"]
+dup copy pos before/after mouse move {"l":"167px","t":"101px"} {"l":"167px","t":"101px"}
+[DIFFERENT] A1.dup.what Duplicate (on middle block "move") :: copy = when_flag > move > say > turn_cw -- G-Warp copies the WHOLE stack incl. the hat above (shots/A1-after-duplicate.png)
+[DIFFERENT] A1.dup.mouse Duplicate follows mouse :: copy is placed 25px down-right, does not follow the mouse
+after ctrl+z ["when_flag > move > say > turn_cw"]
+after Delete Block on move ["when_flag > say > turn_cw"]
+[WORKS] A1.del.mid Delete Block (middle block) :: ["when_flag > say > turn_cw"]
+after undo ["when_flag > move > say > turn_cw"]
+[WORKS] A1.del.undo Ctrl+Z after Delete Block :: ["when_flag > move > say > turn_cw"]
+after ctrl+shift+z ["when_flag > move > say","turn_cw"]
+[BROKEN] B7.redo.shiftz Ctrl+Shift+Z (redo) after an undo :: ["when_flag > move > say","turn_cw"] -- expected ["when_flag > say > turn_cw"]
+hat menu ["Duplicate","Delete Block","Delete Full Stack"] after delete hat ["move"]
+[WORKS] A1.del.hat Delete Block on a hat :: ["move"]
+C stack ["when_flag > repeat[say,move] > turn_cw"]
+C-block menu ["Duplicate","Delete Block","Delete Full Stack"]
+after delete C ["when_flag > turn_cw"]
+[DIFFERENT] A1.del.c Delete Block on C-block with 2 inside :: menu ["Duplicate","Delete Block","Delete Full Stack"] -> ["when_flag > turn_cw"] -- no block count shown in the menu
+reporter dropped: ["when_flag > move(x_position)"]
+reporter menu ["Duplicate","Delete Block","Delete Full Stack"] target move
+after Delete Block on reporter -> ["when_flag"]
+[BROKEN] A1.rep.del Right-click reporter inside a slot > Delete Block :: ["when_flag"] -- menu acts on the block that holds the reporter (shots/A1-reporter-menu.png)
+undo -> ["when_flag > move(x_position)"]
+reporter dup -> ["when_flag > move(x_position)","when_flag > move(x_position)"]
+[BROKEN] A1.rep.dup Right-click reporter inside a slot > Duplicate :: ["when_flag > move(x_position)","when_flag > move(x_position)"]
+menu at bottom {"top":874,"bottom":986}
+[BROKEN] A1.edge Block menu near bottom of window :: menu bottom=986 (window 900)
+ws menu [{"id":"gw35Menu","cls":"","items":["Undo","Redo","Clean up Blocks","Add Comment","Delete 2 Blocks"],"text":""}]
+[WORKS] A2.menu Right-click empty code area :: ["Undo","Redo","Clean up Blocks","Add Comment","Delete 2 Blocks"] -- + a block search box
+menu undo ["when_flag > move","say"] -> ["when_flag > move","say"]
+[BROKEN] A2.undo Menu: Undo right after dragging in a new block :: ["when_flag > move","say"] -- same bug as Ctrl+Z (B7.undo.add)
+after cleanup ["600px,500px","250px,40px"]
+[DIFFERENT] A2.clean Menu: Clean up Blocks (stacks far apart) :: ["600px,500px","250px,40px"] -- stacks that do not overlap are not moved
+cleanup overlapping ["300px,300px","305px,433px"]
+[WORKS] A2.clean2 Menu: Clean up Blocks (2 stacks on top of each other) :: ["300px,300px","305px,433px"]
+[WORKS] A2.comment Menu: Add Comment :: comment text: hello comment
+delete label Delete 2 Blocks
+confirm []
+after delete all ["say"]
+[BROKEN] A2.delall Menu: Delete N Blocks :: ["say"] -- label: Delete 2 Blocks
+undo delete all ["when_flag > move","say","(comment)"]
+[WORKS] A2.delall.undo Ctrl+Z after Delete N Blocks :: ["when_flag > move","say","(comment)"]
+after search add ["when_flag > move","say","(comment)","glide_xy"]
+[WORKS] A2.search Menu search box (TurboWarp extra) :: ["when_flag > move","say","(comment)","glide_xy"]
+menu undo/redo after delete ["when_flag > say"] ["when_flag > move > say"] redo enabled true ["when_flag > say"]
+[WORKS] A2.undo2 Menu: Undo after Delete Block :: ["when_flag > say"] -> ["when_flag > move > say"]
+[WORKS] A2.redo Menu: Redo after that Undo :: Redo enabled: true, ["when_flag > move > say"] -> ["when_flag > say"]
+menus after block menu + empty right-click ["blockContextMenu","gw35Menu"]
+[BROKEN] A1.twomenus Block menu open, then right-click empty code area :: ["blockContextMenu","gw35Menu"] -- shots/A1-two-menus-open.png
+palette move menus [] null
+[WORKS] A3.block Right-click a palette block :: no menu
+palette var menus [] null
+[MISSING] A3.var Right-click a variable in the palette :: no menu (browser menu blocked or nothing)
+PAGEERRORS 0 []
+exit 0
+===== testA4 =====
+sprite menu: gw28Menu: duplicate / find on stage / delete
+[DIFFERENT] A4.menu Right-click sprite thumbnail :: gw28Menu: duplicate / find on stage / delete -- no "export" (.sprite3); has "find on stage" (shots/A4-sprite-menu.png)
+dup: ok
+sprites after duplicate ["G-Spark","G-Spark2"]
+[WORKS] A4.dup Sprite menu: duplicate :: ["G-Spark","G-Spark2"], stacks owned by copy: 1
+del: ok
+confirm dialog: null native dialog: undefined
+sprites after delete ["G-Spark"]
+[WORKS] A4.del Sprite menu: delete (on 2nd sprite) :: ["G-Spark"]
+add sprite menu: gw33Menu: Choose a Sprite / Upload Sprite / Surprise / Paint / Plain sprite
+[WORKS] B5.addmenu Add Sprite button :: gw33Menu: Choose a Sprite / Upload Sprite / Surprise / Paint / Plain sprite -- no Camera item (Scratch 3 has no camera here either)
+plain: ok
+after plain ["G-Spark","Sprite2"]
+costume menu gw37Menu: duplicate / export / delete
+[WORKS] A5.cos.menu Right-click costume thumbnail :: gw37Menu: duplicate / export / delete
+ok
+costumes ["costume1","costume1 2"]
+[WORKS] A5.cos.dup Costume menu: duplicate :: ["costume1","costume1 2"]
+ok
+export download: costume1 2.svg
+[WORKS] A5.cos.export Costume menu: export :: download costume1 2.svg
+ok
+after delete ["costume1"]
+[WORKS] A5.cos.del Costume menu: delete :: ["costume1"]
+delete only costume -> disabled ["costume1"]
+[WORKS] A5.cos.delLast Delete the only costume :: item disabled, costumes ["costume1"]
+sound menu 
+[MISSING] A5.snd.menu Right-click sound thumbnail :: no menu
+sound buttons visible ["Play Piano C4 · Custom"]
+backdrop thumb menu 
+[WORKS] A8.bd.thumb Right-click the Stage card / backdrop thumbnail (sprite pane) :: no menu
+stage selected? {"idx":2,"stage":true,"tab":"Backdrops"}
+backdrop list menu gw37Menu: duplicate / export / delete
+[WORKS] A8.bd.list Right-click a backdrop in the Backdrops tab :: gw37Menu: duplicate / export / delete
+stage canvas menu 
+[WORKS] A8.canvas Right-click stage canvas (on a sprite) :: no menu, browser menu blocked
+var monitor {"shown":"block","x":1007.984375,"y":205.296875,"topEl":"stageCanvas","z":"auto","pe":"none","txt":"my variable: 0"}
+[BROKEN] A6.visible Variable / list monitor visible on stage :: monitor display=block, but the element on top at that spot is stageCanvas; z-index auto -- monitor is hidden under the stage canvas (shots/A6-stage-with-monitors-on.png)
+monitor rclick 
+[MISSING] A6.menu Right-click variable monitor :: no menu (monitor has pointer-events:none)
+[MISSING] A6.list Right-click list monitor :: no menu (pointer-events:none; monitor is plain text "my list: a  b")
+[MISSING] A6.drag Drag a monitor on the stage :: does not move
+comment rect {"x":650,"y":445,"w":200,"h":106}
+comment bar rclick gw35Menu: Undo / Redo / Clean up Blocks / Add Comment / Delete 0 Blocks
+[BROKEN] A7.menu Right-click a comment :: gw35Menu: Undo / Redo / Clean up Blocks / Add Comment / Delete 0 Blocks -- opens the empty-code-area menu instead
+resize css {"comment":"none","ta":"vertical"}
+size before 200 106 after 200 169
+[WORKS] A7.resize Resize a comment (drag corner) :: 200x106 -> 200x169 (css resize: none/vertical)
+[WORKS] A7.fold Minimize (fold) a comment :: folds
+[WORKS] A7.drag Drag a comment by its top bar :: 298px -> 398px
+[WORKS] A7.delete Delete a comment with its x button :: removed
+PAGEERRORS 0 []
+exit 0
+===== testB1 =====
+click stack (move 10) {"x":0,"y":0,"dir":90,"running":false,"threads":0} -> {"x":0,"y":0,"dir":90,"running":false,"threads":0}
+[MISSING] B1.click Click a script in the code area :: x 0 -> 0
+forever shape ["forever[turn_cw]"]
+forever click {"x":0,"y":0,"dir":90,"running":false,"threads":0} -> {"x":0,"y":0,"dir":90,"running":false,"threads":0} {"cls":"block-stack | scratch-block block-c-shape bg-control","shadow":"none","filter":"drop-shadow(rgba(0, 0, 0, 0.22) 0px 1px 1px)","outline":"none"}
+[MISSING] B1.glow Running script glows :: {"cls":"block-stack | scratch-block block-c-shape bg-control","shadow":"none","filter":"drop-shadow(rgba(0, 0, 0, 0.22) 0px 1px 1px)","outli
+click again {"x":0,"y":0,"dir":90,"running":false,"threads":0} {"x":0,"y":0,"dir":90,"running":false,"threads":0}
+[NOT TESTED] B1.stop Click a running script again :: dir 90 -> 90 after 0.5s
+reporter click bubbles []
+[MISSING] B1.reporter Click a reporter (x position) :: nothing shown
+boolean click bubbles []
+[MISSING] B1.boolean Click a boolean (mouse down?) :: nothing shown
+palette click {"x":0,"y":0,"dir":90,"running":false,"threads":0} {"x":0,"y":0,"dir":90,"running":false,"threads":0} ["forever[turn_cw]","x_position","mouse_down"]
+[MISSING] B1.palette Click a block in the palette :: x 0 -> 0
+drag middle ["when_flag > move","say > turn_cw"]
+[WORKS] B2.middle Drag a block from the middle of a stack :: ["when_flag > move","say > turn_cw"]
+insert between ["when_flag > say > turn_cw > move"]
+[WORKS] B2.between Drop a stack between two blocks :: ["when_flag > say > turn_cw > move"]
+if at end ["when_flag > say > turn_cw > move > if[]"]
+[WORKS] B2.end Drop a block at the end of a stack :: ["when_flag > say > turn_cw > move > if[]"]
+into if ["when_flag > say > turn_cw > move > if[next_costume]"]
+[WORKS] B2.cbody Drop a block into an "if" C-block :: ["when_flag > say > turn_cw > move > if[next_costume]"]
+if slot {"x":520.328125,"y":327.5,"w":52,"h":20,"html":"<span class=\"gw-input-slot block-slot-boolean\" data-slot-index=\"0\" data-slot-kind=\"boolean\" title=\"Click to build a nested reporter / boolean expression\"><span "}
+bool in if ["when_flag > say > turn_cw > move > if(key_pressed)[next_costume]"]
+[WORKS] B2.bool Drop a boolean into the "if" slot :: ["when_flag > say > turn_cw > move > if(key_pressed)[next_costume]"]
+reporter in move ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]"]
+[WORKS] B2.reporter Drop a reporter into a number input :: ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]"]
+hat below stack ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]","when_clicked"]
+[WORKS] B2.hat Drop a hat block under a stack :: ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]","when_clicked"]
+drag to palette ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]"]
+[WORKS] B2.trash Drag a block back onto the palette :: ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]"]
+dblclick {"cls":"scratch-block bg-motion gw-stack-block"}
+[DIFFERENT] B7.dbl Double-click a block :: nothing happens (breakpoint=undefined; the dblclick->breakpoint code in app.html does not fire)
+shift click selection []
+[WORKS] B7.shift Shift-click a block :: nothing special
+Delete key ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]"] -> ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]"]
+[MISSING] B7.delkey Click a block, press Delete :: ["when_flag > say > turn_cw > move(mouse_x) > if(key_pressed)[next_costume]"]
+undo add ["when_flag > move","say"] ["when_flag > move","say"] ["when_flag > move","say"]
+[BROKEN] B7.undo.add Ctrl+Z right after dragging a new block in :: ["when_flag > move","say"] -> ["when_flag > move","say"] -> (2nd Ctrl+Z) ["when_flag > move","say"] -- history keeps 2 snapshots per drop; undo only steps between them
+delete/undo/redo ["when_flag","say"] ["when_flag > move","say"] ["when_flag","say"] future 0
+[WORKS] B7.redo Delete Block, Ctrl+Z, then Ctrl+Y (redo) :: ["when_flag","say"] -> undo ["when_flag > move","say"] -> redo ["when_flag","say"]
+key select {"x":566.984375,"y":201,"w":98,"h":20,"opts":42,"val":"space"}
+[WORKS] B8.key Key dropdown in "when key pressed" :: 42 options, space -> right arrow
+[WORKS] B8.costume Costume dropdown in "switch costume to" :: ["costume1"]
+[WORKS] B8.number Edit a number input (move 10 -> 25) :: value 25
+[DIFFERENT] B8.numletters Type letters into a number input :: value "abc"
+[WORKS] B8.goto "go to" dropdown :: ["random position","mouse-pointer"]
+PAGEERRORS 0 []
+exit 0
+===== testB3 =====
+palette checkboxes ["sec-variables:my variable"]
+[MISSING] B3.motion Checkbox next to x position / y position / direction / costume # / size / volume / timer / answer :: no checkbox (only variables have one): ["sec-variables:my variable"]
+[WORKS] B3.var Variable checkbox :: visible true -> false -> true -- switch works, but the monitor is drawn under the stage (see A6)
+var dialog gw9VarDlg: G New Variable New variable name For all sprites For this sprite only (G-Spark) Cloud variable (shared online, numbers only · ● Moderate) Cancel OK
+[WORKS] B4.var.dlg Make a Variable dialog :: gw9VarDlg: G New Variable New variable name For all sprites For this sprite only (G-Spark) Cloud variable (shared online, numbers only · ● Moderate) Cancel OK -- shots/B4-make-variable.png
+vars {"g":["my variable","score"],"chips":["my variable","score"]}
+[WORKS] B4.var.make Make variable "score" (OK) :: {"g":["my variable","score"],"chips":["my variable","score"]}
+dup var name ->  | toast There is already a variable called “score”. | native undefined
+[WORKS] B4.var.dupname Make a variable with a name that already exists :: There is already a variable called “score”.
+local var {"global":true,"local":"{\"mylocal\":0}"}
+[WORKS] B4.var.local Make variable "For this sprite only" :: stored in G-Spark localVars: {"mylocal":0}
+list dialog gw9VarDlg: G New List New list name For all sprites For this sprite only (G-Spark) Cancel OK
+[WORKS] B4.list.dlg Make a List dialog :: gw9VarDlg: G New List New list name For all sprites For this sprite only (G-Spark) Cancel OK
+lists ["my list","scores"]
+[WORKS] B4.list.make Make list "scores" :: ["my list","scores"]
+[MISSING] B3.list Checkbox next to a list in the palette :: no list reporter / checkbox in the palette
+block dialog gw7Maker: Make a Block Click the pink block to type its name. Add inputs and labels below. Add an input number or text Add an input boolean text Add a label Run without screen refresh Runs the whole block in one frame. Good for drawing and maths. Cancel OK
+[WORKS] B4.block.dlg Make a Block dialog :: number or text:true, boolean:true, label:true, without screen refresh:true
+block dialog buttons ["Add an inputnumber or text","Add an inputboolean","textAdd a label","Cancel","OK"]
+custom block made {"define":["define_custom:definejumpnumber or text"],"pal":["call_custom:jump","get_param:number or text"]}
+[WORKS] B4.block.make Make block "jump" with a number input :: {"define":["define_custom:definejumpnumber or text"],"pal":["call_custom:jump","get_param:number or text"]}
+define menu ["Duplicate","Delete Block","Delete Full Stack"]
+[MISSING] A1.custom.define Right-click a "define" hat :: ["Duplicate","Delete Block","Delete Full Stack"] -- no "Edit" to change the block name/inputs
+call menu ["Duplicate","Delete Block","Delete Full Stack"]
+[MISSING] A1.custom.call Right-click a custom block call :: ["Duplicate","Delete Block","Delete Full Stack"]
+palette custom block menu []
+[MISSING] A3.custom Right-click a custom block in the palette :: no menu
+add menu: [{"id":"gw33Menu","cls":"","items":["Choose a Sprite","Upload Sprite","Surprise","Paint","Plain sprite"],"text":""}]
+sprites now G-Spark,Sprite2
+[WORKS] B5.select Click a sprite thumbnail :: active 0 -> 1
+[WORKS] B5.delx x (delete) button on the selected sprite :: sprites 2 -> 1
+costumes {"list":["c1","c2","c3"],"engine":["c1","c2","c3"],"active":1}
+[WORKS] B6.cos.select Click a costume in the list :: active 1 -> 2
+after drag reorder {"list":["c1","c2","c3"],"engine":["c1","c2","c3"],"active":2}
+[MISSING] B6.cos.reorder Drag costume 3 to the top of the list :: ["c1","c2","c3"]
+costume buttons [":",":","gwCosPaintBtn:Paint new","gwCosUploadBtn:Upload","gwCosPlayBtn:Play"]
+[DIFFERENT] B6.cos.buttons Costume add buttons :: ["gwCosPaintBtn:Paint new","gwCosUploadBtn:Upload","gwCosPlayBtn:Play"] -- no costume library / surprise / camera
+[WORKS] B6.cos.paint Costumes: Paint new :: costumes 3 -> 4
+[WORKS] B6.cos.upload Costumes: Upload :: file picker opened
+sounds {"list":["true","false"],"names":["Piano C4 · Custom","Piano C4 · Custom 2"]}
+sound drag {"list":["true","false"],"names":["s1","s2"]}
+[MISSING] B6.snd.reorder Drag sound 2 above sound 1 :: ["s1","s2"]
+[DIFFERENT] B6.snd.buttons Sound add buttons :: ["Upload","Record"] -- no sound library button (the Instruments / Loop / Song makers can make sounds)
+sound delete buttons [{"id":"gwSndDelete","t":"Delete"}]
+[WORKS] B6.snd.delete Delete a sound :: "Delete" button in the sound editor: sounds 2 -> 1 -- no x on the sound thumbnail, no right-click menu
+PAGEERRORS 0 []
+exit 0
+===== testB9 =====
+["when_clicked > change_x","when_flag > forever[]"]
+running? true
+click while running (forever loop keeps project running) 0 -> 10
+[WORKS] B9.click.running Click the sprite on the stage while a script runs :: x 0 -> 10
+[BROKEN] B9.click.stopped Click the sprite on the stage when nothing runs :: x 10 -> 10 -- GW.stageClick returns early when Engine.isRunning is false
+[MISSING] B9.drag Drag a sprite on the stage in the editor :: {"x":10,"y":0} -> {"x":10,"y":0} -- no stage-drag code found; "set drag mode" only stores a flag
+click STAGE label {"stage":true,"motion":"Motion Stage selected: no motion blocks","tab":"Backdrops"}
+[WORKS] B5.stagecard.STAGElabel Click the Stage card (STAGE label) :: Stage selected
+click "1 backdrop" text {"stage":true,"motion":"Motion Stage selected: no motion blocks","tab":"Backdrops"}
+[WORKS] B5.stagecard.1backdroptext Click the Stage card ("1 backdrop" text) :: Stage selected
+click backdrop thumbnail {"stage":true,"motion":"Motion Stage selected: no motion blocks","tab":"Backdrops"}
+[WORKS] B5.stage Click the Stage (backdrop thumbnail) :: {"stage":true,"motion":"Motion Stage selected: no motion blocks","tab":"Backdrops"}
+[WORKS] B6.snd.select Click a (not selected) sound in the list :: ["true","false"] -> ["false","true"]
+PAGEERRORS 0 []
+exit 0
+===== testC =====
+MORE MENU ["New project","Load from your computer…Ctrl+O","SaveCtrl+S","Save as…Ctrl+Shift+S","Report a bug…","More file options","Undo","Redo","Turbo Mode","Tools","Settings","Help & info"]
+[WORKS] C.file.save Save to your computer (File menu) :: More menu has: SaveCtrl+S / Save as…Ctrl+Shift+S
+[WORKS] C.file.load Load from your computer :: Load from your computer…Ctrl+O
+[WORKS] C.turbo Turbo mode :: Turbo Mode
+[WORKS] C.zoom Zoom + / − / = buttons in the code area :: 1 -> + 1.2 -> −− 0.83 -> = 1
+[WORKS] C.zoomwheel Ctrl + mouse wheel in the code area :: 1 -> 1.93
+[WORKS] C.search Search blocks box in the palette (TurboWarp/Scratch Addons) :: ["glide_xy"] (1 shown)
+[MISSING] C.newmsg Broadcast dropdown "New message" :: ["message1","message2"]
+[MISSING] C.renamemsg Rename a broadcast (TurboWarp addon) :: ["message1","message2"]
+[MISSING] C.renamevar Rename / delete a variable :: ["my variable"]
+after drag to sprite tile ["0:when_flag>move","1:when_flag>move"]
+[WORKS] C.copyToSprite Drag a script onto another sprite's thumbnail :: ["0:when_flag>move","1:when_flag>move"]
+[MISSING] C.spriteReorder Drag sprites in the sprite list to reorder :: ["G-Spark","Sprite2"] -> ["G-Spark","Sprite2"]
+[WORKS] C.bgdrag Drag the empty code-area background :: scroll 64,0 -> 264,200
+alt-drag ["when_flag","move"]
+[MISSING] C.middleclick Middle-click a block / Alt+drag (Scratch Addons "duplicate") :: stacks 1 -> middle-click 1 -> alt-drag 2; shape ["when_flag","move"] -- Alt+drag just moves the block
+[MISSING] C.importSprite Upload Sprite accepts a .sprite3 file :: file picker accept = "image/*" -- pictures only
+[WORKS] B5.choose Add Sprite > Choose a Sprite :: G Choose a Sprite All Games Nature Animals Things Rocket Enemy Ship Laser Coin Heart Star Ball Platform Tree Cloud Bird 
+[WORKS] B5.xfield Type 100 in the sprite x box :: sprite x = 100
+[WORKS] B5.rename Rename the sprite in the name box :: name = Hero / tile: Hero
+[WORKS] C.stagesize Small / normal stage buttons :: width 478 -> small 238
+[WORKS] C.flagstop Start (green flag) then Stop :: dir 90 -> run -90 -> stop -45 -> 0.5s later -45
+PAGEERRORS 0 []
+exit 0
+===== testOwner =====
+drop on G-Spark: when_flag@none | after clicking Sprite2: when_flag@1 | Sprite2 sees ["when_flag"] | G-Spark sees []
+[BROKEN] OWN.switch Drag one block into G-Spark's code, then click another sprite :: G-Spark code after: []; Sprite2 code: ["when_flag"] -- shots/OWN-script-jumped-to-sprite2.png
+after add sprite: new sprite sees ["when_key"] | G-Spark sees []
+[BROKEN] OWN.add Drag one block in, then Add Sprite > Plain sprite :: new sprite code: ["when_key"]; G-Spark code: []
+duplicate: G-Spark [] copy ["when_flag"] when_flag@1
+[BROKEN] OWN.dup Drag one block in, then duplicate the sprite :: G-Spark: []; G-Spark2: ["when_flag"] -- the original LOSES its script, the copy gets it
+3 blocks on screen, menu says Delete 2 Blocks
+[BROKEN] OWN.count Right-click empty area with 3 blocks (last one just dropped) :: menu says "Delete 2 Blocks"; the just-dropped "say" is not counted and is not deleted -- shots/A2-workspace-menu.png
+restore 2 1 2 Restore
+[WORKS] B5.restore Delete a sprite, then Restore :: sprites 2 -> delete 1 -> "Restore" 2
+PAGEERRORS 0 []
+exit 0
+===== testTW =====
+[MISSING] TW.ctrlspace Ctrl+Space in the code area :: nothing opens
+[WORKS] TW.ctrlf Ctrl+F in the code area, type "say" :: box "Find blocks…", 1 of 1, highlighted ["say"] -- G-Warp Addons: "Find in scripts" (blocks only, not costumes/sounds)
+ctrl-drag ["when_flag > move","say > turn_cw"]
+[MISSING] TW.ctrldrag Ctrl+drag a block in the middle of a script :: ["when_flag > move","say > turn_cw"] -- takes the block and all blocks below (normal drag)
+[MISSING] TW.copypaste Click a block, Ctrl+C, Ctrl+V :: blocks 4 -> 4
+[MISSING] TW.arrows Arrow Up inside a number input :: value 10
+[MISSING] TW.jumpdef Shift-click / middle-click a custom block :: code area scrollTop 0 -> 0 (define is at y=2200)
+[MISSING] TW.searchdrop Searchable dropdowns :: dropdowns are plain browser <SELECT> lists (no search box)
+PAGEERRORS 0 []
+exit 0
+===== MERGED RESULTS =====
+DIFFERENT  A1.menu                Right-click block
+BROKEN     A1.esc                 Block menu: Escape key
+DIFFERENT  A1.dup.what            Duplicate (on middle block "move")
+DIFFERENT  A1.dup.mouse           Duplicate follows mouse
+WORKS      A1.del.mid             Delete Block (middle block)
+WORKS      A1.del.undo            Ctrl+Z after Delete Block
+BROKEN     B7.redo.shiftz         Ctrl+Shift+Z (redo) after an undo
+WORKS      A1.del.hat             Delete Block on a hat
+DIFFERENT  A1.del.c               Delete Block on C-block with 2 inside
+BROKEN     A1.rep.del             Right-click reporter inside a slot > Delete Block
+BROKEN     A1.rep.dup             Right-click reporter inside a slot > Duplicate
+BROKEN     A1.edge                Block menu near bottom of window
+WORKS      A2.menu                Right-click empty code area
+BROKEN     A2.undo                Menu: Undo right after dragging in a new block
+DIFFERENT  A2.clean               Menu: Clean up Blocks (stacks far apart)
+WORKS      A2.clean2              Menu: Clean up Blocks (2 stacks on top of each other)
+WORKS      A2.comment             Menu: Add Comment
+BROKEN     A2.delall              Menu: Delete N Blocks
+WORKS      A2.delall.undo         Ctrl+Z after Delete N Blocks
+WORKS      A2.search              Menu search box (TurboWarp extra)
+WORKS      A2.undo2               Menu: Undo after Delete Block
+WORKS      A2.redo                Menu: Redo after that Undo
+BROKEN     A1.twomenus            Block menu open, then right-click empty code area
+WORKS      A3.block               Right-click a palette block
+MISSING    A3.var                 Right-click a variable in the palette
+DIFFERENT  A4.menu                Right-click sprite thumbnail
+WORKS      A4.dup                 Sprite menu: duplicate
+WORKS      A4.del                 Sprite menu: delete (on 2nd sprite)
+WORKS      B5.addmenu             Add Sprite button
+WORKS      A5.cos.menu            Right-click costume thumbnail
+WORKS      A5.cos.dup             Costume menu: duplicate
+WORKS      A5.cos.export          Costume menu: export
+WORKS      A5.cos.del             Costume menu: delete
+WORKS      A5.cos.delLast         Delete the only costume
+MISSING    A5.snd.menu            Right-click sound thumbnail
+WORKS      A8.bd.thumb            Right-click the Stage card / backdrop thumbnail (sprite pane)
+WORKS      A8.bd.list             Right-click a backdrop in the Backdrops tab
+WORKS      A8.canvas              Right-click stage canvas (on a sprite)
+BROKEN     A6.visible             Variable / list monitor visible on stage
+MISSING    A6.menu                Right-click variable monitor
+MISSING    A6.list                Right-click list monitor
+MISSING    A6.drag                Drag a monitor on the stage
+BROKEN     A7.menu                Right-click a comment
+WORKS      A7.resize              Resize a comment (drag corner)
+WORKS      A7.fold                Minimize (fold) a comment
+WORKS      A7.drag                Drag a comment by its top bar
+WORKS      A7.delete              Delete a comment with its x button
+MISSING    B1.click               Click a script in the code area
+MISSING    B1.glow                Running script glows
+NOT TESTED B1.stop                Click a running script again
+MISSING    B1.reporter            Click a reporter (x position)
+MISSING    B1.boolean             Click a boolean (mouse down?)
+MISSING    B1.palette             Click a block in the palette
+WORKS      B2.middle              Drag a block from the middle of a stack
+WORKS      B2.between             Drop a stack between two blocks
+WORKS      B2.end                 Drop a block at the end of a stack
+WORKS      B2.cbody               Drop a block into an "if" C-block
+WORKS      B2.bool                Drop a boolean into the "if" slot
+WORKS      B2.reporter            Drop a reporter into a number input
+WORKS      B2.hat                 Drop a hat block under a stack
+WORKS      B2.trash               Drag a block back onto the palette
+DIFFERENT  B7.dbl                 Double-click a block
+WORKS      B7.shift               Shift-click a block
+MISSING    B7.delkey              Click a block, press Delete
+BROKEN     B7.undo.add            Ctrl+Z right after dragging a new block in
+WORKS      B7.redo                Delete Block, Ctrl+Z, then Ctrl+Y (redo)
+WORKS      B8.key                 Key dropdown in "when key pressed"
+WORKS      B8.costume             Costume dropdown in "switch costume to"
+WORKS      B8.number              Edit a number input (move 10 -> 25)
+DIFFERENT  B8.numletters          Type letters into a number input
+WORKS      B8.goto                "go to" dropdown
+MISSING    B3.motion              Checkbox next to x position / y position / direction / costume # / size / volume / timer / answer
+WORKS      B3.var                 Variable checkbox
+WORKS      B4.var.dlg             Make a Variable dialog
+WORKS      B4.var.make            Make variable "score" (OK)
+WORKS      B4.var.dupname         Make a variable with a name that already exists
+WORKS      B4.var.local           Make variable "For this sprite only"
+WORKS      B4.list.dlg            Make a List dialog
+WORKS      B4.list.make           Make list "scores"
+MISSING    B3.list                Checkbox next to a list in the palette
+WORKS      B4.block.dlg           Make a Block dialog
+WORKS      B4.block.make          Make block "jump" with a number input
+MISSING    A1.custom.define       Right-click a "define" hat
+MISSING    A1.custom.call         Right-click a custom block call
+MISSING    A3.custom              Right-click a custom block in the palette
+WORKS      B5.select              Click a sprite thumbnail
+WORKS      B5.delx                x (delete) button on the selected sprite
+WORKS      B6.cos.select          Click a costume in the list
+MISSING    B6.cos.reorder         Drag costume 3 to the top of the list
+DIFFERENT  B6.cos.buttons         Costume add buttons
+WORKS      B6.cos.paint           Costumes: Paint new
+WORKS      B6.cos.upload          Costumes: Upload
+MISSING    B6.snd.reorder         Drag sound 2 above sound 1
+DIFFERENT  B6.snd.buttons         Sound add buttons
+WORKS      B6.snd.delete          Delete a sound
+WORKS      B9.click.running       Click the sprite on the stage while a script runs
+BROKEN     B9.click.stopped       Click the sprite on the stage when nothing runs
+MISSING    B9.drag                Drag a sprite on the stage in the editor
+WORKS      B5.stagecard.STAGElabel Click the Stage card (STAGE label)
+WORKS      B5.stagecard.1backdroptext Click the Stage card ("1 backdrop" text)
+WORKS      B5.stage               Click the Stage (backdrop thumbnail)
+WORKS      B6.snd.select          Click a (not selected) sound in the list
+WORKS      C.file.save            Save to your computer (File menu)
+WORKS      C.file.load            Load from your computer
+WORKS      C.turbo                Turbo mode
+WORKS      C.zoom                 Zoom + / − / = buttons in the code area
+WORKS      C.zoomwheel            Ctrl + mouse wheel in the code area
+WORKS      C.search               Search blocks box in the palette (TurboWarp/Scratch Addons)
+MISSING    C.newmsg               Broadcast dropdown "New message"
+MISSING    C.renamemsg            Rename a broadcast (TurboWarp addon)
+MISSING    C.renamevar            Rename / delete a variable
+WORKS      C.copyToSprite         Drag a script onto another sprite's thumbnail
+MISSING    C.spriteReorder        Drag sprites in the sprite list to reorder
+WORKS      C.bgdrag               Drag the empty code-area background
+MISSING    C.middleclick          Middle-click a block / Alt+drag (Scratch Addons "duplicate")
+MISSING    C.importSprite         Upload Sprite accepts a .sprite3 file
+WORKS      B5.choose              Add Sprite > Choose a Sprite
+WORKS      B5.xfield              Type 100 in the sprite x box
+WORKS      B5.rename              Rename the sprite in the name box
+WORKS      C.stagesize            Small / normal stage buttons
+WORKS      C.flagstop             Start (green flag) then Stop
+BROKEN     OWN.switch             Drag one block into G-Spark's code, then click another sprite
+BROKEN     OWN.add                Drag one block in, then Add Sprite > Plain sprite
+BROKEN     OWN.dup                Drag one block in, then duplicate the sprite
+BROKEN     OWN.count              Right-click empty area with 3 blocks (last one just dropped)
+WORKS      B5.restore             Delete a sprite, then Restore
+MISSING    TW.ctrlspace           Ctrl+Space in the code area
+WORKS      TW.ctrlf               Ctrl+F in the code area, type "say"
+MISSING    TW.ctrldrag            Ctrl+drag a block in the middle of a script
+MISSING    TW.copypaste           Click a block, Ctrl+C, Ctrl+V
+MISSING    TW.arrows              Arrow Up inside a number input
+MISSING    TW.jumpdef             Shift-click / middle-click a custom block
+MISSING    TW.searchdrop          Searchable dropdowns
+COUNTS {"DIFFERENT":10,"BROKEN":16,"WORKS":75,"MISSING":31,"NOT TESTED":1} total 133
+----- end of output -----
