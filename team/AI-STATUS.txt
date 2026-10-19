@@ -1,9 +1,9 @@
 G-WARP — CURRENT TEAM STATUS
-Updated: 2026-10-18 | Owner: Creapter1
-Evidence boundary: GitHub metadata/document review only; no browser/runtime test in this cleanup.
+Updated: 2026-10-19 | Owner: Creapter1
+Evidence boundary: GitHub source/diff and document review by ChatGPT. ChatGPT did NOT run a browser/runtime test. Browser test results below are explicitly attributed to Claude's repository reports; the newest same-version patch still needs a fresh test run.
 
 SOURCE REFERENCE
-At main commit 11fdea2af8ad393f56b988b307781eb739ace638, app.html blob was 7ce527ca2908c63bbdfe642856ca29fd82178648 (2,327,544 bytes) and index.html was d8cf02962b20c0379a51aab7d46d829925325dbd (586,179 bytes). Later commits from this cleanup are documentation-only. Claude must re-fetch current hashes/diffs in its actual work copy before any source edit.
+At main commit e00ce5c052051d4b7156173b036a326d5a682a83, app.html blob is 5ca624a515b9fc1310814c4740608c1cf3071028 (2,440,120 bytes; Beta v15.48.0) and index.html blob is 88b8d46aeaa2056828a0d445b82649a0c5ed986f (586,667 bytes). Claude's v15.48.0 release and same-version shape-handle patch changed app.html after the role-migration baseline; those are separate Claude commits, not part of ChatGPT's migration. Re-fetch hashes in the authorized working copy before further source changes.
 
 CLEANUP COMPLETED
 - Restored AI-TEAM.txt from its referenced good blob; fixed malformed log text and recorded Grok G5 report delivery.
@@ -11,22 +11,26 @@ CLEANUP COMPLETED
 - Claude plan v2.1 now routes through current status/checkpoint; 2026-10-17 plan and 2026-10-14 handoff are archived pointers.
 - Consolidated unique notes into chatgpt/README.md, deleted duplicate chatgpt/README.txt, and converted overlapping progress/inventory snapshots to pointers. Former text is retained in Git history.
 - Updated TODO.txt and continuous queue to separate delivered static review from pending runtime acceptance; simplified root README links.
-- No app.html/index.html edits, runtime tests, integration or deployment.
+- The role migration itself did not edit app.html/index.html and did not run runtime tests. Subsequent Claude commits independently changed app.html for Beta v15.48.0; main now contains those source changes. This status file distinguishes those activities.
 
-CURRENT PRIORITIES (NOT CLAIMING FIXES)
-- P0 freeze/Stop: reproduce/measure first. The 81,000-clone/~45-second symptom remains owner-reported, not independently reproduced. chatgpt/clone-safety.js is disconnected.
-- Costume candidates: source/API evidence map and isolated stage-vs-costume canvas tests remain required.
-- Scratch link/Gemini extension: not end-to-end verified; packaging, permissions, browser tests and owner-confirmed target URL remain open.
-- Protobuf .pmp: incomplete without confirmed parser API and a real legal fixture/assets. Preserve existing .sb3 and ZIP .pmp support.
-- Scratch parity: Grok's 75 cases are written tests, not a passing automated suite.
-- Grok G5 static gallery audit is delivered; published-site extension loading remains unverified.
-- Buffy-labelled add-on/settings ZIP: syntax checked + static review only. Model authorship unverified; no browser test or integration. gemini/lab/BUFFY-ADDONS-SETTINGS-REVIEW.txt remains a misrouted review copy; its model authorship is unverified.
+CURRENT PRIORITIES (SOURCE/REPORT REVIEW)
+- Current main source: Beta v15.48.0. Claude's release log reports the costume editor Select/transform changes, Scratch behavior fixes, and game speed improvements (zombie project reported 2 -> 58 FPS; The worst day 23 -> 37 FPS). These are Claude-reported test results, not independently reproduced by ChatGPT. The performance benchmark plan exists; a full new controlled benchmark cycle has not been recorded.
+- Latest shape-handle patch: the later same-version commit adds three assertions to claude/tests/test_select.js (newly drawn rectangle keeps handles, immediate resize works, clicking elsewhere draws a new shape). The prior "ALL PASS" report predates these assertions; no subsequent run result is recorded. RE-RUN REQUIRED.
+- Clone freeze/Stop: team/P0-CLONE-FREEZE-REPORT.txt records BROWSER-VERIFIED reproduction and v15.46.0 mitigation, retained in v15.48.0. Re-run targeted stress/Stop checks after runtime changes. chatgpt/clone-safety.js remains SUPERSEDED and disconnected.
+- Scratch parity: Claude reports 20/20 costume-animation fixtures and 39/39 parity fixtures/extras. However, T043 in grok/fixtures.json and grok/FIXTURE-SOURCES.txt still says repeat 2.7 runs twice. The runner applies Claude's corrected expectation in memory, so the clean count does not fix the raw source fixture. Grok's correction and requested additional high-risk fixtures remain open.
+- Costume editor: Claude reports the initial v15.48.0 Select test and old costume regressions passed. The newest same-version patch awaits a fresh run; remaining work reported in team/NEXT-FOR-THE-TEAM-2026-10-19.txt includes Bitmap Select copy/paste, text font sizing, and higher-resolution bitmap editing. Former DeepSeek candidates under gemini/lab/ remain blocked until current-source/canvas isolation evidence exists.
+- Browser extension: gemini/extension/ remains WAITING for actual packaging, icons, permission/privacy review, Chromium/Firefox checks, Scratch SPA/repeated injection, and end-to-end project loading. The old URL is not confirmed as the canonical site URL.
+- Protobuf .pmp: gemini/lab/pmp-loader.js and its harness remain incomplete until the parser API and a real legal fixture/assets are verified. Preserve .sb3 and ZIP .pmp.
+- Merge queue: root MERGE-QUEUE.txt is still Claude-maintained and contains stale deepseek/ paths and old task/status entries. ChatGPT has provided exact update recommendations in chatgpt/MERGE-QUEUE-NOTES.txt; do not edit the queue outside Claude's ownership rule.
+- Role migration: verified 28 former deepseek/ files have corresponding Gemini-lab destinations and deepseek/ now contains only README-ARCHIVE.txt. Of the original files, 25 retain identical blob content; three lab reports/notes were intentionally edited only to add provenance headers and update stale paths. Existing candidate code remains unaccepted.
+- Performance plan: team/PERFORMANCE-BENCHMARK-PLAN.txt defines the process; it is a plan, not proof that the whole suite has been remeasured.
 
 GATES / OWNER DECISIONS
 1. Claude must confirm active model label is exactly “Claude Opus 5.5”.
 2. Owner must authorize each live integration/release; this cleanup did not authorize app code changes.
 3. Owner must supply the exact canonical website URL before anyone replaces legacy URL references.
 4. team/CLAUDE-CHECKPOINT.txt is only a preliminary metadata handoff; Claude must verify the actual working copy, then overwrite it with real task/test evidence.
+5. The private user-project suite must stay private; don't copy projects/assets/scripts into this public repo. Current source edits require a fresh full regression run before claiming all v15.48.0 work verified.
 
 CURRENT DOCUMENT ROUTING
 - Start/gates: team/WORKFLOW-START-HERE.txt
@@ -35,7 +39,7 @@ CURRENT DOCUMENT ROUTING
 - Roadmap: team/AI-WORK-PLAN.txt
 - Candidate status: ../MERGE-QUEUE.txt (Claude-maintained)
 - Claude procedure/checkpoint: team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt and team/CLAUDE-CHECKPOINT.txt
-- Detailed evidence: team/CROSS-AI-REVIEW-2026-10-15.txt, team/INTEGRATION-STATUS-AUDIT-2026-10-16.txt, team/GEMINI-ONLY-REVIEW-2026-10-16.txt, team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt, docs/LIVE-UI-VERIFICATION.txt, chatgpt/BUFFY-ADDONS-SETTINGS-REVIEW-2026-10-18.txt.
+- Detailed evidence: team/CROSS-AI-REVIEW-2026-10-15.txt, team/INTEGRATION-STATUS-AUDIT-2026-10-16.txt, team/GEMINI-ONLY-REVIEW-2026-10-16.txt, team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt, team/P0-CLONE-FREEZE-REPORT.txt, claude/REVIEW-GROK-2026-10-19.txt, chatgpt/VERIFICATION-2026-10-19.txt, chatgpt/MERGE-QUEUE-NOTES.txt, team/PERFORMANCE-BENCHMARK-PLAN.txt.
 
 NOT TO EDIT FROM CHATGPT
 - grok/AI-TEAM-RESTORE-BACKUP.txt is a 47-byte “See /tmp…” placeholder; leave for Grok/owner to remove/archive.
