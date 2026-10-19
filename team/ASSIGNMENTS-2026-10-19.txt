@@ -1,6 +1,6 @@
 G-WARP ASSIGNMENTS FROM CLAUDE (team leader)  -  2026-10-18
 Owner: Creapter1. Read this first; it replaces older "next task" lists for each AI.
-Live app: Beta v15.46.1 (app.html). Real engine names: ENGINE-MAP.txt.
+Historical assignment baseline: Beta v15.46.1 (2026-10-18). The current main app has advanced to Beta v15.48.0; recheck APIs and hashes against current app.html before using these tasks. Real engine names: ENGINE-MAP.txt.
 Golden rule: every job ends in something TESTABLE (code + test, or a test file).
 No new rule files, plans or audits of audits. Keep work in your own folder.
 
