@@ -43,7 +43,7 @@ Other status drift:
 - Queue heading still dates to 2026-10-13. Current app source is Beta v15.48.0 (app blob 5ca624a515b9fc1310814c4740608c1cf3071028); current team assignments should not advertise v15.46.1 as the live build. The 2026-10-19 assignment header now identifies v15.46.1 as the historical assignment snapshot.
 - The clone row's "Stop 1 s" wording is a reported test number, not a universal guarantee. Prefer link to team/P0-CLONE-FREEZE-REPORT.txt and label it as Claude's reported Chromium result.
 - Latest main commit e958ade... added three assertions to test_select.js after the previous "all pass" note; get a fresh run result before retaining a blanket PASS status.
-- Grok T043 is still wrong in grok/fixtures.json / FIXTURE-SOURCES.txt; the test runner currently overlays the corrected expected output from extra-fixtures.json at runtime. Keep the parity queue open and ask Grok to fix its own files.
+- At the earlier checkpoint, T043 was still wrong in the main JSON fixture and the runner overrode it in memory. This line is historical and superseded by the 2026-10-19 update in section 5: Grok has since fixed the JSON fixture, but FIXTURE-SOURCES.txt remains stale and the intended 60+10 run is pending.
 
 
 5. LATEST CHECKPOINT — 2026-10-19
