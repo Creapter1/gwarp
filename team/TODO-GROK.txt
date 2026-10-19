@@ -1,6 +1,10 @@
->>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
->>> EXTRA: team/GROK-EXTRA-2026-10-19.txt <<<
+>>> BIG LIST + EXTRA — COMPLETE for 2026-10-19 <<<
 
-[x] R0–R8 + S1–S4 + V1 + V2 — BIG LIST COMPLETE
-    V2 → grok/REVIEW-V2-docs.txt
-[ ] EXTRA E1–E3 tutorials / blocks gotchas — NEXT
+[x] R0–R8 fixture batches
+[x] S1–S4 SPECs / extension checks
+[x] V1–V2 reviews
+[x] E1 REVIEW-TUTORIALS.txt
+[x] E2 blocks gotchas fact-check (in REVIEW-TUTORIALS.txt §B)
+[x] E3 fixtures-tutorials.json (16 cases)
+
+No open Grok jobs on this list. Wait for next Claude/owner assignment.
