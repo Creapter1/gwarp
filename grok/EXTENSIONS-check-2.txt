@@ -1,0 +1,114 @@
+=====================================================================
+ EXTENSIONS-check-2 — Top TurboWarp extensions vs G-Warp support
+ Author: Grok | 2026-10-19 | Batch: S4
+ Evidence: TurboWarp extensions.json + docs; G-Warp app.html static scan;
+   prior grok/EXTENSIONS-check.txt (gallery safety)
+ BLOCKED: private Creapter1/gwarp-test-projects not readable by Grok
+   → cannot list which blocks the owner's 5 test projects actually use.
+   Claude/owner should fill §4 from that repo.
+=====================================================================
+
+1. METHOD
+---------
+- "Top 20" = official Scratch built-ins people still load in TW + first-party
+  TurboWarp gallery entries that appear first in extensions.json / are
+  commonly cited (Files, Gamepad, Box2D, Fetch, Runtime Options, Pen+,
+  CloudLink, Local Storage, Utilities, Stretch, Cursor, Pointerlock, etc.).
+- G-Warp support = opcode strings or gallery card present in app.html
+  (static). NOT a live load test of each .js.
+
+Support key:
+  FULL   = core path / opcodes present for typical blocks
+  LOAD   = in gw10GalleryData (can load as external ext); runtime untested
+  PARTIAL= some related code, incomplete parity
+  NONE   = no meaningful support found
+  DANGER = in GW_EXT_DANGER.LIST (personal data warning)
+
+---------------------------------------------------------------------
+2. TOP 20 MATRIX
+---------------------------------------------------------------------
+#  Extension              Typical blocks / role              G-Warp
+-- ---------------------- ---------------------------------- --------
+1  pen (Scratch built-in) clear, down/up, color, size, stamp PARTIAL*
+2  music (Scratch)        play drum/note, tempo, instruments PARTIAL*
+3  videoSensing           video on, when motion, video motion PARTIAL*
+4  text2speech            speak, set voice/language          PARTIAL*
+5  translate              translate () to ()                 UNSURE
+6  files (TW gallery)     open/save file, picker             LOAD
+7  gamepad                button/axis reporters              LOAD
+8  box2d                  physics world, bodies              LOAD
+9  fetch                  HTTP request                       LOAD (MODERATE)
+10 runtime-options        FPS, clones, fencing, HQ pen       LOAD
+11 local-storage          get/set local keys                 LOAD
+12 stretch                set stretch x/y                    LOAD
+13 cursor                 cursor style / hide                LOAD
+14 pointerlock            mouse lock                         LOAD
+15 utilities              many utility reporters             LOAD
+16 bitwise                bitwise ops                        LOAD
+17 text (TW)              advanced string ops                LOAD
+18 penplus / Pen+         advanced pen rendering             LOAD
+19 cloudlink              WebSocket cloud                    LOAD + DANGER
+20 clipboard              read/write clipboard               LOAD + DANGER
+
+* Scratch built-in pen/music/video/tts: app.html contains opcode strings
+  (pen_clear, pen_penDown, music_playNote, …). Treat as implemented or
+  stubbed in engine — confirm with Claude runner / live Beta, not assumed FULL.
+
+---------------------------------------------------------------------
+3. NOTES PER GROUP
+---------------------------------------------------------------------
+A. Scratch official extensions
+   Pen/Music are expected in any Scratch-compatible player. G-Warp has
+   opcode identifiers in source; full stamp/layer/pen color parity needs
+   fixture runs (see DeepSeek speed-pen notes if present).
+
+B. TurboWarp gallery (unsandboxed)
+   All listed gallery IDs appear in G-Warp's embedded gw10GalleryData
+   (184 cards). Loading = user adds extension URL; execution depends on
+   unsandboxed bridge (GW_EXT_*). Safety: CloudLink + Clipboard are on
+   Dangerous LIST (EXTENSIONS-check.txt).
+
+C. Runtime Options
+   Blocks that set FPS / interpolation / clone limit / fencing map to
+   TurboWarp runtimeOptions (see SPEC-turbowarp-runtime.txt). G-Warp
+   should either implement equivalent flags or no-op with a clear message.
+
+D. Network extensions (fetch, cloudlink, http)
+   Require host permissions / CORS; mark MODERATE or DANGER as already done.
+
+---------------------------------------------------------------------
+4. OWNER TEST PROJECTS — BLOCK INVENTORY (FILL IN)
+---------------------------------------------------------------------
+Private repo Creapter1/gwarp-test-projects is not accessible to Grok.
+Claude: for each of the 5 packed projects, list extension ids from
+project.json "extensions" array and any opcode prefixes outside core.
+
+Template:
+  Project: <name>
+  extensions: [ ... ]
+  non-core opcode samples: [ ... ]
+  G-Warp status: FULL/LOAD/NONE + notes
+
+Until filled, do not claim the owner's games run on G-Warp with these exts.
+
+---------------------------------------------------------------------
+5. GAPS / ACTIONS
+---------------------------------------------------------------------
+A1  Live-load top 10 gallery scripts on Beta; log errors (TODO residual).
+A2  Fixture a minimal pen clear/stamp and music playNote if opcodes exist.
+A3  Document Runtime Options mapping or explicit unsupported list.
+A4  Keep DANGER list in sync when gallery adds auth/geo/clipboard (G5).
+A5  Claude fills §4 from private test projects.
+
+---------------------------------------------------------------------
+6. SOURCES
+---------------------------------------------------------------------
+- https://github.com/TurboWarp/extensions/blob/master/extensions/extensions.json
+- https://extensions.turbowarp.org/
+- G-Warp app.html: gw10GalleryData, GW_EXT_DANGER, opcode strings
+- grok/EXTENSIONS-check.txt (G5 safety)
+- grok/SPEC-turbowarp-runtime.txt (S3)
+
+UNSURE
+- Exact runtime completeness of pen/music (opcodes present ≠ full parity)
+- Which of the top 20 the owner's private tests actually import
