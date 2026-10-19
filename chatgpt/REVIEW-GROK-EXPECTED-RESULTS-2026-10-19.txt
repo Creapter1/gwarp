@@ -1,0 +1,95 @@
+G-WARP C4 REVIEW — GROK TESTS EXPECTED RESULTS
+Date: 2026-10-19 (America/New_York)
+Reviewer: ChatGPT
+Task: team/TODO-CHATGPT.txt C4
+Evidence class: STATIC SOURCE REVIEW + PRIMARY-SOURCE CROSS-CHECK
+Runtime/browser test by ChatGPT: NOT RUN
+Files changed by this review: this report only; Grok-owned files were not changed.
+
+ARTIFACT / BASELINE
+- G-Warp main HEAD at review start: 8987510d4804fd7488d4a1d77d0f21f77e28ff98
+- grok/TESTS.txt blob: 972bf2257cfdaf2ce80c5cfa11fbd30cc571e247
+- grok/VERIFY-high-risk.txt blob: 8634b9c8cb8ef103bd8863336542d89f0ebc0e7c
+- grok/SPEC-control.txt blob: 17f2f1998082275a24f25342c367abff620ed1ff
+- grok/fixtures.json blob: 9da4f9826c34fe15bf262dfb0aa7caa2b6660c1f
+- grok/FIXTURE-SOURCES.txt blob: 78e596183f71ba37edf4d5666ea52398a411362c
+- Current primary Scratch VM location: scratchfoundation/scratch-editor, develop at commit 585b1c3877943b31ac273b3d056ccb79db13aa41 (2026-10-18 22:29:45 UTC).
+- The older scratchfoundation/scratch-vm repository is archived; its develop head is b3266a0cfe5122f20b72ccd738a3dd4dff4fc5a5. Use the current mono-repo path in new evidence rather than treating the archived repository as the permanent source of truth.
+- The primary-source checks in this report used the pinned scratch-editor revision above. This does not prove GUI presentation or G-Warp runtime parity.
+
+EXECUTIVE FINDINGS
+1. BLOCKER — T043 remains WRONG in TESTS.txt.
+   grok/TESTS.txt expects repeat 2.7 to run 2 times by flooring. The current primary VM source uses Math.round(Cast.toNumber(args.TIMES)), so 2.7 rounds to 3 and the body runs 3 times. This is independently visible in packages/scratch-vm/src/blocks/scratch3_control.js at the pinned scratch-editor commit. grok/fixtures.json already says 3, while grok/FIXTURE-SOURCES.txt still says 2 and is also stale about the 30-case set. Correct TESTS.txt and FIXTURE-SOURCES.txt together; don't reintroduce a runner-side override.
+   Primary source: https://github.com/scratchfoundation/scratch-editor/blob/585b1c3877943b31ac273b3d056ccb79db13aa41/packages/scratch-vm/src/blocks/scratch3_control.js
+
+2. HIGH — T017 random test is logically invalid as written.
+   The SCRIPT uses three elided/repeated pick-random expressions to test whether a value is 1, 2 or 3. If those are three independent draws, a valid draw can still fail the combined condition. Store one draw in V, then assert V is an integer and 1 <= V <= 3; repeat many times using the same V for each assertion. Keep the random test probabilistic and record its seed/iteration count where reproducibility is needed.
+
+3. HIGH — T037's “330 characters” expectation is not established as Scratch VM behavior.
+   The VM's looks say primitive emits the provided message to the speech-bubble event; that code does not establish a 330-character truncation rule. A GUI could impose display limits, so this finding is NOT a claim that the visible bubble was browser-tested. Require a Scratch editor/UI reproduction with a 400-character controlled string and saved evidence. If 330 is only G-Warp's own guard, move the case to G-Warp-only regression tests rather than label it exact Scratch behavior.
+   Primary source to inspect: https://github.com/scratchfoundation/scratch-editor/blob/585b1c3877943b31ac273b3d056ccb79db13aa41/packages/scratch-vm/src/blocks/scratch3_looks.js
+
+4. HIGH — T067 and T068 are not precise runnable tests.
+   T067 says “call foo without filling input” and allows “0 (or defined default),” which is not one expected result. A custom-block call gets parameter defaults from its procedure prototype; specify the exact prototype/default and call input value.
+   T068 asks for a boolean argument reporter “outside any call.” The reporter is scoped to a custom-block definition and the described project is not a clear, buildable Scratch script. Replace with a valid custom block definition/call, or remove it until a reproducible project is supplied.
+   Related primary source: https://github.com/scratchfoundation/scratch-editor/blob/585b1c3877943b31ac273b3d056ccb79db13aa41/packages/scratch-vm/src/blocks/scratch3_procedures.js
+
+5. HIGH — T074 is a dangerous and poorly isolated stress recipe, not a parity case.
+   Repeatedly doubling a string 100,000 times can cause enormous allocation very quickly; the test may hit a watchdog or memory pressure before it tests a specific cap. Label it G-Warp-only, use a bounded number of doublings, assert the documented cap and responsiveness separately, and include a safe abort condition. Scratch VM's operator_join path does not establish a 330-character or equivalent built-in hard cap.
+
+CASES THAT NEED CORRECTION OR CLEARER SCOPE
+- T016 (“and short-circuit style truth”): expected truth value is fine, but it does not test short-circuit behavior. Reporter inputs are evaluated as part of block execution; this is only a boolean truth test. Rename it or provide a valid side-effect-free test that actually distinguishes the behavior being claimed.
+- T020 (sqrt(-1)): separate the reporter result from the visible say bubble and monitor formatting. “NaN or empty in some monitors” is not a single expected result and does not describe the say-bubble surface in the SCRIPT. Mark UI formatting LIVE-UI-REQUIRED until verified in Scratch.
+- T030: the 200,000 list item constant and add-to-list guard are source-supported in Scratch VM. Keep the scope precise: it is a VM limit, not proof of identical TurboWarp/PenguinMod behavior. A cap test must assert the boundary behavior (an additional add is ignored) rather than only record the constant.
+- T032: the expected numeric result is 0 for direction 180 + right-turn 180. Remove “or 360-normalized”; it contradicts the stated normalized range and makes the expected result ambiguous.
+- T033 / T035: geometry depends on costume bounds and size. The source fences rendered costume bounds, not a universal sprite-centre coordinate of about x=240. Specify a known costume and size, then check the measured final coordinate. For bounce, specify the actual touching edge and ensure the sprite's bounds cross it before asserting a direction.
+- T036: “say empty clears bubble” needs a Scratch GUI observation; the VM emits an empty message but that alone does not prove precisely how the GUI hides/renders the bubble.
+- T037: see HIGH finding above.
+- T041: “small positive minimum” is not exact. Scratch's setSize clamps relative to the current costume dimensions and stage dimensions; the size reporter is rounded. Pin the costume asset/size, compute or source-confirm the expected boundary, and record the actual reporter value.
+  Primary source: https://github.com/scratchfoundation/scratch-editor/blob/585b1c3877943b31ac273b3d056ccb79db13aa41/packages/scratch-vm/src/sprites/rendered-target.js
+- T047: the script snippet contains only “when I start as a clone [delete this clone]” and does not show any parent script creating a clone. Add a green-flag creator, specify clone count before/after, and assert that the original survives.
+- T050: the stated final sum (11) is reasonable if both receivers finish, but the script does not wait before inspection and “order is all receivers for that broadcast” is imprecise. Use broadcast-and-wait or a completion signal; keep the test about both receivers executing, not about an unsupported ordering claim.
+- T056: specify a known backdrop and a fixed point/region without the target color. “Empty area” is not a sufficient setup if the backdrop itself can contain the chosen color.
+- T058: current year is environment/time dependent. Keep the requirement numeric and source-based; for UI testing record the date/time zone, and do not hardcode the example year as a universal expected value.
+- T061: an unknown sound name is a malformed-project robustness test, not a normal Scratch menu workflow. Retain it as a negative/imported-project test with a concrete fixture and expected continuation behavior.
+- T071: “within ~100 ms” is a G-Warp engineering target, not Scratch parity. Put it in a separately labeled performance/regression suite; record browser, hardware, clone count, measurement method and actual latency.
+- T072: “reset variables project rule if any” is conditional and has no single expected outcome. Identify the exact G-Warp setting/schema and default, otherwise remove it from parity tests.
+- T073: turbo responsiveness/Stop latency is a performance stress test, not an exact Scratch result. Define measurable thresholds, setup and environment, and label it TurboWarp/G-Warp-specific as applicable.
+- T064 is supported by current primary source: the Scratch pen extension calls wrapClamp(value, 0, 100), yielding a 101-value period. Issue #2273 documents the visible quirk, but an editor observation is still a useful regression check.
+  Source: https://github.com/scratchfoundation/scratch-editor/blob/585b1c3877943b31ac273b3d056ccb79db13aa41/packages/scratch-vm/src/extensions/scratch3_pen/index.js
+  Issue: https://github.com/scratchfoundation/scratch-vm/issues/2273
+
+SOURCE-SUPPORTED ITEMS CHECKED IN THIS PASS
+- repeat 2.7 -> 3 iterations (contradicts TESTS.txt T043).
+- round uses Math.round; round(-2.5) -> -2 and round(2.5) -> 3.
+- modulo uses Scratch's floored adjustment; nonnumeric string equality uses case-insensitive Cast.compare.
+- list indices are 1-based; index 0 is invalid and item-of-list returns an empty string; insert at index 0 is a no-op.
+- list item limit is 200,000; clone creation limit is 300.
+- pen size is clamped to 1..1200; pen colour wrapping calls wrapClamp(value, 0, 100).
+- missing custom procedure definition is a no-op by design.
+These are SOURCE-VERIFIED against the pinned Scratch editor VM revision, not BROWSER-VERIFIED and not proof that G-Warp matches them.
+
+REQUIRED EVIDENCE STANDARD FOR EACH EXPECTED RESULT
+Every case needs:
+1. Case ID and system scope: SCRATCH-VM, SCRATCH-GUI, TURBOWARP-OPTION, PENGUINMOD-OPTION, or G-WARP-ONLY.
+2. Primary-source version: pinned commit SHA or released version, not only a moving “develop” label. Link exact source file and function; quote line ranges only when verified.
+3. Evidence class: SOURCE-VERIFIED for a directly derived VM rule; LIVE-UI-VERIFIED for display/timing/interaction observed in a named editor build; REPORTED TEST for another person's run; NOT TESTED when no run exists.
+4. Reproducible setup, input values, exact expected outcome, and any controlled state (costume, backdrop, sprite order, key edge, clone baseline, clock/timezone).
+5. For UI formatting and timing, include environment, recording/screenshot or repeatable test steps, and tolerance. Source code alone is not proof of rendered output.
+6. For G-Warp-specific hardening/performance cases, keep separate from Scratch parity fixtures and name the relevant safety target explicitly.
+7. Keep Grok's files authored by Grok. ChatGPT's role here is to report the corrections and acceptance tests, not silently edit grok/ or Claude's test runner.
+
+ACCEPTANCE CHECKLIST FOR GROK / CLAUDE
+[ ] Fix T043 in grok/TESTS.txt to 3 and correct grok/FIXTURE-SOURCES.txt to match the 60-case fixture revision; remove stale “30 cases” statements.
+[ ] Rewrite T017 to reuse one stored random value per iteration.
+[ ] Give T037 a Scratch GUI observation or reclassify it as G-Warp-only; do not claim 330 is source-proven from the VM.
+[ ] Replace vague T067/T068 with runnable custom-block projects and one exact expected result each.
+[ ] Split G-Warp-only T071-T074 out of Scratch parity acceptance; make T074 bounded and safe.
+[ ] Resolve the setup/expectation issues listed above before treating this as a golden test suite.
+[ ] After Grok updates its own files, Claude should run the intended current fixture set with explicit inputs, report the exact runner revision and app SHA, and distinguish expected/actual output from source-only assumptions.
+
+OVERALL VERDICT
+STATIC REVIEW: ACTIONABLE; multiple test definitions or labels need correction before the document can safely serve as an “exact-result” parity suite.
+INDEPENDENT G-WARP RUNTIME TEST: NOT RUN.
+SCRATCH GUI TEST: NOT RUN.
+INTEGRATION OR RELEASE: NOT DONE.
