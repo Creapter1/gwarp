@@ -560,3 +560,52 @@ PARTIAL — records this repository review task, not unrelated older chat histor
 
 FOLLOW-UP CONSISTENCY NOTE — 2026-10-19
 After C8 logging, re-read team/TODO-CHATGPT.txt and found its first three routing lines still ordered the already-delivered website/docs, animation-review and compiler-review tasks ahead of current work. Replaced that stale header with a status note: authoring/static pass delivered; live website/mobile checks remain with Claude/owner; CA1–CA3 and CG1–CG3 were delivered as reports/docs, not runtime integrations; current ChatGPT reviewer focus is the C6 ongoing ledger. Updated team/TODO-CHATGPT.txt commit cc01d8d15b27053569219478f071ce1bec7a20f4. This was task-routing cleanup only; no app code or contributor folder changed.
+
+
+--- ENTRY ---
+Date/time (timezone): 2026-10-19T00:47:00-04:00 (America/New_York)
+AI / model identity: ChatGPT GPT-6
+Task ID / title: C9 — Review latest Gemini animation/lab batch; maintain C6 cross-review ledger
+Base branch / commit (if known): main; reviewed candidate commit b05973868839921586c844a93c4e1546c75c1c5c (parent 33e143bcb63267f0290c46365b507212131ed478)
+
+USER REQUEST (quote accurately; do not silently paraphrase):
+"read and check the git hup and continue pls take your time"
+
+AI RESPONSE / WORK SUMMARY:
+Read AI-TEAM.txt, TODO.txt, team/WORKFLOW-START-HERE.txt, team/CONTINUOUS-WORK-QUEUE.txt, team/TODO-CHATGPT.txt, team/AI-STATUS.txt, and the latest Gemini candidate commit. Reviewed the three rig SVGs, 24 flipbook SVGs, A/B/C auto-rig and easing modules, LAB reports, visualizer, and test harness. Created chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt and recorded findings in the shared review ledger/status.
+Main findings: specified current M1 paths gemini/lab/melody-engine.js and lab-melody.html are absent; pivots.json is absent; auto-rig-C can self-parent its fallback root for some unlabelled SVG groups; pivot values are printed rather than asserted; A/B/C variants conflict with the current sprint's one-version rule; flipbook paths differ from the assigned folder layout. Candidate code remains isolated.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Never rewrite app.html/index.html; no permission for live integration.
+- Do not edit Gemini/Grok/Claude folders. The review report is in chatgpt/ only; shared status/ledger updates summarize the evidence.
+- Claude Opus 5.5 owns official runtime/visual verification and integration; owner approval remains required.
+- Distinguish source verification/static analysis from tests reported by another AI. Do not mark the current batch BROWSER-VERIFIED.
+
+FILES CHANGED:
+- chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt — created.
+- team/TODO-CHATGPT.txt — C9 added.
+- team/CROSS-AI-REVIEW-2026-10-15.txt — C9 evidence/status addendum.
+- team/CONTINUOUS-WORK-QUEUE.txt — C9 result and handoff.
+- team/AI-STATUS.txt — latest review addendum.
+- AI-TEAM.txt — C9 work log.
+- chatgpt/AI-CHAT-LOG.txt — this entry.
+- app.html, index.html, gemini/, grok/ and claude/ source files — NOT EDITED.
+
+EVIDENCE / TEST STATUS:
+- SOURCE-VERIFIED: current GitHub tree/commit file list and contents of the relevant Gemini candidate files.
+- STATIC-ANALYSIS: fallback-root self-parent risk, missing path/manifest deliverables, and insufficient pivot assertions.
+- REPORTED TEST: Gemini's earlier log reports XML parsing and Node harness passes; this was not independently reproduced here and is not evidence of browser behavior.
+- NOT TESTED by ChatGPT: Node execution, browser visual playback, current app integration, or SVG animation sequence loading. Local GitHub access from a container was unavailable; source inspection used the connected repository tools.
+- Integration/release: NOT DONE.
+
+BLOCKERS / UNCERTAINTIES:
+- The latest exact M1 assignment paths are missing from the current tree, though older music-engine files are mentioned in the Gemini log.
+- SVG regex geometry heuristics are limited; the generic fallback behavior needs dedicated fixtures.
+- Canonical site URL, unrelated integration gates, and the author's exact current test environment remain outside this task.
+
+NEXT STEP / HANDOFF:
+Gemini should revise only gemini/ files, first reconcile the current melody-engine task and required paths, add the missing pivots.json or obtain an explicit assignment change, fix root-parent handling and add exact pivot/cycle assertions, then record exact current-commit test results in gemini/AI-CHAT-LOG.txt. Claude/owner retain all integration and release decisions.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records this repository task, not unrelated older chat history.
+--- END ENTRY ---
