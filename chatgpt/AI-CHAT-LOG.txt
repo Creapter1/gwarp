@@ -398,3 +398,43 @@ Created chatgpt/REVIEW-clone-safety-2026-10-19.txt, commit 538151e098120b676aae3
 2026-10-19 | C3 — SCRATCH LINK + GEMINI EXTENSION REVIEW COMPLETE (STATIC ONLY)
 Created chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt (blob SHA 98648930600e4896f45a096cd24d6e8c6531130e; commit 9d02ab802968630949e216f41b0f17f8b3d961bf). Reviewed app v15.48.0 blob 5ca624a515b9fc1310814c4740608c1cf3071028; app's scratch-link handler is already integrated, so chatgpt/scratch-link.js must not be injected a second time. Extension review found missing manifest-referenced PNG icon files (tracked tree only has SVG + build script), popup setting is not synchronized to already-open Scratch tabs, no chrome.storage.onChanged, history wrappers are not restored on toggle-off, hashchange is not explicitly observed, context-menu parsing should validate link origin, and privacy disclosure needs to distinguish sync storage and later app fetch. Report contains A–D browser/package/network regression checklist; all cases are NOT RUN. No Gemini, app, or extension file was edited.
 NEXT: C4 — review Grok TESTS.txt and label questionable expected results with primary-source/version evidence requirements.
+
+
+--- ENTRY ---
+Date: 2026-10-19 (America/New_York)
+AI: ChatGPT
+Task: C4 — review Grok TESTS.txt expected results and primary-source evidence requirements.
+
+USER REQUEST (verbatim):
+"read and check the git hup and continue pls take your time"
+
+AI RESPONSE / ACTION:
+Re-read the repository rules, current queue, ChatGPT task list and own log. Reviewed grok/TESTS.txt, VERIFY-high-risk.txt, SPEC-control.txt, fixtures.json, FIXTURE-SOURCES.txt and the current Scratch VM source in scratchfoundation/scratch-editor. Created chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt (commit dc28e2df1b18927d1c1d2a9c448a98ff6f9b0ad9). Key finding: TESTS.txt T043 still expects repeat 2.7 -> 2, but the current VM source uses Math.round so the result is 3; fixtures.json has been corrected to 3 while FIXTURE-SOURCES.txt remains stale. Also documented invalid random-test logic in T017, unsupported/unverified 330-character speech claim T037, ambiguous/unrunnable custom-block tests T067/T068, and the need to separate G-Warp performance/safety tests from Scratch parity.
+
+FILES CHANGED:
+- chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt — created.
+- team/CROSS-AI-REVIEW-2026-10-15.txt — appended C4 review status and acceptance criteria.
+- team/TODO-CHATGPT.txt — C1-C4 status refreshed; C5 is next.
+- team/CONTINUOUS-WORK-QUEUE.txt — refreshed ChatGPT handoff to C5.
+- AI-TEAM.txt — appended claim/completion and next-task entries.
+- chatgpt/AI-CHAT-LOG.txt — this entry.
+- No edits to Grok's files, Gemini's files, app.html, index.html, or Claude's runner.
+
+EVIDENCE / TEST STATUS:
+- SOURCE-VERIFIED (Scratch VM semantics): pinned mono-repo commit 585b1c3877943b31ac273b3d056ccb79db13aa41, including repeat, list indexing/limits, clone limit, pen clamp/wrap and custom procedure fallback code.
+- STATIC-ANALYSIS: expected-result and test-definition review.
+- LIVE Scratch editor UI: NOT TESTED.
+- G-Warp runtime: NOT TESTED.
+- Integration/release: NOT DONE.
+
+BLOCKERS / UNCERTAINTIES:
+- Grok must revise its own TESTS.txt and FIXTURE-SOURCES.txt; ChatGPT did not edit grok/.
+- UI-only speech-bubble and timing claims need live editor evidence.
+- This is not a passing parity suite or a statement that G-Warp matches the expected results.
+
+NEXT STEP:
+C5 — inspect gemini/lab/pmp-loader.js, NOTES-pmp.txt, and test-pmp-loader.js read-only; verify parser API, fixture legality/provenance, assets and meaningful assertions. Keep Gemini's folder read-only and do not touch app.html.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records this GitHub review task; does not claim to reproduce older unrelated conversation history.
+--- END ENTRY ---
