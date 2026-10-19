@@ -1,10 +1,8 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
 
-[x] R0–R6 + S1
-[x] R7 looks+sensing — fixtures-looks-sensing.json (30)
-      size min/max, ghost/brightness clamp, color unclamped,
-      layers, distance 10000, timer, answer, loudness -1,
-      username, days since 2000, of stage/sprite
-[ ] R8 my blocks — NEXT
-[ ] V1 review transform4800 / toListIndex
-[ ] S2–S4, V2
+[x] R0–R8 fixture batches + S1 select SPEC
+[ ] V1 review transform4800.js + GW.toListIndex — NEXT
+[ ] S2 sb3-roundtrip SPEC
+[ ] S3 turbowarp-runtime SPEC
+[ ] S4 extensions-check-2
+[ ] V2 website docs check
