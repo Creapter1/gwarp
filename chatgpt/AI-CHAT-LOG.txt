@@ -332,3 +332,7 @@ CHANGED FILES:
 - chatgpt/WEBSITE-OPEN-QUESTIONS.txt: recorded 10 claims/behaviors that need confirmation or published-site checks.
 EVIDENCE: STATIC SOURCE/DOCUMENT REVIEW. No browser, phone-width, or published-site tests run. The feature descriptions use existing repository notes and release records; do not call them independently browser-verified. app.html was not edited.
 LIMITATIONS / NEXT: Need verify all page links and root links, check the root LICENSE filename, inspect/confirm any uncertain current-app claims, and perform a real browser/site check if available. Confirm canonical website URL with owner before replacing legacy URLs. The owner's custom block/procedure correctness priority remains active under Claude's implementation stream; do not duplicate it. Performance plan exists at team/PERFORMANCE-BENCHMARK-PLAN.txt; private owner projects must never be copied into the public repo.
+
+2026-10-19 | WEBSITE/DOCS STATIC LINK CHECK
+- Re-fetched the 14 new docs pages, homepage, app.html, README.md, LICENSE, team workflow and current status. Static relative href/src target check found 0 missing local file targets.
+- This is NOT browser verification: fragment IDs, external URLs, visual rendering, mobile layout and the deployed site were not tested. app.html remains untouched.
