@@ -10424,7 +10424,9 @@ nodes.push(el);cur=b.next;}return nodes;};
     const words = (String(q).toLowerCase().match(/[a-z]+/g) || []).filter(w => !STOP.has(w));
     return [...RECIPES.map(r => ({ r, kind: 'recipe' })), ...TIPS.map(r => ({ r, kind: 'tip' }))].map(x => {
       let s = 0; const hay = [...x.r.keys, ...x.r.title.toLowerCase().split(/\W+/)];
-      words.forEach(w => { if (x.r.keys.includes(w)) s += 3; else if (hay.some(k => k.length > 3 && w.length > 3 && (k.startsWith(w) || w.startsWith(k)))) s += 1; });
+      const qw = x.r._qw || (x.r._qw = new Set((x.r.q || []).join(' ').match(/[a-z]+/g) || [])); /* v15.49.0: example questions count too */
+      const ql = String(q).toLowerCase().trim(); if ((x.r.q || []).some(p => p === ql)) s += 12;
+      words.forEach(w => { if (x.r.keys.includes(w)) s += 3; else if (qw.has(w)) s += 2; else if (hay.some(k => k.length > 3 && w.length > 3 && (k.startsWith(w) || w.startsWith(k)))) s += 1; });
       return { ...x, s };
     }).filter(x => x.s > 0).sort((a, b) => b.s - a.s || (a.kind === 'recipe' ? -1 : 1));
   }
@@ -10456,7 +10458,7 @@ nodes.push(el);cur=b.next;}return nodes;};
   }
   let lastAdded = null;
   function addRecipe(id) {
-    const r = RECIPE[id]; if (!r) return null;
+    const r = RECIPE[id] || RECIPES.find(x => x.id === id); if (!r) return null; /* v15.49.0: pack recipes */
     by('gwMainTabCode')?.click();
     try {
       r.prep?.(); const made = placeStacks(r.build()); lastAdded = made;
@@ -10537,7 +10539,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     d.pass = d.helper && d.recipes >= 12 && d.recipesBuild && d.evaluatorExtended && d.rendererInstalled && d.conditionReadsTypedSlots && d.filterFn && d.filterHookedToDoubleClick && d.badgeRule;
     return d;
   }
-  window.GW_V1571 = { nodeFromBlock, blockFromNode, nestInto, addRecipe, match, checkProject, showAll, rehydrate, recipes: RECIPES, tips: TIPS, diagnostics, parts: PARTS, bool: BOOL, value: VALUE, argkind: ARGKIND, words: WORD };
+  window.GW_V1571 = { blk, cblk, nodeFromBlock, blockFromNode, nestInto, addRecipe, match, checkProject, showAll, rehydrate, recipes: RECIPES, tips: TIPS, diagnostics, parts: PARTS, bool: BOOL, value: VALUE, argkind: ARGKIND, words: WORD };
   window.GW_RUN_V1571_BLOCKS_TEST = diagnostics;
   let tries = 0;
   const boot = () => {
@@ -16917,6 +16919,80 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
 })();
 
+</script>
+<script id="gw-v4900-gwrap-pack">
+(() => {
+  'use strict';
+  /* G-Warp v15.49.0 - GWrap AI knowledge pack loader (written by Claude; owner: "add at least 300 questions and
+     possibilities to the chat"). Recipes and tips are plain JSON (format: team/GEMINI-GWRAP-AI-300-2026-10-19.txt),
+     so the team can write hundreds without touching code. This turns each recipe's JSON script into real blocks with
+     the helper's own builders (GW_V1571.blk / cblk / nestInto) and adds recipes + tips to the GWrap AI helper. */
+  const PACKS = [{"version": 1, "note": "Claude's starter pack (2026-10-19) - proves the loader. Gemini's 320+ entry pack (gemini/gwrap-ai/knowledge-pack.json) is merged on top.", "recipes": [{"id": "r-walk-animate-arrows", "emoji": "🚶", "title": "Walk with the arrow keys and animate", "keys": ["walk", "animate", "animation", "arrow", "arrows", "costume", "costumes", "move", "run", "character"], "q": ["make him walk and animate with the arrow keys", "walking animashun when i press right", "move and change costume at the same time"], "steps": ["Green flag: the sprite only turns left and right, and keeps checking forever.", "Right arrow: face right, move 5 steps, show the next costume.", "Left arrow: the same, facing left. More costumes = a smoother walk (try Costumes → Animation)."], "script": [[["when_flag"], ["set_rotation_style", [], ["left-right"]], ["forever", [], [], {"body": [["if", [], [], {"cond": {"type": "key_pressed", "key": "right arrow"}, "body": [["point_direction", ["90"]], ["move", ["5"]], ["next_costume"], ["wait", ["0.05"]]]}], ["if", [], [], {"cond": {"type": "key_pressed", "key": "left arrow"}, "body": [["point_direction", ["-90"]], ["move", ["5"]], ["next_costume"], ["wait", ["0.05"]]]}]]}]]]}, {"id": "r-gravity-jump", "emoji": "🦘", "title": "Jump with gravity (platformer)", "keys": ["gravity", "platformer", "jump", "fall", "falling", "ground", "floor", "mario"], "prep": {"vars": ["y speed"]}, "q": ["make a platformer jump", "how do i add gravity", "my sprite should fall down and jump"], "steps": ["A variable “y speed” pulls the sprite down a bit more every frame (gravity).", "Below y = -120 is the floor: the sprite stops there.", "Space on the floor = jump: y speed becomes 12."], "script": [[["when_flag"], ["set_var", ["0"], ["y speed"]], ["goto_xy", ["0", "-120"]], ["forever", [], [], {"body": [["change_var", ["-1"], ["y speed"]], ["change_y", [{"r": ["get_var", [], ["y speed"]]}]], ["if", [], [], {"cond": {"type": "op_gt", "args": [{"type": "literal", "value": "-120"}, {"type": "y_position"}]}, "body": [["set_y", ["-120"]], ["set_var", ["0"], ["y speed"]], ["if", [], [], {"cond": {"type": "key_pressed", "key": "space"}, "body": [["set_var", ["12"], ["y speed"]]]}]]}]]}]]]}, {"id": "r-countdown", "emoji": "⏱️", "title": "Countdown timer", "keys": ["countdown", "timer", "time", "clock", "seconds", "count"], "prep": {"vars": ["time left"]}, "q": ["make a countdown", "30 second timer for my game", "how do i make a timer that counts down"], "steps": ["Set “time left” to 30 and show it.", "Every second, take 1 away.", "At 0 the sprite says “Time's up!” and everything stops."], "script": [[["when_flag"], ["set_var", ["30"], ["time left"]], ["show_var", [], ["time left"]], ["repeat_until", [], [], {"cond": {"type": "op_eq", "args": [{"type": "get_var", "name": "time left"}, {"type": "literal", "value": "0"}]}, "body": [["wait", ["1"]], ["change_var", ["-1"], ["time left"]]]}], ["say", ["Time's up!", "2"]], ["stop", [], ["all"]]]]}, {"id": "r-rain-clones", "emoji": "🌧️", "title": "Falling rain (clones)", "keys": ["rain", "clone", "clones", "falling", "snow", "drops", "stars", "fall"], "q": ["make it rain", "falling snow with clones", "how do clones work for rain"], "steps": ["The sprite hides and makes a clone every 0.2 seconds.", "Each clone starts at a random x at the top and falls.", "At the bottom the clone deletes itself."], "script": [[["when_flag"], ["hide"], ["forever", [], [], {"body": [["create_clone", [], ["myself"]], ["wait", ["0.2"]]]}]], [["when_clone"], ["goto_xy", [{"r": ["op_random", ["-230", "230"]]}, "180"]], ["show"], ["repeat_until", [], [], {"cond": {"type": "op_gt", "args": [{"type": "literal", "value": "-170"}, {"type": "y_position"}]}, "body": [["change_y", ["-6"]]]}], ["delete_clone"]]]}, {"id": "r-quiz", "emoji": "❓", "title": "Quiz question with a score", "keys": ["quiz", "question", "ask", "answer", "test", "trivia"], "prep": {"vars": ["score"]}, "q": ["make a quiz", "ask a question and check the answer", "quiz game with points"], "steps": ["Ask a question and wait for the answer.", "If the answer is right: +1 score and “Correct!”.", "If not: “Not quite!”."], "script": [[["when_flag"], ["set_var", ["0"], ["score"]], ["show_var", [], ["score"]], ["ask", ["What is 7 + 5?"]], ["if_else", [], [], {"cond": {"type": "op_eq", "args": [{"type": "answer"}, {"type": "literal", "value": "12"}]}, "body": [["change_var", ["1"], ["score"]], ["say", ["Correct!", "2"]]], "else": [["say", ["Not quite! It's 12.", "2"]]]}]]]}, {"id": "r-talk-two", "emoji": "💬", "title": "Two-sprite conversation (broadcast)", "keys": ["conversation", "talk", "dialogue", "dialog", "chat", "broadcast", "message", "story"], "q": ["make two sprites talk to each other", "how do sprites talk", "conversation with broadcast"], "steps": ["This sprite says hello, then sends the message “your turn”.", "Put the second script on the OTHER sprite: when it receives “your turn”, it answers.", "Broadcasts are how sprites tell each other what to do."], "script": [[["when_flag"], ["say", ["Hi! How are you?", "2"]], ["broadcast", [], ["your turn"]]], [["when_broadcast", [], ["your turn"]], ["think", ["(Copy this script to the other sprite)"]]]]}, {"id": "r-clicker", "emoji": "🖱️", "title": "Clicker game", "keys": ["clicker", "clicks", "click", "cookie", "tap", "idle"], "prep": {"vars": ["clicks"]}, "q": ["make a clicker game", "count how many times i click", "cookie clicker"], "steps": ["Set clicks to 0 and show it.", "Every click adds 1 and the sprite pops bigger for a moment."], "script": [[["when_flag"], ["set_var", ["0"], ["clicks"]], ["show_var", [], ["clicks"]], ["set_size", ["100"]]], [["when_clicked"], ["change_var", ["1"], ["clicks"]], ["change_size", ["10"]], ["wait", ["0.05"]], ["change_size", ["-10"]]]]}, {"id": "r-patrol", "emoji": "🛡️", "title": "Enemy walks back and forth", "keys": ["patrol", "enemy", "guard", "back", "forth", "pace", "walk"], "q": ["enemy that walks left and right", "make a guard patrol", "back and forth movement"], "steps": ["Face right and only turn left/right.", "Move forever and bounce at the edge."], "script": [[["when_flag"], ["set_rotation_style", [], ["left-right"]], ["point_direction", ["90"]], ["forever", [], [], {"body": [["move", ["4"]], ["bounce"]]}]]]}], "tips": [{"id": "t-glide-anim", "emoji": "🪶", "title": "Make an animation glide", "keys": ["glide", "smooth", "keyframe", "keyframes", "tween"], "q": ["how do i make my animation smooth", "what does the glide button do", "character pops instead of moving smooth"], "text": "Costumes → Animation. Make frame 1 (where it starts) and frame 2 (where it goes), then press Glide: the bones slide smoothly between them. Press Glide again to go back to your key frames.", "action": "animation"}, {"id": "t-tiles-tab", "emoji": "🧱", "title": "Turn a sprite into a tile map", "keys": ["tiles", "tile", "tilemap", "level", "map"], "q": ["how do i make a tile map", "tiles tab is grey", "make a level with tiles"], "text": "The Tiles tab works on an empty sprite (no costumes). Open Costumes → Tiles → “Turn this sprite into a tile map”. You can turn it back as long as it has no costumes.", "action": "tiles"}, {"id": "t-folders", "emoji": "📁", "title": "Why are my costumes in a folder?", "keys": ["folder", "folders", "frame", "frames"], "q": ["what is walk//frame 1", "my costumes went into a folder", "costume names with two slashes"], "text": "Animation costumes are named like “walk//frame 1”. The part before // is the folder. Click the folder in the costume list to open or close it."}, {"id": "t-forever-repeat", "emoji": "🔁", "title": "forever vs repeat", "keys": ["forever", "repeat", "loop", "loops"], "q": ["what is the difference between forever and repeat", "how do loops work", "repeat 10 or forever"], "text": "“repeat (10)” runs the blocks inside 10 times, then goes on to the next block. “forever” never stops until you press Stop - nothing under it runs."}, {"id": "t-broadcast", "emoji": "📣", "title": "broadcast vs broadcast and wait", "keys": ["broadcast", "message", "wait", "receive"], "q": ["what does broadcast do", "broadcast and wait vs broadcast", "how do sprites send messages"], "text": "“broadcast” sends a message and keeps going. “broadcast and wait” waits until every “when I receive” script for that message has finished."}, {"id": "t-no-move", "emoji": "🧩", "title": "My sprite doesn't move", "keys": ["doesnt", "not", "working", "broken", "stuck", "nothing", "move"], "q": ["my sprite doesn't move", "nothing happens when i press start", "my code is not working"], "text": "Check the top of your script: it needs a hat block like “when green flag clicked”. Then press Start. Use “Check my project” in GWrap AI to find loose blocks."}, {"id": "t-clone-limit", "emoji": "👥", "title": "Too many clones", "keys": ["clone", "clones", "limit", "300", "lag"], "q": ["my clones stopped appearing", "how many clones can i make", "game gets slow with clones"], "text": "Like Scratch, a project can have 300 clones at a time. Delete clones you don't need (for example when they reach the edge) with “delete this clone”."}, {"id": "t-song-styles", "emoji": "🎼", "title": "Song maker styles", "keys": ["style", "styles", "genre", "song", "music", "melody"], "q": ["what music styles are there", "all my songs sound the same", "make trap music"], "text": "Sounds → Song maker. Pick a style (Lo-Fi, Synthwave, Upbeat Pop, Dark Arcade, Ambient, Electro House, Neo Jazz, Chiptune, Rock, Trap, Cinematic) and a mood, press Generate. Each style has its own melody.", "action": "song"}]}];
+  const by = id => document.getElementById(id);
+  const E = () => window.Engine || {};
+  function other() { const e = E(), i = e.activeSpriteIndex || 0; return (e.sprites || []).find((s, k) => k !== i && !s.isClone)?.name || 'mouse-pointer'; }
+  const fix = v => (v === 'OTHER_SPRITE' ? other() : v);
+  const fixNode = n => JSON.parse(JSON.stringify(n || null), (k, v) => (v === 'OTHER_SPRITE' ? other() : v));
+  function setCond(b, node) { const slot = b.querySelector('.gw-input-slot[data-slot-kind="boolean"]'); if (slot && node && window.GW9?.setSlotNode) window.GW9.setSlotNode(slot, fixNode(node)); }
+  function ownInputs(b) { return [...b.querySelectorAll('.block-input')].filter(i => (!i.closest('.block-c-body') && !i.closest('.gw-input-slot')) || i.dataset.slotProxy === '1'); }
+  function make(A, spec) {
+    if (!Array.isArray(spec) || typeof spec[0] !== 'string') throw new Error('bad block ' + JSON.stringify(spec));
+    const [type, inputs = [], menus = [], x = {}] = spec;
+    const lits = inputs.map(v => (v && typeof v === 'object') ? '' : String(v));
+    const ms = menus.map(fix);
+    let b;
+    if (type === 'if_else') {
+      b = A.blk('if_else', lits, ms);
+      const bodies = b.querySelectorAll(':scope > .block-c-body');
+      (x.body || []).forEach(s => bodies[0]?.appendChild(make(A, s)));
+      (x.else || []).forEach(s => (b.querySelector(':scope > .block-c-else') || bodies[1])?.appendChild(make(A, s)));
+      setCond(b, x.cond);
+    } else if (x.body || ['forever', 'repeat', 'if', 'repeat_until'].includes(type)) {
+      b = A.cblk(type, (x.body || []).map(s => make(A, s)), lits, x.cond ? fixNode(x.cond) : null);
+      if (ms.length) b.querySelectorAll(':scope > .block-c-header .block-select, :scope > .block-select').forEach((sel, i) => { if (ms[i] != null) { if (![...sel.options].some(o => o.value === ms[i])) sel.add(new Option(ms[i], ms[i])); sel.value = ms[i]; } });
+    } else {
+      b = A.blk(type, lits, ms);
+      if (x.cond) setCond(b, x.cond);
+    }
+    inputs.forEach((v, i) => { if (v && typeof v === 'object' && Array.isArray(v.r)) { const inp = ownInputs(b)[i]; if (inp) A.nestInto(inp, make(A, v.r)); } });
+    return b;
+  }
+  const ACT = {
+    code: ['Open Code', () => by('gwMainTabCode')?.click()],
+    costumes: ['Open Costumes', () => by('gwMainTabCostumes')?.click()],
+    sounds: ['Open Sounds', () => by('gwMainTabSounds')?.click()],
+    song: ['Open Song maker', () => { by('gwMainTabSounds')?.click(); setTimeout(() => { try { window.GW_V1570_STUDIO?.showPane?.('song'); } catch {} }, 120); }],
+    animation: ['Open Animation', () => { by('gwMainTabCostumes')?.click(); setTimeout(() => window.GW_COSTABS?.choose?.('animation'), 150); }],
+    tiles: ['Open Tiles', () => { by('gwMainTabCostumes')?.click(); setTimeout(() => window.GW_COSTABS?.choose?.('tiles'), 150); }],
+    backdrops: ['Choose a Backdrop', () => window.GW_BACKDROP_LIBRARY?.open?.()],
+    undo: ['Undo now', () => { try { window.GW8?.undo?.(); } catch {} }]
+  };
+  const words = a => (Array.isArray(a) ? a : []).map(w => String(w).toLowerCase().trim()).filter(Boolean);
+  function install(pack) {
+    const A = window.GW_V1571; if (!A?.blk || !pack) return { recipes: 0, tips: 0 };
+    const have = new Set([...A.recipes.map(r => r.id), ...A.tips.map(t => t.id)]); let nr = 0, nt = 0;
+    (pack.recipes || []).forEach(r => {
+      if (!r || !r.id || have.has(r.id) || !Array.isArray(r.script)) return; have.add(r.id);
+      A.recipes.push({ id: r.id, emoji: r.emoji || '✨', title: String(r.title || r.id), keys: words(r.keys), q: words(r.q), steps: (r.steps || []).map(String),
+        prep: () => { try { (r.prep?.vars || []).forEach(v => { if (!Object.prototype.hasOwnProperty.call(E().variables || {}, v)) window.GW?.createVariable?.(v); });
+          (r.prep?.lists || []).forEach(l => { if (!Object.prototype.hasOwnProperty.call(E().lists || {}, l)) window.GW?.createList?.(l); }); } catch {} },
+        build: () => r.script.map(stack => stack.map(s => make(A, s))), pack: true });
+      nr++;
+    });
+    (pack.tips || []).forEach(t => {
+      if (!t || !t.id || have.has(t.id) || !t.text) return; have.add(t.id);
+      A.tips.push({ id: t.id, emoji: t.emoji || '💡', title: String(t.title || t.id), keys: words(t.keys), q: words(t.q), text: String(t.text), action: ACT[t.action] || null, pack: true });
+      nt++;
+    });
+    return { recipes: nr, tips: nt };
+  }
+  function boot(n = 0) {
+    if (!window.GW_V1571?.blk) { if (n < 120) setTimeout(() => boot(n + 1), 500); return; }
+    let r = 0, t = 0; PACKS.forEach(p => { const k = install(p); r += k.recipes; t += k.tips; });
+    window.GW_GWRAP_PACK = { install, make, loaded: { recipes: r, tips: t }, total: () => ({ recipes: window.GW_V1571.recipes.length, tips: window.GW_V1571.tips.length }) };
+  }
+  boot();
+})();
 </script>
 <script id="gw-v4900-costume-tabs">
 (() => {

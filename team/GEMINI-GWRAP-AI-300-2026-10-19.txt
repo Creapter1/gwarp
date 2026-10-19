@@ -48,6 +48,9 @@ BLOCK = [ "type", [inputs...], [menus...], { "body": STACK, "else": STACK, "cond
         - inputs: the typed values in order, as strings: ["10"], ["Hello!","2"]
         - menus: the dropdown values in order: ["right arrow"], ["mouse-pointer"], ["score"]
         - an input can be a nested round block instead of a string: {"r": ["op_random", ["-200","200"]]}
+          or with a menu: {"r": ["get_var", [], ["y speed"]]}
+        - WORKING EXAMPLES that already pass in the app: claude/gwrap-pack.json (8 recipes + 8 tips by Claude).
+          Copy their style. Don't reuse their ids.
         - the 4th part is only for C-blocks: repeat / forever / if / if_else / repeat_until (body, else, cond)
           and for wait_until (cond).
 NODE (the pointy condition in if / wait until / repeat until):
