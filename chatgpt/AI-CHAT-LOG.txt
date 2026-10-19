@@ -336,3 +336,17 @@ LIMITATIONS / NEXT: Need verify all page links and root links, check the root LI
 2026-10-19 | WEBSITE/DOCS STATIC LINK CHECK
 - Re-fetched the 14 new docs pages, homepage, app.html, README.md, LICENSE, team workflow and current status. Static relative href/src target check found 0 missing local file targets.
 - This is NOT browser verification: fragment IDs, external URLs, visual rendering, mobile layout and the deployed site were not tested. app.html remains untouched.
+
+2026-10-18 | WEBSITE + DOCS PASS 2 — USER REQUEST: “read and check the git hup and continue pls take your time”
+AUTHORITATIVE ROUTING: Read current TODO.txt, AI-TEAM.txt, team/WORKFLOW-START-HERE.txt, team/TODO-CHATGPT.txt and team/CHATGPT-WEBSITE-DOCS-2026-10-19.txt. The website/docs assignment still leads; live app integration remains outside ChatGPT's role.
+CHANGES PUSHED TO main:
+- index.html: added seven missing feature cards (Bug Hunter, comments, right-click search, Stage/backdrops, Look like Scratch, recovery and clone safety); removed fixed “191 extensions” claims from metadata/hero/heading and replaced with non-numeric “extension library and safety labels.” Commit 27d929673d32490463bdd5c32e8304fe83f0fb2d.
+- docs/start.html: added Stage/backdrop guidance and the stage-backdrops anchor. Commit 09a361e83ec9989364ff5723563dc936a7a27be3.
+- docs/blocks.html: added clear script-comments/context-menu guidance and a Bug Hunter section; added editing-scripts and bug-hunter anchors. Commit 066f37b92fd702089a2d6b81b9948e555270a3e9.
+- docs/troubleshoot.html: expanded stuck-project recovery guidance and documented the reported 300 default / 5,000 Infinite Clones safety ceilings; added recovery and clone-safety anchors. Commit 0ecbf124cd1135b60173d3e55afb77110ab6ad74.
+- docs/scratch.html: clarified that Look like Scratch is a display option, not a compatibility guarantee; added look-like-scratch anchor. Commit 157af32f8a3faac4a8875b5e41552b9e5671fc42.
+- chatgpt/WEBSITE-OPEN-QUESTIONS.txt: logged the extension-count mismatch, current static link result, confirmed root MIT LICENSE, and remaining questions. Commit 3db5c2a614659a02855bad7c04ec5f69a7fab5bf.
+EVIDENCE: STATIC GITHUB SOURCE/TREE REVIEW ONLY. After the changes, all 15 public HTML pages (index.html + 14 docs pages) were checked against the current repository tree: zero missing local href/src targets; new home-card anchors resolve to their intended documentation headings. The homepage's visible source no longer claims a fixed 191 or 184 count. Root LICENSE was fetched and verified as MIT (blob 416e68ec518ad79447f98a7e54a6d48b9947055f).
+NOT TESTED: no browser, phone-width, external-URL availability, #open hash-handler, or published GitHub Pages verification. The published site was inaccessible to the available browser tool; source access worked via GitHub connector. app.html was NOT edited. Do not describe this as a complete browser-tested website pass.
+REMAINING BLOCKERS: ask Claude to confirm the current extension gallery/count and native-vs-gallery extension list against the active build; confirm the exact visible names of the four Animation blocks; review per-extension creator/licence data; and conduct the required published-site and mobile checks in a real browser when available. Canonical website URL remains owner-confirmation-only.
+NEXT: continue the website assignment only on claims that can be source-verified, then hand the unresolved runtime/site checks to Claude/owner rather than guessing. Do not change app.html or claim full assignment completion.
