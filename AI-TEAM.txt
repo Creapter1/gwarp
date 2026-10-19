@@ -245,3 +245,5 @@ PROGRESS / PLAN UPDATE (2026-10-18)
 
 2026-10-19 | CLAIMED | ChatGPT | C8 audit user-owned AI key handling / exact project context and reconcile stale TODO statuses
 2026-10-19 | DONE | ChatGPT | C8 static security audit -> chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt (commit f1265a8582f51a6049a323614f2ab9b7166b6a87); existing security audit addendum commit cd95b4b41563f3ecab1ec199f83663047daa4a21; root TODO updated to distinguish feature source presence from privacy/model acceptance and historical 59 case results from current 60+10; no browser/API/history scan or app edit
+
+2026-10-19 | DONE | ChatGPT | C8 follow-up consistency check: corrected stale task routing in team/TODO-CHATGPT.txt (commit cc01d8d15b27053569219478f071ce1bec7a20f4); website/docs, CA1-CA3, and CG1-CG3 are prior delivered outputs, not current work; C6 ledger duty continues | team/TODO-CHATGPT.txt; chatgpt/AI-CHAT-LOG.txt
