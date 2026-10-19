@@ -556,3 +556,7 @@ BLOCKERS / NEXT OWNER ACTION:
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this repository review task, not unrelated older chat history.
 --- END ENTRY ---
+
+
+FOLLOW-UP CONSISTENCY NOTE — 2026-10-19
+After C8 logging, re-read team/TODO-CHATGPT.txt and found its first three routing lines still ordered the already-delivered website/docs, animation-review and compiler-review tasks ahead of current work. Replaced that stale header with a status note: authoring/static pass delivered; live website/mobile checks remain with Claude/owner; CA1–CA3 and CG1–CG3 were delivered as reports/docs, not runtime integrations; current ChatGPT reviewer focus is the C6 ongoing ledger. Updated team/TODO-CHATGPT.txt commit cc01d8d15b27053569219478f071ce1bec7a20f4. This was task-routing cleanup only; no app code or contributor folder changed.
