@@ -74,31 +74,16 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 [~] U2. (legacy lab candidates inherited by Gemini; integration blocked pending source/API evidence and isolated canvas tests) COSTUMES / paint editor must work like Scratch's (tools, select,
         reshape, fill, text, eraser, layers, undo, bitmap<->vector,
         rotation centre, costume list). See team/CROSS-AI-REVIEW-2026-10-15.txt; acceptance remains pending.
-[ ] U3. Claude: bug hunting + clean-up + merge -> new Beta on the website.
+[~] U3. Claude released Beta v15.48.0 in app.html; the newest same-version shape-handle patch still needs its added test assertions rerun, and full regression/published-site verification is not complete.
 
 =====================================================================
  NOW (most important first)
 =====================================================================
-[~] 1. (ChatGPT: chatgpt/clone-safety.js) FREEZE FIXES (v15.46) - the chaos tester froze the app:
-      [ ] Clone limit 300 like Scratch (it made 81,000 clones; Stop took 45 s)
-          + optional "Infinite clones" setting like TurboWarp, with a warning.
-      [ ] Stop must clear all clones in one fast pass (< 100 ms).
-      [ ] Frame budget: never run scripts for more than ~250 ms without
-          letting the page breathe (turbo mode too).
-      [ ] Stuck-script box: "A script is taking too long - Stop / Keep waiting"
-          in G-Warp's dark style. Idea: TurboWarp's "warp timer".
-      [ ] Text limit (join can't grow forever) and list limit 200,000 items.
-      [ ] Crash recovery: after a freeze, offer to restore the last autosave
-          (use IndexedDB, localStorage is too small for big projects).
-      (Historical owner-reported note from 13 Oct 2026 only; current v15.46 status and Stop behavior are NOT VERIFIED. Recheck against the current baseline.)
-[~] 2. (ChatGPT: chatgpt/scratch-link.js) "Open in G-Warp" link: app.html#scratch=<number> should ask
-      "Open Scratch project #<number>?" then load it (G-Warp already has
-      More -> "Load from the web..."). Needed for the browser extension.
+[x] 1. CLONE FREEZE / STOP MITIGATION (Claude, v15.46.0; retained in v15.48.0). Source and Claude's P0 report record O(1) clone counting, the 300 default limit, 5000 safety ceiling for Infinite clones, a script frame budget/watchdog, text/list caps and restore points. Claude reports the v15.46.0 chaos test passed. Re-run the relevant stress/Stop tests after runtime changes; latest v15.48.0 shape-handle patch still needs its newest Select assertions rerun. chatgpt/clone-safety.js remains SUPERSEDED and disconnected.
+      Evidence: team/P0-CLONE-FREEZE-REPORT.txt; Claude's v15.46.0/v15.48.0 work-log entries.
+[x] 2. (ChatGPT candidate merged by Claude in v15.46.1) "Open in G-Warp" hash handler is in app.html: #scratch=<number> prompts before loading; Cancel/bad IDs do nothing. Claude reports test_4611 ALL PASS. The complete browser-extension flow remains open under item 3; handler tests do not prove extension packaging or Scratch SPA behavior.
 [~] (Gemini) 3. Browser-extension proposal delivered -> gemini/extension/ (acceptance pending packaging, permission review, real-browser tests and owner-approved integration).
-[~] 4. (Grok: grok/SPEC-*.txt + TESTS.txt) Scratch behaviour check: every block must give the SAME result as
-      Scratch 3 (number/text rules, list indexes, rounding, pen colours,
-      clone rules, hat restarts, broadcast order...). Make small test
-      projects with the exact expected result.
+[~] 4. (Grok: grok/SPEC-*.txt + TESTS.txt) Scratch behavior coverage is still incomplete. Claude reports 20/20 animation fixtures and 39/39 parity fixtures/extras on v15.48.0, but the raw T043 fixture/source still incorrectly says repeat 2.7 runs twice; Scratch uses Math.round and runs three times. The runner currently overrides T043 in memory. Grok must correct grok/fixtures.json and grok/FIXTURE-SOURCES.txt, then add the additional high-risk cases requested in team/NEXT-FOR-THE-TEAM-2026-10-19.txt. Do not mark the overall parity suite complete yet.
 [~] (Gemini inherited) 5. .pmp research + notes + test harness -> gemini/lab/
       (NOTES-pmp.txt, test-pmp-loader.js and protobuf-only pmp-loader.js are
       legacy candidate material, NOT accepted or integrated. Claude still needs
