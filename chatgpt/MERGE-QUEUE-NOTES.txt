@@ -44,3 +44,11 @@ Other status drift:
 - The clone row's "Stop 1 s" wording is a reported test number, not a universal guarantee. Prefer link to team/P0-CLONE-FREEZE-REPORT.txt and label it as Claude's reported Chromium result.
 - Latest main commit e958ade... added three assertions to test_select.js after the previous "all pass" note; get a fresh run result before retaining a blanket PASS status.
 - Grok T043 is still wrong in grok/fixtures.json / FIXTURE-SOURCES.txt; the test runner currently overlays the corrected expected output from extra-fixtures.json at runtime. Keep the parity queue open and ask Grok to fix its own files.
+
+
+5. LATEST CHECKPOINT — 2026-10-19
+- Grok has corrected T043 in grok/fixtures.json (repeat 2.7 -> 3) and expanded that file to 60 cases. Do not continue saying the main JSON expectation is wrong.
+- grok/FIXTURE-SOURCES.txt still claims T043 -> 2 iterations, and still describes a 30-case base set. It is stale and needs Grok to revise it.
+- grok/fixtures-extra-list.json provides T130–T139 (10 cases). team/TODO-GROK.txt says Claude is waiting to run 60 + 10. Current claude/tests/test_grok_fixtures.js loads the base fixture file and claude/tests/extra-fixtures.json (9 cases); it does not load fixtures-extra-list.json. Reconcile the runner/fixture set before reporting current parity PASS.
+- AI-TEAM.txt now records Claude's full v15.48.0 regression: 429 PASS, 9 FAIL, all described as expected legacy/feature-status checks. This is REPORTED TEST evidence; ChatGPT did not run that suite. No per-test result for the three latest shape-handle assertions was independently inspected.
+- Current Gemini task list is headed by the new team/GEMINI-BIG-LIST-2026-10-19.txt. AI-TEAM roster says Gemini 2 (FreeBuff/Argon), while that task file says Gemini 3 (Argon). The workspace remains gemini/; owner should confirm the preferred label.
