@@ -1,0 +1,158 @@
+=====================================================================
+ SPEC: Scratch 3 Paint Editor — Select tool
+ Author: Grok | Date: 2026-10-18 | Batch: S1
+ Evidence: scratchfoundation/scratch-paint (scale-tool.js, rotate-tool.js,
+   move-tool.js, nudge-tool.js, group.js) + Scratch Wiki / official PDF guide
+ G-Warp side: claude/transform4800.js header + implementation (v15.48.0)
+ Live Beta comparison: NOT RUN in browser this session — differences below
+ are from source comments vs Scratch source. Claude/ChatGPT should verify live.
+=====================================================================
+
+1. WHAT THE SELECT TOOL IS
+--------------------------
+Vector + bitmap modes both have a Select (pointer) tool.
+On selection: a bounding box appears with:
+  - 8 scale handles (4 corners + 4 edge midpoints)
+  - 1 rotation control (arrow / handle below the box in Scratch UI)
+  - interior of box: move selection
+
+Official guide (Scratch Learning Resource PDF):
+  - Corner points resize
+  - Anchor under the shape rotates
+  - Shift while rotating → 45° steps
+  - Copy / Paste / Delete / Flip H / Flip V in tool options
+  - Layer order: Forward / Backward / Front / Back
+
+2. SCALE (from scale-tool.js)
+-----------------------------
+Pivot: opposite corner/edge of the handle being dragged (origPivot).
+
+Corner drag:
+  - WITHOUT Shift: aspect ratio LOCKED
+      sx = sy = max(|sx|,|sy|) with signs preserved
+      (scale-tool.js ~L121-125: if (this.isCorner && !event.modifiers.shift))
+  - WITH Shift: free / non-uniform scale ("freesize" — Scratch Wiki Secrets)
+
+Edge drag: independent axis scale (no forced aspect).
+
+Alt:
+  - Scale FROM CENTER of original bounds
+  - pivot = origCenter; size delta multiplied by 2
+  - Releasing Alt mid-drag resets centered mode
+
+Minimum scale factor enforced (MIN_SCALE_FACTOR) so items do not vanish.
+
+3. ROTATE (from rotate-tool.js)
+-------------------------------
+Pivot: bounds.center of selection.
+Shift: snap rotAngle to multiples of 45°:
+  rotAngle = Math.round(rotAngle / 45) * 45
+Without Shift: free continuous rotation.
+
+4. MOVE (from move-tool.js)
+---------------------------
+Drag interior of selection.
+Shift: snapDeltaToAngle — constrain movement to 45° lines relative to start
+  (Wiki: "snap to 45° angle lines relative to the initial center").
+Without Shift: free move; also snaps selection center to costume rotation
+  center crosshair within SNAPPING_THRESHOLD (4 device px / zoom).
+Alt on mouse-down (hitProperties.clone): clone-on-drag path exists in API.
+Multiselect: Shift on mouse-down toggles (hitProperties.multiselect).
+
+5. NUDGE (from nudge-tool.js)
+-----------------------------
+Arrow keys move selection.
+Base step: 1 / paper.view.zoom (one paper unit at current zoom).
+Shift: step *= NUDGE_MORE_MULTIPLIER (15).
+Clamped so selection stays inside action bounds.
+
+6. GROUP / UNGROUP (from group.js)
+----------------------------------
+Group: paper.Group of selected root items; selection becomes the group;
+  children marked selected.
+Ungroup: applyMatrix true; children promoted; recursive option for nested groups.
+
+7. AFTER DRAWING A SHAPE
+------------------------
+Typical Scratch flow: finishing a rect/ellipse/line leaves that item selected
+so the bounding box is immediately available (select tool default on entry).
+(Exact auto-select is mode-tool dependent; treat as expected UX.)
+
+8. BITMAP SELECT
+----------------
+Bitmap Select grabs a rectangular pixel region: move / stretch / rotate that
+region (Scratch Wiki bitmap Select). Not vector nodes.
+Copy/paste/delete/flip available similarly.
+
+9. G-WARP (transform4800.js) — AS CODED
+---------------------------------------
+From file header + handlers (v15.48.0):
+  - Box with 8 handles + rotate handle (G-Warp violet)
+  - Drag inside box: move; Shift = axis-constrain (horizontal OR vertical),
+    NOT 45° diagonal snap like Scratch move-tool
+  - Corner resize: from opposite corner; Shift = keep aspect
+    (matches Scratch default aspect lock, but Shift polarity is OPPOSITE
+     Scratch: Scratch locks aspect WITHOUT Shift; G-Warp locks WITH Shift)
+  - Side handle: stretch
+  - Rotate: Shift = 15° steps (Scratch uses 45°)
+  - Shift-click: add/remove from selection
+  - Empty drag: marquee; Esc / empty click: deselect
+  - Arrows: 1 unit; Shift+arrows: 10 (Scratch: 1/zoom and ×15)
+  - Ctrl/Cmd+G group; Shift+Ctrl/Cmd+G ungroup
+  - Handles in overlay layer (not saved into costume)
+  - Bitmap marquee path exists (move/resize/rotate pixels)
+
+10. DIFFERENCE LIST (Scratch vs G-Warp) — VERIFY LIVE
+-----------------------------------------------------
+D1  Aspect-ratio modifier POLARITY
+    Scratch: corner + no Shift = lock ratio; Shift = free
+    G-Warp:  corner + Shift = lock ratio; no Shift = free
+    → Muscle-memory mismatch for Scratch users.
+
+D2  Rotate snap angle
+    Scratch: 45° with Shift
+    G-Warp: 15° with Shift
+
+D3  Move + Shift
+    Scratch: 45° line snap relative to drag start
+    G-Warp: pure H or V axis lock
+
+D4  Scale from center
+    Scratch: Alt = from center
+    G-Warp: not documented in header; confirm if Alt is implemented
+
+D5  Nudge amounts
+    Scratch: 1/zoom; Shift ×15
+    G-Warp: 1 and 10 (zoom-independent)
+
+D6  Selection after draw / reshape stability
+    G-Warp header claims jump bugs fixed via matrix-from-drag-start;
+    still needs kid-test (ChatGPT assignment on NEXT-FOR-THE-TEAM).
+
+D7  Bitmap Select copy/paste
+    Claude plan lists as leftover; may still be incomplete vs Scratch.
+
+11. RECOMMENDED ALIGNMENT (if goal = Scratch parity)
+----------------------------------------------------
+P1  Invert corner Shift: lock aspect by default; Shift unlocks.
+P2  Rotate Shift → 45° (or offer both 15/45 in settings).
+P3  Move Shift → 45° snap (keep H/V as secondary if desired).
+P4  Alt = scale from center.
+P5  Nudge: 1/zoom base, Shift ×15 (or document G-Warp choice).
+
+12. SOURCES
+-----------
+- https://github.com/scratchfoundation/scratch-paint
+    src/helper/selection-tools/scale-tool.js
+    src/helper/selection-tools/rotate-tool.js
+    src/helper/selection-tools/move-tool.js
+    src/helper/selection-tools/nudge-tool.js
+    src/helper/group.js
+- Scratch Wiki: Paint Editor; Scratch Secrets (vector Shift behaviours)
+- Scratch Foundation PDF: ScratchLearningResource_CreateOriginalSprite.pdf
+- G-Warp: claude/transform4800.js (v15.48.0)
+
+UNSURE / NOT VERIFIED THIS SESSION
+- Live G-Warp Alt-from-center and bitmap paste
+- Exact auto-select after each shape tool in current Beta
+- Group nesting limits and SVG import groups
