@@ -1,0 +1,100 @@
+G-WARP GA2 — ONION SKIN BEHAVIOUR SPEC
+Author: Grok  |  Date: 2026-10-18
+Evidence: STATIC docs for Scratch Addons onion-skinning; G-Warp behaviour from
+team/ASSIGNMENTS-ANIMATION-2026-10-18.txt (v15.47.0 description).
+Live G-Warp UI comparison: NOT BROWSER-VERIFIED this session (no app run).
+Do NOT copy addon code; behaviour notes only.
+
+=====================================================================
+1. REFERENCE: Scratch Addons "Onion skinning"
+=====================================================================
+Product: Scratch Addons browser extension addon (not stock Scratch 3).
+Stock Scratch / stock TurboWarp GUI do not ship onion skin built-in;
+TurboWarp users often enable Scratch Addons or similar editor mods.
+
+Credit: GarboMuffin (addon author listed in addon.json credits)
+Licence: Scratch Addons is GPL-3.0 (repository licence); treat as third-party
+  add-on — do not copy source into G-Warp.
+Repo: https://github.com/ScratchAddons/ScratchAddons/tree/master/addons/onion-skinning
+addon.json description: transparent overlays of previous or next costumes when
+  editing; controls under the costume editor near zoom buttons.
+
+Default settings (from addon.json settings):
+  enable by default: false
+  previous costumes: 1 (min 0, max 100)
+  next costumes: 0 (min 0, max 100)
+  opacity (%): 25
+  opacity step (%): fades consecutive overlays (setting present)
+  before tint: #FF0000 (red)
+  after tint: #0000FF (blue)
+  (additional UI: toggle, layer count controls)
+
+Behaviour (from description + issues/docs, not code copy):
+  - Shows ghost of neighbouring costumes in the paint editor only.
+  - Previous and next counts are independent.
+  - First costume: no previous layers (or empty).
+  - Last costume: no next layers (or empty).
+  - Vector and bitmap costumes both supported in the Scratch paint editor path.
+  - Overlay is editor-only; not baked into the costume asset.
+  - Alignment follows the costume editor canvas (rotation centre handling is
+    part of the paint editor's own transform — exact RC match is UNSURE without
+    live test).
+  - High layer counts can lag (community reports ~10–20 layers).
+
+=====================================================================
+2. G-WARP (v15.47.0) — as documented by Claude assignment
+=====================================================================
+API: window.GW_FLIPBOOK { settings, setOnion, renderOnion, open, close, play,
+  stop, state }
+Source candidate: claude/flipbook4700.js (integration owned by Claude).
+
+Documented behaviour:
+  - Onion skin button in the paint editor bottom bar.
+  - Costume BEFORE: faint violet overlay.
+  - Costume AFTER: green overlay.
+  - Drawn BEHIND the current drawing.
+  - Lined up by rotation centre.
+  - Controls: before 0–3 / after 0–3 / strength.
+  - Works in Vector + Bitmap.
+  - Never saved into the costume (editor-only).
+  - Separate Flipbook Play under the costume list (FPS 1–30, loop, from–to range).
+
+=====================================================================
+3. DIFFERENCES (G-Warp vs Scratch Addons reference)
+=====================================================================
+| Topic              | Scratch Addons (typical)     | G-Warp (docs)                    |
+|--------------------|------------------------------|----------------------------------|
+| Shipping           | Optional browser addon       | Built into Costumes tab          |
+| Default on         | Off                          | (UI button; default UNSURE live) |
+| Previous layers    | 0–100 (default 1)            | 0–3                              |
+| Next layers        | 0–100 (default 0)            | 0–3                              |
+| Opacity            | % + step fade                | "strength" control               |
+| Before colour      | Tint #FF0000 (red)           | Violet                           |
+| After colour       | Tint #0000FF (blue)          | Green                            |
+| Max practical      | High (can lag)               | Hard cap 3 each side             |
+| Rotation centre    | Editor-dependent             | Explicitly aligned by RC         |
+| Play flipbook      | Not part of onion addon      | Built-in Play under list         |
+| Asset mutation     | No                           | No                               |
+
+G-Warp chooses a smaller layer cap and G-Warp brand colours (violet/green)
+instead of SA red/blue. That is intentional product difference, not a bug.
+
+=====================================================================
+4. PARITY / TEST CHECKLIST (for Claude / live UI)
+=====================================================================
+[ ] Toggle onion on costume 1 of N: only after-layers appear.
+[ ] Toggle on last costume: only before-layers appear.
+[ ] Change before/after counts 0–3 and strength; overlay updates.
+[ ] Vector and bitmap both show overlays behind strokes.
+[ ] Save project; reopen — onion settings not required to persist in costume SVG.
+[ ] Rotation centre move still lines up onion with drawing.
+[ ] Compare Flipbook Play sequence to GA1 A015/A018 costume index rules.
+
+Live app try: NOT RUN this session. Mark differences confirmed after a
+BROWSER-VERIFIED pass.
+
+=====================================================================
+5. FILES
+=====================================================================
+grok/SPEC-onion-skin.txt (this file)
+Related: grok/ANIM-FIXTURES.json (GA1)
