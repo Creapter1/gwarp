@@ -303,3 +303,13 @@ OPEN NEXT STEPS:
 4. Gemini: follow the current big-list assignment under the unified gemini/ workspace and log its own real work; do not claim inherited lab candidates as new Gemini-authored code.
 5. Owner: confirm whether the unified role's canonical label should be Gemini 2 (FreeBuff/Argon) or Gemini 3 (Argon).
 --- END ENTRY ---
+
+2026-10-19 | FINAL CONSISTENCY PASS
+- Follow-up verification found the earlier T043 finding had become stale after Grok's update: grok/fixtures.json now has T043 expect 3 and 60 total cases. grok/FIXTURE-SOURCES.txt remains stale at 2 iterations / 30 cases. Separate grok/fixtures-extra-list.json contains T130-T139 (10 cases), but the current runner does not load that file; the 60+10 run remains pending.
+- AI-TEAM.txt records Claude's full current Beta v15.48.0 regression: 429 PASS, 9 FAIL, all described as expected legacy/feature-status checks. Treat this as REPORTED TEST, not an independent ChatGPT result. No direct per-test output for the three new shape-handle assertions was independently captured.
+- Updated chatgpt/VERIFICATION-2026-10-19.txt, TODO.txt, team/AI-STATUS.txt, team/CONTINUOUS-WORK-QUEUE.txt, team/AI-WORK-PLAN.txt and chatgpt/MERGE-QUEUE-NOTES.txt to distinguish the current 60-case source, the stale source map, the separate 10-case file, and the outstanding runner reconciliation.
+- Updated team/TODO-GEMINI.txt to make the new team/GEMINI-BIG-LIST-2026-10-19.txt priority authoritative and map its G1/G3/L1-L3 overlap to older GA-M1/GA-M2/GL1-GL3 jobs. This prevents duplicate versions of the same deliverable.
+- The newest assignment lists “Gemini 3 (Argon)” while AI-TEAM roster says “Gemini 2 (FreeBuff/Argon)”; the workspace remains gemini/. Owner confirmation needed for canonical role label.
+- The Big List header repeats the old GitHub Pages URL while TODO.txt says canonical URL awaits owner confirmation; do not change extension targets/links without confirmation.
+- Added a correction addendum to gemini/AI-CHAT-LOG.txt and a further review line to AI-TEAM.txt. Those changes are documentation only.
+- Evidence remains GitHub source/tree/diff review. ChatGPT did not run browser tests; app.html/index.html hashes remain unchanged by ChatGPT.
