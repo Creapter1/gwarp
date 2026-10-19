@@ -46,5 +46,6 @@ TEAM CHANGE (2026-10-18): DeepSeek's active role is retired. Gemini owns visual 
 
 CURRENT 2026-10-19 HANDOFF NOTES
 - Gemini's current task list is now headed by team/GEMINI-BIG-LIST-2026-10-19.txt. AI-TEAM names the role Gemini 2 (FreeBuff/Argon), while the new list is titled Gemini 3 (Argon). Keep the unified gemini/ workspace; ask the owner for the canonical label rather than creating another folder.
+- The Big List repeats the old GitHub Pages URL in its header, but TODO.txt still awaits the owner-confirmed canonical URL. Do not change extension targets or links until the owner confirms which URL is canonical.
 - Claude's work log records the current v15.48.0 full regression as 429 PASS / 9 FAIL, all described as expected legacy/feature-status checks. This is reported evidence, not an independent rerun by ChatGPT.
 - Grok's T043 expected value is now fixed in grok/fixtures.json and the base file has 60 fixtures. grok/FIXTURE-SOURCES.txt still has the old expectation/count. The additional T130-T139 cases are in grok/fixtures-extra-list.json and have not yet been run with the 60-case base set. Claude's current runner must be reconciled to use the intended 60+10 set and record results.
