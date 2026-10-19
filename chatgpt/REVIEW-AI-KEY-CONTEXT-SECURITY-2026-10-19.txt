@@ -1,0 +1,125 @@
+G-WARP C8 SECURITY REVIEW — AI KEY STORAGE, CONTEXT TRANSMISSION AND STATUS CONSISTENCY
+Date: 2026-10-19 (America/New_York)
+Reviewer: ChatGPT
+Task: C8 security/consistency follow-through
+Evidence class: STATIC SOURCE REVIEW + OFFICIAL MODEL-DOCUMENT CROSS-CHECK
+Browser/network/API test: NOT RUN
+Git-history scan / repository secret-settings review: NOT RUN
+Production source changes: NONE
+
+BASELINE AND SCOPE
+- Repository: Creapter1/gwarp, main.
+- app.html blob reviewed: 5ca624a515b9fc1310814c4740608c1cf3071028 (Beta v15.48.0; 2,436,157 characters returned by blob fetch).
+- Existing security review: team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt, blob f1d44040c032c78c41d54749b8cd4ee1996d217b.
+- Root task baseline: TODO.txt blob 1b8a6372f7d4e722ee5de58321650cb2d4aad87f.
+- No changes to app.html or index.html. No real API key used, copied, or placed in this report.
+
+EXECUTIVE VERDICT
+HIGH PRIORITY — the current AI key flow is a user-owned direct-provider feature, not a hard-coded shared-key leak. Its storage choice and direct destination are visible in source, but UI disclosure is incomplete regarding the exact project context transmitted and the risk of browser storage. The source's default model string claude-sonnet-5-5 also conflicts with the current official model documentation found during this review, which lists Claude Sonnet 5 as claude-sonnet-5. Because no API request was made, treat the default model mismatch as a HIGH-RISK likely functional defect requiring an authorized verification, not a runtime-confirmed failure.
+
+SOURCE-VERIFIED CURRENT FLOW
+
+1. Key storage
+- keyGet() checks sessionStorage first, then localStorage, for the key named gwarp-ai-key.
+- A new checkbox is initialized from whether a localStorage key already exists. For a new setup, the persistent checkbox is unchecked; the save handler therefore stores the key in sessionStorage by default.
+- When “Remember the key on this computer” is checked, the save handler saves it into localStorage and removes the sessionStorage copy. When unchecked, it saves the sessionStorage copy and removes the localStorage copy.
+- “Remove key” clears the input then invokes the save handler, which removes the stored copies from both locations.
+- The model setting is stored in localStorage separately under gwarp-ai-model.
+- The app handles storage access errors, but those failures are swallowed; there is no clear user-facing warning that storage failed or that a key may not have been saved.
+- Both sessionStorage and localStorage are readable by JavaScript executing in the same origin. The password input masks what is typed but does not make stored values a secure vault. LocalStorage persistence is an explicit opt-in, which is a positive control; it remains exposed to same-origin script compromise.
+
+2. Destination and request contents
+The current askAI() function sends a POST directly to:
+https://api.anthropic.com/v1/messages
+
+It sends the user-supplied key in the x-api-key header, includes the Anthropic version header and the explicit browser-access header, and does not place the key in the JSON request body. No shared provider key or hard-coded credential was identified in the inspected app blob.
+
+The JSON body includes the chosen model, a 700-token response limit, the helper system prompt, and a user message containing:
+- the question typed into the G-Warp AI helper;
+- all non-clone sprite names;
+- the selected sprite name;
+- names of variables in Engine.variables (keys only; the inspected function does not enumerate or send their values);
+- text from the selected sprite's script blocks, drawn from up to 12 top-level stacks owned by the active sprite; within each stack it considers up to 25 descendant blocks; each block's displayed text/type is whitespace-normalized and truncated to 60 characters.
+
+The script text may include user-entered literals or labels, depending on how blocks render their content. A rough intended upper bound for this sampled block text alone is 12 stacks × 25 blocks × 60 characters (18,000 characters), before sprite/variable names and the user's question; actual context will often be smaller. It is not the complete project file: this function does not explicitly include variable values, image/sound bytes, or every script for every sprite.
+
+3. When transmission occurs
+The “Ask the connected AI” button is only offered when the app is in Developer mode, a connected key exists, and the offline helper produced its “none” result. The direct network request runs only when the user presses that button. That is meaningful gating. However, the current flow does not present a preview of the exact context, a per-request confirmation, or a separate context-sharing toggle before sending the sampled project information. The UI copy says “Your key stays in this browser and is sent only to the AI service. Costs and rules of that service apply.” It does not explain the exact project fields transmitted or clearly state the same-origin storage risk.
+
+4. Current model default: likely mismatch
+The source defaults modelGet() to the string claude-sonnet-5-5. The official Anthropic model deprecation/current model documentation found during this review lists Claude Sonnet 5 with the ID claude-sonnet-5, not claude-sonnet-5-5:
+https://docs.anthropic.com/en/docs/about-claude/model-deprecations
+This is a documentation cross-check only. No model-list endpoint was queried and no Messages API request was attempted, so do not label the app's request as tested. The model is user-editable and persisted, but a wrong default can make the first real-AI request fail for users who do not know the model field exists.
+
+SECURITY SCAN PERFORMED IN THIS PASS
+A limited pattern scan of the current app.html blob only found zero matches for the following patterns:
+- Anthropic-looking key strings;
+- AWS access-key ID pattern;
+- private-key header;
+- long bearer-token pattern;
+- Google API key pattern.
+This does not scan Git history, repository settings, deployment artifacts, forks, build caches, binary files or every file in the repository. The earlier 2026-10-15 review reports no matching hard-coded secret pattern in its own 92-file current-content scan; it also did not scan full history. Neither scan is a security certification. No actual secret was found or reproduced in this review.
+
+POSITIVE CONTROLS ALREADY PRESENT
+- The key is user-supplied; no shared provider key was found in the reviewed app blob.
+- Session-only storage is the initial default.
+- Persistent storage requires an explicit checkbox.
+- The direct AI call is gated by Developer mode, an existing key, the offline-helper fallback state and an explicit button press.
+- The API destination is directly visible in source and the key is sent in an authentication header, not inserted in the prompt body.
+- A Remove key button exists and calls the save path with an empty value, which removes both storage copies.
+These controls reduce risk but do not replace clear disclosure or a safe-context selection.
+
+FINDINGS AND MINIMUM CORRECTIONS
+
+F1 — HIGH: project context is sent without an exact preview or per-request context choice.
+Minimum correction, only after owner authorization: before the external request, show a compact preview listing the question, selected sprite name, sprite names, variable names and the sampled script text. Provide a clear separate option to omit project context; safest default for a privacy-first flow is no project context until the user opts in. Keep the local/offline helper available without sending context. Do not silently send more data than the preview states.
+Acceptance: use a dummy key and a non-sensitive fixture; compare the exact preview to the outgoing JSON body, verify context-off sends the question only, verify context-on includes only the documented fields, and verify Cancel sends no request.
+
+F2 — HIGH: current model default is inconsistent with official documentation.
+Minimum correction: confirm an actual model ID supported by the relevant Anthropic API/access tier before changing code; use an owner-approved, current identifier and provide a friendly model-error message. Do not silently substitute another model or claim the documented ID was API-tested.
+Acceptance: in a controlled target browser, send one request using the proposed default with a dummy/test credential; record HTTP status and provider error safely without capturing the key. Also test unsupported-model error handling.
+
+F3 — HIGH: users are not told that browser storage is readable by same-origin scripts.
+Minimum correction: retain session-only as default; near the Remember checkbox, disclose that persistent localStorage is not a secure vault and that same-origin scripts may access stored keys. Make failure to save visible instead of silently swallowing storage exceptions. Do not tell users a browser-only key can be made perfectly secret.
+Acceptance: verify unchecked stores only in sessionStorage; checked stores only in localStorage; Remove key clears both. Simulate storage denial/quota errors and verify a visible warning. Reload and restart to demonstrate the intended lifetime of each option.
+
+F4 — MEDIUM: the short provider disclosure does not explicitly describe destination/cost/data.
+Minimum correction: identify Anthropic and api.anthropic.com, note that API charges/limits may apply, and state the exact categories of project context that may be sent. Keep this language adjacent to the real-AI connection and “Ask” action, not buried only in a general privacy document.
+Acceptance: review the connected-AI dialog at desktop and narrow width; users must be able to identify the provider, destination, cost possibility, storage choice, removal control and transmitted-context categories before any request.
+
+F5 — MEDIUM: hard-coded model default and API endpoint have no tracked runtime contract.
+Minimum correction: document which model ID was verified, when, and under what supported account/API access. Keep all test keys dummy/temporary; never capture request headers in logs or screenshots.
+Acceptance: pass online success, unsupported-model error, invalid-key error and offline/network failure tests while confirming the offline helper still works and no key value is printed/exported.
+
+F6 — MEDIUM: storage errors are caught and ignored.
+Minimum correction: preserve application stability, but make “could not save/remove key” visible when local/session storage denies access. Do not claim “Saved” if the write failed.
+Acceptance: mock/set storage exceptions, verify UI state communicates failure and later AI calls do not falsely imply the rejected value is stored.
+
+F7 — LOW / SCOPE LIMIT: repository-wide secret exposure is still unknown.
+Next safe action: owner/Claude performs a suitable Git-history secret scan and reviews available GitHub secret-scanning settings/alerts. If a real credential is found, identify only its path/commit to the owner, do not paste the value into any report, and rotate/revoke it. Deleting a committed secret alone does not invalidate it.
+
+STATUS CONSISTENCY CHECK
+- TODO.txt correctly identifies the canonical website URL as pending owner confirmation. No URL has been changed or guessed.
+- TODO.txt's current “Now” entries already distinguish the Gemini extension as candidate/acceptance-pending, Grok parity as open, and the inherited protobuf loader as not accepted/integrated; these statuses are consistent with the C3–C5 reviews.
+- The C4 review says the current 60-base + T130–T139 set is not the same as the historical 30+9 run. Preserve historical PASS counts only with that qualification; they must not be reported as a pass for the intended 60+10 suite.
+- The costume emergency fix is documented as a Claude v15.48.0 source change. Its feature state is not contradicted by this audit; latest shape-specific test assertions still require the current run confirmation recorded in team/AI-STATUS.txt.
+- Root TODO.txt still labels the built-in GWrap AI / own-key option as not started even though the reviewed app blob already contains the Developer-mode Anthropic key interface and request function. It should be marked candidate/present but privacy/model acceptance pending, not “finished/verified.”
+- The TODO historic statement that Grok fixture tests ran (59/59) should remain history, but be explicitly distinguished from the newer, still-pending 60+10 run.
+
+ACCEPTANCE CHECKLIST
+[ ] Confirm a current API-supported default model ID; no actual request tested in this review.
+[ ] Add transparent context preview and a user choice to omit project context; test cancel/no-request.
+[ ] Document destination, possible cost, payload categories and storage limitations.
+[ ] Test session-only/persistent/remove behavior with dummy credentials and storage failures.
+[ ] Verify no key enters project exports, AI reports, diagnostics, logs or generated test artifacts.
+[ ] Run a limited current-source scan and a separate Git-history/repository-settings review through the authorized owner/Claude process.
+[ ] Run target-browser/network tests and record actual outcomes without logging any key.
+[ ] Keep the canonical website URL unchanged until the owner confirms the exact replacement.
+
+OVERALL STATUS
+SOURCE REVIEW: COMPLETE for the pinned app blob and relevant governance files.
+OFFICIAL DOCUMENTATION CHECK: performed for the model-ID discrepancy.
+BROWSER / ANTHROPIC API: NOT TESTED.
+REPOSITORY HISTORY / SECRET SETTINGS: NOT TESTED.
+APP CODE CHANGED: NO.
+INTEGRATION / RELEASE: NOT DONE.
