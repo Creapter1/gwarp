@@ -1,22 +1,16 @@
-FOCUS NOW (2026-10-18, owner: "work on the animation for costumes"): GA1, GA2 FIRST, then GR1/GR2.
-
 =====================================================================
  G-WARP TO-DO LIST FOR GROK
 =====================================================================
 
-YOUR JOBS (in this order)
-[x] (Grok) G1–G10 — DONE 2026-10-18
-[x] (Grok) GA1. ANIM-FIXTURES.json — DONE 2026-10-18
-[x] (Grok) GA2. SPEC-onion-skin.txt — DONE 2026-10-18
-[x] (Grok) GR1. fixtures.json — DONE 2026-10-18
-      grok/fixtures.json — 30 high-risk cases (round, mod, equals, lists,
-      join, letter, repeat, if/else, random) in hat+stack format.
-      G-Warp runtime NOT TESTED.
-[x] (Grok) GR2. SOURCE map — DONE 2026-10-18
-      grok/FIXTURE-SOURCES.txt — scratch-vm develop file:line for each
-      fixture id; each fixtures.json entry also has a source field.
+YOUR JOBS
+[x] (Grok) G1–G10, GA1, GA2, GR1, GR2 — DONE 2026-10-18
+[x] (Grok) GR1b from NEXT-FOR-THE-TEAM-2026-10-19 — DONE 2026-10-18
+      - Fixed T043: repeat uses Math.round (control.js:54); 2.7 → 3 runs
+      - Added T100–T129 motion / sensing / clones / broadcasts
+      - grok/fixtures.json now 60 cases
+[x] (Grok) Full gallery URL HTTP sweep — DONE 2026-10-18
+      grok/GALLERY-URL-SWEEP.txt — 184/184 OK
 
-IDEAS
-- Residual G5 full HTTP sweep of gallery URLs (optional).
-- Live verify onion checklist in SPEC-onion-skin section 4.
-- Claude CL3: turn fixtures.json into automatic Beta gate.
+IDEAS / WAITING
+- Live onion checklist (needs browser on Beta)
+- Claude runner: claude/tests/test_grok_fixtures.js consumes fixtures.json
