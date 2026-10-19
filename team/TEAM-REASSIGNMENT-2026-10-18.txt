@@ -1,0 +1,34 @@
+TEAM REASSIGNMENT — 2026-10-18
+Owner: Creapter1
+Scope: AI role/folder/task routing only. No runtime integration authorized.
+
+OWNER'S DECISION
+The owner is retiring DeepSeek from active participation because maintaining the separate tab/workflow has become unreliable and exhausting (difficult to track, repeated 404 / not-working issues). This is a practical workflow change, not a personal judgment. Gemini 2 (through the owner's FreeBuff/Argon access path; follow the actual model label available) inherits both Gemini's existing tasks and every active responsibility previously assigned to DeepSeek.
+
+SINGLE ACTIVE ROUTE FOR GEMINI
+- Task list: team/TODO-GEMINI.txt
+- Current animation tasks: team/ASSIGNMENTS-ANIMATION-2026-10-18.txt
+- Next bounded tasks: team/ASSIGNMENTS-2026-10-19.txt
+- Visuals / extension: gemini/extension/, gemini/icons-animation/, gemini/rig-characters/
+- Lab candidates, A/B/C variants, harnesses and research: gemini/lab/
+- Gemini's own context log: gemini/AI-CHAT-LOG.txt (Gemini must maintain it)
+- Old deepseek/ path: retired pointer only (deepseek/README-ARCHIVE.txt)
+
+PRESERVATION / EVIDENCE
+The former 28 files were moved into gemini/lab/ with their filenames preserved. The former task list is copied to gemini/lab/LEGACY-TODO-DEEPSEEK-2026-10-18.txt. Former work-log entries remain historical; old attribution does not prove a candidate was tested, accepted or integrated. BUFFY-ADDONS-SETTINGS-REVIEW.txt remains an unverified/misrouted artifact whose authorship must not be inferred.
+
+GOVERNANCE
+New tasks/candidates belong in gemini/. ChatGPT keeps its reviews in chatgpt/. Gemini must not edit other AI folders. Claude's existing model-verification, testing and owner-approval gates remain unchanged. No app.html/index.html edits were part of this reassignment.
+
+CLONE QUESTION
+Static comparison of the released v15.46.0 GitHub diff with chatgpt/clone-safety.js shows a different implementation, not a direct paste of the ChatGPT module. The designs share high-level goals (cached/O(1) clone count, safety cap), but the repository cannot establish whether Claude saw or took inspiration from ChatGPT's candidate. See chatgpt/MERGE-QUEUE-NOTES.txt for the exact comparison and limitations.
+
+PRODUCT PRIORITIES CARRIED FORWARD
+1. Scratch runtime behavior parity, especially custom blocks/procedures, remains first.
+2. Aim for 60 FPS+ on representative projects when feasible; this is a goal, not a promise for every heavy project.
+3. Keep the primary UI clean and understandable.
+4. GPU/rendering/compiler work must be measured; compiler work remains Claude's active integration stream.
+5. Tilemap and additional extensions stay deferred unless the owner reorders them.
+6. GWrap AI block/script reconstruction animation should be default On, with Skip/instant and a More -> Settings preference; do not block execution or leave partial scripts.
+
+Cross-AI context caveat: separate AI products do not automatically share complete chats. This handoff is the shared, repo-backed decision record; each AI must also maintain its own chronological AI-CHAT-LOG.txt.
