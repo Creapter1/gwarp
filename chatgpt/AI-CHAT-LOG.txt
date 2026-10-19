@@ -438,3 +438,44 @@ C5 — inspect gemini/lab/pmp-loader.js, NOTES-pmp.txt, and test-pmp-loader.js r
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this GitHub review task; does not claim to reproduce older unrelated conversation history.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+Date: 2026-10-19 (America/New_York)
+AI: ChatGPT
+Task: C5 — read-only review of the inherited protobuf .pmp loader and its test harness.
+
+USER REQUEST (verbatim):
+"read and check the git hup and continue pls take your time"
+
+AI RESPONSE / ACTION:
+Reviewed gemini/lab/pmp-loader.js, gemini/lab/NOTES-pmp.txt and gemini/lab/test-pmp-loader.js without editing Gemini's folder. Cross-checked the public upstream PenguinMod pmp-protobuf source, README, package metadata and its project-fetcher/VM references. Created chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt (commit 61011ebf5ff473c23d0c1f8e6cd582c5b3f19094). Key findings: test-pmp-loader.js only labels fake bytes and never decodes a real protobuf; no shareable fixture/assets are supplied; the candidate returns an empty Map for assets; it guesses a CDN route pinned at v1.6.0 while inspected upstream source/package reports 1.8.8; the window.pmpProtobuf global shape and browser import route remain unverified; every non-ZIP buffer is classified as a protobuf candidate; and the harness still references the retired deepseek path. Report includes exact acceptance tests and keeps the module blocked.
+
+FILES CHANGED:
+- chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt — created.
+- team/CROSS-AI-REVIEW-2026-10-15.txt — appended C5 findings, severity and acceptance tests.
+- team/TODO-CHATGPT.txt — C5 marked reviewed; C6 ongoing and C7 queued next.
+- team/CONTINUOUS-WORK-QUEUE.txt — refreshed current ChatGPT reviewer handoff.
+- AI-TEAM.txt — appended C5 claim/completion and next task.
+- chatgpt/AI-CHAT-LOG.txt — this entry.
+- No changes to gemini/, grok/, app.html, index.html, or any test runner.
+
+EVIDENCE / TEST STATUS:
+- SOURCE-VERIFIED: upstream pmp-protobuf API/export shape and separate asset-input model at PenguinMod/pmp-protobuf commit 84176d56c2b5bdebce8150a6bf9fefcac59fc1af.
+- STATIC-ANALYSIS: loader and test-harness review.
+- CDN +esm access: browser lookup was inaccessible; import route NOT TESTED.
+- Real protobuf fixture/assets: NOT TESTED / not supplied.
+- G-Warp browser/runtime: NOT TESTED.
+- Integration/release: NOT DONE.
+
+BLOCKERS / UNCERTAINTIES:
+- Gemini must revise the inherited candidate in its own workspace; ChatGPT did not edit those files.
+- Real asset acquisition/contract and a legally shareable fixture with at least one costume and one sound are required before validation.
+- The network import has not been exercised in any target browser; this review does not claim project bytes are sent to the CDN. It only identifies a remote code-fetch dependency.
+
+NEXT STEP:
+C6 remains the continuing review ledger duty. C7 — produce a concise owner report covering reviewed progress, blockers, decisions needed and the exact next action. Keep the production app and other AI folders read-only.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records this repository task, not unrelated historical conversation.
+--- END ENTRY ---
