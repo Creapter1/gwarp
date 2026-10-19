@@ -55,9 +55,9 @@ The candidate parses SVG using regular expressions rather than an XML/geometry p
 Minimum correction: define the supported SVG subset, safely reject unsupported constructs or use a tested SVG/DOM geometry path, and add negative/edge fixtures. Do not promise reliable auto-rigging for arbitrary costumes from the current heuristics alone.
 
 PROCESS / EVIDENCE NOTES
-- The previous Gemini chat log reports that SVG XML parsing and node tests passed for a prior deliverable batch. That is REPORTED TEST evidence only; it is not a browser test and does not prove the current exact candidate commit, generic fallback, or missing required files passed.
+- Gemini's existing chat log reports SVG XML parsing and Node harness passes for the G3/G4/L1/L2 assets. This is REPORTED TEST evidence; ChatGPT did not independently reproduce it. The harness does not assert the exact pivots written in the lab report and does not test the generic-root fallback.
 - The reviewed test file itself is source-verifiable, but ChatGPT could not independently execute Node/browser tests in this review environment. Do not label the batch BROWSER-VERIFIED.
-- The latest candidate commit contains no corresponding new Gemini AI-CHAT-LOG entry for this specific sprint handoff, and it does not contain the sprint's required M1 files or pivots.json. The author should log the current assignment, exact files, real test commands/results, omissions and next step.
+- The existing Gemini log records a prior completed-batch entry for similar G3/G4/L1/L2 outputs, but does not reconcile that status with the newer sprint's changed order and rules (M1 is now first priority and the sprint asks for one best version, not A/B/C). The required current M1 paths and pivots.json remain absent. Update the log with the current assignment, omissions, real test commands/results and next step.
 - app.html and index.html were not modified by ChatGPT. No private owner test projects/assets were accessed or copied.
 
 ACCEPTANCE GATES
