@@ -48,3 +48,9 @@ NOT TO EDIT FROM CHATGPT
 
 TEAM ROLE MIGRATION — 2026-10-18
 Owner retired the active DeepSeek role and assigned all lab/research/A-B/C/test-harness work to Gemini 2 (FreeBuff/Argon access path). The former 28 files now live in gemini/lab/; deepseek/ contains only README-ARCHIVE.txt. The active task list is team/TODO-GEMINI.txt. This was a documentation/artifact move only: no app.html/index.html edits and no browser/runtime tests were performed as part of this migration. Existing blocked/superseded dispositions still apply.
+
+
+LATEST AUDIT ADDENDUM — 2026-10-19
+- Claude's AI-TEAM work log records a full Beta v15.48.0 regression of 429 PASS / 9 FAIL, with all nine described as expected legacy/feature-status checks. This is REPORTED TEST evidence; ChatGPT did not run the suite. Confirm whether the aggregate run explicitly included the three fresh-shape assertions in claude/tests/test_select.js.
+- Grok fixed T043 in grok/fixtures.json and expanded it to 60 cases. grok/FIXTURE-SOURCES.txt still says two repeats and a 30-case set. grok/fixtures-extra-list.json contains 10 additional cases; Claude's runner currently does not load that file. The intended current 60+10 parity run remains pending.
+- team/TODO-GEMINI.txt now points first to team/GEMINI-BIG-LIST-2026-10-19.txt, labeled “Gemini 3 (Argon)”; the roster above says “Gemini 2 (FreeBuff/Argon)”. This is a naming mismatch, not a separate workspace. Owner should confirm the canonical label; keep all active work under gemini/.
