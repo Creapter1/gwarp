@@ -42,3 +42,23 @@ PRODUCT PRIORITIES
 2. Performance target: 60 FPS+ on representative projects/hardware when feasible; an aspiration, not a universal guarantee. Benchmark and report before/after values.
 3. Keep the primary UI clean and understandable. Tilemap and extensions beyond the current browser extension assignment remain deferred unless the owner reprioritizes them.
 4. GWrap AI block/script reconstruction animation: proposed behavior should animate newly reconstructed blocks into place by default, offer Skip/instant, and expose More -> Settings with default On. It must never block execution or leave partial scripts when skipped. This is a backlog design/research item until separately assigned.
+
+
+PRESERVED GEMINI BACKLOG — AFTER THE ASSIGNED JOBS ABOVE
+These items carry forward Gemini's prior work instead of dropping it during the team consolidation. Do not interrupt the assigned animation/lab tasks to start these. Claim one only when the higher-priority assignments and dependencies allow.
+
+VISUAL ASSETS
+- GV1. Finish the original G-Spark extension icon artwork and supply reproducible exports for 16/32/48/128 PNG sizes. The extension manifest has historically referenced PNGs that were absent; verify current package paths before calling this complete.
+- GV2. Create 3 original SVG favicon options for the website/app; no outside links, fonts, images or scripts.
+- GV3. Create original category icons for Motion, Looks, Sound, Events, Control, Sensing, Operators, Variables and My Blocks; keep the dark electric/violet/green G-Warp style.
+- GV4. Create 4 original achievement badge ideas including Bug Hunter.
+- GV5. Create original G-Spark poses: waving, running, celebrating and thinking.
+- GV6. Create wide original website hero art with G-Spark and an electric-wire background.
+
+EXTENSION VERIFICATION / HARDENING
+- GE1. Test the extension on the intended Chromium MV3 target and Firefox if still in scope. Record exact browser/version, manifest and permissions. Check chrome/browser namespace differences, context-menu behavior, popup on/off, hide/re-enable and storage errors.
+- GE2. Test Scratch single-page-app navigation and repeated injection. Confirm any history.pushState/replaceState wrappers are restored when disabled and do not break normal navigation.
+- GE3. Run the end-to-end flow from a Scratch project page to the G-Warp hash prompt and load: valid ID, invalid ID, user cancel, no network, unsupported/missing project, repeated click and reload. Use the exact owner-approved target URL in the current assignment; do not guess a replacement domain.
+- GE4. Cross-check packaging, privacy notice, icon paths and install/permissions behavior. Do not label it release-ready based on static inspection alone.
+- When reviewing inherited lab items, use gemini/lab/README.txt for current blockers. Do not resurrect superseded clone candidates, do not treat old PICK labels as acceptance, and do not claim old candidates were written/tested by Gemini.
+
