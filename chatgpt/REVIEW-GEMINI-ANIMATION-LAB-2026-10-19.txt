@@ -1,0 +1,74 @@
+G-WARP C9 REVIEW — NEW GEMINI ANIMATION / LAB BATCH
+Date: 2026-10-19 (America/New_York)
+Reviewer: ChatGPT
+Reviewed candidate commit: b05973868839921586c844a93c4e1546c75c1c5c
+Parent commit: 33e143bcb63267f0290c46365b507212131ed478
+Evidence class: SOURCE-VERIFIED TREE/FILE REVIEW + STATIC ANALYSIS
+ChatGPT Node test: NOT RUN
+Browser / SVG visual test: NOT RUN
+Production integration: NOT DONE
+
+SCOPE
+Reviewed the latest 37-file Gemini candidate commit: 3 rig-character SVGs, 24 flipbook frames, three auto-rig candidates, three easing candidates, two lab reports, the easing visualizer, and the Node test harness. The commit did not modify app.html or index.html. Candidate files remain disconnected from production.
+
+VERDICT
+KEEP ISOLATED — useful visual prototypes and a promising labelled-character rig path, but the batch is not acceptance-ready. The primary melody-engine assignment remains missing at its required paths, the generic auto-rig fallback can produce an invalid hierarchy, and the existing harness does not prove several claims made in LAB-auto-rig.txt. No integration or release recommendation is made.
+
+FINDINGS
+
+1. HIGH — Current top-priority melody deliverables are absent at the required paths
+Assignment references: team/GEMINI-MELODY-2026-10-19.txt and the M1/M2 priority in team/TODO-GEMINI.txt.
+The current recursive tree at the reviewed commit does not contain gemini/lab/melody-engine.js or gemini/lab/lab-melody.html. The Gemini chat log mentions older music-engine-A/B/C.js files elsewhere, but that is not the specified M1 contract and no mapping/acceptance test shows they satisfy window.GW_MELODY.make({style,mood,scale,bars,bpm,seed}) or the required eight style-specific melody behaviors.
+Minimum correction: deliver the exact M1/M2 paths, or explicitly update the active assignment/status with the owner/Claude. Test deterministic same-seed output, eight distinct styles, motif/repetition rules, chord-tone emphasis on strong beats, mood range/energy, MIDI bounds and Web Audio playback.
+
+2. HIGH — Auto-rig Option C can assign the selected root bone as its own parent for unlabelled SVG groups
+File/function: gemini/lab/auto-rig-C.js — autoRigC() and classifyRole().
+When no group is explicitly named body/torso, autoRigC() selects the largest bounding-box group as bodyGrp, but classifyRole() does not special-case that chosen root. If its arbitrary ID is not semantically recognized, the position fallback can classify it as armL/armR/legL/legR. The bone parent is then set to bodyGrp.id because the role is not body; for the root itself, parent can equal its own ID, creating a cyclic rig hierarchy.
+Minimum correction: force bodyGrp to be the root bone with parent:null regardless of its SVG ID, and parent other groups to that root. Add unlabelled-root, mixed-case ID, missing-body, empty and malformed SVG fixtures; assert the hierarchy is acyclic.
+
+3. HIGH — The rig test does not assert the exact pivot values reported as recovered
+File: gemini/lab/test-anim-lab.js.
+The harness asserts six bones and a parts-map entry for each expected group, then prints a summary table for Option C pivots. It does not assert the exact arm/leg pivot coordinates. A regression could print incorrect coordinates while the harness still reports all rigs passing. The test also does not assert parent validity, root uniqueness, non-self-parenting, bone lengths/angles or behavior on an unlabelled drawing.
+Minimum correction: assert the expected pivot coordinates for each named character; assert exactly one root, no self-parent/cycles, valid parent references, and meaningful positive lengths. Keep the Node result labelled REPORTED TEST until the exact harness and output are tied to a commit and independently reproduced by the assigned tester.
+
+4. MEDIUM — Required pivots.json is missing
+Assignment reference: team/GEMINI-SPRINT-2026-10-19.txt job 2 requests pivots.json alongside the three riggable characters. The current tree has only the three SVGs under gemini/rig-characters/. Pivot coordinates are commented into SVG files, but there is no machine-readable pivots.json.
+Minimum correction: add pivots.json with per-character pivot coordinates, specify SVG/viewBox coordinate units, and test that each coordinate matches an actual intended joint anchor. If the owner prefers comments embedded in SVG instead, update the assignment/status and remove the unused file requirement explicitly.
+
+5. MEDIUM — The submitted variants conflict with the active sprint's “one best version” rule
+Assignment reference: team/GEMINI-SPRINT-2026-10-19.txt.
+The sprint explicitly says “ONE best version per job (no A/B/C this time)”, yet this batch contains auto-rig-A/B/C.js and easing-A/B/C.js, with separate visual comparisons. Earlier lab guidance permits A/B/C when specifically requested, but the current sprint instruction is more specific for this sprint.
+Minimum correction: preserve the variants as research history, select one default proposal per job, and clearly mark alternatives as comparison-only rather than presenting them as this sprint's chosen deliverables. Do not delete legacy candidates without checking references/owner approval.
+
+6. MEDIUM — Flipbook paths do not match the assigned folder layout
+Assignment reference: team/GEMINI-SPRINT-2026-10-19.txt job 3 requests gemini/flipbook-sprites/<name>/frameN.svg. The current tree instead has flat names such as coin-1.svg, spark-1.svg, ball-1.svg and gspark-1.svg directly under gemini/flipbook-sprites/. The 24 frames cover the requested six sets, but the required path contract is not met and there is no manifest mapping each animation to its ordered frames.
+Minimum correction: choose one canonical layout, keep frame ordering explicit in a manifest/README or use the requested per-animation folders, and verify every sequence loads in order at the intended frame rate.
+
+7. MEDIUM — Easing modules are lab globals, not drop-in replacements for GW_ANIM.mix()
+Files: gemini/lab/easing-A.js, easing-B.js, easing-C.js and LAB-easing.txt.
+Each script registers a separate window.GW_LAB_EASING_* object. None changes or wraps window.GW_ANIM.mix, which is correct for an isolated candidate but means the comments saying it “Plugs into window.GW_ANIM.mix” are integration intent, not implemented integration. The lab report's SOURCE-VERIFIED wording should not be read as proof that the modules are accepted by the live app or that Smooth x2 uses them.
+Minimum correction: document the candidates as isolated adapters and specify the exact mapping required by Claude's integration. Keep app.html unchanged until authorization. Test interpolation semantics against the pinned current source, including t outside [0,1], missing pose keys, non-finite values, angles at exactly 180 degrees, and Option C overshoot endpoints/range.
+
+8. MEDIUM — SVG/bone acceptance is narrower than the report's generic-input claim
+Files: gemini/lab/auto-rig-A.js and auto-rig-C.js.
+The candidate parses SVG using regular expressions rather than an XML/geometry parser. bboxFromSnippet() handles only selected shape attributes and only selected uppercase path coordinate patterns; it does not compute a complete bounding box for arbitrary paths, transforms, relative commands or nested groups. Option C's findFirstJointCircle() chooses the first small circle inside a group, which may be decoration rather than the intended joint in general art. This is acceptable for a constrained prototype set, not proof of general kid-drawn SVG support.
+Minimum correction: define the supported SVG subset, safely reject unsupported constructs or use a tested SVG/DOM geometry path, and add negative/edge fixtures. Do not promise reliable auto-rigging for arbitrary costumes from the current heuristics alone.
+
+PROCESS / EVIDENCE NOTES
+- The previous Gemini chat log reports that SVG XML parsing and node tests passed for a prior deliverable batch. That is REPORTED TEST evidence only; it is not a browser test and does not prove the current exact candidate commit, generic fallback, or missing required files passed.
+- The reviewed test file itself is source-verifiable, but ChatGPT could not independently execute Node/browser tests in this review environment. Do not label the batch BROWSER-VERIFIED.
+- The latest candidate commit contains no corresponding new Gemini AI-CHAT-LOG entry for this specific sprint handoff, and it does not contain the sprint's required M1 files or pivots.json. The author should log the current assignment, exact files, real test commands/results, omissions and next step.
+- app.html and index.html were not modified by ChatGPT. No private owner test projects/assets were accessed or copied.
+
+ACCEPTANCE GATES
+[ ] Resolve the missing melody-engine.js and lab-melody.html assignment first, or formally update its priority/status.
+[ ] Add pivots.json or obtain an explicit assignment change.
+[ ] Fix Auto-rig C's generic-root self-parent case and test unlabelled SVGs.
+[ ] Assert exact expected pivots and valid acyclic hierarchy in the harness.
+[ ] Reconcile the no-A/B/C sprint rule and flipbook frame paths/manifest.
+[ ] Correct lab integration wording; keep all candidates isolated.
+[ ] Record exact current-commit SVG parsing, Node test command/output, and browser visual verification separately.
+[ ] Update Gemini's own AI-CHAT-LOG.txt and one authoritative task status; Claude/owner retain integration and release gates.
+
+NEXT ACTION
+Gemini should revise only its own gemini/ files and task log. Claude should review any revised lab candidate and run the controlled tests when available. Owner approval remains required before live integration or release.
