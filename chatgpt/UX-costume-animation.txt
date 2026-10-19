@@ -1,0 +1,85 @@
+G-WARP — FLIPBOOK + ANIMATION TAB UX REVIEW
+Date: 2026-10-18
+Owner: Creapter1
+Reviewer: ChatGPT
+Target: Flipbook and Costume Animation UI in app.html (Beta v15.48.0)
+Evidence: STATIC REPOSITORY REVIEW + EXTERNAL REFERENCE RESEARCH. No browser comparison or app execution was run in this session. These are UX recommendations and acceptance criteria, not confirmed runtime bugs.
+
+DESIGN INTENT
+Keep G-Warp's own dark, electric violet/green visual language. Borrow interaction ideas, not another app's artwork: Pivot Animator uses a clear frame strip, a visibly selected frame, direct figure handles, onion skins, playback controls and in-between frames. Scratch Paint emphasizes direct selection/reshape, predictable handles, undo/redo, layers, zoom, vector/bitmap mode and a tool rail. G-Warp should make the same ideas easy to discover without copying either product's exact layout.
+
+RANKED IMPROVEMENTS
+
+1. P0 — Make save/reopen a first-class animation workflow
+Problem to solve: users can spend a long time rigging and posing; losing the rig or generated costumes is a trust-breaking failure.
+Concrete change: make the save state of animations explicit. When an animation has edits, show the project's unsaved marker; on load, restore frame count, bone tree, attachments, pose values, FPS/loop options and animation names. If a generated costume is stale or missing, rebuild it safely or show a readable recovery warning.
+How we know it is done: create an 8-frame walk, edit frame 4, save SB3, close the app, reopen the exact file, and confirm all 8 frames, 5 bones, parent links, attachments, names and poses match. Make costumes twice and verify no duplicate frame set is appended. No console error, data loss or silent fallback. Add a Playwright regression with a saved fixture.
+
+2. P0 — Make the frame strip readable and predictable
+Problem to solve: frame-by-frame animation depends on always knowing which pose is selected and how to add, duplicate, insert, move or delete it.
+Concrete change: keep the frame strip visually distinct from the canvas; use a strong selected-frame border, a readable frame number, and small explicit Add, Duplicate, Delete and (where supported) Move controls. Auto-scroll the strip when keyboard navigation crosses the visible range. Show a count such as “Frame 4 of 8.”
+How we know it is done: on a 20-frame animation, moving to frames 1, 10 and 20 always leaves the selected frame visible and correctly numbered. Add/duplicate/delete updates the count immediately. Reopening the Animation panel restores the correct selected frame or clearly starts at frame 1.
+
+3. P0 — Separate editor Play, project Start and Stop states
+Problem to solve: Flipbook preview, bone-animation preview, Animation blocks and the project's Green Flag/Stop can all animate the same costume. Users need to know which one is running and how to stop it.
+Concrete change: give the active preview a clear Playing state and its own Stop control; when the global project Stop is used, stop the project-owned animation threads and timers. Avoid two playback timers fighting over the selected costume. Do not hijack Space while a rename text field is focused.
+How we know it is done: test Flipbook Play, Animation-tab Play, each Animation block, then press the global Stop. All applicable frame counters/costumes stop changing within one scheduled tick; no timer continues in the background; starting again works. Space starts/stops only when animation canvas/panel owns focus. Text inputs still accept spaces.
+
+4. P0 — Make Onion skin controls visible, reversible and mode-safe
+Problem to solve: a faint previous/next pose is useful only when the learner understands which frames are overlaid and knows the overlay will not be saved as art.
+Concrete change: keep the Onion skin toggle near the drawing canvas, show explicit previous/next frame counts, and make the overlay visibly different from selected artwork while respecting the theme. Re-render on mode switch, frame change and costume change; clear the overlay when toggled off, closed, or stopped. Keep controls reachable by keyboard.
+How we know it is done: turn previous and next skins on/off in vector and bitmap modes; change frames; close/reopen the editor. The correct neighboring poses appear, no old blob/overlay remains, and saved SVG/PNG data contains no onion-skin pixels or URLs. Check the actual pixels, not only a CSS flag.
+
+5. P1 — Teach bone rigging with one small guided example
+Problem to solve: “Rig”, “Attach”, parent/child bones and posing are unfamiliar words for many Scratch users.
+Concrete change: first-run hint or compact inline guide: select Rig, click/drag to create a bone, attach the torso/arm shapes, test a bone, then move to Animate. Highlight the active bone and the parts attached to it; use a small bone hierarchy list with parent/child indentation.
+How we know it is done: a new tester can rig a two-shape character and rotate the arm without reading source code or guessing which shape is attached. The selected bone and attached shapes are visible; Undo restores the previous rig. Hint can be dismissed and does not return every session.
+
+6. P1 — Make in-betweening explain what it will create
+Problem to solve: “In-between” and “Smooth x2” can feel magical or destructive when the user does not know which frames will change.
+Concrete change: before applying, show the source frames and how many intermediate frames will be created. Offer a preview/undoable operation; explain “In-between” as adding a middle pose and “Smooth x2” as adding/smoothing intermediate motion. Preserve the original key poses.
+How we know it is done: applying the tool to frames 1 and 3 inserts the expected intermediate pose(s), leaves frame 1 and 3 unchanged, updates the timeline count, and one Undo reverses the full operation. A preview is cancelled without modifying the animation.
+
+7. P1 — Make Make costumes safe and traceable
+Problem to solve: generated costumes can become confusing if users rename, reorder or manually edit them after an animation changes.
+Concrete change: group or visually mark generated costumes as belonging to an animation, use predictable names like walk 1…8, and explain whether regenerated frames replace linked costumes or create new ones. Before destructive regeneration, preserve manually edited costumes or ask what to do.
+How we know it is done: generate costumes twice, rename the animation, delete a frame, edit one generated costume manually and save/reopen. There are no duplicates or stale linked frames; user edits are not silently overwritten; the resulting frame-to-costume mapping is visible or discoverable.
+
+8. P1 — State vector/bitmap capability before users invest work
+Problem to solve: the rig test currently uses a vector costume, while the existing test's bitmap check covers onion-skin display rather than rigging a true bitmap costume.
+Concrete change: label the costume format and explain whether bone rigs need vector shapes. If bitmap rigging is unsupported, disable the action with a friendly reason and a safe alternative. If conversion is offered, preview it and preserve the original.
+How we know it is done: try a vector costume, a true imported PNG costume and a converted copy. Each path either works and saves correctly or presents an explicit, non-destructive limitation. There is no blank rig or corrupted costume.
+
+9. P2 — Add consistent keyboard and accessibility behavior
+Problem to solve: frame navigation, canvas movement and playback shortcuts can conflict with text editing or be invisible to keyboard-only users.
+Concrete change: expose shortcuts in a small Help/keyboard popover; preserve visible focus; support Tab/Shift+Tab through controls and make the selected frame announced/readable; do not bind Space globally while typing. Keep hit targets large enough for trackpad use.
+How we know it is done: keyboard-only tester can focus the frame strip, move/select a frame, toggle Onion skin, Play and Stop, and leave the panel. Focus ring stays visible. Space typed in Rename input is inserted as a space and does not start playback. Test at 100% and 200% zoom and a narrow viewport.
+
+10. P2 — Keep modes and destructive actions obvious
+Problem to solve: Flipbook (costumes), Rig and Animate (bones) operate on related assets but have different behaviors and possible conversion boundaries.
+Concrete change: show a clear mode label/breadcrumb (“Costumes → Flipbook”, “Costumes → Animation → Rig/Animate”), retain the user's selected sprite and identify the current animation. Use consistent Undo/Redo placement and ask before a destructive delete/convert, not before harmless playback.
+How we know it is done: a new tester can tell which mode is active, which sprite/animation is being changed, and where to return. Switching modes does not lose work or leave stale overlays; Cancel always leaves the source data untouched.
+
+REFERENCE COMPARISON
+
+Pivot Animator (official help)
+- The overview describes frame thumbnails on a timeline, direct figure-handle positioning, and automatic in-betweening.
+- Onion-skin help describes viewing previous/subsequent poses only while editing, not during play/export; its controls can show ahead and multiple prior frames.
+- Frame-controls help describes adding and selecting frames, arrow-key navigation, and inserting in-betweens.
+References:
+https://www.pivotanimator.net/help5-2/overview.htm
+https://www.pivotanimator.net/help5-2/onion_skins.htm
+https://www.ww5.pivotanimator.net/help5-2/animation_frame_controls.htm
+
+Scratch Paint (official source)
+- The paint editor source supports SVG/PNG image editing and vector/bitmap mode conversion. Its standard workflow includes direct selection/reshape, common drawing tools, color/line-width controls, undo/redo, layer/group actions, and zoom.
+- G-Warp should use these familiar interaction expectations (visible handles, stable selection, predictable undo) while keeping its own theme and layout.
+Reference:
+https://github.com/scratchfoundation/scratch-paint
+Visual overview used for feature orientation (third-party tutorial, not official product documentation):
+https://inventwithscratch.com/book3/chapter1.html
+
+NON-GOALS
+- Do not copy Pivot Animator or Scratch's full interface, colors, mascots, or artwork.
+- Do not assert any recommendation is already implemented without a current-build test.
+- Do not modify app.html from this review. The report proposes acceptance criteria for Claude/owner to pick up after current source and tests are reconciled.
