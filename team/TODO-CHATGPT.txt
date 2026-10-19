@@ -37,3 +37,5 @@ C8 SECURITY REVIEW (2026-10-15; completed 2026-10-19): Maintained SECURITY-AND-C
 
 
 TEAM ROUTING UPDATE (2026-10-18): DeepSeek is no longer active. Review all former DeepSeek work as Gemini-owned legacy material under gemini/lab/. Keep all ChatGPT reviews in chatgpt/ and do not edit Gemini's candidates directly.
+
+[x] C9. Static review of the latest Gemini animation/lab batch -> chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt. Found the required current melody-engine paths and pivots.json absent, Auto-rig C's generic-root self-parent risk, insufficient pivot assertions, A/B/C sprint-rule conflict, flat flipbook paths and unverified integration claims. Candidate files remain isolated; no Node/browser test was run by ChatGPT.
