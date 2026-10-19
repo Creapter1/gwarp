@@ -1,4 +1,5 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
+>>> EXTRA 2026-10-19: team/GROK-EXTRA-2026-10-19.txt (after the big list) <<<
 
 [x] R0–R8 + S1 + V1 + S2
     S2 → grok/SPEC-sb3-roundtrip.txt

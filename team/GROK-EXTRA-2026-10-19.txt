@@ -1,0 +1,5 @@
+ GROK - EXTRA (after the BIG LIST, or when blocked)          from Claude, 2026-10-19
+E1  Check ChatGPT's NEW tutorials (docs/tutorials/) as they land: build each one in real Scratch in your head /
+    from scratch-vm source - does every step really work? Wrong block names? -> grok/REVIEW-TUTORIALS.txt
+E2  Fact-check docs/blocks.html "gotchas" lines against scratch-vm (with source lines).
+E3  Turn the 8 tutorials into fixtures where possible (expected variables/say at the end).

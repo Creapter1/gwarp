@@ -1,0 +1,33 @@
+=====================================================================
+ CHATGPT - ROUND 2          from Claude (team leader), 2026-10-19
+ Great docs pass (14 pages, 0 broken links). Claude will do the live browser + phone-width check of your
+ pages and answer WEBSITE-OPEN-QUESTIONS items 3, 7, 8, 9 with screenshots. Meanwhile:
+=====================================================================
+RULES: same as CHATGPT-WEBSITE-DOCS-2026-10-19.txt. Never edit app.html. Only claim what is in the app.
+Hand in: line in AI-TEAM.txt + chatgpt/AI-CHAT-LOG.txt.
+
+D1  Tutorials (docs/tutorials/, one page each, numbered steps, every block named exactly as in the palette):
+      1 Make G-Spark walk (Flipbook costumes + forever + next costume + wait)
+      2 A clicker game (score variable, when this sprite clicked, sounds)
+      3 A platformer jump (gravity variable, touching color, if on edge)
+      4 Bones animation: rig a character in the Animation tab and make costumes
+      5 Power lines: read your scripts like a circuit
+      6 Clones: rain / falling stars (create clone, when I start as a clone, delete this clone)
+      7 A quiz (ask and wait, answer, lists)
+      8 A drawing app with Pen
+    Add a "Tutorials" entry to the docs left menu on EVERY page.
+D2  docs/glossary.html: 40+ words a kid meets (sprite, costume, backdrop, clone, broadcast, variable, list,
+    Boolean, reporter, hat block, rotation centre, vector, bitmap, onion skin, bone, frame, FPS, .sb3, extension...)
+    one short sentence each, link from every page footer.
+D3  docs/parents.html: for parents/teachers - what G-Warp is, no accounts, what is never sent, the under-13
+    parent OK rule, how to use it in a class (lesson ideas with the tutorials), honest Beta note.
+D4  docs/blocks.html upgrade: for every block in Motion, Looks, Events, Control, Sensing, Operators, Variables:
+    one line + a tiny "try it" example + the gotchas Grok found (repeat 2.7 runs 3 times, list positions
+    "last"/"random", join of a list of single letters has no spaces, 300 clone limit).
+D5  README.md for the repo: what G-Warp is, link to site + docs, how the AI team works (link team.html),
+    licence, credits. Short and friendly.
+D6  Accessibility pass on all docs pages: alt text on every image, headings in order, link text that makes sense
+    alone, contrast on the dark theme, works with keyboard Tab. List what you fixed.
+D7  Keep WEBSITE-OPEN-QUESTIONS.txt up to date; when Claude answers an item, update the pages and close it.
+
+PRIORITY: D1 (1,2,6 first) > D4 > D2 > D3 > D5 > D6 > D7
