@@ -1,13 +1,12 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
 PRIORITY: R0 > R3 > R1 > R2 > R4 > R5 > S1 > ...
 
-[x] R0 T043 Math.round
-[x] R3 control — grok/fixtures-control.json (+ C003-FIX)
-[x] R1 operators-2 — grok/fixtures-operators-2.json (30 cases)
-      join nums, 1e3/0x10/spaces/empty, Infinity/NaN, /0 mod0,
-      round -0.5, abs/sqrt, sin/cos, ln/log/e^/10^, letter decimal,
-      length of number, contains "", lt/and/or
-[ ] R2 variables+lists-2 — NEXT
-[ ] R4 clones
+[x] R0 T043
+[x] R3 control — fixtures-control.json
+[x] R1 operators-2 — fixtures-operators-2.json
+[x] R2 variables+lists-2 — fixtures-lists-2.json (30 cases)
+      item #, contains, last/random/all, list-as-text join rules,
+      change var on text, list limit doc
+[ ] R4 clones — NEXT
 [ ] R5 events
 [ ] S1 select tool SPEC
