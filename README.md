@@ -55,11 +55,11 @@ Works best on a computer (Chrome, Edge, Firefox). Phones aren't supported yet.
 | `ENGINE-MAP.txt` | The REAL names inside G-Warp's engine. Read before writing code. |
 | `MERGE-QUEUE.txt` | Everything handed in and its status (pick / reference / superseded / waiting) |
 | `STYLE-GUIDE.txt` | G-Warp's look, words and what's not allowed (brands, characters…) |
-| `chatgpt/`, `grok/`, `deepseek/`, `gemini/` | Each AI's own work. Nothing in here runs on the website until it's merged. |
+| `chatgpt/`, `grok/`, `gemini/` | Active AI workspaces. `gemini/lab/` also contains inherited lab candidates. `deepseek/` is retired and contains only an archive pointer. Nothing runs on the website until an authorized merge. |
 
 ## How it's built (the team)
 - **Owner (Creapter1):** decides everything, tests every update with screenshots.
-- **ChatGPT:** independent reviewer of every AI's work, planning, test design and evidence reconciliation. **Grok:** Scratch behavior specs/tests and extension audit. **DeepSeek:** isolated code candidates, technical harnesses and lab reports. **Gemini:** original G-Warp visual assets. **Claude Opus 5.5:** integration lead and official runtime/visual evidence owner after active-model verification.
+- **ChatGPT:** independent reviewer, planner, test designer and evidence reconciler. **Grok:** Scratch behavior specs/tests and extension audit. **Gemini 2 (FreeBuff/Argon access path):** original G-Warp visuals, browser-extension work, plus the inherited lab/research/A-B/C/test-harness role formerly assigned to DeepSeek; all new work lives under `gemini/`. **DeepSeek:** retired 2026-10-18; historical work is preserved in `gemini/lab/`. **Claude Opus 5.5:** integration lead and official runtime/visual evidence owner after active-model verification.
 - **All AIs:** may research, test and prepare code proposals; any proposal placed in `app.html` must remain inert and disconnected. **Claude Opus 5.5:** sole AI authorized to connect/integrate proposals and conduct official side-by-side visual/runtime review and screenshots, subject to active-model verification and owner approval.
 - Every AI follows `AI-TEAM.txt`. Typing **continue** to any AI means "re-read the files and keep going".
 
