@@ -12,8 +12,8 @@ RESULT SUMMARY
 - ROLE CONSOLIDATION: PASS (repository structure and task routing).
 - LEGACY FILE PRESERVATION: PASS with documented edits to three legacy lab reports.
 - APP/INDEX UNCHANGED BY CHATGPT: PASS. Their current blob IDs are recorded above; later source changes were made by separate Claude commits.
-- CURRENT V15.48.0 BEHAVIORAL VERIFICATION: PARTIAL / REPORTED TEST. Prior Claude test results exist, but a later same-version Select-tool patch added three assertions without a recorded post-patch run.
-- SCRATCH PARITY FIXTURES: PARTIAL. Claude reports 39/39 through a runner that overrides T043 in memory. The raw Grok fixture/source still contains the incorrect expectation.
+- CURRENT V15.48.0 BEHAVIORAL VERIFICATION: PARTIAL / REPORTED TEST. Claude's work log now records a full regression after the same-version shape-handle patch: 429 PASS and 9 FAIL, with all 9 described as expected legacy/feature-status checks. ChatGPT did not independently rerun it or confirm the individual Select assertion output.
+- SCRATCH PARITY FIXTURES: PARTIAL. Grok corrected T043 in grok/fixtures.json and expanded the base to 60 cases. grok/FIXTURE-SOURCES.txt still has the old two-iteration expectation and old 30-case count. A separate 10-case list-index file T130-T139 is not loaded by the current Claude runner.
 - MERGE QUEUE ROUTING: OPEN. Root MERGE-QUEUE.txt is Claude-owned and still uses historical deepseek/ paths and outdated task wording. Exact recommendations are in chatgpt/MERGE-QUEUE-NOTES.txt.
 - PERFORMANCE PLAN: CREATED, NOT A BENCHMARK RUN. The plan defines a procedure; no new comprehensive performance run was performed by ChatGPT.
 
@@ -38,7 +38,7 @@ SOURCE-VERIFIED:
 3. CLAUDE-REPORTED TEST RESULTS — NOT INDEPENDENTLY RE-RUN
 REPORTED TEST:
 - Claude's 2026-10-19 review says Grok's 20 costume-animation fixtures passed 20/20.
-- Claude reports the parity runner passed 39/39 (30 Grok fixtures plus 9 additional fixtures).
+- Claude reports the earlier parity runner passed 39/39 (30 Grok fixtures plus 9 Claude extras). This is an earlier fixture set; current Grok base now has 60 cases and a separate 10-case list fixture file awaits runner integration/rerun.
 - Claude reports the initial v15.48.0 Select-tool test passed and older costume tests passed.
 - Claude reports performance improvements on the owner’s private test projects: zombie 2 -> 58 FPS; The worst day 23 -> 37 FPS. These values apply only to the reported project/build/environment and are not promises for other hardware/projects.
 - team/P0-CLONE-FREEZE-REPORT.txt records Claude's earlier headless Chromium clone-freeze reproduction and mitigation in v15.46.0, retained in current source. This is Claude-reported evidence, not a fresh ChatGPT run.
@@ -46,10 +46,10 @@ Evidence files: claude/REVIEW-GROK-2026-10-19.txt, claude/tests/test_grok_anim.j
 
 4. OPEN BLOCKERS / FINDINGS
 HIGH — latest Select patch needs retest:
-Commit e958ade67cdf1faac55b30a1c0912b34bc853659 added three Select-test assertions for a freshly drawn rectangle retaining handles, resizing immediately, and clicking elsewhere to draw a new shape. The previous PASS note predates that commit. No later run result was found in the repository. Re-run claude/tests/test_select.js against the current app.html, then rerun relevant costume regression and complete full regression. Do not describe the newest patch as fully verified until results are recorded.
+Commit e958ade67cdf1faac55b30a1c0912b34bc853659 added three Select-test assertions for a freshly drawn rectangle retaining handles, resizing immediately, and clicking elsewhere to draw a new shape. A later AI-TEAM work-log entry records full current v15.48.0 regression at 429 PASS / 9 FAIL, all described by Claude as expected legacy/feature-status checks. ChatGPT did not run this suite or confirm the individual output for those three assertions; retain this as REPORTED TEST evidence rather than independent proof.
 
 HIGH — raw T043 fixture is wrong:
-grok/fixtures.json and grok/FIXTURE-SOURCES.txt still say repeat 2.7 runs two times. Scratch uses Math.round for this repeat count, so it runs three times. Claude's runner applies a correction from claude/tests/extra-fixtures.json in memory; thus the reported 39/39 result does not fix the source fixture. Grok owns its files and should correct T043 in both files, then add the additional high-risk cases requested in team/NEXT-FOR-THE-TEAM-2026-10-19.txt. Keep parity coverage open until corrected files are committed and re-run.
+grok/fixtures.json has now corrected T043 to three iterations and contains 60 cases. grok/FIXTURE-SOURCES.txt still says two iterations and still describes 30 cases, so the source map is stale. grok/fixtures-extra-list.json contains T130-T139 (10 list cases). team/TODO-GROK.txt says Claude is waiting to run 60 + 10; however, the current claude/tests/test_grok_fixtures.js loads the 60 base fixtures and adds claude/tests/extra-fixtures.json (9 cases), not fixtures-extra-list.json. The intended 60+10 set is not yet recorded as passing. Grok must update its own source map; Claude must reconcile the runner and record the current run.
 
 MEDIUM — merge queue has stale path/status entries:
 MERGE-QUEUE.txt still lists historical deepseek/ candidate paths and retired DeepSeek tasks. Claude owns that file, so ChatGPT did not edit it. Path mapping, current statuses and review recommendations are in chatgpt/MERGE-QUEUE-NOTES.txt. Legacy costume candidates remain blocked pending actual API/state mapping and isolated stage-vs-costume canvas testing. Protobuf .pmp remains incomplete pending confirmed parser API and a real legal fixture/assets. Preserve existing .sb3 and ZIP .pmp support. Legacy clone speed candidates remain superseded; collision-B is not accepted just because an older queue said PICK.
@@ -69,8 +69,8 @@ team/PERFORMANCE-BENCHMARK-PLAN.txt documents the test protocol and private-proj
 - The product TODO now prioritizes Scratch parity/custom procedures, realistic 60 FPS performance targets, clean UI, measured CPU/GPU investigation, and GWrap AI reconstruction animation behavior. Tilemap and additional extension work remain deferred.
 
 6. REQUIRED NEXT ACTIONS
-1. Claude: rerun the newest Select test additions against current app.html, run relevant costume regressions, finish and log the full v15.48.0 regression; update the Claude-owned merge queue.
-2. Grok: correct T043 in grok/fixtures.json and grok/FIXTURE-SOURCES.txt; then complete additional assigned fixtures and re-run the parity runner.
+1. Claude: retain the recorded current full-regression result (429 PASS / 9 expected FAIL), document the exact expected checks, confirm whether test_select.js's three new shape-handle assertions ran, reconcile runner inputs for 60 base + T130-T139, and update the Claude-owned merge queue.
+2. Grok: T043 is corrected in grok/fixtures.json; update grok/FIXTURE-SOURCES.txt to the three-iteration result and current 60-case count. Claude then runs the intended current 60+10 fixture set.
 3. Gemini: follow team/TODO-GEMINI.txt order; keep new outputs in gemini/ or gemini/lab/ and maintain gemini/AI-CHAT-LOG.txt. Do not treat migrated code as accepted or authored by Gemini.
 4. Claude/Gemini: complete protobuf .pmp API/fixture validation, costume canvas-isolation evidence, and browser-extension packaging/real-browser checks as assigned.
 5. Performance: use team/PERFORMANCE-BENCHMARK-PLAN.txt and private test projects through their authorized private repo only. Record exact project/build/browser/hardware/settings and before/after results.
@@ -78,4 +78,11 @@ team/PERFORMANCE-BENCHMARK-PLAN.txt documents the test protocol and private-proj
 7. All contributors: preserve evidence labels, do not claim tests that did not run, do not edit app.html/index.html without specific authorization, and do not integrate or release without the existing approval gates.
 
 FINAL VERDICT
-The **team-role consolidation and repository/file routing are verified at source/tree level**. The codebase is now at Beta v15.48.0, but **not all current work is fully verified**: the latest Select patch needs a fresh run, T043 in Grok's source fixtures is still wrong, the merge queue needs Claude's cleanup, the extension/.pmp tasks retain blockers, and the comprehensive performance plan still needs actual benchmark runs. ChatGPT performed static GitHub verification only and did not independently run browser/runtime tests.
+The **team-role consolidation and repository/file routing are verified at source/tree level**. The codebase is now at Beta v15.48.0, but **not all current work is fully verified**: Claude reports 429 PASS / 9 expected FAIL for the current full regression but ChatGPT did not independently reproduce it; the current 60+10 parity set has not yet been reported as passing and its source map/runner need reconciliation; the merge queue needs Claude's cleanup; extension/.pmp tasks retain blockers; and the benchmark plan still needs actual benchmark runs. ChatGPT performed static GitHub verification only and did not independently run browser/runtime tests.
+
+
+LATEST SNAPSHOT ADDENDUM (2026-10-19, main 1cffda9578c69fc45685e09b40c655e3a06832a9 at time of audit)
+- Rechecked the changed fixture after Grok's commit 2654d21d: grok/fixtures.json now has 60 fixtures and T043 expects 3. T043 in grok/FIXTURE-SOURCES.txt is still stale at 2 iterations.
+- Grok has provided grok/fixtures-extra-list.json with 10 unique T130-T139 cases. team/TODO-GROK.txt says Claude is waiting for a current 60+10 run. Current runner does not load that extra-list file yet.
+- AI-TEAM.txt records Claude's full v15.48.0 regression as 429 PASS / 9 FAIL (all described as expected). This is reported by Claude and was not independently rerun by ChatGPT.
+- The owner-facing Gemini task list now routes to team/GEMINI-BIG-LIST-2026-10-19.txt, titled for “Gemini 3 (Argon)”, while AI-TEAM's roster still says “Gemini 2 (FreeBuff/Argon)”. One unified gemini/ workspace is preserved; confirm the preferred displayed model/teammate label.
