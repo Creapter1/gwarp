@@ -20,7 +20,7 @@ CURRENT PRIORITIES (NOT CLAIMING FIXES)
 - Protobuf .pmp: incomplete without confirmed parser API and a real legal fixture/assets. Preserve existing .sb3 and ZIP .pmp support.
 - Scratch parity: Grok's 75 cases are written tests, not a passing automated suite.
 - Grok G5 static gallery audit is delivered; published-site extension loading remains unverified.
-- Buffy-labelled add-on/settings ZIP: syntax checked + static review only. Model authorship unverified; no browser test or integration. DeepSeek's folder contains a misrouted copy, not proof of DeepSeek authorship.
+- Buffy-labelled add-on/settings ZIP: syntax checked + static review only. Model authorship unverified; no browser test or integration. gemini/lab/BUFFY-ADDONS-SETTINGS-REVIEW.txt remains a misrouted review copy; its model authorship is unverified.
 
 GATES / OWNER DECISIONS
 1. Claude must confirm active model label is exactly “Claude Opus 5.5”.
@@ -39,4 +39,8 @@ CURRENT DOCUMENT ROUTING
 
 NOT TO EDIT FROM CHATGPT
 - grok/AI-TEAM-RESTORE-BACKUP.txt is a 47-byte “See /tmp…” placeholder; leave for Grok/owner to remove/archive.
-- deepseek/BUFFY-ADDONS-SETTINGS-REVIEW.txt is a misrouted handoff copy in DeepSeek's folder; leave it there unless the owner explicitly directs cross-folder cleanup.
+- gemini/lab/BUFFY-ADDONS-SETTINGS-REVIEW.txt is a misrouted handoff copy in the former DeepSeek folder; leave it there unless the owner explicitly directs cross-folder cleanup.
+
+
+TEAM ROLE MIGRATION — 2026-10-18
+Owner retired the active DeepSeek role and assigned all lab/research/A-B/C/test-harness work to Gemini 2 (FreeBuff/Argon access path). The former 28 files now live in gemini/lab/; deepseek/ contains only README-ARCHIVE.txt. The active task list is team/TODO-GEMINI.txt. This was a documentation/artifact move only: no app.html/index.html edits and no browser/runtime tests were performed as part of this migration. Existing blocked/superseded dispositions still apply.
