@@ -322,3 +322,13 @@ OPEN NEXT STEPS:
 - team/AI-STATUS.txt, team/CONTINUOUS-WORK-QUEUE.txt, team/AI-WORK-PLAN.txt, TODO.txt, chatgpt/MERGE-QUEUE-NOTES.txt and chatgpt/VERIFICATION-2026-10-19.txt were reconciled to current evidence. AI-TEAM.txt has a final REVIEWED log entry.
 - Remaining unresolved owner-level consistency: AI-TEAM says Gemini 2 (FreeBuff/Argon) while the new assignment says Gemini 3 (Argon); the single workspace is gemini/. The new Big List repeats the legacy GitHub Pages URL although TODO still awaits canonical URL confirmation. Neither issue was guessed or silently changed.
 - Verification remains static source/tree/document review only. No browser/runtime suite was run by ChatGPT.
+
+
+2026-10-19 | WEBSITE + DOCS DELIVERY PASS 1
+USER REQUEST / CONTEXT: Owner said “Continue” under the shared rule that this means reread current files and continue the assigned task. Current authoritative assignment is team/CHATGPT-WEBSITE-DOCS-2026-10-19.txt (Claude/owner assignment): extend website and add practical docs pages; preserve G-Warp's own dark/violet/electric-green style; never edit app.html; test links; log handoff.
+CHANGED FILES:
+- index.html: added links to the new docs home, six Beta v15.48.0 feature cards and a 10-question FAQ. Latest commit from this file update is 4cca667c62587c5d066e6a05a695ae991d205302; current blob should be re-fetched before further edits.
+- docs/index.html, docs/start.html, docs/blocks.html, docs/costumes.html, docs/animation.html, docs/sounds.html, docs/extensions.html, docs/safety.html, docs/credits.html, docs/scratch.html, docs/troubleshoot.html, docs/shortcuts.html, docs/changelog.html, docs/team.html: created consistent responsive HTML pages with shared left navigation and back-to-site links.
+- chatgpt/WEBSITE-OPEN-QUESTIONS.txt: recorded 10 claims/behaviors that need confirmation or published-site checks.
+EVIDENCE: STATIC SOURCE/DOCUMENT REVIEW. No browser, phone-width, or published-site tests run. The feature descriptions use existing repository notes and release records; do not call them independently browser-verified. app.html was not edited.
+LIMITATIONS / NEXT: Need verify all page links and root links, check the root LICENSE filename, inspect/confirm any uncertain current-app claims, and perform a real browser/site check if available. Confirm canonical website URL with owner before replacing legacy URLs. The owner's custom block/procedure correctness priority remains active under Claude's implementation stream; do not duplicate it. Performance plan exists at team/PERFORMANCE-BENCHMARK-PLAN.txt; private owner projects must never be copied into the public repo.
