@@ -1,0 +1,68 @@
+G-WARP PERFORMANCE BENCHMARK PLAN
+Owner: Creapter1
+Last updated: 2026-10-18
+Purpose: find the real bottlenecks, track regressions, and measure progress toward 60 FPS+ on representative projects. 60 FPS is an aspiration, not a promise for every project, browser, or computer.
+
+RULES
+- Test in a controlled copy. Record exact G-Warp commit, app.html hash, project name/hash, browser/version, OS, CPU/GPU if known, viewport, and relevant settings.
+- Keep the owner's projects private. They live in the private repository Creapter1/gwarp-test-projects. Never copy their project files, art, sounds, scripts, or assets into this public repository; public reports may mention the project name and aggregate measurements only.
+- No source change during a baseline run. After changing code, rerun the same baseline under the same settings.
+- Do one optimization at a time. Keep before/after numbers and regressions, not just the best number.
+- Warm up each project, then take at least 3 measured runs. Report median and range; flag noisy/invalid runs.
+- Never claim a browser test was run unless exact steps/results and environment are recorded.
+- Keep the main UI responsive and Stop reliable while measuring performance.
+- Scratch runtime parity is a release gate: faster output that changes block results, procedure/custom-block semantics, waits, events, clones or project round-trip fails.
+
+TEST SETS
+
+A. OWNER PROJECTS — PRIVATE
+Use the five projects in Creapter1/gwarp-test-projects, following that repo's README:
+- grass teory
+- space game
+- plaing game test
+- zombie
+- The worst day
+Use their actual baseline projects/scripts, not public copies. Reconfirm baseline on the actual tested G-Warp build before comparing numbers. Existing team note reports historical baselines of 60 FPS, 60 FPS, 51 FPS, 2 FPS, and 23 FPS with about 10 seconds load, respectively; those figures are recorded history, not guaranteed/current results and must be remeasured.
+
+B. PUBLIC REFERENCE
+- TurboWarp CPUMark: https://turbowarp.org/1119901618
+  Use desktop Chrome if possible, turbo mode off, repeat runs as the test page recommends. This is mainly a script/runtime CPU baseline, not a full visual-renderer or Scratch-parity test.
+- Select at least one verified, public, high-clone/game project and one verified, render-heavy/pen/costume project from public Scratch or TurboWarp pages. Record the exact URL/project ID, date accessed, licence/attribution where relevant, load success, and settings. Do not guess IDs. If a project fails to load or requires unavailable extensions, record it as blocked and choose another, without silently changing the test set.
+
+MEASURES PER PROJECT
+1. Load time from navigation/open to ready-to-run.
+2. FPS across the measured interval and frame-time distribution (median, 95th percentile, worst stall); record time spent under 60 FPS.
+3. Script throughput or fixed-work completion time for a reproducible script-heavy test, where practical.
+4. Clone count, sprite count, list size, pen usage and costume complexity where relevant.
+5. Main-thread responsiveness: can the user click, change tabs, pause, and Stop while the project is busy? Measure Stop latency from click to all scripts/clones stopped.
+6. Memory trend if reliable tools are available; note browser/device rather than over-interpreting noisy memory readings.
+7. Correctness outputs: variables/lists, visible end state, event order, clone behavior, procedure inputs/recursion/yields, sounds where the environment permits, and save/reopen round-trip.
+8. Errors, missing/unsupported blocks/extensions, crashes and visual mismatches.
+
+SEPARATE THE BOTTLENECKS
+- SCRIPT-HEAVY: long loops, comparisons, lists, procedures/custom blocks, clone scripts; compare interpreter/cache/compiler changes against the same expected results.
+- RENDER-HEAVY: many visible sprites/clones, large costumes, pen trails, effects and frequent redraw. Record FPS and frame time while scripts are kept as comparable as possible.
+- MIXED: representative games that combine AI loops, clones and drawing.
+- Do not assume GPU acceleration fixes interpreter cost. Profile CPU/script work vs drawing first. Start with the lowest-risk measurable improvement (for example, eliminating repeated DOM reads or drawing work). Only investigate Canvas batching/culling, OffscreenCanvas/workers, or WebGL/WebGPU when profiles point at the renderer and compatibility trade-offs can be tested.
+
+RUN PROCEDURE
+1. Claude records current commit/hash and actual build, confirms model/owner gates, and captures a baseline before any integration.
+2. Open the same project in the same browser/device/viewport/settings. Record load time; warm up; run 3+ timed samples.
+3. Capture FPS/frame-time samples during idle, normal play and peak load. Try interaction and Stop during the peak.
+4. Verify functional outputs and save/reopen where applicable; use Grok's verified fixtures once they are machine-runnable.
+5. Apply one candidate optimization to a test copy; repeat identical runs.
+6. Report before/after medians and range, test failures, risks, untested conditions, and rollback point.
+7. Re-run Scratch behavior/procedure fixtures and key Stop/freeze checks. Reject speed-ups that change results or leave the UI unresponsive.
+8. Keep browser/device limitations explicit. “60 FPS” should mean measured frame delivery near 16.7 ms under the declared load, not merely the displayed FPS counter.
+
+ACCEPTANCE
+- Report includes reproducible steps and exact build/project references.
+- No new behavioral/parity failures in tested fixtures.
+- UI interaction and Stop remain reliable under stress.
+- Before/after measurements show a real improvement beyond measurement noise and identify any regressions.
+- A 60 FPS+ result is credited only for the specific project, hardware, browser and settings tested. Never generalize one result into a universal guarantee.
+
+STATUS / CURRENT BLOCKERS
+- The owner's project files are private and must only be accessed through the authorized private test repo.
+- Public references must be chosen and URL-verified at test time; CPUMark alone does not cover rendering or compatibility.
+- This plan defines the procedure, not proof that all tests have been run.
