@@ -20,8 +20,8 @@ P0 — FREEZE / STOP BASELINE (cross-team priority)
 
 CONTRIBUTOR TASK LISTS — SINGLE SOURCE FOR TASK IDS
 - Grok: team/TODO-GROK.txt. The G5 static gallery audit report is delivered at grok/EXTENSIONS-check.txt. The report's URL checks do not prove all extensions load on the published site; TODO.txt item 6 remains pending for live/browser evidence. Grok's next task is defined in its own list.
-- DeepSeek: team/TODO-DEEPSEEK.txt. Costume candidates remain blocked until the source/API map and isolated stage-vs-costume canvas harness are complete. The protobuf .pmp loader remains incomplete until parser API + real legal fixture/assets are verified. Keep .sb3 and ZIP .pmp support.
-- Gemini: team/TODO-GEMINI.txt. Extension remains WAITING for generated/approved icons, permission and privacy review, real Chromium/Firefox checks, Scratch SPA/repeated injection tests, and end-to-end project loading.
+- Gemini (combined role): team/TODO-GEMINI.txt. All former DeepSeek lab candidates now live under gemini/lab/. Costume candidates remain blocked until actual editor state/API mapping and an isolated stage-vs-costume canvas harness are complete. The protobuf .pmp loader remains incomplete until parser API + real legal fixture/assets are verified. Keep .sb3 and ZIP .pmp support.
+- Gemini (visuals + extension + lab): team/TODO-GEMINI.txt. Extension remains WAITING for generated/approved icons, permission and privacy review, real Chromium/Firefox checks, Scratch SPA/repeated injection tests, and end-to-end project loading. New lab outputs go in gemini/lab/.
 - ChatGPT: team/TODO-CHATGPT.txt. Next reviewer task is the DeepSeek costume source/canvas review after D1/D2 evidence; then proceed in that list's order. ChatGPT reports findings only and does not edit other AI folders.
 Do not copy each contributor's numbered task list here; update the matching TODO file and this cross-team status only when a dependency/status materially changes.
 
@@ -35,4 +35,7 @@ CLAUDE OPUS 5.5 — EXECUTION GATE
 OPEN OWNER / SECURITY DEPENDENCIES
 - Owner: confirm the exact canonical website URL and whether the old GitHub Pages URL remains a fallback. Do not guess/replace links.
 - Claude/owner: perform a Git-history secret scan and review available secret-scanning settings. The prior security check covered current files only.
-- DeepSeek temporary coverage: only after an open task is marked TEMP COVERAGE OPEN may another qualified AI claim it. Work in that AI's own folder, label the report TEMP COVERAGE / NEEDS DEEPSEEK REVIEW, and use team/DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt. This never authorizes live integration.
+- Former DeepSeek temporary coverage is retired by the owner on 2026-10-18. Gemini now owns the inherited lab tasks directly; do not use TEMP COVERAGE / NEEDS DEEPSEEK REVIEW labels or create new deepseek/ files. The old handoff template is historical only.
+
+
+TEAM CHANGE (2026-10-18): DeepSeek's active role is retired. Gemini owns visual assets, extension work, and the inherited research/A-B/C/test-harness lab duties in one workspace. Legacy lab files were moved to gemini/lab/; test and integration blockers remain in force.
