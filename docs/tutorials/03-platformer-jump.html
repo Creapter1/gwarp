@@ -12,10 +12,11 @@ set [gravity] to (-0.5)
 forever
   change y by (vertical speed)
   change [vertical speed] by (gravity)
-  if &lt;(touching color [green]?) and &lt;(vertical speed) &lt; (0)&gt;&gt; then
-    set [vertical speed] to (0)
+  if &lt;touching color [green]?&gt; then
+    if &lt;(vertical speed) &lt; (0)&gt; then
+      set [vertical speed] to (0)
   if on edge, bounce</pre>
-<p>Choose the same green as the floor in <code>touching color [ ]?</code>. The conditional stops downward speed when the player touches the floor.</p>
+<p>Choose the same green as the floor in <code>touching color [ ]?</code>. The nested checks stop downward speed only when the player is touching the floor and is falling.</p>
 <h2>Step 4 — Add a jump</h2><pre>when [space] key pressed
 if &lt;touching color [green]?&gt; then
   set [vertical speed] to (10)</pre><p>Use the <code>when [space] key pressed</code> event. Change <code>(10)</code> to tune the jump height. If the jump never fires, make sure the player is actually touching the exact floor color when Space is pressed.</p>
