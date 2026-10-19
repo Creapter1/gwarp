@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "title": "G-Warp R1 operators-2 fixtures",
+    "author": "Grok",
+    "date": "2026-10-18",
+    "batch": "R1",
+    "count": 30,
+    "evidence": "SOURCE-CONFIRMED scratch-vm develop operators.js + cast.js",
+    "gwarp": "NOT TESTED",
+    "newOpcodes": {
+      "subtract": "operator_subtract",
+      "multiply": "operator_multiply",
+      "divide": "operator_divide",
+      "lt": "operator_lt",
+      "gt": "operator_gt",
+      "and": "operator_and",
+      "or": "operator_or",
+      "mathop": "operator_mathop"
+    }
+  },
+  "fixtures": [
+    {"id": "O201", "setup": "join numbers", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "join", "string1": 1, "string2": 2}}]}, "expect": {"say": "12"}, "source": "operators.js:93-94 Cast.toString + toString"},
+    {"id": "O202", "setup": "1e3 equals 1000", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "equals", "a": "1e3", "b": 1000}}]}, "expect": {"say": "true"}, "source": "cast.js toNumber Number('1e3')===1000; compare numeric"},
+    {"id": "O203", "setup": "0x10 equals 16", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "equals", "a": "0x10", "b": 16}}]}, "expect": {"say": "true"}, "source": "Number('0x10')===16 in JS"},
+    {"id": "O204", "setup": "spaced 5 equals 5", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "equals", "a": " 5 ", "b": 5}}]}, "expect": {"say": "true"}, "source": "Number(' 5 ')===5; compare"},
+    {"id": "O205", "setup": "empty string as number is 0", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "equals", "a": "", "b": 0}}]}, "expect": {"say": "true"}, "source": "Number('')===0; both numeric compare"},
+    {"id": "O206", "setup": "add Infinity", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "add", "num1": "Infinity", "num2": 1}}]}, "expect": {"say": "Infinity", "notes": "say text of Infinity"}, "source": "toNumber('Infinity')===Infinity; Infinity+1"},
+    {"id": "O207", "setup": "NaN coerced to 0 in add", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "add", "num1": "not-a-number", "num2": 5}}]}, "expect": {"say": "5"}, "source": "cast.js toNumber NaN→0; 0+5"},
+    {"id": "O208", "setup": "division by 0", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "divide", "num1": 1, "num2": 0}}]}, "expect": {"say": "Infinity"}, "source": "operators.js:52-53 1/0"},
+    {"id": "O209", "setup": "0/0 NaN → say", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "divide", "num1": 0, "num2": 0}}]}, "expect": {"say": "NaN", "notes": "or empty depending on bubble format; raw is NaN"}, "source": "0/0 NaN; say may stringify"},
+    {"id": "O210", "setup": "mod by 0", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mod", "num1": 10, "num2": 0}}]}, "expect": {"say": "NaN", "notes": "10%0 is NaN; floored adjust does not fix NaN"}, "source": "operators.js:118-124"},
+    {"id": "O211", "setup": "round -0.5", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "round", "num": -0.5}}]}, "expect": {"say": "0"}, "source": "Math.round(-0.5)===-0 → displays 0"},
+    {"id": "O212", "setup": "abs of negative", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "abs", "num": -9}}]}, "expect": {"say": "9"}, "source": "mathop abs L135"},
+    {"id": "O213", "setup": "sqrt negative", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "sqrt", "num": -1}}]}, "expect": {"say": "NaN"}, "source": "Math.sqrt(-1)"},
+    {"id": "O214", "setup": "sin 90", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "sin", "num": 90}}]}, "expect": {"say": "1"}, "source": "mathop sin toFixed(10) parseFloat → 1"},
+    {"id": "O215", "setup": "cos 180", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "cos", "num": 180}}]}, "expect": {"say": "-1"}, "source": "mathop cos"},
+    {"id": "O216", "setup": "sin 180 near 0", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "sin", "num": 180}}]}, "expect": {"say": "0"}, "source": "toFixed(10) cleans float error to 0"},
+    {"id": "O217", "setup": "ln of e", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "ln", "num": {"type": "mathop", "op": "e ^", "num": 1}}}]}, "expect": {"say": "1"}, "source": "ln + e ^ cases"},
+    {"id": "O218", "setup": "log 100", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "log", "num": 100}}]}, "expect": {"say": "2"}, "source": "log = ln/LN10"},
+    {"id": "O219", "setup": "10 ^ 3", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "10 ^", "num": 3}}]}, "expect": {"say": "1000"}, "source": "Math.pow(10,n)"},
+    {"id": "O220", "setup": "e ^ 0", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "mathop", "op": "e ^", "num": 0}}]}, "expect": {"say": "1"}, "source": "Math.exp(0)"},
+    {"id": "O221", "setup": "random 1.0 to 1.0", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "random", "from": "1.0", "to": "1.0"}}]}, "expect": {"say": "1"}, "source": "random low===high return low; isInt('1.0') false but equality path first"},
+    {"id": "O222", "setup": "random ints 1 to 1", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "random", "from": 1, "to": 1}}]}, "expect": {"say": "1"}, "source": "low===high"},
+    {"id": "O223", "setup": "letter of with decimal index 1.9", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "letter_of", "letter": 1.9, "string": "abcd"}}]}, "expect": {"say": "a"}, "source": "letterOf index=toNumber(1.9)-1=0.9; charAt truncates? actually uses index as number for bounds; charAt(0.9)→charAt(0)='a'"},
+    {"id": "O224", "setup": "letter 2.0 of ab", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "letter_of", "letter": 2.0, "string": "ab"}}]}, "expect": {"say": "b"}, "source": "index 1"},
+    {"id": "O225", "setup": "length of number 100", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "length_of", "string": 100}}]}, "expect": {"say": "3"}, "source": "toString(100).length===3"},
+    {"id": "O226", "setup": "contains empty", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "contains", "string1": "abc", "string2": ""}}]}, "expect": {"say": "true"}, "source": "''.includes in every string is true after lowercasing"},
+    {"id": "O227", "setup": "contains empty in empty", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "contains", "string1": "", "string2": ""}}]}, "expect": {"say": "true"}, "source": "operators contains"},
+    {"id": "O228", "setup": "lt string numbers", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "lt", "a": "9", "b": "10"}}]}, "expect": {"say": "true"}, "source": "compare numeric 9<10"},
+    {"id": "O229", "setup": "and short-circuit style values", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "and", "a": 1, "b": 0}}]}, "expect": {"say": "false"}, "source": "toBoolean(1)&&toBoolean(0)"},
+    {"id": "O230", "setup": "or with false string", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "or", "a": "false", "b": "0"}}]}, "expect": {"say": "false"}, "source": "both toBoolean false"}
+  ]
+}
