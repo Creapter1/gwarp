@@ -80,3 +80,7 @@ CHATGPT CG1–CG3 — 2026-10-19 (DOC / STATIC REVIEW COMPLETE)
 - CG2: chatgpt/COMPILER-REVIEW-2026-10-19.txt says no new full statement-cache/core JS compiler is present in app blob 5ca624a515b9fc1310814c4740608c1cf3071028. The existing DOM-part/child-child and typed-slot AST caches are narrower; cache invalidation and full Grok fixture-family coverage must be addressed before compiler acceptance. Static review only; no benchmark/test run.
 - CG3: chatgpt/MERGE-QUEUE-NOTES.txt section 6 suggests refreshing stale statuses/path references. Authoritative MERGE-QUEUE.txt was not edited.
 - Next ChatGPT reviewer task: C1, read-only review of Gemini-inherited costume proposals under gemini/lab/.
+CHATGPT C2 — 2026-10-19 (STATIC REVIEW COMPLETE; CANDIDATE REMAINS SUPERSEDED)
+- Created chatgpt/REVIEW-clone-safety-2026-10-19.txt. It reviews chatgpt/clone-safety.js against current app v15.48.0 source, the handoff notes and ENGINE-MAP, and includes an unchecked P0/P1 clone/Stop/settings/cache regression list.
+- Key issues: candidate bypasses the current 5,000 safety ceiling when Infinite Clones is on; document-capture Stop handler empties threads before native Stop marks them finished; it reimplements the native clone function without maintaining native clone-count cache fields; and it truncates loaded project clone limits above 300.
+- Current queue explicitly marks this module SUPERSEDED. No code was changed and no tests were run. Do not revive. Next assignment follows team/TODO-CHATGPT.txt.
