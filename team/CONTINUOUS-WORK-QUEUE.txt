@@ -15,14 +15,14 @@ P0 — FREEZE / STOP BASELINE (cross-team priority)
 - Owner-reported symptom: 81,000 clones and roughly 45 seconds for Stop. This remains REPORTED, not independently reproduced.
 - Claude's first technical task is to verify model/owner gates, record current branch/commit and app.html/index.html blob IDs, then reproduce/measure in a safe copy. Test the actual clone limit and Stop cleanup before proposing a second limiter.
 - Focused boundary tests: 299/300/301 clones, rapid clone creation, clone hats/broadcasts, Stop during execution, Pause, turbo, reload/duplicate load and feature-off. Record actual Stop latency, browser/environment, UI responsiveness and recovery.
-- chatgpt/clone-safety.js and deepseek/speed-collision-B.js are candidates, not fixes. Do not combine unrelated limits/UI changes or integrate both without source evidence.
+- chatgpt/clone-safety.js and gemini/lab/speed-collision-B.js are candidates, not fixes. Do not combine unrelated limits/UI changes or integrate both without source evidence.
 - ChatGPT reviews candidate/API risks and supplies acceptance cases; contributors revise in their own folders; Claude conducts official controlled tests only after gates; owner decides integration.
 
 CONTRIBUTOR TASK LISTS — SINGLE SOURCE FOR TASK IDS
 - Grok: team/TODO-GROK.txt. The G5 static gallery audit report is delivered at grok/EXTENSIONS-check.txt. The report's URL checks do not prove all extensions load on the published site; TODO.txt item 6 remains pending for live/browser evidence. Grok's next task is defined in its own list.
 - Gemini (combined role): team/TODO-GEMINI.txt. All former DeepSeek lab candidates now live under gemini/lab/. Costume candidates remain blocked until actual editor state/API mapping and an isolated stage-vs-costume canvas harness are complete. The protobuf .pmp loader remains incomplete until parser API + real legal fixture/assets are verified. Keep .sb3 and ZIP .pmp support.
 - Gemini (visuals + extension + lab): team/TODO-GEMINI.txt. Extension remains WAITING for generated/approved icons, permission and privacy review, real Chromium/Firefox checks, Scratch SPA/repeated injection tests, and end-to-end project loading. New lab outputs go in gemini/lab/.
-- ChatGPT: team/TODO-CHATGPT.txt. Next reviewer task is the DeepSeek costume source/canvas review after D1/D2 evidence; then proceed in that list's order. ChatGPT reports findings only and does not edit other AI folders.
+- ChatGPT: team/TODO-CHATGPT.txt. Next reviewer task is the Gemini-inherited costume source/canvas review in gemini/lab/ after source/API mapping and canvas-isolation evidence; then proceed in that list's order. ChatGPT reports findings only and does not edit other AI folders.
 Do not copy each contributor's numbered task list here; update the matching TODO file and this cross-team status only when a dependency/status materially changes.
 
 CLAUDE OPUS 5.5 — EXECUTION GATE
