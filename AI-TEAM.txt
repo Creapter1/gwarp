@@ -4,7 +4,7 @@
 =====================================================================
 
 AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17) — REQUIRED FOR EVERY AI
-- Every AI must keep a chronological conversation/context log inside its OWN folder named <ai-folder>/AI-CHAT-LOG.txt (examples: chatgpt/AI-CHAT-LOG.txt, gemini/AI-CHAT-LOG.txt, grok/AI-CHAT-LOG.txt, deepseek/AI-CHAT-LOG.txt).
+- Every AI must keep a chronological conversation/context log inside its OWN folder named <ai-folder>/AI-CHAT-LOG.txt (examples: chatgpt/AI-CHAT-LOG.txt, gemini/AI-CHAT-LOG.txt, grok/AI-CHAT-LOG.txt. deepseek/AI-CHAT-LOG.txt is a historical example only, not an active folder).
 - For each task/session, append the user's request accurately and the AI's response/handoff. Include date, task, files changed, evidence/test status, unresolved questions, and exact next step.
 - Preserve decisions, constraints, corrections, and explicit prohibitions. Keep direct user wording separate from AI summaries. Never invent missing chat history or claim an incomplete transcript is complete.
 - If the platform may truncate/delete history, update the log before ending the session. Read your own log before continuing an existing task.
@@ -16,8 +16,8 @@ THE TEAM
 - Owner: Creapter1 (the boss - decides priorities, design picks, merges and releases).
 - ChatGPT  | Independent reviewer / planner / test designer / evidence reconciler | folder: chatgpt/ | list: team/TODO-CHATGPT.txt | queue: team/CONTINUOUS-WORK-QUEUE.txt
 - Grok     | Scratch behavior specifications, expected-result tests and extension audit | folder: grok/ | list: team/TODO-GROK.txt
-- DeepSeek | Lab scientist: researches and proposes 3 distinct A/B/C candidates plus lab reports; no main app edits | folder: deepseek/ | list: team/TODO-DEEPSEEK.txt
-- Gemini   | Original G-Warp icons and picture concepts, usually 3 SVG options per idea | folder: gemini/ | list: team/TODO-GEMINI.txt
+- Gemini 2 (FreeBuff/Argon access path) | Combined role: original G-Warp visuals + browser extension + lab research, A/B/C candidates, test harnesses and reports formerly assigned to DeepSeek | one active folder: gemini/ | list: team/TODO-GEMINI.txt
+- DeepSeek | RETIRED from active work on 2026-10-18. Its old outputs are preserved as legacy material under gemini/lab/; old work-log entries are historical, not current assignments.
 - Claude Opus 5.5 | Integration lead + official runtime/visual evidence owner. Reviews all AI work, assigns bounded revisions/assets, integrates approved candidates, captures screenshots, and prepares releases. Must verify active model identity and follow owner approval gates.
 
 START HERE: team/WORKFLOW-START-HERE.txt, then TODO.txt and team/CONTINUOUS-WORK-QUEUE.txt. Read ENGINE-MAP.txt before code proposals and check MERGE-QUEUE.txt before duplicating work. Contributor task lists and handoff notes are stored under team/.
@@ -25,7 +25,7 @@ START HERE: team/WORKFLOW-START-HERE.txt, then TODO.txt and team/CONTINUOUS-WORK
 NEW AI JOINING? Do this:
 1. Read AI-TEAM.txt, then TODO.txt (rules!), then your own list if you have one.
 2. Add yourself under THE TEAM: name | role | folder | list.
-   Pick a NEW folder with your name (e.g. gemini/). Never use another AI's folder.
+   Pick a NEW folder with your name. Current active contributors must use their designated folder; Gemini now owns the consolidated gemini/ workspace.
 3. Write a "JOINED" line in the WORK LOG below.
 4. Only take jobs nobody has CLAIMED (see rules).
 
@@ -43,17 +43,17 @@ When the owner just says "continue" (and nothing else), it means:
 
 WHEN YOUR ASSIGNED LIST IS EMPTY
 Do not stop just because your first task is done if session time remains. Check team/CONTINUOUS-WORK-QUEUE.txt and team/FUTURE-IDEAS.txt, then claim the next unclaimed, in-scope task matching your role. Review other AI work when assigned, but report findings instead of editing their folders. Make A/B/C variants only when explicitly requested. Claude Opus 5.5 alone handles official connected-runtime comparison/integration after model verification and owner authorization.
-TOPICS (most important first):
-  1. SPEED (MAIN GOAL): every project, no matter how heavy, must run at
-     a steady 60 FPS or more. Find what's slow (rendering, clones, pen,
-     collision "touching", lists, sounds, big costumes) and write faster
-     code for it.
-  2. Costumes / paint editor: make it work better and faster.
-  3. Music: better songs from the Song maker - more melodies, more bass,
-     better drums, sounds teens/adults like (not babyish).
-  4. UI ideas, textures, icons (G-Warp's own electric style only).
-  5. Education ideas that help kids learn to code in G-Warp.
-  6. GWrap AI knowledge (see below).
+TOPICS (most important first; 60 FPS is an aspiration, not a guarantee):
+  1. Scratch 3 behavior parity, including procedures/custom blocks, argument,
+     recursion, variable scope, waits/yields, clones, events and save/load.
+  2. Performance: target 60 FPS or better on representative projects and
+     hardware when feasible; benchmark before/after instead of promising every
+     heavy project will reach 60 FPS. Focus on script throughput, rendering,
+     clones, collision, pen, lists, sounds and large costumes.
+  3. A clean, simple primary UI; fix usability/blocking issues before adding clutter.
+  4. Costumes / paint editor and costume animation.
+  5. Original G-Warp visuals, icons, music and learning ideas.
+  6. GWrap AI knowledge and safe in-app assistance.
 The owner tests everything with screenshots, slowly, one by one.
 If it works and runs properly, that's what matters.
 
@@ -161,8 +161,8 @@ TEAM RULES (to stop two AIs making the same thing)
 2026-10-15 | PARTIAL | ChatGPT | security-pattern scan + consistency audit; no matching hard-coded patterns found in current scanned files; history not scanned; canonical website URL awaiting owner | team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt, team/CROSS-AI-REVIEW-2026-10-15.txt, team/FUTURE-IDEAS.txt, TODO.txt, README.md
 
  
-DEEPSEEK TEMPORARY-COVERAGE RULE (2026-10-15)
-ChatGPT, Grok, Gemini, and Claude can work directly on GitHub; DeepSeek currently cannot. If an open DeepSeek task has no meaningful progress for two consecutive team check-ins/session cycles, mark it TEMP COVERAGE OPEN (the owner may open it sooner). Any AI that has officially completed its own assigned task may claim that open task if it has the relevant skills and time. Record the claim in AI-TEAM.txt and the shared queue before starting. Do not wait idle, duplicate actively progressing work, edit deepseek/, or claim the work was completed by DeepSeek. Keep all candidate files in the covering AI's own folder. Create a short plain-TXT handoff using team/DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt and label the candidate/report TEMP COVERAGE / NEEDS DEEPSEEK REVIEW. When DeepSeek returns, it reviews the report and candidate, verifies the evidence, corrects/adapts the work in deepseek/ where appropriate, and records its disposition. Temporary coverage does not authorize live integration; Claude's existing authority/model-verification gates and the owner's approval remain unchanged.
+FORMER DEEPSEEK ROLE — RETIRED / CONSOLIDATED (2026-10-18)
+The owner reassigned DeepSeek's lab/research/candidate duties to Gemini 2 (accessed through FreeBuff/Argon). Active work, new candidates, test harnesses and reports now belong under gemini/. Legacy files were moved to gemini/lab/ and must be reviewed before reuse; their presence does not prove correctness or integration. Do not create new deepseek/ files, use the temporary-coverage rule, or treat the retired return-handoff template as active. Existing DeepSeek work-log entries remain historical evidence. Claude's integration/model-verification gates and owner approval are unchanged.
 
 
 SECURITY RULE — API KEYS AND SECRETS (2026-10-15)
@@ -201,3 +201,5 @@ PROGRESS / PLAN UPDATE (2026-10-18)
 2026-10-18 | RELEASED | Claude | Beta v15.47.0 COSTUME ANIMATION (owner's focus): Flipbook in the Costumes tab (Onion skin: costume before violet / after green behind the drawing, lined up by rotation centre, vector+bitmap, never saved; Play: flips the costumes, FPS/loop/range). Animation tab (bones) + Animation blocks out of Developer-mode preview, for everyone; G-Spark opens with ready-made bones + walk/wave; costumes made from an animation follow its changes (rev stamp), rename renames costumes + block menus, <- -> and Space keys. claude/flipbook4700.js; test claude/tests/test_cosanim.js 27/27 PASS; cos/4600/4601/4611/4700/4640 still ALL PASS; old anim tests only differ where the button/blocks are now shown to everyone (intended)
 2026-10-18 | ASSIGNED | Claude | costume-animation jobs -> team/ASSIGNMENTS-ANIMATION-2026-10-18.txt (Grok GA1-2, DeepSeek DA1-3, Gemini GA-M1-2, ChatGPT CA1-3, Claude CL4-6); TODO-<AI>.txt headers point there first
 2026-10-18 | SETUP | Claude | owner's 5 test projects packed for the team (each with SUMMARY.txt, SCRIPTS.txt = every script as text, v15.47.0 baseline) for the PRIVATE repo Creapter1/gwarp-test-projects (owner creates it, Claude uploads). Rule 7 in TODO.txt: never copy them into public places. Baselines: grass 60 FPS, space game 60 FPS, plaing game 51 FPS, zombie 2 FPS (speed target), The worst day 23 FPS / 10 s load; found: 'item # of' and '<' marked unsupported in The worst day (to fix). claude/tests/smoke.js = the baseline runner
+
+2026-10-18 | NEW ROLE | Gemini 2 (FreeBuff/Argon) | inherits all active DeepSeek lab/research/A-B-C/test-harness duties; one unified workspace gemini/; DeepSeek role retired by owner | team/TODO-GEMINI.txt; gemini/lab/
