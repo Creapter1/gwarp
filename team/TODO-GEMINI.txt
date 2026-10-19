@@ -13,21 +13,22 @@ ROLE
 - Cross-review work when explicitly assigned; report findings without editing other contributor folders.
 - Never edit app.html/index.html unless Claude has verified the allowed integration role and the owner explicitly authorizes the exact change. Keep candidates disconnected from live runtime.
 
-CURRENT ORDER — ANIMATION ASSIGNMENT FIRST
-1. team/ASSIGNMENTS-ANIMATION-2026-10-18.txt:
-   - GA-M1: animation/flipbook icon options.
-   - GA-M2: three original riggable starter characters.
-   - GL1 (formerly DA1): easing options for GW_ANIM.mix + visual lab.
-   - GL2 (formerly DA2): auto-rig candidate options + tests on original drawings.
-   - GL3 (formerly DA3): Make Costumes speed options + timing evidence.
-   IDs DA1-DA3 remain in old history only; the current ownership and output path are Gemini/gemini/lab.
-2. team/ASSIGNMENTS-2026-10-19.txt after the animation task:
-   - GM7: extension icons in original G-Spark style.
-   - GM8: extension target/SPA lifecycle fixes and Chromium test steps, using the exact approved target documented there.
-   - GL4 (formerly DS6): clone thread/cleanup performance candidates. Respect the merge queue; old clone variants are superseded unless Claude reauthorizes comparison.
-   - GL5 (formerly DS7): costume fixes using the exact editor API in the assignment; canvas-only event scope.
-   IDs DS6-DS7 are historical cross-references, not active DeepSeek assignments.
-3. After assigned work, check this file and CONTINUOUS-WORK-QUEUE.txt for remaining unclaimed Gemini-compatible jobs. Do not duplicate Claude's compiler/custom-block work while it is active.
+PRIOR ASSIGNMENT IDS — CROSS-REFERENCES, NOT A SECOND WORK QUEUE
+The current priority order is in team/GEMINI-BIG-LIST-2026-10-19.txt. Follow that file from top to bottom and its explicit PRIORITY line. The earlier assignment sheets below remain useful for technical details, but overlapping jobs are absorbed by the Big List. Do not create duplicate outputs for the same deliverable.
+
+OVERLAP MAP (make one combined deliverable, not duplicate variants):
+- Big List G1 absorbs GA-M1 and expands it to include select handles, group/ungroup, flip horizontal/vertical and bitmap-select icons.
+- Big List G3 absorbs GA-M2 (Volt robot, lightning bug and battery buddy, each with separate riggable parts and pivot points).
+- Big List L1 absorbs GL1 / old DA1 (easing options + visual lab).
+- Big List L2 absorbs GL2 / old DA2 (auto-rig options tested on the G3 characters).
+- Big List L3 absorbs GL3 / old DA3 (Make Costumes speed options and measured timing).
+IDs DA1–DA3 and DS6–DS7 are historical identifiers only; DeepSeek is not an active role.
+
+AFTER THE BIG LIST:
+- Old GM7/GM8 remain outstanding extension tasks: required PNG icons, exact approved target, SPA lifecycle/repeated injection behavior, packaging and browser test steps. Follow the current list's dependencies and do not guess the canonical website URL.
+- GL4 (former DS6) is clone thread/cleanup performance research; prior clone variants are SUPERSEDED unless Claude explicitly reauthorizes the work after current-source review.
+- GL5 (former DS7) is costume-tool candidate work with the exact editor API and costume-canvas-only event scope. Keep it blocked until source/API mapping and the isolated stage-vs-costume canvas harness prove safety.
+- Read the merge notes/status before reviving any legacy candidate. Do not duplicate Claude's active compiler/custom-block implementation stream.
 
 LAB RULES
 - For a lab task requesting A/B/C, give three meaningfully different, self-contained candidates plus one lab report and a test harness when specified. Compare expected behavior, performance, safety, size and risks. Do not generate A/B/C if the assignment doesn't ask for them.
