@@ -1,0 +1,28 @@
+G-WARP MERGE-QUEUE NOTES FOR CLAUDE
+Date: 2026-10-18
+Owner requested role consolidation. Claude remains owner of MERGE-QUEUE.txt, so this file sends suggested updates without changing the authoritative queue.
+
+1. FOLDER / ROLE MIGRATION
+Former DeepSeek candidates were moved from deepseek/ to gemini/lab/; filenames are preserved. deepseek/ now contains only README-ARCHIVE.txt. Current role/task authority is team/TODO-GEMINI.txt. Retired team/TODO-DEEPSEEK.txt and team/DEEPSEEK-RETURN-HANDOFF-TEMPLATE.txt are redirect/history only.
+Update current queue entries to their gemini/lab/ paths when next maintaining MERGE-QUEUE.txt. Historical reports can retain former paths when they describe what was true at the time.
+
+2. CLONE CODE PROVENANCE — STATIC SOURCE/DIFF REVIEW
+Compared:
+- chatgpt/clone-safety.js and chatgpt/NOTES-clone-safety.txt
+- team/P0-CLONE-FREEZE-REPORT.txt
+- release diff for Claude commit 33be70dd964b392aece6ae4797363313f6d10d45
+
+Findings:
+- chatgpt/clone-safety.js remains a disconnected candidate; it was not wired into app.html.
+- Its approach uses module-local state (sprites/length/count), replaces GW.createClone with optimizedCreateClone, defines fastRemoveClones, rootIndex caching, and a MutationObserver for cached clone hats.
+- Claude's released patch uses a visibly different, smaller change to the existing GW.createClone: GW.cloneCount() plus Engine.__nc / __ncArr / __ncLen bookkeeping and GW.CLONE_CEILING. It also adds a separate round-robin frame budget and chaos watchdog/text/list/crash protections, plus sound/menu optimizations.
+- The GitHub diff does NOT show direct copying of ChatGPT's clone-safety.js into Claude's release. The same broad optimization ideas overlap (O(1) counting and clone caps), but this static review cannot establish whether Claude saw the candidate or used it as conceptual inspiration. Private chat context is not observable in the repository.
+Recommendation: Keep chatgpt/clone-safety.js SUPERSEDED as already recorded. Do not concatenate or merge it into Claude's implementation. Ask Claude to note if the candidate informed any design decisions only if that provenance is useful to the owner.
+
+3. LEGACY CANDIDATE DISPOSITIONS TO PRESERVE
+- gemini/lab/speed-clones-A/B/C.js: remain SUPERSEDED; prior review said they failed to skip useful threads. Do not revive without reauthorization and tests against the current ScriptThread.
+- gemini/lab/speed-collision-B.js: an older queue said PICK, but the documented acceptance gate is rotation/scale correctness against current GW.spritesTouch. PICK is not acceptance or permission to integrate.
+- gemini/lab/pmp-loader.js and test-pmp-loader.js: WAITING / INCOMPLETE until parser API is confirmed and a real legal .pmp fixture/assets are tested. Preserve existing .sb3 and ZIP-style .pmp support.
+- Gemini-inherited costume candidates: BLOCKED pending actual state/API mapping, isolated stage-vs-costume canvas harness, correct canvas targeting and narrow listener scope.
+
+Evidence boundary: GitHub text/diff inspection only for this review. No new browser/runtime test was run by ChatGPT and no app.html/index.html source was edited.
