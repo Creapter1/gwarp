@@ -75,3 +75,6 @@ UNSURE / LIMITS
   does not throw).
 - UNSURE: 600px is a good width for this text in G-Warp's dialog style; if
   the owner wants it wider, change the one CSS rule.
+- The dialog still shows its own scrollbar for the last rows; with the
+  headings it is easier to see that there is more below, but a sticky footer
+  is a separate design decision.
