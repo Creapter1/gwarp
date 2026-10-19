@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bouncing Ball Frame 3/4: Floor impact wide squash (center=60,60) -->
+  <ellipse cx="60" cy="102" rx="30" ry="6" fill="#4ade80" opacity="0.5"/>
+  <ellipse cx="60" cy="88" rx="30" ry="14" fill="#8b5cf6" stroke="#4ade80" stroke-width="3"/>
+  <path d="M42 84c8-5 24-5 34 0" stroke="#ffffff" stroke-width="2.5"/>
+</svg>

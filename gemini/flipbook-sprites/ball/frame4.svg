@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bouncing Ball Frame 4/4: Rebound upward stretch (center=60,60) -->
+  <ellipse cx="60" cy="102" rx="18" ry="4.5" fill="#8b5cf6" opacity="0.45"/>
+  <ellipse cx="60" cy="60" rx="18" ry="26" fill="#8b5cf6" stroke="#ffffff" stroke-width="2.5"/>
+  <path d="M50 48a12 18 0 0 1 16-4" stroke="#4ade80" stroke-width="3"/>
+</svg>

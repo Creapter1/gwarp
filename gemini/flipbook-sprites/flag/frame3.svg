@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Waving Flag Frame 3/4: Trough down (center=60,60) -->
+  <line x1="32" y1="20" x2="32" y2="104" stroke="#ffffff" stroke-width="4"/>
+  <circle cx="32" cy="18" r="5" fill="#4ade80"/>
+  <path d="M34 26C52 34 68 18 92 26v34C68 52 52 68 34 60z" fill="#8b5cf6" stroke="#4ade80" stroke-width="2.5"/>
+  <polygon points="62 36 55 46 62 46 59 56 69 44 62 44" fill="#ffffff"/>
+</svg>
