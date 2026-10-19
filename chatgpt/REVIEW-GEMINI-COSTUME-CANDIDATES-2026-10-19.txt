@@ -1,0 +1,102 @@
+G-WARP — GEMINI LAB COSTUME CANDIDATE REVIEW
+Date: 2026-10-19
+Reviewer: ChatGPT
+Task: C1 — read-only review of inherited costume proposals.
+Evidence: STATIC SOURCE REVIEW only. No browser, app run, pixel test or candidate test was executed.
+Current app baseline reviewed: app.html blob 5ca624a515b9fc1310814c4740608c1cf3071028 (Beta v15.48.0; this is a historical blob reference from the source review, not a claim that the candidate was loaded).
+ENGINE-MAP reviewed: blob 2638ede6199671552c7a4a350a04e4cbcdac4fa3 (header calls itself v15.45.0; rechecked relevant field names directly in the v15.48.0 source).
+Candidate SHAs:
+- costume-select-C.js: fe96ca0994eaf40e06be1a4a48a40f7d6f00cc74
+- costume-fill-C.js: 6c28705879d35ed6892af16bfcc04070928a4099
+- costume-text-B.js: f0d485a9161545e8a828edcfa47ae7a06befb087
+- costume-eraser-C.js: 587bcbc59c34b5b782d208ef41a4b4870746c011
+- costume-undo-C.js: f63cfbf73e795ef10a64f6fd3a815786040badb0
+- LAB-costumes.txt: 6f6f064ba8f099c612e69ba672ce9c2b050e5127
+- CHECKLIST-costumes.txt: 709ae64ea265db8495601d013130903fac9053a9
+
+OVERALL VERDICT: BLOCKED / HIGH RISK — DO NOT INTEGRATE THESE FIVE FILES AS-IS.
+The lab's own README says integration is blocked on actual editor state/API mapping, canvas isolation and event-listener scope. Source review confirms those are still material blockers. The “winner” names and Round 3 comments are candidate-author claims, not evidence that the code matches the current app. The five files contain no attached executable tests or independently verified browser results. Do not add their script tags to app.html pending corrections, isolated tests, and Claude/owner approval.
+
+SOURCE-VERIFIED CURRENT EDITOR CONTRACT
+1. The vector drawing surface is SVG `#gwVectorCanvasV15`; the bitmap drawing surface is canvas `#gwBitmapCanvasV15`. The candidates' legacy selectors such as `#gw-costume-canvas`, `#gw-bitmap-canvas`, `.gw-paint-canvas`, and `canvas.gw-bitmap` do not match the current explicit IDs. A generic `canvas` fallback may select a different editor/stage canvas, and it cannot select the actual SVG vector surface.
+2. The exported editor API is `window.GW_V15_COSTUME_EDITOR`, with `state.costumeMode` (values `vector` / `bitmap`), `state.svgTool`, `state.bitmapTool`, `state.selectedSvg`, `state.svgDrag`, `state.selectionRect`, `setMode`, `save`, `loadBitmap`, `loadVector`, `refreshList`, and `cleanSvgXml`. The current state does NOT have `state.mode`, `state.fillColor`, `state.fill`, `state.font`, `state.fontSize`, or `state.eraserSize`; relevant color/width controls are in actual editor inputs such as `#gwVectorFillV15`, `#gwVectorStrokeV15`, and `#gwVectorStrokeWidthV15`.
+3. `window.GW_VECTOR_EDITOR` exports `mapFor(costume)` plus load/save functions. Coordinate conversion must respect the editor's real costume mapping and the current SVG/canvas CSS scaling; raw viewport deltas and `offsetX` are not automatically costume coordinates.
+4. Static search of the current app source found no `data-gw-shape` markers in the existing editor implementation. It uses its own SVG content and selection/handle path. A new candidate cannot assume existing vector shapes match `[data-gw-shape]`.
+5. `GW8.undo()` and `GW8.redo()` exist, but they are the app's general history controls, not proven costume-local transactions. `GW8.pushHistory(label)` records a snapshot; it does not mean “undo” or “redo.” The current history snapshot has not been shown to preserve a costume's actual SVG/PNG edits, so these candidates must not treat a history label as a working art-history operation.
+6. The currently shipped costume editor already binds pointer events to its SVG/canvas and performs its own load/save mapping. New tools must compose with those listeners and persist through the native model; writing to a detached parse or drawing over the canvas without syncing the active costume can produce stale display/data.
+
+FILE-BY-FILE FINDINGS
+
+1. costume-select-C.js — BLOCKER / HIGH
+Exact areas: `canvasFor()`, `attach()`, `getSvgNode()`, `selectedNode()`, pointer handlers, `flushMove()`.
+- Mode read is `CE.state.mode`; current field is `CE.state.costumeMode`. With the current editor, `mode` is absent and the code silently defaults to vector even when Bitmap is active.
+- Selectors do not name either current surface. The vector surface is an SVG, so the fallback `canvas` cannot work as a vector canvas. The bitmap selector also misses `#gwBitmapCanvasV15`.
+- Header says it wraps/uses `GW_VECTOR_EDITOR.mapFor`, but this file never calls `VE.mapFor`. It adds CSS-pixel pointer deltas directly to `data-gw-tx/ty`, which is not a safe SVG viewBox/costume transform.
+- It parses `costume.svg` to a detached DOM node, then uses a hit target from the live surface. The live target does not match `[data-gw-shape]` in the current source, and it mutates the parsed copy rather than the displayed live SVG or saved costume string. Selection state and movement therefore do not connect reliably to what is rendered/saved.
+- The `CE.setMode` wrapper calls `attach()` after each mode change but never removes prior listeners or marks them attached. Repeated switching can attach duplicate handlers; the vector and bitmap element can be replaced/reinitialized during editor boot.
+- It provides only translation; it does not implement the checklist's resize/rotate handles, shift-select, deletion or copy/paste, and duplicates functionality the native Select tool already claims to provide.
+Minimum correction: prefer the shipped native Select tool unless a confirmed reproducible missing feature justifies a new module. If a separate tool remains needed, target exact current surfaces, use `costumeMode`, hit-test the live SVG using the native element model and mapping, update actual artwork/model, save/refresh through supported hooks, and install listeners once with a teardown or explicit idempotency guard.
+Acceptance tests: create vector shapes in a costume; click-select and drag at 50%, 100% and 150% canvas scaling; test pointer capture when dragging beyond the canvas; save/reopen and confirm the same translation; switch vector/bitmap ten times and ensure one drag causes exactly one move/history entry; try selecting an unrelated Stage/costume-list element and confirm no action; verify malformed SVG shows a safe message without changing the costume.
+
+2. costume-fill-C.js — BLOCKER / HIGH
+Exact areas: document-level `click` listener, `currentCostume()`, PNG canvas lookup/coordinate calculation, `[data-gw-shape]` lookup, `solidFillSvg()`, `floodFillBitmap()`.
+- A document-wide click listener conflicts with the lab's own rule (“Never attach listeners to the whole document; only to the costume canvas”). The handler checks the active costume but not that the click was on the editor canvas/tool; clicks elsewhere in the app can trigger fill behavior.
+- The PNG canvas lookup uses stale selectors and generic `canvas`; it can read/write the wrong canvas. It derives x/y as CSS pixel offsets, without multiplying by `canvas.width / rect.width` or height scale, although the actual canvas has a 512×384 backing store displayed at a different CSS size.
+- Vector fill expects `[data-gw-shape]`, which is absent from the current native SVG shape DOM. It mutates an arbitrary target element's `fill` attribute instead of using the current tool/selection/model path, and does not serialize/reconcile the live costume SVG.
+- Fill color comes from nonexistent `CE.state.fillColor` / `CE.state.fill`, so the candidate likely falls back to black instead of the active toolbar color `#gwVectorFillV15`.
+- Flood-fill allocates a full-image `ImageData` and `Uint8Array`, then uses a JavaScript stack that can grow to many pixels. No operation-size budget, cancellation, or time guard exists. Exact RGBA matching also should be characterized on anti-aliased edges/transparency before presenting it as a complete bucket tool.
+- `GW8.pushHistory('Fill ...')` records an entry label, but no evidence proves the changed SVG/PNG pixels are part of that history snapshot or will persist after native save.
+Minimum correction: do not add a global listener. Integrate a tool state and pointer action into the current editor's existing canvas handlers; take color from the actual toolbar control; ensure correct mapped canvas coordinates; update the native costume data and saved representation; implement bounded/cancellable flood-fill and pixel/alpha tests; use an actual editor history transaction or omit history until supported.
+Acceptance tests: fill a vector shape and PNG region at 50%, 100%, and 150% display scale; click outside the canvas and on toolbar/list/stage and ensure no fill; test current fill color, same-color no-op, transparent region, anti-aliased boundary and large 512×384 image; undo/redo once and save/reopen with exact pixels preserved; confirm one action creates one history step and no unrelated canvas changes.
+
+3. costume-text-B.js — BLOCKER / HIGH
+Exact areas: `refreshStyle()`, `commit()`, textarea lifecycle and document-level `click` handler.
+- Click handling calls `document.querySelector('canvas')` and requires `e.target === canvas`. The current vector surface is SVG, not a canvas; for a vector costume this condition fails. On the page, the first generic canvas can be the Stage/another surface rather than the costume editor.
+- The click handler is document-wide and hides the textbox for every click not exactly on its guessed canvas. This can affect unrelated controls and makes input lifecycle dependent on other page UI.
+- Anchor uses `e.offsetX || e.clientX` / `offsetY || clientY` from the event target and appends x/y directly to the source SVG. Those coordinates are not mapped through the SVG viewBox, CSS scaling, `mapFor(costume)`, zoom/pan or rotation centre. A valid zero offset is also replaced with viewport coordinates by `||`.
+- `refreshStyle()` reads `font`, `fontSize`, and `fillColor/fill` from `CE.state`; those fields are absent. Actual fill/width choices are input controls. It therefore silently uses default sans-serif/24/black rather than reliably honoring the toolbar.
+- It mutates `c.svg` by serializing an SVG and appending a text node but does not call the native editor's save/load/render path to refresh the visible editor, and it has no tested transaction/undo integration. It writes `data-gw-shape` on only the new text node, which does not solve the existing-shape API mismatch for other tools.
+- There is no evidence the generic global `GW8.pushHistory('Add text')` snapshot includes costume SVG changes. The textarea is created at module load with no teardown/idempotency marker; reloading the script can create duplicates. Text length is not capped in this B version.
+Minimum correction: use the native vector SVG surface and its correct coordinate transform; read font/fill/size from real controls (or implement proper dedicated controls); scope textbox opening/closing to the editor; refresh/render through the current costume API; add safe length bounds, Escape/cancel handling, one-step edit undo and a single installation lifecycle. Keep text creation vector-only unless bitmap text rendering is explicitly implemented.
+Acceptance tests: add single- and multi-line text on a vector costume at multiple zoom levels; use spaces, Unicode, quotes and a 500+ character input; verify the selected color/size; click toolbar while typing and confirm text remains under user control; Escape cancels without mutation; Enter commits once; save/reopen and verify text placement/data; undo/redo exactly once; verify clicks on stage, sprites, and non-costume canvases never open the textarea.
+
+4. costume-eraser-C.js — BLOCKER / HIGH
+Exact areas: `canvas()`, `brushSize()`, document-level pointerdown/move/up handlers.
+- It reads nonexistent `CE.state.mode`, so the current editor appears to remain in its vector fallback branch and show the vector-mode hint even in real bitmap mode.
+- Bitmap selector misses `#gwBitmapCanvasV15`; generic `canvas` may return an unrelated canvas.
+- Handlers are registered on `document`, not on the exact bitmap editor surface. They can start drawing in response to pointerdown outside that surface if the mode check is corrected; the code has no `canvas.contains(e.target)` gate.
+- The document event target may be an SVG child, toolbar/button, another canvas, or document; `e.offsetX/e.offsetY` are relative to the event target, not necessarily the selected canvas. The drawing positions will be wrong when the event target changes or the canvas is CSS-scaled.
+- It reads non-existent `CE.state.eraserSize` and falls back to 20. Current tool sizing must be taken from the real UI or a documented new state field.
+- The editor already has bitmap handlers and model mapping/save logic. A second handler using `destination-out` may race native brush/fill behavior and may alter the canvas without the model/save path updating the underlying costume correctly. The `ctx.save()`/restore pairing is not protected if drawing exits early on pointercancel/blur or surface replacement; cleanup state is global.
+Minimum correction: attach directly to `#gwBitmapCanvasV15` only while the eraser tool is active; ensure `costumeMode === 'bitmap'` and `bitmapTool === 'eraser'`; use the native mapped coordinates, actual brush control and one pointer-capture lifecycle; call the existing bitmap save/update path once on completion, including pointercancel/blur cleanup. Don't implement a vector erase operation; simply show a mode hint inside the editor.
+Acceptance tests: eraser clears PNG pixels only in the bitmap canvas; wrong target, toolbar, Stage and vector surface don't erase; scale canvas to different CSS sizes and test all corners; drag beyond canvas and release/cancel; switch modes mid-stroke; verify compositing state is restored; save/reopen the erased costume; one undo restores the prior pixel data and redo reapplies it.
+
+5. costume-undo-C.js — BLOCKER / HIGH
+Exact areas: `hasUndoApi/hasRedoApi`, `doUndo()`, `doRedo()`, `CE.state.mode` guard and document-level `keydown`.
+- Its active-editor guard tests `CE.state.mode`, a field not present in the current state, so Ctrl/Cmd+Z/Y handling likely never activates. If changed naively to `costumeMode`, it would then be active in all of vector/bitmap modes and could intercept application history across unrelated controls.
+- The fallback calls `GW8.pushHistory('__undo__')` and `GW8.pushHistory('__redo__')`. These calls add an undo snapshot entry; they do not execute undo/redo. This contradicts the file header's claim that a descriptive history entry is a safe fallback.
+- Although `GW8.undo()` and `GW8.redo()` exist in the current app, they are general project/workspace history. Candidate code has not established that that history snapshots the costume SVG, bitmap pixels, active editing selection or canvas state. Calling them may undo another operation rather than the most recent art edit.
+- Document-level capturing `keydown` conflicts with the app's existing global Ctrl/Cmd+Z/Y listeners. It needs correct ownership/focus handling and a cleanup path. The header says handler removed if editor destroyed, but there is no handler removal in the actual file. 
+Minimum correction: do not add another document-level undo layer. First identify or implement editor-local history that snapshots native costume data, selection/active costume as needed, and supports atomic begin/commit. Route undo/redo only when a costume control/canvas owns focus, respect typing/contenteditable and let the native app handle other contexts. Remove the fake `pushHistory` fallback entirely.
+Acceptance tests: after each supported art operation, Ctrl/Cmd+Z restores exact SVG/PNG data and appearance; redo restores it; multiple pointer moves form one undo entry; keyboard shortcuts outside the costume editor still undo code/project changes; typing in text/name inputs is unaffected; focus leave/re-enter and editor close/reopen do not leave duplicate handlers; Undo does not revert the workspace's last unrelated code edit.
+
+LAB NOTE / CHECKLIST REVIEW
+- `LAB-costumes.txt` marks C/C/B/C/C as “winners” and calls them safest/fastest, yet its own UNSURE section admits the canvas selector, `data-gw-shape`, `CE.state.mode`, color fields, and bitmap storage model are unknown. Those are not minor details; the current source confirms several assumptions are wrong. The Round 2/3 descriptions are self-reported changes, not passing test evidence.
+- `CHECKLIST-costumes.txt` is a useful product checklist of 56 intended behaviors, but every item is unchecked. It is not proof that the native editor or any candidate implements them. It also contains feature ideas (gradient fill, eyedropper, reshape, rotation-centre shortcuts, copy/paste) that are not covered by these five files. Do not describe its 56 requirements as satisfied.
+- `ENGINE-MAP.txt` is useful for concepts but declares itself v15.45.0; use current v15.48.0 source to re-verify selectors and fields before any integration. Current source still confirms the critical mismatches above.
+- The report's title says “safest/most complete” for several C variants; this review finds those labels unsupported until acceptance tests pass.
+
+SHARED MINIMUM TEST GATE BEFORE ANY CANDIDATE IS RECONSIDERED
+1. Load the candidate behind an explicit feature-off switch and only after a clean API guard; keep current editor behavior as default.
+2. Run against vector and real PNG costumes, two sprites with distinct active costumes, save/reopen, Undo/Redo and malformed-costume cases.
+3. Test canvas display sizes/scales, pointerdown/move/up/cancel outside canvas, pointer capture, mode changes and repeated module/editor initialization.
+4. Assert clicks/key presses outside the costume editor do not cause mutations or steal app-level shortcuts.
+5. Count event callbacks/history entries; repeated mode switches must not multiply handlers and one user gesture must create at most one logical history transaction.
+6. Compare costume model values before/after and inspect saved SB3/project output, not only pixels visible on a canvas.
+7. Record exact current app SHA, browser/version, viewport, console errors and per-case PASS/FAIL. Until this is independently run, label all candidate behavior NOT TESTED.
+
+OWNER/CLAUDE ACTION
+- Do not merge these modules based on letter C/B winner tags or the lab prose.
+- Prefer reusing/fixing the v15.48.0 native tools for Select/Fill/Text/Eraser and determine whether any real gap remains.
+- If a new module is still needed, first create a small source/API adapter and canvas-local hook with lifecycle cleanup, then implement one tool at a time. Keep art history separate until actual costume snapshots are proven.
+- ChatGPT performed only static inspection. No candidate file, app.html, Gemini file, or Claude test file was changed.
