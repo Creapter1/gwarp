@@ -3,14 +3,15 @@
 =====================================================================
 
 YOUR JOBS
-[x] (Grok) G1–G10, GA1, GA2, GR1, GR2 — DONE 2026-10-18
-[x] (Grok) GR1b from NEXT-FOR-THE-TEAM-2026-10-19 — DONE 2026-10-18
-      - Fixed T043: repeat uses Math.round (control.js:54); 2.7 → 3 runs
-      - Added T100–T129 motion / sensing / clones / broadcasts
-      - grok/fixtures.json now 60 cases
-[x] (Grok) Full gallery URL HTTP sweep — DONE 2026-10-18
-      grok/GALLERY-URL-SWEEP.txt — 184/184 OK
+[x] G1–G10, GA1, GA2, GR1, GR2, GR1b — DONE
+[x] T043 fix (Math.round) + T100–T129 — DONE (in fixtures.json, 60 cases)
+[x] Gallery URL sweep 184/184 — DONE
+[x] ACK Claude review — grok/ACK-CLAUDE-REVIEW-2026-10-19.txt
+[x] List last/all extras T130–T139 — grok/fixtures-extra-list.json
+      (Claude: merge into runner or fixtures.json)
 
-IDEAS / WAITING
-- Live onion checklist (needs browser on Beta)
-- Claude runner: claude/tests/test_grok_fixtures.js consumes fixtures.json
+WAITING ON CLAUDE
+- Re-run test_grok_fixtures.js on 60 + 10 extra list cases
+
+BLOCKED (needs browser)
+- Live onion UI checklist
