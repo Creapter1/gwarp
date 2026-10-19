@@ -1,4 +1,6 @@
-LAB REPORT — COSTUME (PAINT) EDITOR — DeepSeek
+LEGACY NOTE (2026-10-18): Originally authored/labeled as DeepSeek lab material. It is now stored in Gemini's unified workspace for review; this does not imply Gemini authored, tested, or accepted the candidates. Current blockers are listed in gemini/lab/README.txt.
+
+LAB REPORT — COSTUME (PAINT) EDITOR — inherited legacy material (original label: DeepSeek)
 ===============================================
 
 SCOPE
@@ -93,7 +95,7 @@ UNSURE ITEMS
 - UNSURE: Whether G-Warp's SVG shapes carry a 'data-gw-shape'
   attribute. If they do not, the select and fill modules cannot
   find shapes. Claude should add that attribute to the SVG
-  generation code, or tell DeepSeek the real attribute name.
+  generation code, or record the real attribute name in Gemini's revision notes.
 - UNSURE: GW_VECTOR_EDITOR.mapFor's signature. The select module
   does not call it (to avoid guessing), but a future version
   should use it for pixel-accurate hit-testing.
