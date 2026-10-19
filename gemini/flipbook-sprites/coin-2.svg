@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Frame 2/6: Turning right 45 deg (rx=26, rim on left, center=60,60) -->
+  <path d="M55 22h5a26 38 0 0 1 0 76h-5a26 38 0 0 1 0-76z" fill="#ca8a04" stroke="#0b0b14" stroke-width="3"/>
+  <ellipse cx="62" cy="60" rx="26" ry="38" fill="#facc15" stroke="#0b0b14" stroke-width="3"/>
+  <ellipse cx="62" cy="60" rx="20" ry="30" fill="#eab308" stroke="#8b5cf6" stroke-width="2.5"/>
+  <polygon points="62 40 70 60 62 80 54 60" fill="#8b5cf6" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M50 36L60 26" stroke="#4ade80" stroke-width="3"/>
+</svg>

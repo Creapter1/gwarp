@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Spark Frame 1/4: Bolt zig-zagging left-to-right (center=60,60) -->
+  <circle cx="60" cy="60" r="36" stroke="#8b5cf6" stroke-width="2.5" stroke-dasharray="6 6" opacity="0.7"/>
+  <polygon points="66 16 38 62 58 62 50 104 84 54 62 54" fill="#4ade80" stroke="#ffffff" stroke-width="2.5"/>
+  <circle cx="34" cy="40" r="3.5" fill="#8b5cf6"/>
+  <circle cx="86" cy="78" r="3" fill="#4ade80"/>
+</svg>

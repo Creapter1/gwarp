@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Spark Frame 4/4: Recharging core pulse looping smoothly to Frame 1 (center=60,60) -->
+  <circle cx="60" cy="60" r="38" stroke="#4ade80" stroke-width="2" stroke-dasharray="3 6" opacity="0.65"/>
+  <path d="M34 48L46 54M74 66L86 72" stroke="#4ade80" stroke-width="3"/>
+  <polygon points="64 20 40 60 59 60 52 100 80 56 61 56" fill="#4ade80" stroke="#8b5cf6" stroke-width="2.5"/>
+  <circle cx="60" cy="60" r="6" fill="#ffffff"/>
+</svg>

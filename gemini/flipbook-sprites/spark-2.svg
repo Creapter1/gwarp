@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Spark Frame 2/4: High-voltage flare with side arcs (center=60,60) -->
+  <circle cx="60" cy="60" r="40" stroke="#4ade80" stroke-width="2.5" stroke-dasharray="4 8" opacity="0.8"/>
+  <path d="M26 56L40 60L30 72M94 48L80 58L90 68" stroke="#8b5cf6" stroke-width="3"/>
+  <polygon points="62 14 42 58 60 58 54 106 80 56 61 56" fill="#8b5cf6" stroke="#4ade80" stroke-width="2.5"/>
+  <polygon points="61 28 49 56 60 56 57 90 73 58 61 58" fill="#ffffff"/>
+</svg>

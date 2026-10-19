@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>G-Warp Lab L1 — In-Between Bone Easing Visualizer</title>
+  <style>
+    :root {
+      --bg: #0b0b14;
+      --panel: #141425;
+      --line: #2a2a48;
+      --text: #ececf6;
+      --muted: #a3a3c2;
+      --violet: #8b5cf6;
+      --green: #4ade80;
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    h1 { font-size: 18px; margin: 0 0 6px; color: var(--green); }
+    p { margin: 0 0 14px; font-size: 13px; color: var(--muted); }
+    .controls {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    button {
+      background: var(--violet);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:focus-visible { outline: 2px solid var(--green); }
+    input[type="range"] { width: 220px; accent-color: var(--green); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .card h2 { font-size: 14px; margin: 0 0 8px; color: var(--violet); }
+    canvas {
+      width: 100%;
+      background: #080810;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>G-Warp Animation Lab L1: Easing for In-Between Frames</h1>
+  <p>Visualizes <code>GW_MASCOT.bones()</code> + <code>GW_MASCOT.walkFrames()</code> across <code>t = 0..1</code> with shortest-way-round bone rotation.</p>
+  <div class="controls">
+    <button id="playBtn" type="button">Pause</button>
+    <label for="tSlider">t = <span id="tVal">0.50</span></label>
+    <input id="tSlider" type="range" min="0" max="1" step="0.01" value="0.5" />
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h2>Option A — Linear (e(t) = t)</h2>
+      <canvas id="cvA" width="320" height="240"></canvas>
+    </div>
+    <div class="card">
+      <h2>Option B — Ease In-Out Sine (PICK)</h2>
+      <canvas id="cvB" width="320" height="240"></canvas>
+    </div>
+    <div class="card">
+      <h2>Option C — Springy Overshoot</h2>
+      <canvas id="cvC" width="320" height="240"></canvas>
+    </div>
+  </div>
+  <script src="easing-A.js"></script>
+  <script src="easing-B.js"></script>
+  <script src="easing-C.js"></script>
+  <script>
+    // Fallback GW_MASCOT rig matching G-Warp's walkFrames() when opened standalone outside app.html
+    const MASCOT = window.GW_MASCOT || {
+      bones() {
+        return [
+          { id: 'body', name: 'body', parent: null, x: 60, y: 62, len: 22, angle: -90 },
+          { id: 'head', name: 'head', parent: 'body', at: 1, off: 0, len: 16, angle: -90 },
+          { id: 'armL', name: 'armL', parent: 'body', at: 0.7, off: -16, len: 20, angle: 135 },
+          { id: 'armR', name: 'armR', parent: 'body', at: 0.7, off: 16, len: 20, angle: 45 },
+          { id: 'legL', name: 'legL', parent: 'body', at: 0, off: -10, len: 22, angle: 110 },
+          { id: 'legR', name: 'legR', parent: 'body', at: 0, off: 10, len: 22, angle: 70 }
+        ];
+      },
+      walkFrames() {
+        return [
+          { roots: { body: { x: 60, y: 62 } }, angles: { body: -90, head: -88, armL: 145, armR: 35, legL: 125, legR: 55 } },
+          { roots: { body: { x: 60, y: 58 } }, angles: { body: -90, head: -92, armL: 35, armR: 145, legL: 55, legR: 125 } }
+        ];
+      }
+    };
+
+    const bones = MASCOT.bones();
+    const [poseA, poseB] = MASCOT.walkFrames();
+
+    function solveBones(pose) {
+      const out = {};
+      for (const b of bones) {
+        const ang = ((pose.angles && pose.angles[b.id] != null) ? pose.angles[b.id] : b.angle) * Math.PI / 180;
+        let sx = b.x || 60, sy = b.y || 62;
+        if (b.parent && out[b.parent]) {
+          const p = out[b.parent];
+          const at = b.at != null ? b.at : 1;
+          sx = p.x1 + (p.x2 - p.x1) * at + (b.off || 0);
+          sy = p.y1 + (p.y2 - p.y1) * at;
+        } else if (pose.roots && pose.roots[b.id]) {
+          sx = pose.roots[b.id].x;
+          sy = pose.roots[b.id].y;
+        }
+        out[b.id] = { x1: sx, y1: sy, x2: sx + Math.cos(ang) * b.len, y2: sy + Math.sin(ang) * b.len };
+      }
+      return out;
+    }
+
+    function drawPanel(canvas, mod, t) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw easing curve in bottom strip
+      ctx.strokeStyle = '#2a2a48';
+      ctx.strokeRect(20, 175, 280, 48);
+      ctx.beginPath();
+      ctx.strokeStyle = '#8b5cf6';
+      ctx.lineWidth = 2;
+      for (let i = 0; i <= 60; i++) {
+        const x = i / 60;
+        const y = mod.ease(x);
+        const px = 20 + x * 280;
+        const py = 223 - y * 48;
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+
+      const u = mod.ease(t);
+      ctx.fillStyle = '#4ade80';
+      ctx.beginPath();
+      ctx.arc(20 + t * 280, 223 - u * 48, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Onion ghosts at t=0.25, 0.5, 0.75 + active pose at t
+      const samples = [0.25, 0.5, 0.75, t];
+      samples.forEach((st, idx) => {
+        const isCurrent = idx === samples.length - 1;
+        const pose = mod.mix(poseA, poseB, st);
+        const solved = solveBones(pose);
+        const ox = isCurrent ? 100 : 18 + idx * 65;
+        const oy = 16;
+        ctx.save();
+        ctx.translate(ox, oy);
+        ctx.globalAlpha = isCurrent ? 1 : 0.32;
+        for (const id of Object.keys(solved)) {
+          const seg = solved[id];
+          ctx.strokeStyle = isCurrent ? '#4ade80' : '#8b5cf6';
+          ctx.lineWidth = isCurrent ? 3.5 : 2;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(seg.x1, seg.y1);
+          ctx.lineTo(seg.x2, seg.y2);
+          ctx.stroke();
+          ctx.fillStyle = '#ececf6';
+          ctx.beginPath();
+          ctx.arc(seg.x1, seg.y1, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+    }
+
+    let playing = true;
+    let curT = 0.5;
+    const slider = document.getElementById('tSlider');
+    const tVal = document.getElementById('tVal');
+    const playBtn = document.getElementById('playBtn');
+
+    function renderAll() {
+      tVal.textContent = curT.toFixed(2);
+      slider.value = String(curT);
+      drawPanel(document.getElementById('cvA'), window.GW_LAB_EASING_A, curT);
+      drawPanel(document.getElementById('cvB'), window.GW_LAB_EASING_B, curT);
+      drawPanel(document.getElementById('cvC'), window.GW_LAB_EASING_C, curT);
+    }
+
+    slider.addEventListener('input', () => {
+      playing = false;
+      playBtn.textContent = 'Play';
+      curT = Number(slider.value);
+      renderAll();
+    });
+    playBtn.addEventListener('click', () => {
+      playing = !playing;
+      playBtn.textContent = playing ? 'Pause' : 'Play';
+    });
+
+    function tick(now) {
+      if (playing) {
+        curT = (Math.sin(now * 0.0025) + 1) / 2;
+        renderAll();
+      }
+      requestAnimationFrame(tick);
+    }
+    renderAll();
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

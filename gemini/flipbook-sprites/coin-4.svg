@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Frame 4/6: Edge-on 90 deg (width=10, center=60,60) -->
+  <rect x="55" y="22" width="10" height="76" rx="5" fill="#facc15" stroke="#0b0b14" stroke-width="3"/>
+  <line x1="60" y1="26" x2="60" y2="94" stroke="#8b5cf6" stroke-width="2.5"/>
+  <path d="M55 42h10M55 60h10M55 78h10" stroke="#ca8a04" stroke-width="2"/>
+  <polygon points="60 14 63 21 70 24 63 27 60 34 57 27 50 24 57 21" fill="#4ade80"/>
+</svg>

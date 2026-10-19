@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- G-Spark Blinking Glow Frame 2/3: Electric green aura + glowing G -->
+  <rect x="27" y="23" width="66" height="66" rx="18" stroke="#4ade80" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <path d="M34 58L18 64M86 58L102 64M48 86v18M72 86v18" stroke="#141425" stroke-width="6"/>
+  <path d="M34 58L18 64M86 58L102 64M48 86v18M72 86v18" stroke="#4ade80" stroke-width="2.5"/>
+  <rect x="32" y="28" width="56" height="56" rx="14" fill="#8b5cf6" stroke="#4ade80" stroke-width="3"/>
+  <path d="M68 45H54a10 10 0 0 0 0 22h14V56H60" stroke="#4ade80" stroke-width="9"/>
+  <path d="M68 45H54a10 10 0 0 0 0 22h14V56H60" stroke="#ffffff" stroke-width="5"/>
+</svg>

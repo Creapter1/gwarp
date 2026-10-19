@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bouncing Ball Frame 1/4: High apex round (center=60,60) -->
+  <ellipse cx="60" cy="102" rx="14" ry="4" fill="#8b5cf6" opacity="0.35"/>
+  <ellipse cx="60" cy="40" rx="22" ry="22" fill="#8b5cf6" stroke="#ffffff" stroke-width="2.5"/>
+  <path d="M46 34a14 14 0 0 1 20-4" stroke="#4ade80" stroke-width="3"/>
+</svg>

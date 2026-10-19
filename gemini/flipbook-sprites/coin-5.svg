@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Frame 5/6: Emerging from edge 108 deg (rx=12, rim on right, center=60,60) -->
+  <path d="M60 22h8a12 38 0 0 1 0 76h-8a12 38 0 0 1 0-76z" fill="#ca8a04" stroke="#0b0b14" stroke-width="3"/>
+  <ellipse cx="57" cy="60" rx="12" ry="38" fill="#facc15" stroke="#0b0b14" stroke-width="3"/>
+  <ellipse cx="57" cy="60" rx="8" ry="30" fill="#eab308" stroke="#8b5cf6" stroke-width="2"/>
+  <polygon points="57 42 61 60 57 78 53 60" fill="#4ade80"/>
+</svg>

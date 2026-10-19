@@ -1,0 +1,22 @@
+=====================================================================
+ G-WARP LAB REPORT L2 (GL2 / legacy DA2): Auto-Rig Costume Bones
+ Files: gemini/lab/auto-rig-A.js, auto-rig-B.js, auto-rig-C.js,
+        gemini/lab/test-anim-lab.js
+ Status: TESTED via Node harness on all 3 G3 characters (9/9 rigs PASS)
+=====================================================================
+
+1. WHAT IT DOES
+Reads a vector costume's SVG text and outputs `{ bones:[...], parts:{...} }`
+in `window.GW_ANIM`'s exact schema (`{id, name, parent, at, off, x, y, len, angle}`).
+- Option A (auto-rig-A.js): One bone per `<g id="...">` along its longest bounding-box axis.
+- Option B (auto-rig-B.js): Picks the largest-area group as root (`body`) and chains limbs from the closest point on the torso box to the far tip of each limb.
+- Option C (auto-rig-C.js): Semantic anatomical classifier (`head`, `body`, `armL`, `armR`, `legL`, `legR` + quadrant fallback for unlabelled kid shapes) combined with a Joint-Circle Pivot Detector that locks directly onto shoulder/hip pivot circles when present.
+
+2. TEST RESULTS ON G3 CHARACTERS (`node gemini/lab/test-anim-lab.js`)
+- `volt-robot.svg`: 6/6 bones & parts mapped; Option C recovers exact shoulder/hip pivots `armL=(36,52)`, `armR=(84,52)`, `legL=(48,86)`, `legR=(72,86)`.
+- `lightning-bug.svg`: 6/6 bones & parts mapped; Option C recovers exact shoulder/hip pivots `armL=(38,52)`, `armR=(82,52)`, `legL=(48,88)`, `legR=(72,88)`.
+- `battery-buddy.svg`: 6/6 bones & parts mapped; Option C recovers exact shoulder/hip pivots `armL=(36,54)`, `armR=(84,54)`, `legL=(49,88)`, `legR=(71,88)`.
+
+3. PICK & WHY
+PICK: Option C (`auto-rig-C.js`).
+Why: Option A places pivots at bounding-box edges (which makes diagonal arms swing around their outer tip), and Option B clips shoulder joints onto the torso rectangle edge. Option C detects explicit joint circles on library characters while gracefully falling back to anatomical quadrant pivots on freehand kid drawings.

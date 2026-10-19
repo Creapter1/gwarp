@@ -1,0 +1,20 @@
+=====================================================================
+ G-WARP LAB REPORT L1 (GL1 / legacy DA1): Easing for In-Between Frames
+ Files: gemini/lab/easing-A.js, easing-B.js, easing-C.js, lab-easing.html
+ Status: SOURCE-VERIFIED against GW_ANIM.mix(poseA, poseB, t) +GW_MASCOT
+=====================================================================
+
+1. WHAT IT DOES
+Provides 3 pure, self-contained easing implementations for GW_ANIM.mix(poseA, poseB, t)
+with shortest-arc angular wraparound ((-180, +180] degrees so a bone going from
+170 deg to -170 deg turns 20 deg, never 340 deg):
+- Option A (easing-A.js): Linear e(t) = t (exact midpoint at t=0.5, matches current baseline).
+- Option B (easing-B.js): Sine Ease-In-Out e(t) = -(cos(pi*t) - 1)/2 (smooth acceleration and deceleration across multi-frame Smooth x2 subdivisions).
+- Option C (easing-C.js): Critically-Damped Cartoon Springy Overshoot (~8% peak anticipation/overshoot that settles to exact 0 and 1 endpoints).
+
+2. WHERE IT PLUGS IN
+In app.html inside `window.GW_ANIM.mix(poseA, poseB, t, mode = 'sine')` and `GW_ANIM.smooth()`.
+
+3. PICK & WHY
+PICK: Option B (`easing-B.js` as default for `Smooth x2`, with Option C offered as a "Springy" checkbox).
+Why: At a single `t = 0.5` in-between, both Linear (A) and Ease-In-Out (B) hit 0.5, but when a kid clicks `Smooth x2` twice (t = 0.25, 0.5, 0.75), Option B eliminates robotic mechanical stops at keyframes without overshooting floor contact like Option C can on walk cycles.

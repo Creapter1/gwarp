@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Pivots: head=(60,40), body=(60,62), armL=(36,52), armR=(84,52), legL=(48,86), legR=(72,86) -->
+  <g id="legL">
+    <circle cx="48" cy="86" r="4" fill="#0b0b14" stroke="#8b5cf6" stroke-width="2"/>
+    <rect x="43" y="86" width="10" height="20" rx="4" fill="#141425" stroke="#8b5cf6" stroke-width="2.5"/>
+    <path d="M39 106h16a3 3 0 0 1 3 3v3H36v-3a3 3 0 0 1 3-3z" fill="#8b5cf6" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="45" y1="96" x2="51" y2="96" stroke="#4ade80" stroke-width="2"/>
+  </g>
+  <g id="legR">
+    <circle cx="72" cy="86" r="4" fill="#0b0b14" stroke="#8b5cf6" stroke-width="2"/>
+    <rect x="67" y="86" width="10" height="20" rx="4" fill="#141425" stroke="#8b5cf6" stroke-width="2.5"/>
+    <path d="M65 106h16a3 3 0 0 1 3 3v3H62v-3a3 3 0 0 1 3-3z" fill="#8b5cf6" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="69" y1="96" x2="75" y2="96" stroke="#4ade80" stroke-width="2"/>
+  </g>
+  <g id="armL">
+    <circle cx="36" cy="52" r="4.5" fill="#0b0b14" stroke="#4ade80" stroke-width="2"/>
+    <path d="M36 52L20 68" stroke="#8b5cf6" stroke-width="7"/>
+    <path d="M36 52L20 68" stroke="#ffffff" stroke-width="2"/>
+    <path d="M15 66a6 6 0 1 0 9 7" fill="none" stroke="#4ade80" stroke-width="3"/>
+  </g>
+  <g id="armR">
+    <circle cx="84" cy="52" r="4.5" fill="#0b0b14" stroke="#4ade80" stroke-width="2"/>
+    <path d="M84 52L100 68" stroke="#8b5cf6" stroke-width="7"/>
+    <path d="M84 52L100 68" stroke="#ffffff" stroke-width="2"/>
+    <path d="M105 66a6 6 0 1 1-9 7" fill="none" stroke="#4ade80" stroke-width="3"/>
+  </g>
+  <g id="body">
+    <rect x="38" y="44" width="44" height="42" rx="9" fill="#141425" stroke="#8b5cf6" stroke-width="3"/>
+    <rect x="45" y="51" width="30" height="22" rx="5" fill="#0b0b14" stroke="#ffffff" stroke-width="1.5"/>
+    <polygon points="62 53 54 63 60 63 58 71 66 60 60 60" fill="#4ade80"/>
+    <line x1="46" y1="79" x2="74" y2="79" stroke="#8b5cf6" stroke-width="2.5"/>
+  </g>
+  <g id="head">
+    <line x1="60" y1="18" x2="60" y2="10" stroke="#4ade80" stroke-width="3"/>
+    <circle cx="60" cy="8" r="4" fill="#4ade80" stroke="#ffffff" stroke-width="1.5"/>
+    <rect x="42" y="18" width="36" height="22" rx="7" fill="#8b5cf6" stroke="#ffffff" stroke-width="2.5"/>
+    <rect x="47" y="23" width="26" height="11" rx="4" fill="#0b0b14"/>
+    <polyline points="50 29 55 26 60 30 65 26 70 29" stroke="#4ade80" stroke-width="2.2" fill="none"/>
+  </g>
+</svg>
