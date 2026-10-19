@@ -1,0 +1,124 @@
+=====================================================================
+ V1 REVIEW — transform4800.js + list index (toListIndex)
+ Author: Grok | 2026-10-18
+ Scope: Compare Claude's Select tool and G-Warp list indexing to Scratch
+ Rules: Report only; do not edit app.html
+=====================================================================
+
+A. GW.toListIndex / Cast.toListIndex (app.html)
+----------------------------------------------
+There are TWO list-index helpers in app.html:
+
+1) GW.toListIndex(v, len, acceptAll)
+   - Invalid / empty last / blocked "all" → returns **0** (number)
+   - Callers use `if (i)` so 0 means no-op (good for delete/insert/replace)
+   - Does **not** return a distinct INVALID token
+
+2) Cast.toListIndex(index, length, acceptAll)  [near LIST_INVALID / LIST_ALL]
+   - Matches Scratch closely: 'ALL' | 'INVALID' | 1-based number
+   - last / random / all / floor(toNumber) / range check — aligned with
+     scratch-vm src/util/cast.js toListIndex
+
+Scratch reference (cast.js develop):
+  - last on empty → LIST_INVALID
+  - all only if acceptAll else LIST_INVALID
+  - random/any on empty → LIST_INVALID
+  - numeric: Math.floor(toNumber); outside 1..length → LIST_INVALID
+
+Problems (numbered):
+
+1. **Dual implementations risk divergence**
+   GW.toListIndex and Cast.toListIndex can disagree on edge cases if only one
+   is updated. Prefer one path (Cast) for all list opcodes.
+   Scratch source: single Cast.toListIndex used by scratch3_data.js.
+
+2. **list_item reporter bypasses toListIndex (HIGH)**
+   Observed pattern:
+     case 'list_item': return GW.list(...)[Math.max(1, Math.floor(n(0))) - 1] ?? ''
+   Math.max(1, floor(0)) - 1 = 0 → **returns first item for index 0**.
+   Scratch: index 0 → LIST_INVALID → getItemOfList returns ''.
+   Scratch: data.js getItemOfList + cast.js toListIndex.
+   This is the same class of bug Claude fixed for T011/T024 family; any
+   remaining GW.list_item path still wrong.
+
+3. **list_contains uses strict String equality**
+   Pattern: .some(x => String(x) === text(0))
+   Scratch listContainsItem: indexOf then Cast.compare (so 10 equals '10',
+   case-insensitive strings).
+   Scratch: scratch3_data.js listContainsItem.
+
+4. **GW.toListIndex("all") when acceptAll=false returns 0**
+   Equivalent to invalid no-op — OK for delete/insert. OK vs Scratch INVALID.
+
+5. **Numeric string " 3 " / "3.9"**
+   GW path: Number(t) after String(v); floor — generally OK.
+   Confirm empty string → 0 → invalid; Scratch toNumber('')=0 → invalid. OK.
+
+6. **item # of / last / random on reporter path**
+   Must use Cast.toListIndex, not Math.max(1, floor(...)). Audit every
+   list_item / itemnum / delete / insert / replace in both interpreters.
+
+
+B. transform4800.js (Select tool) vs Scratch paint
+--------------------------------------------------
+Scratch sources: scratch-paint scale-tool.js, rotate-tool.js, move-tool.js,
+nudge-tool.js (see grok/SPEC-select-tool.txt).
+
+Problems (numbered, continue):
+
+7. **Corner aspect-ratio Shift polarity inverted (HIGH UX)**
+   Scratch scale-tool: `if (this.isCorner && !event.modifiers.shift)` → lock ratio
+   (default lock; Shift = free).
+   G-Warp: `if (e.shiftKey && fx !== 0.5 && fy !== 0.5)` → lock ratio
+   (default free; Shift = lock).
+   Scratch users will free-distort when they expect lock.
+
+8. **Rotate Shift snap 15° vs Scratch 45°**
+   G-Warp: Math.round(a/15)*15
+   Scratch rotate-tool: Math.round(rotAngle/45)*45
+
+9. **Move + Shift is axis lock, not 45° snap**
+   G-Warp: if |dx|>|dy| then dy=0 else dx=0
+   Scratch move-tool: snapDeltaToAngle (45° lines)
+
+10. **No Alt = scale from center**
+    Scratch scale-tool: event.modifiers.alt → pivot origCenter, size*2
+    G-Warp: no altKey handling found in scale path (grep).
+
+11. **Nudge step not zoom-scaled**
+    Scratch: 1/paper.view.zoom; Shift ×15
+    G-Warp: 1 and Shift → 10 (screen/SVG units, not zoom-aware)
+
+12. **Bitmap Select completeness**
+    Header claims move/resize/rotate pixels; Claude plan still lists copy/paste
+    as leftover. Verify paste and delete match Scratch bitmap Select.
+
+13. **Handles layer isolation — GOOD**
+    Overlay handles not saved into costume — correct vs Scratch guides.
+
+14. **Matrix-from-drag-start fix — GOOD intent**
+    Addresses jump-on-move for text/groups; still needs kid-test live.
+
+
+C. Priority fix order (for Claude, not Grok)**
+-----------------------------------------------
+P0  Unify list_item / itemnum / contains on Cast.toListIndex + Cast.compare
+    (fixtures: T021, T024, L201–L206, fixtures-lists-2)
+P1  Invert Select corner Shift polarity to match Scratch
+P2  Rotate snap 45°; optional setting for 15°
+P3  Alt-from-center scale; move Shift 45° snap
+P4  Zoom-aware nudge
+
+
+D. Evidence
+-----------
+- app.html: GW.toListIndex ~line region with list_delete/insert/replace;
+  Cast.toListIndex with LIST_INVALID/LIST_ALL; list_item Math.max path
+- claude/transform4800.js: shiftKey scale/rotate/move/nudge handlers
+- scratch-vm: util/cast.js toListIndex; blocks/scratch3_data.js
+- scratch-paint: helper/selection-tools/scale-tool.js (Shift/Alt),
+  rotate-tool.js (45°), move-tool.js, nudge-tool.js
+
+UNSURE without live run
+- Whether Beta v15.48.0 still routes costumes through GW.list_item or only Cast path
+- Whether transform4800 is always loaded on costume tab
