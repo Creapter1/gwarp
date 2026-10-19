@@ -1,7 +1,7 @@
 CURRENT ROUTING STATUS — 2026-10-19 (ChatGPT)
 - The Round 2 website/documentation authoring and static-link pass were delivered and logged; live published-site/mobile/accessibility confirmation and open website questions remain with Claude/owner. See team/AI-STATUS.txt and chatgpt/WEBSITE-OPEN-QUESTIONS.txt. Do not restart D1-D7 unless a new change reopens a specific item.
 - Animation review tasks CA1-CA3 and compiler/engineering review tasks CG1-CG3 were delivered in chatgpt/USER-GUIDE.txt, chatgpt/REVIEW-costume-animation.txt, chatgpt/UX-costume-animation.txt, chatgpt/COMPILER-REVIEW-2026-10-19.txt and chatgpt/MERGE-QUEUE-NOTES.txt. They are documented/review outputs, not runtime integration.
-- Current review ledger duty is C6; C1-C8 case reports are recorded below. Read team/AI-STATUS.txt, ../TODO.txt and CONTINUOUS-WORK-QUEUE.txt before taking another task. Continue from the newest unresolved dependency rather than following outdated “do these first” headers.
+- Current review ledger duty is C6; C1-C9 case reports are recorded below. Read team/AI-STATUS.txt, ../TODO.txt and CONTINUOUS-WORK-QUEUE.txt before taking another task. Continue from the newest unresolved dependency rather than following outdated “do these first” headers.
 
 G-WARP CHATGPT REVIEWER TASK LIST
 Owner: Creapter1
@@ -18,6 +18,7 @@ ACTIVE TASKS (ordered)
 [ONGOING] C6. Keep the independent review ledger current whenever a new deliverable materially changes status; latest updates cover C4-C8 in CROSS-AI-REVIEW-2026-10-15.txt.
 [x] C7. Owner handoff delivered -> chatgpt/OWNER-REVIEW-STATUS-2026-10-19.txt. Summarizes C1-C5 blockers and author/Claude/owner next actions; no runtime test claims.
 [x] C8. Static security review delivered -> chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt. Source context/storage documented; default model string conflicts with current official docs; no API/browser/history test. Root TODO status reconciled, app source unchanged.
+[x] C9. Static review of the latest Gemini animation/lab batch -> chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt. Found required current melody-engine paths and pivots.json absent, Auto-rig C generic-root self-parent risk, insufficient pivot assertions, A/B/C sprint-rule conflict, flat flipbook paths and unverified integration claims. Candidate files remain isolated; no Node/browser test run by ChatGPT.
 
 REVIEW FORMAT
 - Artifact / base commit or blob SHA:
@@ -38,4 +39,3 @@ C8 SECURITY REVIEW (2026-10-15; completed 2026-10-19): Maintained SECURITY-AND-C
 
 TEAM ROUTING UPDATE (2026-10-18): DeepSeek is no longer active. Review all former DeepSeek work as Gemini-owned legacy material under gemini/lab/. Keep all ChatGPT reviews in chatgpt/ and do not edit Gemini's candidates directly.
 
-[x] C9. Static review of the latest Gemini animation/lab batch -> chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt. Found the required current melody-engine paths and pivots.json absent, Auto-rig C's generic-root self-parent risk, insufficient pivot assertions, A/B/C sprint-rule conflict, flat flipbook paths and unverified integration claims. Candidate files remain isolated; no Node/browser test was run by ChatGPT.
