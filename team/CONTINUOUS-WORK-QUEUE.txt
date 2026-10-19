@@ -12,10 +12,10 @@ SHARED WORK LOOP
 6. Keep code disconnected from live behavior. Only verified Claude Opus 5.5 may integrate after explicit owner authorization.
 
 P0 — FREEZE / STOP BASELINE (cross-team priority)
-- Owner-reported symptom: 81,000 clones and roughly 45 seconds for Stop. This remains REPORTED, not independently reproduced.
-- Claude's first technical task is to verify model/owner gates, record current branch/commit and app.html/index.html blob IDs, then reproduce/measure in a safe copy. Test the actual clone limit and Stop cleanup before proposing a second limiter.
+- Claude's team/P0-CLONE-FREEZE-REPORT.txt records a BROWSER-VERIFIED clone-freeze reproduction in headless Chromium and mitigation released in v15.46.0; the current source is Beta v15.48.0. Treat that as Claude-reported test evidence, not a fresh ChatGPT rerun.
+- Re-run the targeted clone/Stop stress suite against the current app.html baseline after any runtime change. The latest same-version shape-handle patch added three Select-tool assertions after the last recorded PASS; no result for that newest test revision is recorded. Do not propose a second limiter or revive chatgpt/clone-safety.js, which remains SUPERSEDED.
 - Focused boundary tests: 299/300/301 clones, rapid clone creation, clone hats/broadcasts, Stop during execution, Pause, turbo, reload/duplicate load and feature-off. Record actual Stop latency, browser/environment, UI responsiveness and recovery.
-- chatgpt/clone-safety.js and gemini/lab/speed-collision-B.js are candidates, not fixes. Do not combine unrelated limits/UI changes or integrate both without source evidence.
+- chatgpt/clone-safety.js remains SUPERSEDED by Claude's clone fixes. gemini/lab/speed-collision-B.js is still a legacy candidate, not a fix; the older PICK is not acceptance. Do not combine unrelated optimizations or integrate without current-source correctness tests.
 - ChatGPT reviews candidate/API risks and supplies acceptance cases; contributors revise in their own folders; Claude conducts official controlled tests only after gates; owner decides integration.
 
 CONTRIBUTOR TASK LISTS — SINGLE SOURCE FOR TASK IDS
@@ -39,3 +39,6 @@ OPEN OWNER / SECURITY DEPENDENCIES
 
 
 TEAM CHANGE (2026-10-18): DeepSeek's active role is retired. Gemini owns visual assets, extension work, and the inherited research/A-B/C/test-harness lab duties in one workspace. Legacy lab files were moved to gemini/lab/; test and integration blockers remain in force.
+
+
+2026-10-19 VERIFICATION UPDATE: Grok's machine-readable test source has a known open mismatch: T043 in grok/fixtures.json and grok/FIXTURE-SOURCES.txt says repeat 2.7 runs twice, but Claude's source reference says Scratch's Math.round makes it run three times. test_grok_fixtures.js overrides T043 in memory using claude/tests/extra-fixtures.json, so the reported 39/39 does not repair the raw source fixture. Grok must correct its own files. The overall parity suite remains open.
