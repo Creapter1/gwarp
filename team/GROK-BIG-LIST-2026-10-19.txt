@@ -1,0 +1,62 @@
+=====================================================================
+ GROK - THE BIG JOB LIST          from Claude (team leader), 2026-10-19
+ Role: Scratch-behaviour detective + test writer. Your fixtures are RUN in G-Warp by Claude
+ (claude/tests/test_grok_fixtures.js and test_grok_anim.js) - every case you write catches real bugs
+ (your last batch found 3). Work top to bottom, never wait.
+=====================================================================
+RULES
+- Every expected value needs a SOURCE: scratch-vm file + line (github.com/scratchfoundation/scratch-vm,
+  develop branch) or the Scratch Wiki page. Read the code, don't guess. Last time T043 was wrong
+  (repeat uses Math.round) - double-check rounding/flooring every time.
+- SAME FORMAT as grok/fixtures.json (hat + stack, expect: say / variables / lists / costumeNumber ...).
+  New step/expr types are OK - list them at the top of the file with their Scratch opcode so Claude can add
+  them to the runner.
+- One fixture = one small thing. Expected results must not depend on timing unless you say how.
+- Your folder only (grok/). Hand in: line in AI-TEAM.txt + grok/AI-CHAT-LOG.txt.
+
+FIRST
+R0  Fix T043 in grok/fixtures.json: repeat (2.7) runs 3 times (scratch3_control.js line 54 Math.round).
+
+FIXTURE BATCHES (30 cases each, file grok/fixtures-<name>.json)
+R1  operators-2: join with numbers (join 1 2), "1e3" = 1000, "0x10" = 16?, " 5 " = 5, "" = 0?, Infinity / NaN
+    text, division by 0, mod 0, round of -0.5, abs/sqrt of negative, sin/cos of 90/180 (rounding!),
+    ln/log/e^/10^, pick random with "1.0" vs "1", letter of with decimals, length of numbers, contains "".
+R2  variables + lists-2: item # of (case, numbers vs text, "" item), list contains with spaces, add to list
+    limit (200000), delete of "random", insert at "random", replace "last" on empty list, list as text
+    (join of items with/without spaces: single letters!), set var to list, change var on text ("a" + 1).
+R3  control: repeat until true, wait 0 yields, stop "this script" inside My Block (returns only from the
+    block!), stop "other scripts in sprite", if with empty condition, forever + stop all, "repeat (-1)".
+R4  clones: create clone of myself copies variables/costume/size/direction/layer; clone count limit 300;
+    "when I start as a clone" order; delete this clone in the original does nothing; clones get
+    broadcasts; local variables separate per clone; clone of another sprite.
+R5  events + broadcasts: broadcast order (sprite layer order), broadcast while receiver running (restart),
+    broadcast and wait waits for all, when key pressed "any", when backdrop switches to, when timer > 0.5.
+R6  motion: move with direction 90/0/45, turn wrap (direction 270 -> -90), point towards, go to random
+    bounds, glide to x y, if on edge bounce, set rotation style, x/y after "go to x:1000" (fencing: Scratch
+    keeps sprites on stage!), change x by on a huge sprite.
+R7  looks + sensing: size limits (min 5% / max from costume size), ghost 0-100 clamp, change effect wraps
+    (color 0-200), go to front/back layers, distance to, touching edge, answer, timer reset, days since 2000
+    type, username empty, loudness -1, "of" block (x position of Stage = 0?).
+R8  My Blocks: arguments are text vs boolean, unknown argument = 0/"", recursion depth, run without screen
+    refresh loops, two blocks with the same name, argument with the same name as a variable.
+
+SPECS / RESEARCH (text files)
+S1  grok/SPEC-select-tool.txt: Scratch 3 paint editor Select tool - exact behaviour of handles (corner keeps
+    ratio or not? Shift? Alt = from centre?), rotate snap angle, arrow-key nudge sizes, what is selected after
+    drawing a shape, group/ungroup rules, bitmap select. Compare with G-Warp Beta v15.48.0 (try the live app)
+    and list differences.
+S2  grok/SPEC-sb3-roundtrip.txt: which project.json fields Scratch needs (targets, layerOrder, monitors,
+    extensions, meta, costume rotationCenter for bitmap at 2x...) and what makes Scratch refuse a file.
+    Then save a project in G-Warp and check it against the list.
+S3  grok/SPEC-turbowarp-runtime.txt: TurboWarp-only things projects use: 60 FPS, interpolation, infinite
+    clones, remove fencing, high quality pen, custom stage size, warp timer. What each does + where in code.
+S4  grok/EXTENSIONS-check-2.txt: for the 20 most used TurboWarp gallery extensions, which blocks the owner's
+    test projects use (ask Claude for the private repo access) and whether G-Warp supports them.
+
+REVIEWS
+V1  Review Claude's new code for Scratch differences: claude/transform4800.js (Select tool) and the list
+    position fix (GW.toListIndex in app.html). Report problems as numbered items with the Scratch source.
+V2  Check the website docs ChatGPT writes (docs/*.html): any statement that disagrees with Scratch or with the
+    app -> numbered list.
+
+PRIORITY: R0 > R3 > R1 > R2 > R4 > R5 > S1 > R6 > R7 > R8 > V1 > S2 > S3 > S4 > V2
