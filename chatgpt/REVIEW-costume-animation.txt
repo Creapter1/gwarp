@@ -1,0 +1,96 @@
+G-WARP — COSTUME ANIMATION TEST COVERAGE REVIEW
+Date: 2026-10-18
+Owner: Creapter1
+Reviewer: ChatGPT
+Artifact: claude/tests/test_cosanim.js
+Test source blob SHA: c35a926b04d2759d5df9da7605d732ef78f32501
+App baseline currently recorded in team status: app.html blob 5ca624a515b9fc1310814c4740608c1cf3071028 (Beta v15.48.0)
+Evidence class: STATIC REVIEW. Assignment notes report 27/27 PASS for the suite, but ChatGPT did not execute Playwright or independently rerun the tests.
+
+SUMMARY
+The suite is a useful UI/runtime smoke test for the happy path: Animation tab visible to normal users, G-Spark's starter walk/wave data, frame navigation, Space preview play/stop, Make costumes, updating generated costumes after deleting a frame, animation rename, palette presence, stale-frame regeneration, direct animation playback, rigging a vector costume, changing a bone pose, onion-skin overlays in vector and bitmap editor modes, and Flipbook range/playback. It also checks page errors at the end.
+
+It does NOT cover the complete persistence, multi-sprite/clone isolation, undo, Stop cleanup, collision, and actual block-stack behavior needed before claiming costume animation is robust. The assignment's reported PASS is evidence for only the assertions in this file and only for the app revision used in that run.
+
+NUMBERED TEST CASES STILL NEEDED
+
+1. Save and reopen an animation project (HIGH)
+   Setup: Open G-Spark, modify the walk animation (change a pose, add/delete a frame), make costumes, save an SB3 project, close/reload it.
+   Expected: Animation names, frames, FPS/loop state, bone definitions, parent links, attachments, pose angles and generated-costume links survive the round trip. The reopened animation plays the edited pose sequence, and no stale generated frame is shown. No console error or silent fallback.
+   Gap: test_cosanim.js mutates animation/frame state and closes/reopens the UI panel, but it does not save the project file and reload it.
+
+2. Two sprites with the same animation name (HIGH)
+   Setup: Give two sprites an animation named "walk" with different poses/frame counts; switch selection back and forth, rename or edit one.
+   Expected: Each sprite selects and plays its own "walk"; modifying/renaming sprite A does not change sprite B's frames, costumes, metadata or dropdown selection.
+   Gap: the current suite uses the active G-Spark sprite and tests rename of a single animation. It does not create two sprite-local animations with colliding names.
+
+3. Clone playback is independent (HIGH)
+   Setup: Make a sprite with an animation, create two clones, start different animations or frame positions on the original and each clone, and update one clone's pose while the others play.
+   Expected: Clones do not overwrite shared frame state or advance each other's frame counters unintentionally. Each clone follows the documented clone semantics, deleting a clone cleans its playback/timer, and the original sprite continues correctly.
+   Gap: no clone is created in test_cosanim.js. The suite's GW_ANIM_BLOCKS.start(s, ...) check operates on the active original sprite.
+
+4. Undo/redo after animation rename (HIGH)
+   Setup: Rename "walk" to "run" using the UI, invoke Undo, then Redo. Include generated costume names and rename after a frame deletion.
+   Expected: Undo restores the animation name and all linked costume names/data; Redo reapplies the rename. No half-renamed collection or stale references remains.
+   Gap: the test checks only the successful rename path, not Undo or Redo around that action.
+
+5. A true bitmap costume opened in the Animation tab (HIGH)
+   Setup: Import or create a real PNG/bitmap costume (not just switching the paint editor to Bitmap mode for onion-skin testing), then open Costumes → Animation.
+   Expected: If bitmap rigging is supported, it produces valid editable parts and the resulting frames render correctly. If unsupported, the UI explains the limitation and prevents a broken/empty rig without corrupting the costume. Saving/reopening preserves the selected safe outcome.
+   Gap: current rig test draws an SVG/vector costume. The later bitmap-mode assertion tests onion-skin background in the paint editor, not bone rigging of a bitmap costume.
+
+6. Global Stop during Animation/Flipbook playback (HIGH)
+   Setup: Start a looping animation through its UI; press the global Stop control while it is playing. Repeat for the Flipbook player and a project running the Animation blocks.
+   Expected: Playback timer and running animation thread stop promptly; frame index and costume stop changing; no delayed tick restarts playback; reopening Play works cleanly. Record the expected distinction between Space-stop and global Stop.
+   Gap: the suite tests Space playing/stopping the Animation tab preview and clicks Play again to close Flipbook. It does not press the global project Stop during each playback mode.
+
+7. Run the actual Animation blocks in a project script (HIGH)
+   Setup: Build and run real script stacks with "switch to animation [ ]", "play animation [ ] from frame [ ]", "play animation [ ] over and over", and "stop animation". Save/reopen the project and repeat.
+   Expected: The selected animation/frame/loop/stop semantics match each block label, run under the normal scheduler, and serialize/deserialize correctly. Stop cancels only the intended animation activity.
+   Gap: the current suite checks that the Animation palette is visible and calls GW_ANIM_BLOCKS.start(...) directly from test JavaScript. That is not equivalent to running each block through the normal script interpreter/compiler.
+
+8. Renaming to a name already used (MEDIUM)
+   Setup: One sprite has "walk" and "wave"; attempt to rename "walk" to "wave". Repeat when two animation names differ only by case/spacing.
+   Expected: The UI rejects or safely disambiguates duplicate names, and dropdowns, block references and generated costume links remain deterministic. No unrelated animation or costume is overwritten.
+   Gap: current test renames walk to unused name run only.
+
+9. Remove or reorder a generated costume (MEDIUM)
+   Setup: Run Make costumes, then rename/reorder/delete one generated costume or delete an animation frame and re-open the animation.
+   Expected: The app clearly preserves, updates, or unlinks affected frames according to its stated design; it must not silently play a stale frame or unexpectedly overwrite a user's manually edited costume.
+   Gap: test_cosanim.js deletes one frame and confirms the generated list reduces, but does not manually rename, reorder or delete one generated costume after creation.
+
+10. Switch sprites while the Animation panel is open (MEDIUM)
+    Setup: Open Animation on sprite A, select sprite B, return to A, close and reopen the panel.
+    Expected: Panel contents match the selected sprite every time; no stale selection, wrong canvas, lost unsaved pose or leaked playback timer.
+    Gap: the current suite stays on one sprite for the animation editing flow.
+
+11. Frame and FPS boundaries (MEDIUM)
+    Setup: Test an animation with one frame and one with many frames; try FPS 1 and 30; try starting at first/last/out-of-range frame and deleting the currently playing frame.
+    Expected: Values clamp or fail safely according to a documented rule; no NaN timer, negative index, blank costume or unbounded loop. A one-frame loop remains stable.
+    Gap: the suite uses the 8-frame G-Spark animation and a small 2-frame example. It does not systematically test edge values or deletion while playback is active.
+
+12. Bone edit Undo/Redo and invalid hierarchy (MEDIUM)
+    Setup: Create parent and child bones, attach several parts, change pose, delete/undo a bone, and test a missing/cyclic parent reference in an imported or deliberately altered fixture.
+    Expected: Undo restores the previous rig and attachments; invalid hierarchy data is rejected or recovered without a freeze, stack overflow or corrupted costume.
+    Gap: current rig test makes one bone and drags its end. It does not check parent/child hierarchy undo or malformed hierarchy data.
+
+13. Import a project containing animation metadata (MEDIUM)
+    Setup: Load a saved project copy containing both ordinary costumes and an animation; run it after import, export/reopen it, and repeat.
+    Expected: Animation metadata is either preserved correctly or explicitly reported as unsupported; regular costume list, image data and project loading remain intact.
+    Gap: test_cosanim.js creates its own data in the live UI; it does not test import/export compatibility.
+
+14. Keyboard focus and input conflicts (LOW/MEDIUM)
+    Setup: Use Tab to focus the Animation controls; test ArrowRight and Space while focus is on the frame canvas, a text input, a rename dialog and another editor tab.
+    Expected: frame navigation and Space playback occur only in the intended context; text input still accepts spaces; keyboard focus remains visible and does not silently trigger playback while editing a name.
+    Gap: it tests ArrowRight and Space when the animation view is focused, but not these conflicting focus contexts.
+
+TEST PRIORITY
+P0 before calling persistence/isolation stable: cases 1, 2, 3, 4, 5, 6, 7.
+P1 before release: cases 8, 9, 10, 11, 12, 13.
+P2 usability regression: case 14.
+
+ACCEPTANCE RULE
+Each test must run against the current app.html blob, record app SHA, browser and viewport, capture screenshots for UI states where useful, and end with a clear PASS/FAIL plus console errors. Keep animation semantics tests separate from visual/editor tests. Do not convert missing coverage into a claim that a bug is present; these are gaps, not confirmed failures.
+
+NEXT OWNER ACTION
+Claude/integration owner: add or schedule focused tests for P0. ChatGPT only reviewed the existing test source and has not run it. Do not edit claude/tests/test_cosanim.js from this reviewer report.
