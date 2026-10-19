@@ -9,10 +9,10 @@ SCOPE AND LIMITS
 This is a GitHub source/tree/diff/document audit. ChatGPT did not run a browser or runtime test. Attempting to clone the repository into a local test workspace failed because the environment could not resolve github.com. Results below distinguish source/tree verification from test results reported by Claude. No app.html/index.html changes were made by ChatGPT in this verification cycle.
 
 RESULT SUMMARY
-- ROLE CONSOLIDATION: PASS (repository structure and task routing).
+- ROLE CONSOLIDATION: PASS (repository structure and active task routing). Follow-up audit found a conflict between Gemini's new Big List and the earlier animation-first section; the combined Gemini task list has now been edited to map overlapping jobs and prevent duplicate deliverables.
 - LEGACY FILE PRESERVATION: PASS with documented edits to three legacy lab reports.
 - APP/INDEX UNCHANGED BY CHATGPT: PASS. Their current blob IDs are recorded above; later source changes were made by separate Claude commits.
-- CURRENT V15.48.0 BEHAVIORAL VERIFICATION: PARTIAL / REPORTED TEST. Claude's work log now records a full regression after the same-version shape-handle patch: 429 PASS and 9 FAIL, with all 9 described as expected legacy/feature-status checks. ChatGPT did not independently rerun it or confirm the individual Select assertion output.
+- CURRENT V15.48.0 BEHAVIORAL VERIFICATION: PARTIAL / REPORTED TEST. Claude's work log records a full regression after the same-version shape-handle patch: 429 PASS and 9 FAIL, with all 9 described as expected legacy/feature-status checks. ChatGPT did not independently rerun it or confirm the individual Select assertion output.
 - SCRATCH PARITY FIXTURES: PARTIAL. Grok corrected T043 in grok/fixtures.json and expanded the base to 60 cases. grok/FIXTURE-SOURCES.txt still has the old two-iteration expectation and old 30-case count. A separate 10-case list-index file T130-T139 is not loaded by the current Claude runner.
 - MERGE QUEUE ROUTING: OPEN. Root MERGE-QUEUE.txt is Claude-owned and still uses historical deepseek/ paths and outdated task wording. Exact recommendations are in chatgpt/MERGE-QUEUE-NOTES.txt.
 - PERFORMANCE PLAN: CREATED, NOT A BENCHMARK RUN. The plan defines a procedure; no new comprehensive performance run was performed by ChatGPT.
@@ -86,3 +86,10 @@ LATEST SNAPSHOT ADDENDUM (2026-10-19, main 1cffda9578c69fc45685e09b40c655e3a0683
 - Grok has provided grok/fixtures-extra-list.json with 10 unique T130-T139 cases. team/TODO-GROK.txt says Claude is waiting for a current 60+10 run. Current runner does not load that extra-list file yet.
 - AI-TEAM.txt records Claude's full v15.48.0 regression as 429 PASS / 9 FAIL (all described as expected). This is reported by Claude and was not independently rerun by ChatGPT.
 - The owner-facing Gemini task list now routes to team/GEMINI-BIG-LIST-2026-10-19.txt, titled for “Gemini 3 (Argon)”, while AI-TEAM's roster still says “Gemini 2 (FreeBuff/Argon)”. One unified gemini/ workspace is preserved; confirm the preferred displayed model/teammate label.
+
+
+LATEST TASK-ROUTING AUDIT (2026-10-19, follow-up documentation commits)
+- team/TODO-GEMINI.txt originally retained an “ANIMATION ASSIGNMENT FIRST” section beneath a header pointing to team/GEMINI-BIG-LIST-2026-10-19.txt. This conflicted with the new Big List's explicit priority order and could cause duplicate work.
+- ChatGPT updated team/TODO-GEMINI.txt to mark the prior assignments as cross-references, not a second work queue. It maps Big List G1 to GA-M1 (expanded icon scope), G3 to GA-M2, L1 to GL1/DA1, L2 to GL2/DA2, and L3 to GL3/DA3. GM7/GM8 and inherited GL4/GL5 remain after the Big List per its note.
+- The current task naming remains inconsistent: AI-TEAM's roster says “Gemini 2 (FreeBuff/Argon)”; team/GEMINI-BIG-LIST-2026-10-19.txt says “Gemini 3 (Argon)”. Only one gemini/ workspace exists. The verification did not guess which display/model label is canonical; owner confirmation is still needed.
+- After these documentation updates, app.html and index.html blob IDs remained 5ca624a515b9fc1310814c4740608c1cf3071028 and 88b8d46aeaa2056828a0d445b82649a0c5ed986f. No runtime code was changed by ChatGPT.
