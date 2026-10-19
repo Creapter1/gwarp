@@ -1,0 +1,95 @@
+G-WARP — SCRATCH PROJECT LINK + GEMINI EXTENSION REVIEW
+Date: 2026-10-19
+Reviewer: ChatGPT
+Task: C3 — review chatgpt/scratch-link.js and Gemini's Scratch extension together.
+Evidence class: SOURCE-VERIFIED + STATIC-ANALYSIS. No browser, extension-load, network-failure or package test was run by ChatGPT.
+App baseline: app.html blob 5ca624a515b9fc1310814c4740608c1cf3071028 (Beta v15.48.0).
+Scope: chatgpt/scratch-link.js, chatgpt/NOTES-scratch-link.txt, and files under gemini/extension/.
+
+VERDICT
+The two pieces fit conceptually: the Scratch-site extension appends a numeric project ID to the G-Warp URL as `#scratch=ID`, and the app's current source contains the `gw-v4611-scratch-link` handler with the same handoff concept. The handler is already present in app.html at the reviewed SHA; do not add a second copy from chatgpt/scratch-link.js. The extension is not yet ready to call package-ready: the current repository tree lists icon.svg and make-icons.js but not the manifest-referenced icon16/32/48/128 PNGs, and the live-site URL still requires owner confirmation. Popup state synchronization, SPA listeners, and the privacy boundary need focused validation.
+
+NUMBERED FINDINGS
+
+1. SOURCE-VERIFIED — App hash handler is already integrated; do not duplicate it.
+   Current app.html contains `<script id="gw-v4611-scratch-link">`, tests a strict numeric `#scratch=...` hash, and uses the existing confirmation/web-loader path. It removes the handled hash before prompting and marks the handoff to avoid duplicate handlers. The separate candidate in chatgpt/scratch-link.js is source/reference material now; adding it again risks redundant boot/retry logic and makes ownership/version drift likely.
+   Required gate: verify only one active handler exists in the exact packaged app. The extension target URL must point to the owner-confirmed canonical deployment; do not assume a previously used GitHub Pages URL is still correct.
+
+2. HIGH — Popup preference changes do not update an already open Scratch tab immediately.
+   SOURCE-VERIFIED: content.js reads `chrome.storage.sync` during `checkState()` but has no `chrome.storage.onChanged` listener. The popup writes the show-button preference. This means turning the pill off in the popup may leave an existing pill visible until navigation/reload; turning it on may not create one until a later check.
+   STATIC-ANALYSIS: this creates a UI mismatch between popup preference and current page state and could mislead the user about whether the preference was applied.
+   Required tests: on a project page, toggle Show button off and on in the popup without navigating; confirm the pill disappears/appears immediately. Repeat while the async storage read is pending and after switching from one project URL to another. Check `chrome.runtime.lastError` for read/write failures and ensure the UI doesn't claim persistence if sync storage fails.
+
+3. HIGH — History methods are patched without cleanup, and hash-only routing is not explicitly observed.
+   SOURCE-VERIFIED: content.js wraps `history.pushState` and `history.replaceState`, dispatches a custom locationchange event, and observes popstate; it does not restore the original methods and does not explicitly listen to hashchange. The wrappers are installed on every matching Scratch document regardless of whether the pill is currently shown.
+   STATIC-ANALYSIS: disabling only the pill does not remove the wrappers. A hash-only navigation can miss the route check, and replacing global History methods without chaining/restoration can conflict with site scripts or other extensions.
+   Required tests: toggle the preference while staying on a page, navigate project → non-project → project via pushState, replaceState, back/forward, and direct `location.hash` changes. Confirm the pill matches the current route every time. Verify an opt-out/disable path restores original methods or explain clearly why the extension remains active until the tab reloads. Ensure wrappers dispatch at most one event even after repeated SPA routing.
+
+4. HIGH — Context-menu link parsing should validate the link's origin, not only a path fragment.
+   SOURCE-VERIFIED: background.js uses the clicked `info.linkUrl` (or `tab.url`) and searches for a `/projects/number` path before constructing the G-Warp URL. The context menu is restricted to Scratch document pages, but a link inside such a page can point to another domain.
+   STATIC-ANALYSIS: an external link whose path happens to contain `/projects/123` could be treated as a Scratch project ID. This is a false positive, not an exploit proven by this review.
+   Required tests: right-click ordinary Scratch project links, non-project links, external domains with a `/projects/123` path, malformed IDs and URLs with extra query/hash components. The handler should accept only the intended Scratch origin and project route, extract one valid positive decimal ID, and safely ignore everything else.
+
+5. HIGH — The packaged icon assets appear incomplete in the current repository tree.
+   SOURCE-VERIFIED: the manifests reference generated PNG icon sizes (16, 32, 48, 128), while the tracked extension tree contains the SVG source and `make-icons.js` but not the referenced PNG output files. The README documents an icon-generation step using Node/sharp.
+   Impact: a folder or ZIP packaged directly from the repository without first generating those files may fail extension loading or show missing icons. Requiring an unpinned native dependency also makes builds hard to reproduce.
+   Required tests: run the documented icon-generation step in a clean environment; verify all referenced PNGs exist, have the expected dimensions/alpha, and are included in both Chrome and Firefox packages. Test unpacked installation and a clean ZIP install. Document the required Node/sharp version or check in the generated assets according to the owner's packaging rule.
+
+6. MEDIUM — Network and cancellation behavior needs an explicit end-to-end test.
+   SOURCE-VERIFIED: the app handler asks for confirmation before invoking the project web loader, removes the handoff hash so Cancel/refresh doesn't repeat that prompt, and has a catch/error path when the loader rejects. The extension itself derives an ID from a Scratch project page and opens the app URL; the actual fetch occurs in G-Warp after user confirmation.
+   Required tests:
+   - Valid public project: prompt appears once, Cancel performs zero fetches, Load requests exactly the selected project ID.
+   - Invalid/zero/overlong/non-numeric ID: no prompt and no fetch.
+   - Private/deleted/missing project, offline mode, timeout, HTTP 403/404/429/5xx, invalid response, malformed SB3 and CORS/network rejection: user sees a useful failure message, the current project remains intact, and no false success toast appears.
+   - Missing/late `GW_CONFIRM` or `GW_WEB.load`: confirm timeout behavior is visible or otherwise diagnosable; no silent hanging or repeated prompts after reload.
+   - Repeated clicks, reloading while a fetch is in flight, and pressing Cancel must not start duplicate loads or leave half-imported project state.
+   - Ensure the confirmation text identifies the operation as loading a public Scratch project and does not imply the extension has inspected the project beforehand.
+
+7. MEDIUM — New-tab/popup behavior should be tested in the real browser context.
+   SOURCE-VERIFIED: the pill click uses `window.open(..., '_blank')` from the user click handler, while the context menu uses `chrome.tabs.create`/the browser tab API. The content script reads an identifier from the current URL.
+   Required tests: Chrome desktop with default popup policy, Firefox, Chromium-based browser with strict tracking/popup settings, and private/incognito mode if the extension is allowed there. Confirm a normal user gesture opens exactly one tab to the canonical app URL plus the numeric hash; a popup-blocked path shows a fallback message/link rather than silently doing nothing. A context-menu action must not steal focus or create two tabs.
+
+8. MEDIUM — Minimum permissions look appropriately narrow, but verify them in package installs.
+   The manifests scope the content script/host access to Scratch and use storage/context-menu and tab-opening behavior instead of asking for broad access to every website. Keep those limits. Test install, permission prompt, extension update, disable/re-enable, browser restart and removal in Chrome/Firefox. Confirm the extension performs no request to the G-Warp site until the user clicks and no project fetch happens before the app's consent prompt. Do not broaden host permissions as a workaround for failures.
+
+9. MEDIUM — Privacy text should describe the complete handoff accurately.
+   The extension code appears to use browser sync storage for a UI preference and places the public project ID in a navigation URL; after explicit approval, the G-Warp app contacts its project-loading endpoint(s). The privacy page should distinguish “the extension does not send analytics/user-entered data” from browser sync and the later G-Warp network fetch. Avoid claiming the end-to-end workflow makes no external request. Also confirm the extension's privacy page is accessible from its popup/package and that the published privacy URL, if any, is canonical.
+
+FOCUSED REGRESSION CHECKLIST (NOT RUN)
+Mark each PASS / FAIL / NOT RUN only after browser execution.
+
+A. App hash parser / consent
+[ ] One active handler in the packaged app; current source SHA recorded.
+[ ] `#scratch=123456` prompts once; Cancel clears the handled hash and performs no fetch.
+[ ] Confirm loads exactly ID 123456; no duplicate prompt/load from duplicate scripts.
+[ ] Test invalid formats: `#scratch=`, `#scratch=0`, letters, encoded digits, negative sign, leading/trailing spaces, >12 digits, extra query/hash text, and non-scratch hashes; invalid cases never fetch.
+[ ] Cancel then refresh; load failure then refresh; back/forward after clear; no surprise second load.
+[ ] While app APIs initialize slowly or are absent, user receives a clear timeout/diagnostic rather than a silent no-op.
+[ ] For offline, 403, 404, 429, 5xx, malformed SB3 and quota errors, preserve the existing project and show a safe error.
+
+B. Extension UI and SPA lifecycle
+[ ] Project page creates exactly one pill; ordinary user/profile/home/project-list pages show none.
+[ ] Popup opt-out removes current pill immediately and opt-in adds it immediately without navigating.
+[ ] Exercise pushState, replaceState, popstate/back-forward, direct hash changes, route replacement, and rapid project A → B → home → A.
+[ ] Repeated route events do not duplicate the pill, listeners or open tabs.
+[ ] Browser toggle/off path doesn't leave unwanted history wrappers running, or documents reload as the explicit cleanup boundary.
+
+C. Context menu and navigation
+[ ] Valid Scratch project page opens canonical app URL with exactly one numeric hash.
+[ ] Valid Scratch project link uses its ID; external/non-project URL containing `/projects/123` is rejected.
+[ ] Window open succeeds from a user gesture; popup-blocked fallback is usable; context-menu action opens only one tab.
+[ ] No broad navigation/open action happens without a deliberate click/context-menu action.
+
+D. Permissions, assets, packaging, privacy
+[ ] Chrome MV3 unpacked and ZIP install succeed with all referenced icon PNGs present.
+[ ] Firefox install succeeds with matching icons and compatible manifest/background behavior.
+[ ] Confirm every requested permission is necessary and there is no permission expansion.
+[ ] Extension and app work with preference storage unavailable; UI shows truthful persistence status.
+[ ] Privacy disclosure distinguishes browser sync preference storage, URL project ID and G-Warp's later network fetch; no unexpected external requests before confirmation.
+[ ] Disable/re-enable and browser restart do not duplicate context-menu entries or content scripts.
+
+NEXT OWNER ACTION
+- Claude/extension owner: verify the canonical app URL and build/package generated icons before promoting the extension.
+- Run the app handler and extension matrix in real Chrome/Firefox; record browser/version/OS, extension package hash, app SHA, project ID/test fixture, network result, console errors and screenshot.
+- Keep chatgpt/scratch-link.js as a reference copy unless Claude explicitly requests a source update; app.html already has the handler at the reviewed baseline.
+- This report is static review only. None of the checklist items is marked tested or passed.
