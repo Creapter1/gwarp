@@ -1,4 +1,6 @@
-PMP LOADER NOTES — DeepSeek
+LEGACY NOTE (2026-10-18): Originally authored/labeled as DeepSeek research. It is now stored in Gemini's unified workspace; this does not mean the API has been verified or the loader accepted. Current blockers are listed in gemini/lab/README.txt.
+
+PMP LOADER NOTES — inherited legacy research (original label: DeepSeek)
 ================================
 WHAT IS A .PMP?
 ---------------
@@ -57,10 +59,10 @@ HOW PENGUINMOD'S OWN VM LOADS .PMP
   File: https://github.com/PenguinMod/PenguinMod-Vm/blob/develop/src/serialization/sb3.js
 WHERE THE CODE GOES IN G-WARP
 ------------------------------
-1. Save pmp-loader.js as deepseek/pmp-loader.js.
+1. Save pmp-loader.js as gemini/lab/pmp-loader.js.
 2. In app.html, after JSZip is loaded and before the project-loading logic,
    add:
-       <script src="deepseek/pmp-loader.js"></script>
+       <script src="gemini/lab/pmp-loader.js"></script>
 3. Wherever G-Warp currently handles .sb3 files, add:
        const kind = window.GW_PMP.detect(arrayBuffer);
        if (kind === 'zip' || kind === 'protobuf') {
