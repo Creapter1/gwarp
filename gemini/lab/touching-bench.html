@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G-Warp Lab — Touching Speed Test (1,000 Moving Boxes)</title>
+  <style>
+    :root {
+      --bg: #0b0b14;
+      --panel: #141425;
+      --panel-2: #1b1b31;
+      --line: #2a2a48;
+      --text: #ececf6;
+      --muted: #a3a3c2;
+      --violet: #8b5cf6;
+      --violet-2: #a855f7;
+      --green: #4ade80;
+      --gold: #facc15;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px 24px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--green);
+      letter-spacing: -0.01em;
+    }
+    .sub {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    button {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.12s ease, border-color 0.12s ease;
+    }
+    button:hover { border-color: var(--violet); }
+    button.active {
+      background: var(--violet);
+      border-color: var(--green);
+      color: #ffffff;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 820px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+    .stat-card {
+      background: var(--panel);
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .stat-card.pair-card { border-color: var(--violet); }
+    .stat-card.grid-card { border-color: var(--green); }
+    .stat-card h2 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #0b0b14;
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .metric {
+      background: #0b0b14;
+      border: 1px solid #1b1b31;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .metric .label {
+      font-size: 11px;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 3px;
+    }
+    .metric .val {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .pair-card .metric .val.hi { color: var(--violet-2); }
+    .grid-card .metric .val.hi { color: var(--green); }
+    .stage-wrap {
+      display: grid;
+      grid-template-columns: 1fr 290px;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .stage-wrap { grid-template-columns: 1fr; }
+    }
+    canvas {
+      width: 100%;
+      background: #07070e;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      display: block;
+    }
+    .side-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .side-panel h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--green);
+    }
+    .speedup-pill {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #0b0b14;
+      border: 1px solid var(--green);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--green);
+      font-weight: 700;
+      font-size: 14px;
+      text-align: center;
+    }
+    label.inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    input[type="range"] { accent-color: var(--green); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>G-Warp Touching Speed Test — 1,000 Moving Boxes</h1>
+      <p class="sub">Side-by-side benchmark comparing <strong>Check Every Pair O(N²)</strong> vs <strong>Grid of Cells (Spatial Hash)</strong> on 1,000 moving sprites.</p>
+    </div>
+  </header>
+
+  <div class="controls">
+    <span style="font-size:13px;color:var(--muted);font-weight:600;">Mode:</span>
+    <button type="button" class="active" data-mode="both">Compare Both Every Frame</button>
+    <button type="button" data-mode="pairs">Only Check Every Pair</button>
+    <button type="button" data-mode="grid">Only Grid of Cells</button>
+    <label class="inline">
+      Cell Size: <strong id="cellVal" style="color:var(--green)">32px</strong>
+      <input id="cellSlider" type="range" min="16" max="80" step="8" value="32" />
+    </label>
+    <label class="inline">
+      <input id="showGridChk" type="checkbox" checked />
+      Draw Grid Lines
+    </label>
+    <button type="button" id="respawnBtn">Re-scatter 1,000 Boxes</button>
+  </div>
+
+  <div class="stats-grid">
+    <!-- Check Every Pair Card -->
+    <div class="stat-card pair-card">
+      <h2>
+        <span>Method 1: Check Every Pair (Brute-Force O(N²))</span>
+        <span class="badge">N × (N − 1) / 2</span>
+      </h2>
+      <div class="metrics">
+        <div class="metric">
+          <span class="label">Estimated FPS</span>
+          <span class="val hi" id="pairFps">60</span>
+        </div>
+        <div class="metric">
+          <span class="label">Checks / Frame</span>
+          <span class="val hi" id="pairChecks">499,500</span>
+        </div>
+        <div class="metric">
+          <span class="label">Step Time</span>
+          <span class="val" id="pairMs">0.00 ms</span>
+        </div>
+        <div class="metric">
+          <span class="label">Touching Boxes</span>
+          <span class="val" id="pairHits">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid of Cells Card -->
+    <div class="stat-card grid-card">
+      <h2>
+        <span>Method 2: Grid of Cells (Uniform Spatial Grid)</span>
+        <span class="badge">Local Cell Lookup</span>
+      </h2>
+      <div class="metrics">
+        <div class="metric">
+          <span class="label">Estimated FPS</span>
+          <span class="val hi" id="gridFps">60</span>
+        </div>
+        <div class="metric">
+          <span class="label">Checks / Frame</span>
+          <span class="val hi" id="gridChecks">0</span>
+        </div>
+        <div class="metric">
+          <span class="label">Step Time</span>
+          <span class="val" id="gridMs">0.00 ms</span>
+        </div>
+        <div class="metric">
+          <span class="label">Touching Boxes</span>
+          <span class="val" id="gridHits">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-wrap">
+    <canvas id="stageCv" width="840" height="460"></canvas>
+    <div class="side-panel">
+      <h3>Why Grid of Cells Wins</h3>
+      <p>With <strong>1,000 moving boxes</strong>, checking every pair requires <code>1000 × 999 / 2 = 499,500</code> AABB overlap tests every single frame.</p>
+      <p>Partitioning the stage into a <strong>Grid of Cells</strong> buckets each box into the cells it overlaps and only tests boxes sharing a cell, cutting pair checks by ~40×–80× with identical collision results.</p>
+      <div class="speedup-pill" id="speedupReadout">Check Reduction: --× fewer checks</div>
+      <div class="speedup-pill" id="matchReadout" style="margin-top:8px;border-color:var(--violet);color:var(--text);">Exact Match: Verified</div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const BOX_COUNT = 1000;
+      const canvas = document.getElementById('stageCv');
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+
+      let mode = 'both';
+      let cellSize = 32;
+      let showGrid = true;
+
+      // 1,000 moving boxes
+      const boxes = new Array(BOX_COUNT);
+      const hitPair = new Uint8Array(BOX_COUNT);
+      const hitGrid = new Uint8Array(BOX_COUNT);
+
+      function spawnBoxes() {
+        let seed = 1337420;
+        function rand() {
+          seed = (seed * 1664525 + 1013904223) >>> 0;
+          return seed / 4294967296;
+        }
+        for (let i = 0; i < BOX_COUNT; i++) {
+          const w = 8 + Math.floor(rand() * 7);
+          const h = 8 + Math.floor(rand() * 7);
+          const angle = rand() * Math.PI * 2;
+          const speed = 0.75 + rand() * 1.65;
+          boxes[i] = {
+            x: rand() * (W - w),
+            y: rand() * (H - h),
+            w,
+            h,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed
+          };
+        }
+      }
+
+      function stepPhysics() {
+        for (let i = 0; i < BOX_COUNT; i++) {
+          const b = boxes[i];
+          b.x += b.vx;
+          b.y += b.vy;
+          if (b.x < 0) { b.x = 0; b.vx = -b.vx; }
+          else if (b.x + b.w > W) { b.x = W - b.w; b.vx = -b.vx; }
+          if (b.y < 0) { b.y = 0; b.vy = -b.vy; }
+          else if (b.y + b.h > H) { b.y = H - b.h; b.vy = -b.vy; }
+        }
+      }
+
+      // 1. Check Every Pair (O(N^2))
+      function runCheckEveryPair() {
+        const t0 = performance.now();
+        hitPair.fill(0);
+        let checks = 0;
+
+        for (let i = 0; i < BOX_COUNT; i++) {
+          const a = boxes[i];
+          const ax1 = a.x, ay1 = a.y, ax2 = a.x + a.w, ay2 = a.y + a.h;
+          for (let j = i + 1; j < BOX_COUNT; j++) {
+            checks++;
+            const b = boxes[j];
+            if (ax1 < b.x + b.w && ax2 > b.x && ay1 < b.y + b.h && ay2 > b.y) {
+              hitPair[i] = 1;
+              hitPair[j] = 1;
+            }
+          }
+        }
+
+        let touching = 0;
+        for (let i = 0; i < BOX_COUNT; i++) touching += hitPair[i];
+        const ms = performance.now() - t0;
+        return { checks, touching, ms };
+      }
+
+      // 2. Grid of Cells (Uniform Spatial Grid)
+      let pairStamp = 1;
+      const seenPairStamp = new Int32Array(BOX_COUNT * BOX_COUNT);
+
+      function runGridOfCells() {
+        const t0 = performance.now();
+        hitGrid.fill(0);
+        let checks = 0;
+
+        const cols = Math.ceil(W / cellSize);
+        const rows = Math.ceil(H / cellSize);
+        const numCells = cols * rows;
+        const cells = new Array(numCells);
+
+        pairStamp = (pairStamp + 1) | 0;
+        if (pairStamp <= 0) {
+          seenPairStamp.fill(0);
+          pairStamp = 1;
+        }
+
+        for (let i = 0; i < BOX_COUNT; i++) {
+          const a = boxes[i];
+          const ax1 = a.x, ay1 = a.y, ax2 = a.x + a.w, ay2 = a.y + a.h;
+
+          let c0 = (ax1 / cellSize) | 0;
+          let c1 = (ax2 / cellSize) | 0;
+          let r0 = (ay1 / cellSize) | 0;
+          let r1 = (ay2 / cellSize) | 0;
+          if (c0 < 0) c0 = 0;
+          if (c1 >= cols) c1 = cols - 1;
+          if (r0 < 0) r0 = 0;
+          if (r1 >= rows) r1 = rows - 1;
+
+          for (let r = r0; r <= r1; r++) {
+            const rowOff = r * cols;
+            for (let c = c0; c <= c1; c++) {
+              const idx = rowOff + c;
+              let bucket = cells[idx];
+              if (!bucket) {
+                cells[idx] = [i];
+              } else {
+                for (let k = 0; k < bucket.length; k++) {
+                  const j = bucket[k];
+                  const pairKey = j * BOX_COUNT + i;
+                  if (seenPairStamp[pairKey] === pairStamp) continue;
+                  seenPairStamp[pairKey] = pairStamp;
+
+                  checks++;
+                  const b = boxes[j];
+                  if (ax1 < b.x + b.w && ax2 > b.x && ay1 < b.y + b.h && ay2 > b.y) {
+                    hitGrid[i] = 1;
+                    hitGrid[j] = 1;
+                  }
+                }
+                bucket.push(i);
+              }
+            }
+          }
+        }
+
+        let touching = 0;
+        for (let i = 0; i < BOX_COUNT; i++) touching += hitGrid[i];
+        const ms = performance.now() - t0;
+        return { checks, touching, ms };
+      }
+
+      // Smoothed stats
+      let smoothPairMs = 6.0;
+      let smoothGridMs = 0.4;
+      let lastFrameTime = performance.now();
+      let measuredLoopFps = 60;
+
+      function msToEstimatedFps(stepMs, loopFps) {
+        if (mode !== 'both') return Math.round(loopFps);
+        // Estimate sustainable frame rate if only this solver ran with 1.2ms render overhead
+        const totalFrameMs = stepMs + 1.2;
+        return Math.min(60, Math.max(1, Math.round(1000 / Math.max(16.67, totalFrameMs))));
+      }
+
+      function renderScene(activeHits) {
+        ctx.clearRect(0, 0, W, H);
+
+        if (showGrid) {
+          ctx.strokeStyle = '#141425';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          for (let x = cellSize; x < W; x += cellSize) {
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, H);
+          }
+          for (let y = cellSize; y < H; y += cellSize) {
+            ctx.moveTo(0, y);
+            ctx.lineTo(W, y);
+          }
+          ctx.stroke();
+        }
+
+        // Batch draw non-touching boxes (#8b5cf6) and touching boxes (#4ade80)
+        ctx.fillStyle = '#8b5cf6';
+        ctx.beginPath();
+        for (let i = 0; i < BOX_COUNT; i++) {
+          if (!activeHits[i]) {
+            const b = boxes[i];
+            ctx.rect(b.x, b.y, b.w, b.h);
+          }
+        }
+        ctx.fill();
+
+        ctx.fillStyle = '#4ade80';
+        ctx.beginPath();
+        for (let i = 0; i < BOX_COUNT; i++) {
+          if (activeHits[i]) {
+            const b = boxes[i];
+            ctx.rect(b.x, b.y, b.w, b.h);
+          }
+        }
+        ctx.fill();
+      }
+
+      let pairStats = { checks: 499500, touching: 0, ms: 0 };
+      let gridStats = { checks: 0, touching: 0, ms: 0 };
+
+      function tick(now) {
+        const dt = Math.max(1, now - lastFrameTime);
+        lastFrameTime = now;
+        measuredLoopFps = measuredLoopFps * 0.9 + (1000 / dt) * 0.1;
+
+        stepPhysics();
+
+        if (mode === 'both' || mode === 'pairs') {
+          pairStats = runCheckEveryPair();
+          smoothPairMs = smoothPairMs * 0.85 + pairStats.ms * 0.15;
+        }
+        if (mode === 'both' || mode === 'grid') {
+          gridStats = runGridOfCells();
+          smoothGridMs = smoothGridMs * 0.85 + gridStats.ms * 0.15;
+        }
+
+        const activeHits = mode === 'pairs' ? hitPair : hitGrid;
+        renderScene(activeHits);
+
+        const pFps = mode === 'pairs' ? Math.min(60, Math.round(measuredLoopFps)) : msToEstimatedFps(smoothPairMs, measuredLoopFps);
+        const gFps = mode === 'grid' ? Math.min(60, Math.round(measuredLoopFps)) : msToEstimatedFps(smoothGridMs, measuredLoopFps);
+
+        document.getElementById('pairFps').textContent = `${pFps} FPS`;
+        document.getElementById('pairChecks').textContent = pairStats.checks.toLocaleString();
+        document.getElementById('pairMs').textContent = `${smoothPairMs.toFixed(2)} ms`;
+        document.getElementById('pairHits').textContent = String(pairStats.touching);
+
+        document.getElementById('gridFps').textContent = `${gFps} FPS`;
+        document.getElementById('gridChecks').textContent = gridStats.checks.toLocaleString();
+        document.getElementById('gridMs').textContent = `${smoothGridMs.toFixed(2)} ms`;
+        document.getElementById('gridHits').textContent = String(gridStats.touching);
+
+        if (gridStats.checks > 0) {
+          const ratio = (pairStats.checks / gridStats.checks).toFixed(1);
+          const speedRatio = (smoothPairMs / Math.max(0.05, smoothGridMs)).toFixed(1);
+          document.getElementById('speedupReadout').textContent =
+            `${ratio}× fewer checks (${speedRatio}× faster)`;
+        }
+        if (mode === 'both') {
+          const match = pairStats.touching === gridStats.touching;
+          document.getElementById('matchReadout').textContent =
+            match
+              ? `Exact Match: ${gridStats.touching} touching boxes`
+              : `Touch Count: Pair=${pairStats.touching}, Grid=${gridStats.touching}`;
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      document.querySelectorAll('[data-mode]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-mode]').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          mode = btn.getAttribute('data-mode');
+        });
+      });
+
+      const cellSlider = document.getElementById('cellSlider');
+      const cellVal = document.getElementById('cellVal');
+      cellSlider.addEventListener('input', () => {
+        cellSize = Number(cellSlider.value);
+        cellVal.textContent = `${cellSize}px`;
+      });
+
+      document.getElementById('showGridChk').addEventListener('change', (e) => {
+        showGrid = e.target.checked;
+      });
+
+      document.getElementById('respawnBtn').addEventListener('click', spawnBoxes);
+
+      spawnBoxes();
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
