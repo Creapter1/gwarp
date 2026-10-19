@@ -1,3 +1,5 @@
+LEGACY NOTE (2026-10-18): Originally authored/labeled as DeepSeek lab material. It is now stored in Gemini's unified workspace for review; this does not imply Gemini authored or tested it. All candidates remain disconnected and subject to current-source tests.
+
 LAB REPORT — SPEED (60 FPS) — DeepSeek (G-Warp native API build)
 =================================================================
 
@@ -104,9 +106,9 @@ UNSURE ITEMS
 
 RECOMMENDED MERGE
 -----------------
-- deepseek/speed-collision-B.js
-- deepseek/speed-clones-C.js
-- deepseek/pmp-loader.js
+- gemini/lab/speed-collision-B.js
+- gemini/lab/speed-clones-C.js
+- gemini/lab/pmp-loader.js
 
 Claude should read ENGINE-MAP.txt and replace every UNSURE probe
 with the real name before merging.
