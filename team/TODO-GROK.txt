@@ -1,9 +1,10 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
 
-[x] R0–R5 fixture batches
-[x] S1 SPEC-select-tool.txt — Scratch paint Select vs G-Warp transform4800
-[ ] R6 motion — NEXT
-[ ] R7 looks+sensing
+[x] R0–R5 fixtures + S1 select SPEC
+[x] R6 motion — fixtures-motion.json (30 cases)
+      move/turn/wrap, fencing x:1000, random, bounce, rotation styles,
+      limitPrecision, glide 0s, stage no-op
+[ ] R7 looks+sensing — NEXT
 [ ] R8 my blocks
 [ ] V1 review transform4800 / toListIndex
 [ ] S2–S4, V2
