@@ -1,7 +1,6 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
 >>> EXTRA: team/GROK-EXTRA-2026-10-19.txt <<<
 
-[x] R0–R8 + S1–S4 + V1
-    S4 → grok/EXTENSIONS-check-2.txt (private test-project inventory needs Claude)
-[ ] V2 website docs — NEXT
-[ ] EXTRA E1–E3 tutorials / blocks gotchas
+[x] R0–R8 + S1–S4 + V1 + V2 — BIG LIST COMPLETE
+    V2 → grok/REVIEW-V2-docs.txt
+[ ] EXTRA E1–E3 tutorials / blocks gotchas — NEXT
