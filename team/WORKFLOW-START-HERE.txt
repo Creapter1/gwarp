@@ -43,7 +43,7 @@ ACTIVE WORKFLOW DOCUMENTS (single purpose each)
 - AI-STATUS.txt: the one current team status and Claude handoff.
 - AI-DELIVERABLE-INVENTORY.txt and AI-PROGRESS-PREVIEW-2026-10-18.txt: archived summary pointers; use their linked detailed reports only when a specific gap requires them.
 - FUTURE-IDEAS.txt: unapproved ideas; preserve, do not implement.
-- Each AI's own folder/AI-CHAT-LOG.txt: append only to that AI's own log.
+- Each AI's own folder/AI-CHAT-LOG.txt: append only to that AI's own log. Gemini's unified workspace includes visuals, the browser-extension prototype, and inherited research/A-B/C/test-harness work under gemini/lab/. The DeepSeek role is retired; use team/TODO-GEMINI.txt and do not create new deepseek/ files.
 
 DUPLICATE / STALE DOCUMENT POLICY
 - The current Claude execution plan is the 2026-10-18 version 2.1. team/CLAUDE-PLAN-2026-10-17.txt is historical and must not override it.
