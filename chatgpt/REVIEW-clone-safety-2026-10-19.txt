@@ -1,0 +1,92 @@
+G-WARP — CLONE-SAFETY CANDIDATE REVIEW
+Date: 2026-10-19
+Reviewer: ChatGPT
+Task: C2 — compare chatgpt/clone-safety.js with its handoff notes and ENGINE-MAP; identify side effects and write a focused regression checklist.
+Evidence labels:
+- SOURCE-VERIFIED: inspected current repository source or module text.
+- STATIC-ANALYSIS: consequences inferred from that source; not runtime-confirmed.
+- NOT-TESTED: no browser, stress test, or Playwright run was performed here.
+
+Reviewed artifacts:
+- Current app baseline: app.html blob 5ca624a515b9fc1310814c4740608c1cf3071028 (Beta v15.48.0; GitHub connector's whole-file fetch was empty in this pass, so relevant source was reviewed from the same SHA's blob response).
+- chatgpt/clone-safety.js: ef4cb2c4bc86960bd8b9d51c4909dd8b9f741cad.
+- chatgpt/NOTES-clone-safety.txt: 4a7c13cbfa38425b60293ac6945f782e173d0649.
+- ENGINE-MAP.txt: 2638ede6199671552c7a4a350a04e4cbcdac4fa3.
+- Cross-team queue currently says the candidate is SUPERSEDED by Claude's clone fixes and explicitly says not to revive it. This report is a review record only, not a merge recommendation.
+
+VERDICT — SUPERSEDED; DO NOT REINTEGRATE
+The module attempts to replace clone creation/counting/removal and intercept Green Flag, Stop, and Infinite Clones settings. The current v15.48.0 source already contains an O(1)-style clone count cache, a 5,000 ceiling even when Infinite Clones is enabled, clone-local variable/list copies, clone-root handling, clone hats, project-load limit restoration, and normal Stop cleanup. The candidate duplicates/replaces that path and diverges on important behavior. It should not be revived or added alongside Claude's current fixes.
+
+NUMBERED FINDINGS
+
+1. HIGH — Infinite Clones becomes genuinely unbounded in this candidate.
+   SOURCE-VERIFIED: current app's effective creator computes `gwCap = Math.min(Engine.cloneLimit || 300, GW.CLONE_CEILING || 5000)`. Infinite Clones sets Engine.cloneLimit to Infinity, but the separate 5,000 safety ceiling still applies. In `chatgpt/clone-safety.js`, `effectiveLimit()` returns Infinity as soon as `GW_SETTINGS.get().infiniteClones` is true, then `optimizedCreateClone()` compares the count against that Infinity. The candidate has no separate 5,000 cap, so its explicit setting removes the ceiling the current release promises to retain.
+   Impact: a runaway clone loop could allocate indefinitely and freeze the tab, contrary to the current source, user guide, and handoff claim that an Infinite Clones safety ceiling remains.
+   Gate: any approved implementation must prove the limit is `min(project/user limit, 5000)` under both settings. Test 4,999 / 5,000 / 5,001 attempts with Infinite Clones on and off and confirm the UI warning and actual count agree.
+
+2. HIGH — Stop clears thread references before normal Stop marks them finished.
+   SOURCE-VERIFIED: the candidate's document-capture click handler calls `fastRemoveClones(true)` on `#stopBtn`; that sets `Engine.threads.length = 0` without first setting each thread's `finished` flag. The current Stop implementation calls `stopAllLikeScratch`, which marks each thread finished before clearing the array, removes clones, stops tracked sound sources, clears speech bubbles, and emits `PROJECT_STOP_ALL`.
+   STATIC-ANALYSIS: because the candidate's capture handler runs before the target's ordinary Stop handler, the normal Stop routine can see an already-empty thread array and fail to mark the detached thread objects finished. A delayed wait/promise/resume path could potentially continue or perform side effects; this requires a runtime test, but it is a serious ordering risk. The candidate itself does not stop audio or emit the extension stop event.
+   Gate: stress clones and scripts, click Stop while a script is in wait/resume, verify all original and clone threads are marked/stay stopped, audio/extension playback ends, and no clone or script reappears. Also test calling Stop from the in-script Stop block, not only the UI button.
+
+3. HIGH — The candidate misses current engine clone-count cache bookkeeping.
+   SOURCE-VERIFIED: the shipped creator updates `Engine.__nc` and `Engine.__ncLen` immediately after pushing a clone, and `GW.cloneCount()` uses `Engine.__ncArr`, `Engine.__ncLen`, and `Engine.__nc` to avoid recounting. The candidate implements a separate private count cache and pushes the clone without updating those native cache fields.
+   STATIC-ANALYSIS: other callers of `GW.cloneCount()` may detect a length mismatch and rescan after candidate creations, so the claimed O(1) path may not actually remain cheap across the app; caches can also disagree until one recounts. The candidate is intended as a performance fix but does not demonstrate compatibility with the runtime's own counter invariants.
+   Gate: after create/delete/remove-all/reload, compare candidate count with a full source-of-truth count and the native `GW.cloneCount()` result. Profile the 299/300/301 and rapid-spawn cases with the actual current runtime counters enabled.
+
+4. HIGH — Imported project clone limits over 300 are silently reduced.
+   SOURCE-VERIFIED: project loading restores `Engine.cloneLimit` from `projectRuntime.cloneLimit` when present; the current creator respects that effective value but applies the separate 5,000 safety ceiling. The candidate's `effectiveLimit()` uses `Math.min(BASE_LIMIT, Math.floor(n))` for every finite stored value, so a project that requests 400, 1000, or another finite limit above 300 is forced back to 300 (unless the user setting returns Infinity).
+   Impact: runtime compatibility for projects that set `maxClones`/clone limit is changed without a warning or documented decision. The candidate's own notes explicitly require loaded TurboWarp/SB3 `maxClones` testing; that test is not present in the module.
+   Gate: load projects with no custom cap, 50, 300, 400, 1,000, 5,000 and a value over 5,000; verify the intended runtime value, effective ceiling, and displayed warning for each setting combination. Preserve documented project semantics, not merely the default.
+
+5. MEDIUM/HIGH — Overriding `GW.createClone` discards native implementation work.
+   SOURCE-VERIFIED: the candidate assigns `g.createClone = optimizedCreateClone` rather than wrapping the already installed creator. Current source's implementation includes root/cloneRoot fields, clone-local variables and lists, copied costume objects, cloned effects, the native counter-cache updates, root index and clone-hat dispatch, plus the safety ceiling. The candidate recreates part of this behavior but diverges on ceiling/cache semantics and depends on its own owner/hats cache.
+   Static source similarity is not proof that every side effect matches. Newer runtime additions can be lost when the entire function is replaced, and future fixes to the native creator will not automatically flow through.
+   Gate: prefer a narrow wrapper or upstream fix in the native creator. If replacement is unavoidable, diff every property and side effect and regression-test nested clone-of-clone creation, cloneRoot/rootName, local variables/lists, costumes/effects, sound, visibility/layer, clone hats, broadcast, and sprite-specific custom procedures.
+
+6. MEDIUM — `fastRemoveClones` changes collection mutation semantics.
+   SOURCE-VERIFIED: native `GW.removeAllClones` replaces `Engine.sprites` with a filtered array and filters clone-owned threads. Candidate removal compacts `Engine.sprites` in place and truncates `Engine.threads`. It also adds its own `GW.__sprEpoch` bump.
+   STATIC-ANALYSIS: in-place mutation may surprise code that holds the current sprite array reference or relies on replacement to invalidate caches; manual epoch bumps do not automatically update every independent counter/cache. Its Stop=true branch clears all threads without marking them complete first (see Finding 2).
+   Gate: test external references/caches, active sprite selection, stage proxy preservation, original-thread preservation on Green Flag, thread and sprite count caches, and repeated removal when there are zero, one, or many clones. Confirm no stale clone is rendered or left in the sprite grid.
+
+7. MEDIUM — Settings and retry installation have idempotency/ordering risks.
+   SOURCE-VERIFIED: `install()` only requires Engine/GW and existing `createClone`/`deleteClone`; it does not require `GW_SETTINGS` to exist before it returns success. The settings wrapper is attempted only at install time. Also, the top-level `GW_CLONE_SAFETY` guard is set at the end, while delayed retry closures call `install()` directly without rechecking the guard.
+   STATIC-ANALYSIS: if the module is injected more than once while Engine/GW are available but before settings initialize, or before one of multiple retries finishes, it may install handlers/wrappers more than once or succeed before wrapping the setting function. Project-load listeners and document-capture handlers have no removal/teardown path.
+   Gate: test insertion before Engine init, between Engine and GW_SETTINGS init, and duplicate loading before/after retry success. Assert one clone operation, one confirmation, one Green Flag/Stop handler, one project-load listener, and one wrapper. Test `GW_FEATURE_OFF('cloneSafety')` and verify that disabled mode leaves every native function/listener unchanged.
+
+8. MEDIUM — Clone-hat observer can remain attached to an obsolete workspace node.
+   SOURCE-VERIFIED: `installHatObserver()` returns whenever `state.observer` is already truthy. The project-loaded event calls the same function again, but does not check whether the observer's original workspace element remains connected or whether `#workspaceCanvas` was replaced.
+   STATIC-ANALYSIS: if project loading/editor rebuilding replaces the workspace element, `state.hatsDirty` may stop tracking the new workspace and cached clone hats may become stale. If the current loader keeps the same element and only changes descendants, this path may be safe; that implementation detail needs a test.
+   Gate: load/reload projects through each supported loader and verify the observer watches the current `#workspaceCanvas`; edit/add/delete/retype a clone hat, change `data-owner`, then create a clone and confirm exactly the matching hat runs.
+
+9. MEDIUM — Clone warnings and selection side effects need consistency checks.
+   SOURCE-VERIFIED: the candidate intercepts the settings checkbox in document capture, cancels the native click, changes the checkbox state manually after async `GW_CONFIRM`, and clamps `activeSpriteIndex` after fast removal. Its warning says “unlimited clones,” which does not describe current v15.48.0's hard 5,000 ceiling.
+   Gate: cancel/confirm repeatedly; change the setting while a project is loaded; verify checkbox and persisted preference agree with Engine.cloneLimit. Test the clone-limit toast/health note is shown once per run and resets on Green Flag, not on every failed attempt. Test sprite selection stays on a valid non-clone after Stop/delete-all.
+
+FOCUSED STATIC / RUNTIME REGRESSION CHECKLIST (NOT RUN BY CHATGPT)
+Record each item PASS / FAIL / NOT RUN; record current app SHA, browser version, viewport, test project hash, clone cap, console errors, clone count, thread count, and Stop latency. Do not write PASS until Claude executes the case.
+
+P0 — Safety and state correctness
+[ ] Default mode: create 299, 300, then attempt 301; count never exceeds 300, exactly one useful warning is shown for the run, and the project remains responsive.
+[ ] Infinite Clones mode: create through 4,999, 5,000, attempt 5,001; confirm a hard 5,000 ceiling remains, warning matches actual count, and no unbounded growth happens.
+[ ] Stop under load: create many clones and a wait/loop on original and clones; click UI Stop during the wait. All threads are finished, clones gone, audio/extensions stopped, and no script resumes or creates a clone after Stop.
+[ ] Stop from script: execute the normal Stop all block with active clone hats and nested clone creation; verify identical cleanup.
+[ ] Clone-local state: per-sprite variables/lists are copied appropriately; mutate one clone and verify the original and sibling clone do not share local mutable arrays/values.
+[ ] Clone ancestry/hats: clone an original, clone that clone, confirm rootName/cloneRoot/cloneOf semantics and only matching owner hats run each time.
+[ ] Delete/remove-all consistency: delete one clone, remove all, create more, press Green Flag twice, and compare live counts with a full array scan and `GW.cloneCount()`.
+[ ] Project cap compatibility: test projectRuntime.cloneLimit absent, 50, 300, 400, 1,000, 5,000, and >5,000; run with Infinite Clones setting on/off and record the intended rule.
+[ ] Cache and reload: project load replacing array/workspace resets counts and hats; no stale cache, stale selected index, or duplicate clone hat execution.
+[ ] Duplicate install/feature-off: load module twice before core initialization, after core but before settings, then after full startup; with feature-off key enabled, no wrapper/listener/change activates.
+
+P1 — Performance / UX gates
+[ ] Rapid-spawn stress: use same project/machine/Chromium version and same duration before/after; report median and range for FPS, worst frame stall, create throughput, and Stop latency; at least 3 runs each.
+[ ] Stop latency for the handoff's 81,000-clone stress case is under 100 ms in the documented test environment, with zero surviving clone/thread and no unhandled rejection. Do not extrapolate this threshold to other machines.
+[ ] Confirm clone tags/UI counters and limit notices stay accurate while sprites are created/deleted and after a project reload.
+[ ] Confirm no change to broadcasts, Pause, turbo, sprite selection, speech bubble cleanup, stage proxy and extension stop events.
+[ ] Check heap growth / memory stability after repeated create-delete cycles; avoid claiming “fixed freeze” from frame time alone.
+
+CURRENT STATUS / OWNER ACTION
+- The current cross-team queue says `chatgpt/clone-safety.js` is SUPERSEDED by Claude's clone fixes and says explicitly not to revive it. Respect that routing.
+- Keep this document as a static test-planning/report artifact. Do not wire this module into app.html and do not replace Claude's current clone fixes with it.
+- Ask Claude to run the targeted existing clone/Stop stress suite against the actual current app blob, including the three most recent Select-tool assertions noted by the queue; no current test output was available to this reviewer.
+- ChatGPT did not run any candidate test, browser, benchmark or 81,000-clone timing. All checklist boxes above are unchecked; they are recommended test cases, not completed results.
