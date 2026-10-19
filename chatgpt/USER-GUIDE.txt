@@ -141,6 +141,45 @@ The vector costume editor now has a dedicated Select tool with a bounding box, e
 
 In bitmap mode, **Bitmap Select** uses a marquee to select pixels, then lets you move/resize the selected pixels. The selection outline should be an editing overlay, not saved artwork. Confirm the result by switching away and back, then saving/reopening a test project.
 
+### Animate your costumes (easy guide)
+
+You can make a short animation in two ways: flip through ordinary costumes, or pose a character with bones.
+
+#### 1. Flipbook: draw a walk cycle
+1. Select **G-Spark** in the sprite list and open **Costumes**.
+2. Keep the first costume as your backup. Duplicate it to make **walk 2**.
+3. Turn on **Onion skin** in the paint editor. The nearby costume should appear faintly behind the one you are drawing; it is a guide, not part of the saved picture.
+4. Move an arm or leg a little. Duplicate again to make **walk 3**, and change the pose slightly.
+5. Select a costume and press **Play** under the costume list to preview the costumes in order. If a pose jumps, edit it or put the costumes back in the right order.
+
+#### 2. Animation tab: use bones
+1. Open **Costumes → Animation**. G-Spark starts with **walk** and **wave** animations.
+2. In **Rig**, add bones and attach the artwork shapes that should move together. Test one bone before making a complex rig.
+3. In **Animate**, select a frame and drag the bone ends to pose the character. Add frames to make the motion change over time.
+4. Use **Onion skin** to compare nearby poses. **In-between** adds a middle pose; **Smooth x2** adds/smooths intermediate motion. Press **Play** and adjust the FPS or loop option as needed.
+5. Choose **Make costumes** to turn the animation frames into normal costumes such as **walk 1**, **walk 2**, and **walk 3**. Save a separate project copy before using the frames in a larger game.
+
+#### 3. Play the animation with code
+The Animation block palette appears when the selected sprite has an animation. The current labels are:
+
+- `switch to animation [ ]` — select which animation the sprite uses.
+- `play animation [ ] from frame [ ]` — start an animation at a chosen frame.
+- `play animation [ ] over and over` — repeat it in a loop.
+- `stop animation` — stop the animation block's playback.
+
+For a simple costume loop, the regular blocks can also be used:
+
+```text
+when flag clicked
+forever
+  next costume
+  wait (0.1) seconds
+```
+
+This method plays the costume list, not the rig animation directly. Keep the frames in the intended order and test them on the Stage.
+
+**If something looks wrong:** stop playback, save a copy, and try again with only two or three frames. Do not assume all editing modes support every costume format or that animation survives save/reopen until you have tested your current build.
+
 8. SOUNDS, INSTRUMENTS, AND MUSIC
 - Select a sound row to edit/audition it.
 - Upload imports an audio file; the interface describes common formats such as MP3, WAV, and OGG.
