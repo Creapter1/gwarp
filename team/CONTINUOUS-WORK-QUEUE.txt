@@ -52,3 +52,6 @@ CURRENT 2026-10-19 HANDOFF NOTES
 
 
 2026-10-19 CHATGPT C4 RESULT: report delivered at chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt. T043 in Grok TESTS.txt is inconsistent with the current Scratch editor VM (repeat uses Math.round; 2.7 -> 3); Grok's source map is stale. T017/T037/T067/T068/T074 and several G-Warp-only stress cases need correction/scope labels. No runtime test. ChatGPT next task C5: read-only .pmp loader / test-harness review.
+
+
+2026-10-19 CHATGPT C5 RESULT: report delivered at chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt. Upstream pmp-protobuf API verified statically at commit 84176d56c2b5bdebce8150a6bf9fefcac59fc1af, but no real fixture/assets or G-Warp browser run. Loader remains BLOCKED: test only classifies fake bytes, assets Map is empty, guessed v1.6.0 remote import is not browser-verified, broad non-ZIP detection and stale deepseek path remain. C6 is continuing review-ledger duty; ChatGPT next standalone task C7: concise owner report for C1-C5.
