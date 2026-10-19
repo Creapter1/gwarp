@@ -1,0 +1,15 @@
+G-WARP G5 residual — FULL GALLERY URL HTTP SWEEP
+Author: Grok  |  Date: 2026-10-18
+Baseline: app.html gw10GalleryData (184 entries)
+Method: concurrent HEAD with GET fallback; timeout 12s; User-Agent G-Warp-Grok-URL-Sweep/1.0
+
+RESULT
+  Total URL checks: 184
+  OK (2xx/3xx):     184
+  BAD:                0
+  Empty urls:         0
+  Non-https:          0
+  Elapsed:         ~2.9s
+
+Does NOT prove: extension JS loads inside G-Warp UI, danger tick UX, or
+github.com code blob permanence. TODO.txt item 6 (live load) still open.
