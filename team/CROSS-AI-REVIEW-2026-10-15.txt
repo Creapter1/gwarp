@@ -121,3 +121,14 @@ SUPPLEMENTAL STATIC SCAN NOTES (2026-10-15)
 
 SECURITY REVIEW ADDENDUM (2026-10-15)
 A separate scoped static review is recorded in team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. No matching hard-coded key patterns were found in the current files scanned, but Git history and deployment settings remain unchecked. The app's user-owned AI-key flow deserves clearer storage-risk and project-context disclosure. The report also lists stale task statuses and website URL confirmation needed from the owner.
+
+
+=====================================================================
+C4 REVIEW — GROK TEST EXPECTED RESULTS (2026-10-19)
+=====================================================================
+Artifact: grok/TESTS.txt, blob 972bf2257cfdaf2ce80c5cfa11fbd30cc571e247; review report: chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt (commit dc28e2df1b18927d1c1d2a9c448a98ff6f9b0ad9).
+Evidence class: STATIC SOURCE REVIEW + PRIMARY-SOURCE CROSS-CHECK. No Scratch GUI or G-Warp runtime test was run by ChatGPT.
+Severity: BLOCKER for T043; HIGH for T017, T037, T067/T068 and T074; MEDIUM for the test setup/scope concerns listed in the report.
+Findings: TESTS.txt still expects repeat 2.7 => 2 via floor, but the current Scratch VM under scratchfoundation/scratch-editor develop commit 585b1c3877943b31ac273b3d056ccb79db13aa41 uses Math.round, so the result is 3. fixtures.json says 3, while FIXTURE-SOURCES.txt retains the old 2-iteration/30-case description. T017's independent random draws can fail even when all outputs are valid. T037's 330-character limit is not established by the VM say primitive; require Scratch GUI evidence or relabel G-Warp-only. T067 has no single expected default; T068's “boolean reporter outside any call” is not a runnable scenario as written. T071-T074 are G-Warp performance/safety tests, not Scratch exact-result tests; bound the explosive string test.
+Minimum correction: Grok revises only Grok-owned files; sync TESTS.txt and FIXTURE-SOURCES.txt, make each pseudocode fixture executable and unambiguous, pin primary source revision/path, distinguish SOURCE-VERIFIED from LIVE-UI-VERIFIED and REPORTED TEST, and label product-specific stress tests separately.
+Acceptance: current source link+commit recorded; repeat 2.7 runs 3 in TESTS/source map/JSON; T017 stores one random draw per trial; T037 is visually verified or reclassified; T067/T068 have buildable projects and one exact result; T071-T074 have safe bounded setups and separate thresholds. Claude should later run the reconciled current fixture set against an identified G-Warp app SHA. Keep all results NOT TESTED until actually run.
