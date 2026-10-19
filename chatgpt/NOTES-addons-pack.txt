@@ -1,0 +1,71 @@
+NOTES: addons-pack.js (Buffy)   2026-10-17
+==========================================
+NOT wired into app.html yet. Add one script tag before </body>:
+  <script src="chatgpt/addons-pack.js"></script>
+Put it AFTER the app's own scripts (the addons module is gw-v1510-addons).
+
+WHAT IT DOES
+Adds three more on/off helpers to More -> App -> Addons..., in exactly the
+same way the app's four addons already work. Nothing is on until the user
+turns it on, and each choice is saved by the app itself (gwarp-addon-<id>).
+
+1. Block counter (id: blockcount)
+   A small dark pill in the top-right corner of the code area:
+   "12 blocks · 3 scripts". It counts the real blocks the child dragged in
+   (#workspaceCanvas .scratch-block) and the real scripts
+   (#workspaceCanvas > .block-stack). Hidden when the code area is empty or
+   the "stuck block" alert is up.
+
+2. Press P to pause (id: pausekey)
+   While a project runs, press P to pause or resume it. It presses the app's
+   own Pause button (no new pause code) and shows a short toast. Typing in a
+   text box or a menu never pauses, and nothing happens while a dialog is open.
+
+3. Number keys pick a sprite (id: spritenums)
+   Press 1-9 to select that sprite in "Your sprites". It clicks the app's own
+   sprite card, so the whole selection path (costume, property boxes, scripts)
+   runs exactly as if the child had clicked it. Handy with many sprites.
+
+WHERE IT PLUGS IN
+- window.GW_ADDONS.list is the real array the Addons dialog reads when it
+  opens, so pushing into it makes the three rows appear on their own.
+
+HOW IT WAS TESTED (real app, real files, real input)
+- Both modules were run inside the real app with the base64 harness described
+  in chatgpt/LAB-lesson-explain.txt. __gwHarness.failed was empty.
+- The Addons dialog listed 7 checkboxes, including the three new ids; the
+  checkbox in the dialog is the app's own, and clicking it stored and applied
+  the choice.
+- Block counter: the GWrap AI "Jump when space is pressed" recipe was used to
+  add real blocks (5 blocks, 1 script) and the pill appeared with exactly
+  "5 blocks · 1 script"; turning the addon off hid it.
+- Press P: pressing P paused the running project (Engine.isPaused true) and
+  pressing it again resumed it (false). With the GWrap AI question box
+  focused (document.activeElement = gwAiAsk) the same key press left the
+  project playing, so typing "p" never pauses.
+- Number keys: a second sprite was added; pressing 2 selected sprite 2,
+  pressing 9 with only two sprites changed nothing. With the Advanced
+  settings dialog open, pressing 2 changed nothing (no switching behind a
+  dialog).
+- Loaded twice from one page: no duplicate rows, no errors, one pill.
+
+SWITCH-OFF / CLEAN-UP
+- window.GW_FEATURE_OFF('addonsPack') makes the module do nothing.
+- window.GW_ADDONS_PACK.off() turns the three helpers off and removes the pill
+  and the stylesheet (the rows stay in the list, off, like the app's own).
+- API for other code: GW_ADDONS_PACK.list(), .on(id), .set(id, bool),
+  .isRegistered(), .off().
+
+WHY IT IS SAFE
+- It never adds, moves or runs a block and never touches the project data.
+- It only clicks buttons and sprite cards that already exist, and every value
+  is read defensively, so a missing element shows nothing instead of throwing.
+- It does not change another addon's setting and does not add a second mode.
+
+UNSURE / LIMITS
+- UNSURE: the pill sits in the top-right corner of the code area. The app's
+  own find bar (Ctrl+F) and the "Clean Up / Pan" toolbar are nearby; on a very
+  narrow screen they could feel crowded. Move it to bottom-left if the owner
+  prefers.
+- The number keys only go up to 9 (more sprites than keys would need another
+  way to choose).

@@ -1,0 +1,77 @@
+NOTES: settings-ui-fix.js (Buffy)   2026-10-17
+=============================================
+NOT wired into app.html yet. Add one script tag before </body>:
+  <script src="chatgpt/settings-ui-fix.js"></script>
+It fixes the two dialogs only while they are open; app.html is not edited.
+
+WHAT WAS WRONG (seen in the running app, not on paper)
+1. Advanced settings: the "Frame rate" row put its explanation in a ~160px
+   column next to a 210px-wide select, so the sentence showed one or two
+   words per line (measured: 163px wide, 107px tall at 1440px, and 60px wide
+   in a narrow window). Hard to read for anyone, worse for a child.
+2. Seven settings sat in one flat list with no headings: "Show FPS" looked
+   exactly as important - and as safe - as "Infinite clones".
+3. Nothing said that Infinite clones / Remove fencing / Remove misc limits
+   can make a project freeze or lose sprites.
+4. There was no way back to the safe settings after experimenting.
+5. Addons: the "Project volume" row split its label and its 100% onto two
+   lines with the slider squeezed beside them.
+
+WHAT IT DOES
+Advanced settings
+- Widens the dialog to 600px (was 460px) and lets the frame-rate row wrap:
+  on a narrow window the select moves under the explanation instead of
+  squeezing the text. No text is cut and no control is lost.
+- Adds three real headings, with the settings regrouped under them:
+     SPEED              Frame rate, Show FPS on the stage
+     LIMITS & SAFETY    Infinite clones, Remove fencing, Remove misc limits
+     PICTURE & HELPERS  Max quality render (HQ), Anti-freeze (warp timer)
+  The rows are the app's own elements, moved with appendChild, so every
+  checkbox, the frame-rate select, its "Custom..." field and the app's Save
+  button keep working (checked: Save still stored showFps=true and the FPS
+  tag appeared on the stage).
+- Adds an amber warning that appears only while a risky switch is on,
+  naming the switches and telling the user to turn them back off.
+- Adds "Recommended settings -> Reset to recommended": sets 60 FPS, every
+  limit back on, HQ on, FPS counter off, anti-freeze on, and updates the
+  "Now: 60 FPS" label. It only changes the dialog's own controls; the app's
+  Save button still decides whether anything is stored.
+- The "Now: 60 FPS" text is a green chip instead of words glued to the end
+  of the paragraph.
+
+Addons
+- The volume row is now label + percentage on one line with the slider full
+  width underneath (accent in G-Warp violet).
+- A "Sound" heading above it, and a note under the list: "Changes here save
+  straight away - you do not need to press anything." (the app really does
+  save addons on each click; Advanced settings needs Save, so the two
+  dialogs now say what they do).
+
+HOW IT WAS TESTED (real app, real files)
+- Run inside the real app.html with the base64 harness (see
+  chatgpt/LAB-lesson-explain.txt). __gwHarness.failed empty, no console
+  errors from this module.
+- 1440x900: dialog 600px, frame-rate text column 293px, select 220px.
+  389x819: dialog 357px, text column 280px, select wrapped underneath.
+- Headings present in the right order (Speed / Limits & safety / Picture &
+  helpers), one warning strip, one reset row.
+- Checking Infinite clones made the warning appear with its name; Reset put
+  every box back (clones/fence/misc/showFps off, HQ/guard on, 60 FPS) and
+  hid the warning.
+- Save after the reorder still saved (showFps=true, FPS tag on the stage).
+- Addons: 7 checkboxes, the "Sound" heading, the new note, slider 280px
+  wide under a single-line label.
+- Loaded twice in one page: no duplicate headings, warning or reset row.
+
+SWITCH-OFF
+- window.GW_FEATURE_OFF('settingsUiFix') makes the module do nothing.
+- window.GW_SETTINGS_UI_FIX.off() disconnects the observer and removes the
+  stylesheet, warning and reset row (a dialog already open stays tidied).
+
+UNSURE / LIMITS
+- The regrouping moves the app's own rows, so if Claude later renames or
+  reorders those settings, the labels in the `plan` list must be updated;
+  anything it cannot find is simply left where the app put it (the code
+  does not throw).
+- UNSURE: 600px is a good width for this text in G-Warp's dialog style; if
+  the owner wants it wider, change the one CSS rule.
