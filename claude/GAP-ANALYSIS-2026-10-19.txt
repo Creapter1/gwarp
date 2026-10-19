@@ -1,0 +1,247 @@
+G-WARP GAP ANALYSIS (PARTIAL - stopped early on owner request)   2026-10-19   tester: Claude
+=========================================================================================
+App tested : copy of /home/claude/gwarp/app.html  ->  window.GW_BUILD.label = "Beta v15.49.1"
+How        : headless Chromium (Playwright), 1440x900, real clicks. Page errors: NONE in all runs.
+Rules kept : report only. app.html NOT changed. Nothing committed or pushed.
+Scripts    : /tmp/claude-0/-home-claude/89a5354a-15ce-5dfe-8bd9-593b440e36e9/scratchpad/qa-gaps/
+             probe1.js (palette + top bar), probe2.js / probe3.js (More menu, Advanced settings,
+             Addons, About, Load from web, Extension library), probe4.js (sb3 importer table).
+Not repeated: everything in claude/REVIEW-CLICKS-2026-10-19.txt (clicks, right-clicks).
+
+IMPORTANT - WHAT "STATUS" MEANS HERE
+ The run was stopped before the block RUNTIME test. So for blocks this report only says if a
+ block is IN THE PALETTE or NOT. "MISSING" = not in G-Warp's palette (probe1 palette dump).
+ Whether the block runs (or loads from a .sb3) is NOT TESTED. The runtime test project builder
+ is ready: qa-gaps/mk-core.js + sb3build.js (one test per Scratch opcode, expected values set).
+
+Sources for Scratch / TurboWarp / PenguinMod (read from source code, local clones):
+ [S3]  scratchfoundation/scratch-gui src/lib/make-toolbox-xml.js (commit dae2a97, 2026-05-29)
+       + scratch-vm src/blocks, src/extensions
+ [TW]  TurboWarp/scratch-gui (be382ab, 2026-10-06), TurboWarp/scratch-vm (042235b), src/addons/addons
+       (81 addons), TurboWarp/extensions extensions.json (104 entries, 6d5538b)
+ [PM]  PenguinMod/penguinmod.github.io (7bba0b5, 2026-10-05) make-toolbox-xml.js, src/addons/addons
+       (83 addons), PenguinMod-Vm src/blocks + extensions, PenguinMod-ExtensionsGallery (80 entries)
+ Lists saved: qa-gaps/opcodes.json (VM primitives), qa-gaps/toolbox.json (visible toolbox blocks).
+
+
+THE SCORE (so far)
+------------------
+Area                              In G-Warp   PARTIAL   MISSING   NOT TESTED
+1. Scratch 3 core blocks (123)        107         3        13      runtime of all 123
+   (palette presence only)
+2. TurboWarp extra blocks (5)           0         0         5
+3. PenguinMod extra blocks (~110)      ~4 look-alikes      ~106
+4. Scratch extensions (11)              4         1         6      (pen/music/tts not run)
+5. Runtime settings (TW, 11)            7         2         2      (toggles not run)
+6. Addons (TW 81 / PM 83)               4 (+ volume slider)  most     -
+7. Menu bar (8 checks)                  5         1         2
+Everything else: NOT TESTED (list at the end).
+
+
+1. SCRATCH 3 CORE BLOCKS - per category (palette presence)
+----------------------------------------------------------
+category   Scratch  in G-Warp  missing from G-Warp palette
+motion        18       17      glide (1) secs to [random / mouse / sprite]   (motion_glideto)
+looks         21       19      switch backdrop to [] and wait; backdrop [number/name] reporter
+                               (only "backdrop #" inside "[ ] of [Stage]")
+sound          9        9      -
+events         9        7      when stage clicked; when [loudness / timer] > ( )
+control       11       11      -
+sensing       18       13+1    touching color [ ]?; color [ ] is touching [ ]?; loudness;
+                               days since 2000.  PARTIAL: "current time" has no dropdown
+                               (Scratch: current [year/month/date/day of week/hour/minute/second])
+operators     18       15+1    ( ) < ( ); [apple] contains [a]?.  PARTIAL: only "abs" - Scratch's
+                               [abs/floor/ceiling/sqrt/sin/cos/tan/asin/acos/atan/ln/log/e^/10^] of
+variables      5        4+1    PARTIAL: variable reporter is one generic "value of [my variable]"
+                               (Scratch: one round reporter per variable, with checkbox)
+lists         12       10      list reporter (data_listcontents, "my list"); item # of [ ] in [list]
+my blocks      2        2      (define / call exist; Edit missing - see REVIEW-CLICKS)
+Evidence: probe1.out "cats" (palette dump), compared with toolbox.json [S3].
+G-Warp-only categories seen: Stage, GWrap AI, Tilemap (5), Behavior (5), gw9-ext (42: camera, physics,
+ set frame rate, set stage size, set layer, stop one sound, loop sound, press key).
+
+2. TURBOWARP EXTRA BLOCKS [TW make-toolbox-xml.js]   - all MISSING from palette
+ while < > (control_while) | online? (sensing_online) | TurboWarp category: last key pressed,
+ is [mouse button] down? | hacked reporters "is compiled?" / "is TurboWarp?"
+
+3. PENGUINMOD EXTRA BLOCKS [PM make-toolbox-xml.js + data_category.js]  - MISSING from palette
+ About 110 extra toolbox blocks. Biggest groups (none in G-Warp's palette):
+  operators: power (^), true / false, >=, <=, not =, new line, tab, upper/lower case, replace all,
+             index of, letters from..to, starts/ends with, regex, constrain, lerp, stringify, boolify
+  control:   if / else if (expandable if), switch / case, for each, from..to, break / continue loop,
+             try / catch / throw, run as sprite, all at once, wait (secs) or until, delete clones of,
+             is clone?, back to green flag, stop sprite
+  looks:     stretch x/y, tint color, effect value reporter, visible? reporters, set/get layer,
+             say width/height, set font/color/shape of bubble, stop talking, previous costume/backdrop
+  motion:    change by x,y; point towards x,y; if on sprite bounce; move to scene side
+  sound:     stop one sound, play at seconds, is playing?, length of sound, play all sounds
+  events:    when stop clicked, always, when anything, when key hit, when mouse scrolled
+  sensing:   finger/touch blocks, clipboard, mouse scrolling, mouse clicked?, is mobile?,
+             logged in?, touching clone of, x/y of touching sprite, direction to, is number/text?
+  data:      list as array, reverse list, list empty?, for each item/number, filter list
+  my blocks: return value (reporter / boolean shapes), ending block, branch (C) inputs, block colour
+ G-Warp look-alikes (palette, not run): set layer (looks_layersSetLayer), stop sound [ ] (sound_stop),
+  set frame rate / set stage size (runtime options).
+
+4. SCRATCH EXTENSIONS (library)  - G-Warp Extensions window (probe3 "extlib")
+ G-Warp tab "G-Warp (8)": Pen, Music, Text to Speech, Translate, Makey Makey, Camera Controls,
+ Box2D Physics, Tilemap & Behaviors. Tabs "TurboWarp (104)" and "PenguinMod (79)".
+ Scratch 3 extension         G-Warp
+ Pen                         in library (not run)
+ Music                       in library (not run)
+ Text to Speech              in library (not run)
+ Translate                   PARTIAL - its own card says "Keeps the words as they are for now"
+                             (no real translation)
+ Makey Makey                 in library (not run)
+ Video Sensing               MISSING
+ micro:bit                   MISSING
+ LEGO MINDSTORMS EV3         MISSING
+ LEGO BOOST                  MISSING
+ LEGO Education WeDo 2.0     MISSING
+ Go Direct Force & Accel.    MISSING
+ Gallery sizes: G-Warp lists TurboWarp 104 (= TW's extensions.json, 104) and PenguinMod 79 (PM gallery
+ repo has 80). Loading/running gallery extensions: NOT TESTED.
+ Custom extension: "AI Extension Builder" window exists (paste JS with Scratch.extensions.register;
+ the window says "not a security sandbox"). Load from URL / file, sandboxed mode: NOT TESTED.
+
+5. RUNTIME SETTINGS  - More > Settings > Advanced settings (probe3 "advanced")
+ feature                     TW            G-Warp
+ Turbo mode                  yes           in More menu (on/off)
+ custom FPS                  yes           30 / 60 / 120 / unlimited / Custom
+ default FPS                 30            60  -> DIFFERENT: the dialog itself says a Scratch project
+                                           without delta time "runs twice as fast" at 60.
+                                           (Does .sb3 import switch to 30? NOT TESTED)
+ interpolation               yes           MISSING (not in Advanced settings)
+ high quality pen            yes           "Max quality render (HQ)" (whole stage, up to 4x)
+ infinite clones             yes           yes
+ remove fencing              yes           yes
+ remove misc limits          yes           yes
+ warp timer                  yes           "Anti-freeze for lightning blocks (warp timer)"
+ custom stage size           yes (dialog)  PARTIAL: only a block ("set stage size width: height:")
+ compiler on/off             yes           MISSING (no option)
+ pause button                TW addon      "Pause" button in the top bar (not run)
+ Settings were NOT switched on/off and checked in this run.
+
+6. ADDONS  - More > Settings > Addons... (probe3 "addons")
+ G-Warp has 4: Clone counter, Mute and project volume (Ctrl+click flag), Gamepad, Find in scripts
+ (+ Project volume slider). TurboWarp has 81, PenguinMod 83 (names in qa-gaps notes; source:
+ TW/PM src/addons/addons). Not in G-Warp's Addons window (examples, important first):
+ Debugger, Onion skinning, Customizable block colors (editor themes), Sprite folders, Rename broadcasts,
+ Block switching, Jump to custom block definition, Block dropdown search, Insert blocks by name
+ (Ctrl+Space), Copy reporter values, Save blocks as image, Variable manager, Switch local/global
+ variable, Move costume to top/bottom, Snap scripts to grid, File drag and drop, Search box in sprite
+ pane, Sprite deletion confirmation, Hex / 2D colour picker, Pick colours on stage, Costume editor
+ snapping + skew, Running block border, Editor comment previews, Project video recorder, Enhanced full
+ screen, Hide stage, Display stage on left, Two-column categories, Zebra striping, Compact editor.
+ PM-only: Block pinning, Code editor tabs, Costume gradient editor, Costume tool panel, Draggable
+ categories, Newgrounds audio import, HQ sound waveform.
+ (Some of these may exist elsewhere in G-Warp, e.g. Ctrl+F find and mouse x/y were seen in
+ REVIEW-CLICKS; Developer mode has a debug button - NOT TESTED.)
+
+7. MENU BAR  - More menu (probe3 "MORE FULL")
+ New project / Load (Ctrl+O) / Save (Ctrl+S) / Save as (Ctrl+Shift+S)   in menu
+ Load from the web (Scratch / TurboWarp / PenguinMod links)              in menu (not run, no network)
+ Restore a previous version                                             in menu (not run)
+ Undo / Redo / Turbo Mode                                               in menu
+ Language                    MISSING - no language choice anywhere in the More menu
+ Theme                       PARTIAL - only "Look like Scratch" on/off (TW: light/dark + accent
+                             colour; PM: themes) - from memory for TW/PM theme menus
+ Tutorials                   MISSING - Help & info has About, Bug Hunter trophies, Update only
+                             (Scratch 3 has 27 tutorial decks [S3 decks/index.jsx])
+
+Library sizes of the other apps (from their source, for later comparison; G-Warp NOT counted):
+ sprites / costumes / sounds / backdrops:  Scratch 339/886/353/85,  TW 333/859/353/85,
+ PenguinMod 331/1089/701/93.
+
+
+MISSING + BROKEN + PARTIAL LIST  (confirmed in this run)
+=========================================================
+P1 = kids hit it in their first hour
+ 1. touching color [ ]? and color [ ] is touching [ ]? not in palette          owner: Claude
+ 2. ( ) < ( ) not in palette (only >)                                           owner: Claude
+ 3. [ ] contains [ ]? not in palette                                            owner: Claude
+ 4. math functions: only "abs"; no floor/ceiling/sqrt/sin/cos/tan/... dropdown  owner: Claude
+ 5. when stage clicked hat not in palette                                       owner: Claude
+ 6. glide ( ) secs to [random / mouse / sprite] not in palette                  owner: Claude
+ 7. list reporter ("my list") not in palette                                    owner: Claude
+ 8. Tutorials missing (Scratch has 27)                                          owner: ChatGPT (content) + Gemini (UI)
+ 9. Default 60 FPS: Scratch projects made for 30 run twice as fast (dialog says  owner: Claude
+    so); check that .sb3 import picks 30
+P2 = important for real games
+10. switch backdrop to [ ] and wait not in palette                              owner: Claude
+11. backdrop [number / name] reporter not in palette                            owner: Claude
+12. when [timer / loudness] > ( ) hat not in palette                            owner: Claude
+13. item # of [ ] in [list] not in palette                                      owner: Claude
+14. current [year/month/date/...] - G-Warp has "current time" with no dropdown  owner: Claude
+15. days since 2000 not in palette                                              owner: Claude
+16. variable reporters: generic "value of [ ]" instead of one per variable      owner: Claude
+17. TurboWarp blocks: while, online?, last key pressed, mouse button down?      owner: Claude
+18. Interpolation setting missing                                               owner: Claude
+19. Custom stage size only as a block, not in Advanced settings                 owner: Gemini
+20. Language menu missing (Scratch/TW/PM have ~60 languages, from memory)      owner: Gemini (+ChatGPT strings)
+21. Translate extension does not translate                                      owner: Claude
+22. Addons: Debugger, Onion skinning, Sprite folders, Rename broadcasts,        owner: Gemini
+    Variable manager, Block switching, Jump to definition, Dropdown search
+23. PenguinMod core blocks most used in games: if/else-if, switch/case,          owner: Claude (+Grok spec)
+    power, true/false, >= <= !=, break/continue, return from custom block
+P3 = nice to have
+24. loudness reporter (and Video Sensing extension) missing                     owner: Claude
+25. Hardware extensions missing: micro:bit, EV3, BOOST, WeDo 2.0, Force&Accel  owner: Claude (P3, needs Scratch Link)
+26. Compiler on/off option missing                                              owner: Claude
+27. Themes: only "Look like Scratch"; no block colour themes                    owner: Gemini
+28. Rest of TW/PM addons (zebra striping, compact editor, video recorder,       owner: Gemini
+    colour pickers, paint snapping/skew, etc.)
+29. Rest of PenguinMod blocks (text tools, stretch/tint, finger/touch,          owner: Claude (+Grok spec)
+    clipboard, list tools)
+No new BROKEN items were confirmed in this run (BROKEN items are in REVIEW-CLICKS-2026-10-19.txt).
+
+
+QUICK WINS (probably under 1 hour each; engine/palette only, not checked in code)
+ - "<" block (mirror of ">"); "contains" block; mathop dropdown on the abs block
+ - "item # of" and list reporter blocks; "days since 2000"; "backdrop [number/name]"
+ - "when stage clicked" hat; "switch backdrop and wait" (G-Warp already has broadcast-and-wait)
+ - TurboWarp "while" C-block and "last key pressed"
+ - "current [year/month/...]" dropdown on the "current time" block
+ - Make .sb3 import set 30 FPS (if it does not already)
+
+
+WHERE G-WARP IS ALREADY AHEAD (seen in this run, not run in depth)
+ - Built-in Tilemap + Behaviors categories, Camera blocks, Box2D physics without loading anything
+ - One extension window with G-Warp + TurboWarp (104) + PenguinMod (79) galleries and safety
+   labels (Safe / Moderate / Dangerous)
+ - Load from the web accepts Scratch, TurboWarp AND PenguinMod links in one box
+ - "Max quality render" sharpens the whole stage (not only pen); 120 FPS option
+ - Restore a previous version; Bug Hunter trophies; GWrap AI helper; AI Extension Builder
+
+
+NOT TESTED (did not get to these before the stop)
+ - Block RUNTIME for every category (mk-core.js test project is written, never run)
+ - Pen / Music / TTS / Makey Makey blocks running; TurboWarp/PenguinMod gallery extensions loading
+ - Custom extensions from URL / file; sandboxed vs unsandboxed
+ - Editor UI: sprite pane fields beyond REVIEW-CLICKS, direction dial, stage Small/Normal/Large/
+   fullscreen, paint editor tools, sound editor effects (trim, fade, louder, robot, echo, reverse...),
+   library item counts in G-Warp, palette zoom, minimap
+ - Runtime toggles actually working (infinite clones, fencing, HQ, warp timer, custom FPS), cloud
+   variables, project player / fullscreen, keyboard + mouse sensing, loudness, video
+ - Files: .sb / .sb2 / .sprite3 / .pmp load, .sb3 save round trip, export sprite, costume import
+   (svg/png/jpg/gif/bmp), sound import (wav/mp3/ogg), packager, project.json view
+ - Accessibility, keyboard shortcuts (beyond REVIEW-CLICKS), languages, mobile/touch
+ - Performance: FPS with 200 clones
+
+
+TEST OUTPUT (key lines, final runs)
+ probe1: build {"version":"15.49.1","label":"Beta v15.49.1"}; top bar: Start, Pause / Resume, Stop,
+   More; categories: Motion, Looks, Sound, Events, Control, Sensing, Operators, Variables, My Blocks,
+   Lists, Stage, GWrap AI, Tilemap, Behavior, Extensions; palette counts motion 18, looks 20,
+   sound 9, events 8, control 10, sensing 15, operators 16, stage 3, lists 10, myblocks 3,
+   variables 5, tilemap 5, behaviors 5, gw9-ext 42.  PAGEERRORS 0
+ probe3: MORE FULL = New project / Load / Save / Save as / Report a bug / Load from the web /
+   Restore a previous version / Undo / Redo / Turbo Mode / LAN Live / Clear Workspace /
+   Advanced settings / Look like Scratch / Power lines / Addons / Developer mode / About G-Warp /
+   Bug Hunter trophies / Update G-Warp / Performance 60 FPS
+   advanced = Frame rate (30/60/120/no limit/Custom), Infinite clones, Remove fencing, Remove misc
+   limits, Max quality render (HQ), Show FPS on the stage, Anti-freeze (warp timer)
+   addons = Clone counter, Mute and project volume, Gamepad, Find in scripts, Project volume
+   extlib = G-Warp (8) / TurboWarp (104) / PenguinMod (79); Translate card: "Keeps the words as
+   they are for now".  PAGEERRORS 0
+ probe4: importer stack-block table GW_V1580_SB3.CMD has 113 entries (reporter table not exposed).

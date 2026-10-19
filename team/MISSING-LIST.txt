@@ -60,5 +60,54 @@ D. G-WARP ALREADY HAS (TurboWarp / PenguinMod have them too)
     Ctrl+click flag to mute, project volume, gamepad, mouse x / y over the stage, "find on stage" in the sprite
     menu, Restore after deleting a sprite, costume folders (v15.49.0), onion skin, bones animation, Song maker.
 
-E. FROM THE 3-APP AUDIT (claude/GAP-ANALYSIS-2026-10-19.txt)
-    (added below when the audit's partial report is in)
+E. FROM THE 3-APP AUDIT (claude/GAP-ANALYSIS-2026-10-19.txt - stopped early by the owner)
+   Score so far: Scratch 3 core blocks 107 of 123 in the palette (3 partial, 13 missing); TurboWarp's 5 extra
+   blocks: 0; PenguinMod's ~110 extra blocks: ~4 look-alikes; Scratch extensions 4 of 11 (+ Translate partial);
+   runtime settings 7 of 11 (2 partial); addons: 4 + volume slider of TurboWarp's 81 / PenguinMod's 83;
+   menu bar 5 of 8 (1 partial). NOTE: blocks were only checked IN THE PALETTE - whether they run was not tested yet.
+
+ E1. Kids hit these in their first hour (P1)
+[ ] E1.1  "touching color ?" and "color is touching color ?" blocks.                              Claude
+[ ] E1.2  The "<" (less than) block - only ">" exists.                                             Claude
+[ ] E1.3  The "contains ?" block (text contains text).                                              Claude
+[ ] E1.4  Math functions: only "abs" - add the dropdown with floor, ceiling, sqrt, sin, cos, tan, asin, acos,
+          atan, ln, log, e^, 10^.                                                                    Claude
+[ ] E1.5  "when stage clicked" hat.                                                                 Claude
+[ ] E1.6  "glide to random position / mouse-pointer / a sprite".                                     Claude
+[ ] E1.7  The list reporter (the round "my list" block that shows the whole list).                   Claude
+[ ] E1.8  Tutorials (Scratch has 27).                                       ChatGPT (content) + Gemini (UI)
+[ ] E1.9  G-Warp runs at 60 FPS by default; its own settings say a Scratch project then runs twice as fast.
+          Opening an .sb3 should use 30 FPS unless the project asks for 60 (NOT TESTED yet).        Claude
+
+ E2. Important for real games (P2)
+[ ] E2.1  "switch backdrop to () and wait", "backdrop number / name" reporter, "when [timer / loudness] > ()",
+          "item # of () in [list]", "days since 2000".                                             Claude
+[ ] E2.2  "current time" needs its dropdown (year, month, date, day of week, hour, minute, second). Claude
+[ ] E2.3  One round reporter block per variable (today one generic "value of [ ]" block).          Claude
+[ ] E2.4  TurboWarp blocks: while, is online?, last key pressed, mouse button down?.              Claude
+[ ] E2.5  Interpolation setting; custom stage size in the settings (today only a block).   Claude / Gemini
+[ ] E2.6  Language menu.                                                      Gemini (UI) + ChatGPT (words)
+[ ] E2.7  The Translate extension doesn't translate (its card says it "keeps the words as they are"). Claude
+[ ] E2.8  Addons kids use: debugger, sprite folders, rename broadcasts, variable manager, block switching,
+          jump to definition, dropdown search (some already in section C / Gemini G-C list).          Gemini
+[ ] E2.9  PenguinMod core blocks: if / else if, switch / case, power, true / false, >= <= !=, break / continue,
+          return from a custom block.                                                 Claude + Grok (spec)
+
+ E3. Nice to have (P3)
+[ ] E3.1  Loudness and Video Sensing; hardware extensions (micro:bit, EV3, BOOST, WeDo, Force & Acceleration).
+[ ] E3.2  Compiler on/off option.                                                                    Claude
+[ ] E3.3  Themes (today only "Look like Scratch").                                                  Gemini
+[ ] E3.4  The rest of the TurboWarp / PenguinMod addons and PenguinMod blocks.      Gemini / Claude + Grok
+
+ E4. Quick wins (the auditor's guess: under an hour each)
+    "<" and "contains" blocks; math dropdown on "abs"; "item # of", list reporter, "days since 2000",
+    "backdrop number / name"; "when stage clicked", "switch backdrop and wait"; TurboWarp "while" and
+    "last key pressed"; "current time" dropdown; 30 FPS when opening an .sb3.
+
+ E5. NOT CHECKED YET (next audit run - the test project that runs every Scratch block is already written:
+     scratchpad qa-gaps/mk-core.js + sb3build.js)
+    Every block actually RUNNING; Pen / Music / Text to Speech; gallery + custom extensions (URL / file,
+    sandboxed or not); paint + sound editor tools; library sizes; stage sizes / fullscreen / player; the runtime
+    switches; cloud variables, keyboard, mouse, loudness, video; files (.sb, .sb2, .sprite3, .pmp loading,
+    .sb3 round trip, sprite export, costume + sound import, packager); accessibility, shortcuts, languages,
+    mobile / touch; FPS with 200 clones.
