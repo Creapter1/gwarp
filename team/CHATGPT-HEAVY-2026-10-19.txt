@@ -1,0 +1,50 @@
+=====================================================================
+ CHATGPT - HEAVY JOB (50 minutes)          from Claude (team leader), 2026-10-19 evening
+ Owner: "give ChatGPT a heavy task, don't hold back - hard work only."
+ The GWrap AI 300 job moves from Gemini to YOU (Gemini does the click/right-click modules first).
+=====================================================================
+RULES (read them - the last session crashed from over-checking)
+- Read ONLY these files: this one, team/GEMINI-GWRAP-AI-300-2026-10-19.txt (the format), team/gwrap-blocks.json
+  (every real block), claude/gwrap-pack.json (8 working recipes + 8 tips to copy the style from),
+  team/tools/validate_gwrap_pack.py (the checker), team/MISSING-LIST.txt section E1/E2 (for H3).
+  Do NOT review other files, ledgers or other AIs' work.
+- Use your Python tool: download team/gwrap-blocks.json + team/tools/validate_gwrap_pack.py and RUN the checker on
+  your pack before every push:  python3 validate_gwrap_pack.py knowledge-pack.json gwrap-blocks.json claude/gwrap-pack.json
+  Push only when it says PASS (0 errors).
+- Push every 60 entries (the whole file), ONE commit each time. If a push seems stuck, look at GitHub before pushing
+  again. At minute 45: stop, push, write one line in AI-TEAM.txt.
+
+H1  GWRAP AI KNOWLEDGE PACK  ->  chatgpt/gwrap-ai/knowledge-pack.json   (MAIN JOB)
+    At least 180 recipes + 180 tips (360+). Exact format + topic list: team/GEMINI-GWRAP-AI-300-2026-10-19.txt.
+    - Recipes BUILD real working scripts. Mix: single ideas (motion, looks, sound, events, control, sensing,
+      variables, lists, clones) AND combos the owner loves: "create an animation, move, and connect it to the
+      <block> and do this" - e.g. walk + animate + jump, enemy that chases and says "got you", coin that spins and
+      adds score when touched, button that broadcasts "start" and hides, boss with health and flashing when hit.
+    - 25+ whole mini games (2-4 scripts each): clicker, catch, dodge, pong paddle, flappy-style, quiz, memory,
+      race with timer, whack-a-mole, shooter with clone bullets, collector, maze with touching edge/OTHER_SPRITE...
+    - Tips: every tab and button, the costume editor tools, Animation (Rig / bones / Animate / In-between /
+      Smooth x2 / Glide / Make costumes / onion skin), Song maker (11 styles), block explanations, fixing problems,
+      "coming from Scratch / TurboWarp / PenguinMod".
+    - Each entry: 3+ example questions the way kids type (with real misspellings), 3+ keys.
+    - Only blocks from team/gwrap-blocks.json. Nothing G-Warp can't do (no "touching color" - it isn't there yet).
+
+H2  IN-APP TUTORIALS DATA  ->  chatgpt/tutorials/tutorials.json   (if H1 is done before minute 35)
+    { "version":1, "tutorials":[ { "id":"tut-...", "title":"...", "level":"starter|middle|pro", "minutes":5,
+      "picture":"one sentence describing a cover picture for Gemini to draw",
+      "steps":[ { "say":"short instruction (1-2 sentences)", "where":"code|costumes|sounds|stage|animation|tiles|song",
+                  "add": <optional: ONE script in the same block format as recipes - the step adds it> } ] } ] }
+    15 tutorials, 5-10 steps each (Scratch has 27 - we need our own, no copying): first animation, chase game,
+    pong, platformer, quiz, music video with Song maker, bones animation, tile level, clones rain, story with two
+    sprites talking, drawing with pen-like stamps (no pen blocks in the palette yet - use costumes), virtual pet,
+    racing timer, space shooter, dress-up game. Every "add" must pass the same checker (wrap it as a recipe to test).
+
+H3  SPECS FOR CLAUDE'S QUICK WINS  ->  chatgpt/SPEC-missing-blocks.txt   (if time is left)
+    For each block G-Warp is missing (team/MISSING-LIST.txt E1.2-E1.7, E2.1, E2.2, E2.4): the Scratch opcode, how
+    it is stored in project.json (inputs / fields, with a small JSON example), the exact behaviour and edge cases
+    (from the Scratch Wiki / scratch-vm source - say which), and 3 test cases (input -> expected result).
+    Blocks: operator_lt, operator_contains, operator_mathop (all 14 functions), event_whenstageclicked,
+    motion_glideto, data_listcontents, data_itemnumoflist, sensing_dayssince2000, looks_backdropnumbername,
+    looks_switchbackdroptoandwait, sensing_current (all 7 menu options), sensing_touchingcolor,
+    sensing_coloristouchingcolor, and TurboWarp's while / last key pressed.
+
+HAND IN: 2026-10-19 | DONE | ChatGPT | HEAVY H1 (<n> recipes, <n> tips, checker PASS) H2 (<n>) H3 (<n> blocks)
