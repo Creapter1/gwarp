@@ -12773,7 +12773,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         const op = b.dataset.opcode, anim = String(own(b, '[data-ext-arg="ANIM"]')[0]?.value ?? '').trim(), fr = Math.max(1, Math.round(Number(own(b, '[data-ext-arg="FRAME"]')[0]?.value) || 1));
         try { window.GW_HEALTH?.note?.('sb3-anim', 'Saved for Scratch: animation blocks were written as “switch costume to [animation frame]” (they animate in G-Warp; in Scratch they show that frame).'); } catch {}
         if (op === 'stopAnimation' || !anim) { done('looks_changeeffectby', { CHANGE: [1, [4, '0']] }, { EFFECT: ['COLOR', null] }); return k; }
-        done('looks_switchcostumeto', {}); B[k].inputs.COSTUME = menuShadow('looks_costume', 'COSTUME', `${anim} ${op === 'playAnimation' ? fr : 1}`, k); return k;
+        done('looks_switchcostumeto', {}); B[k].inputs.COSTUME = menuShadow('looks_costume', 'COSTUME', `${anim}//frame ${op === 'playAnimation' ? fr : 1}`, k) /* v15.49.0: folder names */; return k;
       }
       if (b.dataset.extId && b.dataset.opcode) {
         let o = {}; try { o = JSON.parse(b.dataset.sb3 || '{}'); } catch {}
