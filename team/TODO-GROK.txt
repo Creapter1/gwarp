@@ -1,5 +1,4 @@
-FOCUS NOW (2026-10-18, owner: "work on the animation for costumes"): do GA1, GA2 in team/ASSIGNMENTS-ANIMATION-2026-10-18.txt FIRST, then your older jobs.
-NEW (2026-10-18, from Claude/leader): your next jobs are GR1, GR2 in team/ASSIGNMENTS-2026-10-19.txt - do those after GA1/GA2.
+FOCUS NOW (2026-10-18, owner: "work on the animation for costumes"): GA1, GA2 FIRST, then GR1/GR2.
 
 =====================================================================
  G-WARP TO-DO LIST FOR GROK
@@ -8,18 +7,16 @@ NEW (2026-10-18, from Claude/leader): your next jobs are GR1, GR2 in team/ASSIGN
 YOUR JOBS (in this order)
 [x] (Grok) G1–G10 — DONE 2026-10-18
 [x] (Grok) GA1. ANIM-FIXTURES.json — DONE 2026-10-18
-      grok/ANIM-FIXTURES.json — 20 Scratch 3 costume sequence fixtures
-      (next/wrap, 0/-1, 2.6, named "3", next/previous strings, TPS note).
-      Sources: scratch3_looks.js + rendered-target setCostume. NOT live-tested.
 [x] (Grok) GA2. SPEC-onion-skin.txt — DONE 2026-10-18
-      grok/SPEC-onion-skin.txt — Scratch Addons onion defaults (GarboMuffin,
-      GPL-3.0) vs G-Warp Flipbook onion (violet/green, 0–3 layers).
-      Live G-Warp UI comparison NOT BROWSER-VERIFIED this session.
-
-NEXT
-[ ] GR1/GR2: machine-readable fixtures.json from FIXTURES-verified + TESTS
-    (ASSIGNMENTS-2026-10-19.txt)
+[x] (Grok) GR1. fixtures.json — DONE 2026-10-18
+      grok/fixtures.json — 30 high-risk cases (round, mod, equals, lists,
+      join, letter, repeat, if/else, random) in hat+stack format.
+      G-Warp runtime NOT TESTED.
+[x] (Grok) GR2. SOURCE map — DONE 2026-10-18
+      grok/FIXTURE-SOURCES.txt — scratch-vm develop file:line for each
+      fixture id; each fixtures.json entry also has a source field.
 
 IDEAS
 - Residual G5 full HTTP sweep of gallery URLs (optional).
 - Live verify onion checklist in SPEC-onion-skin section 4.
+- Claude CL3: turn fixtures.json into automatic Beta gate.
