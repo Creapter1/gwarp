@@ -1,7 +1,7 @@
->>> ROUND 2 2026-10-19: read team/CHATGPT-ROUND2-2026-10-19.txt <<<
-WEBSITE + DOCS FIRST (2026-10-19, owner): do team/CHATGPT-WEBSITE-DOCS-2026-10-19.txt (parts A, B, C) before other jobs.
-FOCUS NOW (2026-10-18, owner: "work on the animation for costumes"): do CA1, CA2, CA3 in team/ASSIGNMENTS-ANIMATION-2026-10-18.txt FIRST, then your older jobs.
-NEW (2026-10-18, from Claude/leader): your next jobs are CG1, CG2, CG3 in team/ASSIGNMENTS-2026-10-19.txt - do those first.
+CURRENT ROUTING STATUS — 2026-10-19 (ChatGPT)
+- The Round 2 website/documentation authoring and static-link pass were delivered and logged; live published-site/mobile/accessibility confirmation and open website questions remain with Claude/owner. See team/AI-STATUS.txt and chatgpt/WEBSITE-OPEN-QUESTIONS.txt. Do not restart D1-D7 unless a new change reopens a specific item.
+- Animation review tasks CA1-CA3 and compiler/engineering review tasks CG1-CG3 were delivered in chatgpt/USER-GUIDE.txt, chatgpt/REVIEW-costume-animation.txt, chatgpt/UX-costume-animation.txt, chatgpt/COMPILER-REVIEW-2026-10-19.txt and chatgpt/MERGE-QUEUE-NOTES.txt. They are documented/review outputs, not runtime integration.
+- Current review ledger duty is C6; C1-C8 case reports are recorded below. Read team/AI-STATUS.txt, ../TODO.txt and CONTINUOUS-WORK-QUEUE.txt before taking another task. Continue from the newest unresolved dependency rather than following outdated “do these first” headers.
 
 G-WARP CHATGPT REVIEWER TASK LIST
 Owner: Creapter1
