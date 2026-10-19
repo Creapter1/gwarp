@@ -1,8 +1,8 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
 >>> EXTRA 2026-10-19: team/GROK-EXTRA-2026-10-19.txt (after the big list) <<<
 
-[x] R0–R8 + S1 + V1 + S2
-    S2 → grok/SPEC-sb3-roundtrip.txt
-[ ] S3 SPEC-turbowarp-runtime — NEXT
-[ ] S4 EXTENSIONS-check-2
+[x] R0–R8 + S1 + V1 + S2 + S3
+    S3 → grok/SPEC-turbowarp-runtime.txt
+[ ] S4 EXTENSIONS-check-2 — NEXT
 [ ] V2 website docs
+[ ] then GROK-EXTRA jobs
