@@ -208,6 +208,11 @@ The loader describes support for shared Scratch project links/IDs, TurboWarp lin
 4. Inspect the project title/attribution, sprites, scripts, and assets.
 5. Save a local copy before editing.
 
+### Open a Scratch project from a `#scratch=` link
+A compatible G-Warp app link can include a numeric Scratch project ID, in this form: `app.html#scratch=123456789`. When the app recognizes the ID, it asks whether to load that shared Scratch 3 project. Choose **Load project** to continue, or **Cancel** to stop. The link handler clears the hash before asking, so refreshing or cancelling should not repeat the same prompt automatically. A load failure should show an error toast rather than silently confirming success.
+
+Only the numeric project ID is read from the hash; G-Warp then uses its existing web loader to retrieve the project. Network access and public project availability are required. Inspect the project after loading and save a local copy before editing. Do not share an old published URL until the owner confirms it is still the canonical address.
+
 Only use links you trust. Public access may be required for the loader to retrieve a project.
 
 11. EXTENSIONS AND ADVANCED TOOLS
@@ -220,7 +225,7 @@ Only use links you trust. Public access may be required for the loader to retrie
 
 Other source-present tools include GWrap AI/search/debugging, tilemap editor, Behavior Designer, LAN collaboration, project health/restore, and advanced settings. Availability may depend on the build, developer mode, or browser capabilities. LAN collaboration was not security-tested for this guide; share session codes only with intended collaborators.
 
-Advanced settings can include frame rate, clone limits, HQ rendering, stage fencing, and miscellaneous runtime limits. Unlimited clones or disabled safeguards can reduce performance or freeze a tab; change these only when you understand the cost.
+Advanced settings can include frame rate, clone limits, HQ rendering, stage fencing, and miscellaneous runtime limits. G-Warp normally allows up to **300 clones**. The optional **Infinite Clones** mode does not remove the separate safety ceiling: the inspected v15.48.0 source caps clone creation at **5,000 clones**. A clone request above the active cap is ignored. These are safety limits, not performance targets; many clones can make a project slow well before the cap.
 
 12. PERFORMANCE AND ACCESSIBILITY
 - Maximize the window or use landscape on mobile if the workspace does not fit.
@@ -231,6 +236,18 @@ Advanced settings can include frame rate, clone limits, HQ rendering, stage fenc
 - This is primarily a desktop-oriented block editor; small screens may require more scrolling.
 
 13. TROUBLESHOOTING
+### “Your project is stuck” prompt
+G-Warp watches for repeated very slow frames. If a running project appears to stall badly, it can pause the project and show **Your project is stuck**, including counts of clones and running scripts. Choose **Stop it** to trigger the normal Stop control; that is the safer choice if you are unsure what caused the stall. Choose **Keep going** only if you understand the cost and want to resume. The current source gives Keep going a 30-second quiet period before it checks for another stall. This watchdog does not prove that a project is safe or prevent every freeze. After stopping, save a copy and test a smaller version of the script.
+
+### Report a bug (More → File)
+1. Open **More → File → Report a bug…**.
+2. Describe what happened in the box. Include the steps, what you expected, what actually happened, and the app/browser version.
+3. Optional: tick the checkbox to include the most recent errors G-Warp noticed. You can expand **See exactly what will be shared** to inspect the report before leaving the app.
+4. Choose **Open GitHub to send**. This opens a prefilled GitHub issue; review it and press GitHub's **Submit** button yourself. Nothing is submitted automatically by G-Warp.
+5. Review the title, description and recent-error log for private information before submitting. The project file is not attached.
+
+The current source keeps up to 20 recent error records in this browser's local storage; the records are not sent by themselves. The report may include the notes you type and, only if you choose it, the selected recent error entries. A GitHub account is needed to submit the issue. If you are under 13, ask a parent or guardian first. Do not put passwords, access tokens, private links or personal information in a report.
+
 Blocks jump when detached: undo, zoom out, and avoid reorganizing long stacks until the known drag issue is fixed.
 Nested blocks will not accept blocks: aim inside the C-body and confirm the block shape is valid. If it still fails, undo and create a small reproduction.
 Unexpected sprite-click scripts: test one sprite at a time; stage click routing is a known audit item.
