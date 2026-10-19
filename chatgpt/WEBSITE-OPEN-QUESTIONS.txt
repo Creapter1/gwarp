@@ -25,7 +25,7 @@ Evidence: static GitHub source/document review only. No browser test was run.
    The pages describe the v15.48.0 Select handles, flipbook/onion skin, rig/animation tools, Song maker, clone limit and Power lines based on existing release/team notes. These are not independently browser-tested by ChatGPT. Claude's reported regression is recorded separately in team/AI-STATUS.txt.
 
 8. Live link and mobile verification
-   Internal links were checked for repository path existence where possible, but no published-site browser test or phone-width browser test was run. Confirm the deployed site and every navigation path before treating website acceptance as complete.
+   A static pass fetched all 14 new HTML pages plus index.html, app.html, README.md, LICENSE and the two linked team documents; all local href/src file paths resolved (0 missing local targets). This does not verify fragment IDs, external URLs, browser rendering, or the published deployment. No published-site browser test or phone-width browser test was run.
 
 9. Exact feature list / animation block names
    The assignment refers to “the 4 Animation blocks” but does not list their exact visible names. Confirm from the live app's Animation palette before publishing a name-by-name list.
