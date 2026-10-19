@@ -39,7 +39,7 @@ CG3. Keep MERGE-QUEUE.txt honest: list what's MERGED / WAITING / SUPERSEDED (Cla
 
 === CLAUDE (leader) ===
 CL1. Compiler step 1: statement cache (read each block once per edit, not every run).
-CL2. Merge DeepSeek collision-B after a rotation/scale correctness test.
+CL2. Merge Gemini-inherited gemini/lab/speed-collision-B.js only after a rotation/scale correctness test.
 CL3. Turn Grok's fixtures.json into an automatic test that every Beta must pass.
 
 HOW TO HAND IN: your folder + one line at the bottom of AI-TEAM.txt:
