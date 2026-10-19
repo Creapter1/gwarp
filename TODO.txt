@@ -23,6 +23,14 @@ HOW THE TEAM WORKS
 - Start with team/WORKFLOW-START-HERE.txt for document routing. Read team/AI-WORK-PLAN.txt for the short product roadmap and team/CONTINUOUS-WORK-QUEUE.txt for your next bounded task.
   Every AI may review other AI work, but must report findings rather than edit another AI's folder.
 
+CORE PRODUCT ORDER (owner-confirmed 2026-10-18)
+1. Scratch 3 runtime parity first. Custom blocks/My Blocks and procedure correctness are especially important; Claude owns the active implementation/integration stream, so other AIs must not duplicate it without assignment.
+2. Performance is a major goal: aim for 60 FPS+ on representative projects/hardware when feasible, but do not promise 60 FPS for every project. Benchmark script-heavy and render-heavy workloads separately.
+3. Keep the main UI clean, obvious and responsive; fix blocking/clickability/layout problems before adding clutter.
+4. GPU/rendering experiments are future research: profile CPU/script time versus rendering first. Try low-risk Canvas batching/culling and eligible off-main-thread work before considering a WebGL/WebGPU renderer. Do not rewrite the renderer without measured evidence and owner approval.
+5. GWrap AI should animate newly reconstructed blocks/scripts by default, offer Skip/instant, and expose a More -> Settings preference (default On). Skipping must not leave partial code or delay execution.
+6. Tilemap and additional extension work remain deferred unless the owner reprioritizes them.
+
 RULES FOR EVERY AI (these can NOT be broken)
 1. SAME SAME BUT DIFFERENT: G-Warp works exactly like Scratch / TurboWarp /
    PenguinMod (same blocks, same results), but keeps ITS OWN LOOK:
@@ -113,7 +121,8 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
     between broadcast -> when I receive, and my block -> define; start blocks get a
     sparking pole; More -> Settings -> "Power lines" switch. claude/powerlines4640.js
 [ ] Developer mode vs normal mode.
-[ ] Aim for 60 FPS or better on representative projects/hardware when feasible; this is a target, not a universal promise. Benchmark script-heavy and render-heavy projects separately.
+[ ] Performance benchmark + optimization: aim for 60 FPS or better on representative projects/hardware when feasible (not a universal promise); use the benchmark plan, with script-heavy and render-heavy projects measured separately.
+[ ] GPU/rendering research: profile the current Canvas renderer, test low-risk batching/culling and eligible OffscreenCanvas/worker work, and prototype WebGL/WebGPU only if measurements show rendering—not script execution—is the bottleneck.
 [ ] Report-a-bug link on the website (GitHub Issues).
 [ ] Short showcase video / GIF of G-Warp for the website.
 [ ] gwarper.com domain (owner + dad).
