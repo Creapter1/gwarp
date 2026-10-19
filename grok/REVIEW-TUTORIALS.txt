@@ -1,0 +1,101 @@
+=====================================================================
+ E1 REVIEW — docs/tutorials (8 guides)
+ E2 FACT-CHECK — docs/blocks.html gotchas vs scratch-vm
+ Author: Grok | 2026-10-19
+ Evidence: tutorial HTML on main; scratch-vm develop (prior SPEC/fixture work)
+ Runtime in G-Warp: NOT TESTED live this session
+=====================================================================
+
+A. E1 — TUTORIAL-BY-TUTORIAL
+---------------------------------------------------------------------
+T1  G-Spark walk (01)
+    Blocks: when flag, forever, next costume, wait (0.1)
+    Scratch: all valid. next costume wraps list order — gotcha correct.
+    G-Warp: Onion skin overlay not saved — aligns with SPEC-onion-skin.
+    Issues: none on block names.
+
+T2  Clicker (02)
+    Blocks: when flag, set Score 0, when this sprite clicked, change by 1,
+            start sound [pop]
+    Scratch: valid. Sound must exist on sprite — tutorial says so. OK.
+    Issues: none.
+
+T3  Platformer jump (03)
+    Blocks: variables vertical speed / gravity, forever, change y by,
+            touching color?, when space key pressed, if on edge bounce
+    Scratch: valid. Color match must be exact (gotcha OK).
+    Issues: nested "if vertical speed < 0" inside color touch is fine;
+            not a full collision engine (doc admits).
+
+T4  Bones / rig (04)
+    G-Warp-only Animation/Rig UI. Code tail same as T1.
+    Issues: none for Scratch block names; correctly not claiming Scratch export.
+
+T5  Power lines (05)
+    Blocks: broadcast [spark], when I receive [spark], say
+    Scratch: broadcast names case-insensitive in VM hats — tutorial says
+             exact match (safe for kids; slightly stricter than Scratch).
+    Power lines = G-Warp overlay only — correctly labeled.
+
+T6  Falling stars (06)
+    Blocks: hide, create clone of myself, wait, when I start as a clone,
+            go to random x, show, repeat until y < -170, change y, delete
+    Scratch: valid. delete after loop correct. Clone limit 300 correct.
+    Issue: "Infinite Clones safety ceiling 5,000" = G-Warp claim only
+           (same as V2 #2). Label as G-Warp, not Scratch.
+
+T7  Quiz (07)
+    Blocks: lists Questions/Answers, Index, Score, repeat length of list,
+            ask item of list, answer = item of Answers, join
+    Scratch: lists 1-based; answer = uses Cast.compare (case-insensitive).
+             Tutorial says try capital change — good teaching note.
+    join no auto-space — correct.
+    Issues: none on block names.
+
+T8  Pen drawing (08)
+    Blocks: erase all / clear, pen up/down, go to mouse x/y, mouse down?
+    Scratch: opcode looks_pen vs pen extension — labels "erase all" vs
+             "clear" vary by editor; tutorial correctly says use palette label.
+    Issues: none if Pen extension present in G-Warp build.
+
+Wrong Scratch block names found: **none** in the eight tutorials.
+
+---------------------------------------------------------------------
+B. E2 — blocks.html GOTCHAS vs scratch-vm (source lines)
+---------------------------------------------------------------------
+G1  Motion does nothing on Stage
+    TRUE. rendered-target setXY/setDirection return if isStage.
+
+G2  next costume cycles list order
+    TRUE. looks nextCostume uses currentCostume+1 with wrapClamp.
+
+G3  repeat (2.7) → 3 vs old TESTS.txt → 2
+    Scratch TRUE: control.js ~L54 Math.round(times).
+    Docs should drop "TESTS still says 2" as authoritative conflict;
+    fixtures already expect 3 (T043).
+
+G4  Clone limit 300; Infinite 5000
+    300 TRUE (runtime MAX_CLONES).
+    5000 = G-Warp-only if implemented; not Scratch.
+
+G5  Operators: round(-2.5)=-2; (-10) mod 3 = 2; join no space; random inclusive
+    TRUE. operators.js Math.round; floored mod; join string concat;
+    random inclusive endpoints.
+
+G6  Lists: last/random; insert 0 no-op; item # missing → 0
+    TRUE. cast.js toListIndex; data.js insert/delete/itemnum.
+
+G7  [abc]=[ABC] same under project rules
+    TRUE Scratch Cast.compare case-insensitive.
+
+No gotcha found that **contradicts** Scratch when read carefully.
+Residual: docs still frame G3 as unresolved vs TESTS.txt (editorial).
+
+---------------------------------------------------------------------
+C. ACTIONS FOR CHATGPT (docs)
+---------------------------------------------------------------------
+1. Fix G3 prose (repeat 2.7 = 3).
+2. Tag 5000 clone ceiling as G-Warp-only (T6 + blocks.html).
+3. Optional: note broadcast match is case-insensitive in Scratch (T5).
+
+E3 fixtures: see grok/fixtures-tutorials.json
