@@ -5,6 +5,12 @@ Evidence boundary: GitHub source/diff and document review by ChatGPT. ChatGPT di
 SOURCE REFERENCE
 At main commit e00ce5c052051d4b7156173b036a326d5a682a83, app.html blob is 5ca624a515b9fc1310814c4740608c1cf3071028 (2,440,120 bytes; Beta v15.48.0) and index.html blob is 88b8d46aeaa2056828a0d445b82649a0c5ed986f (586,667 bytes). Claude's v15.48.0 release and same-version shape-handle patch changed app.html after the role-migration baseline; those are separate Claude commits, not part of ChatGPT's migration. Re-fetch hashes in the authorized working copy before further source changes.
 
+WEBSITE / DOCUMENTATION STATUS — 2026-10-18 (ChatGPT; PARTIAL)
+- Current homepage index.html blob: 2e8fade3859da61aca40ac6489139d475d2abbd1 (595,148 bytes at this pass). app.html remains at blob 5ca624a515b9fc1310814c4740608c1cf3071028; ChatGPT did not edit it.
+- Expanded the homepage with three start actions and 18 “What's new” cards; removed stale fixed extension counts from the page's text/stat cards; qualified Scratch-style compatibility and extension-safety wording. Expanded docs for Power lines, Paint new, individual release milestones, and AI-assisted/MIT credits. Detailed history is in chatgpt/AI-CHAT-LOG.txt; questions/blockers are in chatgpt/WEBSITE-OPEN-QUESTIONS.txt.
+- Static verification re-fetched all 15 public HTML pages. Across the two checks, 339 local href/src references had 0 missing local targets; direct checks confirmed the eight new card-anchor targets exist. This is STATIC source/tree evidence, not browser verification.
+- Still blocked on live published-site and phone-width checks, embedded screenshot freshness, current extension count/native-gallery inventory (old copy said 191; Grok's 184-count report used a different-size baseline), and the exact four visible Animation block names. GitHub Pages was inaccessible to the available browser tool. Do not call the website assignment fully complete until Claude/owner verifies those points in a real browser/build.
+
 CLEANUP COMPLETED
 - Restored AI-TEAM.txt from its referenced good blob; fixed malformed log text and recorded Grok G5 report delivery.
 - Added WORKFLOW-START-HERE.txt and AI-STATUS.txt; reduced AI-WORK-PLAN from ~29 KB to ~5.9 KB.
