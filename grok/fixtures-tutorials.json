@@ -1,0 +1,310 @@
+{
+  "meta": {
+    "title": "G-Warp tutorial-derived fixtures (E3)",
+    "author": "Grok",
+    "date": "2026-10-19",
+    "batch": "E3",
+    "count": 16,
+    "sourceTutorials": [
+      "docs/tutorials/01-g-spark-walk.html",
+      "docs/tutorials/02-clicker-game.html",
+      "docs/tutorials/03-platformer-jump.html",
+      "docs/tutorials/04-bones-animation.html",
+      "docs/tutorials/05-power-lines.html",
+      "docs/tutorials/06-falling-stars.html",
+      "docs/tutorials/07-quiz.html",
+      "docs/tutorials/08-pen-drawing-app.html"
+    ],
+    "evidence": "Tutorial scripts + scratch-vm behavior; G-Warp NOT TESTED",
+    "notes": [
+      "Timing-heavy tutorials (T1 walk forever, T3 physics, T6 continuous spawn) only get discrete checks.",
+      "T4 bones UI has no pure block fixture beyond same next-costume loop as T1.",
+      "T8 pen requires pen extension opcodes."
+    ],
+    "newOpcodes": {
+      "start_sound": "sound_play",
+      "pen_clear": "pen_clear",
+      "pen_down": "pen_penDown",
+      "pen_up": "pen_penUp",
+      "mouse_x": "sensing_mousex",
+      "mouse_y": "sensing_mousey",
+      "mouse_down": "sensing_mousedown",
+      "next_costume": "looks_nextcostume",
+      "ask": "sensing_askandwait",
+      "answer": "sensing_answer",
+      "length_of_list": "data_lengthoflist",
+      "item_of_list": "data_itemoflist"
+    }
+  },
+  "fixtures": [
+    {
+      "id": "TU01",
+      "tutorial": 1,
+      "setup": "next costume advances",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "switch_costume", "costume": 1 },
+          { "type": "next_costume" },
+          { "type": "say", "value": { "type": "costume_number" } }
+        ]
+      },
+      "expect": { "say": "2", "notes": "1-based costume number after one next" },
+      "source": "looks nextCostume + costume number reporter"
+    },
+    {
+      "id": "TU02",
+      "tutorial": 2,
+      "setup": "flag resets score",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "set_var", "name": "Score", "value": 0 },
+          { "type": "say", "value": { "type": "var", "name": "Score" } }
+        ]
+      },
+      "expect": { "say": "0", "variables": { "Score": 0 } },
+      "source": "data_setvariableto"
+    },
+    {
+      "id": "TU03",
+      "tutorial": 2,
+      "setup": "change score by 1 three times",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "set_var", "name": "Score", "value": 0 },
+          { "type": "change_var", "name": "Score", "by": 1 },
+          { "type": "change_var", "name": "Score", "by": 1 },
+          { "type": "change_var", "name": "Score", "by": 1 },
+          { "type": "say", "value": { "type": "var", "name": "Score" } }
+        ]
+      },
+      "expect": { "say": "3", "variables": { "Score": 3 } },
+      "source": "clicker change by 1"
+    },
+    {
+      "id": "TU04",
+      "tutorial": 3,
+      "setup": "gravity var init",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "set_var", "name": "gravity", "value": -0.5 },
+          { "type": "set_var", "name": "vertical speed", "value": 0 },
+          { "type": "say", "value": { "type": "var", "name": "gravity" } }
+        ]
+      },
+      "expect": { "say": "-0.5" },
+      "source": "tutorial step 2–3"
+    },
+    {
+      "id": "TU05",
+      "tutorial": 3,
+      "setup": "one gravity step changes speed",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "set_var", "name": "vertical speed", "value": 0 },
+          { "type": "set_var", "name": "gravity", "value": -0.5 },
+          { "type": "change_var", "name": "vertical speed", "by": { "type": "var", "name": "gravity" } },
+          { "type": "say", "value": { "type": "var", "name": "vertical speed" } }
+        ]
+      },
+      "expect": { "say": "-0.5" },
+      "source": "change vertical speed by gravity once"
+    },
+    {
+      "id": "TU06",
+      "tutorial": 4,
+      "setup": "same walk loop as T1 after Make costumes",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "next_costume" },
+          { "type": "say", "value": "ok" }
+        ]
+      },
+      "expect": { "say": "ok" },
+      "source": "T4 code tail"
+    },
+    {
+      "id": "TU07",
+      "tutorial": 5,
+      "setup": "broadcast and receive",
+      "blocks": {
+        "scripts": [
+          {
+            "hat": "when_flag",
+            "stack": [ { "type": "broadcast", "message": "spark" } ]
+          },
+          {
+            "hat": "when_receive",
+            "message": "spark",
+            "stack": [ { "type": "set_var", "name": "Got", "value": 1 } ]
+          }
+        ]
+      },
+      "expect": { "variables": { "Got": 1 }, "notes": "after flag, receiver runs" },
+      "source": "event_broadcast + when I receive"
+    },
+    {
+      "id": "TU08",
+      "tutorial": 5,
+      "setup": "broadcast case-insensitive",
+      "blocks": {
+        "scripts": [
+          {
+            "hat": "when_flag",
+            "stack": [ { "type": "broadcast", "message": "Spark" } ]
+          },
+          {
+            "hat": "when_receive",
+            "message": "spark",
+            "stack": [ { "type": "set_var", "name": "Got", "value": 1 } ]
+          }
+        ]
+      },
+      "expect": { "variables": { "Got": 1 }, "notes": "Scratch hats match case-insensitive" },
+      "source": "startHats broadcast case"
+    },
+    {
+      "id": "TU09",
+      "tutorial": 6,
+      "setup": "delete this clone on original is no-op",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "set_var", "name": "Alive", "value": 1 },
+          { "type": "delete_this_clone" },
+          { "type": "say", "value": { "type": "var", "name": "Alive" } }
+        ]
+      },
+      "expect": { "say": "1", "notes": "original continues" },
+      "source": "control deleteThisClone only if isClone"
+    },
+    {
+      "id": "TU10",
+      "tutorial": 6,
+      "setup": "create clone of myself increments clone-related path",
+      "blocks": {
+        "scripts": [
+          {
+            "hat": "when_flag",
+            "stack": [
+              { "type": "set_var", "name": "C", "value": 0 },
+              { "type": "create_clone", "of": "_myself_" },
+              { "type": "wait", "seconds": 0.05 },
+              { "type": "say", "value": { "type": "var", "name": "C" } }
+            ]
+          },
+          {
+            "hat": "when_start_as_clone",
+            "stack": [
+              { "type": "change_var", "name": "C", "by": 1 },
+              { "type": "delete_this_clone" }
+            ]
+          }
+        ]
+      },
+      "expect": { "say": "1", "notes": "one clone bumped C then deleted" },
+      "source": "createClone + start as clone hat"
+    },
+    {
+      "id": "TU11",
+      "tutorial": 7,
+      "setup": "quiz lists aligned",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "delete_all_of_list", "list": "Questions" },
+          { "type": "delete_all_of_list", "list": "Answers" },
+          { "type": "add_to_list", "list": "Questions", "item": "2+2?" },
+          { "type": "add_to_list", "list": "Answers", "item": "4" },
+          { "type": "say", "value": { "type": "item_of_list", "list": "Answers", "index": 1 } }
+        ]
+      },
+      "expect": { "say": "4" },
+      "source": "list item 1-based"
+    },
+    {
+      "id": "TU12",
+      "tutorial": 7,
+      "setup": "answer equals list item case",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "delete_all_of_list", "list": "Answers" },
+          { "type": "add_to_list", "list": "Answers", "item": "Paris" },
+          { "type": "if",
+            "condition": { "type": "equals", "a": "paris", "b": { "type": "item_of_list", "list": "Answers", "index": 1 } },
+            "then": [ { "type": "say", "value": "yes" } ],
+            "else": [ { "type": "say", "value": "no" } ]
+          }
+        ]
+      },
+      "expect": { "say": "yes", "notes": "Cast.compare case-insensitive" },
+      "source": "operators equals"
+    },
+    {
+      "id": "TU13",
+      "tutorial": 7,
+      "setup": "join Score label",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "set_var", "name": "Score", "value": 2 },
+          { "type": "say", "value": { "type": "join", "string1": "Score: ", "string2": { "type": "var", "name": "Score" } } }
+        ]
+      },
+      "expect": { "say": "Score: 2" },
+      "source": "join with explicit space in string1"
+    },
+    {
+      "id": "TU14",
+      "tutorial": 7,
+      "setup": "length of questions list",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "delete_all_of_list", "list": "Questions" },
+          { "type": "add_to_list", "list": "Questions", "item": "a" },
+          { "type": "add_to_list", "list": "Questions", "item": "b" },
+          { "type": "add_to_list", "list": "Questions", "item": "c" },
+          { "type": "say", "value": { "type": "length_of_list", "list": "Questions" } }
+        ]
+      },
+      "expect": { "say": "3" },
+      "source": "repeat (length of Questions)"
+    },
+    {
+      "id": "TU15",
+      "tutorial": 8,
+      "setup": "pen clear then up does not throw",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "pen_clear" },
+          { "type": "pen_up" },
+          { "type": "say", "value": "ready" }
+        ]
+      },
+      "expect": { "say": "ready", "notes": "requires pen extension" },
+      "source": "pen_clear / pen_penUp"
+    },
+    {
+      "id": "TU16",
+      "tutorial": 1,
+      "setup": "wait 0 still advances past",
+      "blocks": {
+        "hat": "when_flag",
+        "stack": [
+          { "type": "wait", "seconds": 0 },
+          { "type": "say", "value": "after" }
+        ]
+      },
+      "expect": { "say": "after" },
+      "source": "control wait; 0 yields then continues"
+    }
+  ]
+}
