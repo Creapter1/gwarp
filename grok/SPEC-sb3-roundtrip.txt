@@ -1,0 +1,169 @@
+=====================================================================
+ SPEC: .sb3 / project.json round-trip (Scratch ↔ G-Warp)
+ Author: Grok | 2026-10-18 | Batch: S2
+ Evidence: scratch-parser sb3_schema.json + sb3_definitions.json;
+   Scratch Wiki File Format 3.0; scratch-vm serialization/sb3.js;
+   G-Warp app.html exportSB3 (read-only audit)
+ Live upload-to-scratch.mit.edu: NOT RUN this session
+=====================================================================
+
+1. CONTAINER
+------------
+.sb3 = ZIP (PK header) containing:
+  - project.json  (required)
+  - asset files named {assetId}.{ext}  (svg/png/wav/mp3; md5ext matches)
+Missing project.json or non-ZIP → Scratch refuses / fails to load.
+
+2. TOP-LEVEL project.json (schema required)
+-------------------------------------------
+Required by scratch-parser schema:
+  - meta   (object; required property: meta.semver matching ^3\.[0-9]+\.[0-9]+$)
+  - targets (array; first item must be Stage; further items Sprites)
+
+Common optional top-level:
+  - monitors[]
+  - extensions[]   (extension id strings)
+  - extensionURLs  (id → URL map; TurboWarp-style, not always in official Scratch)
+
+Scratch will often still open projects with extra keys; unknown keys are ignored.
+Official uploader may reject schema failures (bad semver, missing targets).
+
+3. meta
+-------
+Required: semver (e.g. "3.0.0")
+Optional: vm, agent, origin
+Bad semver pattern (not 3.x.y) → schema invalid.
+
+4. targets[] — Stage (first)
+----------------------------
+Required (definitions): name, isStage=true
+Expected name: "Stage"
+layerOrder: 0 if present
+Also typically:
+  variables {}, lists {}, broadcasts {}, blocks {}, comments {}
+  currentCostume (int ≥ 0)
+  costumes[] (at least one recommended)
+  sounds[], volume, tempo, videoState, videoTransparency, textToSpeechLanguage
+
+5. targets[] — Sprite
+---------------------
+Required: name, isStage=false
+name must not be "_stage_"
+layerOrder: integer ≥ 1 if present
+Sprite fields: visible, x, y, size, direction, draggable, rotationStyle
+rotationStyle: "all around" | "left-right" | "don't rotate"
+
+Wiki: if name not provided, target will not be loaded.
+
+6. costumes[] items
+-------------------
+Schema required: assetId, dataFormat, name (and typically md5ext)
+Highly recommended: rotationCenterX, rotationCenterY
+bitmapResolution: 1 for SVG; 2 for classic 2x bitmaps (Scratch bitmap costumes
+  often use resolution 2 so logical size is half pixel size)
+
+rotationCenter for stage SVG backdrop defaults often 240,180 (stage half).
+Bitmap centers are in **pixel** space of the asset (resolution-scaled).
+
+Asset file must exist in ZIP at md5ext (or loadable via assetId + dataFormat).
+Broken/missing asset → costume may show as missing bitmap / fail skin load.
+
+7. sounds[] items
+-----------------
+assetId, name, dataFormat, md5ext, rate, sampleCount (and format string)
+Missing wav/mp3 bytes → silent or load error.
+
+8. blocks object
+----------------
+Map id → block { opcode, next, parent, inputs, fields, shadow, topLevel, x, y, mutation? }
+Shadow compression allowed (inline arrays) per sb3.js serialize.
+Unknown opcodes: Scratch keeps them but may show as undefined / strip on save.
+Extension opcodes need matching extensions[] entry for toolbox; runtime may no-op.
+
+9. variables / lists / broadcasts
+---------------------------------
+variables: id → [name, value, cloud?]
+lists: id → [name, valueArray]
+broadcasts: usually on stage only; id → name
+
+10. WHAT MAKES SCRATCH REFUSE OR BREAK
+--------------------------------------
+Hard / common failures:
+  H1  Not a ZIP / corrupt ZIP
+  H2  No project.json
+  H3  JSON parse error
+  H4  meta.semver missing or not 3.x.y
+  H5  targets missing or empty
+  H6  First target not stage (isStage true) — loader may mis-order
+  H7  Target without name
+  H8  Costume references md5ext not present in ZIP
+  H9  Invalid dataFormat / unreadable image bytes
+  H10 currentCostume out of range (often clamped, not always fatal)
+
+Soft failures (opens but wrong):
+  S1  Wrong rotationCenter → costume offset on stage
+  S2  bitmapResolution 1 on 2x bitmap → double size
+  S3  layerOrder wrong → draw order off
+  S4  Missing extensions[] → extension blocks missing from palette
+  S5  G-Warp-only opcodes dropped or shown as obsolete
+  S6  extensionURLs ignored by official Scratch (TurboWarp only)
+
+11. G-WARP exportSB3 (app.html) — AUDIT
+---------------------------------------
+Observed behaviour (source read):
+
+  meta: { semver: '3.0.0', vm: '0.2.0', agent: 'G-Warp …' }  → semver OK
+  targets[0]: isStage true, name Stage, layerOrder 0, tempo/video fields set
+  sprites: isStage false, layerOrder from drawOrder index+1, x/y/size/direction,
+           rotationStyle, visible, draggable
+  costumes: svg via TextEncoder; png via canvas; rotationCenterX/Y from c.rc
+            bitmap: center multiplied by res (c.rc.x * r) — good for 2x
+            svg: bitmapResolution 1; rc from c.rc or 0,0
+  stage backdrops: rasterized to 480×360 png, center 240,180
+  sounds: from dataUrl; rate/sampleCount filled when possible
+  monitors: exported for visible globals
+  extensions: non-core ids collected; extensionURLs when known
+  Warns if non-Scratch blocks present; can drop opcodes into report.dropped
+  ZIP deflate of project.json + assets; download title.sb3
+
+G-Warp-only: may also embed gwarp-project.json in extraFiles for full fidelity
+(own format) while Scratch-facing project.json strips unknown blocks.
+
+12. G-WARP GAPS / RISKS vs Scratch
+----------------------------------
+G1  Stage costumes always exported as PNG raster of canvas — vector backdrops
+    lose SVG editability in Scratch.
+G2  rotationCenter default 0,0 for SVG without c.rc — may not match visual center
+    (Scratch defaults often half of costume size).
+G3  Empty costumes[] on a sprite — schema allows but Scratch UX expects ≥1.
+G4  broadcasts object only on stage in export; sprite broadcasts {} — OK if all
+    messages registered on stage (Scratch convention).
+G5  vm: '0.2.0' is fine; agent string free-form.
+G6  extensionURLs not understood by scratch.mit.edu — OK for TurboWarp.
+G7  Dropped G-Warp opcodes: project opens but scripts incomplete — user toast
+    documents this.
+G8  list/variable id scheme is md5-derived — stable enough if names stable.
+G9  No automated schema validate before download (could add AJV against
+    sb3_schema in CI).
+
+13. ROUND-TRIP CHECKLIST (manual / Claude)
+------------------------------------------
+1. Export empty project from G-Warp → unzip → confirm meta.semver, Stage first.
+2. Open in Scratch Desktop / lab.scratch.mit.edu → must load.
+3. Costume with known SVG + rc → position matches.
+4. Bitmap costume res=2 → size matches Scratch.
+5. Project with pen/music → extensions[] includes ids; blocks present.
+6. Project with G-Warp-only blocks → warning; Scratch omits those stacks.
+7. Re-import same .sb3 into G-Warp → sprites/scripts/assets survive.
+
+14. SOURCES
+-----------
+- https://github.com/scratchfoundation/scratch-parser/blob/master/lib/sb3_schema.json
+- https://github.com/scratchfoundation/scratch-parser/blob/master/lib/sb3_definitions.json
+- https://en.scratch-wiki.info/wiki/Scratch_File_Format_(3.0)
+- https://github.com/scratchfoundation/scratch-vm/blob/develop/src/serialization/sb3.js
+- G-Warp app.html function exportSB3
+
+UNSURE
+- Exact official website reject messages for each H-code (needs live upload)
+- Whether G-Warp import path always rebuilds rc from rotationCenter/res
