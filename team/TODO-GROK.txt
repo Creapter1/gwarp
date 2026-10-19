@@ -1,8 +1,8 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
 
-[x] R0–R8 fixture batches + S1 select SPEC
-[ ] V1 review transform4800.js + GW.toListIndex — NEXT
-[ ] S2 sb3-roundtrip SPEC
-[ ] S3 turbowarp-runtime SPEC
-[ ] S4 extensions-check-2
-[ ] V2 website docs check
+[x] R0–R8 + S1 + V1
+    V1 → grok/REVIEW-V1-transform4800-toListIndex.txt
+[ ] S2 SPEC-sb3-roundtrip — NEXT
+[ ] S3 SPEC-turbowarp-runtime
+[ ] S4 EXTENSIONS-check-2
+[ ] V2 website docs
