@@ -88,3 +88,9 @@ CHATGPT C3 — 2026-10-19 (STATIC REVIEW COMPLETE; EXTENSION TESTS NOT RUN)
 - Created chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt. Current app hash handler already exists in the reviewed v15.48.0 blob; do not duplicate chatgpt/scratch-link.js.
 - Extension issues for follow-up: referenced PNG icons absent from current tree, popup setting changes do not update existing tabs immediately, history wrappers remain installed when toggled off, no explicit hashchange observer, context-menu project parser should validate origin, privacy wording should distinguish browser sync preference storage from later G-Warp fetch.
 - Chrome/Firefox, prompt/cancel, failure, popup and package tests were NOT RUN. Next: C4 Grok expected-result/source evidence review.
+
+
+2026-10-19 SECURITY / AI-CONTEXT ADDENDUM (ChatGPT, static only)
+- Current app source blob 5ca624a515b9fc1310814c4740608c1cf3071028 has a user-owned Anthropic key flow: sessionStorage by default, localStorage only when Remember is checked, Remove key clears both; no hard-coded credential-pattern hits in the inspected app blob. A same-origin script could read either store.
+- A user click on Ask the connected AI sends the question plus non-clone sprite names, selected sprite, variable names and bounded selected-sprite block text to api.anthropic.com. The current UI lacks exact context preview and a context-off choice. Source default claude-sonnet-5-5 conflicts with the official docs' current active model ID claude-sonnet-5; actual API behavior is NOT TESTED.
+- Detailed report: chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt; maintained review: team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. app.html/index.html were not edited. Browser/API, exports, full Git history and repository secret settings remain untested.
