@@ -79,5 +79,5 @@ Status: OWNER APPROVED, not built. Needs: a draggable horizontal line, "feet" = 
 ID: OI-5  Animation costumes in folders (TurboWarp style)
 Description: TurboWarp groups costumes with "folder//name". Made animation costumes are named
   "<animation>//frame 1", "<animation>//frame 2" ...
-Status: BUILT in v15.49.0 (Make costumes, rename and the animation blocks use the new names). Next: the
-  costume list shows each folder as one group that opens/closes (like TurboWarp's folders addon, own look).
+Status: BUILT in v15.49.0 (Make costumes, rename and the animation blocks use the new names) + the costume list
+  shows each folder as one group that opens/closes (own look). Next: drag a costume into/out of a folder.

@@ -8937,13 +8937,25 @@ nodes.push(el);cur=b.next;}return nodes;};
     CS.sig0 = true;
     by('gwCosListSub').textContent = 'for ' + s.name;
     side.innerHTML = '';
+    /* v15.49.0 (Claude; owner: folders like TurboWarp's - "walk//frame 1"): costumes named "<folder>//<name>" that sit
+       next to each other are shown as one folder that opens and closes. The full name is unchanged (blocks see it). */
+    const fOf = c => { const n = String(c?.name || ''), k = n.indexOf('//'); return k > 0 ? n.slice(0, k) : null; };
+    CS.open = CS.open || new Set(); const actF = fOf(s.costumes[s.activeCostume]); if (actF && CS.sig.split('|')[2] !== CS.lastAct) { CS.open.add(s.name + '/' + actF); } CS.lastAct = CS.sig.split('|')[2];
     s.costumes.forEach((c, i) => {
+      const fo = fOf(c), key = fo ? s.name + '/' + fo : '', isOpen = !fo || CS.open.has(key);
+      if (fo && fOf(s.costumes[i - 1]) !== fo) { let n = 0; for (let j = i; j < s.costumes.length && fOf(s.costumes[j]) === fo; j++) n++;
+        const th = (() => { try { return c.canvas.toDataURL(); } catch { return ''; } })();
+        const head = h('div', { class: 'gw7-cos-folder' + (isOpen ? ' open' : ''), role: 'button', tabindex: '0', 'aria-expanded': String(isOpen), title: fo + ' - ' + n + ' costumes (click to ' + (isOpen ? 'close' : 'open') + ')',
+          onclick: () => { CS.open.has(key) ? CS.open.delete(key) : CS.open.add(key); renderCostumeList(true); }, onkeydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.currentTarget.click(); } } },
+          h('i', { class: 'fa-solid ' + (isOpen ? 'fa-folder-open' : 'fa-folder'), 'aria-hidden': 'true' }), h('img', { class: 'gw7-cos-fthumb', src: th, alt: '' }), h('span', { class: 'gw7-cos-fname', text: fo }), h('span', { class: 'gw7-cos-fcount', text: String(n) }));
+        side.appendChild(head); }
+      if (!isOpen) return;
       let src = ''; try { src = c.canvas.toDataURL(); } catch {}
-      const item = h('div', { class: 'gw7-cos-item', role: 'option', tabindex: '0', 'data-index': String(i), 'aria-selected': String(i === s.activeCostume), title: c.name,
+      const item = h('div', { class: 'gw7-cos-item' + (fo ? ' in-folder' : ''), role: 'option', tabindex: '0', 'data-index': String(i), 'aria-selected': String(i === s.activeCostume), title: c.name,
         onclick: () => selectCostume(i), onkeydown: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCostume(i); } } },
         h('span', { class: 'gw7-cos-num', text: String(i + 1) }),
         h('img', { class: 'gw7-cos-thumb', src, alt: '' }),
-        h('span', { class: 'gw7-cos-name', text: c.name }),
+        h('span', { class: 'gw7-cos-name', text: fo ? String(c.name).slice(fo.length + 2) : c.name }),
         h('span', { class: 'gw7-cos-tools' },
           h('button', { type: 'button', title: 'Duplicate', 'aria-label': 'Duplicate ' + c.name, html: '<i class="fa-regular fa-copy"></i>', onclick: e => { e.stopPropagation(); duplicateCostume(i); } }),
           s.costumes.length > 1 ? h('button', { type: 'button', class: 'danger', title: 'Delete', 'aria-label': 'Delete ' + c.name, html: '<i class="fa-regular fa-trash-can"></i>', onclick: e => { e.stopPropagation(); deleteCostume(i); } }) : null));
@@ -16954,6 +16966,11 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
 #gwCosTabs .gw-costab.active{background:var(--gw7-looks,#8b5cf6);color:#fff;border-color:rgba(255,255,255,.12);box-shadow:0 2px 10px rgba(139,92,246,.35)}
 #gwCosTabs .gw-costab:disabled{opacity:.38;cursor:not-allowed}
 #gwCosTabs .gw-costab:focus-visible{outline:2px solid #4ade80;outline-offset:2px}
+.gw7-cos-folder{display:flex;align-items:center;gap:6px;padding:6px 7px;margin:2px 0;border:1px solid #2b2f55;border-radius:10px;background:#14162a;color:#e5e7eb;font-size:11px;font-weight:800;cursor:pointer}
+.gw7-cos-folder:hover{background:#1b1d33}.gw7-cos-folder.open{border-color:#8b5cf6}
+.gw7-cos-folder i{color:#4ade80;width:14px}.gw7-cos-fthumb{width:22px;height:22px;object-fit:contain;border-radius:4px;background:#fff}
+.gw7-cos-fname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gw7-cos-fcount{padding:1px 6px;border-radius:99px;background:#26294a;color:#cbd5e1;font-size:10px}
+.gw7-cos-item.in-folder{margin-left:6px;width:calc(100% - 6px);box-sizing:border-box;border-left:2px solid #8b5cf6}
 #gwCosTabs .gw-costab-note{margin-left:auto;padding-right:8px;font-size:11px;color:#64748b}
 #gw18AnimBtn{display:none!important}
 #gwTilesPane{flex:1 1 auto;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px;border:1px solid var(--gw7-line,#262a45);border-radius:14px;background:#0d0f1c;min-height:320px}
