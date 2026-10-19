@@ -609,3 +609,38 @@ Gemini should revise only gemini/ files, first reconcile the current melody-engi
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this repository task, not unrelated older chat history.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+Date/time (timezone): 2026-10-19 (America/New_York; time not independently sampled)
+AI / model identity: ChatGPT GPT-6
+Task ID / title: N-C1..N-C4 — document Beta v15.49.0 website updates
+Base branch / commit (if known): main; source blobs fetched immediately before each documentation edit
+
+USER REQUEST (quote accurately; do not silently paraphrase):
+"Continue were you left off on the git huh"
+
+AI RESPONSE / WORK SUMMARY:
+Re-read the repository routing documents, TODO.txt, AI-TEAM.txt, team/NEXT-AFTER-v15.49-2026-10-19.txt, team/TODO-CHATGPT.txt, team/CONTINUOUS-WORK-QUEUE.txt, and this ChatGPT log. Followed the explicit N-C1..N-C4 assignment only. Updated the costume and animation guides for the v15.49.0 tabs, tile-sprite availability/rules, animation costume folders, and Glide behavior; updated the sound guide for style-specific melodies and the four explicitly confirmed new styles; added v15.49.0 to the changelog and homepage highlights.
+
+FILES CHANGED:
+- docs/costumes.html
+- docs/animation.html
+- docs/sounds.html
+- docs/changelog.html
+- index.html
+- chatgpt/AI-CHAT-LOG.txt — this entry
+- AI-TEAM.txt — one-line task log
+
+EVIDENCE / TEST STATUS:
+- SOURCE-VERIFIED: current repository task instructions and documented v15.49.0 facts in team/NEXT-AFTER-v15.49-2026-10-19.txt and team/FUTURE-IDEAS.txt.
+- Static edits committed through GitHub file updates. No browser, mobile, accessibility, or published-site test was run.
+- The full list of all 11 Song maker style names could not be independently verified from the available source fetch; docs name only the four styles explicitly confirmed in the release notes and say to check the current selector for the full list. This remains a narrow documentation gap, not a guessed list.
+- app.html was NOT edited. No integration or release action was performed.
+
+BLOCKERS / NEXT STEP:
+N-C4 says stop after the documentation tasks and add one line to AI-TEAM.txt. Do not start a review-ledger pass or other tasks from this assignment. Claude/owner still own browser/mobile/published-site verification.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records this repository task, not unrelated older chat history.
+--- END ENTRY ---
