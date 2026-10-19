@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "title": "G-Warp R4 clones fixtures",
+    "author": "Grok",
+    "date": "2026-10-18",
+    "batch": "R4",
+    "count": 30,
+    "evidence": "SOURCE-CONFIRMED scratch-vm develop control.js + rendered-target.makeClone + runtime MAX_CLONES",
+    "gwarp": "NOT TESTED",
+    "newOpcodes": {
+      "create_clone": "control_create_clone_of",
+      "delete_this_clone": "control_delete_this_clone",
+      "when_start_as_clone": "control_start_as_clone",
+      "when_receive": "event_whenbroadcastreceived",
+      "broadcast": "event_broadcast"
+    },
+    "notes": [
+      "MAX_CLONES = 300 (runtime.js static getter)",
+      "makeClone copies x,y,direction,visible,size,currentCostume,rotationStyle,effects,variables",
+      "Stage cannot be cloned (makeClone returns null)",
+      "delete this clone on original is no-op",
+      "control_start_as_clone restartExistingThreads: false"
+    ]
+  },
+  "fixtures": [
+    {"id": "K001", "setup": "create clone myself under limit", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, "expect": {"cloneCount": 1, "notes": "one non-original target for this sprite"}, "source": "control.js:152-174; makeClone"},
+    {"id": "K002", "setup": "clone copies direction", "blocks": {"hat": "when_flag", "stack": [{"type": "point_in_direction", "direction": 45}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "clone.direction === 45"}, "source": "rendered-target.js makeClone newClone.direction = this.direction"},
+    {"id": "K003", "setup": "clone copies size", "blocks": {"hat": "when_flag", "stack": [{"type": "set_size", "size": 50}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "clone.size === 50"}, "source": "makeClone newClone.size = this.size"},
+    {"id": "K004", "setup": "clone copies costume index", "blocks": {"hat": "when_flag", "stack": [{"type": "switch_costume", "costume": 2}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "clone.currentCostume matches original (0-based internal)"}, "source": "makeClone currentCostume copy"},
+    {"id": "K005", "setup": "clone copies x y", "blocks": {"hat": "when_flag", "stack": [{"type": "go_to_xy", "x": 30, "y": -20}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "clone at 30,-20"}, "source": "makeClone x,y copy"},
+    {"id": "K006", "setup": "clone placed behind original", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "newClone.goBehindOther(cloneTarget)"}, "source": "control.js:173"},
+    {"id": "K007", "setup": "local var copied then independent", "blocks": {"hat": "when_flag", "stack": [{"type": "set_var", "name": "localV", "value": 7, "scope": "sprite"}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "clone starts with localV=7; changing original localV later does not change clone"}, "source": "makeClone variables = duplicateVariables()"},
+    {"id": "K008", "setup": "delete this clone on original", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_this_clone"}, {"type": "say", "value": "still here"}]}, "expect": {"say": "still here"}, "source": "control.js:177-178 isOriginal return"},
+    {"id": "K009", "setup": "stage cannot clone", "blocks": {"hat": "when_flag", "target": "stage", "stack": [{"type": "create_clone", "option": "_myself_"}]}, "expect": {"cloneCount": 0, "notes": "makeClone returns null if isStage"}, "source": "rendered-target.js:956-957"},
+    {"id": "K010", "setup": "missing sprite name", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "NoSprite"}, {"type": "say", "value": "ok"}]}, "expect": {"say": "ok", "cloneCount": 0}, "source": "control.js:164-165 !cloneTarget return"},
+    {"id": "K011", "setup": "301 clones to 300", "blocks": {"hat": "when_flag", "stack": [{"type": "repeat", "times": 300, "body": [{"type": "create_clone", "option": "_myself_"}]}]}, "expect": {"cloneCount_le": 300}, "source": "runtime MAX_CLONES=300; clonesAvailable"},
+    {"id": "K012", "setup": "301 301st blocked", "blocks": {"hat": "when_flag", "stack": [{"type": "repeat", "times": 301, "body": [{"type": "create_clone", "option": "_myself_"}]}]}, "expect": {"cloneCount": 300, "notes": "extra createClone no-ops when counter hit"}, "source": "makeClone null when !clonesAvailable()"},
+    {"id": "K013", "setup": "when I start as clone runs on clone only", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, {"hat": "when_start_as_clone", "stack": [{"type": "say", "value": "clone"}]}]}, "expect": {"notes": "say clone from clone target not original"}, "source": "control getHats start_as_clone; clone fires hat"},
+    {"id": "K014", "setup": "start as clone restartExistingThreads false", "blocks": {"hat": "when_start_as_clone", "stack": []}, "expect": {"notes": "hat option restartExistingThreads:false — re-cloning does not restart same hat threads mid-run the way some broadcast hats do"}, "source": "control.js getHats L47-49"},
+    {"id": "K015", "setup": "clone of other sprite by name", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "Other"}]}, "expect": {"notes": "requires sprite named Other; clone is of Other not self"}, "source": "getSpriteTargetByName then makeClone"},
+    {"id": "K016", "setup": "clones receive broadcast", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}, {"type": "broadcast", "message": "ping"}]}, {"hat": "when_receive", "message": "ping", "stack": [{"type": "change_var", "name": "hits", "by": 1}]}]}, "expect": {"notes": "both original and clone can run when-receive; hits may be 2 if both have the script"}, "source": "broadcast starts hats on all targets with matching hat"},
+    {"id": "K017", "setup": "visible copied", "blocks": {"hat": "when_flag", "stack": [{"type": "hide"}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "clone.visible === false"}, "source": "makeClone visible copy"},
+    {"id": "K018", "setup": "effects copied", "blocks": {"hat": "when_flag", "stack": [{"type": "set_effect", "effect": "ghost", "value": 50}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "clone.effects.ghost === 50 (Clone.simple)"}, "source": "makeClone effects = Clone.simple(this.effects)"},
+    {"id": "K019", "setup": "rotation style copied", "blocks": {"hat": "when_flag", "stack": [{"type": "set_rotation_style", "style": "left-right"}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "clone.rotationStyle matches"}, "source": "makeClone rotationStyle"},
+    {"id": "K020", "setup": "clone delete removes target", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, {"hat": "when_start_as_clone", "stack": [{"type": "delete_this_clone"}]}]}, "expect": {"cloneCount": 0, "notes": "after clone boots and deletes itself"}, "source": "deleteClone disposeTarget + stopForTarget"},
+    {"id": "K021", "setup": "original survives clone delete", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}, {"type": "say", "value": "orig"}]}, {"hat": "when_start_as_clone", "stack": [{"type": "delete_this_clone"}]}]}, "expect": {"say": "orig"}, "source": "only clone disposed"},
+    {"id": "K022", "setup": "two clones", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"cloneCount": 2}, "source": "two makeClone success"},
+    {"id": "K023", "setup": "clone counter increments", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "runtime.changeCloneCounter(1) per successful makeClone"}, "source": "rendered-target.js:959"},
+    {"id": "K024", "setup": "draggable copied", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "newClone.draggable = this.draggable"}, "source": "makeClone L965"},
+    {"id": "K025", "setup": "shared costumes object", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "sprite.costumes shared across clones; currentCostume index is per-target"}, "source": "sprite.js comment: shared costumes"},
+    {"id": "K026", "setup": "clone of myself string", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, "expect": {"cloneCount": 1}, "source": "CLONE_OPTION Cast.toString; _myself_ branch"},
+    {"id": "K027", "setup": "stop all deletes threads not auto-delete clones", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}, {"type": "stop", "option": "all"}]}, "expect": {"notes": "clones may remain as targets until green-flag reset; threads stopped — exact G-Warp cleanup may differ; document Scratch stopAll vs target list"}, "source": "stop all stops threads; clone targets often cleared on green flag"},
+    {"id": "K028", "setup": "299 clones then one more ok", "blocks": {"hat": "when_flag", "stack": [{"type": "repeat", "times": 299, "body": [{"type": "create_clone", "option": "_myself_"}]}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"cloneCount": 300}, "source": "boundary 299 then +1 = 300"},
+    {"id": "K029", "setup": "local list independent on clone", "blocks": {"hat": "when_flag", "stack": [{"type": "add_to_list", "list": "localL", "item": "a", "scope": "sprite"}, {"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "duplicateVariables copies lists; later add on original does not grow clone list"}, "source": "duplicateVariables"},
+    {"id": "K030", "setup": "isOriginal true only for first", "blocks": {"hat": "when_flag", "stack": [{"type": "create_clone", "option": "_myself_"}]}, "expect": {"notes": "sprite.createClone sets isOriginal = clones.length===0 for the first only; subsequent false"}, "source": "sprite.js createClone isOriginal = this.clones.length === 0"}
+  ]
+}
