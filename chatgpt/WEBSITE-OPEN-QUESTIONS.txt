@@ -26,10 +26,17 @@ Evidence: static GitHub source/document review only. No browser test was run.
    The pages describe the v15.48.0 Select handles, flipbook/onion skin, rig/animation tools, Song maker, clone limit and Power lines based on existing release/team notes. These are not independently browser-tested by ChatGPT. Claude's reported regression is recorded separately in team/AI-STATUS.txt.
 
 8. Static link check and live-site/mobile verification
-    After the latest Pass 2 edits, all 15 public HTML pages (index.html plus 14 docs pages) were re-fetched from current main in two static passes. Across the checks, 339 local href/src references were scanned with 0 missing local file targets and 0 broken fragments detected in checked pages; new homepage-card anchors and the three-step starter targets were included. This used the GitHub tree and source, not a browser. It does not verify app.html's #open hash handler, external URL availability, deployed fragment behavior, browser rendering, phone-width layout or the published deployment. No published-site browser test or phone-width browser test was run.
+    After the homepage update, the current main branch has 25 documentation HTML pages (16 core docs plus the tutorials hub and eight tutorial lessons). Static source/tree checks across those pages found 0 missing local href/src targets, 0 duplicate IDs, no heading-level skips, and no images without alt text (no inline <img> elements were present in these pages). All 25 pages now have a visible :focus-visible outline, a Tutorials navigation entry, and footer links to Glossary and Parents & teachers. Fragment checks on the pages and linked targets examined found no broken anchors; the new homepage feature-card anchors were also checked against their target headings. This remains STATIC source/tree evidence, not a browser test. It does not verify app.html's #open hash handler, external URL availability, browser rendering, phone-width layout, screen-reader behavior, visual contrast by measurement, or the published deployment. Claude owns the real browser/mobile pass per team/CHATGPT-ROUND2-2026-10-19.txt.
 
 9. Exact feature list / animation block names
    The assignment refers to “the 4 Animation blocks” but does not list their exact visible names. Confirm from the live app's Animation palette before publishing a name-by-name list.
+
+ROUND 2 DOCUMENTATION CONTENT — 2026-10-18
+- Added all eight prioritized tutorial pages plus a hub under docs/tutorials/ and linked Tutorials in the left menu on all 25 docs pages.
+- Added docs/glossary.html (65 terms), docs/parents.html (privacy claims deliberately limited to confirmed facts), expanded docs/blocks.html with over 100 core-block examples and behavior caveats, and shortened README.md with direct docs/workflow/licence links.
+- Added visible keyboard focus styles across the docs pages. This is a static CSS change; actual keyboard operation and visual contrast still require Claude's browser review.
+- Not closed: canonical published URL; visual freshness of embedded screenshots; exact current extension/gallery count and native-vs-third-party inventory; four exact visible Animation block names; and runtime confirmation that the examples work as written.
+
 
 10. Credits
     Confirmed: root LICENSE exists and contains the MIT License (blob 416e68ec518ad79447f98a7e54a6d48b9947055f). The Credits page links to ../LICENSE. Still open: verify each extension's creator and licence from the current extension gallery before claiming the credit list is exhaustive.
