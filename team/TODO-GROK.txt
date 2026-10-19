@@ -1,8 +1,7 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
 
-[x] R0–R8 + S1 + V1
-    V1 → grok/REVIEW-V1-transform4800-toListIndex.txt
-[ ] S2 SPEC-sb3-roundtrip — NEXT
-[ ] S3 SPEC-turbowarp-runtime
+[x] R0–R8 + S1 + V1 + S2
+    S2 → grok/SPEC-sb3-roundtrip.txt
+[ ] S3 SPEC-turbowarp-runtime — NEXT
 [ ] S4 EXTENSIONS-check-2
 [ ] V2 website docs
