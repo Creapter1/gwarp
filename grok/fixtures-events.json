@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "title": "G-Warp R5 events + broadcasts fixtures",
+    "author": "Grok",
+    "date": "2026-10-18",
+    "batch": "R5",
+    "count": 30,
+    "evidence": "SOURCE-CONFIRMED scratch-vm develop event.js + runtime.startHats",
+    "gwarp": "NOT TESTED",
+    "newOpcodes": {
+      "broadcast": "event_broadcast",
+      "broadcast_and_wait": "event_broadcastandwait",
+      "when_receive": "event_whenbroadcastreceived",
+      "when_key": "event_whenkeypressed",
+      "when_backdrop": "event_whenbackdropswitchesto",
+      "when_greater": "event_whengreaterthan",
+      "when_flag": "event_whenflagclicked",
+      "when_clicked": "event_whenthisspriteclicked"
+    }
+  },
+  "fixtures": [
+    {"id": "E001", "setup": "simple broadcast", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "broadcast", "message": "go"}]}, {"hat": "when_receive", "message": "go", "stack": [{"type": "say", "value": "hi"}]}]}, "expect": {"say": "hi"}, "source": "event.js broadcast → startHats whenbroadcastreceived"},
+    {"id": "E002", "setup": "broadcast name case-insensitive match", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "broadcast", "message": "Ping"}]}, {"hat": "when_receive", "message": "ping", "stack": [{"type": "say", "value": "ok"}]}]}, "expect": {"say": "ok", "notes": "startHats uppercases match fields"}, "source": "runtime.startHats optMatchFields toUpperCase"},
+    {"id": "E003", "setup": "broadcast restarts receiver", "blocks": {"scripts": [{"hat": "when_receive", "message": "loop", "stack": [{"type": "forever", "body": [{"type": "change_var", "name": "C", "by": 1}]}]}, {"hat": "when_flag", "stack": [{"type": "broadcast", "message": "loop"}, {"type": "wait", "seconds": 0.1}, {"type": "broadcast", "message": "loop"}]}]}, "expect": {"notes": "restartExistingThreads true for whenbroadcastreceived — second broadcast restarts the hat thread"}, "source": "event getHats whenbroadcastreceived restartExistingThreads:true"},
+    {"id": "E004", "setup": "broadcast and wait waits for receivers", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "set_var", "name": "C", "value": 0}, {"type": "broadcast_and_wait", "message": "work"}, {"type": "say", "value": {"type": "var", "name": "C"}}]}, {"hat": "when_receive", "message": "work", "stack": [{"type": "change_var", "name": "C", "by": 1}]}]}, "expect": {"say": "1"}, "source": "broadcastAndWait waits until started threads leave runtime.threads"},
+    {"id": "E005", "setup": "broadcast and wait no receivers", "blocks": {"hat": "when_flag", "stack": [{"type": "broadcast_and_wait", "message": "nobody"}, {"type": "say", "value": "done"}]}, "expect": {"say": "done"}, "source": "startedThreads.length===0 return immediately"},
+    {"id": "E006", "setup": "two receivers both run", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "set_var", "name": "C", "value": 0}, {"type": "broadcast_and_wait", "message": "x"}, {"type": "say", "value": {"type": "var", "name": "C"}}]}, {"hat": "when_receive", "message": "x", "stack": [{"type": "change_var", "name": "C", "by": 1}]}, {"hat": "when_receive", "message": "x", "stack": [{"type": "change_var", "name": "C", "by": 1}]}]}, "expect": {"say": "2", "notes": "same sprite two hats both start"}, "source": "startHats all matching scripts"},
+    {"id": "E007", "setup": "execution order follows executableTargets", "blocks": {"notes": "multi-sprite: receivers run in executableTargets order (reverse of draw/layer order)"}, "expect": {"notes": "document order; compare list append order across sprites"}, "source": "runtime allScriptsByOpcodeDo uses executableTargets"},
+    {"id": "E008", "setup": "when key any", "blocks": {"hat": "when_key", "key": "any", "stack": [{"type": "say", "value": "any"}]}, "expect": {"notes": "KEY_PRESSED starts both specific key hats and KEY_OPTION any"}, "source": "event.js constructor KEY_PRESSED dual startHats"},
+    {"id": "E009", "setup": "when key space restartExisting false", "blocks": {"hat": "when_key", "key": "space", "stack": [{"type": "forever", "body": []}]}, "expect": {"notes": "holding key does not restart if thread still running"}, "source": "whenkeypressed restartExistingThreads:false"},
+    {"id": "E010", "setup": "when backdrop switches restart true", "blocks": {"hat": "when_backdrop", "backdrop": "backdrop1", "stack": [{"type": "say", "value": "bd"}]}, "expect": {"notes": "switching to backdrop1 starts/restarts hat"}, "source": "whenbackdropswitchesto restartExistingThreads:true"},
+    {"id": "E011", "setup": "when timer greater than", "blocks": {"hat": "when_greater", "menu": "timer", "value": 0.5, "stack": [{"type": "say", "value": "t"}]}, "expect": {"notes": "edgeActivated; fires when projectTimer > 0.5 after rising edge"}, "source": "hatGreaterThanPredicate timer; edgeActivated:true"},
+    {"id": "E012", "setup": "when flag restartExisting true", "blocks": {"hat": "when_flag", "stack": [{"type": "forever", "body": [{"type": "change_var", "name": "C", "by": 1}]}]}, "expect": {"notes": "second green flag restarts the hat thread"}, "source": "whenflagclicked restartExistingThreads:true"},
+    {"id": "E013", "setup": "unknown broadcast message", "blocks": {"hat": "when_flag", "stack": [{"type": "broadcast", "message": ""}, {"type": "say", "value": "after"}]}, "expect": {"say": "after", "notes": "if lookupBroadcastMsg fails, no hats"}, "source": "broadcast if (broadcastVar)"},
+    {"id": "E014", "setup": "broadcast and wait yields while receivers run", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "broadcast_and_wait", "message": "slow"}, {"type": "set_var", "name": "done", "value": 1}]}, {"hat": "when_receive", "message": "slow", "stack": [{"type": "wait", "seconds": 0.05}]}]}, "expect": {"variables": {"done": 1}, "notes": "done set only after wait"}, "source": "broadcastAndWait waiting loop"},
+    {"id": "E015", "setup": "sprite click restart true", "blocks": {"hat": "when_clicked", "stack": [{"type": "say", "value": "click"}]}, "expect": {"notes": "whenthisspriteclicked restartExistingThreads:true"}, "source": "getHats"},
+    {"id": "E016", "setup": "touching object edge hat", "blocks": {"hat": "when_touching", "object": "_edge_", "stack": [{"type": "say", "value": "edge"}]}, "expect": {"notes": "edgeActivated; restartExisting false"}, "source": "whentouchingobject"},
+    {"id": "E017", "setup": "loudness greater hat", "blocks": {"hat": "when_greater", "menu": "loudness", "value": 10, "stack": [{"type": "say", "value": "loud"}]}, "expect": {"notes": "needs audioEngine; may not fire headless"}, "source": "hatGreaterThanPredicate loudness"},
+    {"id": "E018", "setup": "broadcast option is message name not id", "blocks": {"hat": "when_flag", "stack": [{"type": "broadcast", "message": "msg"}]}, "expect": {"notes": "uses broadcastVar.name for BROADCAST_OPTION match"}, "source": "broadcast.js L86-88"},
+    {"id": "E019", "setup": "multiple sprites receive", "blocks": {"notes": "Sprite A and B both when receive m; broadcast from A; both run"}, "expect": {"notes": "startHats iterates all targets unless optTarget"}, "source": "startHats allScriptsByOpcodeDo"},
+    {"id": "E020", "setup": "green flag clears and starts flag hats", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": "flag"}]}, "expect": {"say": "flag"}, "source": "runtime green flag startHats whenflagclicked"},
+    {"id": "E021", "setup": "broadcast while receiver STATUS_DONE can restart", "blocks": {"scripts": [{"hat": "when_receive", "message": "once", "stack": [{"type": "change_var", "name": "C", "by": 1}]}, {"hat": "when_flag", "stack": [{"type": "broadcast", "message": "once"}, {"type": "broadcast", "message": "once"}]}]}, "expect": {"notes": "with restart true, sequential broadcasts in same tick may restart; exact count depends on thread timing"}, "source": "_restartThread / startHats"},
+    {"id": "E022", "setup": "key pressed does not restart running", "blocks": {"hat": "when_key", "key": "a", "stack": [{"type": "wait", "seconds": 1}]}, "expect": {"notes": "second KEY_PRESSED while wait runs: no second thread (restart false + active check)"}, "source": "startHats restartExistingThreads false branch"},
+    {"id": "E023", "setup": "timer > 0 at start may be false", "blocks": {"hat": "when_greater", "menu": "timer", "value": 0, "stack": [{"type": "say", "value": "tick"}]}, "expect": {"notes": "edge activated — needs transition; not pure level trigger every frame without edge logic"}, "source": "edgeActivated hats"},
+    {"id": "E024", "setup": "broadcast and wait all waiting yieldTick", "blocks": {"notes": "if every started thread isWaitingThread → yieldTick else yield"}, "expect": {"notes": "scheduling detail for runner"}, "source": "broadcastAndWait L120-128"},
+    {"id": "E025", "setup": "stage click hat", "blocks": {"hat": "when_stage_clicked", "stack": [{"type": "say", "value": "stage"}]}, "expect": {"notes": "restartExistingThreads true"}, "source": "whenstageclicked"},
+    {"id": "E026", "setup": "receiver order same sprite = script order in allScriptsByOpcodeDo", "blocks": {"notes": "two when-receive on one sprite: order follows script enumeration"}, "expect": {"notes": "append to list to observe order"}, "source": "allScriptsByOpcodeDo"},
+    {"id": "E027", "setup": "broadcast empty name", "blocks": {"hat": "when_flag", "stack": [{"type": "broadcast", "message": ""}, {"type": "say", "value": "cont"}]}, "expect": {"say": "cont"}, "source": "lookup may fail; no throw"},
+    {"id": "E028", "setup": "when receive + stop this script", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "broadcast", "message": "s"}]}, {"hat": "when_receive", "message": "s", "stack": [{"type": "stop", "option": "this script"}, {"type": "say", "value": "no"}]}]}, "expect": {"say": null, "notes": "say must not run"}, "source": "stop this script ends receiver thread"},
+    {"id": "E029", "setup": "flag click stops prior flag threads via restart", "blocks": {"hat": "when_flag", "stack": [{"type": "forever", "body": [{"type": "wait", "seconds": 0.01}]}]}, "expect": {"notes": "pressing green flag again restarts rather than stacking forever loops"}, "source": "whenflagclicked restartExistingThreads true"},
+    {"id": "E030", "setup": "broadcast message match uses field value equality after upper", "blocks": {"scripts": [{"hat": "when_flag", "stack": [{"type": "broadcast", "message": "AbC"}]}, {"hat": "when_receive", "message": "aBc", "stack": [{"type": "say", "value": "match"}]}]}, "expect": {"say": "match"}, "source": "startHats field compare after toUpperCase on optMatchFields; hat field values also compared upper in practice via stored fields"}
+  ]
+}
