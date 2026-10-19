@@ -1,3 +1,8 @@
+RETIRED 2026-10-18 — historical template only; do not use for new work.
+All former DeepSeek work now routes directly to team/TODO-GEMINI.txt and gemini/lab/. Keep this file only for historical traceability.
+
+--- ORIGINAL TEMPLATE BELOW (PRESERVED FOR HISTORY) ---
+
 G-WARP — TEMPORARY DEEPSEEK TASK HANDOFF
 Status: TEMP COVERAGE / NEEDS DEEPSEEK REVIEW
 Date:
