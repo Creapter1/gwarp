@@ -14,9 +14,9 @@ ACTIVE TASKS (ordered)
 [x] C2. Static review delivered -> chatgpt/REVIEW-clone-safety-2026-10-19.txt. Candidate remains SUPERSEDED; no runtime test.
 [x] C3. Static review delivered -> chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt. Extension packaging/browser flow remains NOT TESTED.
 [x] C4. Static review delivered -> chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt. T043 repeat 2.7 remains wrong in TESTS.txt (Scratch VM uses Math.round -> 3); Grok must revise its own files.
-[CLAIM NEXT] C5. Review gemini/lab/pmp-loader.js, gemini/lab/NOTES-pmp.txt and gemini/lab/test-pmp-loader.js; verify parser API, a legally shareable real fixture/assets and meaningful assertions. Gemini folder is read-only for ChatGPT.
-[ ] C6. Review each new deliverable as it arrives and update CROSS-AI-REVIEW-2026-10-15.txt with date, commit/blob, severity, evidence class, fix and acceptance test.
-[ ] C7. Create a concise owner report every major review cycle: verified progress, blocked work, decisions needed, next exact task.
+[x] C5. Static review delivered -> chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt. The candidate remains BLOCKED: fake-byte classification only, no real decode fixture/assets, empty assets Map, unverified v1.6.0 CDN import and stale deepseek test path. No browser/runtime test.
+[ONGOING] C6. Keep the independent review ledger current whenever a new deliverable materially changes status; latest updates cover C4/C5 in CROSS-AI-REVIEW-2026-10-15.txt.
+[CLAIM NEXT] C7. Create a concise owner report for the C1-C5 review cycle: verified progress, blocked work, owner/author decisions, and the next exact actions. Do not imply runtime verification.
 
 REVIEW FORMAT
 - Artifact / base commit or blob SHA:
