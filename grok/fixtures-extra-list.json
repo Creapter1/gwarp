@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "Extra list-index fixtures (append to fixtures.json)",
+    "author": "Grok",
+    "date": "2026-10-18",
+    "note": "Covers list last/all paths Claude fixed in v15.48.0; merge into fixtures.json or load alongside",
+    "evidence": "cast.js toListIndex; scratch3_data.js delete/insert/replace/getItem"
+  },
+  "fixtures": [
+    {"id": "T130", "setup": "list L=[a,b,c]", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "add_to_list", "list": "L", "item": "a"}, {"type": "add_to_list", "list": "L", "item": "b"}, {"type": "add_to_list", "list": "L", "item": "c"}, {"type": "say", "value": {"type": "item_of_list", "list": "L", "index": "last"}}]}, "expect": {"say": "c"}, "source": "cast.js toListIndex last→length"},
+    {"id": "T131", "setup": "list L empty", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "say", "value": {"type": "item_of_list", "list": "L", "index": "last"}}]}, "expect": {"say": ""}, "source": "last on empty → INVALID"},
+    {"id": "T132", "setup": "delete last", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "add_to_list", "list": "L", "item": "a"}, {"type": "add_to_list", "list": "L", "item": "b"}, {"type": "add_to_list", "list": "L", "item": "c"}, {"type": "delete_of_list", "list": "L", "index": "last"}, {"type": "say", "value": {"type": "length_of_list", "list": "L"}}]}, "expect": {"say": "2", "lists": {"L": ["a", "b"]}}, "source": "deleteOfList last"},
+    {"id": "T133", "setup": "delete all index", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "add_to_list", "list": "L", "item": "a"}, {"type": "add_to_list", "list": "L", "item": "b"}, {"type": "delete_of_list", "list": "L", "index": "all"}, {"type": "say", "value": {"type": "length_of_list", "list": "L"}}]}, "expect": {"say": "0", "lists": {"L": []}}, "source": "deleteOfList all → LIST_ALL"},
+    {"id": "T134", "setup": "insert at last appends", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "add_to_list", "list": "L", "item": "a"}, {"type": "add_to_list", "list": "L", "item": "b"}, {"type": "insert_at_list", "list": "L", "index": "last", "item": "x"}, {"type": "say", "value": {"type": "item_of_list", "list": "L", "index": "last"}}]}, "expect": {"say": "x", "lists": {"L": ["a", "b", "x"]}}, "source": "insertAtList toListIndex(last,len+1)→append"},
+    {"id": "T135", "setup": "replace last", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "add_to_list", "list": "L", "item": "a"}, {"type": "add_to_list", "list": "L", "item": "b"}, {"type": "replace_item_of_list", "list": "L", "index": "last", "item": "z"}, {"type": "say", "value": {"type": "item_of_list", "list": "L", "index": 2}}]}, "expect": {"say": "z", "lists": {"L": ["a", "z"]}}, "source": "replaceItemOfList last"},
+    {"id": "T136", "setup": "item # of b", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "add_to_list", "list": "L", "item": "a"}, {"type": "add_to_list", "list": "L", "item": "b"}, {"type": "say", "value": {"type": "item_num_of_list", "list": "L", "item": "b"}}]}, "expect": {"say": "2"}, "source": "getItemNumOfList"},
+    {"id": "T137", "setup": "item # of 10 vs string 10", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "add_to_list", "list": "L", "item": "10"}, {"type": "say", "value": {"type": "item_num_of_list", "list": "L", "item": 10}}]}, "expect": {"say": "1"}, "source": "Cast.compare"},
+    {"id": "T138", "setup": "insert all no-op", "blocks": {"hat": "when_flag", "stack": [{"type": "delete_all_of_list", "list": "L"}, {"type": "add_to_list", "list": "L", "item": "a"}, {"type": "insert_at_list", "list": "L", "index": "all", "item": "x"}, {"type": "say", "value": {"type": "length_of_list", "list": "L"}}]}, "expect": {"say": "1", "lists": {"L": ["a"]}}, "source": "insert acceptAll=false all→INVALID"},
+    {"id": "T139", "setup": "letter 4 of abc", "blocks": {"hat": "when_flag", "stack": [{"type": "say", "value": {"type": "letter_of", "letter": 4, "string": "abc"}}]}, "expect": {"say": ""}, "source": "letterOf OOB (T011 family)"}
+  ]
+}
