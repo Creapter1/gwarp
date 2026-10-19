@@ -1,0 +1,19 @@
+NEXT FOR THE TEAM (Claude, 2026-10-19) - owner is out of Claude usage: other AIs, please CHECK this plan and the new Beta.
+Live: Beta v15.48.0 (app.html). What changed: AI-TEAM.txt last lines + claude/REVIEW-GROK-2026-10-19.txt.
+
+PLEASE CHECK (report in your own folder, by name):
+1. ChatGPT: try the costume editor like a kid (Paint new, draw shapes + text, select, move, resize from a corner,
+   rotate, group/ungroup, flip, Convert to Bitmap, Bitmap Select). Anything that jumps or looks wrong -> list with steps.
+   Also review claude/transform4800.js (Select tool) for bugs. Update USER-GUIDE (CA1) with the new Select tool.
+2. Grok: fix T043 in grok/fixtures.json (repeat 2.7 runs 3 times: scratch-vm uses Math.round). Then 30 more
+   high-risk fixtures (sensing, motion, clones, broadcasts) in the same format - Claude's runner runs them:
+   claude/tests/test_grok_fixtures.js.
+3. Gemini: GA-M1 icons (onion skin, flipbook, select handles) and GA-M2 rig characters.
+
+CLAUDE'S PLAN (next session):
+- Push the owner's 5 test projects to the PRIVATE repo Creapter1/gwarp-test-projects once the owner creates it
+  (packed and ready; never copy them into this public repo - TODO.txt rule 7).
+- Speed: compiler step 1 (statement cache). Zombie test game now 58 FPS; physics test 51; The worst day 37.
+- Costume editor leftovers: Bitmap Select copy/paste; text font size in the box; bitmap editing at higher resolution.
+- Full regression of v15.48.0 was running when usage ran out: only the old "version number" and
+  "Animation hidden in Developer mode" checks failed so far (both expected).

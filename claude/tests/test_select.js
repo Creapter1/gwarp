@@ -21,6 +21,16 @@ const [file, shots] = process.argv.slice(2);
   await tool('line'); await drag(B.x + 400, B.y + 80, B.x + 520, B.y + 120);
   await tool('gw:brush'); await drag(B.x + 90, B.y + 260, B.x + 200, B.y + 300);
   await tool('gw:text'); await p.mouse.click(B.x + 330, B.y + 300); await p.waitForTimeout(250); await p.keyboard.type('Hi'); await p.keyboard.press('Enter'); await p.waitForTimeout(300);
+  // like Scratch: the rectangle you just drew keeps its box, and its corner can be dragged while the Rectangle tool is still on
+  await tool('rect'); await drag(B.x + 420, B.y + 300, B.x + 480, B.y + 340);
+  let fresh = await p.evaluate(() => ({ n: document.querySelectorAll('#gwTxOverlay [data-h]').length, tag: GW_TRANSFORM.sel[0]?.localName }));
+  ok(fresh.n === 9 && fresh.tag === 'rect', 'a newly drawn rectangle shows its box with handles right away ' + JSON.stringify(fresh));
+  const fr0 = (await art()).pop(); const SE = await p.evaluate(() => { const r = document.querySelector('#gwTxOverlay [data-h="se"]').getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; });
+  await drag(SE.x, SE.y, SE.x + 30, SE.y + 20); const fr1 = (await art()).pop();
+  ok(Math.abs(fr1.x0 - fr0.x0) < 1 && fr1.w > fr0.w + 15, `...and dragging its corner resizes it (width ${fr0.w.toFixed(0)} → ${fr1.w.toFixed(0)}), no extra shape`);
+  const cnt = (await art()).length; await drag(B.x + 30, B.y + 330, B.x + 60, B.y + 360);
+  ok((await art()).length === cnt + 1, 'clicking somewhere else draws a new shape');
+  await p.evaluate(() => { const s = document.getElementById('gwVectorCanvasV15'); [...s.children].filter(n => n.localName === 'rect').slice(1).forEach(n => n.remove()); });
   await tool('select'); await p.waitForTimeout(200);
   let A = await art(); const tags = A.map(a => a.tag); console.log('shapes: ' + tags.join(','));
   ok(['rect', 'ellipse', 'line', 'path', 'text'].every(t => tags.includes(t) || (t === 'ellipse' && tags.includes('circle'))), 'drew a rectangle, circle, line, brush stroke and text');

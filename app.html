@@ -21620,6 +21620,8 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   const topArt = t => { const s = svgEl(); while (t && t.parentNode && t.parentNode !== s) t = t.parentNode; return isArt(t) ? t : null; };
   const selectToolOn = () => { if (mode() !== 'vector' || window.GW_VECTOR_TOOLS2?.tool) return false; const a = document.querySelector('#gwSvgToolsV15 button.active'); return !!a && (a.dataset.gwpe === 'select' || a.dataset.svgTool === 'select'); };
   const typing = e => !!e.target?.closest?.('input,textarea,select,[contenteditable="true"]');
+  // Rectangle / Circle / Line: like Scratch, the shape you just drew keeps its box so you can resize it right away
+  const shapeToolOn = () => { if (mode() !== 'vector' || window.GW_VECTOR_TOOLS2?.tool) return false; const a = document.querySelector('#gwSvgToolsV15 button.active'); return !!a && ['rect', 'circle', 'line'].includes(a.dataset.gwpe); };
 
   const T = window.GW_TRANSFORM = { sel: [], drag: null, marquee: null, stats: { moves: 0 } };
 
@@ -21865,6 +21867,17 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     const w = wrapEl(); if (!w) return n < 120 && setTimeout(() => wire(n + 1), 500);
     if (w.__gwTx) return; w.__gwTx = true;
     w.addEventListener('pointerdown', onDown, true);
+    // a shape drawn with Rectangle / Circle / Line gets its box when the mouse is let go
+    let freshNew = null;
+    new MutationObserver(rs => { if (!shapeToolOn()) return; for (const r of rs) for (const n of r.addedNodes) if (isArt(n) && /^(rect|ellipse|circle|line|path)$/.test(n.localName)) freshNew = n; }).observe(svgEl(), { childList: true });
+    addEventListener('pointerup', () => { if (freshNew && freshNew.isConnected && shapeToolOn()) { const n = freshNew; freshNew = null; setTimeout(() => { if (n.isConnected && shapeToolOn()) { T.fresh = n; setSel([n]); } }, 40); /* after the tool's own clean-up */ } else freshNew = null; }, true);
+    // ...and its handles / body can be grabbed before the tool would start a new shape (document runs before the tools)
+    document.addEventListener('pointerdown', e => {
+      if (e.button !== 0 || !shapeToolOn() || !T.fresh || T.sel[0] !== T.fresh || T.sel.length !== 1) return;
+      const h = e.target.closest?.('#gwTxOverlay [data-h]'), t = topArt(e.target);
+      if (!h && t !== T.fresh) { setSel([]); T.fresh = null; return; } // somewhere else: the tool draws a new shape
+      e.stopPropagation(); e.preventDefault(); undoPush(); begin(h ? h.dataset.h : 'move', e);
+    }, true);
     w.addEventListener('pointerdown', bmpDown, true); addEventListener('pointermove', bmpMove, true); addEventListener('pointerup', bmpUp, true);
     w.addEventListener('pointerdown', e => { if (e.button !== 0 || !textToolOn()) return; const t = topArt(e.target); if (t?.localName === 'text') { e.stopPropagation(); e.preventDefault(); editText(t); } }, true);
     w.addEventListener('dblclick', e => { if (!selectToolOn()) return; const t = topArt(e.target); if (t?.localName === 'text') { e.preventDefault(); editText(t); } }, true);
@@ -21877,7 +21890,8 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
       requestAnimationFrame(tick);
       const s = svgEl(); if (!s) return;
       if (BS.rect) { if (!bmpSelectOn()) BS.clear(); else { const c = bmpCanvas(), r = c?.getBoundingClientRect(); const k2 = r ? [r.left, r.top, r.width, wrapEl()?.scrollLeft, wrapEl()?.scrollTop].map(v => Math.round(v || 0)).join() : ''; if (k2 !== sig && !bd) { sig = k2; draw(); } } return; }
-      if (T.sel.length && (!selectToolOn() || T.sel.some(n => !n.isConnected))) { setSel(T.sel.filter(n => n.isConnected && selectToolOn())); return; }
+      const freshOk = shapeToolOn() && T.sel.length === 1 && T.sel[0] === T.fresh;
+      if (T.sel.length && ((!selectToolOn() && !freshOk) || T.sel.some(n => !n.isConnected))) { setSel(T.sel.filter(n => n.isConnected && (selectToolOn() || freshOk))); return; }
       if (!T.sel.length && !T.marquee) { if (ov && ov.firstChild) ov.textContent = ''; return; }
       const m = s.getScreenCTM(); const k = m ? [m.a, m.e, m.f].map(v => v.toFixed(2)).join() + '|' + T.sel.map(n => n.getAttribute('transform') || '').join('|') + '|' + (wrapEl()?.scrollLeft || 0) + ',' + (wrapEl()?.scrollTop || 0) : '';
       if (k !== sig && !T.drag) { sig = k; draw(); }
