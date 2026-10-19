@@ -1,0 +1,8 @@
+CORRECTION for grok/fixtures-control.json C003
+=============================================
+C003 expect.say must be "1", not "0".
+ES/Scratch: Math.round(0.5) === 1 (control.js:54).
+C003b already has the correct expectation; treat C003 as superseded by C003b
+or edit C003 expect to "1" and delete the VERIFY notes.
+
+Also: Math.round(-0.5) === -0 → 0 iterations for repeat(-0.5) — covered by C002 family.
