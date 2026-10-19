@@ -4,7 +4,7 @@
 =====================================================================
 
 AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17) — REQUIRED FOR EVERY AI
-- Every AI must keep a chronological conversation/context log inside its OWN folder named <ai-folder>/AI-CHAT-LOG.txt (examples: chatgpt/AI-CHAT-LOG.txt, gemini/AI-CHAT-LOG.txt, grok/AI-CHAT-LOG.txt. deepseek/AI-CHAT-LOG.txt is a historical example only, not an active folder).
+- Every AI must keep a chronological conversation/context log inside its OWN folder named <ai-folder>/AI-CHAT-LOG.txt (examples: chatgpt/AI-CHAT-LOG.txt, gemini/AI-CHAT-LOG.txt, grok/AI-CHAT-LOG.txt. The former deepseek/AI-CHAT-LOG.txt path is historical only, not an active folder).
 - For each task/session, append the user's request accurately and the AI's response/handoff. Include date, task, files changed, evidence/test status, unresolved questions, and exact next step.
 - Preserve decisions, constraints, corrections, and explicit prohibitions. Keep direct user wording separate from AI summaries. Never invent missing chat history or claim an incomplete transcript is complete.
 - If the platform may truncate/delete history, update the log before ending the session. Read your own log before continuing an existing task.
