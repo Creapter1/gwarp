@@ -6,7 +6,7 @@ same same but different, theirs is theirs / ours is ours, no cats, no Scratch ar
 Golden rule: every job ends in something TESTABLE. Keep your work in YOUR folder only.
 TEST PROJECTS: the owner's 5 real projects are in the PRIVATE repo Creapter1/gwarp-test-projects
 (README there = rules). Each has SCRIPTS.txt (every script as text) - use REAL scripts for your tests.
-DeepSeek/Gemini: ask the owner to paste or upload them. Never copy them into this public repo (TODO.txt rule 7).
+Gemini: ask the owner to paste or upload them. Never copy them into this public repo (TODO.txt rule 7).
 
 --------------------------------------------------------------------
 WHAT IS ALREADY IN THE APP (v15.47.0, built by Claude, test: claude/tests/test_cosanim.js 27/27 PASS)
@@ -52,24 +52,24 @@ GA2. grok/SPEC-onion-skin.txt: how the onion-skin add-on that Scratch / TurboWar
      add-on's authors and say its licence.
 
 --------------------------------------------------------------------
-=== DEEPSEEK  (lab: 3 versions of each, with a test page) ===
+=== GEMINI LAB (inherited from former DeepSeek; current owner is Gemini) ===
 --------------------------------------------------------------------
-DA1. Easing for in-betweens. Today "In-between" makes the exact half-way pose (linear).
+GL1 (legacy ID DA1). Easing for in-betweens. Today "In-between" makes the exact half-way pose (linear).
      Make 3 versions of an ease option for GW_ANIM.mix(A, B, t): (A) linear, (B) ease in-out (sine),
-     (C) your best "springy" one. Pure functions + deepseek/lab-easing.html that draws G-Spark's
+     (C) your best "springy" one. Pure functions + gemini/lab/lab-easing.html that draws G-Spark's
      bones (GW_MASCOT.bones(), walkFrames()) for t = 0..1 so we can SEE the difference.
      Bones turn the short way round (see mix in the app). Say which one you'd pick and why.
-DA2. Auto-rig: guess bones for a vector costume the kid drew. Input: the costume's SVG text.
+GL2 (legacy ID DA2). Auto-rig: guess bones for a vector costume the kid drew. Input: the costume's SVG text.
      Output: { bones:[...], parts:{...} } in the GW_ANIM format above. 3 versions, for example
      (A) one bone per shape along its longest side, (B) chain shapes that overlap, root = biggest
      shape, (C) your idea. Test each on 3 of YOUR OWN drawings (stick robot, lightning bug, a G-Warp
-     style character - no cats, no famous characters). File: deepseek/auto-rig-A/B/C.js + LAB notes.
-DA3. Faster "Make costumes": it turns every frame into an SVG, then a picture at 2x. Time it for
+     style character - no cats, no famous characters). File: gemini/lab/auto-rig-A/B/C.js + LAB notes.
+GL3 (legacy ID DA3). Faster "Make costumes": it turns every frame into an SVG, then a picture at 2x. Time it for
      8 / 30 / 120 frames (G-Spark walk + Smooth x2 a few times) and make 3 faster versions (reuse one
      Image, createImageBitmap, draw only the parts that move...). Same pictures, measured times.
 
 --------------------------------------------------------------------
-=== GEMINI  (pictures: 3 SVG options for each, always check them) ===
+=== GEMINI VISUALS (existing role; same active owner) ===
 --------------------------------------------------------------------
 GA-M1. Icons in G-Warp's style (24x24 viewBox, currentColor + violet #8b5cf6 / electric green
        #4ade80 accents, dark UI): Onion skin, Flipbook play, Animation (bones), In-between,
@@ -104,3 +104,7 @@ CL6. Save/load .sb3 with animations; clones playing animations; Stop during play
 HOW TO HAND IN: your folder + one line at the bottom of AI-TEAM.txt:
   <date> | DONE | <AI> | <job id> | <files>
 If you can't do a job (no GitHub, no browser), say so in your folder's notes and do the part you can.
+
+
+OWNER REASSIGNMENT ADDENDUM — 2026-10-18
+All former DeepSeek tasks DA1–DA3 are now Gemini-owned. Current IDs are GL1–GL3; DA1–DA3 remain only as traceable historical aliases. New outputs go to gemini/lab/. Existing candidates moved from deepseek/ are legacy inputs and do not count as completed tasks or proof of test success.
