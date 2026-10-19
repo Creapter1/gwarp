@@ -90,7 +90,8 @@ TEAM RULES (to stop two AIs making the same thing)
 8. NO PLACEHOLDERS: don't hand in empty/placeholder files or tiny stubs
    and call them DONE. If something is missing, log it as PARTIAL, not DONE.
 9. GIT COMMIT MESSAGES must start with your name: "Grok: ...",
-   "ChatGPT: ...". When saving another AI's work: "Grok (for DeepSeek): ...".
+   "ChatGPT: ...". When preserving inherited lab work, say so explicitly, e.g.
+   "Gemini (inherited lab): ..."; do not imply the original author committed it.
 10. WORK LOG lines go at the very BOTTOM, in time order. Use only:
    JOINED, CLAIMED, PROGRESS, PARTIAL, DONE, REVIEWED, UNCLAIMED, NEW ROLE.
 11. Don't commit junk files (.claude/, node_modules/, .DS_Store,
