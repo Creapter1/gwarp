@@ -15,8 +15,9 @@ ACTIVE TASKS (ordered)
 [x] C3. Static review delivered -> chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt. Extension packaging/browser flow remains NOT TESTED.
 [x] C4. Static review delivered -> chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt. T043 repeat 2.7 remains wrong in TESTS.txt (Scratch VM uses Math.round -> 3); Grok must revise its own files.
 [x] C5. Static review delivered -> chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt. The candidate remains BLOCKED: fake-byte classification only, no real decode fixture/assets, empty assets Map, unverified v1.6.0 CDN import and stale deepseek test path. No browser/runtime test.
-[ONGOING] C6. Keep the independent review ledger current whenever a new deliverable materially changes status; latest updates cover C4/C5 in CROSS-AI-REVIEW-2026-10-15.txt.
+[ONGOING] C6. Keep the independent review ledger current whenever a new deliverable materially changes status; latest updates cover C4-C8 in CROSS-AI-REVIEW-2026-10-15.txt.
 [x] C7. Owner handoff delivered -> chatgpt/OWNER-REVIEW-STATUS-2026-10-19.txt. Summarizes C1-C5 blockers and author/Claude/owner next actions; no runtime test claims.
+[x] C8. Static security review delivered -> chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt. Source context/storage documented; default model string conflicts with current official docs; no API/browser/history test. Root TODO status reconciled, app source unchanged.
 
 REVIEW FORMAT
 - Artifact / base commit or blob SHA:
@@ -32,7 +33,7 @@ REVIEW FORMAT
 CONTINUOUS WORK RULE
 When one task is complete and session time remains, claim the next unclaimed C-task. Do not invent features or repeat the whole audit unless the source/diff materially changed. If blocked, produce a source-evidence map, test matrix, or precise author revision request.
 
-C8 SECURITY REVIEW (2026-10-15): Maintain SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. Review the current user-owned AI-key flow and exactly what project context is transmitted; provide a bounded risk report and acceptance tests. Do not change app.html or claim the key can be made perfectly secret in browser code. Also reconcile stale status statements in TODO.txt with current cross-review evidence. Ask the owner for the new canonical website URL before replacing old URLs.
+C8 SECURITY REVIEW (2026-10-15; completed 2026-10-19): Maintained SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt and delivered chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt. app.html unchanged; no browser/API/Git-history test. Canonical website URL is still pending owner confirmation; never replace old links with a guess.
 
 
 TEAM ROUTING UPDATE (2026-10-18): DeepSeek is no longer active. Review all former DeepSeek work as Gemini-owned legacy material under gemini/lab/. Keep all ChatGPT reviews in chatgpt/ and do not edit Gemini's candidates directly.
