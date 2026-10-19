@@ -59,3 +59,12 @@ NEXT STEP / HANDOFF:
 CHAT HISTORY COMPLETENESS:
 PARTIAL — This is a repository-backed handoff from ChatGPT, not a complete transcript of Gemini or DeepSeek chats.
 --- END ENTRY ---
+
+--- VERIFICATION CORRECTION / ADDENDUM (ChatGPT, 2026-10-19) ---
+The earlier audit entry said both grok/fixtures.json and grok/FIXTURE-SOURCES.txt had the wrong T043 expectation. This was corrected after Grok's newer commit was verified: grok/fixtures.json now expects 3 iterations for repeat 2.7 and contains 60 cases. Only grok/FIXTURE-SOURCES.txt remains stale (it still says 2 iterations and describes 30 cases).
+Grok's separate grok/fixtures-extra-list.json has T130-T139 (10 cases). team/TODO-GROK.txt says Claude is waiting to run the 60 + 10 set. The current claude/tests/test_grok_fixtures.js reads the main fixture file and adds claude/tests/extra-fixtures.json (9 cases); it does not load fixtures-extra-list.json yet. The previous 39/39 report is for the earlier 30+9 set. Do not claim the current 60+10 set passes until Claude reconciles the runner and logs actual results.
+AI-TEAM.txt now records Claude's full Beta v15.48.0 regression as 429 PASS / 9 FAIL, all described as expected legacy/feature-status checks. This is REPORTED TEST evidence, not a ChatGPT browser run. No individual result specifically confirming the three added fresh-shape assertions was independently captured by ChatGPT.
+A routing conflict was also found and corrected in team/TODO-GEMINI.txt: the new team/GEMINI-BIG-LIST-2026-10-19.txt priority order is authoritative; older GA-M1/GA-M2/GL1-GL3 assignments are cross-references absorbed by Big List G1/G3/L1-L3, not duplicate outputs.
+Naming caveat: AI-TEAM calls the role Gemini 2 (FreeBuff/Argon), but the newest big list is titled Gemini 3 (Argon). Use the single gemini/ workspace and ask the owner to confirm the display label; don't create another folder.
+URL caveat: the Big List repeats the old GitHub Pages URL in its header, while TODO.txt still requires owner confirmation of the canonical URL. Do not assume that header authorizes link/extension-target changes.
+--- END ADDENDUM ---
