@@ -1,6 +1,6 @@
 G-WARP USER GUIDE
-Complete practical guide for G-Warp Desktop v15.45.0
-Last updated: 2026-10-13
+Complete practical guide for G-Warp Desktop v15.48.0
+Last updated: 2026-10-19
 
 START HERE
 
@@ -12,7 +12,7 @@ The editor map introduces the main areas before you read the detailed feature in
 
 G-Warp is a Scratch-style block-programming environment with additional creative and developer tools. This file is the detailed feature/user manual, not the first lesson. For the easy step-by-step learning path, start at docs/LEARNING-GUIDE.md. For a deeper explanation of how a Scratch-like editor is structured and how G-Warp differs internally from Scratch, read docs/ENGINEERING-REFERENCE.md. This guide describes the checked-in app.html interface inspected for this document. Layouts and features can change between commits.
 
-App: https://creapter1.github.io/gwarp/
+Previously documented app URL: https://creapter1.github.io/gwarp/ (canonical URL has not been reconfirmed by the owner)
 Beginner learning path: ../docs/LEARNING-GUIDE.md
 Deep engineering research: ../docs/ENGINEERING-REFERENCE.md
 Master index: ../docs/README.md
@@ -127,6 +127,20 @@ Workspace:
 
 Exact tools differ by mode. The inspected source did not show costume-list drag reordering; do not depend on dragging rows to change animation order without testing the live build. Asset menus offer actions such as duplicate, export, and delete.
 
+### Select, transform, and resize artwork (v15.48.0)
+
+The vector costume editor now has a dedicated Select tool with a bounding box, eight resize handles, and a rotate handle. In the latest source, the same transform layer also supports moving and multi-selecting artwork; the behavior was introduced to stop shapes and text from jumping when moved or resized.
+
+1. In **Costumes**, open the intended costume and choose the vector mode and **Select** tool.
+2. Click artwork to show its box. Drag inside the box to move it. Drag a corner handle to resize from the opposite corner; hold **Shift** to keep proportions. Drag a side handle to stretch one dimension.
+3. Drag the round rotate handle to rotate. Hold **Shift** for 15-degree steps.
+4. Hold **Shift** while clicking other objects to add or remove them from the selection. Drag on empty canvas to marquee-select. Press **Escape** or click empty space to clear the selection.
+5. Use arrow keys to nudge selected artwork by one unit; **Shift+Arrow** moves it by ten. **Delete** removes the selected artwork.
+6. Use the editor's group/ungroup and flip controls when needed. Duplicate first before experimenting, then undo immediately if anything moves unexpectedly.
+7. Rectangle, circle, and line tools have a follow-up interaction in the newest patch: after drawing one, it should retain its handles so you can resize it without changing tools. This exact follow-up was added to the test file after the last reported PASS; see verification status below before relying on it.
+
+In bitmap mode, **Bitmap Select** uses a marquee to select pixels, then lets you move/resize the selected pixels. The selection outline should be an editing overlay, not saved artwork. Confirm the result by switching away and back, then saving/reopening a test project.
+
 8. SOUNDS, INSTRUMENTS, AND MUSIC
 - Select a sound row to edit/audition it.
 - Upload imports an audio file; the interface describes common formats such as MP3, WAV, and OGG.
@@ -199,6 +213,10 @@ Import/export changed a project: check unsupported extensions, assets, variables
 7. Separate source-inspected findings from browser-reproduced findings.
 
 15. VERIFICATION STATUS
-This guide is based on static inspection of app.html identified as Beta v15.45.0 plus Claude's limited live-browser run (Chromium, 1440×900 and 1024×700, 2026-10-13). Ten interaction/layout checks passed; see docs/LIVE-UI-VERIFICATION.txt. It does not claim every feature has been browser-tested. Live-verified: category single-click, basic block drag, workspace and block context menus, Start/Stop, More menu, sprite context menu, Code/Costumes/Sounds tab switching, Extensions library, and 1024×700 width fit. Restore, web-load, instrument details, tilemap, Behavior Designer, LAN, and other advanced tools are present in source but were not part of the live test run. High-priority items to verify are category navigation, long-stack/nested snapping, live edits in running loops, stage sprite-click routing, edit-mode sprite dragging, effect reset/audio pause, and duplicate Ctrl/Cmd+S handling.
+This guide is updated against the GitHub v15.48.0 source and recent commit diffs. Claude's repository log reports that the main Select-tool Playwright test passed, Grok's 20 costume-animation fixtures passed, and the Grok parity runner passed 39/39 (30 Grok fixtures + 9 Claude extras, with a correction for T043 applied by the runner in memory). Older costume tests are also reported passing. These are REPORTED TEST results from Claude's commit/log, not tests independently rerun by ChatGPT.
 
-If the live interface differs, treat the current app/source as authoritative and update this guide after verification.
+IMPORTANT: after that reported Select-tool PASS, a later same-version commit added three assertions for a freshly drawn rectangle retaining its handles, resizing it immediately, and clicking elsewhere to draw a new shape. The repository has no test-run result recorded after that latest addition; those three behaviors are NOT YET VERIFIED for the newest commit. The full v15.48.0 regression was also reported as still running, with two failures described as expected legacy title/version and old Developer-mode-animation checks; those have not been independently confirmed here.
+
+ChatGPT's verification for this update was a static GitHub source/diff and documentation audit. No browser/runtime execution was possible in this review environment. Do not treat code presence, a test file, or a prior PASS as proof that the newest commit passed. Re-run `claude/tests/test_select.js` against the current `app.html`; then run the relevant costume regression tests and complete the full suite before claiming the current Beta is fully verified. The user guide and current task list should be updated with the exact results and environment.
+
+Still unverified in the reported runs: all browsers beyond Chromium, all interactions at small window sizes, project save/reopen after every transform type, accessibility/reduced motion, and full public-site loading. Live-verified items listed in the older 2026-10-13 report remain evidence only for that older build.
