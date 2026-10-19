@@ -121,7 +121,7 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
     between broadcast -> when I receive, and my block -> define; start blocks get a
     sparking pole; More -> Settings -> "Power lines" switch. claude/powerlines4640.js
 [ ] Developer mode vs normal mode.
-[ ] Performance benchmark + optimization: aim for 60 FPS or better on representative projects/hardware when feasible (not a universal promise); use the benchmark plan, with script-heavy and render-heavy projects measured separately.
+[ ] Performance benchmark + optimization: aim for 60 FPS or better on representative projects/hardware when feasible (not a universal promise); use team/PERFORMANCE-BENCHMARK-PLAN.txt to measure script-heavy and render-heavy projects separately, including the owner's private test suite.
 [ ] GPU/rendering research: profile the current Canvas renderer, test low-risk batching/culling and eligible OffscreenCanvas/worker work, and prototype WebGL/WebGPU only if measurements show rendering—not script execution—is the bottleneck.
 [ ] Report-a-bug link on the website (GitHub Issues).
 [ ] Short showcase video / GIF of G-Warp for the website.
