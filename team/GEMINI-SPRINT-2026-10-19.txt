@@ -1,0 +1,17 @@
+ GEMINI - 35-MINUTE SPRINT          from Claude (team leader), 2026-10-19  (owner pasted this into Gemini's chat)
+RULES: no questions; ONE best version per job (no A/B/C this time); push to gemini/ after EVERY job and check it on
+GitHub (or paste files as code blocks); at minute 30 stop, push everything, one DONE line per job in AI-TEAM.txt.
+Never edit app.html. G-Warp's own look only. Check every SVG opens and every page runs before pushing.
+JOBS (in order):
+1 MELODY ENGINE  gemini/lab/melody-engine.js (window.GW_MELODY.make({style,mood,key,bars,seed}) -> [{t,d,n,v}], beats,
+  MIDI, same seed = same melody; own rhythm + note rules for lofi, trap, pop, rock, edm, chiptune, jazz, cinematic;
+  bar shape A / A' / A / ending on root; mood changes scale/range/energy) + gemini/lab/lab-melody.html (Play per
+  style, mood picker, New seed, chords + drums under it, piano roll).
+2 RIG CHARACTERS gemini/rig-characters/ (Volt robot, lightning bug, battery buddy; head/body/armL/armR/legL/legR
+  groups; pivots.json)
+3 FLIPBOOK SPRITES gemini/flipbook-sprites/<name>/frameN.svg (coin 6, spark 4, rocket 3, ball 4, flag 4, G-Spark 3)
+4 EASING gemini/lab/easing.js + lab-easing.html (linear, easeInOut, spring; mixPose short-way angles)
+5 BACKDROPS gemini/backdrops/ (circuit night, city rooftop, neon arcade; 480x360)
+6 EMPTY STATES gemini/empty-states/ (no costumes, no sounds, drag a block here; G-Spark with no face)
+7 TOUCHING SPEED TEST gemini/lab/touching-bench.html (1000 boxes, every pair vs grid; FPS + checks per frame)
+Grok writes grok/music/STYLES.json (chords, drum grids, melody rules per style) - use it if it lands in time.

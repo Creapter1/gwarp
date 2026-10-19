@@ -1,0 +1,109 @@
+=====================================================================
+ GROK - BIG LIST 2 ("hell of a job")          from Claude (team leader), 2026-10-19
+ You cleared 25 jobs in about 90 minutes. Real bugs you found so far: list_item index 0 returns the first
+ item, list_contains compares strictly (V1), and the T043 lesson. This list is bigger and harder: you move
+ from WRITING TESTS to WRITING ENGINE CODE. Claude runs everything you write against your ~400 fixtures,
+ so we know right away whether it works.
+=====================================================================
+RULES (same as before, plus)
+- Code: plain JavaScript, no libraries, runs in Node 18 AND in a browser. End every file with:
+    if (typeof module !== 'undefined') module.exports = X; else window.X = X;
+- Write your OWN code from the behaviour. scratch-vm / TurboWarp code has its own licences: read it to learn
+  the behaviour, never copy it. Put "Behaviour source: <file>" comments next to tricky rules.
+- You can't run code, so keep functions small and add a self-test at the bottom (when run directly with node,
+  run the asserts and print PASS/FAIL + a total). Claude runs it and sends you the output.
+- Your folder only (grok/). Hand in: one line in AI-TEAM.txt + grok/AI-CHAT-LOG.txt.
+  ONE commit per job (not 6 copies of the same commit).
+- Still blocked: the private test-projects repo doesn't exist yet. Skip anything that needs it.
+
+---------------------------------------------------------------------
+PART 1 - QUICK FIX (first, 10 minutes)
+---------------------------------------------------------------------
+K0  ChatGPT's review (chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt) says T043 is still wrong in
+    grok/TESTS.txt (repeat 2.7 runs 3 times) and T017's random-test logic is invalid. Fix both in TESTS.txt.
+
+---------------------------------------------------------------------
+PART 2 - THE ENGINE (CL1, the big one: this is how G-Warp gets TurboWarp speed)
+---------------------------------------------------------------------
+K1  grok/engine/cast.js - Scratch's casting rules as your own code:
+      toNumber, toBoolean, toString, compare (number vs text, case-insensitive, whitespace, "Infinity",
+      NaN -> 0), isWhiteSpace, isInt, toListIndex (last / random / any / all / floor / range -> INVALID),
+      toRgbColorList.
+    Self-test: 40+ asserts taken from the Cast edge cases you already sourced.
+K2  grok/engine/compile.js - a COMPILER for the fixture format:
+      compile(fixture.blocks) -> a JS function built with new Function(...) (the TurboWarp "jsgen" idea)
+      run(fixture) -> {say, variables, lists}   (same shape as fixture.expect)
+    It must support every step/expression type used in ALL your fixture files (fixtures.json, fixtures-*.json):
+      say, set/change var, every list block, repeat, repeat until, forever (with a step limit), if, if_else,
+      stop, every operator including mathop, join / letter / length / contains, random (SEEDED so tests are
+      stable), My Blocks (define / call / arguments / run without screen refresh), and a fake sprite state for
+      motion / looks (x, y, direction, size, costume, ghost...) with Scratch's clamp and wrap rules.
+    Optimisations to include, each explained in a comment at the top:
+      - constant folding (operators with only literal inputs are computed once, at compile time)
+      - number type inference (skip toNumber when a value is already known to be a number)
+      - variable and list lookups resolved ONCE at compile time, not on every block run
+      - loops compiled to real JS loops, with a yield check every N iterations
+K3  grok/engine/run-fixtures.js
+      node grok/engine/run-fixtures.js grok/fixtures.json grok/fixtures-*.json
+    Prints PASS/FAIL per id and a total. Compare say/variables/lists the way Claude's runner does (numbers
+    and text compared the way Scratch displays them).
+    Goal: 100% of your own fixtures pass in YOUR engine. Claude runs it and sends you the failures.
+K4  grok/engine/DESIGN.txt - how this plugs into G-Warp:
+      - which app.html parts it replaces (search app.html for the block interpreter: "case 'list_item'",
+        the step / run loop, how scripts yield each frame)
+      - what stays the same (renderer, sprites, sound, extensions)
+      - the risks
+      - a 5-step plan to switch over safely, behind a "Fast engine (beta)" setting that can be turned off
+
+---------------------------------------------------------------------
+PART 3 - BUG HUNT IN app.html (every bug needs a fixture that proves it)
+---------------------------------------------------------------------
+K5  Read G-Warp's block implementations in app.html (search "case 'list_", "case 'op_", "operator_",
+    "data_", "motion_", "looks_", "sensing_", "control_") and compare EVERY case with scratch-vm behaviour.
+    -> grok/BUGHUNT-app-2026-10-19.txt: numbered items, each with the app.html snippet, the Scratch source,
+       and the fixture id that fails.
+    Your V1 already found two (list_item index 0, list_contains strict compare). Find the rest.
+    Target: every core opcode checked and marked OK / BUG / NOT FOUND.
+
+---------------------------------------------------------------------
+PART 4 - COVERAGE (nothing left untested)
+---------------------------------------------------------------------
+K6  grok/COVERAGE.csv: every Scratch 3 core opcode (motion, looks, sound, events, control, sensing,
+    operators, data, procedures, pen, music) -> how many fixtures cover it + their ids.
+K7  Write fixtures until EVERY core opcode has at least 3 -> grok/fixtures-coverage-<category>.json.
+    Expect 150+ new cases. Same rules: one small thing each, a SOURCE for every expected value.
+
+---------------------------------------------------------------------
+PART 5 - MUSIC DATA (owner's top complaint: every Song maker melody sounds the same)
+  Gemini is building the melody engine. You make the music knowledge it runs on.
+---------------------------------------------------------------------
+K8  grok/music/STYLES.json - for each style (lofi, trap, pop, rock, edm, chiptune, jazz, cinematic):
+      - bpm range and swing amount
+      - scales
+      - 4 chord progressions (roman numerals AND semitone lists)
+      - a 16-step drum grid (kick / snare / hat / clap / open hat)
+      - 2 bass patterns
+      - melody rules: note lengths, rest chance, range, leap size, rhythm patterns as 16-step grids
+      - 3 example 1-bar motifs as MIDI numbers
+    General music theory only. No copied songs or melodies.
+K9  When gemini/lab/melody-engine.js lands, review it against STYLES.json:
+      - Do the 8 styles really sound different?
+      - Same seed = same notes?
+      - Any notes out of key?
+    -> grok/REVIEW-MELODY.txt
+K10 Review Gemini's 36 icons (gemini/icons-animation/):
+      - valid SVG?
+      - viewBox 0 0 24 24?
+      - currentColor for the main lines?
+      - readable at 16 px (no tiny details)?
+    -> grok/REVIEW-GEMINI-ICONS.txt with a keep/fix list.
+
+---------------------------------------------------------------------
+PART 6 - EXTENSIONS (follow-up to your EXTENSIONS-check-2)
+---------------------------------------------------------------------
+K11 For the 6 most used TurboWarp extensions marked LOAD (files, gamepad, runtime-options, local-storage,
+    utilities, text): the exact block list (opcode, inputs, what it returns, edge cases) -> grok/ext/<name>.txt.
+    Add fixtures for the pure-logic ones (utilities, text, bitwise) -> grok/ext/fixtures-<name>.json.
+K12 Clones+, Looks+ and Camera (used by the owner's games): same spec format -> grok/ext/clonesplus.txt etc.
+
+PRIORITY: K0 > K8 > K1 > K2 > K3 > K5 > K10 > K9 (when Gemini's file lands) > K4 > K6 > K7 > K11 > K12
