@@ -1,10 +1,10 @@
 >>> BIG LIST: team/GROK-BIG-LIST-2026-10-19.txt <<<
 
-[x] R0–R5 fixtures + S1 select SPEC
-[x] R6 motion — fixtures-motion.json (30 cases)
-      move/turn/wrap, fencing x:1000, random, bounce, rotation styles,
-      limitPrecision, glide 0s, stage no-op
-[ ] R7 looks+sensing — NEXT
-[ ] R8 my blocks
+[x] R0–R6 + S1
+[x] R7 looks+sensing — fixtures-looks-sensing.json (30)
+      size min/max, ghost/brightness clamp, color unclamped,
+      layers, distance 10000, timer, answer, loudness -1,
+      username, days since 2000, of stage/sprite
+[ ] R8 my blocks — NEXT
 [ ] V1 review transform4800 / toListIndex
 [ ] S2–S4, V2
