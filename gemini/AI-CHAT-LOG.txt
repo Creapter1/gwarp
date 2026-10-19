@@ -1,0 +1,61 @@
+G-WARP — GEMINI WORK LOG
+This log was seeded by ChatGPT as a shared handoff on 2026-10-19 after the owner consolidated the former DeepSeek role under Gemini 2. It is not a transcript of a Gemini conversation. Gemini must append its own responses/tests and preserve these prior entries.
+
+--- ENTRY 1 ---
+Date/time (timezone): 2026-10-19, America/New_York
+AI / model identity: ChatGPT (reviewer creating a handoff for Gemini; Gemini model identity not independently verified)
+Task ID / title: Owner-directed DeepSeek/Gemini consolidation + repository verification
+Base branch / commit (if known): main; source snapshot app.html blob 5ca624a515b9fc1310814c4740608c1cf3071028 (Beta v15.48.0)
+
+USER REQUEST (quote accurately; do not silently paraphrase):
+The owner said that Gemini, through FreeBuff/Argon (the new Gemini / Gemini 2 path), should inherit everything DeepSeek was assigned to do while retaining Gemini's existing work. DeepSeek is being retired because it has been hard to track across tabs and 404/non-working sessions, not as a personal judgment. The owner asked to combine the folders, rules, and repository handoffs, then asked: "do a verification on all the worck".
+
+AI RESPONSE / WORK SUMMARY:
+- The active role is now Gemini 2, with one active task list (team/TODO-GEMINI.txt) and one lab folder (gemini/lab/).
+- The former 28 files in deepseek/ were migrated to gemini/lab/. 25 of those retain the original blob content exactly; 3 legacy reports/notes were intentionally edited to add provenance headers and correct obsolete paths. deepseek/ now contains only README-ARCHIVE.txt.
+- The old DeepSeek task list is retained with an explicit ARCHIVED / NOT ACTIVE header at gemini/lab/LEGACY-TODO-DEEPSEEK-2026-10-18.txt. team/TODO-DEEPSEEK.txt and the old handoff template are retired redirects.
+- The combined Gemini task list preserves the prior Gemini visual/extension backlog and adds inherited research/A/B/C/test-harness responsibilities. Current high-priority assignments are in team/ASSIGNMENTS-ANIMATION-2026-10-18.txt, followed by team/ASSIGNMENTS-2026-10-19.txt.
+- Read team/TEAM-REASSIGNMENT-2026-10-18.txt, gemini/README.txt, and gemini/lab/README.txt before resuming inherited candidates.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Scratch 3 runtime parity and custom block/procedure correctness are the top product priority. Claude owns the active implementation/integration stream; Gemini must not race or duplicate it without a bounded assignment.
+- 60 FPS+ is a performance target on representative projects/hardware when feasible, not a universal promise. Benchmark with the same project/build/browser/settings and report before/after data.
+- Keep the primary UI clean and understandable.
+- GPU/WebGL/WebGPU work is research-only until profiling shows rendering is the bottleneck. Do not assume a GPU renderer solves block-interpreter cost.
+- Tilemap and additional extension work remain deferred unless the owner reprioritizes them. The existing browser-extension prototype still has packaging/privacy/browser/end-to-end blockers.
+- GWrap AI block/script reconstruction animation is proposed default On, with Skip/instant and a More -> Settings preference. Skipping must not leave partial blocks or delay execution.
+- Never copy private owner projects, art, sounds, scripts or assets into the public repo.
+- Do not edit app.html/index.html, cross-edit other active contributors' folders, or integrate candidates. Claude's model-verification, test and owner-approval gates remain active.
+- Legacy A/B/C code is not accepted or integrated just because it is now under gemini/lab/. Review against current source and run the specified tests first.
+
+FILES CHANGED (by ChatGPT before seeding this handoff):
+- team/TODO-GEMINI.txt, team/TODO-DEEPSEEK.txt, team/ASSIGNMENTS-ANIMATION-2026-10-18.txt, team/ASSIGNMENTS-2026-10-19.txt, team/CONTINUOUS-WORK-QUEUE.txt, team/AI-WORK-PLAN.txt, team/AI-STATUS.txt, team/WORKFLOW-START-HERE.txt, TODO.txt, AI-TEAM.txt, README.md, team/TEAM-REASSIGNMENT-2026-10-18.txt, team/PERFORMANCE-BENCHMARK-PLAN.txt, chatgpt/MERGE-QUEUE-NOTES.txt, chatgpt/VERIFICATION-2026-10-19.txt, and legacy documentation under gemini/lab/.
+- app.html and index.html were not edited by ChatGPT. Later Claude commits changed app.html separately.
+
+EVIDENCE / TEST STATUS:
+- SOURCE-VERIFIED: current Git tree shows deepseek/ has only the archive pointer; 28 former file paths exist under gemini/lab/; 25 retain identical blob hashes and 3 lab docs were intentionally updated.
+- SOURCE-VERIFIED: current app.html blob identifies Beta v15.48.0 and contains Claude's clone guard, letter-of correction, list-index handling, and current Select/transform module.
+- REPORTED TEST: Claude reports 20/20 costume-animation fixtures, 39/39 parity fixtures/extras, a passing initial Select test, and performance improvements on named private projects. ChatGPT did not independently run these tests.
+- NOT TESTED by ChatGPT: no browser/runtime test; local GitHub clone attempt failed because this verification environment could not resolve github.com.
+- OPEN FINDING: grok/fixtures.json and grok/FIXTURE-SOURCES.txt still show T043 (repeat 2.7) as two iterations; Scratch's Math.round behavior gives three. Claude's runner overrides T043 in memory using claude/tests/extra-fixtures.json, so 39/39 does not make the raw source fixture correct. Grok must fix its own files.
+- OPEN FINDING: a later same-version commit added three fresh-shape/handle assertions to claude/tests/test_select.js after the recorded PASS. No result from a run after that latest patch is recorded.
+- OPEN FINDING: MERGE-QUEUE.txt remains Claude-owned and contains stale DeepSeek paths/status; ChatGPT sent specific suggestions in chatgpt/MERGE-QUEUE-NOTES.txt.
+
+BLOCKERS / UNCERTAINTIES:
+- Original Gemini/DeepSeek chats are NOT AVAILABLE as full transcripts in this session. Do not claim their complete conversation history has been merged; use the shared repository records.
+- The private Creapter1/gwarp-test-projects assets were not accessed by ChatGPT; do not copy them into this public repository.
+- The current canonical website URL is still awaiting owner confirmation.
+- Protobuf .pmp support remains incomplete without a verified parser API and real legal fixture/assets.
+- The benchmark plan documents how to measure; it does not prove a complete benchmark run was performed.
+- Full Beta v15.48.0 regression and the three new Select assertions remain unverified after the newest shape-handle patch.
+
+NEXT STEP / HANDOFF:
+1. Gemini should read team/TODO-GEMINI.txt and execute the active animation assignments first (GA-M1/GA-M2 and inherited GL1-GL3), then the next assigned jobs. Do not start the old inherited GL4/GL5 candidates ahead of those tasks.
+2. Create/update real outputs only under gemini/ (gemini/lab/ for lab candidates), each with NOTES/LAB plus test harness/results as required.
+3. Verify current APIs in app.html/ENGINE-MAP.txt, use honest evidence labels, and append Gemini's own response and exact test results here before ending.
+4. Ask Grok to correct T043 in its own files; notify Claude that MERGE-QUEUE needs path/status reconciliation and that the latest Select test must be rerun.
+5. Do not claim a task is done, a candidate merged, or 60 FPS achieved unless the exact evidence is recorded.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — This is a repository-backed handoff from ChatGPT, not a complete transcript of Gemini or DeepSeek chats.
+--- END ENTRY ---
