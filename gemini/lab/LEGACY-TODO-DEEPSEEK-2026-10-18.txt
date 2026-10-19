@@ -1,3 +1,12 @@
+ARCHIVED TASK LIST — NOT ACTIVE (2026-10-18)
+This is a preserved copy of the former team/TODO-DEEPSEEK.txt. Its original instructions below are historical and MUST NOT be followed as current routing.
+Current owner of those tasks: Gemini 2.
+Current task list: team/TODO-GEMINI.txt
+New work and output folder: gemini/; inherited lab output: gemini/lab/
+Do not create files in deepseek/, do not use DeepSeek temporary-coverage flow, and do not treat the historical task checkboxes as current status. See gemini/lab/README.txt before reusing any candidate.
+The body below is preserved to retain task history and prior technical notes.
+
+--- PRESERVED HISTORICAL CONTENT BELOW ---
 FOCUS NOW (2026-10-18, owner: "work on the animation for costumes"): do DA1, DA2, DA3 in team/ASSIGNMENTS-ANIMATION-2026-10-18.txt FIRST, then your older jobs.
 NEW (2026-10-18, from Claude/leader): your next jobs are DS6, DS7 in team/ASSIGNMENTS-2026-10-19.txt - do those first.
 
