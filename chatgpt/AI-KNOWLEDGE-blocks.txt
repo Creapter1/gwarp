@@ -1,1 +1,295 @@
-<full contents of archived file omitted here only to avoid a second massive copy in this message>
+=====================================================================
+ G-WARP BLOCK KNOWLEDGE  -  for GWrap AI (the in-app assistant)
+ File:   chatgpt/AI-KNOWLEDGE-blocks.txt
+ Author: Buffy        Date: 2026-10-16
+ Status: REFERENCE file. Not code, nothing to wire into app.html.
+=====================================================================
+ WHY THIS FILE EXISTS
+ GWrap AI is an ASSISTANT inside G-Warp, not a free-roaming AI. It helps
+ only with G-Warp itself: blocks, sprites, costumes, sounds, projects,
+ bugs and ideas. This file gives it the real block list so it never
+ invents a block that does not exist.
+
+ HOW THIS WAS CHECKED
+ Every data-type name below was read out of the real palette markup in
+ gwarp/app.html (the cat-section blocks, "data-type=..."), and the
+ "runs / note" column was read out of the real ScriptThread executor in
+ the same file. Nothing here is guessed. Anything not found is written
+ as: UNSURE: need <thing>.
+
+ IMPORTANT - READ FIRST
+ 1. G-Warp is NOT scratch-vm. There is no window.vm and no runtime.sequencer.
+    The engine is window.Engine and the code is G-Warp's own. If you are
+    talking to yourself about the engine, use the names in ENGINE-MAP.txt.
+ 2. A block must EXIST IN THE PALETTE before the assistant may add it.
+    The palette has 11 main sections and 116 blocks (counted in the live
+    app on 2026-10-16; an earlier count here said 104 and missed the 11
+    blocks in the CORRECTION at the end of this file - read that too).
+ 3. G-Warp behaves like Scratch for results, but looks like G-Warp:
+    dark theme, electric C-blocks, Start / Pause / Stop only in the top bar.
+ 4. G-WARP HAS NO PEN BLOCKS YET. There is no pen category, no pen down,
+    no stamp, no pen colour. Do not offer pen recipes. (Pen drawing is a
+    known open idea in TODO.txt. GW_EXT_BRIDGE.Pen is the extension
+    compatibility bridge, not a user block.)
+ 5. No cats, no other companies' characters or brands, not even in
+    examples. Use G-Spark or an invented character.
+
+ HOW TO READ AN ENTRY
+   name | what it does | inputs | notes / Scratch difference
+
+=====================================================================
+ EVENTS  (palette section #sec-events, 8 blocks, yellow)
+=====================================================================
+ when_flag      | runs the script when Start (green flag) is pressed | none | A hat block. Start is in the top bar only.
+ when_key       | runs the script when a key is pressed | select: space, up/down/left/right arrow | A hat. Extra keys are not in the palette select yet. UNSURE: need extra key options.
+ when_clicked   | runs when this sprite is clicked on the stage | none | A hat.
+ broadcast      | sends a message now and moves on | select: message1, message2 | Messages come from the palette selects; new names are added elsewhere. UNSURE: need the "new message" UI id.
+ broadcast_wait | sends a message and waits until all "when I receive" scripts finish | select: message1, message2 | Matches Scratch ordering (waiters run before the sender continues).
+ when_broadcast | runs when the message arrives | select: message1, message2 | A hat. This + broadcast is how sprites talk.
+ when_clone     | runs in a clone right after "create clone of myself" | none | A hat. Runs once per clone.
+ when_backdrop  | runs when the backdrop switches to the chosen one | select: stage1 | A hat. Be careful: the select lists backdrop names.
+
+=====================================================================
+ MOTION  (palette section #sec-motion, 16 blocks, sky blue)
+=====================================================================
+ move           | moves the sprite forward by its direction | steps | Direction 90 = right, as in Scratch.
+ turn_cw        | turns right | degrees | Scratch calls this "turn right".
+ turn_ccw       | turns left | degrees |
+ goto_xy        | jumps to a stage position | x, y |
+ point_direction| points the sprite | degrees | 90 = right, 0 = up (Scratch rules).
+ change_x       | adds to x | amount | Is a normal block, not a reporter.
+ set_x          | sets x | amount |
+ change_y       | adds to y | amount |
+ set_y          | sets y | amount |
+ bounce         | "if on edge, bounce" - flips direction at the stage edge | none | Only works while the sprite is moving. G-Warp's edge is |x| > 220 or |y| > 160 (not Scratch's exact numbers), so keep sprites near the middle.
+ glide_xy       | slides to x,y over a number of seconds | secs, x, y | Works: the thread waits for the glide to finish.
+ goto_random    | teleports to a random spot on the stage | none |
+ point_towards  | points at the mouse pointer | select: mouse-pointer | Only "mouse-pointer" exists; pointing at another sprite is UNSURE: need sprite targets.
+ x_position     | reporter: the sprite's x | none |
+ y_position     | reporter: the sprite's y | none |
+ direction      | reporter: the sprite's direction | none |
+
+=====================================================================
+ LOOKS  (palette section #sec-looks, 14 blocks, purple)
+=====================================================================
+ say            | shows a speech bubble | text, seconds | With seconds > 0 the script WAITS that long (like Scratch "say for secs"). With 0 it does not wait.
+ think          | shows a thinking bubble (the text gets a light-bulb mark) | text | Always shows immediately; it does not wait.
+ switch_costume | changes costume by name | select (costume1, costume2) |
+ next_costume   | goes to the next costume, wrapping to the first | none | Reported by "costume #" as 1-based, like Scratch.
+ change_size    | adds to size, never below 1 | percent |
+ set_size       | sets size, never below 1 | percent |
+ show           | makes the sprite visible | none |
+ hide           | makes the sprite invisible | none |
+ change_ghost   | changes the ghost (fade) effect, kept between 0 and 100 | percent |
+ set_ghost      | sets the ghost effect, kept between 0 and 100 | percent |
+ clear_effects  | clears the effects | none | Currently it clears ghost. If the assistant is asked about other effects, say only ghost is a real effect so far.
+ costume_number | reporter: costume number, first costume = 1 | none |
+ costume_name   | reporter: costume name | none |
+ size_reporter  | reporter: size | none |
+
+=====================================================================
+ SOUND  (palette section #sec-sound, 6 blocks, pink)
+=====================================================================
+ play_sound     | plays a sound and waits until it is done | select (Zap, Pop) |
+ start_sound    | starts a sound and carries on | select (Zap, Pop) |
+ stop_all_sounds| stops all sounds | none | Engine.audioCtx is suspended.
+ change_volume  | adds to the sprite volume, kept between 0 and 100 | amount |
+ set_volume     | sets the sprite volume, kept between 0 and 100 | percent |
+ volume_reporter| reporter: the sprite volume | none |
+ Real sprite sounds come from the Sounds tab (record, upload, or Song maker).
+
+=====================================================================
+ CONTROL  (palette section #sec-control, 10 blocks, amber)
+=====================================================================
+ wait           | pauses this script for a number of seconds | seconds | The thread waits here; other scripts keep going.
+ repeat         | C-block: runs the body that many times | count | Rounded to a whole number of loops.
+ forever        | C-block: runs the body over and over | none | Stops when Stop is pressed.
+ if             | C-block: runs the body when the condition is true | pointy condition | Drag a pointy block (or "key pressed?") into the gap. The gap glows when it fits.
+ if_else        | C-block: one body when true, the other when false | pointy condition | Two separate bodies (the dark "else" strip).
+ wait_until     | waits where it stands until the condition is true | pointy condition |
+ repeat_until   | C-block: repeats until the condition becomes true | pointy condition |
+ stop           | stops things | select: all, this script, other scripts in sprite | "all" empties the running script list and stops the green flag; "this script" ends only this script.
+ create_clone   | makes a clone | select: myself | Clones copy the costume, position and scripts. Count is capped (see Notes at the bottom).
+ delete_clone   | removes the clone that runs it | none | Ends that clone's script.
+ The C-block bodies hold other blocks. Blocks left loose (one pointy reporter alone on the canvas) never run; the assistant should warn about that.
+
+=====================================================================
+ SENSING  (palette section #sec-sensing, 14 blocks, cyan)
+=====================================================================
+ touching_pointer | pointy: is the sprite touching the mouse-pointer or the edge? | select: mouse-pointer, edge | "edge" behaves as "touching edge?".
+ key_pressed      | pointy: is this key held down? | select: space, arrow keys |
+ mouse_down       | pointy: is the mouse button held? | none |
+ mouse_x          | reporter: mouse x on the stage | none |
+ mouse_y          | reporter: mouse y on the stage | none |
+ touching_sprite  | pointy: touching the chosen thing? | select: mouse-pointer, edge | The select offers pointer/edge; choosing a sprite is a step further. UNSURE: need the sprite list in this select.
+ distance_to      | reporter: distance to the mouse pointer, rounded | select: mouse-pointer | G-Warp measures to the mouse only. It does not take a sprite. Tell the user to use "x of / y of" if they need another sprite.
+ sprite_prop      | reporter: a property of the Stage or a sprite | property + target sprite | Properties: x position, y position, direction, costume #, costume name, size, volume, backdrop #, backdrop name.
+ ask              | asks a question and waits for the typed answer | text | The answer lands in the "answer" reporter.
+ answer           | reporter: the last typed answer | none |
+ reset_timer      | restarts the timer | none |
+ timer            | reporter: seconds since the timer started or the flag was pressed | none |
+ username         | reporter: the user's name | none | UNSURE: the palette has this block but no code was found that runs it, so it may report an empty value. Do not promise it.
+ current_time     | reporter: the current time as text (e.g. 3:45:00 pm) | none | Text, not a number, so it cannot be used in sums.
+
+=====================================================================
+ OPERATORS  (palette section #sec-operators, 16 blocks, green)
+=====================================================================
+ op_add      | reporter: A + B | A, B |
+ op_sub      | reporter: A − B | A, B |
+ op_mul      | reporter: A × B | A, B |
+ op_div      | reporter: A ÷ B | A, B |
+ op_gt       | pointy: A > B | A, B |
+ op_eq       | pointy: A = B | A, B | Number/text compare rules follow Scratch.
+ op_and      | pointy: both conditions are true | two pointy inputs |
+ op_or       | pointy: either condition is true | two pointy inputs |
+ op_not      | pointy: the condition is false | one pointy input |
+ op_mod      | reporter: A mod B | A, B |
+ op_round    | reporter: rounds to the nearest whole number | value |
+ op_abs      | reporter: value without the minus sign | value |
+ op_join     | reporter: two pieces of text stuck together | A, B | This is how to build text; it can grow, so watch the text limit item in TODO.txt.
+ op_length   | reporter: how many letters/characters are in the text | text |
+ op_letter   | reporter: one letter of the text | letter number, text | First letter is 1, like Scratch.
+ op_random   | reporter: a whole number between the two values | from, to | Includes both ends, like Scratch.
+ Pointy (boolean) reporters only fit the pointy gaps in if / wait until /
+ repeat until / and / or / not. Round reporters only fit round inputs.
+
+=====================================================================
+ STAGE / BACKDROPS  (palette section #sec-stage, 3 blocks, indigo)
+=====================================================================
+ set_backdrop          | switches the backdrop by name | select (stage1) | Also triggers "when backdrop switches to".
+ next_backdrop         | goes to the next backdrop, wrapping around | none |
+ change_backdrop_color | tints the current backdrop | colour picker | G-Warp's own block; not in Scratch.
+
+=====================================================================
+ LISTS  (palette section #sec-lists, 10 blocks, red)
+=====================================================================
+ list_add      | adds an item to the end of the list | item, list |
+ list_delete   | deletes one item by position | position, list |
+ list_insert   | puts an item in a position, pushing the rest along | item, position, list |
+ list_replace  | swaps the item in a position | position, list, item |
+ list_clear    | deletes everything in the list | list |
+ list_show     | shows the list on the stage | list |
+ list_hide     | hides the list from the stage | list |
+ list_item     | reporter: the item at a position | position, list | First item is 1.
+ list_length   | reporter: how many items | list |
+ list_contains | pointy: does the list hold this item? | list, item | Text compare is done in lower case here.
+ Lists have a limit (200,000 items) - see Notes.
+
+=====================================================================
+ MY BLOCKS  (palette section #sec-myblocks, 3 blocks, fuchsia)
+=====================================================================
+ define_custom | C-block: defines your own block | name + comma-separated arg names | Only the first define block owns the name; put your own blocks in this C-block.
+ call_custom   | runs a custom block | name + comma-separated arguments | Arguments are scoped to the calling thread, so nested calls are safe.
+ get_var       | reporter: the value of a variable scoped to this script | variable | In a custom block this reads the argument (or the scoped variable), which is what makes arguments work.
+ Custom procedures wait for each other like Scratch's "run without screen refresh" is OFF. UNSURE: need the warp / run-without-refresh switch for custom blocks.
+
+=====================================================================
+ VARIABLES  (palette section #sec-variables, 4 blocks, orange)
+=====================================================================
+ set_var    | sets a variable to a value | variable, value |
+ change_var | adds to a variable | variable, amount |
+ show_var   | shows a variable on the stage | variable |
+ hide_var   | hides a variable from the stage | variable |
+ A new variable is created from the Variables panel; the assistant can also
+ ask for one through the app (see the recipe notes in gwrap-ai-pack.js).
+
+=====================================================================
+ PEN
+=====================================================================
+ NO PEN BLOCKS EXIST IN G-WARP YET. There is no Pen section, no pen down,
+ no stamp and no pen colour. If a child asks to draw with a pen, say that
+ G-Warp has no pen blocks yet and offer a sprite that leaves a trail by
+ cloning, or a costume drawn in the Costumes tab instead.
+ UNSURE: need a real pen category (Claude must add the blocks + a pen hook
+ first - see ENGINE-MAP.txt).
+
+=====================================================================
+ EXTENSIONS  (not a palette section - they add their own blocks)
+=====================================================================
+ - The galleries come from TurboWarp (extensions.turbowarp.org) and
+   PenguinMod (extensions.penguinmod.com). Each card shows who made it and
+   its licence; credit stays with the creator (team rule 2).
+ - Safety labels are real and must be respected: window.GW_EXT_DANGER has
+   three levels - Safe, Moderate (uses the internet, no tick box), and
+   Dangerous (can read personal data - a red warning and a tick box before
+   it loads, no exceptions).
+ - Adding an extension warns that projects using its blocks no longer work
+   in Scratch itself. That is expected, not a bug.
+ - Extension blocks appear in the palette after the extension loads, and a
+   project can load an extension with it (extensionURLs in the project
+   file). Names: window.GW_EXTENSIONS, window.GW_EXT_GALLERY,
+   window.GW_EXT_BRIDGE.
+ - Never tell a user to paste a project from a stranger into an extension
+   that is marked Dangerous. Ask a grown-up first.
+
+=====================================================================
+ NOTES THE ASSISTANT SHOULD KNOW ABOUT LIMITS
+=====================================================================
+ - Clone limit: 300 clones by default, like Scratch. There is an
+   "Infinite clones" setting that warns first. Stop clears all clones in
+   one fast pass.
+ - List limit: 200,000 items.
+ - Text limit: still open (a decision is needed on the size). Do not state
+   a number for it.
+ - Speed goal: every project should hold 60 FPS or more, even big ones.
+   The team is still working on the frame budget (never run scripts for
+   more than about 250 ms without letting the page breathe).
+ - Blocks that never run: a loose stack with no hat on top, a lone pointy
+   reporter, or an "if" with an empty pointy gap. The Check-my-project
+   helper already reports these three; use the same words.
+
+=====================================================================
+ WHAT IS NOT VERIFIED (say this honestly, never guess)
+=====================================================================
+ - username: palette block, no running code found.
+ - pointing at/colliding with another named sprite from the point_towards
+   and touching_sprite selects: only mouse-pointer and edge are offered.
+   CORRECTED 2026-10-16: point_towards offers "mouse-pointer" and "random
+   direction", and the go-to block (type goto_target) does have a sprite
+   list - the engine looks the sprite up by name. See CORRECTION below.
+ - Custom block "run without screen refresh" (warp) switch.
+ - Extra keys in the when_key / key_pressed selects.
+ - The "new message" UI for broadcasts (the palette only shows message1
+   and message2).
+ - Pen blocks: they do not exist yet.
+=====================================================================
+
+=====================================================================
+ CORRECTION, 2026-10-16 (Buffy) - 11 blocks this file was missing
+=====================================================================
+ The palette was counted again in the LIVE app (every
+ `#paletteBlocks .scratch-block[data-type]`). It holds 116 blocks across
+ its 11 main sections, and typing the file's 104 names against it left
+ these 11 out. Each line below was read out of the real executor in
+ gwarp/app.html - not guessed. The assistant MUST know these exist.
+
+ goto_target     | Motion | go to (random position / mouse-pointer / a sprite) | The list
+                 | offers random position and mouse-pointer, and the engine also
+                 | looks up a sprite by name. Random lands x -240..240, y -180..180.
+ set_rotation_style | Motion | set rotation style (left-right / don't rotate / all
+                 | around) | Changes what turning does. left-right keeps a walker
+                 | the right way up.
+ say_only        | Looks | say (text) | Shows the bubble and does NOT wait.
+                 | This is the difference from the say block with seconds.
+ think_secs      | Looks | think (text) for (seconds) | Thinking bubble that waits.
+ set_effect      | Looks | set (colour / fisheye / whirl / pixelate / mosaic /
+                 | brightness / ghost) effect to (value) | Real picture effects.
+ change_effect   | Looks | change (same list) effect by (value) | Adds to one effect.
+ go_front_back   | Looks | go to (front / back) layer | Jumps to the very front or back.
+ go_layers       | Looks | go (forward / backward) (n) layers | Moves a few layers.
+ snd_set_effect  | Sound | set (pitch / pan left-right) effect to (value) | Pitch is
+                 | kept -360..360, pan -100..100.
+ snd_change_effect | Sound | change (pitch / pan) effect by (value) | Adds to it.
+ snd_clear_effects | Sound | clear sound effects | Pitch and pan back to normal.
+
+ So "clear graphic effects" is NOT the only effect block, and ghost is not the
+ only effect: colour, fisheye, whirl, pixelate, mosaic and brightness are real
+ too. Say the right thing if a child asks.
+
+ NOT COVERED BY THIS FILE AT ALL (checked 2026-10-16, do not answer from memory)
+ - #sec-tilemap (5 blocks: tile_set, tile_at, tile_is_solid, tile_clear_layer,
+   touching_tile) and #sec-behaviors (5 blocks: behaviour attributes and
+   behaviour events). They sit next to the main sections in #paletteContainer.
+ - #sec-gw9-ext - 42 camera / physics / layer / key blocks that stay hidden
+   until an extension pack is switched on.
+ UNSURE: their exact wordings; read the executor before answering about them.
