@@ -3,6 +3,14 @@
  Owner: "give work to Gemini, holding back is not an option."
  The click jobs (team/GEMINI-CLICKS-2026-10-19.txt) never reached GitHub - they are still first.
 =====================================================================
+STEP 0 - CONNECTION FIRST (before any new work)
+  1. Check you can read AND write the GitHub repo Creapter1/gwarp.
+  2. Upload EVERYTHING you already made (also work from earlier chats that never reached GitHub).
+  3. Read it back from GitHub and check every file is really there and complete.
+  4. Tell the owner in 3 lines: connected yes/no, what you uploaded, what you checked.
+  If you can't connect: say so at once and paste each file as a code block with its file name on top.
+  Only then start the jobs below.
+
 RULES
 - One best version per job (no A/B/C). Push after EVERY job and open it on GitHub to check it's there.
   If you can't push, paste the file with its name on top. Before your time runs out: push + one line in AI-TEAM.txt.
