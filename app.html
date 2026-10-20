@@ -23127,7 +23127,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   window.addEventListener('keydown', e => {
     if (e.key === 'Escape') { const open = (by('blockContextMenu')?.style.display === 'block') || document.querySelector('.gw4950-menu'); if (open) { hideMenus(); e.stopPropagation(); } return; }
     if (typing(e)) return;
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && String(e.key).toLowerCase() === 'z') { e.preventDefault(); e.stopImmediatePropagation(); try { window.GW8?.redo?.(); } catch {} return; }
+    /* Ctrl+Shift+Z = redo is handled by the app's own key handler (fixed there in v15.50.0), so the Animation editor keeps its own undo */
     if ((e.key === 'Delete' || e.key === 'Backspace') && lastBlock?.isConnected && lastBlock.closest('#workspaceCanvas')) {
       e.preventDefault(); const r = lastBlock.getBoundingClientRect();
       lastBlock.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: r.left + 5, clientY: r.top + 5 }));
