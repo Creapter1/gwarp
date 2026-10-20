@@ -40,7 +40,7 @@
 
   /* ---- keys: Escape, Ctrl+Shift+Z = redo, Delete = delete the clicked block ---- */
   let lastBlock = null;
-  document.addEventListener('keydown', e => {
+  window.addEventListener('keydown', e => {
     if (e.key === 'Escape') { const open = (by('blockContextMenu')?.style.display === 'block') || document.querySelector('.gw4950-menu'); if (open) { hideMenus(); e.stopPropagation(); } return; }
     if (typing(e)) return;
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && String(e.key).toLowerCase() === 'z') { e.preventDefault(); e.stopImmediatePropagation(); try { window.GW8?.redo?.(); } catch {} return; }
@@ -52,17 +52,23 @@
   }, true);
 
   /* ---- Undo skips history entries that look the same as now (a drop made two entries) ---- */
-  const shape = html => String(html || '').replace(/style="[^"]*"/g, '').replace(/\s+/g, ' ');
+  const shape = html => { const d = document.createElement('div'); d.innerHTML = String(html || ''); /* structure only: block types + values */
+    return [...d.querySelectorAll('.block-stack')].map(st => [...st.querySelectorAll('.scratch-block')].map(b => b.dataset.type + '(' + [...b.querySelectorAll(':scope > .block-input')].map(i => i.getAttribute('value') ?? i.value).join(',') + ')').join('>')).join('|'); };
   function wrapUndo() {
     const G = window.GW8; if (!G?.undo || G.undo.__gw4950) return !!G?.undo;
     const old = G.undo;
     G.undo = async function () {
-      try { const now = shape(by('workspaceCanvas')?.innerHTML);
+      try { clearTimeout(G.historyTimer); G.pushHistory?.('before undo'); } catch {} /* record the newest change first (a fresh drop is only saved 300 ms later) */
+      try { const now = shape(by('workspaceCanvas')?.outerHTML);
         while (G.history.length > 2 && shape(G.history[G.history.length - 2]?.state?.workspace) === now) G.future.push(G.history.pop());
       } catch {}
       return old.apply(this, arguments);
     };
-    G.undo.__gw4950 = true; return true;
+    G.undo.__gw4950 = true; 
+    /* a restore re-saves the picture ("post-restore"); that must not throw away the Redo steps */
+    const oldPush = G.pushHistory;
+    G.pushHistory = function (reason) { if (reason === 'post-restore') { const f = G.future.slice(); const r = oldPush.apply(this, arguments); G.future = f; return r; } return oldPush.apply(this, arguments); };
+    return true;
   }
 
   /* ---- stage click while stopped ---- */
@@ -80,12 +86,13 @@
   /* ---- click a script to run it; it glows; click again to stop ---- */
   let down = null;
   document.addEventListener('pointerdown', e => { if (e.button === 0) down = { x: e.clientX, y: e.clientY, t: e.target }; const b = e.target.closest?.('#workspaceCanvas .scratch-block'); if (b) lastBlock = b; }, true);
-  document.addEventListener('click', e => {
-    if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 4) return;
-    const t = e.target; if (t.closest('input,select,textarea,button,.gw-input-slot,.gw7-chip,.gw38-comment,[contenteditable="true"]')) return;
-    const block = t.closest('#workspaceCanvas .scratch-block'); const st = block?.closest('#workspaceCanvas > .block-stack'); if (!st) return;
-    toggleRun(st);
-  });
+  /* the code area's drag code takes the block on pointerdown, so no "click" event comes: use pointerup */
+  document.addEventListener('pointerup', e => {
+    const d = down; down = null; if (!d || e.button !== 0 || Math.hypot(e.clientX - d.x, e.clientY - d.y) > 4) return;
+    const t = d.t; if (!t?.closest || t.closest('input,select,textarea,button,.gw-input-slot,.gw7-chip,.gw38-comment,[contenteditable="true"]')) return;
+    const block = t.closest('.scratch-block'); if (!block) return;
+    setTimeout(() => { if (!block.closest('#workspaceCanvas')) return; const st = block.closest('#workspaceCanvas > .block-stack'); if (st) toggleRun(st); }, 30);
+  }, true);
   const HATS = new Set(['when_flag', 'when_key', 'when_clicked', 'when_broadcast', 'when_clone', 'when_backdrop', 'define_custom']);
   const threadsOf = st => (window.Engine?.threads || []).filter(th => !th.finished && th.__gw4950 === st);
   function toggleRun(st) {
