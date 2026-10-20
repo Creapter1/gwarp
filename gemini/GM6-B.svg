@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" width="800" height="320">
+  <defs>
+    <linearGradient id="gm6bG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="320" rx="20" fill="#0b0b14"/>
+  <!-- Perspective grid -->
+  <g stroke="#1b1b31" stroke-width="2">
+    <line x1="0" y1="220" x2="800" y2="220"/>
+    <line x1="0" y1="260" x2="800" y2="260"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="400" y1="160" x2="80" y2="320"/>
+    <line x1="400" y1="160" x2="240" y2="320"/>
+    <line x1="400" y1="160" x2="400" y2="320"/>
+    <line x1="400" y1="160" x2="560" y2="320"/>
+    <line x1="400" y1="160" x2="720" y2="320"/>
+  </g>
+  <!-- Sound equalizer & electric wire arcs -->
+  <g stroke="#8b5cf6" stroke-width="6" stroke-linecap="round" opacity="0.7">
+    <path d="M90 180 V120 M115 190 V95 M140 175 V130 M165 195 V80 M190 180 V110"/>
+    <path d="M610 180 V110 M635 195 V80 M660 175 V130 M685 190 V95 M710 180 V120"/>
+  </g>
+  <path d="M60 160 Q210 60 330 150 M470 150 Q590 60 740 160" fill="none" stroke="#4ade80" stroke-width="4" stroke-dasharray="12 8" stroke-linecap="round"/>
+  <!-- Center G-Spark Mascot -->
+  <g transform="translate(340,76)">
+    <circle cx="60" cy="70" r="68" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="10 6"/>
+    <path d="M48 94 L42 122 M72 94 L78 122 M26 58 L6 70 M94 56 L114 34" stroke="#2e1065" stroke-width="6.5" stroke-linecap="round"/>
+    <ellipse cx="38" cy="126" rx="11" ry="6" fill="#2e1065"/>
+    <ellipse cx="82" cy="126" rx="11" ry="6" fill="#2e1065"/>
+    <rect x="24" y="18" width="72" height="76" rx="21" fill="url(#gm6bG)" stroke="#4ade80" stroke-width="3.5"/>
+    <path d="M76 41 A21 21 0 1 0 77 71 L77 58 L62 58" fill="none" stroke="#ffffff" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="4" cy="72" r="8" fill="#ffffff" stroke="#2e1065" stroke-width="2.5"/>
+    <circle cx="116" cy="31" r="8" fill="#ffffff" stroke="#2e1065" stroke-width="2.5"/>
+  </g>
+</svg>

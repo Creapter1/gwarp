@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 104" width="224" height="104">
+  <rect width="224" height="104" rx="12" fill="#0b0b14"/>
+  <!-- ROW 1: 5 SOUND STUDIO TABS (HIGH-CONTRAST 16PX ELECTRIC WIRE GLYPHS) -->
+  <g id="tab-edit" transform="translate(8,8)">
+    <path d="M2 12 H7 L10 4 L14 20 L17 12 H22" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="tab-instruments" transform="translate(38,8)">
+    <rect x="2" y="4" width="20" height="16" rx="3" fill="none" stroke="#8b5cf6" stroke-width="2.6"/>
+    <path d="M8 4 V13 M16 4 V13" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round"/>
+  </g>
+  <g id="tab-loop" transform="translate(68,8)">
+    <path d="M4 9 H19 L15 5 M20 15 H5 L9 19" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="tab-song" transform="translate(98,8)">
+    <path d="M4 19 V11 M10 19 V5 M16 19 V13 M21 19 V7" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="10" cy="4" r="2" fill="#4ade80"/>
+  </g>
+  <g id="tab-tone" transform="translate(128,8)">
+    <path d="M2 12 Q7 2 12 12 T22 12" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round"/>
+  </g>
+  <!-- ROW 2: FX 1-5 -->
+  <g id="fx-faster" transform="translate(8,40)">
+    <path d="M4 6 L12 12 L4 18 M12 6 L20 12 L12 18" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-slower" transform="translate(38,40)">
+    <path d="M20 6 L12 12 L20 18 M12 6 L4 12 L12 18" fill="none" stroke="#a855f7" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-louder" transform="translate(68,40)">
+    <path d="M3 10 H7 L13 5 V19 L7 14 H3 Z" fill="#ececf6"/>
+    <path d="M16 7 Q22 12 16 17" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+  <g id="fx-softer" transform="translate(98,40)">
+    <path d="M4 10 H8 L14 5 V19 L8 14 H4 Z" fill="#8b5cf6"/>
+    <line x1="17" y1="12" x2="21" y2="12" stroke="#ececf6" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+  <g id="fx-fadein" transform="translate(128,40)">
+    <path d="M3 19 L21 5 V19 Z" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-linejoin="round"/>
+  </g>
+  <!-- ROW 3: FX 6-9 -->
+  <g id="fx-fadeout" transform="translate(8,72)">
+    <path d="M3 5 L21 19 H3 Z" fill="none" stroke="#a855f7" stroke-width="2.6" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-reverse" transform="translate(38,72)">
+    <path d="M21 12 H4 M10 6 L3 12 L10 18" fill="none" stroke="#facc15" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-echo" transform="translate(68,72)">
+    <circle cx="6" cy="12" r="3" fill="#4ade80"/>
+    <path d="M12 7 A6 6 0 0 1 12 17 M17 4 A10 10 0 0 1 17 20" fill="none" stroke="#8b5cf6" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <g id="fx-robot" transform="translate(98,72)">
+    <path d="M2 17 V8 H8 V16 H15 V7 H21 V17" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

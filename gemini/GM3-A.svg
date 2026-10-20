@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 36" width="288" height="36">
+  <rect width="288" height="36" rx="8" fill="#0b0b14"/>
+  <!-- 1. Motion: Electric Rocket Thruster -->
+  <g id="palette-motion" transform="translate(4,6)">
+    <path d="M12 2 L19 9 L15 13 L9 13 L5 9 Z" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M9 16 L12 22 L15 16" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 2. Looks: Holo Prism Spark -->
+  <g id="palette-looks" transform="translate(36,6)">
+    <polygon points="12,2 22,12 12,22 2,12" fill="#a855f7" stroke="#ececf6" stroke-width="1.8"/>
+    <circle cx="12" cy="12" r="3.5" fill="#4ade80"/>
+  </g>
+  <!-- 3. Sound: Electric Pulse Wave -->
+  <g id="palette-sound" transform="translate(68,6)">
+    <rect x="2" y="2" width="20" height="20" rx="5" fill="#141425" stroke="#a855f7" stroke-width="1.8"/>
+    <path d="M5 12 H8 L10 6 L14 18 L16 9 L19 12" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 4. Events: High-Voltage Bolt (Black on Yellow/Green per Style Guide) -->
+  <g id="palette-events" transform="translate(100,6)">
+    <rect x="2" y="2" width="20" height="20" rx="6" fill="#facc15" stroke="#4ade80" stroke-width="1.8"/>
+    <polygon points="13,4 6,13 12,13 10,20 18,11 12,11" fill="#0b0b14"/>
+  </g>
+  <!-- 5. Control: Electric Wire C-Loop -->
+  <g id="palette-control" transform="translate(132,6)">
+    <path d="M18 5 H8 A4 4 0 0 0 4 9 V15 A4 4 0 0 0 8 19 H18" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="16,15 21,19 16,23" fill="#facc15"/>
+  </g>
+  <!-- 6. Sensing: Radar Scan Ring -->
+  <g id="palette-sensing" transform="translate(164,6)">
+    <circle cx="12" cy="12" r="9" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="12" cy="12" r="4" fill="none" stroke="#4ade80" stroke-width="2"/>
+    <line x1="12" y1="12" x2="19" y2="5" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <!-- 7. Operators: Logic Gate Nodes -->
+  <g id="palette-operators" transform="translate(196,6)">
+    <circle cx="6" cy="7" r="3" fill="#4ade80"/>
+    <circle cx="6" cy="17" r="3" fill="#4ade80"/>
+    <circle cx="18" cy="12" r="3.5" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.5"/>
+    <path d="M9 7 L15 12 M9 17 L15 12" stroke="#ececf6" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <!-- 8. Variables: Memory Core Cube -->
+  <g id="palette-variables" transform="translate(228,6)">
+    <rect x="3" y="3" width="18" height="18" rx="4" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.8"/>
+    <rect x="8" y="8" width="8" height="8" rx="1.5" fill="#4ade80"/>
+  </g>
+  <!-- 9. My Blocks: Custom Microchip -->
+  <g id="palette-myblocks" transform="translate(260,6)">
+    <path d="M12 1 V4 M12 20 V23 M1 12 H4 M20 12 H23" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round"/>
+    <rect x="5" y="5" width="14" height="14" rx="3" fill="#a855f7" stroke="#ececf6" stroke-width="1.8"/>
+    <circle cx="12" cy="12" r="2.5" fill="#ffffff"/>
+  </g>
+</svg>

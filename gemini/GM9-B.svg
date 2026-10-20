@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 104" width="224" height="104">
+  <rect width="224" height="104" rx="12" fill="#0b0b14"/>
+  <g id="tab-edit" transform="translate(8,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.8"/>
+    <path d="M5 12 H9 L11 7 L13 17 L15 12 H19" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g id="tab-instruments" transform="translate(38,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.8"/>
+    <path d="M7 8 H17 V16 H7 Z M10 8 V13 M14 8 V13" fill="none" stroke="#ececf6" stroke-width="1.8"/>
+  </g>
+  <g id="tab-loop" transform="translate(68,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.8"/>
+    <circle cx="12" cy="12" r="5" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="18 5"/>
+    <circle cx="12" cy="12" r="1.8" fill="#ececf6"/>
+  </g>
+  <g id="tab-song" transform="translate(98,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.8"/>
+    <path d="M7 17 V11 M12 17 V7 M17 17 V9" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <g id="tab-tone" transform="translate(128,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.8"/>
+    <path d="M5 12 Q8.5 5 12 12 T19 12" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g id="fx-faster" transform="translate(8,40)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M7 8 L13 12 L7 16 M13 8 L19 12 L13 16" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-slower" transform="translate(38,40)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M17 8 L11 12 L17 16 M11 8 L5 12 L11 16" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-louder" transform="translate(68,40)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M12 6 V18 M6 12 H18" stroke="#4ade80" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+  <g id="fx-softer" transform="translate(98,40)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M6 12 H18" stroke="#ececf6" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+  <g id="fx-fadein" transform="translate(128,40)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M6 16 L18 8 M13 8 H18 V13" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-fadeout" transform="translate(8,72)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M6 8 L18 16 M13 16 H18 V11" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-reverse" transform="translate(38,72)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M16 8 H8 L11 5 M8 16 H16 L13 19" fill="none" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-echo" transform="translate(68,72)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M7 9 V15 M12 7 V17 M17 10 V14" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g id="fx-robot" transform="translate(98,72)">
+    <circle cx="12" cy="12" r="11" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <rect x="6" y="7" width="12" height="10" rx="2" fill="none" stroke="#4ade80" stroke-width="1.8"/>
+    <path d="M9 11 H10 M14 11 H15 M9 14.5 H15" stroke="#ececf6" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+</svg>

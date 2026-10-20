@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 36" width="288" height="36">
+  <rect width="288" height="36" rx="8" fill="#0b0b14"/>
+  <!-- 1. Motion: Bold Electric Arrow -->
+  <g id="palette-motion" transform="translate(4,6)">
+    <path d="M3 12 H19 M13 6 L20 12 L13 18" fill="none" stroke="#8b5cf6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="5" cy="12" r="2.5" fill="#4ade80"/>
+  </g>
+  <!-- 2. Looks: Neon Portal Frame -->
+  <g id="palette-looks" transform="translate(36,6)">
+    <rect x="3" y="4" width="18" height="16" rx="4" fill="none" stroke="#a855f7" stroke-width="2.8"/>
+    <circle cx="12" cy="12" r="3.5" fill="#4ade80"/>
+  </g>
+  <!-- 3. Sound: Electric Tuning Wave -->
+  <g id="palette-sound" transform="translate(68,6)">
+    <path d="M3 12 Q7.5 3 12 12 T21 12" fill="none" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="12" cy="12" r="2.5" fill="#4ade80"/>
+  </g>
+  <!-- 4. Events: Pure Bolt -->
+  <g id="palette-events" transform="translate(100,6)">
+    <polygon points="14,2 5,13 12,13 9,22 19,11 12,11" fill="#4ade80" stroke="#0b0b14" stroke-width="1.2"/>
+  </g>
+  <!-- 5. Control: Loop Infinity Wire -->
+  <g id="palette-control" transform="translate(132,6)">
+    <rect x="4" y="6" width="16" height="12" rx="6" fill="none" stroke="#4ade80" stroke-width="2.8"/>
+    <polygon points="13,3 18,6 13,9" fill="#facc15"/>
+  </g>
+  <!-- 6. Sensing: Signal Beacon -->
+  <g id="palette-sensing" transform="translate(164,6)">
+    <circle cx="12" cy="12" r="3" fill="#4ade80"/>
+    <path d="M6 7 A8 8 0 0 1 18 7 M4 17 A10 10 0 0 0 20 17" fill="none" stroke="#8b5cf6" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+  <!-- 7. Operators: Code Brackets -->
+  <g id="palette-operators" transform="translate(196,6)">
+    <path d="M8 6 L3 12 L8 18 M16 6 L21 12 L16 18" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="12" cy="12" r="2.5" fill="#8b5cf6"/>
+  </g>
+  <!-- 8. Variables: Charged Hex Box -->
+  <g id="palette-variables" transform="translate(228,6)">
+    <polygon points="12,2 21,7 21,17 12,22 3,17 3,7" fill="none" stroke="#8b5cf6" stroke-width="2.6"/>
+    <circle cx="12" cy="12" r="3.5" fill="#4ade80"/>
+  </g>
+  <!-- 9. My Blocks: Warp Gear Spark -->
+  <g id="palette-myblocks" transform="translate(260,6)">
+    <rect x="5" y="5" width="14" height="14" rx="4" transform="rotate(45 12 12)" fill="#a855f7" stroke="#4ade80" stroke-width="2"/>
+    <circle cx="12" cy="12" r="2.5" fill="#ffffff"/>
+  </g>
+</svg>

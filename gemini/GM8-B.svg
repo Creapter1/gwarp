@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 160" width="256" height="160">
+  <rect width="256" height="160" rx="16" fill="#0b0b14"/>
+  <!-- 1. MELODY HEX -->
+  <g transform="translate(8,8)">
+    <polygon points="22,4 42,16 42,52 22,64 2,52 2,16" fill="#141425" stroke="#a855f7" stroke-width="2.2"/>
+    <path d="M18 44 V22 L31 18 V39" fill="none" stroke="#ececf6" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="14" cy="44" r="4" fill="#4ade80"/>
+    <circle cx="27" cy="39" r="4" fill="#a855f7"/>
+  </g>
+  <!-- 2. BACKING HEX -->
+  <g transform="translate(57,8)">
+    <polygon points="22,4 42,16 42,52 22,64 2,52 2,16" fill="#141425" stroke="#8b5cf6" stroke-width="2.2"/>
+    <path d="M10 26 L22 20 L34 26 L22 32 Z" fill="none" stroke="#ececf6" stroke-width="2"/>
+    <path d="M10 34 L22 40 L34 34" fill="none" stroke="#a855f7" stroke-width="2"/>
+    <path d="M10 42 L22 48 L34 42" fill="none" stroke="#4ade80" stroke-width="2"/>
+  </g>
+  <!-- 3. BASS HEX -->
+  <g transform="translate(106,8)">
+    <polygon points="22,4 42,16 42,52 22,64 2,52 2,16" fill="#141425" stroke="#4ade80" stroke-width="2.2"/>
+    <circle cx="22" cy="34" r="12" fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
+    <circle cx="22" cy="34" r="5" fill="#4ade80"/>
+  </g>
+  <!-- 4. DRUMS HEX -->
+  <g transform="translate(155,8)">
+    <polygon points="22,4 42,16 42,52 22,64 2,52 2,16" fill="#141425" stroke="#facc15" stroke-width="2.2"/>
+    <rect x="11" y="30" width="22" height="14" rx="3" fill="#1b1b31" stroke="#ececf6" stroke-width="2"/>
+    <path d="M12 20 L22 30 M32 20 L22 30" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <!-- 5. FILLS HEX -->
+  <g transform="translate(204,8)">
+    <polygon points="22,4 42,16 42,52 22,64 2,52 2,16" fill="#141425" stroke="#4ade80" stroke-width="2.2"/>
+    <path d="M10 46 C18 44 24 34 32 20" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round"/>
+    <circle cx="32" cy="20" r="3.5" fill="#ececf6"/>
+  </g>
+  <!-- 6. QUIET ENERGY -->
+  <g transform="translate(14,86)">
+    <polygon points="24,2 46,15 46,51 24,64 2,51 2,15" fill="#141425" stroke="#8b5cf6" stroke-width="2.2"/>
+    <path d="M14 38 Q24 26 34 38" fill="none" stroke="#a3a3c2" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="24" cy="24" r="3" fill="#4ade80"/>
+  </g>
+  <!-- 7. MID ENERGY -->
+  <g transform="translate(74,86)">
+    <polygon points="24,2 46,15 46,51 24,64 2,51 2,15" fill="#141425" stroke="#4ade80" stroke-width="2.2"/>
+    <line x1="14" y1="42" x2="14" y2="28" stroke="#8b5cf6" stroke-width="4" stroke-linecap="round"/>
+    <line x1="24" y1="44" x2="24" y2="22" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>
+    <line x1="34" y1="42" x2="34" y2="26" stroke="#ececf6" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- 8. INTENSE ENERGY -->
+  <g transform="translate(134,86)">
+    <polygon points="24,2 46,15 46,51 24,64 2,51 2,15" fill="#141425" stroke="#facc15" stroke-width="2.2"/>
+    <path d="M12 42 L20 24 L26 36 L34 18" fill="none" stroke="#facc15" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="34" cy="18" r="3.5" fill="#4ade80"/>
+  </g>
+  <!-- 9. EXTREME ENERGY -->
+  <g transform="translate(194,86)">
+    <polygon points="24,2 46,15 46,51 24,64 2,51 2,15" fill="#141425" stroke="#4ade80" stroke-width="2.2"/>
+    <path d="M27 14 L15 33 H25 L21 52 L35 30 H25 Z" fill="#a855f7" stroke="#4ade80" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 160" width="256" height="160">
+  <rect width="256" height="160" rx="16" fill="#0b0b14"/>
+  <!-- Top row: 5 Stems as High-Contrast Minimalist Wire Glyphs (16px-ready) -->
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- 1. Melody -->
+    <rect x="10" y="12" width="42" height="42" rx="10" fill="#141425" stroke="#2a2a48" stroke-width="2"/>
+    <path d="M27 41 V22 L40 19 V37" stroke="#ececf6" stroke-width="3"/>
+    <circle cx="23" cy="41" r="4.5" fill="#4ade80" stroke="none"/>
+    <circle cx="36" cy="37" r="4.5" fill="#a855f7" stroke="none"/>
+
+    <!-- 2. Backing -->
+    <rect x="59" y="12" width="42" height="42" rx="10" fill="#141425" stroke="#2a2a48" stroke-width="2"/>
+    <line x1="69" y1="42" x2="69" y2="24" stroke="#8b5cf6" stroke-width="4"/>
+    <line x1="80" y1="42" x2="80" y2="19" stroke="#ececf6" stroke-width="4"/>
+    <line x1="91" y1="42" x2="91" y2="27" stroke="#4ade80" stroke-width="4"/>
+
+    <!-- 3. Bass -->
+    <rect x="108" y="12" width="42" height="42" rx="10" fill="#141425" stroke="#2a2a48" stroke-width="2"/>
+    <path d="M115 33 C120 20 124 20 129 33 C134 46 138 46 143 33" stroke="#4ade80" stroke-width="3.2"/>
+    <circle cx="129" cy="33" r="3" fill="#ececf6" stroke="none"/>
+
+    <!-- 4. Drums -->
+    <rect x="157" y="12" width="42" height="42" rx="10" fill="#141425" stroke="#2a2a48" stroke-width="2"/>
+    <circle cx="178" cy="36" r="10" stroke="#facc15" stroke-width="3"/>
+    <path d="M166 20 L175 29 M190 20 L181 29" stroke="#ececf6" stroke-width="2.8"/>
+
+    <!-- 5. Fills -->
+    <rect x="206" y="12" width="42" height="42" rx="10" fill="#141425" stroke="#2a2a48" stroke-width="2"/>
+    <path d="M214 43 Q227 41 238 21" stroke="#4ade80" stroke-width="3.2"/>
+    <path d="M231 20 H239 V28" stroke="#a855f7" stroke-width="2.8"/>
+  </g>
+
+  <!-- Bottom row: 4 Energy Levels + Twist Sparkle (5 tiles) -->
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Quiet -->
+    <rect x="10" y="76" width="42" height="68" rx="10" fill="#141425" stroke="#2a2a48" stroke-width="2"/>
+    <line x1="21" y1="126" x2="41" y2="126" stroke="#8b5cf6" stroke-width="4"/>
+    <circle cx="31" cy="98" r="5" stroke="#a3a3c2" stroke-width="2.5"/>
+
+    <!-- Mid -->
+    <rect x="59" y="76" width="42" height="68" rx="10" fill="#141425" stroke="#2a2a48" stroke-width="2"/>
+    <line x1="70" y1="128" x2="70" y2="112" stroke="#8b5cf6" stroke-width="4"/>
+    <line x1="80" y1="128" x2="80" y2="102" stroke="#4ade80" stroke-width="4"/>
+    <line x1="90" y1="128" x2="90" y2="108" stroke="#ececf6" stroke-width="4"/>
+
+    <!-- Intense -->
+    <rect x="108" y="76" width="42" height="68" rx="10" fill="#141425" stroke="#2a2a48" stroke-width="2"/>
+    <line x1="119" y1="128" x2="119" y2="102" stroke="#8b5cf6" stroke-width="4"/>
+    <line x1="129" y1="128" x2="129" y2="90" stroke="#facc15" stroke-width="4"/>
+    <line x1="139" y1="128" x2="139" y2="96" stroke="#4ade80" stroke-width="4"/>
+
+    <!-- Extreme -->
+    <rect x="157" y="76" width="42" height="68" rx="10" fill="#141425" stroke="#4ade80" stroke-width="2"/>
+    <path d="M181 86 L169 109 H179 L174 132 L189 107 H179 Z" fill="#4ade80" stroke="#ececf6" stroke-width="2"/>
+
+    <!-- Twist (✦) -->
+    <rect x="206" y="76" width="42" height="68" rx="10" fill="#141425" stroke="#a855f7" stroke-width="2"/>
+    <path d="M227 88 L231 104 L243 110 L231 116 L227 132 L223 116 L211 110 L223 104 Z" fill="#a855f7" stroke="#4ade80" stroke-width="2"/>
+  </g>
+</svg>

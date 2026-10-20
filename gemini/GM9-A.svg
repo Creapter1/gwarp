@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 104" width="224" height="104">
+  <rect width="224" height="104" rx="12" fill="#0b0b14"/>
+  <g id="tab-edit" transform="translate(8,8)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.8"/>
+    <path d="M4 12 H8 L10 6 L14 18 L16 12 H20" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="tab-instruments" transform="translate(38,8)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.8"/>
+    <rect x="4" y="5" width="16" height="14" rx="2" fill="none" stroke="#ececf6" stroke-width="1.8"/>
+    <path d="M9 5 V13 M15 5 V13" stroke="#4ade80" stroke-width="2.2"/>
+  </g>
+  <g id="tab-loop" transform="translate(68,8)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.8"/>
+    <path d="M6 9 H17 L14 6 M18 15 H7 L10 18" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="tab-song" transform="translate(98,8)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.8"/>
+    <path d="M5 17 V11 M10 17 V7 M15 17 V13 M19 17 V5" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g id="tab-tone" transform="translate(128,8)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.8"/>
+    <path d="M4 12 Q8 4 12 12 T20 12" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g id="fx-faster" transform="translate(8,40)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <path d="M5 7 L12 12 L5 17 Z M12 7 L19 12 L12 17 Z" fill="#4ade80"/>
+  </g>
+  <g id="fx-slower" transform="translate(38,40)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <path d="M19 7 L12 12 L19 17 Z M12 7 L5 12 L12 17 Z" fill="#a855f7"/>
+  </g>
+  <g id="fx-louder" transform="translate(68,40)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <path d="M5 10 H8 L13 6 V18 L8 14 H5 Z" fill="#ececf6"/>
+    <path d="M16 8 Q20 12 16 16" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g id="fx-softer" transform="translate(98,40)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <path d="M6 10 H9 L14 6 V18 L9 14 H6 Z" fill="#a3a3c2"/>
+    <circle cx="17.5" cy="12" r="1.5" fill="#8b5cf6"/>
+  </g>
+  <g id="fx-fadein" transform="translate(128,40)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <path d="M5 18 L19 6 V18 Z" fill="#8b5cf6" stroke="#4ade80" stroke-width="1.6" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-fadeout" transform="translate(8,72)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <path d="M5 6 L19 18 H5 Z" fill="#8b5cf6" stroke="#4ade80" stroke-width="1.6" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-reverse" transform="translate(38,72)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <path d="M19 12 H6 M10 7 L5 12 L10 17" fill="none" stroke="#facc15" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="fx-echo" transform="translate(68,72)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <circle cx="8" cy="12" r="3" fill="#4ade80"/>
+    <path d="M13 8 A5 5 0 0 1 13 16 M17 6 A8 8 0 0 1 17 18" fill="none" stroke="#a855f7" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+  <g id="fx-robot" transform="translate(98,72)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#2a2a48" stroke-width="1.6"/>
+    <path d="M4 16 V9 H9 V15 H14 V8 H19 V16" fill="none" stroke="#4ade80" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+</svg>

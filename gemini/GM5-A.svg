@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120">
+  <defs>
+    <linearGradient id="gm5aG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="120" rx="16" fill="#0b0b14"/>
+  <!-- 1. Waving -->
+  <g id="pose-waving" transform="translate(0,5)">
+    <path d="M48 78 L44 96 M72 78 L76 96 M31 52 L16 32 M89 52 L103 62" stroke="#2e1065" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <ellipse cx="40" cy="99" rx="8.5" ry="4.5" fill="#2e1065"/>
+    <ellipse cx="80" cy="99" rx="8.5" ry="4.5" fill="#2e1065"/>
+    <rect x="30" y="18" width="60" height="62" rx="17" fill="url(#gm5aG)" stroke="#2e1065" stroke-width="2.5"/>
+    <path d="M72 36 A17 17 0 1 0 73 60 L73 50 L61 50" fill="none" stroke="#ffffff" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="14" cy="29" r="6.5" fill="#ffffff" stroke="#2e1065" stroke-width="2"/>
+    <circle cx="106" cy="64" r="6.5" fill="#ffffff" stroke="#2e1065" stroke-width="2"/>
+    <path d="M6 22 Q10 14 18 18" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <!-- 2. Running -->
+  <g id="pose-running" transform="translate(120,5)">
+    <path d="M46 78 L30 94 M74 78 L92 88 M32 50 L14 44 M88 50 L106 58" stroke="#2e1065" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <ellipse cx="26" cy="96" rx="8.5" ry="4.5" transform="rotate(-20 26 96)" fill="#2e1065"/>
+    <ellipse cx="96" cy="90" rx="8.5" ry="4.5" transform="rotate(20 96 90)" fill="#2e1065"/>
+    <rect x="30" y="18" width="60" height="62" rx="17" transform="rotate(8 60 49)" fill="url(#gm5aG)" stroke="#2e1065" stroke-width="2.5"/>
+    <path d="M74 37 A17 17 0 1 0 73 61 L74 51 L62 50" fill="none" stroke="#ffffff" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="12" cy="43" r="6.5" fill="#ffffff" stroke="#2e1065" stroke-width="2"/>
+    <circle cx="108" cy="59" r="6.5" fill="#ffffff" stroke="#2e1065" stroke-width="2"/>
+    <path d="M8 68 H22 M4 78 H18" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <!-- 3. Celebrating -->
+  <g id="pose-celebrating" transform="translate(240,5)">
+    <path d="M46 74 L36 94 M74 74 L84 94 M31 44 L14 22 M89 44 L106 22" stroke="#2e1065" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <ellipse cx="33" cy="97" rx="8.5" ry="4.5" fill="#2e1065"/>
+    <ellipse cx="87" cy="97" rx="8.5" ry="4.5" fill="#2e1065"/>
+    <rect x="30" y="14" width="60" height="62" rx="17" fill="url(#gm5aG)" stroke="#4ade80" stroke-width="2.5"/>
+    <path d="M72 32 A17 17 0 1 0 73 56 L73 46 L61 46" fill="none" stroke="#ffffff" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="12" cy="19" r="6.5" fill="#ffffff" stroke="#2e1065" stroke-width="2"/>
+    <circle cx="108" cy="19" r="6.5" fill="#ffffff" stroke="#2e1065" stroke-width="2"/>
+    <polygon points="60,2 63,9 70,9 64,13 66,20 60,15 54,20 56,13 50,9 57,9" fill="#facc15"/>
+  </g>
+  <!-- 4. Thinking -->
+  <g id="pose-thinking" transform="translate(360,5)">
+    <path d="M48 78 L44 96 M72 78 L76 96 M31 54 L20 64 M89 52 L102 36" stroke="#2e1065" stroke-width="5" stroke-linecap="round" fill="none"/>
+    <ellipse cx="40" cy="99" rx="8.5" ry="4.5" fill="#2e1065"/>
+    <ellipse cx="80" cy="99" rx="8.5" ry="4.5" fill="#2e1065"/>
+    <rect x="30" y="18" width="60" height="62" rx="17" fill="url(#gm5aG)" stroke="#2e1065" stroke-width="2.5"/>
+    <path d="M72 36 A17 17 0 1 0 73 60 L73 50 L61 50" fill="none" stroke="#ffffff" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="18" cy="66" r="6.5" fill="#ffffff" stroke="#2e1065" stroke-width="2"/>
+    <circle cx="104" cy="33" r="6.5" fill="#ffffff" stroke="#2e1065" stroke-width="2"/>
+    <circle cx="96" cy="14" r="3" fill="#4ade80"/>
+    <circle cx="106" cy="8" r="5" fill="#facc15"/>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" width="800" height="320">
+  <defs>
+    <linearGradient id="gm6aG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a855f7"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+    <radialGradient id="gm6aGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#0b0b14" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="320" rx="20" fill="#0b0b14"/>
+  <circle cx="400" cy="160" r="220" fill="url(#gm6aGlow)"/>
+  <!-- Electric wire traces -->
+  <g fill="none" stroke="#2a2a48" stroke-width="2">
+    <path d="M0 70 H220 L260 110 H540 L580 70 H800"/>
+    <path d="M0 250 H200 L250 210 H550 L600 250 H800"/>
+  </g>
+  <g fill="none" stroke="#4ade80" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 160 H180 L220 120 H310" stroke-dasharray="14 8"/>
+    <path d="M490 120 H580 L620 160 H760" stroke-dasharray="14 8"/>
+    <path d="M120 230 H260 L300 190 H340"/>
+    <path d="M460 190 H500 L540 230 H680"/>
+  </g>
+  <!-- Floating block cards left & right -->
+  <rect x="64" y="56" width="130" height="44" rx="10" fill="#facc15" stroke="#4ade80" stroke-width="2"/>
+  <rect x="82" y="72" width="76" height="12" rx="6" fill="#0b0b14"/>
+  <rect x="606" y="56" width="130" height="44" rx="10" fill="#141425" stroke="#8b5cf6" stroke-width="2.5"/>
+  <path d="M624 78 H642 L648 66 L656 90 L664 72 L672 78 H716" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Center G-Spark Mascot -->
+  <g transform="translate(340,86)">
+    <path d="M48 92 L42 122 M72 92 L78 122 M28 56 L4 34 M92 56 L116 34" stroke="#2e1065" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+    <ellipse cx="38" cy="126" rx="11" ry="6" fill="#2e1065"/>
+    <ellipse cx="82" cy="126" rx="11" ry="6" fill="#2e1065"/>
+    <rect x="24" y="16" width="72" height="76" rx="21" fill="url(#gm6aG)" stroke="#4ade80" stroke-width="3.5"/>
+    <path d="M76 39 A21 21 0 1 0 77 69 L77 56 L62 56" fill="none" stroke="#ffffff" stroke-width="9.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M36 27 L46 27" stroke="#c4b5fd" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="2" cy="31" r="8" fill="#ffffff" stroke="#2e1065" stroke-width="2.5"/>
+    <circle cx="118" cy="31" r="8" fill="#ffffff" stroke="#2e1065" stroke-width="2.5"/>
+  </g>
+</svg>

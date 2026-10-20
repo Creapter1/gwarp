@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 288 36" width="288" height="36">
+  <rect width="288" height="36" rx="8" fill="#0b0b14"/>
+  <!-- 1. Motion: Double Warp Chevrons -->
+  <g id="palette-motion" transform="translate(4,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="2"/>
+    <path d="M6 7 L12 12 L6 17 M12 7 L18 12 L12 17" fill="none" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 2. Looks: Electric Spark Star -->
+  <g id="palette-looks" transform="translate(36,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#141425" stroke="#a855f7" stroke-width="2"/>
+    <path d="M12 4 L14.5 9.5 L20 12 L14.5 14.5 L12 20 L9.5 14.5 L4 12 L9.5 9.5 Z" fill="#a855f7" stroke="#4ade80" stroke-width="1.5"/>
+  </g>
+  <!-- 3. Sound: Synth Equalizer Bars -->
+  <g id="palette-sound" transform="translate(68,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="2"/>
+    <path d="M6 15 V9 M10 18 V6 M14 16 V10 M18 19 V5" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+  <!-- 4. Events: Spark Trigger Badge -->
+  <g id="palette-events" transform="translate(100,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#4ade80"/>
+    <polygon points="13,4 6,13 12,13 10,20 18,11 12,11" fill="#0b0b14"/>
+  </g>
+  <!-- 5. Control: Wire Branch Fork -->
+  <g id="palette-control" transform="translate(132,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#facc15"/>
+    <path d="M6 12 H11 L15 7 H19 M11 12 L15 17 H19" fill="none" stroke="#0b0b14" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 6. Sensing: Target Crosshair -->
+  <g id="palette-sensing" transform="translate(164,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="12" cy="12" r="5" fill="none" stroke="#4ade80" stroke-width="2"/>
+    <path d="M12 4 V7 M12 17 V20 M4 12 H7 M17 12 H20" stroke="#ececf6" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <!-- 7. Operators: Diamond Math Core -->
+  <g id="palette-operators" transform="translate(196,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="2"/>
+    <path d="M8 9 H16 M8 15 H16 M12 6 V12" stroke="#4ade80" stroke-width="2.3" stroke-linecap="round"/>
+  </g>
+  <!-- 8. Variables: Data Slot Tag -->
+  <g id="palette-variables" transform="translate(228,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#141425" stroke="#a855f7" stroke-width="2"/>
+    <rect x="5" y="7" width="14" height="10" rx="5" fill="#8b5cf6" stroke="#4ade80" stroke-width="1.8"/>
+    <circle cx="15" cy="12" r="2" fill="#ffffff"/>
+  </g>
+  <!-- 9. My Blocks: Plug Module -->
+  <g id="palette-myblocks" transform="translate(260,6)">
+    <rect x="1" y="1" width="22" height="22" rx="6" fill="#141425" stroke="#a855f7" stroke-width="2"/>
+    <path d="M6 9 H18 V17 H6 Z" fill="#a855f7" stroke="#ececf6" stroke-width="1.6"/>
+    <path d="M9 9 V6 M15 9 V6" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+</svg>

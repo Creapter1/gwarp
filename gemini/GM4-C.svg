@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" width="280" height="80">
+  <rect width="280" height="80" rx="14" fill="#0b0b14"/>
+  <!-- 1. Bug Hunter -->
+  <g id="badge-bughunter" transform="translate(8,8)">
+    <rect x="7" y="7" width="50" height="50" rx="14" fill="#1b1b31" stroke="#4ade80" stroke-width="3"/>
+    <circle cx="32" cy="34" r="9" fill="#8b5cf6" stroke="#ececf6" stroke-width="2"/>
+    <path d="M28 24 L24 19 M36 24 L40 19 M19 31 H23 M41 31 H45 M19 37 H23 M41 37 H45" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <!-- 2. Wire Wizard -->
+  <g id="badge-wirewizard" transform="translate(76,8)">
+    <rect x="7" y="7" width="50" height="50" rx="14" fill="#1b1b31" stroke="#8b5cf6" stroke-width="3"/>
+    <path d="M16 32 H25 L29 20 L35 44 L39 32 H48" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 3. Beat Architect -->
+  <g id="badge-beatarchitect" transform="translate(144,8)">
+    <rect x="7" y="7" width="50" height="50" rx="14" fill="#1b1b31" stroke="#a855f7" stroke-width="3"/>
+    <rect x="16" y="34" width="6" height="12" rx="2" fill="#4ade80"/>
+    <rect x="25" y="22" width="6" height="24" rx="2" fill="#8b5cf6"/>
+    <rect x="34" y="28" width="6" height="18" rx="2" fill="#4ade80"/>
+    <rect x="43" y="18" width="6" height="28" rx="2" fill="#facc15"/>
+  </g>
+  <!-- 4. Turbo60 Master -->
+  <g id="badge-turbo60" transform="translate(212,8)">
+    <rect x="7" y="7" width="50" height="50" rx="14" fill="#1b1b31" stroke="#facc15" stroke-width="3"/>
+    <path d="M20 22 L32 32 L20 42 M32 22 L44 32 L32 42" fill="none" stroke="#4ade80" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
