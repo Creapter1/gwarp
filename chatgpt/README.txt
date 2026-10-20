@@ -1,1 +1,17 @@
-Ry1XQVJQIENIQVRHUFQgRk9MREVSIOKAlCBRVUlDSyBJTkRFWA0KUmVhZCAuLi9BSS1URUFNLnR4dCBmaXJzdCwgdGhlbiAuLi9UT0RPLnR4dC4gTmV2ZXIgcmV3cml0ZSBhcHAuaHRtbC4NCg0KVVNFUiBET0NVTUVOVEFUSU9ODQotIFVTRVItR1VJREUudHh0IOKAlCBwcmFjdGljYWwgZ3VpZGUgdG8gdXNpbmcgRy1XYXJwLg0KLSBTQ1JFRU5TSE9ULVVJLURPQ1VNRU5UQVRJT04ubWQg4oCUIFVJIG1hcCwgbWVudXMsIGludGVyYWN0aW9ucywgYW5kIHNjcmVlbnNob3QgZXZpZGVuY2UuDQotIC4uL2RvY3MvUkVBRE1FLm1kIOKAlCBtYXN0ZXIgZG9jdW1lbnRhdGlvbiBpbmRleC4NCi0gVUktQVVESVQudHh0IOKAlCBzb3VyY2UtbGV2ZWwgVUkgZmluZGluZ3MgYW5kIHByaW9yaXRpZXMuDQoNClZJU1VBTFMgQU5E IExJVkUgVEVTVFMNCi0gaW1hZ2VzL2d3YXJwLXVpLW1hcC5zdmcgYW5kIGltYWdlcy9nd2FycC1pbnRlcmFjdGlvbnMtbWFwLnN2ZyBhcmUgU0NIRU1BVElDUywgbm90IHNjcmVlbnNob3RzLg0KLSAuLi9kb2NzL3NjcmVlbnMvIGNvbnRhaW5zIHJlYWwgYnJvd3NlciBzY3JlZW5zaG90cy4NCi0gLi4vZG9jcy9MSVZFLVVJLVZFUklGSUNBVElPTi50eHQgcmVjb3JkcyAxMCBsaXZlIGNoZWNrcyBhbmQgcmVtYWluaW5nIHVudGVzdGVkIGFyZWFzLg0KDQpDT0RFIEhBTkRPRkZTIChub3QgbWVyZ2VkIGludG8gYXBwLmh0bWwpDQotIGNsb25lLXNhZmV0eS5qcyArIE5PVEVTLWNsb25lLXNhZmV0eS50eHQNCi0gc2NyYXRjaC1saW5rLmpzICsgTk9URVMtc2NyYXRjaC1saW5rLnR4dA0K
+G-WARP CHATGPT FOLDER — QUICK INDEX
+Read ../AI-TEAM.txt first, then ../TODO.txt. Never rewrite app.html.
+
+USER DOCUMENTATION
+- USER-GUIDE.txt — practical guide to using G-Warp.
+- SCREENSHOT-UI-DOCUMENTATION.md — UI map, menus, interactions, and screenshot evidence.
+- ../docs/README.md — master documentation index.
+- UI-AUDIT.txt — source-level UI findings and priorities.
+
+VISUALS AND LIVE TESTS
+- images/gwarp-ui-map.svg and images/gwarp-interactions-map.svg are SCHEMATICS, not screenshots.
+- ../docs/screens/ contains real browser screenshots.
+- ../docs/LIVE-UI-VERIFICATION.txt records 10 live checks and remaining untested areas.
+
+CODE HANDOFFS (not merged into app.html)
+- clone-safety.js + NOTES-clone-safety.txt
+- scratch-link.js + NOTES-scratch-link.txt
