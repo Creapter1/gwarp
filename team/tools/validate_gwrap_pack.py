@@ -8,9 +8,9 @@ HATS = {'when_flag', 'when_key', 'when_clicked', 'when_broadcast', 'when_clone',
 C_BLOCKS = {'forever', 'repeat', 'if', 'if_else', 'repeat_until'}
 NEEDS_COND = {'if', 'if_else', 'repeat_until', 'wait_until'}
 COND_NODES = {'key_pressed', 'touching_edge', 'touching_pointer', 'touching_sprite', 'mouse_down',
-              'op_gt', 'op_eq', 'op_and', 'op_or', 'op_not'}
+              'op_gt', 'op_lt', 'op_contains', 'op_eq', 'op_and', 'op_or', 'op_not'}
 VALUE_NODES = {'literal', 'get_var', 'x_position', 'y_position', 'timer', 'answer', 'mouse_x', 'mouse_y',
-               'costume_number', 'size_reporter', 'op_random', 'direction', 'op_add', 'op_sub', 'op_mul', 'op_div'}
+               'costume_number', 'size_reporter', 'op_random', 'direction', 'op_add', 'op_sub', 'op_mul', 'op_div', 'op_mathop', 'current_part', 'days_since_2000', 'backdrop_number', 'backdrop_name'}
 ACTIONS = {'code', 'costumes', 'sounds', 'song', 'animation', 'tiles', 'backdrops', 'save', 'undo'}
 KEYS = {'space', 'up arrow', 'down arrow', 'left arrow', 'right arrow', 'any'} | set('abcdefghijklmnopqrstuvwxyz0123456789')
 
@@ -40,7 +40,7 @@ def main():
         if t == 'get_var' and not n.get('name'): errs.append(f'{where}: get_var needs "name"')
         if t == 'touching_sprite' and not n.get('target'): errs.append(f'{where}: touching_sprite needs "target" (use "OTHER_SPRITE")')
         if t == 'literal' and 'value' not in n: errs.append(f'{where}: literal needs "value"')
-        if t in ('op_gt', 'op_eq', 'op_add', 'op_sub', 'op_mul', 'op_div', 'op_random'):
+        if t in ('op_gt', 'op_lt', 'op_contains', 'op_eq', 'op_add', 'op_sub', 'op_mul', 'op_div', 'op_random'):
             a = n.get('args')
             if not isinstance(a, list) or len(a) != 2: errs.append(f'{where}: {t} needs "args" with 2 values')
             else: [node(x, f'{where}.{t}[{i}]', 'value') for i, x in enumerate(a)]

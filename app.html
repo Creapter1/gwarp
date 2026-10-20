@@ -2284,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.50.0</span>
+<span class="app-version">Beta v15.50.1</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -2528,12 +2528,15 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="scratch-block bg-sensing" data-type="timer">timer</div>
 <div class="scratch-block bg-sensing" data-type="username">username</div>
 <div class="scratch-block bg-sensing" data-type="current_time">current time</div>
+<div class="scratch-block bg-sensing" data-type="current_part">current <select class="block-select"><option value="YEAR">year</option><option value="MONTH">month</option><option value="DATE">date</option><option value="DAYOFWEEK">day of week</option><option value="HOUR">hour</option><option value="MINUTE">minute</option><option value="SECOND">second</option></select></div>
+<div class="scratch-block bg-sensing" data-type="days_since_2000">days since 2000</div>
 </div>
 <!-- OPERATORS -->
 <div class="cat-section flex flex-col items-start gap-1.5" id="sec-operators">
 <div class="text-xs font-extrabold text-emerald-400 mb-1 flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-operators"></div> Operators</div>
 <div class="scratch-block bg-operators" data-type="op_add"><input class="block-input" type="text" value=""/> + <input class="block-input" type="text" value=""/></div>
 <div class="scratch-block bg-operators" data-type="op_gt"><input class="block-input" type="text" value=""/> &gt; <input class="block-input" type="text" value="50"/></div>
+<div class="scratch-block bg-operators" data-type="op_lt"><input class="block-input" type="text" value=""/> &lt; <input class="block-input" type="text" value="50"/></div>
 <div class="scratch-block bg-operators" data-type="op_sub"><input class="block-input" type="text" value=""/> − <input class="block-input" type="text" value=""/></div>
 <div class="scratch-block bg-operators" data-type="op_mul"><input class="block-input" type="text" value=""/> × <input class="block-input" type="text" value=""/></div>
 <div class="scratch-block bg-operators" data-type="op_div"><input class="block-input" type="text" value=""/> ÷ <input class="block-input" type="text" value="1"/></div>
@@ -2544,8 +2547,10 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="scratch-block bg-operators" data-type="op_mod"><input class="block-input" type="text" value="10"/> mod <input class="block-input" type="text" value="3"/></div>
 <div class="scratch-block bg-operators" data-type="op_round">round <input class="block-input" type="text" value="3.14"/></div>
 <div class="scratch-block bg-operators" data-type="op_abs">abs <input class="block-input" type="text" value="-5"/></div>
+<div class="scratch-block bg-operators" data-type="op_mathop"><select class="block-select"><option value="abs">abs</option><option value="floor">floor</option><option value="ceiling">ceiling</option><option value="sqrt">sqrt</option><option value="sin">sin</option><option value="cos">cos</option><option value="tan">tan</option><option value="asin">asin</option><option value="acos">acos</option><option value="atan">atan</option><option value="ln">ln</option><option value="log">log</option><option value="e ^">e ^</option><option value="10 ^">10 ^</option></select> of <input class="block-input" type="text" value="9"/></div>
 <div class="scratch-block bg-operators" data-type="op_join">join <input class="block-input" type="text" value="hello "/> <input class="block-input" type="text" value="world"/></div>
 <div class="scratch-block bg-operators" data-type="op_length">length of <input class="block-input" type="text" value="hello"/></div>
+<div class="scratch-block bg-operators" data-type="op_contains"><input class="block-input" type="text" value="apple"/> contains <input class="block-input" type="text" value="a"/>?</div>
 <div class="scratch-block bg-operators" data-type="op_letter"><input class="block-input" type="text" value="1"/> letter of <input class="block-input" type="text" value="hello"/></div>
 <div class="scratch-block bg-operators" data-type="op_random">pick random <input class="block-input" type="text" value="1"/> to <input class="block-input" type="text" value="10"/></div>
 </div>
@@ -2554,6 +2559,8 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="text-xs font-extrabold text-indigo-400 mb-1 flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-indigo-500"></div> Stage</div>
 <div class="scratch-block bg-indigo-600" data-type="set_backdrop">switch backdrop to <select class="block-select"><option value="stage1">stage1</option></select></div>
 <div class="scratch-block bg-indigo-600" data-type="next_backdrop">next backdrop</div>
+<div class="scratch-block bg-indigo-600" data-type="backdrop_number">backdrop #</div>
+<div class="scratch-block bg-indigo-600" data-type="backdrop_name">backdrop name</div>
 <div class="scratch-block bg-indigo-600" data-type="change_backdrop_color">set backdrop color to <input class="block-input" style="width:42px;padding:1px;" type="color" value="#ffffff"/></div>
 </div>
 <!-- LISTS -->
@@ -2567,6 +2574,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="scratch-block bg-red-600" data-type="list_show">show list <select class="block-select"><option value="my list">my list</option></select></div>
 <div class="scratch-block bg-red-600" data-type="list_hide">hide list <select class="block-select"><option value="my list">my list</option></select></div>
 <div class="scratch-block bg-red-600" data-type="list_item">item <input class="block-input" type="text" value="1"/> of <select class="block-select"><option value="my list">my list</option></select></div>
+<div class="scratch-block bg-red-600" data-type="list_contents"><select class="block-select"><option value="my list">my list</option></select></div>
 <div class="scratch-block bg-red-600" data-type="list_length">length of <select class="block-select"><option value="my list">my list</option></select></div>
 <div class="scratch-block bg-red-600" data-type="list_contains"><select class="block-select"><option value="my list">my list</option></select> contains <input class="block-input" type="text" value="item"/>?</div>
 </div>
@@ -4636,7 +4644,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.0',label:'Beta v15.50.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.1',label:'Beta v15.50.1',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -8216,8 +8224,8 @@ nodes.push(el);cur=b.next;}return nodes;};
     const type=block.dataset.type||'';
     if(['repeat','forever','if','if_else','repeat_until','define_custom'].includes(type)||block.classList.contains('block-c-shape')){const header=block.querySelector('.block-c-header');if(header)block.style.setProperty('--gw-block-connector-color',getComputedStyle(header).backgroundColor);block.title='C-block: connect above or below; drop other blocks inside the open middle.';return;}
     const hats=['when_flag','when_key','when_clicked','when_broadcast','when_clone'];
-    const booleans=['op_gt','op_eq','op_and','op_or','op_not','touching_pointer','touching_sprite','key_pressed','mouse_down','list_contains','tile_is_solid','touching_tile'];
-    const reporters=['x_position','y_position','direction','costume_number','costume_name','size_reporter','volume_reporter','get_var','op_add','op_sub','op_mul','op_div','op_mod','op_round','op_abs','op_join','op_length','op_letter','op_random','list_item','list_length','timer','current_time','distance_to','sprite_prop','mouse_x','mouse_y','tile_at','behavior_get_attr','behavior_event_actor_name','behavior_event_tile'];
+    const booleans=['op_gt','op_lt','op_contains','op_eq','op_and','op_or','op_not','touching_pointer','touching_sprite','key_pressed','mouse_down','list_contains','tile_is_solid','touching_tile'];
+    const reporters=['op_mathop','current_part','days_since_2000','backdrop_number','backdrop_name','list_contents','x_position','y_position','direction','costume_number','costume_name','size_reporter','volume_reporter','get_var','op_add','op_sub','op_mul','op_div','op_mod','op_round','op_abs','op_join','op_length','op_letter','op_random','list_item','list_length','timer','current_time','distance_to','sprite_prop','mouse_x','mouse_y','tile_at','behavior_get_attr','behavior_event_actor_name','behavior_event_tile'];
     if(hats.includes(type)){block.classList.add('gw-hat-block');block.title='Hat block: starts a script.';return;}
     if(booleans.includes(type)){block.classList.add('gw-boolean-block');block.title='Boolean block: returns true or false.';return;}
     if(reporters.includes(type)){block.classList.add('gw-reporter-block');block.title='Reporter block: gives a value to another block.';return;}
@@ -10015,7 +10023,7 @@ nodes.push(el);cur=b.next;}return nodes;};
 
   /* ---------------- 1. expression model ---------------- */
   const BOOL = new Set(['key_pressed', 'mouse_down', 'touching_pointer', 'touching_sprite', 'op_gt', 'op_eq', 'op_and', 'op_or', 'op_not', 'list_contains', 'op_lt', 'op_contains', 'get_param_bool']);
-  const VALUE = new Set(['get_param', 'x_position', 'y_position', 'direction', 'mouse_x', 'mouse_y', 'timer', 'answer', 'volume_reporter', 'size_reporter', 'costume_number', 'costume_name', 'current_time', 'distance_to', 'sprite_prop', 'username', 'get_var', 'list_length', 'list_item', 'op_add', 'op_sub', 'op_mul', 'op_div', 'op_mod', 'op_join', 'op_length', 'op_letter', 'op_random', 'op_round', 'op_abs']);
+  const VALUE = new Set(['op_mathop', 'current_part', 'days_since_2000', 'backdrop_number', 'backdrop_name', 'list_contents', 'get_param', 'x_position', 'y_position', 'direction', 'mouse_x', 'mouse_y', 'timer', 'answer', 'volume_reporter', 'size_reporter', 'costume_number', 'costume_name', 'current_time', 'distance_to', 'sprite_prop', 'username', 'get_var', 'list_length', 'list_item', 'op_add', 'op_sub', 'op_mul', 'op_div', 'op_mod', 'op_join', 'op_length', 'op_letter', 'op_random', 'op_round', 'op_abs']);
   const NESTABLE = t => BOOL.has(t) || VALUE.has(t);
   const isBool = t => BOOL.has(t) || t === 'touching_edge';
   const isBoolNode = n => isBool(n?.type) || (n?.type === 'parameter' && n.kind === 'boolean');
@@ -10055,6 +10063,9 @@ nodes.push(el);cur=b.next;}return nodes;};
       case 'list_length': return { type: t, name: selOf(b) || 'my list' };
       case 'list_item': return { type: t, name: selOf(b) || 'my list', index: lit(ins[0] ?? 1) };
       case 'list_contains': return { type: t, name: selOf(b) || 'my list', args: [lit(ins[0] ?? '')] };
+      case 'op_mathop': return { type: t, op: selOf(b) || 'abs', args: argsOf(b) }; // v15.50.1
+      case 'current_part': return { type: t, part: selOf(b) || 'YEAR' };
+      case 'list_contents': return { type: t, name: selOf(b) || 'my list' };
     }
     if (/^op_/.test(t)) return { type: t, args: argsOf(b) };
     return { type: t };
@@ -10272,6 +10283,9 @@ nodes.push(el);cur=b.next;}return nodes;};
       if (t === 'list_item') return blk(t, [litVal(n.index, 1)], [n.name]);
       if (t === 'list_contains') return blk(t, [litVal(n.args?.[0], '')], [n.name]);
       if (t === 'op_round' || t === 'op_abs') return blk(t, [litVal(n.args?.[0], '')]);
+      if (t === 'op_mathop') return blk(t, [litVal(n.args?.[0], '')], [n.op || 'abs']); // v15.50.1
+      if (t === 'current_part') return blk(t, [], [n.part || 'YEAR']);
+      if (t === 'list_contents') return blk(t, [], [n.name]);
       return blk(t);
     } catch { return null; }
   }

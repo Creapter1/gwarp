@@ -1,5 +1,5 @@
 {
-"note": "G-Warp Beta v15.49.0 palette, dumped from the live app by Claude 2026-10-19. \"inputs\" = number of typed inputs in order; \"menus\" = dropdown options in order (a custom name like a variable, sprite, costume or message is allowed in menus that list names). Pen/Music/Animation extension blocks are not in the default palette.",
+"note": "G-Warp Beta v15.50.1 palette, dumped from the live app by Claude 2026-10-19. \"inputs\" = number of typed inputs in order; \"menus\" = dropdown options in order (a custom name like a variable, sprite, costume or message is allowed in menus that list names). Pen/Music/Animation extension blocks are not in the default palette.",
 "blocks": [
 {
 "type": "move",
@@ -885,6 +885,34 @@
 "conditionSlot": false
 },
 {
+"type": "current_part",
+"category": "sensing",
+"text": "current [YEAR]",
+"inputs": 0,
+"menus": [
+[
+"YEAR",
+"MONTH",
+"DATE",
+"DAYOFWEEK",
+"HOUR",
+"MINUTE",
+"SECOND"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "days_since_2000",
+"category": "sensing",
+"text": "days since 2000",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
 "type": "op_add",
 "category": "operators",
 "text": "() + ()",
@@ -897,6 +925,15 @@
 "type": "op_gt",
 "category": "operators",
 "text": "() > 50(50)",
+"inputs": 2,
+"menus": [],
+"shape": "boolean",
+"conditionSlot": false
+},
+{
+"type": "op_lt",
+"category": "operators",
+"text": "() < (50)",
 "inputs": 2,
 "menus": [],
 "shape": "boolean",
@@ -993,6 +1030,30 @@
 "conditionSlot": false
 },
 {
+"type": "op_mathop",
+"category": "operators",
+"text": "[abs] of (9)",
+"inputs": 1,
+"menus": [
+[
+"abs",
+"floor",
+"ceiling",
+"sqrt",
+"sin",
+"cos",
+"tan",
+"asin",
+"acos",
+"atan",
+"ln",
+"log"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
 "type": "op_join",
 "category": "operators",
 "text": "join hello (hello ) world(world)",
@@ -1008,6 +1069,15 @@
 "inputs": 1,
 "menus": [],
 "shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "op_contains",
+"category": "operators",
+"text": "(apple) contains (a)?",
+"inputs": 2,
+"menus": [],
+"shape": "boolean",
 "conditionSlot": false
 },
 {
@@ -1048,6 +1118,24 @@
 "inputs": 0,
 "menus": [],
 "shape": "stack",
+"conditionSlot": false
+},
+{
+"type": "backdrop_number",
+"category": "stage",
+"text": "backdrop #",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "backdrop_name",
+"category": "stage",
+"text": "backdrop name",
+"inputs": 0,
+"menus": [],
+"shape": "reporter",
 "conditionSlot": false
 },
 {
@@ -1155,6 +1243,19 @@
 "category": "lists",
 "text": "item (1) of [my list]",
 "inputs": 1,
+"menus": [
+[
+"my list"
+]
+],
+"shape": "reporter",
+"conditionSlot": false
+},
+{
+"type": "list_contents",
+"category": "lists",
+"text": "[my list]",
+"inputs": 0,
 "menus": [
 [
 "my list"

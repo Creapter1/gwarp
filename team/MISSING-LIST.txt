@@ -11,16 +11,16 @@
 A. BROKEN (G-Warp has it, but it does the wrong thing) - Claude
 [x] A1  A new block jumped to another sprite when you clicked / added / duplicated a sprite.
         Fixed in v15.49.1 (new scripts belong to their sprite at once). Same cause: "Delete N Blocks" counted wrong.
-[ ] A2  Variable and list monitors are switched on but hidden UNDER the stage picture (score is invisible).
-[ ] A3  Undo does nothing after dragging in a new block. Ctrl+Shift+Z undoes again instead of redo.
-[ ] A4  Clicking a script or a palette block does not run it (no glow, click again to stop).
+[x] A2  Variable and list monitors are switched on but hidden UNDER the stage picture (score is invisible).
+[x] A3  Undo does nothing after dragging in a new block. Ctrl+Shift+Z undoes again instead of redo.
+[x] A4  Clicking a script or a palette block does not run it (no glow, click again to stop).
 [ ] A5  Right-clicking a reporter inside a block acts on the OUTER block (Delete removes the whole "move" block,
         Duplicate copies the whole script).
-[ ] A6  "when this sprite clicked" only works while the project is running (Scratch: also when stopped).
-[ ] A7  Block right-click menu: runs off the bottom of the window, Escape doesn't close it, can be open at the same
+[x] A6  "when this sprite clicked" only works while the project is running (Scratch: also when stopped).
+[x] A7  Block right-click menu: runs off the bottom of the window, Escape doesn't close it, can be open at the same
         time as the empty-area menu, Duplicate also copies the blocks ABOVE and doesn't stick to the mouse.
-[ ] A8  Right-clicking a comment opens the wrong menu.
-[ ] A9  The Delete key does nothing on a clicked block.
+[x] A8  Right-clicking a comment opens the wrong menu.
+[x] A9  The Delete key does nothing on a clicked block.
 [ ] A10 Number inputs accept letters ("abc" in "move ( ) steps").
 
 B. MISSING - kids hit these in their first hour (most important first)
@@ -50,7 +50,7 @@ C. MISSING - TurboWarp / PenguinMod editor helpers (they are ahead here)
 [ ] C8  Copy a reporter's value (from the value bubble or a monitor).                              Gemini (with B4)
 [ ] C9  Sprite folders and sound folders (costume folders exist: "walk//frame 1"), search sprites by name.
 [ ] C10 Arrow keys change the number in a focused number field.
-[ ] C11 Running script glows / gets a border (with A4).
+[x] C11 Running script glows / gets a border (with A4).
 [ ] C12 Backpack (keep scripts / costumes / sounds to use in another project).
 [ ] C13 Snap scripts to a grid; drag a file onto the sprite pane to add it (both NOT TESTED yet).
 [ ] C14 Block count in the menu bar; comment previews on hover; ask before deleting a sprite (G-Warp has Restore).
@@ -68,21 +68,21 @@ E. FROM THE 3-APP AUDIT (claude/GAP-ANALYSIS-2026-10-19.txt - stopped early by t
 
  E1. Kids hit these in their first hour (P1)
 [ ] E1.1  "touching color ?" and "color is touching color ?" blocks.                              Claude
-[ ] E1.2  The "<" (less than) block - only ">" exists.                                             Claude
-[ ] E1.3  The "contains ?" block (text contains text).                                              Claude
-[ ] E1.4  Math functions: only "abs" - add the dropdown with floor, ceiling, sqrt, sin, cos, tan, asin, acos,
+[x] E1.2  The "<" (less than) block - only ">" exists.                                             Claude
+[x] E1.3  The "contains ?" block (text contains text).                                              Claude
+[x] E1.4  Math functions: only "abs" - add the dropdown with floor, ceiling, sqrt, sin, cos, tan, asin, acos,
           atan, ln, log, e^, 10^.                                                                    Claude
 [ ] E1.5  "when stage clicked" hat.                                                                 Claude
 [ ] E1.6  "glide to random position / mouse-pointer / a sprite".                                     Claude
-[ ] E1.7  The list reporter (the round "my list" block that shows the whole list).                   Claude
+[x] E1.7  The list reporter (the round "my list" block that shows the whole list).                   Claude
 [ ] E1.8  Tutorials (Scratch has 27).                                       ChatGPT (content) + Gemini (UI)
 [ ] E1.9  G-Warp runs at 60 FPS by default; its own settings say a Scratch project then runs twice as fast.
           Opening an .sb3 should use 30 FPS unless the project asks for 60 (NOT TESTED yet).        Claude
 
  E2. Important for real games (P2)
-[ ] E2.1  "switch backdrop to () and wait", "backdrop number / name" reporter, "when [timer / loudness] > ()",
+[~] E2.1  (backdrop number/name + days since 2000 done v15.50.1) "switch backdrop to () and wait", "backdrop number / name" reporter, "when [timer / loudness] > ()",
           "item # of () in [list]", "days since 2000".                                             Claude
-[ ] E2.2  "current time" needs its dropdown (year, month, date, day of week, hour, minute, second). Claude
+[x] E2.2  (v15.50.1: "current [year...]" block) "current time" needs its dropdown (year, month, date, day of week, hour, minute, second). Claude
 [ ] E2.3  One round reporter block per variable (today one generic "value of [ ]" block).          Claude
 [ ] E2.4  TurboWarp blocks: while, is online?, last key pressed, mouse button down?.              Claude
 [ ] E2.5  Interpolation setting; custom stage size in the settings (today only a block).   Claude / Gemini
