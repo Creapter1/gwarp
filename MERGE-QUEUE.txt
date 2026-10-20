@@ -81,3 +81,6 @@ CLAUDE (v15.49.0, this night)
                                                      (the paint editor keeps its own toolbar icons)
   gemini/empty-states (code + costumes)              MERGED v15.50.3 ("no sounds" picture: next, needs the sound list)
   gemini/rig-characters, flipbook-sprites            MERGED v15.50.4 in "Choose a Sprite" (Animated + Characters tabs)
+  gemini/GM12-A (8 electric sprites) + GM5-A (4 G-Spark poses)   MERGED v15.50.7 in Choose a Sprite (Electric tab; "G-Spark Poses" = 4 costumes)
+  gemini/GM15 (backdrops)   NOT MERGED: they are small framed thumbnails (8 in one 384x192 sheet), not 480x360 backdrops
+  gemini/GM1/2/3/4/6/8/9/11/13/16/17/18 (icon sheets)   READY - each needs its spot in the app's buttons (next session)
