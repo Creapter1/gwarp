@@ -1,0 +1,176 @@
+=====================================================================
+ G-WARP MUSIC LAB — WHY MELODIES SOUNDED THE SAME & 3 ENGINE FIXES
+ File: gemini/LAB-music.txt | Date: 2026-10-16 | Author: Gemini
+ Targets:
+   1. `window.GW_SONG_ARRANGER` in `app.html` (lines 9065–9960) — Song Maker
+   2. `window.GW_SOUND_LAB` / `window.GW_SOUND_LAB_API` in `app.html` (lines 5589–5829) — Loop Maker
+ Constraint: ZERO UI changes — pure melody, harmony, bass, and groove engine
+=====================================================================
+
+1. ROOT-CAUSE RESEARCH (EXACT LINES IN app.html)
+   Why did changing Genre/Style, Mood, or Theme still play almost the exact
+   same melody in G-Warp's Song Maker and Loop Maker?
+
+   A. SONG MAKER (`window.GW_SONG_ARRANGER`, lines 9065–9960)
+      - CAUSE 1 — Theme had 0% effect on Melody (1/12 unique melodies):
+        In `app.html` lines 9244–9257 and 9360–9372, `S.theme` (`gaming`,
+        `vlog`, `cinematic`, `fashion`, `sports`, `corporate`, `ads`,
+        `tech`, `travel`, `anime`, `documentary`, `horror`) only changes
+        `T().shape` (the 8-part energy bar heights) and `T().fills`.
+        `makeMotif(r, base)` never reads `S.theme` or `T()` at all!
+        Measured result: all 12 themes produce 1/12 identical melodies
+        (100% duplicate tunes across every theme).
+
+      - CAUSE 2 — Mood only changed rest probability & 2 scales (6/16 motifs):
+        In `app.html` lines 9082 and 9360–9372:
+        * `SCALES` only has `major: [0,2,4,5,7,9,11]` and natural
+          `minor: [0,2,3,5,7,8,10]`.
+        * 13 of the 16 moods use the exact same natural minor scale.
+        * `makeMotif()` only reads `M().rest`. Moods that share `rest`
+          (e.g. `chill` 0.30, `dreamy` 0.30, `mysterious` 0.30; or
+          `angry` 0.10 and `restless` 0.10; or `scary` 0.50 and `horror`
+          0.50) run the exact same PRNG steps and emit the exact same
+          note sequence (`deg += r() < 0.5 ? 1 : -1`).
+
+      - CAUSE 3 — 28 Genres collapsed into 7 Rhythm Templates (7/28):
+        In `app.html` lines 9182–9222 and 9360:
+        * All 28 genres map `G().rhythm` to only 8 templates (`bouncy`,
+          `sparse`, `trap`, `epic`, `fast`, `stabs`, `syncopated`, `swing`).
+        * Worse: in Modern mode (the default), line 9361 forces:
+          `const rh = modern() && G().rhythm === 'bouncy' ? 'syncopated' : G().rhythm;`
+          which merges `bouncy` into `syncopated` — leaving only 7 templates
+          for 28 genres!
+        * `lofi`, `boombap`, `westcoast`, `rnb`, `reggae`, `sexydrill`,
+          and `electronica` all use `sparse` and generate the exact same
+          motif!
+
+      - CAUSE 4 — Unchanged Seed on Style Switch (`setStyle` -> `generate(false)`):
+        In `app.html` line 9394, `setStyle({ genre, mood, theme })` calls
+        `generate(false)`, which reuses `S.seed` (default `1`) without
+        mixing the selected genre, mood, or theme into the PRNG seed.
+
+      - CAUSE 5 — Stepwise Clamp & Mid-Energy Filtering in `schedulePart`:
+        In `app.html` lines 9590–9604:
+        * Non-chord notes (`ev.chord === false`) ignore `ev.idx` completely!
+          `schedulePart()` only computes `midi = prev + dv` where `dv = ev.dir`.
+          Because `makeMotif()` only ever set `dir: r() < 0.5 ? 1 : -1`,
+          every non-chord note in every song was forced to move by a single
+          scale step (`+1` or `-1`), erasing all melodic leaps and contours!
+        * In Mid-energy parts (`lv === 1`), line 9597 executes:
+          `if (lv === 1 && !ev.chord) return;` — dropping all non-chord
+          notes and only playing `ev.chord === true` notes.
+
+   B. LOOP MAKER (`window.GW_SOUND_LAB` / `window.GW_SOUND_LAB_API`, lines 5589–5829)
+      - CAUSE 6 — Loop Style had 0% effect on Melody, Bass, or Chords (1/8 styles):
+        In `app.html` lines 5652–5686, `generatePatterns()` reads
+        `style = STYLES[st.style]`, which only defines `{ wave, bass, lead, drumScale }`.
+        `style` is ONLY used once at line 5672 (`v: 0.62 * style.drumScale`)!
+        It has ZERO effect on melody notes, rhythm, bassline, or chords, and
+        `seeded(st.seed)` does not hash `st.style` or `st.mood`.
+        Measured result: all 8 Loop Styles (`lofi`, `synthwave`, `upbeat`,
+        `dark`, `ambient`, `house`, `jazz`, `chiptune`) play 1/8 identical
+        melodies, and all 64 (8×8) Style×Mood combinations collapse to just
+        7 unique melodies!
+
+   C. CLASSIC PROCEDURAL GENERATOR (`window.GW_V153_GENERATOR`, lines 6898–6934)
+      & SEAMLESS SONG LOOP MODE (`TODO.txt` item 1)
+      - CAUSE 7 — Uniform Random Walk Across Sections & Missing Seamless Loop Wrap:
+        In `app.html` lines 6905–6910, `patternFor(section, settings, r, bpm)`
+        picks random scale notes on every 8th-note step (`i * 0.5`) with the
+        exact same `[0, 4, 5, 3]` chord roots and uniform kick/snare/hat on
+        every section (`intro`, `a`, `b`, `bridge`, `outro`), ignoring style
+        rhythmic pockets and section contours.
+      - Furthermore, Song Maker (`GW_SONG_ARRANGER`) ended every song with an
+        `outro` energy drop-off + a 2.6 s silent/release tail, causing a gap
+        when looped via `forever -> play sound until done`. All 3 engines now
+        provide `setLoopMode(true)` + `wrapSeamlessLoopBuffer()` so loop mode
+        repeats seamlessly from end to start.
+
+=====================================================================
+2. THREE STANDALONE ENGINE VERSIONS (NO UI CHANGES)
+=====================================================================
+
+OPTION A: `gemini/music-engine-A.js`
+  "Modal Theory, Mood Intervals, Theme Contours & Genre Pocket"
+  - 12 modal scales (`ionian`, `lydian`, `mixolydian`, `pentMaj`,
+    `aeolian`, `dorian`, `phrygian`, `harmonicMin`, `phrygianDom`,
+    `bluesMin`, `hirajoshi`, `wholeTone`).
+  - 16 `MOOD_PROFILES`: each mood sets its own modal scale, interval
+    leap probability (`leapProb`), max leap size, upward/downward
+    directional bias (`dirBias`), pitch register shift (`regShift`),
+    staccato/legato gate (`gate`), characteristic tension degree
+    (`tensionDeg`), syncopation bias, `anchorSteps`, and chord progressions.
+  - 12 `THEME_CONTOURS`: each theme defines an 8-slot 2-bar pitch
+    contour curve (`arch`, `climb`, `hook`, `pedal`, `callResp`,
+    `cascade`), note density multiplier, and octave-doubling rate.
+  - 28 dedicated `GENRE_RHYTHMS` (one distinct 2-bar rhythmic pocket
+    per genre) + FNV-1a style signature seeding.
+  - Includes `projectEventsForSchedulePart(S, rawEvents)` which projects
+    target modal/contour MIDI pitches into exact multi-semitone `ev.dir`
+    deltas and `ev.chord` anchors so `app.html`'s existing `schedulePart()`
+    renders the true leaps, contours, and registers at both `lv=1` (Mid)
+    and `lv=2,3` (Intense/Extreme).
+  - Includes `buildLoopPatternsA(st)` + `installLoopLab()` for `GW_SOUND_LAB`
+    with 8 `LOOP_STYLE_PROFILES` and 8 `LOOP_MOOD_PROFILES` (64/64 unique
+    style×mood loops).
+
+OPTION B: `gemini/music-engine-B.js`
+  "Phrase Grammar, Call-and-Response, Cadences & Counter-Melody"
+  - Replaces random walks with 2-bar musical phrase grammar:
+    * Bar 1 (Steps 0–15): Question / Call phrase ending on a mood-
+      specific open cadence (`callEnd` degree) + turnaround pickup.
+    * Bar 2 (Steps 16–31): Answer / Resolution phrase (`respEnd`
+      for Motif A; climax turnaround for Motif B; chorus hook for
+      Motif C; contrasting bridge cell for Motif D).
+  - 12 `PHRASE_ARCHETYPES` (`ostinatoHook`, `callResponse`, `longArc`,
+    `syncHook`, `anthemClimb`, `pedalArp`, `brightHook`, `arpMatrix`,
+    `openHorizon`, `heroicOctave`, `minimalCell`, `dissonantPedal`).
+  - Projects phrase pitches and cadence chord voicings directly into
+    `schedulePart()` so all 16 moods, 12 themes, and 28 genres produce
+    unique rendered MIDI note streams.
+  - Includes `buildLoopPhrasesB(st)` + `installLoopLab()` with `LOOP_PHRASE_CELLS`
+    and `LOOP_MOOD_CADENCE` (64/64 unique call-and-response loops).
+
+OPTION C: `gemini/music-engine-C.js`
+  "Multi-Voice Texture, Expressive Synth Voices & Harmonic Voicing"
+  - Expands all 16 moods' chord progressions (`MOOD_HARMONY`) with
+    modal borrowed chords (`iio` Phrygian/Locrian tension, `iv` minor
+    plagal, Andalusian cadences, jazz turnarounds).
+  - Pairs `S.inst.melody` with a mood-matched secondary lead voice
+    (up to `MAX_LAYERS = 3`) so dark/horror/dreamy/epic moods change
+    timbre as well as notes.
+  - 12 explicit `THEME_TEXTURES` defining exact step grids, note
+    lengths, and interval jump contours for every theme, projected
+    through `projectTextureEvents(S, rawEvents)`.
+  - Includes `buildLoopTextureC(st)` + `installLoopLab()` with `LOOP_TEXTURES`
+    and `LOOP_MOOD_VOICINGS` (64/64 unique multi-voice texture loops).
+
+=====================================================================
+3. END-TO-END RENDERED MIDI BENCHMARK (`node gemini/test-music-engines.js`)
+=====================================================================
+Simulated through `app.html`'s exact `GW_SONG_ARRANGER` (`chordFor()` +
+`schedulePart()`) AND `GW_SOUND_LAB` (`generatePatterns()`):
+
+| Engine Version                  | Song Moods | Song Themes | Song Genres | Mid (`lv=1`) | Loop Styles | Loop 64 Combos | Classic 5 Secs | Classic 64 Combos | Seamless Loop |
+|---------------------------------|------------|-------------|-------------|--------------|-------------|----------------|----------------|-------------------|---------------|
+| Baseline (`app.html` v15.45.0)  | 13 / 16    |  1 / 12     |  7 / 28     | 13 / 16      |  1 / 8      |  7 / 64        | 5 / 5 (random) | 64 / 64 (random)  | N/A           |
+| Option A (Modal + Contour)      | 16 / 16    | 12 / 12     | 28 / 28     | 16 / 16      |  8 / 8      | 64 / 64        | 5 / 5 (shaped) | 64 / 64 (shaped)  | PASS          |
+| Option B (Phrase Grammar)       | 16 / 16    | 12 / 12     | 28 / 28     | 16 / 16      |  8 / 8      | 64 / 64        | 5 / 5 (cadence)| 64 / 64 (cadence) | PASS          |
+| Option C (Multi-Voice Texture)  | 16 / 16    | 12 / 12     | 28 / 28     | 16 / 16      |  8 / 8      | 64 / 64        | 5 / 5 (texture)| 64 / 64 (texture) | PASS          |
+
+=====================================================================
+4. RECOMMENDATION FOR CLAUDE MERGE INTO app.html
+=====================================================================
+- Primary Pick: **Option A (`gemini/music-engine-A.js`)** + the Bar 1 /
+  Bar 2 cadence resolution from **Option B (`gemini/music-engine-B.js`)**.
+- Why:
+  1. Option A directly fixes all 6 root causes across BOTH `GW_SONG_ARRANGER`
+     and `GW_SOUND_LAB` (including `schedulePart`'s `ev.dir` non-chord step
+     calculation, `lv=1` chord anchors, and Loop Maker's 1/8 style-blind
+     melody bug) while keeping 100% compatibility with `GW_SONG_ARRANGER`,
+     `GW_SOUND_LAB_API`, and `GW_RUN_V1570_SONG_MAKER_TEST()`.
+  2. It supports G-Warp's multi-tag combiner (`S.genres`, `S.moods`,
+     `S.themes` up to 3 tags each) and requires zero DOM/CSS changes.
+  3. Can be dropped in as a single post-init call:
+     `window.GW_GEMINI_MUSIC_A.install(window.GW_SONG_ARRANGER, window.GW_SOUND_LAB, window.GW_SOUND_LAB_API)`
+     or inlined into `makeMotif()` (line 9360) and `generatePatterns()` (line 5652).

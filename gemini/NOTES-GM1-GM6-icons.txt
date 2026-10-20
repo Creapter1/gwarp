@@ -1,0 +1,160 @@
+=====================================================================
+ GEMINI NOTES — GM1 TO GM18 SVG ICON & ART PACK (A / B / C OPTIONS)
+ Date: 2026-10-17 | Author: Gemini
+=====================================================================
+
+1. WHAT WAS BUILT
+   All jobs in TODO-GEMINI.txt (GM1–GM6 + GM8 + GM9 + GM11 + GM12 + GM13 +
+   GM15 + GM16 + GM17 + GM18 — 46 SVGs total), each with 3 distinct SVG
+   options (-A, -B, -C), plus the fixed canonical G-Spark icon at
+   gemini/extension/icons/gspark.svg and pre-rendered PNGs
+   (gemini/extension/icons/icon16.png, icon32.png, icon48.png, icon128.png).
+
+   - GM1 (Extension icon, 128x128 viewBox, tested for 16px clarity):
+     * GM1-A.svg: Full G-Spark mascot on #0b0b14 with electric green
+       circuit traces and #4ade80 border.
+     * GM1-B.svg: Extra-bold chunky G-Spark badge maximizing the white
+       "G" and #4ade80 outline for 16x16 toolbar legibility.
+     * GM1-C.svg: Action G-Spark with dashed #4ade80 energy ring & bolt.
+     * gemini/extension/icons/gspark.svg + icon16..128.png: Updated from
+       the old lightning bolt placeholder to the canonical G-Spark mascot
+       (rounded violet square #8b5cf6->#4f46e5, bold white "G", #2e1065
+       stick arms/legs, white glove hands) and rendered all 4 PNG sizes.
+
+   - GM2 (Website + app favicon, 64x64 viewBox, ultra-clean at 16px):
+     * GM2-A.svg: Violet gradient G-tile with #4ade80 border + spark dot.
+     * GM2-B.svg: Dark #0b0b14 tile with white G + #4ade80 lightning bar.
+     * GM2-C.svg: Compact mini G-Spark silhouette with green stick limbs.
+
+   - GM3 (9 Block Palette Category Icons: Motion, Looks, Sound, Events,
+     Control, Sensing, Operators, Variables, My Blocks — 288x36 sheet
+     with <g id="palette-..."> groups at 24x24 each):
+     * GM3-A.svg: Neon Circuit / High-Tech Nodes (Events & Control use
+       #0b0b14 black details on #facc15 / #4ade80 per STYLE-GUIDE.txt).
+     * GM3-B.svg: Rounded Electric Tiles (#141425 panels with violet &
+       electric green glyphs).
+     * GM3-C.svg: Minimalist High-Contrast Glyphs (thick 2.8–3.2px
+       strokes for instant 24px recognition).
+
+   - GM4 (4 Achievement Badges: Bug Hunter, Wire Wizard, Beat Architect,
+     Turbo60 Master — 280x80 sheet with <g id="badge-..."> groups):
+     * GM4-A.svg: Electric Hex Shields.
+     * GM4-B.svg: Neon Arcade Medallions.
+     * GM4-C.svg: G-Spark Rounded Square Crests.
+
+   - GM5 (4 G-Spark Poses: waving, running, celebrating, thinking —
+     480x120 sheet with <g id="pose-..."> groups, 120x110 per pose):
+     * GM5-A.svg: Canonical G-Spark proportions matching GW_DEFAULT_MASCOT
+       in app.html (same rounded violet body, white G, stick limbs).
+     * GM5-B.svg: Charged G-Spark with electric green wire limbs & bolts.
+     * GM5-C.svg: Stage-spotlight framed G-Spark poses for UI cards/Modals.
+
+   - GM6 (Website Hero Art: G-Spark + electric wire background, 800x320):
+     * GM6-A.svg: Wide electric circuit board with glowing dashed #4ade80
+       wires, floating block cards, and central celebrating G-Spark.
+     * GM6-B.svg: Neon synth horizon grid + equalizer bars + G-Spark.
+     * GM6-C.svg: C-block electric wire connected through G-Spark to the
+       Song Maker arrangement grid.
+
+   - GM8 (Song Maker Stem & Energy Icons: Melody, Backing, Bass, Drums,
+     Fills + Quiet, Mid, Intense, Extreme, Twist — 256x160 sheet):
+     * GM8-A.svg: Neon Circuit Stem & Energy Badges.
+     * GM8-B.svg: Hexagonal Synth Studio Icons.
+     * GM8-C.svg: Minimalist High-Contrast Wire Glyphs (16px-ready).
+
+   - GM9 (Sound Studio Tab & Audio FX Icons: 5 tabs `tab-edit`,
+     `tab-instruments`, `tab-loop`, `tab-song`, `tab-tone` + 9 audio FX
+     `fx-faster`, `fx-slower`, `fx-louder`, `fx-softer`, `fx-fadein`,
+     `fx-fadeout`, `fx-reverse`, `fx-echo`, `fx-robot` — 224x104 sheet):
+     * GM9-A.svg: Neon Studio Rounded Tiles (#141425 panels with #4ade80 /
+       #8b5cf6 / #a855f7 / #facc15 waveforms and controls).
+     * GM9-B.svg: Hex Synth & Medallion Modules.
+     * GM9-C.svg: Minimalist 16px High-Contrast Wire Glyphs.
+
+   - GM11 (Costume Paint Editor Tool Icons: 12 tools `tool-select`,
+     `tool-box`, `tool-circle`, `tool-line`, `tool-group`, `tool-front`,
+     `tool-back`, `tool-brush`, `tool-eraser`, `tool-bucket`, `tool-grid`,
+     `tool-snap` — 192x72 sheet):
+     * GM11-A.svg: Neon Rounded Tiles (#141425 / #8b5cf6 / #4ade80).
+     * GM11-B.svg: Hex Vector Studio Badges.
+     * GM11-C.svg: Minimalist 16px High-Contrast Wire Glyphs.
+
+   - GM12 (8 Electric Game Sprites for G-Warp Sprite Library: `sprite-spark-bot`,
+     `sprite-volt-rover`, `sprite-cyber-crystal`, `sprite-plasma-shield`,
+     `sprite-warp-gate`, `sprite-hover-pad`, `sprite-neon-drone`,
+     `sprite-speed-booster` — 280x140 sheet, zero cats/brands):
+     * GM12-A.svg: Filled Vector Game Costumes.
+     * GM12-B.svg: Geometric Synth Arcade Sprites.
+     * GM12-C.svg: Neon Wireframe Arcade Vector Sprites.
+
+   - GM13 (Top Bar & Stage Control Icons: 10 controls `ctrl-start`,
+     `ctrl-pause`, `ctrl-stop`, `ctrl-turbo`, `ctrl-hq`, `ctrl-stage-sm`,
+     `ctrl-stage-md`, `ctrl-stage-lg`, `ctrl-fullscreen`, `ctrl-extension`
+     — 160x72 sheet):
+     * GM13-A.svg: Neon Rounded Control Tiles.
+     * GM13-B.svg: Hex Command Modules.
+     * GM13-C.svg: Minimalist 16px Wire Glyphs.
+
+   - GM15 (8 Electric Stage Backdrops for `window.GW_BACKDROP_LIBRARY`:
+     `bd-cyber-grid`, `bd-synth-horizon`, `bd-neon-lab`, `bd-star-warp`,
+     `bd-crystal-cavern`, `bd-circuit-city`, `bd-plasma-arena`,
+     `bd-cloud-citadel` — 384x192 sheet, 88x66 per backdrop at 4:3 Stage
+     aspect ratio, zero cats/brands):
+     * GM15-A.svg: Filled Electric Vector Stage Backdrops.
+     * GM15-B.svg: Geometric Synth Arcade Stage Backdrops.
+     * GM15-C.svg: Neon Wireframe Stage Backdrops.
+
+   - GM16 (11 Instrument Playground & Drum Group Icons for
+     `window.GW_INSTRUMENT_STUDIO`: `inst-all`, `inst-keys`, `inst-strings`,
+     `inst-winds`, `inst-mallets`, `inst-synth`, `inst-drums`, `inst-chord`,
+     `inst-arp`, `inst-surprise`, `inst-save` — 192x72 sheet):
+     * GM16-A.svg: Neon Rounded Instrument & Action Tiles.
+     * GM16-B.svg: Hexagonal Synth Studio Instrument Badges.
+     * GM16-C.svg: Minimalist 16px High-Contrast Wire Glyphs.
+
+   - GM17 (10 Extension Safety & Gallery Category Icons for
+     `window.GW_EXT_DANGER` & `#gw10LibDlg`: `ext-safe`, `ext-moderate`,
+     `ext-danger`, `ext-physics`, `ext-graphics`, `ext-sound`,
+     `ext-gamepad`, `ext-math`, `ext-storage`, `ext-url` — 160x72 sheet):
+     * GM17-A.svg: Neon Rounded Safety & Category Tiles.
+     * GM17-B.svg: Hexagonal Safety & Category Badges.
+     * GM17-C.svg: Minimalist 16px High-Contrast Wire Glyphs.
+
+   - GM18 (10 Make-a-Block, Power Lines & Bug Hunter UI Icons for TODO.txt
+     roadmap: `mb-input-value`, `mb-input-boolean`, `mb-label-text`,
+     `mb-warp-norefresh`, `pwr-broadcast-wire`, `pwr-myblock-wire`,
+     `bug-hunter-radar`, `freeze-guard-shield`, `crash-recovery-restore`,
+     `look-scratch-toggle` — 160x72 sheet):
+     * GM18-A.svg: Neon Rounded UI Feature Tiles.
+     * GM18-B.svg: Hexagonal UI Feature Badges.
+     * GM18-C.svg: Minimalist 16px High-Contrast Wire Glyphs.
+
+2. STYLE GUIDE & RULE COMPLIANCE
+   - Every SVG has an explicit viewBox, width/height, no external fonts,
+     no external links/images, no <script> tags, and is well under 4 KB.
+   - Strict G-Warp palette: #0b0b14, #141425, #1b1b31, #2a2a48, #ececf6,
+     #8b5cf6, #a855f7, #4ade80, #facc15.
+   - Zero cats, zero Scratch icons, zero third-party characters/brands.
+
+3. RECOMMENDED PICKS FOR CLAUDE MERGE
+   - GM1: GM1-B.svg for 16px/32px PNGs, GM1-A.svg for 48px/128px.
+   - GM2: GM2-A.svg (matches index.html .logo while adding #4ade80 spark).
+   - GM3: GM3-A.svg (each category icon can be extracted by its id).
+   - GM4: GM4-A.svg.
+   - GM5: GM5-A.svg (1:1 compatible with GW_DEFAULT_MASCOT costume).
+   - GM6: GM6-C.svg (shows C-block wire + G-Spark + Song Maker together).
+   - GM8: GM8-C.svg for compact 16px grid cells or GM8-A.svg for headers.
+   - GM9: GM9-A.svg for Sound Studio tab headers (`#gwSndTabs`) and
+     GM9-C.svg for compact FX buttons (`#gwSndFx`).
+   - GM11: GM11-A.svg or GM11-C.svg for `#gwCosTools` in Costume Studio.
+   - GM12: GM12-A.svg to expand `window.GW_SPRITE_LIBRARY` with 8 electric
+     game sprites.
+   - GM13: GM13-A.svg or GM13-C.svg for the top bar and stage toolbar.
+   - GM15: GM15-A.svg to expand `window.GW_BACKDROP_LIBRARY` with 8 electric
+     4:3 stage backdrops.
+   - GM16: GM16-A.svg or GM16-C.svg for `#gwInstGroups` and action buttons
+     in `window.GW_INSTRUMENT_STUDIO`.
+   - GM17: GM17-A.svg for extension library cards (`#gw10LibList`) and
+     `window.GW_EXT_DANGER` badges.
+   - GM18: GM18-A.svg for the Make-a-Block dialog, Power Lines toggle,
+     and Bug Hunter / Freeze Guard / Crash Recovery controls.

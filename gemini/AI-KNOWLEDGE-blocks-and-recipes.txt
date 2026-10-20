@@ -1,0 +1,223 @@
+=====================================================================
+ GWRAP AI KNOWLEDGE BASE — BLOCKS, RECIPES, DIAGNOSTICS & KID SAFETY
+ File: gemini/AI-KNOWLEDGE-blocks-and-recipes.txt | Date: 2026-10-16
+ Author: Gemini | Target: window.GW_V1571 (GWrap AI Helper in app.html)
+=====================================================================
+
+1. PURPOSE & SAFETY RULES (HARD CONSTRAINTS)
+   - GWrap AI is a built-in helper inside G-Warp's Code palette (`#sec-gwrap`).
+   - It ONLY helps with G-Warp: explaining blocks, building working block
+     scripts via `GW_V1571.addRecipe()`, checking the user's project via
+     `GW_V1571.checkProject()`, and guiding users to Costumes / Sounds /
+     Song Maker.
+   - NEVER send project or personal data without explicit parent/user OK.
+   - NEVER execute arbitrary JavaScript strings or `eval()`.
+   - NEVER pretend to be a real person or mention cats / third-party game
+     characters (use G-Spark, Spark Bot, Rocket, Coin, Gem, Star).
+
+2. HOW G-WARP STORES PROJECTS, SPRITES & BLOCKS (REAL ENGINE NAMES)
+   - `window.Engine.sprites`: array of sprites (`isClone === true` for clones).
+     * Active sprite: `Engine.sprites[Engine.activeSpriteIndex || 0]`
+     * Fields: `name`, `x`, `y`, `size`, `direction` (90 = right, 0 = up),
+       `visible`, `volume`, `activeCostume`, `costumes`, `sounds`, `behaviors`.
+   - `window.Engine.variables`: `{ [varName]: value }`
+   - `window.Engine.lists`: `{ [listName]: [items...] }`
+   - Workspace DOM (`#workspaceCanvas`):
+     * Top-level stacks are `<div class="block-stack" data-owner="0">`.
+     * Each block is `<div class="scratch-block" data-type="...">`.
+     * C-blocks (`forever`, `repeat`, `if`, `if_else`, `repeat_until`,
+       `define_custom`) hold nested blocks inside `.block-c-body` (and
+       `.block-c-else` for `if_else`).
+     * Typed input slots (`window.GW9` / `window.GW_V1571`):
+       `<span class="gw-input-slot" data-slot-kind="boolean|value" data-expr='{"type":...}'>`
+
+3. COMPLETE G-WARP BLOCK OPCODE MAP (`data-type`)
+   - EVENTS (Hats — start a script):
+     * `when_flag`       : when green flag clicked
+     * `when_key`        : when [space / arrow] key pressed (`select.block-select`)
+     * `when_clicked`    : when this sprite clicked
+     * `when_broadcast`  : when I receive [message1]
+     * `broadcast`       : broadcast [message1]
+     * `broadcast_wait`  : broadcast [message1] and wait
+     * `when_backdrop`   : when backdrop switches to [backdrop1]
+   - MOTION:
+     * `move`            : move (10) steps
+     * `turn_cw`         : turn right (15) degrees
+     * `turn_ccw`        : turn left (15) degrees
+     * `goto_xy`         : go to x: (0) y: (0)
+     * `goto_random`     : go to random position
+     * `glide_xy`        : glide (1) secs to x: (0) y: (0)
+     * `point_direction` : point in direction (90)
+     * `point_towards`   : point towards [mouse-pointer / sprite]
+     * `change_x`        : change x by (10)
+     * `set_x`           : set x to (0)
+     * `change_y`        : change y by (10)
+     * `set_y`           : set y to (0)
+     * `bounce`          : if on edge, bounce
+     * Reporters: `x_position`, `y_position`, `direction`
+   - LOOKS:
+     * `say`             : say (Hello!) for (2) seconds
+     * `think`           : think (Hmm...) for (2) seconds
+     * `switch_costume`  : switch costume to [costume1]
+     * `next_costume`    : next costume
+     * `switch_backdrop` : switch backdrop to [backdrop1]
+     * `change_size`     : change size by (10)
+     * `set_size`        : set size to (100) %
+     * `change_color`    : change color effect by (25)
+     * `change_ghost`    : change ghost effect by (25)
+     * `clear_effects`   : clear graphic effects
+     * `show` / `hide`   : show / hide sprite
+     * Reporters: `costume_number`, `costume_name`, `size_reporter`
+   - SOUND:
+     * `play_sound`      : play sound [Zap] until done
+     * `start_sound`     : start sound [Zap]
+     * `stop_all_sounds` : stop all sounds
+     * `change_volume`   : change volume by (-10)
+     * `set_volume`      : set volume to (100) %
+     * Reporter: `volume_reporter`
+   - CONTROL:
+     * `wait`            : wait (1) seconds
+     * `repeat`          : repeat (10) { ... }
+     * `forever`         : forever { ... }
+     * `if`              : if <condition> then { ... }
+     * `if_else`         : if <condition> then { ... } else { ... }
+     * `wait_until`      : wait until <condition>
+     * `repeat_until`    : repeat until <condition> { ... }
+     * `stop`            : stop [all / this script / other scripts in sprite]
+     * `when_clone`      : when I start as a clone
+     * `create_clone`    : create clone of [myself]
+     * `delete_clone`    : delete this clone
+   - SENSING (Pointy Booleans & Round Reporters):
+     * `touching_pointer`: touching [mouse-pointer]?
+     * `touching_edge`   : touching [edge]?
+     * `touching_sprite` : touching [Sprite2]?
+     * `key_pressed`     : key [space] pressed?
+     * `mouse_down`      : mouse down?
+     * `distance_to`     : distance to [mouse-pointer]
+     * `ask_wait`        : ask (What's your name?) and wait
+     * `answer`          : answer
+     * `mouse_x`, `mouse_y`, `timer`, `reset_timer`, `current_time`, `username`
+   - OPERATORS:
+     * `op_add` (+), `op_sub` (-), `op_mul` (*), `op_div` (/), `op_mod` (mod)
+     * `op_random` (pick random A to B)
+     * `op_gt` (>), `op_lt` (<), `op_eq` (=)
+     * `op_and` (and), `op_or` (or), `op_not` (not)
+     * `op_join`, `op_letter`, `op_length`, `op_contains`, `op_round`, `op_abs`
+   - VARIABLES & LISTS:
+     * `set_var`, `change_var`, `show_var`, `hide_var`, `get_var`
+     * `list_add`, `list_delete`, `list_insert`, `list_replace`,
+       `list_item`, `list_length`, `list_contains`
+
+4. COMMON BEGINNER BUGS & HOW GWRAP AI DIAGNOSES THEM
+   - BUG 1: "My `if` block only checks once when I click the green flag!"
+     * Cause: `when_flag -> if <key space pressed?>` runs in 1 millisecond
+       at startup and finishes immediately.
+     * Fix: Wrap the `if` block inside a `forever` C-block so G-Warp keeps
+       checking every frame.
+   - BUG 2: "My sprite walks upside down when bouncing!"
+     * Cause: Rotation style or direction flips 180 degrees.
+     * Fix: Use `change_x (10)` and `change_x (-10)` for left/right movement,
+       or point in direction 90 / -90.
+   - BUG 3: "My song sounds like rapid machine-gun noise inside `forever`!"
+     * Cause: Using `start_sound` inside `forever` restarts the sound 60 times
+       per second.
+     * Fix: Use `play_sound` ("play sound until done") inside `forever`, or
+       add a `wait` block.
+   - BUG 4: "My clones multiply exponentially (1 -> 2 -> 4 -> 8 -> 300)!"
+     * Cause: Broadcast receivers run on the original sprite AND every clone,
+       so each clone creates another clone when the broadcast fires.
+     * Fix: Create clones from the main `when_flag` loop or check a clone variable.
+   - BUG 5: "My score doesn't reset when I restart the game!"
+     * Cause: `change_var [score] by 1` exists, but there is no `set_var [score] to 0`
+       under `when_flag`.
+     * Fix: Always put `set [score] to 0` right under `when green flag clicked`.
+
+5. EIGHT EXPANDED GAME RECIPES (READY FOR `GW_V1571.RECIPES`)
+   - Recipe 1: Smooth Gravity & Jump (Platformer Physics)
+     * Uses `when_flag -> set [speed y] to 0 -> forever { change [speed y] by -1; change y by (speed y); if <y position < -120> { set y to -120; set [speed y] to 0; if <key space pressed?> { set [speed y] to 14 } } }`.
+   - Recipe 2: Coin Collector (Touching + Random Respawn + Score)
+     * Uses `when_flag -> set [score] to 0 -> forever { if <touching [G-Spark]?> { change [score] by 1; start sound [Zap]; go to random position } }`.
+   - Recipe 3: Laser Clone Shooter
+     * Uses `when [space] key pressed -> create clone of [myself]` +
+       `when I start as a clone -> show -> repeat until <touching [edge]?> { change x by 14 } -> delete this clone`.
+   - Recipe 4: Enemy Patrol (Left-Right Guard)
+     * Uses `when_flag -> forever { repeat (25) { change x by 4 } repeat (25) { change x by -4 } }`.
+   - Recipe 5: Countdown Timer (Game Over at 0)
+     * Uses `when_flag -> set [time left] to 30 -> repeat (30) { wait 1 seconds; change [time left] by -1 } -> say "Time's up!" for 2 seconds -> stop [all]`.
+   - Recipe 6: Dash Boost with Cooldown
+     * Uses `when [z] key pressed -> repeat (6) { move 18 steps } -> wait 0.8 seconds`.
+   - Recipe 7: Health Hearts & Damage Flash
+     * Uses `when_flag -> set [health] to 3 -> forever { if <touching [Enemy Ship]?> { change [health] by -1; repeat (4) { change ghost effect by 40; wait 0.1 seconds; clear graphic effects } } }`.
+   - Recipe 8: High Score Tracker
+     * Uses `when_flag -> forever { if <(score) > (high score)> { set [high score] to (score) } }`.
+
+6. DEEP PROJECT DIAGNOSTICS (`GW_V1571.checkProject()` EXPANSION)
+   In addition to checking missing hat blocks, loose reporters, and empty
+   boolean slots, GWrap AI's project checker can detect 6 subtle runtime
+   bugs by inspecting `#workspaceCanvas .block-stack`:
+   - CHECK A — One-Shot `if` Under Green Flag (Missing `forever`):
+     * Pattern: A `.block-stack` starts with `when_flag` and its direct
+       child is `if` or `if_else` testing `key_pressed` or `touching_*`,
+       with no enclosing `forever` or `repeat_until`.
+     * Message: "This 'if' only checks once right when you press Start.
+       Put a 'forever' block around it so it keeps checking while you play."
+   - CHECK B — `start_sound` Inside `forever` Without `wait` (Audio Stutter):
+     * Pattern: A `forever` C-body contains `start_sound` and no `wait`,
+       `play_sound`, or `glide_xy`.
+     * Message: "'start sound' inside 'forever' restarts the sound 60 times
+       every second! Use 'play sound until done' instead."
+   - CHECK C — Broadcast Clone Multiplication (Exponential Clone Bomb):
+     * Pattern: A `when_broadcast` stack contains `create_clone` of `myself`.
+     * Message: "Every clone also receives broadcasts, so 'create clone'
+       inside 'when I receive' doubles your clones each time! Move 'create
+       clone' to the green flag script or another sprite."
+   - CHECK D — Clone Without `when_clone` Hat or Without `delete_clone`:
+     * Pattern: Sprite has `create_clone`(myself) but no `when_clone` hat,
+       or `when_clone` never calls `delete_clone`.
+     * Message: "You make clones of this sprite, but there is no 'when I
+       start as a clone' block (or clones never delete themselves when done)."
+   - CHECK E — Variable Changed But Never Initialized on Start:
+     * Pattern: `change_var` is used for a variable (e.g. `score`), but no
+       `when_flag` script has `set_var` for that variable.
+     * Message: "You change 'score', but nothing sets it to 0 when the
+       green flag is clicked."
+   - CHECK F — Unmatched `broadcast` / `when_broadcast` Names:
+     * Pattern: A `broadcast` or `broadcast_wait` sends message X, but no
+       sprite has `when_broadcast` for X (or vice versa).
+     * Message: "A block broadcasts a message that no 'when I receive'
+       block is listening for."
+
+7. OFFLINE BUG-REPORT QUESTIONNAIRE -> `window.GW_AI_REPORT` (`TODO.txt` Spec)
+   Per `app.html` `REPORT.todo`:
+   "GWrap AI rework: (a) developer mode only: a section to connect a real
+   AI with an API key (option present, off by default); (b) everyone else
+   keeps the offline quick assistant, extended with a simple questionnaire
+   that helps describe a bug in their version, how to recreate it and what
+   might cause it, feeding the AI Report."
+
+   - QUESTIONNAIRE FLOW (4 Kid-Friendly Steps, 100% Offline, Private):
+     1. `area` (Where did it happen?):
+        Options: `Blocks / Code`, `Costumes / Paint`, `Sounds / Song Maker`,
+        `Stage / Sprites`, `Saving / Loading`, `Extensions`.
+     2. `problem` (What went wrong?):
+        Short text or quick chip: `Something froze or slowed down`,
+        `A block didn't do what I expected`, `My drawing or sound changed`,
+        `A button or menu wouldn't click`.
+     3. `often` (How often does it happen?):
+        Options: `Every time`, `Sometimes`, `Only once`.
+     4. `making` + `steps` (What were you making, and how can we make it
+        happen again?):
+        Two short text inputs (`maxlength="200"`), plus automatic static
+        cause-hint matching:
+        - If `area === 'Blocks / Code'` and nested `if` blocks > 2:
+          auto-hint: `Possible cause: nested C-block snap target in collectSnapCandidate()`.
+        - If `area === 'Stage / Sprites'` and clone count >= 280:
+          auto-hint: `Possible cause: clone cap (300) reached without delete_clone`.
+        - If `area === 'Sounds / Song Maker'` and sprite volume === 0:
+          auto-hint: `Possible cause: sprite volume is 0% or AudioContext suspended`.
+     5. Saving to `window.GW_AI_REPORT`:
+        Appends `{ area, problem, often, making, steps, causeHint, version: window.GW_BUILD?.label, when: new Date().toISOString() }`
+        to `window.GW_BUG_REPORTS` so clicking "AI Report" immediately
+        includes the structured report under `## Bug reports from the user`.
+        Per `TODO.txt` Rule 6: stays 100% local in memory/session until the
+        user copies or downloads the report; never sent anywhere silently.
