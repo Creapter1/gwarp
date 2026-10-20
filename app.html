@@ -2285,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.50.4</span>
+<span class="app-version">Beta v15.50.5</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4647,7 +4647,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.4',label:'Beta v15.50.4',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.5',label:'Beta v15.50.5',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -5464,8 +5464,9 @@ IMPORTANT:
     const type=block?.dataset?.type||'';
     if(type==='get_var'){const name=gwVarEls(block).sel?.value||'my variable';return GW9.scopedValue(this,name);}
     if(type==='set_var'||type==='change_var'){
-      const gwE=gwVarEls(block);const name=gwE.sel?.value||'my variable';const raw=gwE.raw?.value??0;const val=GW8.resolveInput(this,block,0,raw);if(type==='set_var')GW9.setScopedValue(this,name,val);else GW9.setScopedValue(this,name,GW9.scopedValue(this,name)+GW8.coerceNumber(val));GW.refreshVariableMonitors?.();return;
+      const gwE=gwVarEls(block);const name=gwE.sel?.value||'my variable';const raw=gwE.raw?.value??0;const val=GW8.resolveInput(this,block,0,raw);if(type==='set_var')GW9.setScopedValue(this,name,val);else GW9.setScopedValue(this,name,GW8.coerceNumber(GW9.scopedValue(this,name))+GW8.coerceNumber(val)); /* v15.50.4: 'a' + 1 = 1 like Scratch (was 'a1') */GW.refreshVariableMonitors?.();return;
     }
+    if(type==='point_direction'){ /* v15.50.4: point in direction (abc / empty) keeps the old direction, like Scratch */ const pin=[...block.querySelectorAll(':scope > .block-input')].filter(x=>x.dataset.slotProxy!=='1')[0]; const pv=GW8.resolveInput(this,block,0,pin?.value??''); if(String(pv).trim()===''||!Number.isFinite(Number(pv)))return; }
     if(type==='call_custom'){
       const ins=[...block.querySelectorAll('.block-input')].filter(x=>x.dataset.slotProxy!=='1');const name=(ins[0]?.value||'').trim();const def=GW8.customDefs?.[name];if(!def)return;if(this.callStack.length>128){toast('Custom procedure recursion limit reached');return;}const argText=ins[1]?.value||'';const args=argText.split(',').map(s=>s.trim()).filter((_,i)=>i<def.params.length).map(s=>{const scoped=GW9.scopedValue(this,s);const n=Number(s);return s!==''&&scoped!==''?scoped:(Number.isFinite(n)?n:s);});const locals={};def.params.forEach((p,i)=>locals[p]=args[i]??'');this.callStack.push({type:'custom',name:def.name,blocks:def.blocks,pc:0,locals});return;
     }
@@ -11020,7 +11021,7 @@ nodes.push(el);cur=b.next;}return nodes;};
         case 'touching_sprite': { const s = spr(th, owner); return !!s && Engine.sprites.some(t => t !== s && GW.rootName(t) === node.target && GW.spritesTouch(s, t)); }
         case 'op_lt': { const n = v => Number.isFinite(Number(v)) ? Number(v) : 0; return n(G9.evalNode(th, node.args?.[0], 'value', owner)) < n(G9.evalNode(th, node.args?.[1], 'value', owner)); }
         case 'op_contains': return String(G9.evalNode(th, node.args?.[0], 'value', owner)).toLowerCase().includes(String(G9.evalNode(th, node.args?.[1], 'value', owner)).toLowerCase());
-        case 'op_mathop': { const v = Number(G9.evalNode(th, node.args?.[0], 'value', owner)) || 0; const f = { abs: Math.abs, floor: Math.floor, ceiling: Math.ceil, sqrt: Math.sqrt, sin: x => Math.sin(x * DEG), cos: x => Math.cos(x * DEG), tan: x => Math.tan(x * DEG), asin: x => Math.asin(x) / DEG, acos: x => Math.acos(x) / DEG, atan: x => Math.atan(x) / DEG, ln: Math.log, log: Math.log10, 'e ^': Math.exp, '10 ^': x => Math.pow(10, x) }[node.op] || (x => x); const r = f(v); return Number.isFinite(r) ? Math.round(r * 1e10) / 1e10 : 0; }
+        case 'op_mathop': { const v = Number(G9.evalNode(th, node.args?.[0], 'value', owner)) || 0; const f = { abs: Math.abs, floor: Math.floor, ceiling: Math.ceil, sqrt: Math.sqrt, sin: x => Math.sin(x * DEG), cos: x => Math.cos(x * DEG), tan: x => Math.tan(x * DEG), asin: x => Math.asin(x) / DEG, acos: x => Math.acos(x) / DEG, atan: x => Math.atan(x) / DEG, ln: Math.log, log: Math.log10, 'e ^': Math.exp, '10 ^': x => Math.pow(10, x) }[node.op] || (x => x); const r = f(v); return Number.isFinite(r) ? Math.round(r * 1e10) / 1e10 : r; } /* v15.50.4: NaN / Infinity like Scratch (sqrt of -1 = NaN, ln 0 = -Infinity) */
         case 'list_contents': { const a = Engine.lists?.[node.name] || []; return a.every(x => String(x).length === 1) ? a.join('') : a.join(' '); }
         case 'current_part': { const d = new Date(); return ({ YEAR: d.getFullYear(), MONTH: d.getMonth() + 1, DATE: d.getDate(), DAYOFWEEK: d.getDay() + 1, HOUR: d.getHours(), MINUTE: d.getMinutes(), SECOND: d.getSeconds() })[node.part] ?? 0; }
         case 'days_since_2000': return (Date.now() - Date.UTC(2000, 0, 1)) / 86400000;
@@ -13658,7 +13659,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     move: (th, s, b) => { const n = nIn(b, 0), r = (90 - s.direction) * DEG; s.x += Math.cos(r) * n; s.y += Math.sin(r) * n; },
     turn_cw: (th, s, b) => { s.direction = wrapDir(s.direction + nIn(b, 0)); },
     turn_ccw: (th, s, b) => { s.direction = wrapDir(s.direction - nIn(b, 0)); },
-    point_direction: (th, s, b) => { s.direction = wrapDir(nIn(b, 0)); },
+    point_direction: (th, s, b) => { const raw = String(ownInputs(b)[0]?.value ?? '').trim(), v = Number(raw); if (raw !== '' && !Number.isFinite(v)) return; s.direction = wrapDir(nIn(b, 0)); }, /* v15.50.5: NaN / text keeps the direction (Scratch setDirection) */
     goto_xy: (th, s, b) => { s.x = nIn(b, 0); s.y = nIn(b, 1); },
     change_x: (th, s, b) => { s.x += nIn(b, 0); }, set_x: (th, s, b) => { s.x = nIn(b, 0); },
     change_y: (th, s, b) => { s.y += nIn(b, 0); }, set_y: (th, s, b) => { s.y = nIn(b, 0); },
@@ -23181,7 +23182,11 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   }
   setInterval(() => document.querySelectorAll('#workspaceCanvas > .block-stack.gw4950-run').forEach(st => { if (!threadsOf(st).length) st.classList.remove('gw4950-run'); }), 120);
 
-  (function boot(n = 0) { const a = wrapUndo(), b = wrapStageClick(); if ((!a || !b) && n < 120) setTimeout(() => boot(n + 1), 500); })();
+  /* v15.50.4: x / y position reporters hide float noise like Scratch's limitPrecision (1.00000000001 -> 1) */
+  function wrapXY() { const G = window.GW9; if (!G?.evalNode || G.evalNode.__gw4950) return !!G?.evalNode; const base = G.evalNode;
+    G.evalNode = function (th, node) { const r = base.apply(this, arguments); if (node && (node.type === 'x_position' || node.type === 'y_position') && typeof r === 'number') { const k = Math.round(r); return Math.abs(r - k) < 1e-9 ? k : r; } return r; };
+    G.evalNode.__gw4950 = true; return true; }
+  (function boot(n = 0) { wrapXY(); const a = wrapUndo(), b = wrapStageClick(); if ((!a || !b) && n < 120) setTimeout(() => boot(n + 1), 500); })();
   window.GW_4950 = { toggleRun, smallMenu };
 })();
 </script>

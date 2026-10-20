@@ -118,7 +118,11 @@
   }
   setInterval(() => document.querySelectorAll('#workspaceCanvas > .block-stack.gw4950-run').forEach(st => { if (!threadsOf(st).length) st.classList.remove('gw4950-run'); }), 120);
 
-  (function boot(n = 0) { const a = wrapUndo(), b = wrapStageClick(); if ((!a || !b) && n < 120) setTimeout(() => boot(n + 1), 500); })();
+  /* v15.50.4: x / y position reporters hide float noise like Scratch's limitPrecision (1.00000000001 -> 1) */
+  function wrapXY() { const G = window.GW9; if (!G?.evalNode || G.evalNode.__gw4950) return !!G?.evalNode; const base = G.evalNode;
+    G.evalNode = function (th, node) { const r = base.apply(this, arguments); if (node && (node.type === 'x_position' || node.type === 'y_position') && typeof r === 'number') { const k = Math.round(r); return Math.abs(r - k) < 1e-9 ? k : r; } return r; };
+    G.evalNode.__gw4950 = true; return true; }
+  (function boot(n = 0) { wrapXY(); const a = wrapUndo(), b = wrapStageClick(); if ((!a || !b) && n < 120) setTimeout(() => boot(n + 1), 500); })();
   window.GW_4950 = { toggleRun, smallMenu };
 })();
 </script>

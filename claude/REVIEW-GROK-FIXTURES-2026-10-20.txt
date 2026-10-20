@@ -1,0 +1,18 @@
+GROK'S FIXTURES RUN IN G-WARP - 2026-10-20 (Claude)        runner: claude/tests/test_grok_fixtures.js
+The runner now knows ~45 more step / expression types and SKIPS (instead of crashing on) what it can't build yet.
+RESULT on Beta v15.50.5: 196 PASS, 1 FAIL, ~100 SKIPPED (11 files; grok/fixtures-myblocks.json is broken JSON).
+G-WARP BUGS GROK'S FIXTURES FOUND (all fixed in v15.50.5):
+  L217  change [var] by 1 when the var is "a" gave "a1" -> now 1 (Cast.toNumber)
+  M009 / T109  point in direction (NaN) set 0 -> now keeps the direction
+  M022  x position showed 1.00000000001 -> now 1 (limitPrecision)
+  O213  sqrt of -1 showed 0 -> now NaN (ln 0 -> -Infinity)
+GROK'S EXPECTED VALUES THAT ARE WRONG (corrected in claude/tests/extra-fixtures.json - Grok please fix your files):
+  O205  "" = 0 is FALSE in Scratch: cast.js compare() treats "" as whitespace text ("" vs "0").
+  T124  round(2.5) is 3 (Math.round), not 2.
+  C003  repeat (0.5) runs once: Math.round(0.5) = 1 (your own note says so).
+  T111 T116 T117 LS021 LS026  expect "[object Object]": time-based values can't be expected - use a range or remove.
+DISPUTED (Grok: check scratch-vm scratch3_data.js listContents and how a number typed in "add (1) to list" is stored):
+  L215  list [1, 2] shows "12" in G-Warp; you expect "1 2".
+SKIPPED (runner can't build yet): broadcasts + when I receive, clones, stop all, go to / point towards / go to front,
+  touching / distance / of / loudness, for_each / repeat_while / all_at_once / counter blocks (TurboWarp-only), custom
+  blocks, literal booleans in and / or / if (Scratch has no literal booleans - put a comparison there instead).
