@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <!-- GM18 Option C: Minimalist 16px High-Contrast Wire Glyphs (10 x 24x24) -->
+  <rect width="160" height="72" rx="8" fill="#0b0b14"/>
+  <!-- 1. mb-input-value -->
+  <g id="mb-input-value" transform="translate(8,6)" fill="none">
+    <rect x="3" y="7" width="18" height="10" rx="5" stroke="#8b5cf6" stroke-width="2.4"/>
+  </g>
+  <!-- 2. mb-input-boolean -->
+  <g id="mb-input-boolean" transform="translate(38,6)" fill="none" stroke-linejoin="round">
+    <polygon points="8,7 16,7 21,12 16,17 8,17 3,12" stroke="#4ade80" stroke-width="2.4"/>
+  </g>
+  <!-- 3. mb-label-text -->
+  <g id="mb-label-text" transform="translate(68,6)" fill="none" stroke-linecap="round">
+    <path d="M6 6H18M12 6V18M8 18H16" stroke="#ececf6" stroke-width="2.4"/>
+  </g>
+  <!-- 4. mb-warp-norefresh -->
+  <g id="mb-warp-norefresh" transform="translate(98,6)">
+    <polygon points="13,3 5,13 12,13 10,21 19,11 12,11" fill="#facc15"/>
+  </g>
+  <!-- 5. pwr-broadcast-wire -->
+  <g id="pwr-broadcast-wire" transform="translate(128,6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="5" cy="18" r="2.5" fill="#facc15"/>
+    <circle cx="19" cy="6" r="2.5" fill="#facc15"/>
+    <polyline points="7,16 12,14 12,10 17,8" stroke="#4ade80" stroke-width="2.4"/>
+  </g>
+  <!-- 6. pwr-myblock-wire -->
+  <g id="pwr-myblock-wire" transform="translate(8,42)" fill="none" stroke-linecap="round">
+    <rect x="3" y="14" width="6" height="6" rx="1.5" stroke="#a855f7" stroke-width="2.2"/>
+    <rect x="15" y="4" width="6" height="6" rx="1.5" stroke="#8b5cf6" stroke-width="2.2"/>
+    <path d="M9 17H13V7H15" stroke="#4ade80" stroke-width="2.2"/>
+  </g>
+  <!-- 7. bug-hunter-radar -->
+  <g id="bug-hunter-radar" transform="translate(38,42)" fill="none" stroke-linecap="round">
+    <circle cx="12" cy="12" r="8" stroke="#4ade80" stroke-width="2.2"/>
+    <path d="M12 4V20M4 12H20" stroke="#8b5cf6" stroke-width="1.8"/>
+    <circle cx="15" cy="9" r="2.2" fill="#facc15"/>
+  </g>
+  <!-- 8. freeze-guard-shield -->
+  <g id="freeze-guard-shield" transform="translate(68,42)" fill="none" stroke-linecap="round">
+    <circle cx="12" cy="12" r="8" stroke="#facc15" stroke-width="2.2"/>
+    <polyline points="12,7 12,12 16,15" stroke="#4ade80" stroke-width="2.4"/>
+  </g>
+  <!-- 9. crash-recovery-restore -->
+  <g id="crash-recovery-restore" transform="translate(98,42)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 10A7 7 0 1 1 6 15M6 5V10H11" stroke="#4ade80" stroke-width="2.4"/>
+  </g>
+  <!-- 10. look-scratch-toggle -->
+  <g id="look-scratch-toggle" transform="translate(128,42)" fill="none">
+    <rect x="3" y="7" width="18" height="10" rx="5" stroke="#8b5cf6" stroke-width="2.2"/>
+    <circle cx="15" cy="12" r="3" fill="#4ade80"/>
+  </g>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <!-- GM17 Option C: Minimalist 16px High-Contrast Wire Glyphs (10 x 24x24) -->
+  <rect width="160" height="72" rx="8" fill="#0b0b14"/>
+  <!-- 1. ext-safe -->
+  <g id="ext-safe" transform="translate(8,6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3L20 6.5V12C20 17 16.5 20.5 12 22C7.5 20.5 4 17 4 12V6.5Z" stroke="#4ade80" stroke-width="2.2"/>
+    <polyline points="8,12.5 11,15.5 16,9" stroke="#4ade80" stroke-width="2.4"/>
+  </g>
+  <!-- 2. ext-moderate -->
+  <g id="ext-moderate" transform="translate(38,6)" fill="none" stroke-linecap="round">
+    <circle cx="12" cy="12" r="8" stroke="#facc15" stroke-width="2.2"/>
+    <path d="M4 12H20M12 4C15 7 15 17 12 20M12 4C9 7 9 17 12 20" stroke="#facc15" stroke-width="1.8"/>
+  </g>
+  <!-- 3. ext-danger -->
+  <g id="ext-danger" transform="translate(68,6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12,3 21,20 3,20" stroke="#ef4444" stroke-width="2.4"/>
+    <path d="M12 9V14M12 17V17.2" stroke="#facc15" stroke-width="2.6"/>
+  </g>
+  <!-- 4. ext-physics -->
+  <g id="ext-physics" transform="translate(98,6)" fill="none" stroke-linecap="round">
+    <circle cx="7" cy="8" r="3" fill="#4ade80"/>
+    <path d="M7 12Q12 20 19 14" stroke="#8b5cf6" stroke-width="2.4"/>
+  </g>
+  <!-- 5. ext-graphics -->
+  <g id="ext-graphics" transform="translate(128,6)" fill="none" stroke-linejoin="round">
+    <polygon points="12,3 21,12 12,21 3,12" stroke="#a855f7" stroke-width="2.4"/>
+    <circle cx="12" cy="12" r="2.5" fill="#4ade80"/>
+  </g>
+  <!-- 6. ext-sound -->
+  <g id="ext-sound" transform="translate(8,42)" fill="none" stroke-linecap="round">
+    <path d="M5 15V9M9.5 19V5M14.5 17V7M19 14V10" stroke="#4ade80" stroke-width="2.6"/>
+  </g>
+  <!-- 7. ext-gamepad -->
+  <g id="ext-gamepad" transform="translate(38,42)" fill="none" stroke-linecap="round">
+    <rect x="3" y="7" width="18" height="10" rx="5" stroke="#8b5cf6" stroke-width="2.2"/>
+    <path d="M7.5 12H10.5M9 10.5V13.5" stroke="#ececf6" stroke-width="2"/>
+    <circle cx="15.5" cy="12" r="1.5" fill="#4ade80"/>
+  </g>
+  <!-- 8. ext-math -->
+  <g id="ext-math" transform="translate(68,42)" fill="none" stroke-linecap="round">
+    <path d="M5 8H11M8 5V11M13 8H19M5 16H19" stroke="#facc15" stroke-width="2.4"/>
+  </g>
+  <!-- 9. ext-storage -->
+  <g id="ext-storage" transform="translate(98,42)" fill="none" stroke-linecap="round">
+    <ellipse cx="12" cy="7" rx="7" ry="3" stroke="#a855f7" stroke-width="2.2"/>
+    <path d="M5 7V17C5 19 19 19 19 17V7" stroke="#ececf6" stroke-width="2.2"/>
+  </g>
+  <!-- 10. ext-url -->
+  <g id="ext-url" transform="translate(128,42)" fill="none" stroke-linecap="round">
+    <path d="M9 15L15 9M7 17L5 15A4 4 0 0 1 11 9M17 7L19 9A4 4 0 0 1 13 15" stroke="#4ade80" stroke-width="2.4"/>
+  </g>
+</svg>

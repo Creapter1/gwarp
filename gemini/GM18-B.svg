@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <!-- GM18 Option B: Hexagonal Make-a-Block, Power Lines & Bug Hunter Badges (10 x 24x24) -->
+  <rect width="160" height="72" rx="8" fill="#0b0b14"/>
+  <!-- 1. mb-input-value -->
+  <g id="mb-input-value" transform="translate(8,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="5" y="9" width="14" height="6" rx="3" fill="none" stroke="#ececf6" stroke-width="1.8"/>
+  </g>
+  <!-- 2. mb-input-boolean -->
+  <g id="mb-input-boolean" transform="translate(38,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <polygon points="8,9 16,9 19,12 16,15 8,15 5,12" fill="none" stroke="#4ade80" stroke-width="1.8"/>
+  </g>
+  <!-- 3. mb-label-text -->
+  <g id="mb-label-text" transform="translate(68,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <path d="M8 8H16M12 8V16M9 16H15" stroke="#ececf6" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+  <!-- 4. mb-warp-norefresh -->
+  <g id="mb-warp-norefresh" transform="translate(98,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <polygon points="13,5 7,13 12,13 11,19 17,11 12,11" fill="#facc15"/>
+  </g>
+  <!-- 5. pwr-broadcast-wire -->
+  <g id="pwr-broadcast-wire" transform="translate(128,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <polyline points="6,16 11,11 13,13 18,8" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 6. pwr-myblock-wire -->
+  <g id="pwr-myblock-wire" transform="translate(8,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <path d="M6 15H10V9H18" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 7. bug-hunter-radar -->
+  <g id="bug-hunter-radar" transform="translate(38,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <circle cx="12" cy="12" r="5.5" fill="none" stroke="#4ade80" stroke-width="1.6"/>
+    <circle cx="12" cy="12" r="2" fill="#facc15"/>
+  </g>
+  <!-- 8. freeze-guard-shield -->
+  <g id="freeze-guard-shield" transform="translate(68,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <polyline points="12,7 12,12 16,14" fill="none" stroke="#facc15" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <!-- 9. crash-recovery-restore -->
+  <g id="crash-recovery-restore" transform="translate(98,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <path d="M8 10A5 5 0 1 1 8 15M8 7V10H11" fill="none" stroke="#ececf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 10. look-scratch-toggle -->
+  <g id="look-scratch-toggle" transform="translate(128,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="6" y="9" width="12" height="6" rx="3" fill="none" stroke="#ececf6" stroke-width="1.6"/>
+    <circle cx="14.5" cy="12" r="2" fill="#4ade80"/>
+  </g>
+</svg>

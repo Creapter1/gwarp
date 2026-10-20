@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <rect width="160" height="72" rx="10" fill="#0b0b14"/>
+  <g id="ctrl-start" transform="translate(8,8)">
+    <path d="M5 3 V21 M5 4 H19 L15 9.5 L19 15 H5" fill="#4ade80" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="ctrl-pause" transform="translate(38,8)">
+    <path d="M7 4 V20 M17 4 V20" stroke="#facc15" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <g id="ctrl-stop" transform="translate(68,8)">
+    <polygon points="8,3 16,3 21,8 21,16 16,21 8,21 3,16 3,8" fill="#ef4444"/>
+  </g>
+  <g id="ctrl-turbo" transform="translate(98,8)">
+    <path d="M14 2 L6 13 H13 L10 22 L19 10 H12 Z" fill="#4ade80"/>
+  </g>
+  <g id="ctrl-hq" transform="translate(128,8)">
+    <polygon points="12,2 21,12 12,22 3,12" fill="none" stroke="#a855f7" stroke-width="2.8"/>
+    <circle cx="12" cy="12" r="3" fill="#4ade80"/>
+  </g>
+  <g id="ctrl-stage-sm" transform="translate(8,40)">
+    <rect x="6" y="7" width="12" height="10" rx="2" fill="none" stroke="#8b5cf6" stroke-width="2.6"/>
+  </g>
+  <g id="ctrl-stage-md" transform="translate(38,40)">
+    <rect x="4" y="5" width="16" height="14" rx="2.5" fill="none" stroke="#4ade80" stroke-width="2.6"/>
+  </g>
+  <g id="ctrl-stage-lg" transform="translate(68,40)">
+    <rect x="2" y="3" width="20" height="18" rx="3" fill="none" stroke="#ececf6" stroke-width="2.8"/>
+  </g>
+  <g id="ctrl-fullscreen" transform="translate(98,40)">
+    <path d="M3 9 V3 H9 M15 3 H21 V9 M21 15 V21 H15 M9 21 H3 V15" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="ctrl-extension" transform="translate(128,40)">
+    <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#8b5cf6" stroke-width="2.6"/>
+    <path d="M12 7 V17 M7 12 H17" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round"/>
+  </g>
+</svg>

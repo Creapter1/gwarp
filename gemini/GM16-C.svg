@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 72" width="192" height="72">
+  <!-- GM16 Option C: Minimalist 16px High-Contrast Wire Glyphs (11 x 24x24) -->
+  <rect width="192" height="72" rx="8" fill="#0b0b14"/>
+  <!-- 1. inst-all -->
+  <g id="inst-all" transform="translate(6,6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 18V7L18 5V16" stroke="#4ade80" stroke-width="2.5"/>
+    <circle cx="7" cy="18" r="2.2" fill="#4ade80"/>
+    <circle cx="16" cy="16" r="2.2" fill="#4ade80"/>
+  </g>
+  <!-- 2. inst-keys -->
+  <g id="inst-keys" transform="translate(36,6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="5" width="18" height="14" rx="2" stroke="#ececf6" stroke-width="2.2"/>
+    <path d="M9 5V19M15 5V19" stroke="#ececf6" stroke-width="2"/>
+    <path d="M9 5V12M15 5V12" stroke="#8b5cf6" stroke-width="3.5"/>
+  </g>
+  <!-- 3. inst-strings -->
+  <g id="inst-strings" transform="translate(66,6)" fill="none" stroke-linecap="round">
+    <circle cx="9" cy="15" r="5" stroke="#a855f7" stroke-width="2.4"/>
+    <path d="M13 11L20 4" stroke="#4ade80" stroke-width="2.6"/>
+  </g>
+  <!-- 4. inst-winds -->
+  <g id="inst-winds" transform="translate(96,6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 13H13L20 7V19L13 13" stroke="#facc15" stroke-width="2.4"/>
+  </g>
+  <!-- 5. inst-mallets -->
+  <g id="inst-mallets" transform="translate(126,6)" fill="none" stroke-linecap="round">
+    <path d="M5 19L17 7M19 19L7 7" stroke="#ececf6" stroke-width="2.4"/>
+    <circle cx="18" cy="6" r="2.5" fill="#facc15"/>
+    <circle cx="6" cy="6" r="2.5" fill="#4ade80"/>
+  </g>
+  <!-- 6. inst-synth -->
+  <g id="inst-synth" transform="translate(156,6)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="3,15 8,6 12,18 16,6 21,15" stroke="#4ade80" stroke-width="2.5"/>
+  </g>
+  <!-- 7. inst-drums -->
+  <g id="inst-drums" transform="translate(6,42)" fill="none" stroke-linecap="round">
+    <ellipse cx="12" cy="10" rx="8" ry="3.5" stroke="#facc15" stroke-width="2.2"/>
+    <path d="M4 10V16C4 19 20 19 20 16V10" stroke="#a855f7" stroke-width="2.2"/>
+  </g>
+  <!-- 8. inst-chord -->
+  <g id="inst-chord" transform="translate(36,42)" fill="none" stroke-linecap="round">
+    <path d="M5 17H19M5 12H19M5 7H19" stroke="#8b5cf6" stroke-width="2.6"/>
+  </g>
+  <!-- 9. inst-arp -->
+  <g id="inst-arp" transform="translate(66,42)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="4,18 9,18 9,12 14,12 14,6 20,6" stroke="#4ade80" stroke-width="2.5"/>
+  </g>
+  <!-- 10. inst-surprise -->
+  <g id="inst-surprise" transform="translate(96,42)">
+    <polygon points="12,3 14.5,9.5 21,12 14.5,14.5 12,21 9.5,14.5 3,12 9.5,9.5" fill="#facc15"/>
+  </g>
+  <!-- 11. inst-save -->
+  <g id="inst-save" transform="translate(126,42)" fill="none" stroke-linecap="round">
+    <path d="M12 5V19M5 12H19" stroke="#4ade80" stroke-width="2.8"/>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 72" width="192" height="72">
+  <rect width="192" height="72" rx="10" fill="#0b0b14"/>
+  <g id="tool-select" transform="translate(8,8)">
+    <path d="M5 3 L19 12 L13 14 L16 21 L12 22 L9 15 L5 19 Z" fill="#4ade80"/>
+  </g>
+  <g id="tool-box" transform="translate(38,8)">
+    <rect x="3" y="4" width="18" height="16" rx="3" fill="none" stroke="#8b5cf6" stroke-width="2.8"/>
+  </g>
+  <g id="tool-circle" transform="translate(68,8)">
+    <circle cx="12" cy="12" r="8.5" fill="none" stroke="#4ade80" stroke-width="2.8"/>
+  </g>
+  <g id="tool-line" transform="translate(98,8)">
+    <line x1="4" y1="20" x2="20" y2="4" stroke="#ececf6" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g id="tool-group" transform="translate(128,8)">
+    <rect x="3" y="3" width="11" height="11" rx="2" fill="none" stroke="#8b5cf6" stroke-width="2.5"/>
+    <rect x="10" y="10" width="11" height="11" rx="2" fill="none" stroke="#4ade80" stroke-width="2.5"/>
+  </g>
+  <g id="tool-front" transform="translate(158,8)">
+    <path d="M12 20 V4 M6 10 L12 4 L18 10" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="tool-back" transform="translate(8,40)">
+    <path d="M12 4 V20 M6 14 L12 20 L18 14" fill="none" stroke="#a855f7" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="tool-brush" transform="translate(38,40)">
+    <path d="M16 3 L21 8 L10 19 H5 V14 Z" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-linejoin="round"/>
+  </g>
+  <g id="tool-eraser" transform="translate(68,40)">
+    <path d="M11 4 L20 12 L13 20 H5 L3 15 Z" fill="none" stroke="#a855f7" stroke-width="2.6" stroke-linejoin="round"/>
+  </g>
+  <g id="tool-bucket" transform="translate(98,40)">
+    <path d="M4 12 L12 4 L20 12 L12 20 Z" fill="none" stroke="#8b5cf6" stroke-width="2.6"/>
+    <circle cx="19" cy="18" r="2.5" fill="#4ade80"/>
+  </g>
+  <g id="tool-grid" transform="translate(128,40)">
+    <path d="M3 8 H21 M3 16 H21 M8 3 V21 M16 3 V21" stroke="#ececf6" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g id="tool-snap" transform="translate(158,40)">
+    <path d="M5 4 V13 A7 7 0 0 0 19 13 V4" fill="none" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round"/>
+  </g>
+</svg>

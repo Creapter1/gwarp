@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <rect width="160" height="72" rx="10" fill="#0b0b14"/>
+  <g id="ctrl-start" transform="translate(8,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#4ade80" stroke-width="1.8"/>
+    <path d="M8 6 V18 M8 7 H17 L14.5 10.5 L17 14 H8" fill="#4ade80" stroke="#4ade80" stroke-width="1.4" stroke-linejoin="round"/>
+  </g>
+  <g id="ctrl-pause" transform="translate(38,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#facc15" stroke-width="1.8"/>
+    <path d="M9 7 V17 M15 7 V17" stroke="#facc15" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g id="ctrl-stop" transform="translate(68,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#ef4444" stroke-width="1.8"/>
+    <rect x="7" y="7" width="10" height="10" rx="2" fill="#ef4444"/>
+  </g>
+  <g id="ctrl-turbo" transform="translate(98,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#8b5cf6" stroke-width="1.8"/>
+    <path d="M13 5 L8 12.5 H12.5 L10.5 19 L17 11 H12.5 Z" fill="#facc15"/>
+  </g>
+  <g id="ctrl-hq" transform="translate(128,8)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.8"/>
+    <path d="M12 5 L14 10 L19 12 L14 14 L12 19 L10 14 L5 12 L10 10 Z" fill="#4ade80"/>
+  </g>
+  <g id="ctrl-stage-sm" transform="translate(8,40)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <rect x="8" y="9" width="8" height="6" fill="#ececf6"/>
+  </g>
+  <g id="ctrl-stage-md" transform="translate(38,40)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <rect x="6" y="7" width="12" height="10" fill="none" stroke="#4ade80" stroke-width="2"/>
+  </g>
+  <g id="ctrl-stage-lg" transform="translate(68,40)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <rect x="5" y="6" width="14" height="12" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.5"/>
+  </g>
+  <g id="ctrl-fullscreen" transform="translate(98,40)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M7 10 V7 H10 M14 7 H17 V10 M17 14 V17 H14 M10 17 H7 V14" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g id="ctrl-extension" transform="translate(128,40)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#8b5cf6" stroke="#4ade80" stroke-width="1.8"/>
+    <path d="M12 7 V17 M7 12 H17" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+</svg>

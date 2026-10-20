@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 192" width="384" height="192">
+  <!-- GM15 Option A: Filled Electric Vector Stage Backdrops (8 x 88x66, 4:3 Stage ratio) -->
+  <rect width="384" height="192" rx="10" fill="#0b0b14"/>
+  <!-- 1. bd-cyber-grid -->
+  <g id="bd-cyber-grid" transform="translate(8,8)">
+    <rect width="88" height="66" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <path d="M0 40H88M0 50H88M0 60H88M44 40V66M26 40L8 66M62 40L80 66" stroke="#4ade80" stroke-width="1.2"/>
+    <circle cx="44" cy="24" r="10" fill="#a855f7"/>
+  </g>
+  <!-- 2. bd-synth-horizon -->
+  <g id="bd-synth-horizon" transform="translate(102,8)">
+    <rect width="88" height="66" rx="6" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <circle cx="44" cy="36" r="14" fill="#facc15"/>
+    <path d="M4 44L22 28L38 40L56 24L72 38L84 30V64H4Z" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.5"/>
+  </g>
+  <!-- 3. bd-neon-lab -->
+  <g id="bd-neon-lab" transform="translate(196,8)">
+    <rect width="88" height="66" rx="6" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <rect x="14" y="14" width="16" height="38" rx="4" fill="#0b0b14" stroke="#4ade80" stroke-width="1.5"/>
+    <rect x="58" y="14" width="16" height="38" rx="4" fill="#0b0b14" stroke="#8b5cf6" stroke-width="1.5"/>
+    <path d="M36 33H52M44 25V41" stroke="#facc15" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <!-- 4. bd-star-warp -->
+  <g id="bd-star-warp" transform="translate(290,8)">
+    <rect width="88" height="66" rx="6" fill="#0b0b14" stroke="#8b5cf6" stroke-width="1.5"/>
+    <circle cx="44" cy="33" r="6" fill="#ececf6"/>
+    <path d="M44 19V6M44 47V60M30 33H10M58 33H78M33 22L16 10M55 44L72 56M55 22L72 10M33 44L16 56" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  <!-- 5. bd-crystal-cavern -->
+  <g id="bd-crystal-cavern" transform="translate(8,88)">
+    <rect width="88" height="66" rx="6" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <polygon points="18,64 26,34 34,64" fill="#8b5cf6"/>
+    <polygon points="36,64 46,20 56,64" fill="#4ade80"/>
+    <polygon points="58,64 66,38 74,64" fill="#a855f7"/>
+    <polygon points="24,2 30,20 36,2" fill="#8b5cf6"/>
+  </g>
+  <!-- 6. bd-circuit-city -->
+  <g id="bd-circuit-city" transform="translate(102,88)">
+    <rect width="88" height="66" rx="6" fill="#0b0b14" stroke="#4ade80" stroke-width="1.5"/>
+    <path d="M8 64V36H22V64M26 64V22H42V64M46 64V30H60V64M64 64V18H80V64" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.3"/>
+    <circle cx="34" cy="32" r="2.5" fill="#facc15"/>
+    <circle cx="72" cy="28" r="2.5" fill="#4ade80"/>
+  </g>
+  <!-- 7. bd-plasma-arena -->
+  <g id="bd-plasma-arena" transform="translate(196,88)">
+    <rect width="88" height="66" rx="6" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <rect x="8" y="48" width="72" height="8" rx="4" fill="#8b5cf6" stroke="#4ade80" stroke-width="1.5"/>
+    <rect x="24" y="28" width="40" height="6" rx="3" fill="#a855f7"/>
+    <circle cx="44" cy="16" r="5" fill="#facc15"/>
+  </g>
+  <!-- 8. bd-cloud-citadel -->
+  <g id="bd-cloud-citadel" transform="translate(290,88)">
+    <rect width="88" height="66" rx="6" fill="#1b1b31" stroke="#8b5cf6" stroke-width="1.5"/>
+    <ellipse cx="28" cy="50" rx="18" ry="8" fill="#2a2a48" stroke="#ececf6" stroke-width="1.2"/>
+    <ellipse cx="58" cy="46" rx="22" ry="9" fill="#2a2a48" stroke="#4ade80" stroke-width="1.2"/>
+    <polygon points="48,38 58,16 68,38" fill="#8b5cf6" stroke="#facc15" stroke-width="1.2"/>
+  </g>
+</svg>

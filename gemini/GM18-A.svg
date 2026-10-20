@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <!-- GM18 Option A: Neon Rounded Make-a-Block, Power Lines & Bug Hunter Tiles (10 x 24x24) -->
+  <rect width="160" height="72" rx="8" fill="#0b0b14"/>
+  <!-- 1. mb-input-value (round input) -->
+  <g id="mb-input-value" transform="translate(8,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="4" y="8" width="16" height="8" rx="4" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.5"/>
+  </g>
+  <!-- 2. mb-input-boolean (pointy input) -->
+  <g id="mb-input-boolean" transform="translate(38,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <polygon points="8,8 16,8 20,12 16,16 8,16 4,12" fill="#0b0b14" stroke="#4ade80" stroke-width="1.6"/>
+  </g>
+  <!-- 3. mb-label-text -->
+  <g id="mb-label-text" transform="translate(68,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <path d="M7 7H17M12 7V17" stroke="#ececf6" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <!-- 4. mb-warp-norefresh -->
+  <g id="mb-warp-norefresh" transform="translate(98,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <polygon points="13,4 6,13 12,13 10,20 18,11 12,11" fill="#facc15"/>
+  </g>
+  <!-- 5. pwr-broadcast-wire -->
+  <g id="pwr-broadcast-wire" transform="translate(128,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <circle cx="6" cy="17" r="2.2" fill="#facc15"/>
+    <circle cx="18" cy="7" r="2.2" fill="#facc15"/>
+    <path d="M8 15L12 14L12 10L16 9" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 6. pwr-myblock-wire -->
+  <g id="pwr-myblock-wire" transform="translate(8,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <rect x="4" y="14" width="6" height="5" rx="1.5" fill="#a855f7"/>
+    <rect x="14" y="5" width="6" height="5" rx="1.5" fill="#8b5cf6"/>
+    <path d="M10 16.5C14 16.5 10 7.5 14 7.5" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="2 1.5"/>
+  </g>
+  <!-- 7. bug-hunter-radar -->
+  <g id="bug-hunter-radar" transform="translate(38,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <circle cx="12" cy="12" r="7" fill="none" stroke="#4ade80" stroke-width="1.6"/>
+    <path d="M12 5V19M5 12H19" stroke="#8b5cf6" stroke-width="1.4"/>
+    <circle cx="14.5" cy="9.5" r="2" fill="#facc15"/>
+  </g>
+  <!-- 8. freeze-guard-shield -->
+  <g id="freeze-guard-shield" transform="translate(68,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <circle cx="12" cy="12" r="7" fill="#0b0b14" stroke="#facc15" stroke-width="1.6"/>
+    <polyline points="12,8 12,12 15,14" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <!-- 9. crash-recovery-restore -->
+  <g id="crash-recovery-restore" transform="translate(98,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <path d="M7 10A6 6 0 1 1 7 15M7 6V10H11" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 10. look-scratch-toggle -->
+  <g id="look-scratch-toggle" transform="translate(128,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="4" y="8" width="16" height="8" rx="4" fill="#0b0b14" stroke="#8b5cf6" stroke-width="1.5"/>
+    <circle cx="15" cy="12" r="2.8" fill="#4ade80"/>
+  </g>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 192" width="384" height="192">
+  <!-- GM15 Option B: Geometric Synth Arcade Stage Backdrops (8 x 88x66, 4:3 Stage ratio) -->
+  <rect width="384" height="192" rx="10" fill="#0b0b14"/>
+  <!-- 1. bd-cyber-grid -->
+  <g id="bd-cyber-grid" transform="translate(8,8)">
+    <rect width="88" height="66" rx="4" fill="#0b0b14" stroke="#4ade80" stroke-width="1.5"/>
+    <polygon points="44,12 56,28 32,28" fill="none" stroke="#a855f7" stroke-width="2"/>
+    <path d="M4 38H84M4 48H84M4 58H84M44 38V64M22 38L6 64M66 38L82 64" stroke="#8b5cf6" stroke-width="1.4"/>
+  </g>
+  <!-- 2. bd-synth-horizon -->
+  <g id="bd-synth-horizon" transform="translate(102,8)">
+    <rect width="88" height="66" rx="4" fill="#0b0b14" stroke="#8b5cf6" stroke-width="1.5"/>
+    <polygon points="44,14 60,38 28,38" fill="#facc15"/>
+    <polyline points="4,46 20,32 36,44 52,28 68,42 84,32" fill="none" stroke="#4ade80" stroke-width="2"/>
+    <line x1="4" y1="54" x2="84" y2="54" stroke="#a855f7" stroke-width="1.5"/>
+  </g>
+  <!-- 3. bd-neon-lab -->
+  <g id="bd-neon-lab" transform="translate(196,8)">
+    <rect width="88" height="66" rx="4" fill="#0b0b14" stroke="#a855f7" stroke-width="1.5"/>
+    <polygon points="22,14 34,26 22,52 10,26" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <polygon points="66,14 78,26 66,52 54,26" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <circle cx="44" cy="33" r="6" fill="none" stroke="#facc15" stroke-width="2"/>
+  </g>
+  <!-- 4. bd-star-warp -->
+  <g id="bd-star-warp" transform="translate(290,8)">
+    <rect width="88" height="66" rx="4" fill="#0b0b14" stroke="#facc15" stroke-width="1.5"/>
+    <polygon points="44,20 56,33 44,46 32,33" fill="none" stroke="#4ade80" stroke-width="1.8"/>
+    <path d="M44 6V16M44 50V60M8 33H24M64 33H80" stroke="#ececf6" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+  <!-- 5. bd-crystal-cavern -->
+  <g id="bd-crystal-cavern" transform="translate(8,88)">
+    <rect width="88" height="66" rx="4" fill="#0b0b14" stroke="#8b5cf6" stroke-width="1.5"/>
+    <polygon points="14,62 24,28 34,62" fill="#141425" stroke="#4ade80" stroke-width="1.6"/>
+    <polygon points="34,62 46,16 58,62" fill="#141425" stroke="#a855f7" stroke-width="1.6"/>
+    <polygon points="56,62 68,32 78,62" fill="#141425" stroke="#facc15" stroke-width="1.6"/>
+  </g>
+  <!-- 6. bd-circuit-city -->
+  <g id="bd-circuit-city" transform="translate(102,88)">
+    <rect width="88" height="66" rx="4" fill="#0b0b14" stroke="#4ade80" stroke-width="1.5"/>
+    <path d="M10 62V32H26V62M32 62V18H52V62M58 62V26H78V62" fill="none" stroke="#8b5cf6" stroke-width="1.8"/>
+    <path d="M18 40H42V28H68" fill="none" stroke="#4ade80" stroke-width="1.5"/>
+  </g>
+  <!-- 7. bd-plasma-arena -->
+  <g id="bd-plasma-arena" transform="translate(196,88)">
+    <rect width="88" height="66" rx="4" fill="#0b0b14" stroke="#facc15" stroke-width="1.5"/>
+    <polygon points="10,52 78,52 70,60 18,60" fill="#8b5cf6"/>
+    <polygon points="24,30 64,30 58,36 30,36" fill="#4ade80"/>
+    <polygon points="44,10 50,20 38,20" fill="#facc15"/>
+  </g>
+  <!-- 8. bd-cloud-citadel -->
+  <g id="bd-cloud-citadel" transform="translate(290,88)">
+    <rect width="88" height="66" rx="4" fill="#0b0b14" stroke="#a855f7" stroke-width="1.5"/>
+    <polygon points="14,52 42,52 36,42 20,42" fill="#1b1b31" stroke="#ececf6" stroke-width="1.4"/>
+    <polygon points="42,48 76,48 68,36 50,36" fill="#1b1b31" stroke="#4ade80" stroke-width="1.4"/>
+    <polygon points="52,36 59,16 66,36" fill="#8b5cf6"/>
+  </g>
+</svg>

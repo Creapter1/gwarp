@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <!-- GM17 Option B: Hexagonal Extension Safety & Gallery Badges (10 x 24x24) -->
+  <rect width="160" height="72" rx="8" fill="#0b0b14"/>
+  <!-- 1. ext-safe -->
+  <g id="ext-safe" transform="translate(8,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <polyline points="8,12.5 11,15.5 16.5,9" fill="none" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 2. ext-moderate -->
+  <g id="ext-moderate" transform="translate(38,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <circle cx="12" cy="12" r="6" fill="none" stroke="#facc15" stroke-width="1.8"/>
+    <path d="M6 12H18M12 6V18" stroke="#facc15" stroke-width="1.5"/>
+  </g>
+  <!-- 3. ext-danger -->
+  <g id="ext-danger" transform="translate(68,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#ef4444" stroke-width="1.5"/>
+    <path d="M12 7V13M12 16.5V17" stroke="#ef4444" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+  <!-- 4. ext-physics -->
+  <g id="ext-physics" transform="translate(98,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <circle cx="9" cy="9" r="2.5" fill="#4ade80"/>
+    <path d="M9 12L15 16M12 16H16V12" fill="none" stroke="#ececf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 5. ext-graphics -->
+  <g id="ext-graphics" transform="translate(128,6)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <polygon points="12,5 18,15 6,15" fill="none" stroke="#4ade80" stroke-width="1.8"/>
+    <circle cx="12" cy="13" r="2" fill="#a855f7"/>
+  </g>
+  <!-- 6. ext-sound -->
+  <g id="ext-sound" transform="translate(8,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <polyline points="5,13 9,8 12,16 15,8 19,13" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 7. ext-gamepad -->
+  <g id="ext-gamepad" transform="translate(38,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="5" y="9" width="14" height="7" rx="3" fill="none" stroke="#ececf6" stroke-width="1.6"/>
+    <circle cx="9" cy="12.5" r="1.2" fill="#4ade80"/>
+    <circle cx="15" cy="12.5" r="1.2" fill="#a855f7"/>
+  </g>
+  <!-- 8. ext-math -->
+  <g id="ext-math" transform="translate(68,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <path d="M7 10H17M7 14H17M10 7L14 17" stroke="#facc15" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+  <!-- 9. ext-storage -->
+  <g id="ext-storage" transform="translate(98,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <rect x="6" y="7" width="12" height="10" rx="2" fill="none" stroke="#ececf6" stroke-width="1.6"/>
+    <line x1="6" y1="12" x2="18" y2="12" stroke="#4ade80" stroke-width="1.6"/>
+  </g>
+  <!-- 10. ext-url -->
+  <g id="ext-url" transform="translate(128,42)">
+    <polygon points="12,1 22,7 22,17 12,23 2,17 2,7" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <path d="M8 15L16 9M11 9H16V14" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

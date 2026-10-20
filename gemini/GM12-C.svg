@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 140" width="280" height="140">
+  <rect width="280" height="140" rx="14" fill="#0b0b14"/>
+  <!-- 1. SPARK BOT -->
+  <g id="sprite-spark-bot" transform="translate(8,8)">
+    <rect x="14" y="14" width="36" height="34" rx="9" fill="none" stroke="#8b5cf6" stroke-width="2.8"/>
+    <path d="M24 27 H28 M36 27 H40 M24 38 H40" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round"/>
+    <line x1="32" y1="5" x2="32" y2="14" stroke="#facc15" stroke-width="2.8" stroke-linecap="round"/>
+  </g>
+  <!-- 2. VOLT ROVER -->
+  <g id="sprite-volt-rover" transform="translate(76,8)">
+    <path d="M8 38 L18 22 H46 L56 38 Z" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-linejoin="round"/>
+    <circle cx="18" cy="44" r="6" fill="none" stroke="#ececf6" stroke-width="2.6"/>
+    <circle cx="46" cy="44" r="6" fill="none" stroke="#ececf6" stroke-width="2.6"/>
+  </g>
+  <!-- 3. CYBER CRYSTAL -->
+  <g id="sprite-cyber-crystal" transform="translate(144,8)">
+    <polygon points="32,6 50,24 32,54 14,24" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-linejoin="round"/>
+    <line x1="14" y1="24" x2="50" y2="24" stroke="#a855f7" stroke-width="2.2"/>
+  </g>
+  <!-- 4. PLASMA SHIELD -->
+  <g id="sprite-plasma-shield" transform="translate(212,8)">
+    <path d="M32 6 L52 14 V30 C52 43 42 51 32 56 C22 51 12 43 12 30 V14 Z" fill="none" stroke="#a855f7" stroke-width="2.8"/>
+    <path d="M34 17 L25 30 H33 L29 43 L40 28 H32 Z" fill="#4ade80"/>
+  </g>
+  <!-- 5. WARP GATE -->
+  <g id="sprite-warp-gate" transform="translate(8,74)">
+    <circle cx="32" cy="30" r="20" fill="none" stroke="#8b5cf6" stroke-width="2.8"/>
+    <circle cx="32" cy="30" r="11" fill="none" stroke="#4ade80" stroke-width="2.6" stroke-dasharray="8 4"/>
+  </g>
+  <!-- 6. HOVER PAD -->
+  <g id="sprite-hover-pad" transform="translate(76,74)">
+    <rect x="8" y="22" width="48" height="12" rx="6" fill="none" stroke="#4ade80" stroke-width="2.6"/>
+    <path d="M16 42 H48" stroke="#a855f7" stroke-width="2.8" stroke-linecap="round"/>
+  </g>
+  <!-- 7. NEON DRONE -->
+  <g id="sprite-neon-drone" transform="translate(144,74)">
+    <line x1="10" y1="20" x2="54" y2="20" stroke="#4ade80" stroke-width="2.8" stroke-linecap="round"/>
+    <ellipse cx="32" cy="32" rx="14" ry="8" fill="none" stroke="#ececf6" stroke-width="2.6"/>
+  </g>
+  <!-- 8. SPEED BOOSTER -->
+  <g id="sprite-speed-booster" transform="translate(212,74)">
+    <path d="M14 18 L28 30 L14 42 M30 18 L44 30 L30 42" fill="none" stroke="#4ade80" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

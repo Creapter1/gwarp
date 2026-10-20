@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 72" width="160" height="72">
+  <!-- GM17 Option A: Neon Rounded Extension Safety & Gallery Group Tiles (10 x 24x24) -->
+  <rect width="160" height="72" rx="8" fill="#0b0b14"/>
+  <!-- 1. ext-safe -->
+  <g id="ext-safe" transform="translate(8,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <path d="M12 4L19 7V12C19 16.5 16 19.5 12 21C8 19.5 5 16.5 5 12V7Z" fill="#0b0b14" stroke="#4ade80" stroke-width="1.6"/>
+    <polyline points="8.5,12.5 11,15 15.5,9.5" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- 2. ext-moderate -->
+  <g id="ext-moderate" transform="translate(38,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <circle cx="12" cy="12" r="7" fill="none" stroke="#facc15" stroke-width="1.6"/>
+    <ellipse cx="12" cy="12" rx="3.2" ry="7" fill="none" stroke="#facc15" stroke-width="1.4"/>
+    <line x1="5" y1="12" x2="19" y2="12" stroke="#facc15" stroke-width="1.4"/>
+  </g>
+  <!-- 3. ext-danger -->
+  <g id="ext-danger" transform="translate(68,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#ef4444" stroke-width="1.5"/>
+    <polygon points="12,4 20,19 4,19" fill="#0b0b14" stroke="#ef4444" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M12 9V14M12 16.8V17" stroke="#facc15" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <!-- 4. ext-physics -->
+  <g id="ext-physics" transform="translate(98,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <circle cx="8" cy="9" r="3" fill="#4ade80"/>
+    <path d="M8 12Q12 19 18 15" fill="none" stroke="#ececf6" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+  <!-- 5. ext-graphics -->
+  <g id="ext-graphics" transform="translate(128,6)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <polygon points="12,5 19,12 12,19 5,12" fill="#8b5cf6" stroke="#4ade80" stroke-width="1.5"/>
+  </g>
+  <!-- 6. ext-sound -->
+  <g id="ext-sound" transform="translate(8,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <path d="M6 15V9M10 18V6M14 16V8M18 14V10" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <!-- 7. ext-gamepad -->
+  <g id="ext-gamepad" transform="translate(38,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#8b5cf6" stroke-width="1.5"/>
+    <rect x="4" y="8" width="16" height="9" rx="4" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.4"/>
+    <path d="M8 12.5H11M9.5 11V14" stroke="#0b0b14" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="15.5" cy="12.5" r="1.3" fill="#4ade80"/>
+  </g>
+  <!-- 8. ext-math -->
+  <g id="ext-math" transform="translate(68,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#facc15" stroke-width="1.5"/>
+    <path d="M6 9H11M8.5 6.5V11.5M13 9H18M6 16H18" stroke="#facc15" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <!-- 9. ext-storage -->
+  <g id="ext-storage" transform="translate(98,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#a855f7" stroke-width="1.5"/>
+    <ellipse cx="12" cy="8" rx="6" ry="2.5" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.4"/>
+    <path d="M6 8V16C6 17.5 18 17.5 18 16V8" fill="none" stroke="#ececf6" stroke-width="1.4"/>
+  </g>
+  <!-- 10. ext-url -->
+  <g id="ext-url" transform="translate(128,42)">
+    <rect width="24" height="24" rx="6" fill="#141425" stroke="#4ade80" stroke-width="1.5"/>
+    <path d="M10 14L14 10M8 16L6 14A3 3 0 0 1 10 10M16 8L18 10A3 3 0 0 1 14 14" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+</svg>

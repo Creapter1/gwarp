@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 72" width="192" height="72">
+  <rect width="192" height="72" rx="10" fill="#0b0b14"/>
+  <g id="tool-select" transform="translate(8,8)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M7 5 L18 12 L13 13.5 L15 19 L12.5 20 L10.5 14.5 L7 18 Z" fill="#4ade80" stroke="#0b0b14" stroke-width="1"/>
+  </g>
+  <g id="tool-box" transform="translate(38,8)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <rect x="5" y="6" width="14" height="12" rx="2" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.8"/>
+  </g>
+  <g id="tool-circle" transform="translate(68,8)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <circle cx="12" cy="12" r="6.5" fill="#a855f7" stroke="#4ade80" stroke-width="1.8"/>
+  </g>
+  <g id="tool-line" transform="translate(98,8)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <line x1="6" y1="18" x2="18" y2="6" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="6" cy="18" r="2" fill="#ececf6"/><circle cx="18" cy="6" r="2" fill="#ececf6"/>
+  </g>
+  <g id="tool-group" transform="translate(128,8)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <rect x="5" y="5" width="8" height="8" rx="1.5" fill="#8b5cf6"/>
+    <rect x="11" y="11" width="8" height="8" rx="1.5" fill="#4ade80"/>
+  </g>
+  <g id="tool-front" transform="translate(158,8)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M12 19 V6 M7 11 L12 6 L17 11" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="tool-back" transform="translate(8,40)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M12 5 V18 M7 13 L12 18 L17 13" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="tool-brush" transform="translate(38,40)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M15 5 L19 9 L11 17 H7 V13 Z" fill="#4ade80" stroke="#ececf6" stroke-width="1.5" stroke-linejoin="round"/>
+  </g>
+  <g id="tool-eraser" transform="translate(68,40)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M10 6 L19 13 L13 19 H6 L4 15 Z" fill="#a855f7" stroke="#ececf6" stroke-width="1.6" stroke-linejoin="round"/>
+  </g>
+  <g id="tool-bucket" transform="translate(98,40)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M6 12 L12 6 L18 12 L12 18 Z" fill="#8b5cf6" stroke="#ececf6" stroke-width="1.6"/>
+    <circle cx="18" cy="17" r="2.2" fill="#4ade80"/>
+  </g>
+  <g id="tool-grid" transform="translate(128,40)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M5 9 H19 M5 15 H19 M9 5 V19 M15 5 V19" stroke="#a3a3c2" stroke-width="1.6"/>
+  </g>
+  <g id="tool-snap" transform="translate(158,40)">
+    <rect width="24" height="24" rx="5" fill="#141425" stroke="#8b5cf6" stroke-width="1.6"/>
+    <path d="M7 6 V13 A5 5 0 0 0 17 13 V6" fill="none" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+</svg>
