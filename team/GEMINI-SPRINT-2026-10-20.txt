@@ -1,0 +1,37 @@
+=====================================================================
+ GEMINI - SPRINT 2026-10-20          from Claude (team leader)
+ Owner: "give work to Gemini, holding back is not an option."
+ The click jobs (team/GEMINI-CLICKS-2026-10-19.txt) never reached GitHub - they are still first.
+=====================================================================
+RULES
+- One best version per job (no A/B/C). Push after EVERY job and open it on GitHub to check it's there.
+  If you can't push, paste the file with its name on top. Before your time runs out: push + one line in AI-TEAM.txt.
+- Never edit app.html. Your files go in gemini/. G-Warp's own look (dark #0b0b14, panels #14162a, borders #2b2f55,
+  violet #8b5cf6, green #4ade80). No cats, no Scratch art, no brands, no famous characters.
+- No questions, no long explanations. Just build.
+
+PART 1 - CLICK MODULES (team/GEMINI-CLICKS-2026-10-19.txt has the rules + app facts) -> gemini/clicks/<ID>.js
+  Do these 6 first, in this order: G-C1 New message / rename message, G-C2 rename / delete variables and lists,
+  G-C4 value bubble, G-C10 searchable dropdowns, G-C8 sound right-click menu, G-C5 Edit custom block.
+  Then: G-C12 copy / paste blocks, G-C11 blocks as picture, G-C7 reorder by dragging, G-C6 block comments,
+  G-C3 monitors, G-C9 .sprite3 export / import.
+
+PART 2 - NEW JOBS
+G-B1  Block switching (TurboWarp / PenguinMod have it) -> gemini/clicks/G-B1-switch.js
+      Right-click a block -> "Switch to" -> related blocks of the same shape; the inputs carry over.
+      Groups (use only types from team/gwrap-blocks.json): move/change_x/change_y; set_x/set_y; turn_cw/turn_ccw;
+      say/think/say_only/think; say for secs/think for secs; show/hide; play_sound/start_sound;
+      change_size/set_size; change_ghost/set_ghost; op_add/op_sub/op_mul/op_div/op_mod; op_and/op_or;
+      broadcast/broadcast_wait; set_var/change_var; show_var/hide_var; list_show/list_hide; wait/... (your pick).
+G-L1  Costume library: 40 ORIGINAL costumes for "Choose a Costume" -> gemini/library/costumes/<name>.svg + index.json
+      ([{ "name", "file", "tags": [...], "rotationCenter": [x, y] }]). Groups: robots, space, food, sports, fantasy,
+      nature, vehicles, G-Spark poses (8). About 120 x 120, clean shapes, every SVG opens in a browser.
+G-L2  Tutorial cover pictures (480 x 360) -> gemini/tutorials/<id>.svg for these 15 tutorials: first animation,
+      chase game, pong, platformer, quiz, music video, bones animation, tile level, clones rain, two-sprite story,
+      stamp drawing, virtual pet, racing timer, space shooter, dress-up game.
+G-T1  3 themes as CSS variable sets -> gemini/themes/themes.css + preview.html:
+      "Midnight" (today's look), "Daylight" (light, still violet/green accents), "High contrast" (accessibility).
+      List every color the app uses that a theme must change (search app.html for --gw7- variables).
+
+ORDER: G-C1, G-C2, G-C4, G-C10, G-C8, G-C5 > G-B1 > G-L1 > rest of the G-C list > G-L2 > G-T1
+HAND IN: 2026-10-20 | DONE | Gemini | <job id> | <files>

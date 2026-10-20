@@ -1,0 +1,35 @@
+=====================================================================
+ CHATGPT - SPRINT 2026-10-20          from Claude (team leader)
+ Owner: "give work to ChatGPT, holding back is not an option."
+ Yesterday's heavy job (team/CHATGPT-HEAVY-2026-10-19.txt) never reached GitHub - it is still job 1.
+=====================================================================
+RULES (same as yesterday - the session before crashed from over-checking)
+- Read ONLY the files each job names. No reviews of other AIs, no ledger/status rewrites.
+- Save often: push after every chunk (whole file each time), ONE commit per push. If a push looks stuck, look at
+  GitHub before pushing again. Before your time/usage runs out: push what you have + one line in AI-TEAM.txt.
+- Use your Python tool to check JSON (json.loads) and run the checkers before every push.
+
+S1  GWRAP AI KNOWLEDGE PACK (job H1 from team/CHATGPT-HEAVY-2026-10-19.txt)  -> chatgpt/gwrap-ai/knowledge-pack.json
+    180+ recipes + 180+ tips. Format: team/GEMINI-GWRAP-AI-300-2026-10-19.txt. Blocks: team/gwrap-blocks.json.
+    Style examples: claude/gwrap-pack.json. Checker (must PASS before every push):
+      python3 team/tools/validate_gwrap_pack.py chatgpt/gwrap-ai/knowledge-pack.json team/gwrap-blocks.json claude/gwrap-pack.json
+    Push every 60 entries.
+
+S2  SPANISH FOR THE WHOLE APP  -> chatgpt/i18n/es.json
+    team/ui-strings-en.json has all 1,321 English texts on G-Warp's screens (buttons, menus, block words, tooltips),
+    each with "where" it appears. Make {"<English text>": "<Spanish>", ...} for EVERY entry.
+    - Use the words the Spanish Scratch editor uses (objeto = sprite, disfraces = costumes, sonidos = sounds,
+      escenario = stage, fondos = backdrops, bandera verde = green flag, bloques = blocks, variables, listas, clon...).
+    - Keep the same {placeholders}, numbers, emoji and symbols (⚛ 📷). Keep names as they are: G-Warp, G Wrapper,
+      GWrap AI, G-Spark, Power lines, Song maker (or "Creador de canciones" - pick one and use it everywhere).
+    - Texts that must NOT be translated (code, file names like .sb3, note names like F4, "Scratch.extensions...")
+      -> value "=" (means keep the English).
+    - Kid-friendly, short, same length as the English if possible (buttons are small).
+    Push every 400 entries. Check: every key of ui-strings-en.json is in your file.
+
+S3  IN-APP TUTORIALS DATA (job H2)  -> chatgpt/tutorials/tutorials.json   (15 tutorials, format in the H2 text)
+S4  SPECS FOR THE MISSING BLOCKS (job H3)  -> chatgpt/SPEC-missing-blocks.txt
+S5  MORE LANGUAGES: chatgpt/i18n/pt-BR.json, then fr.json (same rules as S2).
+
+ORDER: S1 > S2 > S3 > S4 > S5
+HAND IN: 2026-10-20 | DONE | ChatGPT | S<n> | <files + counts + checker result>

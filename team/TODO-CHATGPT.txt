@@ -1,3 +1,4 @@
+>>> NOW 2026-10-20: team/CHATGPT-SPRINT-2026-10-20.txt (S1 GWrap AI pack, S2 Spanish for the whole app, S3 tutorials, S4 block specs, S5 more languages) <<<
 >>> NOW 2026-10-19 evening: team/CHATGPT-HEAVY-2026-10-19.txt (GWrap AI 360+ pack, tutorials data, block specs) - READ ONLY THE FILES IT LISTS <<<
 >>> NEXT 2026-10-19 (after v15.49.0): team/NEXT-AFTER-v15.49-2026-10-19.txt - ChatGPT section N-C1..N-C4 ONLY (small jobs; no full review passes - that crashed the last session) <<<
 CURRENT ROUTING STATUS — 2026-10-19 (ChatGPT)
