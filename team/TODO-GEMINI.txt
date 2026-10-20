@@ -1,3 +1,4 @@
+>>> NEW 2026-10-20: team/GEMINI-WEBSITE-2026-10-20.txt (website makeover) - after the click modules G-C1..G-C5 <<<
 >>> NOW 2026-10-20: team/GEMINI-SPRINT-2026-10-20.txt (click modules first, then block switching, costume library, tutorial covers, themes) <<<
 >>> FIRST 2026-10-19: team/GEMINI-CLICKS-2026-10-19.txt (12 missing click/right-click features as modules), THEN the GWrap AI 300 job <<<
 >>> MOVED 2026-10-19 evening: the GWrap AI 300 job went to ChatGPT (team/CHATGPT-HEAVY-2026-10-19.txt). Gemini: do the click modules (GEMINI-CLICKS) <<<

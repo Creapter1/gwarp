@@ -1,0 +1,23 @@
+ GEMINI - WEBSITE MAKEOVER          from Claude, 2026-10-20 (owner: "it's nice, make it better, organized,
+ fixed, more appealing and attractive for people and kids")
+STEP 0: connect to GitHub first, upload anything not uploaded yet, read it back (see the sprint files).
+FILES YOU MAY EDIT: index.html, docs/*.html, docs/tutorials/*.html, and new files in docs/images/ or gemini/website/.
+Never app.html. Keep every fact true to the app (docs/changelog.html + team/FUTURE-IDEAS.txt OI-1..5).
+W1 Look first: open the live site (creapter1.github.io/gwarp) on a wide screen AND a phone width. List what is
+   messy, broken, too long or boring -> gemini/website/REVIEW.txt (short numbered list).
+W2 Home page (index.html), organized top to bottom: hero (big title, one-line promise, 2 big buttons "Start
+   creating" / "Open a project", a picture of the real editor), "What you can make" (games, animations, music -
+   with pictures), the 6 best features as colorful cards (Animation with bones + Glide, Song maker, Tiles,
+   GWrap AI helper, Power lines, Scratch / TurboWarp projects open), "How it works in 3 steps", tutorials strip,
+   safety for parents, FAQ, footer. Shorter text, bigger pictures, G-Spark mascot, playful but clean.
+W3 Pictures: use your art (gemini/backdrops, flipbook-sprites, rig-characters, empty-states, icons) + new SVGs:
+   hero illustration, feature card icons, a "made with G-Warp" game strip. Optimize: SVG, small files.
+W4 Docs pages: same header/footer/menu everywhere, readable on phones, a clear left menu, a search-free
+   "Start here" path for kids (Start -> first tutorial -> blocks -> costumes -> animation -> sounds).
+W5 Fix: broken links, overflowing text on phones, contrast (dark #0b0b14 + violet #8b5cf6 + green #4ade80),
+   alt text on every image, buttons big enough to tap, fast loading (no huge images, no external scripts).
+W6 Fun touches (light): small hover animations, G-Spark waving in the hero (CSS only), respects
+   "prefers-reduced-motion".
+RULES: G-Warp's own look, no cats / Scratch art / brands, no tracking, no ads, kid-friendly words.
+Push after EVERY page and check it on GitHub. Hand in: 2026-10-20 | DONE | Gemini | W<n> | <files>
+ORDER: W1 > W2 > W3 > W5 > W4 > W6
