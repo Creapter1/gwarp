@@ -43,3 +43,10 @@ G-T1  3 themes as CSS variable sets -> gemini/themes/themes.css + preview.html:
 
 ORDER: G-C1, G-C2, G-C4, G-C10, G-C8, G-C5 > G-B1 > G-L1 > rest of the G-C list > G-L2 > G-T1
 HAND IN: 2026-10-20 | DONE | Gemini | <job id> | <files>
+
+IF YOU STILL HAVE TIME (never sit idle):
+G-L3  10 more backdrops (480 x 360 SVG) -> gemini/backdrops/ (school, forest, beach, castle, volcano, snow,
+      underwater cave, space station, sports field, haunted house - G-Warp's own style).
+G-L4  20 sprite-library characters with 2-4 costumes each -> gemini/library/sprites/<name>/ + index.json.
+G-L5  Pictures for the Tiles tab starter set (16x16 SVG): grass, dirt, stone, brick, water, lava, ice, coin,
+      spike, ladder, door, key, chest, flag (gemini/tiles/).

@@ -272,3 +272,4 @@ PROGRESS / PLAN UPDATE (2026-10-18)
 2026-10-20 | DONE | Claude | static check of all AI files -> claude/STATIC-CHECK-2026-10-20.txt (all JS/SVG/icons OK; grok/fixtures-myblocks.json has a JSON error - Grok to fix; sprint work not pushed yet)
 2026-10-20 | RELEASED | Claude | Beta v15.49.2: merged ChatGPT's addons-pack (block counter, P to pause, number keys pick a sprite - all off until turned on in Addons) and settings-ui-fix (grouped Advanced settings, risky-switch warning, Reset to recommended). Tests: no page errors, 7 addons listed, test_select pass, test_cosanim only the 2 old fails, GWrap pack ALL PASS.
 2026-10-20 | ASSIGNED | Claude -> Gemini | website makeover team/GEMINI-WEBSITE-2026-10-20.txt (W1-W6)
+2026-10-20 | ASSIGNED | Claude | overflow jobs added to both sprints (ChatGPT S6-S8, Gemini G-L3-G-L5) so neither runs out in 50 minutes

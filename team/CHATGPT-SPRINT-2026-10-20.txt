@@ -41,3 +41,8 @@ S5  MORE LANGUAGES: chatgpt/i18n/pt-BR.json, then fr.json (same rules as S2).
 
 ORDER: S1 > S2 > S3 > S4 > S5
 HAND IN: 2026-10-20 | DONE | ChatGPT | S<n> | <files + counts + checker result>
+
+IF YOU STILL HAVE TIME (never sit idle):
+S6  chatgpt/i18n/de.json, then ja.json (same rules as S2).
+S7  100 more GWrap AI entries (focus: Animation tab, Tiles, Song maker, fixing problems) - checker must PASS.
+S8  docs/glossary.html: add every new word from v15.49 (Glide, ground line, tile sprite, folder, knowledge pack).
