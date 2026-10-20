@@ -1,0 +1,12 @@
+STATIC CHECK OF EVERY AI'S PUSHED FILES - 2026-10-20 (Claude; no app run, as the owner asked)
+NEW SPRINT WORK: nothing on GitHub yet (no gemini/clicks, chatgpt/gwrap-ai, chatgpt/i18n, chatgpt/tutorials,
+  gemini/library, gemini/themes). Only new push since yesterday: chatgpt/addons-pack.js + settings-ui-fix.js (+NOTES).
+JS syntax (node --check, every .js in gemini/ chatgpt/ grok/): ALL OK.
+JSON: 1 broken -> grok/fixtures-myblocks.json line 42 col 370 (one bracket too many/few after the "param order"
+  case: ...{"type":"arg","name":"b"}}]}]} ). GROK must fix it (his folder). All other JSON OK.
+SVG (94 files in gemini/): all valid XML, no scripts, no web links.
+Icons (gemini/icons-animation, 36): all viewBox 0 0 24 24 + currentColor = follow the plan.
+Gemini lab self-test (test-anim-lab.js): ALL PASSED (3 easing models, 9/9 auto-rigs on the 3 characters).
+Risky code scan (fetch / eval / new Function / localStorage) in chatgpt addons + settings, melody, easing: none found.
+Already merged earlier: melody engine, 3 backdrops, ease curve. Ready to merge next: icons, rig characters,
+  flipbook sprites, empty states, chatgpt addons-pack + settings-ui-fix (need an app test first).
