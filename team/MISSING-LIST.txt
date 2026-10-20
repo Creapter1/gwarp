@@ -72,7 +72,7 @@ E. FROM THE 3-APP AUDIT (claude/GAP-ANALYSIS-2026-10-19.txt - stopped early by t
 [x] E1.3  The "contains ?" block (text contains text).                                              Claude
 [x] E1.4  Math functions: only "abs" - add the dropdown with floor, ceiling, sqrt, sin, cos, tan, asin, acos,
           atan, ln, log, e^, 10^.                                                                    Claude
-[ ] E1.5  "when stage clicked" hat.                                                                 Claude
+[x] E1.5  "when stage clicked" hat.                                                                 Claude
 [ ] E1.6  "glide to random position / mouse-pointer / a sprite".                                     Claude
 [x] E1.7  The list reporter (the round "my list" block that shows the whole list).                   Claude
 [ ] E1.8  Tutorials (Scratch has 27).                                       ChatGPT (content) + Gemini (UI)
@@ -80,7 +80,7 @@ E. FROM THE 3-APP AUDIT (claude/GAP-ANALYSIS-2026-10-19.txt - stopped early by t
           Opening an .sb3 should use 30 FPS unless the project asks for 60 (NOT TESTED yet).        Claude
 
  E2. Important for real games (P2)
-[~] E2.1  (backdrop number/name + days since 2000 done v15.50.1) "switch backdrop to () and wait", "backdrop number / name" reporter, "when [timer / loudness] > ()",
+[~] E2.1  (done: backdrop #/name, days since 2000, item # of; left: switch backdrop and wait, when timer >) "switch backdrop to () and wait", "backdrop number / name" reporter, "when [timer / loudness] > ()",
           "item # of () in [list]", "days since 2000".                                             Claude
 [x] E2.2  (v15.50.1: "current [year...]" block) "current time" needs its dropdown (year, month, date, day of week, hour, minute, second). Claude
 [ ] E2.3  One round reporter block per variable (today one generic "value of [ ]" block).          Claude

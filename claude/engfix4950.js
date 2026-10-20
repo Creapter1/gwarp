@@ -72,13 +72,23 @@
   }
 
   /* ---- stage click while stopped ---- */
+  /* the stage only tracks the mouse while a project runs: give clicks the right stage x / y */
+  document.addEventListener('mousedown', e => { const c = e.target?.id === 'stageCanvas' ? e.target : null; const E = window.Engine; if (!c || !E?.mouse) return;
+    const r = c.getBoundingClientRect(); if (!r.width) return; E.mouse.x = Math.round((e.clientX - r.left) / r.width * 480 - 240); E.mouse.y = Math.round(180 - (e.clientY - r.top) / r.height * 360); }, true);
   function wrapStageClick() {
     const GW = window.GW; if (!GW?.stageClick || GW.stageClick.__gw4950) return !!GW?.stageClick;
     const old = GW.stageClick;
     GW.stageClick = function () {
       const E = window.Engine;
       if (E && !E.isRunning && document.querySelector('#workspaceCanvas > .block-stack > .scratch-block[data-type="when_clicked"]:first-child')) { E.isRunning = true; E.isPaused = false; }
-      return old.apply(this, arguments);
+      const r = old.apply(this, arguments);
+      try { /* v15.50.2: "when stage clicked" runs when the click hits no sprite */
+        const mx = E?.mouse?.x || 0, my = E?.mouse?.y || 0;
+        const hit = (E?.sprites || []).some(s => s.visible && !s.stageProxy && (GW.spriteHasPoint ? GW.spriteHasPoint(s, mx, my) : false));
+        const st = [...document.querySelectorAll('#workspaceCanvas > .block-stack')].filter(x => x.firstElementChild?.dataset.type === 'when_stage_clicked');
+        if (!hit && st.length) { E.isRunning = true; E.isPaused = false; st.forEach(x => GW.runHat(x, E.sprites[GW.stackOwner(x)])); }
+      } catch {}
+      return r;
     };
     GW.stageClick.__gw4950 = true; return true;
   }
@@ -93,7 +103,7 @@
     const block = t.closest('.scratch-block'); if (!block) return;
     setTimeout(() => { if (!block.closest('#workspaceCanvas')) return; const st = block.closest('#workspaceCanvas > .block-stack'); if (st) toggleRun(st); }, 30);
   }, true);
-  const HATS = new Set(['when_flag', 'when_key', 'when_clicked', 'when_broadcast', 'when_clone', 'when_backdrop', 'define_custom']);
+  const HATS = new Set(['when_flag', 'when_key', 'when_clicked', 'when_stage_clicked', 'when_broadcast', 'when_clone', 'when_backdrop', 'define_custom']);
   const threadsOf = st => (window.Engine?.threads || []).filter(th => !th.finished && th.__gw4950 === st);
   function toggleRun(st) {
     const E = window.Engine, GW = window.GW; if (!E || !GW) return;

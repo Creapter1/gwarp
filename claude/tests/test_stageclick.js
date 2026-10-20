@@ -1,0 +1,18 @@
+const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path');
+(async () => { let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fails++; };
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1440, height: 900 } }); const errs = [];
+  p.on('pageerror', e => errs.push(e.message)); await prep(p); await p.goto('file://' + path.resolve(process.argv[2])); await p.waitForTimeout(4500);
+  await p.evaluate(() => { ['n', 'k'].forEach(v => { if (!(v in Engine.variables)) GW.createVariable(v); }); if (!('L' in Engine.lists)) GW.createList('L');
+    const A = GW_V1571, M = GW_GWRAP_PACK.make, ws = document.getElementById('workspaceCanvas');
+    const mk = (blocks, top) => { const st = document.createElement('div'); st.className = 'block-stack'; st.dataset.owner = String(Engine.activeSpriteIndex); st.style.left = '40px'; st.style.top = top + 'px'; blocks.forEach(x => st.appendChild(M(A, x))); ws.appendChild(st); };
+    mk([['when_stage_clicked'], ['change_var', ['1'], ['n']]], 40);
+    mk([['when_flag'], ['list_clear', [], ['L']], ['list_add', ['a'], ['L']], ['list_add', ['b'], ['L']], ['set_var', [{ r: ['list_itemnum', ['B'], ['L']] }], ['k']]], 160); });
+  const fr = await p.evaluate(() => { const r = document.getElementById('stageCanvas').getBoundingClientRect(); return { x: r.x + r.width * 0.85, y: r.y + r.height * 0.85 }; }); console.log(await p.evaluate(fr => document.elementFromPoint(fr.x, fr.y).id + '|' + document.elementFromPoint(fr.x, fr.y).className, fr));
+  await p.mouse.click(fr.x, fr.y); await p.waitForTimeout(500); console.log(await p.evaluate(() => JSON.stringify({ wrapped: !!GW.stageClick.__gw4950, mouse: Engine.mouse, run: Engine.isRunning, th: Engine.threads.length, n: Engine.variables.n, stk: [...document.querySelectorAll('#workspaceCanvas > .block-stack')].map(s => s.firstElementChild?.dataset.type) })));
+  const n1 = await p.evaluate(() => Engine.variables.n);
+  ok(n1 == 1, 'click an empty spot on the stage (project stopped) runs "when stage clicked": n = ' + n1);
+  await p.evaluate(() => document.getElementById('greenFlagBtn').click()); await p.waitForTimeout(800);
+  const k = await p.evaluate(() => Engine.variables.k); ok(k == 2, 'item # of "B" in [a, b] = 2 (Scratch ignores case): ' + k);
+  const sb3 = await p.evaluate(async () => { const z = await GW_FILES.buildSb3(); const zip = await JSZip.loadAsync(await z.blob.arrayBuffer()); const j = JSON.parse(await zip.file('project.json').async('string')); return [...new Set(j.targets.flatMap(t => Object.values(t.blocks).map(x => x.opcode)))]; });
+  ok(sb3.includes('event_whenstageclicked') && sb3.includes('data_itemnumoflist'), 'saved to .sb3 as event_whenstageclicked + data_itemnumoflist');
+  ok(!errs.length, 'no page errors ' + errs.join(' | ')); console.log(fails ? fails + ' FAILED' : 'ALL PASS'); await b.close(); })();

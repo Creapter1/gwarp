@@ -74,6 +74,7 @@
         .scratch-block[data-type="when_flag"],
         .scratch-block[data-type="when_key"],
         .scratch-block[data-type="when_clicked"],
+        .scratch-block[data-type="when_stage_clicked"],
         .scratch-block[data-type="when_broadcast"] {
             border-top-left-radius: 16px;
             border-top-right-radius: 16px;
@@ -2284,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.50.1</span>
+<span class="app-version">Beta v15.50.2</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -2466,6 +2467,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="scratch-block bg-events" data-type="when_flag">when <i class="fa-solid fa-flag text-emerald-800"></i> clicked</div>
 <div class="scratch-block bg-events" data-type="when_key">when key <select class="block-select"><option value="space">space</option><option value="up arrow">up arrow</option><option value="down arrow">down arrow</option><option value="right arrow">right arrow</option><option value="left arrow">left arrow</option></select> pressed</div>
 <div class="scratch-block bg-events" data-type="when_clicked">when this sprite clicked</div>
+<div class="scratch-block bg-events" data-type="when_stage_clicked">when stage clicked</div>
 <div class="scratch-block bg-events" data-type="broadcast">broadcast <select class="block-select"><option value="message1">message1</option><option value="message2">message2</option></select></div>
 <div class="scratch-block bg-events" data-type="broadcast_wait">broadcast <select class="block-select"><option value="message1">message1</option><option value="message2">message2</option></select> and wait</div>
 <div class="scratch-block bg-events" data-type="when_broadcast">when I receive <select class="block-select"><option value="message1">message1</option><option value="message2">message2</option></select></div>
@@ -2577,6 +2579,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="scratch-block bg-red-600" data-type="list_contents"><select class="block-select"><option value="my list">my list</option></select></div>
 <div class="scratch-block bg-red-600" data-type="list_length">length of <select class="block-select"><option value="my list">my list</option></select></div>
 <div class="scratch-block bg-red-600" data-type="list_contains"><select class="block-select"><option value="my list">my list</option></select> contains <input class="block-input" type="text" value="item"/>?</div>
+<div class="scratch-block bg-red-600" data-type="list_itemnum">item # of <input class="block-input" type="text" value="thing"/> in <select class="block-select"><option value="my list">my list</option></select></div>
 </div>
 <!-- MY BLOCKS / CUSTOM PROCEDURES -->
 <div class="cat-section flex flex-col items-start gap-1.5" id="sec-myblocks">
@@ -4644,7 +4647,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.1',label:'Beta v15.50.1',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.2',label:'Beta v15.50.2',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -8223,9 +8226,9 @@ nodes.push(el);cur=b.next;}return nodes;};
     block.classList.remove('gw-stack-block','gw-hat-block','gw-cap-block','gw-reporter-block','gw-boolean-block');
     const type=block.dataset.type||'';
     if(['repeat','forever','if','if_else','repeat_until','define_custom'].includes(type)||block.classList.contains('block-c-shape')){const header=block.querySelector('.block-c-header');if(header)block.style.setProperty('--gw-block-connector-color',getComputedStyle(header).backgroundColor);block.title='C-block: connect above or below; drop other blocks inside the open middle.';return;}
-    const hats=['when_flag','when_key','when_clicked','when_broadcast','when_clone'];
+    const hats=['when_flag','when_key','when_clicked','when_stage_clicked','when_broadcast','when_clone'];
     const booleans=['op_gt','op_lt','op_contains','op_eq','op_and','op_or','op_not','touching_pointer','touching_sprite','key_pressed','mouse_down','list_contains','tile_is_solid','touching_tile'];
-    const reporters=['op_mathop','current_part','days_since_2000','backdrop_number','backdrop_name','list_contents','x_position','y_position','direction','costume_number','costume_name','size_reporter','volume_reporter','get_var','op_add','op_sub','op_mul','op_div','op_mod','op_round','op_abs','op_join','op_length','op_letter','op_random','list_item','list_length','timer','current_time','distance_to','sprite_prop','mouse_x','mouse_y','tile_at','behavior_get_attr','behavior_event_actor_name','behavior_event_tile'];
+    const reporters=['list_itemnum','op_mathop','current_part','days_since_2000','backdrop_number','backdrop_name','list_contents','x_position','y_position','direction','costume_number','costume_name','size_reporter','volume_reporter','get_var','op_add','op_sub','op_mul','op_div','op_mod','op_round','op_abs','op_join','op_length','op_letter','op_random','list_item','list_length','timer','current_time','distance_to','sprite_prop','mouse_x','mouse_y','tile_at','behavior_get_attr','behavior_event_actor_name','behavior_event_tile'];
     if(hats.includes(type)){block.classList.add('gw-hat-block');block.title='Hat block: starts a script.';return;}
     if(booleans.includes(type)){block.classList.add('gw-boolean-block');block.title='Boolean block: returns true or false.';return;}
     if(reporters.includes(type)){block.classList.add('gw-reporter-block');block.title='Reporter block: gives a value to another block.';return;}
@@ -10066,6 +10069,7 @@ nodes.push(el);cur=b.next;}return nodes;};
       case 'op_mathop': return { type: t, op: selOf(b) || 'abs', args: argsOf(b) }; // v15.50.1
       case 'current_part': return { type: t, part: selOf(b) || 'YEAR' };
       case 'list_contents': return { type: t, name: selOf(b) || 'my list' };
+      case 'list_itemnum': return { type: t, name: selOf(b) || 'my list', args: [lit(ins[0] ?? '')] };
     }
     if (/^op_/.test(t)) return { type: t, args: argsOf(b) };
     return { type: t };
@@ -10286,6 +10290,7 @@ nodes.push(el);cur=b.next;}return nodes;};
       if (t === 'op_mathop') return blk(t, [litVal(n.args?.[0], '')], [n.op || 'abs']); // v15.50.1
       if (t === 'current_part') return blk(t, [], [n.part || 'YEAR']);
       if (t === 'list_contents') return blk(t, [], [n.name]);
+      if (t === 'list_itemnum') return blk(t, [litVal(n.args?.[0], '')], [n.name]);
       return blk(t);
     } catch { return null; }
   }
@@ -10499,7 +10504,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     }
     const [x, ...rest] = list; box.appendChild(card(x, rest, q));
   }
-  const HATS = new Set(['when_flag', 'when_key', 'when_clicked', 'when_broadcast', 'when_clone', 'when_backdrop', 'define_custom']);
+  const HATS = new Set(['when_flag', 'when_key', 'when_clicked', 'when_stage_clicked', 'when_broadcast', 'when_clone', 'when_backdrop', 'define_custom']);
   function flash(el) { const st = el.closest('.block-stack') || el; st.scrollIntoView({ block: 'center', inline: 'center' }); glow(st); }
   function checkProject() {
     const ws = WS(), out = by('gwAiCheckOut'); if (!ws || !out) return [];
@@ -11519,7 +11524,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     looks_changesizeby: ['change_size', ['CHANGE']], looks_setsizeto: ['set_size', ['SIZE']], looks_cleargraphiceffects: ['clear_effects'], looks_show: ['show'], looks_hide: ['hide'],
     looks_gotofrontback: ['go_front_back', [], ['FRONT_BACK']], looks_goforwardbackwardlayers: ['go_layers', ['NUM'], ['FORWARD_BACKWARD']],
     sound_playuntildone: ['play_sound', [], ['SOUND_MENU']], sound_play: ['start_sound', [], ['SOUND_MENU']], sound_stopallsounds: ['stop_all_sounds'], sound_changevolumeby: ['change_volume', ['VOLUME']], sound_setvolumeto: ['set_volume', ['VOLUME']],
-    event_whenflagclicked: ['when_flag'], event_whenkeypressed: ['when_key', [], ['KEY_OPTION']], event_whenthisspriteclicked: ['when_clicked'], event_whenbroadcastreceived: ['when_broadcast', [], ['BROADCAST_OPTION']],
+    event_whenflagclicked: ['when_flag'], event_whenkeypressed: ['when_key', [], ['KEY_OPTION']], event_whenthisspriteclicked: ['when_clicked'], event_whenstageclicked: ['when_stage_clicked'], event_whenbroadcastreceived: ['when_broadcast', [], ['BROADCAST_OPTION']],
     event_whenbackdropswitchesto: ['when_backdrop', [], ['BACKDROP']], event_broadcast: ['broadcast', [], ['BROADCAST_INPUT']], event_broadcastandwait: ['broadcast_wait', [], ['BROADCAST_INPUT']],
     control_wait: ['wait', ['DURATION']], control_repeat: ['repeat', ['TIMES']], control_forever: ['forever'], control_if: ['if'], control_if_else: ['if_else'], control_wait_until: ['wait_until'], control_repeat_until: ['repeat_until'],
     control_stop: ['stop', [], ['STOP_OPTION']], control_start_as_clone: ['when_clone'], control_create_clone_of: ['create_clone', [], ['CLONE_OPTION']], control_delete_this_clone: ['delete_clone'],
@@ -12682,7 +12687,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     say: ['looks_sayforsecs', ['MESSAGE', 'SECS']], say_only: ['looks_say', ['MESSAGE']], think: ['looks_think', ['MESSAGE']], think_secs: ['looks_thinkforsecs', ['MESSAGE', 'SECS']], next_costume: ['looks_nextcostume'], next_backdrop: ['looks_nextbackdrop'],
     change_size: ['looks_changesizeby', ['CHANGE']], set_size: ['looks_setsizeto', ['SIZE']], clear_effects: ['looks_cleargraphiceffects'], show: ['looks_show'], hide: ['looks_hide'], go_layers: ['looks_goforwardbackwardlayers', ['NUM']],
     stop_all_sounds: ['sound_stopallsounds'], change_volume: ['sound_changevolumeby', ['VOLUME']], set_volume: ['sound_setvolumeto', ['VOLUME']],
-    when_flag: ['event_whenflagclicked'], when_clicked: ['event_whenthisspriteclicked'], when_clone: ['control_start_as_clone'],
+    when_flag: ['event_whenflagclicked'], when_clicked: ['event_whenthisspriteclicked'], when_stage_clicked: ['event_whenstageclicked'], when_clone: ['control_start_as_clone'],
     wait: ['control_wait', ['DURATION']], repeat: ['control_repeat', ['TIMES']], forever: ['control_forever'], if: ['control_if'], if_else: ['control_if_else'], wait_until: ['control_wait_until'], repeat_until: ['control_repeat_until'], delete_clone: ['control_delete_this_clone'],
     ask: ['sensing_askandwait', ['QUESTION']], reset_timer: ['sensing_resettimer'],
     set_var: ['data_setvariableto', ['VALUE']], change_var: ['data_changevariableby', ['VALUE']], show_var: ['data_showvariable'], hide_var: ['data_hidevariable'],
@@ -23126,13 +23131,23 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   }
 
   /* ---- stage click while stopped ---- */
+  /* the stage only tracks the mouse while a project runs: give clicks the right stage x / y */
+  document.addEventListener('mousedown', e => { const c = e.target?.id === 'stageCanvas' ? e.target : null; const E = window.Engine; if (!c || !E?.mouse) return;
+    const r = c.getBoundingClientRect(); if (!r.width) return; E.mouse.x = Math.round((e.clientX - r.left) / r.width * 480 - 240); E.mouse.y = Math.round(180 - (e.clientY - r.top) / r.height * 360); }, true);
   function wrapStageClick() {
     const GW = window.GW; if (!GW?.stageClick || GW.stageClick.__gw4950) return !!GW?.stageClick;
     const old = GW.stageClick;
     GW.stageClick = function () {
       const E = window.Engine;
       if (E && !E.isRunning && document.querySelector('#workspaceCanvas > .block-stack > .scratch-block[data-type="when_clicked"]:first-child')) { E.isRunning = true; E.isPaused = false; }
-      return old.apply(this, arguments);
+      const r = old.apply(this, arguments);
+      try { /* v15.50.2: "when stage clicked" runs when the click hits no sprite */
+        const mx = E?.mouse?.x || 0, my = E?.mouse?.y || 0;
+        const hit = (E?.sprites || []).some(s => s.visible && !s.stageProxy && (GW.spriteHasPoint ? GW.spriteHasPoint(s, mx, my) : false));
+        const st = [...document.querySelectorAll('#workspaceCanvas > .block-stack')].filter(x => x.firstElementChild?.dataset.type === 'when_stage_clicked');
+        if (!hit && st.length) { E.isRunning = true; E.isPaused = false; st.forEach(x => GW.runHat(x, E.sprites[GW.stackOwner(x)])); }
+      } catch {}
+      return r;
     };
     GW.stageClick.__gw4950 = true; return true;
   }
@@ -23147,7 +23162,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     const block = t.closest('.scratch-block'); if (!block) return;
     setTimeout(() => { if (!block.closest('#workspaceCanvas')) return; const st = block.closest('#workspaceCanvas > .block-stack'); if (st) toggleRun(st); }, 30);
   }, true);
-  const HATS = new Set(['when_flag', 'when_key', 'when_clicked', 'when_broadcast', 'when_clone', 'when_backdrop', 'define_custom']);
+  const HATS = new Set(['when_flag', 'when_key', 'when_clicked', 'when_stage_clicked', 'when_broadcast', 'when_clone', 'when_backdrop', 'define_custom']);
   const threadsOf = st => (window.Engine?.threads || []).filter(th => !th.finished && th.__gw4950 === st);
   function toggleRun(st) {
     const E = window.Engine, GW = window.GW; if (!E || !GW) return;
