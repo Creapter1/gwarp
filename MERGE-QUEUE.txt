@@ -71,3 +71,13 @@ CHATGPT
 CLAUDE (v15.49.0, this night)
   Costume tabs (Costumes | Tiles | Animation), tile sprites v1, Glide button, animation costumes in folders
   ("walk//frame 1"), Gemini's melody engine in the Song maker.
+
+--- MERGED 2026-10-20 (Beta v15.49.2 - v15.50.3) ---
+  chatgpt/addons-pack.js + settings-ui-fix.js      MERGED v15.49.2
+  chatgpt/gwrap-ai-pack.js (5 recipes, /commands)    MERGED v15.50.3 (GW_V1571.blocks + showAnswer now exported)
+  chatgpt/gwarp-tutorial.js (3 guided tours)         MERGED v15.50.3 (started from GWrap AI: "tour", "tutorial")
+  chatgpt/idea-teacher-check.js, idea-voice-commands.js  WAITING (ideas; voice needs a privacy check - may send audio)
+  gemini/icons-animation (her picks)                 MERGED v15.50.3 in the Animation editor + Animation tab
+                                                     (the paint editor keeps its own toolbar icons)
+  gemini/empty-states (code + costumes)              MERGED v15.50.3 ("no sounds" picture: next, needs the sound list)
+  gemini/rig-characters, flipbook-sprites            READY - need a "ready-made characters" picker + sprite library

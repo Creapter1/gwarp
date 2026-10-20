@@ -2285,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.50.2</span>
+<span class="app-version">Beta v15.50.3</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4647,7 +4647,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.2',label:'Beta v15.50.2',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.3',label:'Beta v15.50.3',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -10561,7 +10561,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     d.pass = d.helper && d.recipes >= 12 && d.recipesBuild && d.evaluatorExtended && d.rendererInstalled && d.conditionReadsTypedSlots && d.filterFn && d.filterHookedToDoubleClick && d.badgeRule;
     return d;
   }
-  window.GW_V1571 = { blk, cblk, nodeFromBlock, blockFromNode, nestInto, addRecipe, match, checkProject, showAll, rehydrate, recipes: RECIPES, tips: TIPS, diagnostics, parts: PARTS, bool: BOOL, value: VALUE, argkind: ARGKIND, words: WORD };
+  window.GW_V1571 = { blk, cblk, blocks: { blk, cblk, ifEdge, firstSound }, showAnswer, nodeFromBlock, blockFromNode, nestInto, addRecipe, match, checkProject, showAll, rehydrate, recipes: RECIPES, tips: TIPS, diagnostics, parts: PARTS, bool: BOOL, value: VALUE, argkind: ARGKIND, words: WORD };
   window.GW_RUN_V1571_BLOCKS_TEST = diagnostics;
   let tries = 0;
   const boot = () => {
@@ -23182,5 +23182,385 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
 })();
 </script>
 
+<script id="gw-v4960-chatgpt-gwrap-pack">
+/* v15.50.3: ChatGPT (Buffy) module chatgpt/gwrap-ai-pack.js, merged by Claude */
+(() => {
+  'use strict';
+  // GWrap AI knowledge pack (ChatGPT/Claude team, v1.0).
+  // Adds 5 recipes + 2 tips to the GWrap AI helper, and a small set of SAFE
+  // slash commands typed in the “What do you want to make?” box.
+  // It never runs code, never sends data anywhere, and only clicks buttons
+  // that already exist in app.html.
+  if (window.GW_AI_PACK) return;                       // safe if loaded twice
+  if (window.GW_FEATURE_OFF?.('gwAiPack')) return;     // switch-off key
+
+  const $ = id => document.getElementById(id);
+  const V = () => window.GW_V1571;                     // exposed by app.html
+  const TABS = { code: 'gwMainTabCode', costumes: 'gwMainTabCostumes', sounds: 'gwMainTabSounds' };
+  const COMMANDS = ['/help', '/start', '/stop', '/undo', '/check', '/open code|costumes|sounds', '/add <idea>'];
+
+  function say(msg, kind) {
+    const s = $('gwAiStatus'); if (!s) return;
+    s.textContent = msg; s.dataset.kind = kind || '';
+  }
+
+  function recipes(B) {
+    const { blk, cblk, ifEdge, firstSound } = B;
+    return [
+      { id: 'gravity', emoji: '🪂', title: 'Fall with gravity', keys: ['gravity', 'fall', 'falling', 'drop', 'platformer', 'weight', 'heavy'],
+        steps: ['When the green flag is clicked…', 'keep going forever,', 'and move down 3 steps each time. Pair it with “Jump when space is pressed”.'],
+        build: () => [[blk('when_flag'), cblk('forever', [blk('change_y', ['-3'])])]] },
+      { id: 'shake', emoji: '📳', title: 'Shake when clicked', keys: ['shake', 'wobble', 'tremble', 'vibrate', 'shiver', 'rattle'],
+        steps: ['When clicked, move 5 steps right 10 times,', 'then 5 steps left 10 times, so it ends where it started.'],
+        build: () => [[blk('when_clicked'), cblk('repeat', [blk('change_x', ['5'])], ['10']), cblk('repeat', [blk('change_x', ['-5'])], ['10'])]] },
+      { id: 'click-sound', emoji: '🔊', title: 'Play a sound when clicked', keys: ['pop', 'boop', 'click', 'sound', 'noise', 'beep', 'effect'],
+        steps: ['When the sprite is clicked, play its first sound.', 'Add or record more sounds in the Sounds tab.'],
+        build: () => [[blk('when_clicked'), blk('play_sound', [], [firstSound()])]] },
+      { id: 'countdown', emoji: '⏱️', title: 'Countdown from 10', keys: ['countdown', 'timer', 'count', 'down', 'clock', 'seconds', 'time', 'limit'],
+        steps: ['Make a variable called countdown and show it.', 'When the green flag is clicked, set it to 10.', 'Repeat 10 times: wait 1 second, then subtract 1.'],
+        prep: () => { try { if (!Object.prototype.hasOwnProperty.call(window.Engine?.variables || {}, 'countdown')) window.GW?.createVariable?.('countdown'); } catch {} },
+        build: () => [[blk('when_flag'), blk('set_var', ['10'], ['countdown']), blk('show_var', [], ['countdown']),
+          cblk('repeat', [blk('wait', ['1']), blk('change_var', ['-1'], ['countdown'])], ['10'])]] },
+      { id: 'turn-away', emoji: '↪️', title: 'Turn away from the edge', keys: ['turn', 'bounce', 'away', 'edge', 'reverse', 'border', 'wall'],
+        steps: ['Keep moving forever.', 'If the sprite touches the edge, turn around by 180 degrees.'],
+        build: () => [[blk('when_flag'), cblk('forever', [blk('move', ['4']), ifEdge([blk('turn_cw', ['180'])])])]] }
+    ];
+  }
+
+  function tips() {
+    return [
+      { id: 'tip-start', emoji: '🚩', title: 'Start and stop your game', keys: ['start', 'run', 'play', 'stop', 'test', 'green', 'flag', 'begin', 'go'],
+        text: 'Press the green flag (Start) to run every script that begins with a flag block. Press Stop to end them all at once.',
+        action: ['Press Start', () => $('greenFlagBtn')?.click()] },
+      { id: 'tip-commands', emoji: '⌨️', title: 'Type commands', keys: ['command', 'commands', 'help', 'slash', 'shortcut', 'shortcuts'],
+        text: 'In the box above, type a slash command: /start, /stop, /undo, /check, /open code, /open costumes, /open sounds, /add followed by an idea, or /help. These are the only things the helper runs.',
+        action: ['Show commands', () => showHelp()] }
+    ];
+  }
+
+  function showHelp() {
+    const box = $('gwAiAnswer'); if (!box) return;
+    box.innerHTML = '';
+    const card = document.createElement('div');
+    card.className = 'gw7-ai-card'; card.dataset.kind = 'tip';
+    const b = document.createElement('b'); b.textContent = '⌨️ Commands'; card.appendChild(b);
+    const p = document.createElement('p');
+    p.textContent = 'These are the only commands I run. I never run code.';
+    card.appendChild(p);
+    const ul = document.createElement('ul');
+    COMMANDS.forEach(c => { const li = document.createElement('li'); li.textContent = c; ul.appendChild(li); });
+    card.appendChild(ul);
+    box.appendChild(card);
+    say('Type a command in the box and press Enter.', 'ok');
+  }
+
+  // Safe runner: a fixed list of actions. Anything else is refused.
+  function run(text) {
+    const [cmd = '', ...rest] = text.slice(1).trim().toLowerCase().split(/\s+/);
+    const arg = rest.join(' ');
+    switch (cmd) {
+      case 'help': showHelp(); return;
+      case 'start': $('greenFlagBtn')?.click(); say('Started. Press Stop to end the scripts.', 'ok'); return;
+      case 'stop': $('stopBtn')?.click(); say('Stopped all scripts.', 'ok'); return;
+      case 'undo': try { window.GW8?.undo?.(); say('Undid the last change.', 'ok'); } catch { say('Nothing to undo.', 'warn'); } return;
+      case 'check': { const f = V()?.checkProject?.() || []; say(f.length ? 'Checked. See the results below “Check my project”.' : 'Nothing to check yet.', 'ok'); return; }
+      case 'open': {
+        const id = TABS[arg];
+        if (!id) { say('I can open: code, costumes, sounds. Example: /open costumes', 'warn'); return; }
+        $(id)?.click(); say(`Opened ${arg}.`, 'ok'); return;
+      }
+      case 'add': {
+        const hit = (V()?.match?.(arg) || []).find(x => x.kind === 'recipe');
+        if (!arg || !hit) { say('No idea matches that yet. Try /help, or pick one of the ideas above.', 'warn'); return; }
+        V().addRecipe(hit.r.id); return;
+      }
+      default:
+        say(`I can’t run “/${cmd}”. Commands: /start, /stop, /undo, /check, /open, /add, /help. I never run code.`, 'warn');
+    }
+  }
+
+  // Intercept only slash commands; normal questions still go to the built-in matcher.
+  document.addEventListener('submit', e => {
+    const input = $('gwAiAsk');
+    if (!input || e.target !== input.form) return;
+    const text = input.value.trim();
+    if (!text.startsWith('/')) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    input.value = '';
+    run(text);
+  }, true);
+
+  // Show a chip for each new recipe that doesn't already have one.
+  function addChips(list) {
+    const box = document.querySelector('#sec-gwrap .gw7-ai-chips');
+    if (!box) return false;
+    list.forEach(r => {
+      if (box.querySelector(`[data-recipe="${r.id}"]`)) return;
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'gw7-ai-chip'; btn.setAttribute('role', 'listitem');
+      btn.dataset.recipe = r.id; btn.textContent = r.emoji + ' ' + r.title;
+      btn.addEventListener('click', () => V()?.showAnswer?.([{ r, kind: 'recipe' }]));
+      box.appendChild(btn);
+    });
+    return true;
+  }
+
+  function init() {
+    const v = V(); if (!v?.blocks || !Array.isArray(v.recipes)) return false;
+    const added = recipes(v.blocks);
+    added.forEach(r => { if (!v.recipes.some(x => x.id === r.id)) v.recipes.push(r); });
+    tips().forEach(t => { if (!v.tips.some(x => x.id === t.id)) v.tips.push(t); });
+    const placed = addChips(added);
+    window.GW_AI_PACK = { version: '1.0', commands: COMMANDS, run, recipes: added.map(r => r.id) };
+    return placed;
+  }
+
+  // app.html builds the helper late, so wait for both it and the helper section.
+  let tries = 0;
+  const timer = setInterval(() => {
+    tries++;
+    const ready = init();
+    if (ready || tries > 80) clearInterval(timer);
+  }, 250);
+})();
+
+</script>
+<script id="gw-v4960-chatgpt-tutorial">
+/* v15.50.3: ChatGPT (Buffy) module chatgpt/gwarp-tutorial.js, merged by Claude */
+(() => {
+  'use strict';
+  // GWrap tutorial (ChatGPT team, v1.0). NOT wired into app.html yet.
+  // (merged into app.html by Claude in v15.50.3; the separate file is chatgpt/gwarp-tutorial.js)
+  // then call  GW_TUTORIAL.start('basics')  (or 'code', or 'music').
+  // Safety: no network, no eval, no storage writes. Lessons only highlight things on the page.
+  // A "Do it" button can only click the buttons listed in ALLOWED, and only after the learner presses it.
+  if (window.GW_TUTORIAL) return;                       // safe if loaded twice
+  if (window.GW_FEATURE_OFF?.('tutorial')) return;      // switch-off key
+
+  const $ = id => document.getElementById(id);
+
+  // The only buttons a lesson may press. Anything else is ignored.
+  const ALLOWED = {
+    tabCode: 'gwMainTabCode',
+    tabCostumes: 'gwMainTabCostumes',
+    tabSounds: 'gwMainTabSounds',
+    musicGenerate: 'gwMusicGenerate',
+    musicPlay: 'gwMusicPlay',
+    musicStop: 'gwMusicStop',
+    musicAdd: 'gwMusicAddToSprite'
+  };
+
+  const LESSONS = {
+    basics: {
+      title: 'Basics: how G-Warp works',
+      steps: [
+        { title: 'Welcome', text: 'G-Warp works like Scratch: the same blocks give the same results. It has its own look. Press Next to go on, or Close at any time.' },
+        { title: 'The Code tab', text: 'Scripts are made by snapping blocks together. Your code lives in the Code tab.', target: 'gwMainTabCode', action: { key: 'tabCode', label: 'Open Code' } },
+        { title: 'Start and Stop', text: 'Start (the green flag) runs every script that begins with a flag block. Stop ends them all at once.', target: 'greenFlagBtn' },
+        { title: 'Costumes', text: 'Costumes are the pictures a sprite can wear. Draw, import or edit them here.', target: 'gwMainTabCostumes', action: { key: 'tabCostumes', label: 'Open Costumes' } },
+        { title: 'Sounds', text: 'Sounds are audio clips. Music Maker is at the top of this tab.', target: 'gwMainTabSounds', action: { key: 'tabSounds', label: 'Open Sounds' } }
+      ]
+    },
+    code: {
+      title: 'Code: your first script',
+      steps: [
+        { title: 'Build a script', text: 'Drag a "when green flag clicked" block into the code area. Then drag a "move 10 steps" block under it.', target: 'gwWorkbenchCodeRegion', action: { key: 'tabCode', label: 'Go to Code' } },
+        { title: 'Run it', text: 'Press Start. Your sprite moves. Press Stop to end the scripts.', target: 'greenFlagBtn' },
+        { title: 'Ask the helper', text: 'In the "What do you want to make?" box, type an idea such as "gravity" or "countdown", then press Add these blocks. Type /help to see every command.', target: 'gwAiAsk' },
+        { title: 'Undo a mistake', text: 'Type /undo in the helper box to take back your last change.', target: 'gwAiAsk' }
+      ]
+    },
+    music: {
+      title: 'Music: make a loop',
+      steps: [
+        { title: 'Open the Sounds tab', text: 'Music Maker lives in the Sounds tab.', target: 'gwMainTabSounds', action: { key: 'tabSounds', label: 'Open Sounds' } },
+        { title: 'Pick a style and mood', text: 'Style sets the genre, for example Lo-Fi or Synthwave. Mood sets the feel, for example Relaxed or Intense.', target: 'gwMusicStyle' },
+        { title: 'Set speed and length', text: 'BPM is the speed: 120 is a steady beat. Duration is how long the loop is: 5 seconds, 4 bars or 8 bars.', target: 'gwMusicBpm' },
+        { title: 'Pick a seed', text: 'The same seed gives the same tune. Press the dice button next to Generate for a new one.', target: 'gwMusicSeed' },
+        { title: 'Generate a loop', text: 'This makes melody, bass, drums and chords. The status line under the buttons says what was made.', target: 'gwMusicGenerate', action: { key: 'musicGenerate', label: 'Generate Loop' } },
+        { title: 'Listen', text: 'Play the loop. Loop is on by default, so it repeats until you press Stop.', target: 'gwMusicPlay', action: { key: 'musicPlay', label: 'Play' } },
+        { title: 'Save it to a sprite', text: 'This renders a WAV file and adds it to the selected sprite\'s sounds.', target: 'gwMusicAddToSprite', action: { key: 'musicAdd', label: 'Add Mix to Sprite Sounds' } },
+        { title: 'Play it in a script', text: 'Go to the Code tab and use a play-sound block with your new sound. Press Start to hear it.', action: { key: 'tabCode', label: 'Go to Code' } }
+      ]
+    }
+  };
+
+  const state = { track: null, i: 0, marked: null };
+  let card = null;
+
+  function clearMark() {
+    if (state.marked) { state.marked.el.style.outline = state.marked.prev; state.marked = null; }
+  }
+
+  function mark(id) {
+    clearMark();
+    const el = id && $(id);
+    if (!el) return;
+    state.marked = { el, prev: el.style.outline };
+    el.style.outline = '3px solid #4ade80';
+    el.scrollIntoView?.({ block: 'nearest' });
+  }
+
+  function ensureCard() {
+    if (card) return card;
+    card = document.createElement('section');
+    card.id = 'gwTutorialCard';
+    card.setAttribute('role', 'dialog');
+    card.setAttribute('aria-live', 'polite');
+    card.style.cssText = 'position:fixed;right:16px;bottom:16px;z-index:99999;width:300px;max-width:calc(100vw - 32px);background:#0f172a;color:#e2e8f0;border:2px solid #8b5cf6;border-radius:12px;padding:14px;font:13px/1.45 system-ui,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.5)';
+    document.body.appendChild(card);
+    return card;
+  }
+
+  function button(label, onClick, primary) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    b.style.cssText = `padding:6px 10px;margin:4px 4px 0 0;border-radius:8px;border:1px solid ${primary ? '#4ade80' : '#475569'};background:${primary ? '#14532d' : '#1e293b'};color:#f8fafc;cursor:pointer`;
+    b.addEventListener('click', onClick);
+    return b;
+  }
+
+  function render() {
+    const lesson = LESSONS[state.track];
+    const step = lesson.steps[state.i];
+    const c = ensureCard();
+    c.textContent = '';
+
+    const head = document.createElement('div');
+    head.style.cssText = 'font-size:11px;color:#a78bfa;font-weight:bold;margin-bottom:4px';
+    head.textContent = `${lesson.title}  (${state.i + 1}/${lesson.steps.length})`;
+
+    const title = document.createElement('h3');
+    title.style.cssText = 'margin:0 0 6px;font-size:15px;color:#4ade80';
+    title.textContent = step.title;
+
+    const text = document.createElement('p');
+    text.style.margin = '0 0 8px';
+    text.textContent = step.text;
+
+    const row = document.createElement('div');
+    if (step.action) row.appendChild(button(step.action.label, () => doAction(step.action.key)));
+    row.appendChild(button('Back', prev));
+    const last = state.i === lesson.steps.length - 1;
+    row.appendChild(button(last ? 'Finish' : 'Next', next, true));
+    row.appendChild(button('Close', stop));
+
+    c.append(head, title, text, row);
+    mark(step.target);
+  }
+
+  // Only the allow-listed buttons can be pressed.
+  function doAction(key) {
+    if (!Object.prototype.hasOwnProperty.call(ALLOWED, key)) return;
+    $(ALLOWED[key])?.click();
+  }
+
+  function start(track) {
+    if (!Object.prototype.hasOwnProperty.call(LESSONS, track)) return false;
+    state.track = track;
+    state.i = 0;
+    render();
+    return true;
+  }
+
+  function next() {
+    const lesson = LESSONS[state.track];
+    if (!lesson) return;
+    if (state.i >= lesson.steps.length - 1) { stop(); return; }
+    state.i++;
+    render();
+  }
+
+  function prev() {
+    if (!LESSONS[state.track] || state.i === 0) return;
+    state.i--;
+    render();
+  }
+
+  function stop() {
+    clearMark();
+    if (card) { card.remove(); card = null; }
+    state.track = null;
+  }
+
+  // Escape closes the lesson while it is open.
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && state.track) stop();
+  });
+
+  window.GW_TUTORIAL = {
+    start,
+    next,
+    prev,
+    stop,
+    tracks: () => Object.keys(LESSONS).map(id => ({ id, title: LESSONS[id].title, steps: LESSONS[id].steps.length })),
+    lessons: LESSONS
+  };
+})();
+
+</script>
+<script id="gw-v4960-tutorial-tip">
+/* v15.50.3 (Claude): GWrap AI can start ChatGPT's guided tours (chatgpt/gwarp-tutorial.js) */
+(function boot(n = 0) { const A = window.GW_V1571, T = window.GW_TUTORIAL; if (!A?.tips || !T?.start) { if (n < 60) setTimeout(() => boot(n + 1), 500); return; }
+  if (A.tips.some(t => t.id === 'tip-tour')) return;
+  [['basics', 'Take the tour: the basics', ['tour', 'tutorial', 'tutorials', 'guide', 'lesson', 'learn', 'basics', 'new', 'beginner']],
+   ['code', 'Take the tour: code blocks', ['tour', 'tutorial', 'code', 'blocks', 'script', 'scripts', 'lesson']],
+   ['music', 'Take the tour: make music', ['tour', 'tutorial', 'music', 'song', 'songmaker', 'lesson', 'beat']]].forEach(([k, title, keys], i) =>
+    A.tips.push({ id: i ? 'tip-tour-' + k : 'tip-tour', emoji: '🎓', title, keys, q: ['show me how to use g-warp', 'tutorial', 'how do i start'], text: 'A short guided tour: G-Warp shows you each button with a green outline. Press Next to go on, Escape to stop.', action: ['Start the tour', () => T.start(k)] }));
+})();
+</script>
+<script id="gw-v4970-gemini-icons">
+(() => {
+  'use strict';
+  /* v15.50.3: Gemini 3 Argon's costume-editor + animation icons (gemini/icons-animation, her picks), merged by Claude.
+     They follow the theme (currentColor) with small violet / green accents. Each target keeps its text label. */
+  const I = {"onion": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"7\" width=\"12\" height=\"12\" rx=\"2\" stroke=\"#8b5cf6\" opacity=\"0.55\" stroke-dasharray=\"2 2\"/><rect x=\"10\" y=\"5\" width=\"12\" height=\"12\" rx=\"2\" stroke=\"#4ade80\" opacity=\"0.65\" stroke-dasharray=\"2 2\"/><rect x=\"6\" y=\"6\" width=\"12\" height=\"12\" rx=\"2\" fill=\"#0b0b14\" fill-opacity=\"0.75\" stroke=\"currentColor\"/><circle cx=\"12\" cy=\"12\" r=\"2\" fill=\"#4ade80\" stroke=\"none\"/></svg>", "flipbook-play": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 4h11a2 2 0 0 1 2 2v10\" stroke=\"#8b5cf6\" opacity=\"0.75\"/><rect x=\"4\" y=\"7\" width=\"13\" height=\"13\" rx=\"2\" stroke=\"currentColor\"/><polygon points=\"9 11 14 13.5 9 16\" fill=\"#4ade80\" stroke=\"#4ade80\" stroke-width=\"1.5\"/></svg>", "bones": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 18L12 10L19 7\" stroke=\"currentColor\"/><circle cx=\"6\" cy=\"18\" r=\"2.5\" fill=\"#0b0b14\" stroke=\"#8b5cf6\"/><circle cx=\"12\" cy=\"10\" r=\"2.5\" fill=\"#0b0b14\" stroke=\"#4ade80\"/><circle cx=\"19\" cy=\"7\" r=\"2\" fill=\"#4ade80\" stroke=\"none\"/></svg>", "in-between": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"6\" width=\"5\" height=\"12\" rx=\"1\" stroke=\"#8b5cf6\"/><rect x=\"17\" y=\"6\" width=\"5\" height=\"12\" rx=\"1\" stroke=\"#8b5cf6\"/><rect x=\"9\" y=\"5\" width=\"6\" height=\"14\" rx=\"1.5\" stroke=\"currentColor\" stroke-dasharray=\"2 2\"/><path d=\"M12 10v4M10 12h4\" stroke=\"#4ade80\"/></svg>", "rotate-handle": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 11a8 8 0 1 0-2.3 5.7\" stroke=\"currentColor\"/><polyline points=\"20 6 20 11 15 11\" stroke=\"#4ade80\"/><circle cx=\"12\" cy=\"11\" r=\"2\" fill=\"#8b5cf6\" stroke=\"none\"/><path d=\"M12 13v7\" stroke=\"#8b5cf6\"/></svg>", "bitmap-select": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"1.5\" stroke=\"currentColor\" stroke-dasharray=\"3 3\"/><rect x=\"8\" y=\"8\" width=\"3.5\" height=\"3.5\" fill=\"#8b5cf6\" stroke=\"none\"/><rect x=\"12.5\" y=\"8\" width=\"3.5\" height=\"3.5\" fill=\"#4ade80\" stroke=\"none\"/><rect x=\"8\" y=\"12.5\" width=\"3.5\" height=\"3.5\" fill=\"#4ade80\" stroke=\"none\"/><rect x=\"12.5\" y=\"12.5\" width=\"3.5\" height=\"3.5\" fill=\"#8b5cf6\" stroke=\"none\"/></svg>", "smooth-x2": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 16c3-7 6-7 9 0s6 7 9 0\" stroke=\"currentColor\"/><circle cx=\"7.5\" cy=\"10.8\" r=\"2\" fill=\"#8b5cf6\" stroke=\"none\"/><circle cx=\"16.5\" cy=\"10.8\" r=\"2\" fill=\"#4ade80\" stroke=\"none\"/><path d=\"M14 5l3 3M17 5l-3 3\" stroke=\"#4ade80\"/><path d=\"M19 5h2.5v2.5h-2.5v2.5H22\" stroke=\"#8b5cf6\" stroke-width=\"1.8\"/></svg>", "make-costumes": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"5.5\" cy=\"8.5\" r=\"2\" fill=\"#0b0b14\" stroke=\"#8b5cf6\"/><circle cx=\"5.5\" cy=\"15.5\" r=\"2\" fill=\"#0b0b14\" stroke=\"#4ade80\"/><path d=\"M5.5 10.5v3\" stroke=\"currentColor\"/><path d=\"M9 12h4M11 10l2 2-2 2\" stroke=\"#4ade80\"/><rect x=\"14\" y=\"5\" width=\"7\" height=\"6\" rx=\"1.5\" stroke=\"currentColor\"/><rect x=\"14\" y=\"13\" width=\"7\" height=\"6\" rx=\"1.5\" stroke=\"#8b5cf6\"/></svg>", "group": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\" stroke=\"currentColor\" stroke-dasharray=\"2.5 2.5\"/><rect x=\"7\" y=\"7\" width=\"6\" height=\"6\" rx=\"1\" stroke=\"#8b5cf6\"/><circle cx=\"14.5\" cy=\"14.5\" r=\"3\" stroke=\"#4ade80\"/></svg>", "ungroup": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"8\" height=\"8\" rx=\"1.5\" stroke=\"currentColor\"/><circle cx=\"17\" cy=\"17\" r=\"4\" stroke=\"#8b5cf6\"/><path d=\"M13 11l3-3M16 8h-2.5M16 8v2.5\" stroke=\"#4ade80\"/><path d=\"M11 13l-3 3M8 16h2.5M8 16v-2.5\" stroke=\"#4ade80\"/></svg>", "flip-horizontal": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"12\" y1=\"3\" x2=\"12\" y2=\"21\" stroke=\"#4ade80\" stroke-dasharray=\"2.5 2.5\"/><polygon points=\"9 7 3 12 9 17\" stroke=\"currentColor\"/><polygon points=\"15 7 21 12 15 17\" fill=\"#8b5cf6\" fill-opacity=\"0.35\" stroke=\"#8b5cf6\"/></svg>", "flip-vertical": "<svg width=\"16\" height=\"16\" aria-hidden=\"true\" focusable=\"false\" class=\"gw4970-ic\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"3\" y1=\"12\" x2=\"21\" y2=\"12\" stroke=\"#4ade80\" stroke-dasharray=\"2.5 2.5\"/><polygon points=\"7 9 12 3 17 9\" stroke=\"currentColor\"/><polygon points=\"7 15 12 21 17 15\" fill=\"#8b5cf6\" fill-opacity=\"0.35\" stroke=\"#8b5cf6\"/></svg>"};
+  const css = document.createElement('style'); css.textContent = '.gw4970-ic{display:inline-block;vertical-align:-3px;flex:0 0 auto}'; document.head.appendChild(css);
+  const put = (el, key) => { if (!el || el.dataset.gw4970 === key) return; const old = el.querySelector(':scope > i.fa-solid, :scope > i.fa-regular, :scope > .gw4970-ic'); const span = document.createElement('span'); span.innerHTML = I[key]; const svg = span.firstChild; if (old) old.replaceWith(svg); else el.prepend(svg); el.dataset.gw4970 = key; };
+  const byText = (root, re) => [...(root || document).querySelectorAll('button, label')].filter(b => re.test((b.textContent || '').trim()));
+  function apply() {
+    put(document.getElementById('gw18Tween'), 'in-between');
+    put(document.getElementById('gw18Smooth'), 'smooth-x2');
+    const pl = document.getElementById('gw18Play'); put(pl, 'flipbook-play'); if (pl) [...pl.childNodes].forEach(n => { if (n.nodeType === 3 && /▶/.test(n.textContent)) n.textContent = n.textContent.replace('▶', '').replace(/^\s+/, ' '); });
+    put(document.querySelector('[id^="gw18Mak"]'), 'make-costumes');
+    const onion = document.getElementById('gw18OnionOn')?.closest('label'); if (onion) put(onion, 'onion');
+    put(document.getElementById('gwCosTab-animation'), 'bones');
+    /* the paint editor's own toolbar icons stay (they are drawn as part of each button) */
+    byText(document.getElementById('gwCosList'), /^Play$/).forEach(b => put(b, 'flipbook-play'));
+    byText(document.getElementById('gwCosList'), /Onion/).forEach(b => put(b, 'onion'));
+  }
+  let t = 0; new MutationObserver(() => { clearTimeout(t); t = setTimeout(apply, 120); }).observe(document.body, { childList: true, subtree: true });
+  setTimeout(apply, 1500);
+  window.GW_ICONS = I;
+})();
+</script>
+<script id="gw-v4970-empty-states">
+(() => {
+  'use strict';
+  /* v15.50.3: Gemini's "nothing here yet" pictures with G-Spark (gemini/empty-states), merged by Claude.
+     Code area: shown while the selected sprite has no scripts. Costume list: shown when the sprite has no costumes. */
+  const P = {"code": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 280 200\" width=\"280\" height=\"200\"><defs><linearGradient id=\"esBody3\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#a855f7\"/><stop offset=\"0.55\" stop-color=\"#8b5cf6\"/><stop offset=\"1\" stop-color=\"#4f46e5\"/></linearGradient></defs><!-- Panel Background --><rect width=\"280\" height=\"200\" rx=\"16\" fill=\"#0b0b14\"/><rect x=\"10\" y=\"10\" width=\"260\" height=\"180\" rx=\"12\" fill=\"#141425\" stroke=\"#2a2a48\" stroke-width=\"1.5\" stroke-dasharray=\"6 5\"/><!-- Dashed Puzzle Block Drop Target on Left --><g transform=\"translate(28,38)\"><!-- Ghost Block Outline with Puzzle Notch --><path d=\"M0 8 A6 6 0 0 1 6 2 H22 L27 8 H41 L46 2 H82 A6 6 0 0 1 88 8 V32 A6 6 0 0 1 82 38 H46 L41 44 H27 L22 38 H6 A6 6 0 0 1 0 32 Z\" fill=\"#0b0b14\" stroke=\"#4ade80\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><!-- Curved Motion Arrow Pointing into Slot --><path d=\"M44 68 Q44 52 58 48\" fill=\"none\" stroke=\"#facc15\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><polyline points=\"53,44 60,48 54,54\" fill=\"none\" stroke=\"#facc15\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></g><!-- G-Spark Mascot (Purple rounded square, big white \"G\", small dark arms and legs, NO face) --><g transform=\"translate(136,26)\"><!-- Small Dark Stick Arms & Legs (#2e1065) --><g stroke=\"#2e1065\" stroke-width=\"5.5\" stroke-linecap=\"round\" fill=\"none\"><!-- Left arm pointing toward block slot --><path d=\"M22 46 L-6 42\"/><!-- Right arm balanced --><path d=\"M78 48 L94 56\"/><!-- Legs --><path d=\"M36 78 L32 96\"/><path d=\"M64 78 L68 96\"/></g><!-- Feet --><ellipse cx=\"30\" cy=\"98\" rx=\"7.5\" ry=\"4\" fill=\"#4ade80\"/><ellipse cx=\"70\" cy=\"98\" rx=\"7.5\" ry=\"4\" fill=\"#4ade80\"/><!-- Hands --><circle cx=\"-7\" cy=\"42\" r=\"5\" fill=\"#ffffff\" stroke=\"#2e1065\" stroke-width=\"2\"/><circle cx=\"95\" cy=\"57\" r=\"5\" fill=\"#ffffff\" stroke=\"#2e1065\" stroke-width=\"2\"/><!-- Purple Rounded Square Body --><rect x=\"20\" y=\"18\" width=\"60\" height=\"60\" rx=\"16\" fill=\"url(#esBody3)\" stroke=\"#2e1065\" stroke-width=\"3\"/><!-- Top Highlight Gloss --><path d=\"M30 25 H42\" stroke=\"#ececf6\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.75\"/><!-- Big White \"G\" (Strictly NO face/eyes/mouth) --><path d=\"M64 38 A16 16 0 1 0 65 58 L65 48 L52 48\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"7.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></g><!-- Label Text --><text x=\"140\" y=\"154\" text-anchor=\"middle\" fill=\"#ececf6\" font-family=\"system-ui, -apple-system, sans-serif\" font-size=\"16\" font-weight=\"700\">Drag a block here</text><text x=\"140\" y=\"173\" text-anchor=\"middle\" fill=\"#a3a3c2\" font-family=\"system-ui, -apple-system, sans-serif\" font-size=\"11.5\">Snap blocks together to wire up your sprite</text></svg>", "costumes": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 280 200\" width=\"280\" height=\"200\"><defs><linearGradient id=\"esBody1\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#a855f7\"/><stop offset=\"0.55\" stop-color=\"#8b5cf6\"/><stop offset=\"1\" stop-color=\"#4f46e5\"/></linearGradient></defs><!-- Panel Background --><rect width=\"280\" height=\"200\" rx=\"16\" fill=\"#0b0b14\"/><rect x=\"10\" y=\"10\" width=\"260\" height=\"180\" rx=\"12\" fill=\"#141425\" stroke=\"#2a2a48\" stroke-width=\"1.5\" stroke-dasharray=\"6 5\"/><!-- Empty Costume Frame Card on Left --><g transform=\"translate(42,36)\"><rect x=\"0\" y=\"0\" width=\"66\" height=\"74\" rx=\"10\" fill=\"#0b0b14\" stroke=\"#8b5cf6\" stroke-width=\"2\" stroke-dasharray=\"4 3\"/><!-- Hanger Hook + Silhouette --><path d=\"M33 14 C38 14 40 19 35 22 L33 24 V28\" fill=\"none\" stroke=\"#4ade80\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><polygon points=\"33,28 14,44 52,44\" fill=\"none\" stroke=\"#4ade80\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><!-- Paint Sparkle --><circle cx=\"52\" cy=\"18\" r=\"3\" fill=\"#facc15\"/></g><!-- G-Spark Mascot (Purple rounded square, big white \"G\", small dark arms and legs, NO face) --><g transform=\"translate(132,26)\"><!-- Small Dark Stick Arms & Legs (#2e1065) --><g stroke=\"#2e1065\" stroke-width=\"5.5\" stroke-linecap=\"round\" fill=\"none\"><!-- Left arm reaching toward costume frame with paintbrush --><path d=\"M22 46 L4 36\"/><!-- Right arm on hip/waving --><path d=\"M78 48 L94 38\"/><!-- Left & Right legs --><path d=\"M36 78 L32 96\"/><path d=\"M64 78 L68 96\"/></g><!-- Feet --><ellipse cx=\"30\" cy=\"98\" rx=\"7.5\" ry=\"4\" fill=\"#4ade80\"/><ellipse cx=\"70\" cy=\"98\" rx=\"7.5\" ry=\"4\" fill=\"#4ade80\"/><!-- Hands --><circle cx=\"3\" cy=\"35\" r=\"5\" fill=\"#ffffff\" stroke=\"#2e1065\" stroke-width=\"2\"/><circle cx=\"95\" cy=\"37\" r=\"5\" fill=\"#ffffff\" stroke=\"#2e1065\" stroke-width=\"2\"/><!-- Paintbrush in Left Hand --><line x1=\"-8\" y1=\"24\" x2=\"6\" y2=\"38\" stroke=\"#ececf6\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"-8,24 -15,17 -10,14 -4,21\" fill=\"#4ade80\"/><!-- Purple Rounded Square Body --><rect x=\"20\" y=\"18\" width=\"60\" height=\"60\" rx=\"16\" fill=\"url(#esBody1)\" stroke=\"#2e1065\" stroke-width=\"3\"/><!-- Top Highlight Gloss --><path d=\"M30 25 H42\" stroke=\"#ececf6\" stroke-width=\"3\" stroke-linecap=\"round\" opacity=\"0.75\"/><!-- Big White \"G\" (Strictly NO face/eyes/mouth) --><path d=\"M64 38 A16 16 0 1 0 65 58 L65 48 L52 48\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"7.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></g><!-- Label Text --><text x=\"140\" y=\"154\" text-anchor=\"middle\" fill=\"#ececf6\" font-family=\"system-ui, -apple-system, sans-serif\" font-size=\"16\" font-weight=\"700\">No costumes yet</text><text x=\"140\" y=\"173\" text-anchor=\"middle\" fill=\"#a3a3c2\" font-family=\"system-ui, -apple-system, sans-serif\" font-size=\"11.5\">Paint a new frame or pick a sprite from the library</text></svg>"};
+  const css = document.createElement('style');
+  css.textContent = '.gw4970-empty{pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:6px;color:#94a3b8;font-size:13px;font-weight:800;text-align:center}.gw4970-empty svg{width:220px;height:auto;max-width:80%;opacity:.95}#gw4970CodeEmpty{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);z-index:1}';
+  document.head.appendChild(css);
+  const by = id => document.getElementById(id);
+  function code() {
+    const ws = by('workspaceCanvas'), host = ws?.parentElement; if (!ws || !host) return;
+    const E = window.Engine, i = String(E?.activeSpriteIndex ?? 0);
+    const mine = [...ws.querySelectorAll(':scope > .block-stack')].some(s => (s.dataset.owner ?? i) === i && s.offsetParent !== null);
+    let el = by('gw4970CodeEmpty');
+    if (mine) { el?.remove(); return; }
+    if (!el) { el = document.createElement('div'); el.id = 'gw4970CodeEmpty'; el.className = 'gw4970-empty'; el.innerHTML = P.code; if (getComputedStyle(host).position === 'static') host.style.position = 'relative'; host.appendChild(el); }
+  }
+  function costumes() {
+    const side = by('costumesSidebar'); if (!side) return; const s = window.Engine?.sprites?.[window.Engine.activeSpriteIndex];
+    const empty = !s?.costumes?.length; const el = side.querySelector('.gw4970-empty');
+    if (!empty) { el?.remove(); return; }
+    if (!el) { const d = document.createElement('div'); d.className = 'gw4970-empty'; d.style.padding = '10px 0'; d.innerHTML = P.costumes; side.appendChild(d); }
+  }
+  setInterval(() => { try { code(); costumes(); } catch {} }, 500);
+})();
+</script>
 </body>
 </html>

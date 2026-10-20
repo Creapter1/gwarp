@@ -1,0 +1,14 @@
+const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path');
+(async () => { let fails = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fails++; };
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1440, height: 900 } }); const errs = [];
+  p.on('pageerror', e => errs.push(e.message)); await prep(p); await p.goto('file://' + path.resolve(process.argv[2])); await p.waitForTimeout(5000);
+  const r = await p.evaluate(async () => { const A = GW_V1571; const ids = A.recipes.map(x => x.id); const out = { pack: !!window.GW_AI_PACK, tut: !!window.GW_TUTORIAL, recipes: ids.length, tips: A.tips.length, has: ['gravity', 'shake', 'countdown'].every(i => ids.includes(i)), tour: A.tips.some(t => t.id === 'tip-tour') };
+    const made = A.addRecipe('shake'); out.shake = (made || []).length;
+    const ask = document.getElementById('gwAiAsk'); ask.value = '/help'; ask.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })); ask.dispatchEvent(new Event('input', { bubbles: true }));
+    await new Promise(r => setTimeout(r, 300)); out.help = (document.getElementById('gwAiAnswer')?.textContent || '') + '|' + (document.getElementById('gwAiStatus')?.textContent || '');
+    GW_TUTORIAL.start('basics'); await new Promise(r => setTimeout(r, 400)); out.tourCard = !!document.querySelector('[class*=tut], [id*=Tut], [id*=tut]'); GW_TUTORIAL.next(); GW_TUTORIAL.stop();
+    return out; });
+  console.log(JSON.stringify(r).slice(0, 600));
+  ok(r.pack && r.tut && r.has && r.tour, 'ChatGPT pack + tutorial loaded, tours in GWrap AI');
+  ok(r.shake > 0, 'pack recipe "shake" builds blocks');
+  ok(!errs.length, 'no page errors ' + errs.join(' | ')); console.log(fails ? fails + ' FAILED' : 'ALL PASS'); await b.close(); })();
