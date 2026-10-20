@@ -1,0 +1,33 @@
+=============================================
+============================ G-WARP BLOCK KNOWLEDGE  -
+ for GWrap AI (the in-app assistant)
+ File:   chatgpt/AI-KNOWLEDGE-blocks.txt
+ Author: Buffy        Date: 2026-10-16
+ Status: REFERENCE file. Not code, nothing to wire into app.html.
+=============================================
+ WHY THIS FILE EXISTS
+
+ GWrap AI is an ASSISTANT, not a free-roaming AI. It helps
+ only with G-Warp itself: blocks, sprites, costumes, sounds,
+ bugs and ideas. This file gives it the real block list so it
+ never invents a block that does not exist.
+
+ HOW THIS WAS CHECKED
+ Every data-type name below was read from the real palette markup
+ in gwarp/app.html (the cat-section blocks, "data-type=..."), and
+ the "runs / note" column was read from the real ScriptThread
+ executor in the same file. Nothing here is guessed. Anything not
+ checked is marked "UNSURE: need <thing>".  Do not make it up.
+
+
+============================================
+IMPORTANT - READ FIRST
+1. G-Warp is NOT scratch-vm. There is no window.vm and no runtime.sequencer. Use window.Engine and the GW_ names in ENGINE-MAP.txt.
+2. A block must EXIST IN THE PALETTE before the assistant adds it. The palette has 11 main sections and 116 blocks (counted in the live app on 2026-10-16; this file has a CORRECTION below for blocks the earlier count missed).
+3. G-Warp behaves like Scratch for results, but looks like G-Warp: dark theme, electric C-blocks, Start / Pause / Stop only in the top bar.
+4. G-WARP HAS NO PEN BLOCKS YET. There is no Pen category, no pen down, no stamp, and no pen colour. Do not offer pen recipes. GW_EXT_BRIDGE.Pen is an extension compatibility bridge, not a user block.
+5. No cats, no other companies' characters or brands, even in examples. Use G-Spark or an invented character.
+
+
+============================================
+ HOW TO READ ANˆ^H›Û™H[Ü™KˆËÈ
