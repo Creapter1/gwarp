@@ -80,4 +80,4 @@ CLAUDE (v15.49.0, this night)
   gemini/icons-animation (her picks)                 MERGED v15.50.3 in the Animation editor + Animation tab
                                                      (the paint editor keeps its own toolbar icons)
   gemini/empty-states (code + costumes)              MERGED v15.50.3 ("no sounds" picture: next, needs the sound list)
-  gemini/rig-characters, flipbook-sprites            READY - need a "ready-made characters" picker + sprite library
+  gemini/rig-characters, flipbook-sprites            MERGED v15.50.4 in "Choose a Sprite" (Animated + Characters tabs)
