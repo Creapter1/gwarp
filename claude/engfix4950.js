@@ -28,9 +28,29 @@
   document.addEventListener('contextmenu', e => {
     hideMenus();
     const com = e.target.closest?.('#workspaceCanvas .gw38-comment');
-    if (com) { e.preventDefault(); e.stopPropagation(); smallMenu(e.clientX, e.clientY, [['🗑️ Delete comment', () => com.querySelector('.gw38-x')?.click()]]); return; }
+    if (com) { e.preventDefault(); e.stopPropagation(); smallMenu(e.clientX, e.clientY, [['Delete comment', () => com.querySelector('.gw38-x')?.click()]]); return; }
+    const chip = e.target.closest?.('#workspaceCanvas .gw7-chip');
+    if (chip && chip._gw7node && window.GW9?.setSlotNode) { /* v15.50.5: right-click a reporter inside a block acts on the reporter only */
+      e.preventDefault(); e.stopPropagation();
+      smallMenu(e.clientX, e.clientY, [['Duplicate', () => dupChip(chip, e)], ['Delete Block', () => delChip(chip)]]); return;
+    }
     setTimeout(() => clamp(by('blockContextMenu')), 0);
   }, true);
+  const litN = v => ({ type: 'literal', value: String(v ?? '') });
+  function delChip(chip) {
+    const g = window.GW9, holder = chip.parentElement;
+    if (holder?.classList.contains('gw-expr-slot') && holder._gw7) { const c = holder._gw7; g.setByPath(c.parent, c.path, holder.dataset.exprKind === 'value' ? litN('') : null); g.setSlotNode(c.root, c.root._gwRootNode); }
+    else { const root = chip.closest('.gw-input-slot'); if (!root) return; const inOp = /^op_/.test(root.closest('.scratch-block')?.dataset.type || ''); g.setSlotNode(root, root.dataset.slotKind === 'value' && (inOp || root.dataset.cmd === '1') ? litN(root.dataset.lit ?? '') : null); }
+    try { window.GW8?.pushHistory?.('delete reporter'); } catch {}
+  }
+  function dupChip(chip, e) {
+    const A = window.GW_V1571, ws = by('workspaceCanvas'); if (!A?.blockFromNode || !ws) return;
+    const b = A.blockFromNode(JSON.parse(JSON.stringify(chip._gw7node))); if (!b) return;
+    const r = ws.getBoundingClientRect(), z = window.GW_WSZOOM ? window.GW_WSZOOM() : 1, st = document.createElement('div');
+    st.className = 'block-stack'; st.dataset.owner = chip.closest('.block-stack')?.dataset.owner ?? String(window.Engine?.activeSpriteIndex || 0);
+    st.style.left = ((e.clientX - r.left) / z + ws.scrollLeft + 20) + 'px'; st.style.top = ((e.clientY - r.top) / z + ws.scrollTop + 20) + 'px';
+    st.appendChild(b); ws.appendChild(st); try { window.GW8?.decorate?.(); A.rehydrate?.(); window.GW8?.pushHistory?.('duplicate reporter'); } catch {}
+  }
   document.addEventListener('pointerdown', e => { if (!e.target.closest?.('.gw4950-menu')) document.querySelectorAll('.gw4950-menu').forEach(x => x.remove()); }, true);
   function smallMenu(x, y, items) {
     const m = document.createElement('div'); m.className = 'gw4950-menu'; m.setAttribute('role', 'menu');
@@ -53,7 +73,7 @@
 
   /* ---- Undo skips history entries that look the same as now (a drop made two entries) ---- */
   const shape = html => { const d = document.createElement('div'); d.innerHTML = String(html || ''); /* structure only: block types + values */
-    return [...d.querySelectorAll('.block-stack')].map(st => [...st.querySelectorAll('.scratch-block')].map(b => b.dataset.type + '(' + [...b.querySelectorAll(':scope > .block-input')].map(i => i.getAttribute('value') ?? i.value).join(',') + ')').join('>')).join('|'); };
+    return [...d.querySelectorAll('.block-stack')].map(st => [...st.querySelectorAll('.scratch-block')].map(b => b.dataset.type + '(' + [...b.querySelectorAll(':scope > .block-input')].map(i => i.getAttribute('value') ?? i.value).join(',') + '|' + [...b.querySelectorAll(':scope > .gw-input-slot')].map(x => x.dataset.expr || x.dataset.reporter || x.textContent.trim()).join(',') + ')').join('>')).join('|'); };
   function wrapUndo() {
     const G = window.GW8; if (!G?.undo || G.undo.__gw4950) return !!G?.undo;
     const old = G.undo;

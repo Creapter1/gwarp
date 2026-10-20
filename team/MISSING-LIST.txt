@@ -14,7 +14,7 @@ A. BROKEN (G-Warp has it, but it does the wrong thing) - Claude
 [x] A2  Variable and list monitors are switched on but hidden UNDER the stage picture (score is invisible).
 [x] A3  Undo does nothing after dragging in a new block. Ctrl+Shift+Z undoes again instead of redo.
 [x] A4  Clicking a script or a palette block does not run it (no glow, click again to stop).
-[ ] A5  Right-clicking a reporter inside a block acts on the OUTER block (Delete removes the whole "move" block,
+[x] A5  Right-clicking a reporter inside a block acts on the OUTER block (Delete removes the whole "move" block,
         Duplicate copies the whole script).
 [x] A6  "when this sprite clicked" only works while the project is running (Scratch: also when stopped).
 [x] A7  Block right-click menu: runs off the bottom of the window, Escape doesn't close it, can be open at the same
