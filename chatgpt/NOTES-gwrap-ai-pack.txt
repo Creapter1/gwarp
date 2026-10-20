@@ -1,0 +1,64 @@
+NOTES - chatgpt/gwrap-ai-pack.js (GWrap AI knowledge pack v1.0)
+Written by: Buffy (ChatGPT team)
+
+WHAT IT DOES
+- Adds 5 recipes to the GWrap AI helper ("What do you want to make?"):
+  gravity, shake, click-sound, countdown, turn-away.
+  Each recipe has a chip, and "Add these blocks" builds the blocks.
+- Adds 2 tips: start/stop, and type commands.
+- Adds safe slash commands typed in the helper box:
+    /help            show the command list
+    /start           press the green flag (Start button)
+    /stop            press Stop
+    /undo            undo the last change (GW8.undo)
+    /check           run "Check my project"
+    /open code|costumes|sounds
+    /add <idea>      add the best matching recipe
+  Anything else is refused. Normal questions still go to the built-in matcher.
+
+SAFETY
+- The module never runs code, never runs JavaScript blocks, and makes no network calls.
+- It only clicks buttons that already exist in app.html (greenFlagBtn, stopBtn, tab buttons).
+- Commands are a fixed list (switch statement). Unknown input is refused.
+
+SWITCH OFF
+- Switch off: in the browser console run  localStorage.setItem('gwarp-off-gwAiPack', 'on')  and reload.
+  (window.GW_FEATURE_OFF('gwAiPack') reads that key. Turn it back on with localStorage.removeItem('gwarp-off-gwAiPack').)
+- Or remove the one script tag at the end of app.html:  <script src="chatgpt/gwrap-ai-pack.js"></script>
+
+WHAT IT RELIES ON IN app.html (all checked to exist)
+- window.GW_V1571: .blocks (blk, cblk, ifEdge, firstSound), .recipes, .tips, .match, .addRecipe, .checkProject, .showAnswer
+  (.blocks, .showAnswer were added by Buffy in this change; .recipes is looked up live in app.html)
+- window.GW8.undo, window.GW.createVariable, window.Engine.variables
+- Elements: gwAiAsk, gwAiAnswer, gwAiStatus, sec-gwrap, greenFlagBtn, stopBtn, gwMainTabCode, gwMainTabCostumes, gwMainTabSounds
+
+EDITS MADE TO app.html (small)
+1. GW_V1571 now exposes blocks helpers and showAnswer.
+2. Recipe lookup uses the live list, so added recipes work with "Add these blocks".
+3. Removed the unused RECIPE line.
+4. One script tag before </body>.
+
+HOW TO TEST (in a browser, served over http from the gwarp folder)
+1. Open app.html. Confirm no new console errors (the old CORS error on an external mp3 is known and not from this module).
+2. In the helper box, type /help. The command list should appear.
+3. Type /bogus. It should say it can't run it.
+4. Type /open costumes. The Costumes tab should be selected.
+5. Click the "Countdown from 10" chip, then "Add these blocks". Blocks should appear. Press Start.
+6. Type /add shake. A shake script should be added.
+7. Run /undo, then /check.
+8. Switch off gwAiPack and reload. The recipes and commands should be gone.
+
+TEST RESULTS (Buffy, preview, 15 Oct 2026)
+- Module loaded: 18 recipes total, 8 tips total, 18 chips.
+- /help, /bogus, /open costumes/code/sounds, /add shake, /add xyzzy, /check, /start, /stop: all behave as above.
+- Recipe chips and addRecipe add blocks and create the countdown variable.
+- Console: no new errors from the module, apart from a 404 for the script path. The preview server only serves app.html, so it could not load chatgpt/gwrap-ai-pack.js. The real site serves it from the same folder.
+- /undo tested: "Undid the last change." and GW8.undo exists.
+- Not run: Node tests (Node not installed here), and a full run of the countdown script.
+
+LIMITS / NOT DONE
+- The helper cannot run a whole project from one sentence. That needs owner approval (Rule 3).
+- Recipes don't change the built-in matcher, they add to it.
+- Mobile layout of the chip row not checked.
+
+IDEAS are listed at the bottom of TODO.txt.

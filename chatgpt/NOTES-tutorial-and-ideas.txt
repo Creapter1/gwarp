@@ -1,0 +1,56 @@
+NOTES: GWrap tutorial and idea modules (Buffy)
+=============================================
+
+NOT wired into app.html. Add each one only after the owner approves.
+
+1. chatgpt/gwarp-tutorial.js  (ready to test on the live site)
+   - Lessons: 'basics' (5 steps), 'code' (4 steps), 'music' (8 steps).
+   - Use:  GW_TUTORIAL.start('basics' | 'code' | 'music'), GW_TUTORIAL.next(), .prev(), .stop()
+   - Each step highlights a real control (green outline). Some steps have a button
+     that presses an existing control, but only the ids in ALLOWED can be pressed.
+   - Escape closes it. Finish closes it on the last step.
+   - Switch off: window.GW_FEATURE_OFF('tutorial') returns true.
+   - Ids used (all checked in app.html): gwMainTabCode, gwMainTabCostumes, gwMainTabSounds,
+     greenFlagBtn, gwWorkbenchCodeRegion, gwAiAsk, gwMusicStyle, gwMusicBpm, gwMusicSeed,
+     gwMusicGenerate, gwMusicPlay, gwMusicAddToSprite.
+   - Tested in the preview. The test used a pasted copy of the same logic, with shorter
+     text, because the preview can't serve chatgpt/ files. The text and styling differ
+     from the file; the logic is the same. Re-test the real file on the live site.
+
+2. chatgpt/idea-teacher-check.js  (idea, code only)
+   - GW_IDEA_TEACHER.explain() reads GW_V1571.checkProject() and returns plain sentences.
+   - Read-only. It never changes blocks.
+   - Tested in the preview: returns the check's sentence once (fixed a doubled "Looks good" line).
+     GW_V1571.checkProject exists and returns an array.
+
+3. chatgpt/idea-voice-commands.js  (idea, code only)
+   - GW_IDEA_VOICE.start() / .stop(). Only the fixed phrase list works; other phrases are refused.
+   - Caveats: browser speech recognition is NOT offline by default; it may send audio to the
+     browser provider. Needs a mic-permission check and a real test with a microphone.
+   - In the preview, window.GW_STATUS is undefined, so messages go to the console only.
+     Add a visible message area before turning it on.
+   - Tested the phrase handler in the preview (no microphone): "Code Tab!" clicks the Code tab;
+     "rm -rf", "constructor", "__proto__" and "toString" are refused. Real speech is not tested.
+
+4. "Run a whole project for me" (idea, NOT coded)
+   - Your team rules forbid running arbitrary code. Build it only as a fixed action list,
+     with an owner-approved confirm step and an undo, as the earlier idea described.
+
+Checks not run
+- Node is not installed, so no automated tests ran.
+- The preview only serves app.html, so chatgpt/ files were checked by pasting their source into the page.
+  The tutorial was re-run from its exact source at the end, and all checks passed.
+
+=====================================================================
+ADDED LATER: chatgpt/idea-more-recipes.js  (NOT wired into app.html)
+=====================================================================
+- Two more helper recipes: "Make clones" (clone spawner: a green-flag
+  forever loop creates clones; "when I start as a clone" moves and deletes
+  at the edge) and "Ask a question" (ask, then say).
+- Pen drawing is NOT included: app.html has no pen blocks yet.
+- Tested in the preview by loading the exact file source. Both recipes build
+  with the real GW_V1571.blocks helpers (blk, cblk, ifEdge), and the nodes
+  have the right block types. Nothing was inserted into the workspace.
+- Switch-off key: GW_FEATURE_OFF('ideaMoreRecipes').
+- To use later: add one script tag after gwrap-ai-pack.js, then add these
+  recipes to the helper's list (not done yet).
