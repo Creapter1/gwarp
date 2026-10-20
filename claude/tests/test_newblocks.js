@@ -24,6 +24,6 @@ const { chromium } = require('playwright'); const { prep } = require('./harness'
   });
   console.log(JSON.stringify(r));
   ok(r.v.a == 4 && r.v.b == 2 && r.v.c == new Date().getFullYear() && r.v.d === 'xy' && r.v.f == 1, 'mathop sqrt/floor, current year, list contents, backdrop #');
-  ok(r.v.e === 'yes1' || r.v.e == 'yes1', '< and contains work (e = ' + r.v.e + ')');
+  ok(r.v.e == 1, '< and contains work: both ifs ran (e = "yes" then change by 1 = 1, like Scratch) e = ' + r.v.e);
   ok(Array.isArray(r.sb3) && ['operator_mathop', 'operator_lt', 'operator_contains', 'sensing_current'].every(o => r.sb3.includes(o)), 'saved to .sb3 as Scratch blocks: ' + JSON.stringify(r.sb3));
   ok(!errs.length, 'no page errors ' + errs.join(' | ')); console.log(fails ? fails + ' FAILED' : 'ALL PASS'); await b.close(); })();
