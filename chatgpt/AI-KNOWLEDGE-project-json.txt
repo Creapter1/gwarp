@@ -1,0 +1,274 @@
+=====================================================================
+ G-WARP AI KNOWLEDGE  -  PROJECT FORMAT (what is inside a project)
+ Written by: Buffy (chatgpt/ folder)    For: the built-in GWrap AI helper
+ Source of truth: gwarp/app.html (Beta v15.45.0) + ENGINE-MAP.txt
+ Every name below was checked in app.html. Anything I could not check
+ is marked  UNSURE: ...  Do not guess over an UNSURE line.
+=====================================================================
+
+WHY THIS FILE EXISTS
+The GWrap AI helper is an ASSISTANT inside the app. It never sends a
+project anywhere. This file tells it what a project file actually
+contains, so it can answer a kid's questions in plain words:
+  "What is inside my file?"  "Where are my blocks?"  "Why is it so big?"
+  "Did my picture save?"     "Can I get my old version back?"
+
+
+=====================================================================
+ 1. THE PROJECT OPEN IN THE APP (live, in memory)
+=====================================================================
+The live project is NOT a JSON object. It is the running engine:
+
+  window.Engine   <- everything that is loaded right now
+    Engine.sprites[], Engine.activeSpriteIndex
+    Engine.variables{}, Engine.variableVisible{}
+    Engine.lists{}, Engine.listVisible{}
+    Engine.backdrops[], Engine.activeBackdrop
+    Engine.tilemap, Engine.behaviorSystem
+    Engine.extensions, Engine.cloneLimit, Engine.isRunning / isPaused / isTurbo
+
+The BLOCKS a kid sees are not in Engine at all. Every script on the
+workspace is a DOM element:
+  #workspaceCanvas > .block-stack  ->  one script
+  each stack holds .scratch-block elements, one per block.
+So "where are my blocks?" = they are the blocks drawn on the workspace
+canvas; the engine reads them from there. (ENGINE-MAP.txt.)
+
+
+=====================================================================
+ 2. THE SAVE FUNCTION  -  window.GW_PROJECT_DATA()
+=====================================================================
+Inside app.html there is a function  projectData()  that turns the live
+project into a plain object. It IS exposed:
+  window.GW_PROJECT_DATA()   ->  the whole project as an object
+  window.GW_DOWNLOAD(blob, name)   ->  file download helper
+
+Top-level keys it returns (checked, app.html ~line 11926):
+  version        12                (a number, the G-Warp save version)
+  format         'gwarp-json-v15.8'
+  gwarp          the G-Warp build version (from BUILD().version)
+  title          the project name in the top bar
+  variables, variableVisible, lists, listVisible
+  backdrops, activeBackdrop
+  sprites[]      one entry per sprite (clones are NOT saved)
+  stacks[]       one entry per script on the workspace
+  ast            the block tree (GW9.captureAST()), may be null
+  soundLab       the Song maker / sound lab state, may be null
+  tilemap        the tile map, may be null
+  behaviorSystem { definitions, sceneAttachments }, may be null
+  extensionsAgreed   extensions the kid already said OK to
+  projectExt     extra extension info for this project, may be null
+  projectRuntime { fence, sb3, cloneLimit }
+  metadata       { engine, saved } - engine name and a save timestamp
+
+If the global GW_VARS exists, global variables and lists are read from
+it (GW_VARS.globals(), GW_VARS.globalLists()) instead of Engine.
+
+
+=====================================================================
+ 3. WHAT ONE SPRITE LOOKS LIKE INSIDE THE SAVE
+=====================================================================
+Each entry of  sprites[]  has these keys (checked):
+  name, x, y, size, direction, visible, activeCostume, volume,
+  rotationStyle, layer, draggable, stageProxy, collisionGroup,
+  costumes[], localVars{}, localLists{}, effects{}, sounds[],
+  behaviors[], gwAnimations (only when the sprite has any)
+
+Each costume has:
+  name, data, natural, rc, res, w, h, dataFormat, svg, gwAnimFrame
+    data        a data: URL of the picture (a base64 PNG) - the big part
+    natural     true when the picture is the "natural" render
+    rc          rotation centre {x,y}, or null
+    res         resolution (default 1)
+    w, h        width and height of the picture
+    dataFormat  'svg' for vector costumes, 'png'/'bitmap' otherwise
+    svg         the vector drawing itself (kept so vectors stay vectors)
+    gwAnimFrame animation frame info (v15.16.2 feature), may be absent
+
+
+=====================================================================
+ 4. HOW SCRIPTS ARE STORED  -  the "stacks" and "html" fields
+=====================================================================
+  stacks: [ { left, top, owner, html }, ... ]
+
+  left, top   where the script sits on the workspace (CSS pixels)
+  owner       which sprite owns it (the sprite's index, as a string;
+              '0' is the first sprite)
+  html        the script's INNER HTML
+
+This is the important one: G-Warp saves blocks as HTML text, not as
+Scratch block JSON. Loading puts that HTML back, then asks the app to
+re-decorate it (the helper section calls rehydrate(); the load path
+also calls GW_V1571.rehydrate() and refreshes the my-blocks palette).
+So a project file is not readable by Scratch, and editing the html by
+hand is NOT safe - the helper must never do it.
+
+UNSURE: whether every block input value (a text box a kid typed into)
+is inside that html or rebuilt from the AST when the project loads.
+Both ast and html are saved, so the safe answer is "do not edit them".
+
+
+=====================================================================
+ 5. SAVING TO A FILE  -  what the download really is
+=====================================================================
+There are two save routes, both reachable from More -> File:
+
+a) Save / Save as... (Ctrl+S, Ctrl+Shift+S)  <- the normal route
+   window.GW_FILES.save() -> buildSb3():
+     - takes window.GW_PROJECT_DATA()
+     - writes an .sb3 ZIP that ALSO contains the G-Warp copy of the
+       project as  gwarp-project.json   (GWJSON in app.html ~15188)
+     - the finished blob is left on
+         window.GW_LAST_SB3_EXPORT = { report, pj, blob }
+       and the blocks are written by GW8.exportBlockChain(...)
+   So one file carries both formats: Scratch can open it, and G-Warp
+   reads its own richer copy from inside it.
+
+b) The old Save button (id saveProjectBtn): GW.saveProject()
+   Only writes a plain  <name>.gwarp.json  (no ZIP, no SB3).
+   It is now hidden inside the More menu (class gw10-hidden-old) but
+   the function still exists and still works.
+
+Older save wrappers (version 5, 9, 11, 12) still sit in app.html and
+add their own keys, but the CURRENT saver is the one in (a).
+
+
+=====================================================================
+ 6. THE SCRATCH .sb3 SHAPE INSIDE THE FILE
+=====================================================================
+GW8.exportSB3 builds a real Scratch 3 project (~line 5262):
+  targets[]   one Stage entry, then one entry per sprite
+              { isStage, name, x, y, size, direction, draggable,
+                rotationStyle, isOriginal, visible, variables, lists,
+                currentCostume, costumes[], sounds[], volume,
+                layerOrder, blocks{} }
+  monitors[]  empty array
+  extensions[]
+  meta        { semver: '3.0.0', vm, agent }
+Costume pictures go in as separate PNG entries in the ZIP, each named
+by its own md5ext/assetId. Loading a file whose JSON has a targets[]
+array goes to GW8.importSB3, not to the G-Warp loader.
+The newer writer used by (5a) is GW_V1580_SB3_EXPORT; the reader is
+window.GW_V1580_SB3 = { importSB3, unzip, CMD, isExtOp }.
+
+IMPORTANT: extensions. G-Warp has 191 extensions, and a project that
+uses one no longer opens in plain Scratch. The file keeps
+extensionsAgreed[] and projectExt so the warning is not repeated.
+projectRuntime.fence (false = fencing off), .sb3, and .cloneLimit
+(Infinity is stored as a number bigger than 1e300) come back on load.
+
+
+=====================================================================
+ 7. OPENING A FILE  -  what happens, in order
+=====================================================================
+More -> File -> "Load from your computer..."  accepts
+  .sb3, .pmp, .zip, .json     (window.GW_OPEN_FILE = openFile)
+
+  .json:  if the JSON has a targets[] array -> importSB3 (Scratch),
+          otherwise GW.loadProject (G-Warp JSON).
+  .sb3/.pmp/.zip:  G-Warp first looks inside the ZIP for
+          gwarp-project.json. If it is there and has a format and a
+          sprites[] array, it loads that (kind 'gwarp-in-sb3'), so no
+          G-Warp-only information is lost. Otherwise importSB3 (kind
+          'sb3').
+
+GW.loadProject then (checked ~11957):
+  - copies per-sprite fields back (rotationStyle, layer, draggable,
+    localVars, localLists, effects, gwAnimations, behaviors)
+  - redraws costumes: an .svg costume keeps its vector data; a PNG
+    data URL is drawn into a canvas of the saved w x h
+  - restores extensionsAgreed, projectExt, projectRuntime (fence, sb3,
+    cloneLimit)
+  - 200 ms later fires  window event  'gwarp-project-loaded'
+    with  detail = { kind: 'gwarp' }
+  - then rehydrates the helper and the my-blocks palette
+A module may listen for 'gwarp-project-loaded' to know a project just
+opened. (Several parts of app.html already do this.)
+Starting a brand new project sets sessionStorage 'gwarp-new-project'
+and takes a restore point first.
+UNSURE: whether there is a matching 'project saved' event to listen for.
+
+
+=====================================================================
+ 8. "WHY IS MY FILE SO BIG?"  (and the slim save)
+=====================================================================
+Costume pictures are almost the whole file. Two things are already
+done about it:
+  - a costume picture is turned into a data URL once and reused
+    (window.GW_DATAURL_RESET() clears that cache)
+  - v15.24.0 "slim save" (Claude): when a costume has BOTH an SVG and
+    a big natural PNG (over about 1500 characters), the PNG is replaced
+    by a 1x1 pixel picture and  svgOnly = true  is set; opening draws
+    the costume from the SVG again. Measured on the plane game: 9 of
+    the 10.7 MB of gwarp-project.json were costume PNGs.
+    Switch off with:  window.GW_FEATURE_OFF('slimSave')
+Sound files, a big tile map, many sprites and thousands of blocks also
+    grow the file, but costumes come first.
+
+
+=====================================================================
+ 9. AUTOSAVE / RESTORE POINTS  ("can I get my old version back?")
+=====================================================================
+Yes - G-Warp keeps restore points by itself:
+  DB name  'gwarp-restore'      (IndexedDB, NOT localStorage)
+  stores   'points' and 'assets'
+  MAX      10 points, one about every 60 seconds (EVERY = 60000)
+  window.GW_FILES.Restore  ->  .point(), .list(), and the restore path
+  menu:  More -> File -> "Restore a previous version..."
+IndexedDB is used because localStorage is far too small for a project
+with costume pictures. A module must never clear that database - it is
+the kid's safety net after a freeze.
+
+
+=====================================================================
+ 10. THE OTHER THINGS A "PROJECT" HOLDS
+=====================================================================
+  ast              the block tree (GW9.captureAST / refreshAST)
+  soundLab         the Song maker / sound lab state
+  tilemap          tiles, layers, tile size (GW12.ensureTilemap)
+  behaviorSystem   behavior definitions + scene attachments
+  GW_SOUND_LAB.state   the live sound lab state
+  GW_AI_REPORT.text()  the app's own AI report text (markdown)
+  dropped blocks   import/export report the blocks it had to drop
+                   (report.dropped); app.html shows them in a report box
+                   (gw8ImportReport). Useful when a kid asks
+                   "why is a block missing after I opened my project?"
+
+
+=====================================================================
+ 11. HOW THE ASSISTANT SHOULD ANSWER A KID  (plain words)
+=====================================================================
+- "Where are my blocks saved?"  -> Inside your project file, as the
+  scripts you drew on the workspace. You never need to open the file.
+- "Why is my project so big?"  -> Mostly the pictures of your costumes.
+  G-Warp already shrinks them when it can. Fewer/smaller costumes, or
+  turning a costume into a vector one in the Costumes tab, makes it
+  smaller.
+- "I lost my project!"  -> More -> File -> Restore a previous version.
+  G-Warp keeps the last few versions by itself, about one a minute.
+- "Will it open in Scratch?" -> The file is also a Scratch file, so
+  yes - unless you used an extension, which is why G-Warp asks before
+  you add one.
+- "Did my picture/vector art save?" -> Yes, drawn costumes keep their
+  vector drawing; a kid's uploaded picture is stored as a picture.
+- NEVER: send the project anywhere, open it outside G-Warp, edit the
+  saved html/ast, delete restore points, or claim a file is safe when
+  the answer is UNSURE. If a question needs a name that is not in this
+  file, say you are not sure and offer the menu path instead.
+
+
+=====================================================================
+ 12. QUICK REFERENCE  (verified names for the helper)
+=====================================================================
+window.GW_PROJECT_DATA()        the project as an object (live)
+window.GW_FILES                { FILE, openFromComputer, openFile,
+                                 save, buildSb3, openRestore, restoreTo,
+                                 Restore, Web, loadFromWeb }
+window.GW_OPEN_FILE            openFile (used by the extension)
+window.GW_LAST_SB3_EXPORT      { report, pj, blob } after a save
+window.GW8.exportSB3           Scratch exporter (also GW8.importSB3)
+window.GW_V1580_SB3            { importSB3, unzip, CMD, isExtOp }
+window.GW_DOWNLOAD(blob,name)  download a file the app made
+'tgwarp-project-loaded'         window event, detail.kind = 'gwarp'
+gwarp-project.json             G-Warp copy inside a saved .sb3
+gwarp-restore                  IndexedDB with the last 10 restore points
