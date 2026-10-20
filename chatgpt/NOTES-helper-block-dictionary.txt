@@ -1,6 +1,0 @@
-NOTES: helper-block-dictionary.js          (Buffy, 2026-10-16)
-=============================================
- NOT wired into app.html on its own. IT is DATA + four tiny lookup helpers.
-
-WHAT IT IS
-The one place the plain-word explanation of every G-Warp palette block lives, so the helper lessons and GWrap AI give the same answer and never invent a block that does not exist.
