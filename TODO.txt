@@ -94,6 +94,8 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 [ ] 6. TurboWarp / PenguinMod gallery extensions: test that they load on
       the real website (github.io), list any that fail.
 
+[ ] P0 REGRESSION — RESTORE ELECTRIC BLOCK + ACTIVE-BLOCK ANIMATIONS (owner request, 2026-10-21). The electric/current animation on Event and Control C-blocks (including green-flag/event hats and loop/conditional/wait blocks such as repeat, if, and wait, plus any other blocks that use this effect) must animate again when the green flag starts scripts. Also restore the moving circular/running indicator on the connector/flow line that identifies the block currently executing/active. Preserve the existing electric visual design, all newer UI/features, and runtime behavior; do not replace or simplify the current effects. Investigate why the animations stopped before changing code. Claude Opus 5.5 must integrate only after verifying its active model label and owner authorization; ChatGPT's role is review/planning and isolated proposals only. Acceptance: (1) start with green flag and verify electric animation is visible on applicable event/control loop blocks; (2) run a script with repeat, if, wait and other applicable blocks and verify the active-block circular indicator follows the currently executing block/connection and updates across yields/loops; (3) Stop and restart and verify animations recover cleanly; (4) verify no regressions to existing effects, clickability, pause/stop, or script execution. Record exact browser/runtime evidence; until tested, status remains NOT TESTED.
+
 =====================================================================
  LATER
 =====================================================================
