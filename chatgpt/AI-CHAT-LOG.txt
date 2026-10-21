@@ -674,3 +674,33 @@ The assigned N-C1..N-C4 documentation scope is now complete. Stop here pending a
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this repository task, not unrelated older chat history.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+Date: 2026-10-21 (America/New_York)
+AI: ChatGPT
+Task: Record the owner's mandatory animation-regression requirement in the shared TODO.
+
+USER REQUEST (verbatim):
+"As you know, we are working on Derock. I have noticed a little error that we need to fix. The little electricity that is on the event loops, and some others like that, like if, wait, repeat, and any of them to be honest, that have the electricity moving, they are no longer doing the animation when green flag is pressed. That is something that we need to fix. Same goes for the block. Once we click on the block, there's a line that always displays what is currently being connected to the block name. So it used to be a little circle of running around all the way to the block that's being active at the moment. It's no longer there. We need to update the GitHub to the to-do to turn back to that point where it used to be animation on it. That is a must. That is something that we're gonna need to in order to maintain established. The goal is to be electricity but not to remove the cool stuff that we already have. Okay."
+
+AI RESPONSE / ACTION:
+Added a P0 regression requirement to the "NOW (most important first)" section of TODO.txt. It covers electric animation on applicable Event/Control blocks (including green flag, if, wait, repeat and other blocks using the effect), plus the moving circular active-execution indicator on the block connector/flow line. It explicitly requires preserving existing visuals/features, investigating the regression, and validating green-flag start, active-block tracking through loops/yields, Stop/restart recovery, and regressions.
+
+FILES CHANGED:
+- TODO.txt — added P0 animation regression task.
+- AI-TEAM.txt — appended a progress handoff.
+- No app.html, index.html, or runtime code changed.
+
+EVIDENCE / TEST STATUS:
+- SOURCE-VERIFIED: GitHub file update succeeded; TODO commit: 63a2fdb0c0945c6a77451fc02faeb6eef6f8267b.
+- NOT TESTED: no app/browser/runtime tests were run; this session updated the requirement only.
+- Integration: NOT DONE.
+
+BLOCKERS / UNCERTAINTIES:
+- Exact source hooks responsible for both animations have not yet been traced; do not guess at a cause.
+- Current published/runtime behavior has not been independently reproduced in this session.
+
+NEXT STEP / HANDOFF:
+Claude Opus 5.5 should inspect the current source and trace both animation paths, then restore them minimally while preserving all existing features, subject to the project's model-verification and owner-approval gates. ChatGPT can review the resulting candidate and acceptance evidence.
+--- END ENTRY ---
