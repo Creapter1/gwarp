@@ -287,3 +287,5 @@ PROGRESS / PLAN UPDATE (2026-10-18)
 PROGRESS | ChatGPT | 2026-10-21 | Documented owner-requested P0 regression in TODO.txt: restore electric animation on applicable Event/Control blocks and the active-block circular execution indicator; no runtime source changed.
 
 PROGRESS | ChatGPT | 2026-10-21 | Added owner-requested Music Maker expansion to TODO.txt (distinct melodies, bass/drums/fills, and Create Melody zone in instrument section; preserve existing music/icon/selection workflow) and recorded tilemap move from Code to Custom as a future idea explicitly deferred pending owner design. No app/runtime code changed.
+
+PROGRESS | ChatGPT | 2026-10-21 | Added owner-requested Music Maker expansion to TODO.txt: distinct melody styles, bass/drums/fills, and a Create Melody zone in the instrument section while preserving existing music/icon/selection workflow. Recorded tilemap move from Code to Custom as a future idea explicitly deferred pending owner design. No app/runtime code changed.
