@@ -704,3 +704,14 @@ BLOCKERS / UNCERTAINTIES:
 NEXT STEP / HANDOFF:
 Claude Opus 5.5 should inspect the current source and trace both animation paths, then restore them minimally while preserving all existing features, subject to the project's model-verification and owner-approval gates. ChatGPT can review the resulting candidate and acceptance evidence.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+Date: 2026-10-21
+AI: ChatGPT
+Task: Music Maker and tilemap TODO update.
+ACTION: Added an additive Music Maker expansion task to TODO.txt covering genuinely distinct melodies, bass/drums/fills, and a Create Melody area linked to Song Maker and instrument choice. Preserved existing music, Gemini-created icon/assets, and click-to-select workflow. Added tilemap relocation from Code to Custom as a deferred idea only.
+FILES: TODO.txt and AI-TEAM.txt updated. Runtime files unchanged.
+EVIDENCE: TODO commit fe911d710e9fe6f00126d733e37d6320879573cc. NOT TESTED: no browser/audio tests; documentation only.
+NEXT: inspect existing Gemini music assets and Song Maker connections before implementation; defer tilemap until owner design discussion.
+--- END ENTRY ---
