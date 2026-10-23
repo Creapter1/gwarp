@@ -291,3 +291,6 @@ PROGRESS | ChatGPT | 2026-10-21 | Added owner-requested Music Maker expansion to
 PROGRESS | ChatGPT | 2026-10-21 | Added owner-requested Music Maker expansion to TODO.txt: distinct melody styles, bass/drums/fills, and a Create Melody zone in the instrument section while preserving existing music/icon/selection workflow. Recorded tilemap move from Code to Custom as a future idea explicitly deferred pending owner design. No app/runtime code changed.
 
 CLAIMED | ChatGPT | C6 — audit AI-CHAT-LOG coverage and document continuity gaps | 2026-10-23
+
+PROGRESS | ChatGPT | 2026-10-23 | Checked active AI chat-log paths. ChatGPT/Grok/Gemini logs exist; Claude's required claude/AI-CHAT-LOG.txt is missing; Grok's log is stale relative to later repository work. See chatgpt/REVIEW-AI-CHAT-LOG-COVERAGE-2026-10-23.txt.
+DONE | ChatGPT | C6 — AI chat-log coverage audit | chatgpt/REVIEW-AI-CHAT-LOG-COVERAGE-2026-10-23.txt; chatgpt/AI-CHAT-LOG.txt updated; app.html/index.html unchanged.
