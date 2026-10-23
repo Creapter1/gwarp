@@ -1,0 +1,34 @@
+G-WARP — AI CHAT-LOG COVERAGE AUDIT
+Date: 2026-10-23
+Reviewer: ChatGPT GPT-6
+Repository: Creapter1/gwarp, main
+Task: C6 — independent review ledger / continuity gap audit
+Evidence class: SOURCE-VERIFIED for file presence/content returned by GitHub; NOT TESTED for any local or browser execution.
+
+PURPOSE
+The owner raised a concern that AI chat sessions degrade, lose context, or make mistakes during long-running work, and asked whether the requested user-request/AI-response log still exists for all AIs. This report checks the exact required paths documented in AI-TEAM.txt and team/AI-CHAT-LOG-TEMPLATE.txt. This is a repository file-presence/content check, not a guarantee that all chat history is automatically captured.
+
+RULE FOUND
+AI-TEAM.txt defines a mandatory rule dated 2026-10-17: every active AI must append a chronological log to its OWN folder at <ai-folder>/AI-CHAT-LOG.txt. Each task/session should preserve the user's request accurately, the AI response/handoff, date, files changed, evidence/test status, unresolved questions, and exact next step. It forbids invented quotations or claiming missing original chat history is complete. The shared template exists at team/AI-CHAT-LOG-TEMPLATE.txt.
+
+CHECK RESULTS (expected exact paths, main branch)
+1. chatgpt/AI-CHAT-LOG.txt — PRESENT. The fetched file is about 73.8 KB and the latest visible entry is dated 2026-10-21. This audit and owner request are being appended to this log.
+2. grok/AI-CHAT-LOG.txt — PRESENT, but only about 1.1 KB. Its visible entries are dated 2026-10-18 and its next step is G6 high-risk TESTS.txt review. This is older than later Grok activity recorded elsewhere in the repository (including fixture updates on 2026-10-19/20). Reconcile/append missing sessions if Grok can support them from real source/history; do not fabricate transcript text.
+3. gemini/AI-CHAT-LOG.txt — PRESENT, about 16 KB. The latest visible entry is dated 2026-10-20 and records Gemini's connection/upload/sprint handoff. Checkpoint freshness should be revisited when Gemini does another task.
+4. claude/AI-CHAT-LOG.txt — NOT FOUND (GitHub returned 404 for this exact path). Claude is listed as an active role. Claude's work is summarized in AI-TEAM.txt, MERGE-QUEUE.txt, checkpoints and other reports, but those do not satisfy the explicit requirement for Claude's own folder log at the required path. Claude should create and maintain it, using the template. For historical context unavailable from an original chat, it must mark that history unavailable and only summarize verified evidence.
+5. deepseek/AI-CHAT-LOG.txt — NOT FOUND. This is not counted as a current active-role failure: AI-TEAM.txt says DeepSeek was retired on 2026-10-18 and its former lab work was consolidated under gemini/lab/.
+
+CONCLUSION
+The logging RULE and TEMPLATE still exist. Actual compliance is partial, not complete. ChatGPT, Grok and Gemini have logs at the required paths; Claude's required log is missing. Grok's existing log appears stale relative to later repository activity. DeepSeek is retired, so the old path need not be recreated.
+
+RECOMMENDED CORRECTIONS
+- Claude: create claude/AI-CHAT-LOG.txt and append every subsequent task/session using team/AI-CHAT-LOG-TEMPLATE.txt. Backfill only from verifiable shared logs/reports; label reconstructed context accurately and never invent user quotes or claim a full transcript.
+- Grok: reconcile its dated log against its own available work records and append any missing task handoffs that can be supported. Do not reconstruct unavailable user wording.
+- All active AIs: append before ending a task/session; record status and next action; distinguish source/static evidence, reported tests, browser-verified tests and not-tested work.
+- Owner/Claude: consider a lightweight closeout check that confirms each active AI updated its own log before handoff.
+
+SCOPE LIMITS
+This check verified GitHub path presence and read the text returned from the current main branch. No runtime/browser tests were run. This audit did not edit app.html/index.html or edit another AI's folder. The only files changed by this ChatGPT task are its own report/log and the shared AI-TEAM work log.
+
+NEXT STEP
+Claude should address the missing required log in claude/. Grok should reconcile the stale log; ChatGPT will keep the independent review ledger updated on future deliverable changes.
