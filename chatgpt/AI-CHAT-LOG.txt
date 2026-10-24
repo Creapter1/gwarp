@@ -756,3 +756,57 @@ Claude: create claude/AI-CHAT-LOG.txt using team/AI-CHAT-LOG-TEMPLATE.txt and re
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this repository task and the exact current user request; not a complete transcript of unrelated earlier conversations.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+UTC timestamp: 2026-10-24T15:15:03Z
+AI / model identity: ChatGPT GPT-6 (verified in this session)
+Task ID / title: Owner request — enforce zero-exception AI session logging gate
+Branch / starting commit: main / prior HEAD not recorded in this entry
+
+USER REQUEST (verbatim):
+"All ai shud ha e a log so make the a strick rule the is sonting the all most have to avoid error don't mere ho it is why claude make super big mistakes last time"
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Make personal AI logs mandatory for every AI working on G-Warp, with strict enforcement intended to prevent context-loss mistakes. No AI or task type may be exempt. Failure to maintain/verify the log must stop project work.
+
+PROGRESS / AI RESPONSE:
+Added a zero-exception logging gate to AI-TEAM.txt; replaced the shared template with mandatory start/progress/closeout fields and verification requirements; added a hard-stop reminder to TODO.txt. The rule applies to all active/future/temporary AIs and agents, including Claude, ChatGPT, Grok, and Gemini.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Every AI must read AI-TEAM.txt, the shared template, and its own complete log before work.
+- Every AI must log session start, meaningful progress, and closeout; personal log and shared work log are both required.
+- If personal logging/read-back verification fails, stop all G-Warp work and notify the owner.
+- A task cannot be marked DONE until its personal log closeout is committed and read back from GitHub.
+- New timestamps use UTC ISO-8601 with seconds and Z. Never guess/backdate; preserve historical timestamps.
+- Never invent missing chat text or tests; label reconstructed context and evidence honestly.
+- Append only; never edit another AI's personal log. No app.html/index.html changes.
+
+FILES CHANGED:
+- AI-TEAM.txt — added ZERO-EXCEPTION AI SESSION LOGGING GATE.
+- team/AI-CHAT-LOG-TEMPLATE.txt — replaced with mandatory session start/progress/closeout template and GitHub read-back gate.
+- TODO.txt — added critical logging hard-stop rule.
+- chatgpt/AI-CHAT-LOG.txt — this entry.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub update_file succeeded for the three shared files. Commit SHAs: AI-TEAM.txt cc5091186a361f95ca2b6617791b7a28fad31efd; template c1338889966539f46ed393bedf8d68aac7412a18; TODO.txt a107dfeb5094a340b3b51ab5b9c1bf91ba3dca9d.
+- Read-back verification pending in this entry at time of writing.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for fetched source files and successful GitHub write responses; read-back verification to follow.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- This establishes repository policy and a hard-stop instruction; it does not technically enforce logging inside external AI products. Compliance still depends on each AI/agent following the repo gate.
+
+NEXT STEP / HANDOFF:
+- Read back all three changed shared files and this personal log from GitHub; verify the rule and this entry are present. Future AIs must comply before any G-Warp work.
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+
+GITHUB CLOSEOUT VERIFICATION:
+- Personal log commit SHA: PENDING
+- Read-back URL/path: PENDING
+- Verified new entry is present at bottom: PENDING
+- Task status: PARTIAL until read-back verification completes
+--- END ENTRY ---
