@@ -12,6 +12,22 @@ AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17) — REQUIRED FOR EVERY AI
 - If original chat is unavailable, write ORIGINAL CHAT NOT AVAILABLE and only summarize supported facts; ask the owner rather than guessing.
 - Use team/AI-CHAT-LOG-TEMPLATE.txt. This rule does not grant cross-folder editing, live integration, testing authority, or release permission.
 
+
+ZERO-EXCEPTION AI SESSION LOGGING GATE — OWNER-MANDATED, CRITICAL
+Effective: 2026-10-24T15:15:03Z
+THIS RULE OVERRIDES ANY CONVENIENCE, TIME LIMIT, TASK PRIORITY, OR AI ROLE.
+- EVERY AI/agent/model that reads, plans, reviews, researches, edits, tests, commits, or hands off ANY G-Warp work MUST maintain its own <ai-folder>/AI-CHAT-LOG.txt. This includes Claude, ChatGPT, Grok, Gemini, replacement/future AIs, temporary agents and delegated subagents. No exceptions for short sessions, reviews, "small" changes, failed attempts, or work with no files changed.
+- Before doing ANY project work: read AI-TEAM.txt, the shared template, and your OWN complete current log. If your own log is missing, create it from the template BEFORE doing the task. Never start unlogged.
+- At session start, append an entry recording the actual owner request (verbatim when available), task ID, your verified identity/model, and the starting commit/branch. Claim the task in the shared WORK LOG as separately required.
+- During work, append progress when scope/decisions change, files are changed, tests run/fail, blockers appear, or a handoff/context switch is about to happen. Do not wait until the end of a long session.
+- BEFORE ending, pausing, switching models/agents, handing off, or declaring any task status, append a complete closeout: what the owner asked; what you actually did and did not do; decisions/prohibitions; every changed path; commands/tests and exact results; evidence class; blockers/unknowns; exact next action; and completeness status. Record NONE where applicable. PARTIAL is not DONE.
+- Timestamp standard: UTC ISO-8601 with seconds and Z, e.g. 2026-10-24T15:15:03Z. Use the actual current time; never guess or backdate. If exact time is unavailable, write TIME NOT AVAILABLE and explain. Optional local time may be added separately with an explicit IANA timezone. Do not mix date-only, local-naive, and UTC timestamps in new entries.
+- Preserve original historical timestamps exactly. Never silently normalize, invent, or backfill unknown times. Mark TIME NOT RECORDED / ORIGINAL CHAT NOT AVAILABLE where appropriate. Clearly label reconstructed summaries and their supporting source; never fabricate user quotes, AI replies, tests, or completed work.
+- Before saying the log is updated, read the committed file back from GitHub and verify the new entry is present, complete, and at the bottom. Record the resulting commit SHA in the closeout when available. A local edit or attempted upload is NOT proof of a saved log.
+- HARD STOP: If you cannot read or write your own log, cannot verify the upload, or cannot establish the required context, STOP all G-Warp work. Do not edit code, test, commit, integrate, or hand off as if work can continue. Tell the owner exactly what failed and what is needed. Resume only after logging is restored.
+- Never overwrite prior entries, delete history, or edit another AI's personal log. Append only to your own log. Keep secrets redacted. The shared template is mandatory; extra fields are allowed, required fields may not be omitted.
+- A task is NOT DONE until its own log closeout is committed and read-back verified. The shared AI-TEAM WORK LOG does not replace the personal conversation log; both must be maintained.
+
 THE TEAM
 - Owner: Creapter1 (the boss - decides priorities, design picks, merges and releases).
 - ChatGPT  | Independent reviewer / planner / test designer / evidence reconciler | folder: chatgpt/ | list: team/TODO-CHATGPT.txt | queue: team/CONTINUOUS-WORK-QUEUE.txt
