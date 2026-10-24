@@ -1,40 +1,56 @@
-G-WARP — AI CHAT LOG TEMPLATE
-Purpose: durable, truthful context when chat history is truncated, deleted, or unavailable.
+G-WARP — MANDATORY AI CHAT LOG TEMPLATE
+Purpose: prevent context loss, false assumptions, duplicated work, and unsafe/incomplete handoffs.
 
-RULES
-- Store this file as <your-ai-folder>/AI-CHAT-LOG.txt. Append entries; do not overwrite earlier history.
-- Keep the user's request separate from the AI's response/interpretation.
-- Quote the request accurately where available. If unavailable, write ORIGINAL CHAT NOT AVAILABLE; do not reconstruct it as a quote.
-- Never record passwords, API keys, access tokens, private keys, or unrelated sensitive personal data. Redact secrets and say [REDACTED — SECRET OMITTED].
-- Mark evidence honestly: SOURCE-VERIFIED, STATIC-ANALYSIS, BROWSER-VERIFIED, NOT-TESTED, or other clearly explained status.
+ZERO-EXCEPTION RULE
+- Every AI/agent/model working on G-Warp must keep this file at <ai-folder>/AI-CHAT-LOG.txt. No exceptions for short sessions, reviews, failed attempts, temporary agents, or sessions with no file changes.
+- Read AI-TEAM.txt, this template, and your own existing log BEFORE any work. If the log does not exist, create it from this template before proceeding.
+- Append a session-start entry before work; append progress at meaningful milestones; append closeout before stopping, switching context/model, handing off, or claiming completion.
+- If you cannot update and verify your own log, HARD STOP all project work and notify the owner. Do not continue unlogged.
+- A task is NOT DONE until its personal log closeout is committed AND read back from GitHub. The shared AI-TEAM work log is also required and does not replace this file.
+- New timestamps must be UTC ISO-8601 with seconds and Z (example: 2026-10-24T15:15:03Z). Never guess or backdate. If unavailable, say TIME NOT AVAILABLE. Optional local time must include an IANA timezone.
+- Never alter historical timestamps, invent missing conversation text, claim unrun tests, or mark partial work DONE. Label reconstructed summaries and cite their supporting repo evidence.
+- Append only. Never overwrite or delete prior entries. Never edit another AI's personal log. Redact secrets.
 
---- ENTRY TEMPLATE (copy for each task/session) ---
-Date/time (timezone):
-AI / model identity (only if actually known):
+--- ENTRY TEMPLATE (copy for each task/session; start and closeout can be separate appended entries) ---
+SESSION START / TASK RECORD
+UTC timestamp:
+AI / agent / exact model identity (only if verified):
 Task ID / title:
-Base branch / commit (if known):
+Branch / starting commit:
 
-USER REQUEST (quote accurately; do not silently paraphrase):
-[Paste request here. Redact secrets if any.]
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+[Paste exact request. If unavailable: ORIGINAL CHAT NOT AVAILABLE. Never invent a quote.]
 
-AI RESPONSE / WORK SUMMARY:
-[What was answered or done. Distinguish completed work from proposals.]
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+[What must be done; explicit constraints and prohibitions.]
+
+PROGRESS / AI RESPONSE:
+[What was actually done. Separate facts, plans, and proposals. Append progress updates as needed.]
 
 DECISIONS AND CONSTRAINTS TO PRESERVE:
-- [Owner decisions, scope, prohibitions, unresolved choices]
+- [Owner decisions, corrections, prohibitions, unresolved choices]
 
-FILES CHANGED (with paths):
-- [Path — what changed; or NONE]
+FILES CHANGED:
+- [Exact path — exact change; or NONE]
 
-EVIDENCE / TEST STATUS:
-- [SOURCE-VERIFIED / STATIC-ANALYSIS / BROWSER-VERIFIED / NOT-TESTED; include what was actually checked]
+COMMANDS / TESTS / RESULTS:
+- [Exact command or procedure, result, and what was not tested; or NONE]
 
-BLOCKERS / UNCERTAINTIES:
-- [Unknowns, missing context, assumptions to avoid]
+EVIDENCE CLASS:
+- [SOURCE-VERIFIED / STATIC-ANALYSIS / BROWSER-VERIFIED / REPORTED TEST / NOT-TESTED; explain scope]
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- [Unknowns and what must not be guessed; or NONE]
 
 NEXT STEP / HANDOFF:
-- [Exact continuation action; do not invent a new task]
+- [One exact next action, owner/AI responsible, required inputs]
 
 CHAT HISTORY COMPLETENESS:
 [COMPLETE FOR THIS TASK / PARTIAL / ORIGINAL CHAT NOT AVAILABLE]
+
+GITHUB CLOSEOUT VERIFICATION (required before DONE):
+- Personal log commit SHA:
+- Read-back URL/path:
+- Verified new entry is present at bottom: YES / NO
+- Task status: DONE / PARTIAL / BLOCKED / ABORTED (never call PARTIAL or BLOCKED DONE)
 --- END ENTRY ---
