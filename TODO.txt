@@ -7,6 +7,7 @@
 >>> MISSING vs Scratch / TurboWarp / PenguinMod: team/MISSING-LIST.txt (broken + missing features, who does each) <<<
 
 HOW THE TEAM WORKS
+- CRITICAL ZERO-EXCEPTION LOG GATE: Every AI/agent must read AI-TEAM.txt + team/AI-CHAT-LOG-TEMPLATE.txt + its own AI-CHAT-LOG.txt before work; log session start/progress/closeout; commit and read back verify its own log before handoff or DONE. If logging or verification fails, HARD STOP all project work and notify the owner. No AI, task, review, failed attempt, or short session is exempt. See the ZERO-EXCEPTION AI SESSION LOGGING GATE in AI-TEAM.txt.
 - [ ] = not started, [~] = candidate/report handed in and awaiting review, [x] = completed only to the scope stated (not automatically integrated). Check MERGE-QUEUE.txt for proposal status; owner approval is required before live integration/release.
 - See MERGE-QUEUE.txt for candidate dispositions only; Claude must reconcile current evidence and the owner must approve integration.
 - READ AI-TEAM.txt FIRST. If the owner only says "continue", it means:
