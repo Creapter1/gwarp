@@ -160,3 +160,8 @@ NEXT STEP / HANDOFF: owner plays it on Scratch, then tweak (difficulty, keys, li
 CHAT HISTORY COMPLETENESS:
 COMPLETE FOR THIS TASK
 --- END ENTRY ---
+GITHUB CLOSEOUT VERIFICATION (ENTRY 3):
+- Commit SHA: 9965f29 (app.html v15.50.9 + this entry)
+- Read-back URL/path: origin/main:claude/AI-CHAT-LOG.txt (git show after fetch)
+- Verified new entry is present at bottom: YES
+- Task status: DONE (remix v2 delivered; Scratch website upload NOT-TESTED)
