@@ -56,3 +56,58 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 1):
 - Read-back URL/path: origin/main:claude/AI-CHAT-LOG.txt (git show after fetch)
 - Verified new entry is present at bottom: YES
 - Task status: PARTIAL (idea saved and planned; implementation waits for owner OK + linked PC)
+
+--- ENTRY 2 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-25T20:41:00Z (request) - closeout 2026-10-25T21:03Z
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: REMIX-CM1 - G-Warp remix of "Clone Multiplayer! remix but better" (not the owner's project; credit kept) + G-Warp fidelity fixes
+Branch / starting commit: main @ e58e883
+
+USER REQUEST (summary, owner's words in quotes):
+Using the G-Warp app, "not something else": add "a little tiny intro" (made with G-Warp), fix "the gravity mechanic, which is a bit lame",
+"create those little tiny animations using" the walk animation, "100% scratch compatible ... we cannot use any extensions", "do what you can".
+(+ an old ChatGPT rebuild prompt as reference.)
+Mid-task note from the owner (17:00 local): Gemini and Grok are retired / no longer working for him.
+
+PROGRESS / AI RESPONSE:
+- Remix built by driving G-Warp itself (Playwright): G-Warp mascot intro (8-frame walk, "Remixed with G-Warp!", fade), Player setup
+  starts on "start game" after the intro, backdrop back to Battlefield; gravity: falling speed capped at -10 and landing steps back up
+  by the fall distance (no sinking) instead of always +1.
+- Tried fixing the "Check for nearby players" Distance formula; the real-Scratch run showed the computer players then stood still,
+  so it was REVERTED - the original behaviour is kept.
+- G-Warp bugs found on the way and fixed in app.html (Beta v15.50.8):
+  1. stage music was dropped and SVG backdrops turned into PNG on .sb3 round trip;
+  2. a reporter inside a menu input ("switch costume to ((Player ID * 5) - 4)", also backdrop / sound / clone / point towards) was
+     saved as the plain menu value - now saved as the reporter over the menu shadow, like Scratch;
+  3. "touching color ?" / "color () is touching ()?" were dropped on import - now real blocks: palette, import, export
+     ([9,"#rrggbb"] colour inputs), runtime (Scratch's 5/5/4-bit colour match, other sprites top layer first, then backdrop;
+     pen layer and colour effects not included);
+  4. GW_FILES.buildSb3({scratchOnly:true}) leaves out G-Warp's own gwarp-project.json (smaller file for Scratch).
+
+FILES CHANGED:
+- app.html (v15.50.8); team/MISSING-LIST.txt (E1.1 done); AI-TEAM.txt one line; this log.
+- The remix .sb3 is NOT in the repo (someone else's project) - sent to the owner only.
+
+COMMANDS / TESTS / RESULTS:
+- Script diff original vs remix: only the intended changes (intro sprite, start-game hat, gravity cap, landing if/else).
+- REAL Scratch 3 engine (scratch-vm + scratch-render + scratch-storage from npm, in Chromium): both original and remix load
+  (all costumes / sounds), scratch-parser OK, no extensions. Remix: intro on Title backdrop, "start game" at 3.3 s, 4 clones at the
+  4 spawn points with costumes 1/6/11/16, arrow keys move/jump player 1 (jump peak ~98, fall capped at -10), computer players fight
+  and lose lives like the original, no page errors. Screenshots in the scratchpad (svm/out-remix).
+- G-Warp tests: newblocks, test_gwrap_pack, stageclick, lib_t, test_mascot ALL PASS; test_anim 16/18 (the 2 fails are old
+  version/button checks, not related); new colour_t 5/5 PASS.
+
+EVIDENCE CLASS:
+- TESTED in scratch-vm (the engine Scratch uses) - NOT uploaded to scratch.mit.edu itself.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- End screens (You Win / You Lost) were not reached in the 35 s test run (same as the original in that time).
+- Owner should do the final check by uploading to Scratch and playing it.
+
+NEXT STEP / HANDOFF:
+- Owner: try the remix on Scratch; tell Claude what to tweak. Gemini + Grok retired per owner - their open jobs need a new owner.
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---

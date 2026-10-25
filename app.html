@@ -2285,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.50.7</span>
+<span class="app-version">Beta v15.50.8</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -2517,6 +2517,8 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="cat-section flex flex-col items-start gap-1.5" id="sec-sensing">
 <div class="text-xs font-extrabold text-cyan-400 mb-1 flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-sensing"></div> Sensing</div>
 <div class="scratch-block bg-sensing" data-type="touching_pointer">touching <select class="block-select"><option value="mouse-pointer">mouse-pointer</option><option value="edge">edge</option></select>?</div>
+<div class="scratch-block bg-sensing" data-type="touching_color">touching color <input class="block-input gw-color-lit" type="text" value="#ff0000"/>?</div>
+<div class="scratch-block bg-sensing" data-type="color_touching">color <input class="block-input gw-color-lit" type="text" value="#ff0000"/> is touching <input class="block-input gw-color-lit" type="text" value="#0000ff"/>?</div>
 <div class="scratch-block bg-sensing" data-type="key_pressed">key <select class="block-select"><option value="space">space</option><option value="up arrow">up arrow</option><option value="down arrow">down arrow</option><option value="left arrow">left arrow</option><option value="right arrow">right arrow</option></select> pressed?</div>
 <div class="scratch-block bg-sensing" data-type="mouse_down">mouse down?</div>
 <div class="scratch-block bg-sensing" data-type="mouse_x">mouse x</div>
@@ -4647,7 +4649,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.7',label:'Beta v15.50.7',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.8',label:'Beta v15.50.8',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -8228,7 +8230,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     const type=block.dataset.type||'';
     if(['repeat','forever','if','if_else','repeat_until','define_custom'].includes(type)||block.classList.contains('block-c-shape')){const header=block.querySelector('.block-c-header');if(header)block.style.setProperty('--gw-block-connector-color',getComputedStyle(header).backgroundColor);block.title='C-block: connect above or below; drop other blocks inside the open middle.';return;}
     const hats=['when_flag','when_key','when_clicked','when_stage_clicked','when_broadcast','when_clone'];
-    const booleans=['op_gt','op_lt','op_contains','op_eq','op_and','op_or','op_not','touching_pointer','touching_sprite','key_pressed','mouse_down','list_contains','tile_is_solid','touching_tile'];
+    const booleans=['op_gt','op_lt','op_contains','op_eq','op_and','op_or','op_not','touching_pointer','touching_sprite','touching_color','color_touching','key_pressed','mouse_down','list_contains','tile_is_solid','touching_tile'];
     const reporters=['list_itemnum','op_mathop','current_part','days_since_2000','backdrop_number','backdrop_name','list_contents','x_position','y_position','direction','costume_number','costume_name','size_reporter','volume_reporter','get_var','op_add','op_sub','op_mul','op_div','op_mod','op_round','op_abs','op_join','op_length','op_letter','op_random','list_item','list_length','timer','current_time','distance_to','sprite_prop','mouse_x','mouse_y','tile_at','behavior_get_attr','behavior_event_actor_name','behavior_event_tile'];
     if(hats.includes(type)){block.classList.add('gw-hat-block');block.title='Hat block: starts a script.';return;}
     if(booleans.includes(type)){block.classList.add('gw-boolean-block');block.title='Boolean block: returns true or false.';return;}
@@ -10026,13 +10028,13 @@ nodes.push(el);cur=b.next;}return nodes;};
   const pop = el => { if (!el?.animate || calm()) return; try { el.animate([{ transform: 'scale(.6)' }, { transform: 'scale(1.08)', offset: .6 }, { transform: 'scale(1)' }], { duration: 480, easing: 'cubic-bezier(.175,.885,.32,1.275)' }); } catch {} };
 
   /* ---------------- 1. expression model ---------------- */
-  const BOOL = new Set(['key_pressed', 'mouse_down', 'touching_pointer', 'touching_sprite', 'op_gt', 'op_eq', 'op_and', 'op_or', 'op_not', 'list_contains', 'op_lt', 'op_contains', 'get_param_bool']);
+  const BOOL = new Set(['key_pressed', 'mouse_down', 'touching_pointer', 'touching_sprite', 'touching_color', 'color_touching', 'op_gt', 'op_eq', 'op_and', 'op_or', 'op_not', 'list_contains', 'op_lt', 'op_contains', 'get_param_bool']);
   const VALUE = new Set(['op_mathop', 'current_part', 'days_since_2000', 'backdrop_number', 'backdrop_name', 'list_contents', 'get_param', 'x_position', 'y_position', 'direction', 'mouse_x', 'mouse_y', 'timer', 'answer', 'volume_reporter', 'size_reporter', 'costume_number', 'costume_name', 'current_time', 'distance_to', 'sprite_prop', 'username', 'get_var', 'list_length', 'list_item', 'op_add', 'op_sub', 'op_mul', 'op_div', 'op_mod', 'op_join', 'op_length', 'op_letter', 'op_random', 'op_round', 'op_abs']);
   const NESTABLE = t => BOOL.has(t) || VALUE.has(t);
   const isBool = t => BOOL.has(t) || t === 'touching_edge';
   const isBoolNode = n => isBool(n?.type) || (n?.type === 'parameter' && n.kind === 'boolean');
   const CAT = t => /^op_/.test(t) ? 'operators'
-    : ['key_pressed', 'mouse_down', 'touching_pointer', 'touching_sprite', 'touching_edge', 'distance_to', 'sprite_prop', 'username', 'mouse_x', 'mouse_y', 'timer', 'answer', 'current_time'].includes(t) ? 'sensing'
+    : ['key_pressed', 'mouse_down', 'touching_pointer', 'touching_sprite', 'touching_color', 'color_touching', 'touching_edge', 'distance_to', 'sprite_prop', 'username', 'mouse_x', 'mouse_y', 'timer', 'answer', 'current_time'].includes(t) ? 'sensing'
     : t === 'get_var' ? 'variables' : (t === 'parameter' || /^get_param/.test(t)) ? 'myblocks' : /^list_/.test(t) ? 'lists'
     : ['costume_number', 'costume_name', 'size_reporter'].includes(t) ? 'looks' : t === 'volume_reporter' ? 'sound' : 'motion';
   const TPL_OF = t => (t === 'touching_edge' || t === 'touching_sprite') ? 'touching_pointer' : t;
@@ -10068,6 +10070,7 @@ nodes.push(el);cur=b.next;}return nodes;};
       case 'list_item': return { type: t, name: selOf(b) || 'my list', index: lit(ins[0] ?? 1) };
       case 'list_contains': return { type: t, name: selOf(b) || 'my list', args: [lit(ins[0] ?? '')] };
       case 'op_mathop': return { type: t, op: selOf(b) || 'abs', args: argsOf(b) }; // v15.50.1
+      case 'touching_color': case 'color_touching': return { type: t, args: argsOf(b) }; // v15.50.8
       case 'current_part': return { type: t, part: selOf(b) || 'YEAR' };
       case 'list_contents': return { type: t, name: selOf(b) || 'my list' };
       case 'list_itemnum': return { type: t, name: selOf(b) || 'my list', args: [lit(ins[0] ?? '')] };
@@ -10112,7 +10115,8 @@ nodes.push(el);cur=b.next;}return nodes;};
     op_gt: ['$0', '>', '$1'], op_eq: ['$0', '=', '$1'], op_and: ['$0', 'and', '$1'], op_or: ['$0', 'or', '$1'], op_not: ['not', '$0'],
     op_join: ['join', '$0', '$1'], op_length: ['length of', '$0'], op_letter: ['letter', '$0', 'of', '$1'], op_random: ['pick random', '$0', 'to', '$1'],
     op_round: ['round', '$0'], op_abs: ['abs of', '$0'], list_contains: ['@list', 'contains', '$0', '?'],
-    op_lt: ['$0', '<', '$1'], op_contains: ['$0', 'contains', '$1', '?'], op_mathop: ['@mathop', 'of', '$0']
+    op_lt: ['$0', '<', '$1'], op_contains: ['$0', 'contains', '$1', '?'], op_mathop: ['@mathop', 'of', '$0'],
+    touching_color: ['touching color', '$0', '?'], color_touching: ['color', '$0', 'is touching', '$1', '?']
   };
   const ARGKIND = { op_and: ['boolean', 'boolean'], op_or: ['boolean', 'boolean'], op_not: ['boolean'] };
   const KEYS = ['space', 'up arrow', 'down arrow', 'left arrow', 'right arrow'];
@@ -10292,11 +10296,13 @@ nodes.push(el);cur=b.next;}return nodes;};
       if (t === 'current_part') return blk(t, [], [n.part || 'YEAR']);
       if (t === 'list_contents') return blk(t, [], [n.name]);
       if (t === 'list_itemnum') return blk(t, [litVal(n.args?.[0], '')], [n.name]);
+      if (t === 'touching_color') return blk(t, [litVal(n.args?.[0], '#ff0000')]);
+      if (t === 'color_touching') return blk(t, [litVal(n.args?.[0], '#ff0000'), litVal(n.args?.[1], '#0000ff')]);
       return blk(t);
     } catch { return null; }
   }
   function fillOpSlots(b, n) {
-    if (!/^op_/.test(n.type) || !Array.isArray(n.args)) return;
+    if (!(/^op_/.test(n.type) || n.type === 'touching_color' || n.type === 'color_touching') || !Array.isArray(n.args)) return;
     b.querySelectorAll(':scope > .gw-input-slot').forEach(slot => { const a = n.args[+slot.dataset.slotIndex]; if (a) G9().setSlotNode(slot, JSON.parse(JSON.stringify(a))); });
   }
   function pullOut(chip, e) {
@@ -11019,6 +11025,8 @@ nodes.push(el);cur=b.next;}return nodes;};
         case 'touching_pointer': { const s = spr(th, owner); return !!s && GW.spriteHasPoint(s, Engine.mouse?.x || 0, Engine.mouse?.y || 0); }
         case 'touching_edge': { const s = spr(th, owner); return !!s && GW.touchingEdge(s); }
         case 'touching_sprite': { const s = spr(th, owner); return !!s && Engine.sprites.some(t => t !== s && GW.rootName(t) === node.target && GW.spritesTouch(s, t)); }
+        case 'touching_color': return !!GW.touchingColor?.(spr(th, owner), G9.evalNode(th, node.args?.[0], 'value', owner));
+        case 'color_touching': return !!GW.colorTouchingColor?.(spr(th, owner), G9.evalNode(th, node.args?.[0], 'value', owner), G9.evalNode(th, node.args?.[1], 'value', owner));
         case 'op_lt': { const n = v => Number.isFinite(Number(v)) ? Number(v) : 0; return n(G9.evalNode(th, node.args?.[0], 'value', owner)) < n(G9.evalNode(th, node.args?.[1], 'value', owner)); }
         case 'op_contains': return String(G9.evalNode(th, node.args?.[0], 'value', owner)).toLowerCase().includes(String(G9.evalNode(th, node.args?.[1], 'value', owner)).toLowerCase());
         case 'op_mathop': { const v = Number(G9.evalNode(th, node.args?.[0], 'value', owner)) || 0; const f = { abs: Math.abs, floor: Math.floor, ceiling: Math.ceil, sqrt: Math.sqrt, sin: x => Math.sin(x * DEG), cos: x => Math.cos(x * DEG), tan: x => Math.tan(x * DEG), asin: x => Math.asin(x) / DEG, acos: x => Math.acos(x) / DEG, atan: x => Math.atan(x) / DEG, ln: Math.log, log: Math.log10, 'e ^': Math.exp, '10 ^': x => Math.pow(10, x) }[node.op] || (x => x); const r = f(v); return Number.isFinite(r) ? Math.round(r * 1e10) / 1e10 : r; } /* v15.50.4: NaN / Infinity like Scratch (sqrt of -1 = NaN, ln 0 = -Infinity) */
@@ -11600,6 +11608,8 @@ nodes.push(el);cur=b.next;}return nodes;};
         case 'looks_backdropnumbername': return { type: field(b, 'NUMBER_NAME') === 'name' ? 'backdrop_name' : 'backdrop_number' };
         case 'sound_volume': return { type: 'volume_reporter' };
         case 'sensing_touchingobject': { const m = M('TOUCHINGOBJECTMENU'); return m === 'edge' ? { type: 'touching_edge' } : m === 'mouse-pointer' ? { type: 'touching_pointer' } : { type: 'touching_sprite', target: m }; }
+        case 'sensing_touchingcolor': return { type: 'touching_color', args: [I('COLOR')] }; // v15.50.8 (Claude)
+        case 'sensing_coloristouchingcolor': return { type: 'color_touching', args: [I('COLOR'), I('COLOR2')] };
         case 'sensing_keypressed': return { type: 'key_pressed', key: String(M('KEY_OPTION') || 'space') };
         case 'sensing_mousedown': return { type: 'mouse_down' };
         case 'sensing_mousex': return { type: 'mouse_x' };
@@ -11826,7 +11836,7 @@ nodes.push(el);cur=b.next;}return nodes;};
       // backdrops
       const bds = [];
       const bdK = await Promise.all((stage.costumes || []).map(c => zip ? run(() => costumeFrom(zip, c, warn)) : null)); // v15.17.5: in parallel
-      (stage.costumes || []).forEach((c, i) => { const k = bdK[i]; bds.push({ name: c.name, color: '#ffffff', image: k ? k.canvas.toDataURL() : undefined, rc: k?.rc, res: k?.res }); }); lap('backdrops');
+      (stage.costumes || []).forEach((c, i) => { const k = bdK[i]; const img = k ? k.canvas.toDataURL() : undefined; bds.push({ name: c.name, color: '#ffffff', image: img, rc: k?.rc, res: k?.res, ...(k?.dataFormat === 'svg' && k.svg ? { svg: k.svg, svgRc: k.rc, svgImage: img } : {}) }); }); /* v15.50.8: keep the SVG so saving gives it back unchanged */ lap('backdrops');
       Engine.backdrops = bds.length ? bds : [{ name: 'backdrop1', color: '#ffffff' }];
       Engine.activeBackdrop = Math.max(0, Math.min(Engine.backdrops.length - 1, Number(stage.currentCostume) || 0));
       // sprites
@@ -11850,7 +11860,8 @@ nodes.push(el);cur=b.next;}return nodes;};
         lap('first costumes');
       }
       const hasStageScripts = Object.values(stage.blocks || {}).some(b => b && b.topLevel && !b.shadow);
-      if (hasStageScripts) { const s = make('Stage'); Object.assign(s, { visible: false, stageProxy: true, layer: -1e6, size: 100 }); s.costumes = [{ name: 'stage', canvas: Object.assign(document.createElement('canvas'), { width: 2, height: 2 }), rc: { x: 1, y: 1 }, res: 1, natural: true }]; s.sounds = []; Engine.sprites.push(s); warn.push('Stage scripts were placed on a hidden sprite named “Stage”'); }
+      const stageSnd = zip ? (await Promise.all((stage.sounds || []).map(snd => run(() => soundFrom(zip, snd, warn))))).filter(Boolean) : []; /* v15.50.8: the Stage's own sounds (music) were dropped */
+      if (hasStageScripts || stageSnd.length) { const s = make('Stage'); Object.assign(s, { visible: false, stageProxy: true, layer: -1e6, size: 100 }); s.costumes = [{ name: 'stage', canvas: Object.assign(document.createElement('canvas'), { width: 2, height: 2 }), rc: { x: 1, y: 1 }, res: 1, natural: true }]; s.sounds = stageSnd; Engine.sprites.push(s); warn.push('Stage scripts were placed on a hidden sprite named “Stage”'); }
       // custom block definitions first (so calls know their input names)
       pj.targets.forEach(t => Object.values(t.blocks || {}).forEach(b => { if (b?.opcode === 'procedures_prototype' && b.mutation) ctx.procs[b.mutation.proccode] = { proccode: b.mutation.proccode, names: safeJSON(b.mutation.argumentnames, []), types: window.GW_V1580_MYBLOCKS.argTypes(b.mutation.proccode), warp: String(b.mutation.warp) === 'true' }; }));
       // scripts
@@ -12723,6 +12734,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
         case 'touching_pointer': return set('sensing_touchingobject', target('sensing_touchingobjectmenu', 'TOUCHINGOBJECTMENU', '_mouse_'));
         case 'touching_edge': return set('sensing_touchingobject', target('sensing_touchingobjectmenu', 'TOUCHINGOBJECTMENU', '_edge_'));
         case 'touching_sprite': return set('sensing_touchingobject', target('sensing_touchingobjectmenu', 'TOUCHINGOBJECTMENU', node.target));
+        case 'touching_color': case 'color_touching': { // v15.50.8 (Claude): colour inputs are Scratch colour pickers ([9, "#rrggbb"])
+          const col = (nm, a) => { if (!a || a.type === 'literal') { let v = String(a?.value ?? '#000000').trim(); if (/^-?\d+(\.\d+)?$/.test(v)) v = '#' + ((Number(v) >>> 0) & 0xffffff).toString(16).padStart(6, '0'); if (!/^#[0-9a-f]{6}$/i.test(v)) v = '#000000'; return { [nm]: [1, [9, v]] }; } const r = inputFromNode(a, nm, k, false); if (r && r[0] === 3) r[2] = [9, '#000000']; return r ? { [nm]: r } : {}; };
+          return node.type === 'touching_color' ? set('sensing_touchingcolor', col('COLOR', node.args?.[0])) : set('sensing_coloristouchingcolor', { ...col('COLOR', node.args?.[0]), ...col('COLOR2', node.args?.[1]) });
+        }
         case 'key_pressed': return set('sensing_keypressed', target('sensing_keyoptions', 'KEY_OPTION', node.key || 'space'));
         case 'mouse_down': return set('sensing_mousedown'); case 'mouse_x': return set('sensing_mousex'); case 'mouse_y': return set('sensing_mousey');
         case 'distance_to': return set('sensing_distanceto', target('sensing_distancetomenu', 'DISTANCETOMENU', node.target || 'mouse-pointer', { 'mouse-pointer': '_mouse_' }));
@@ -12852,12 +12867,15 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       if (fieldOnly[t]) { const [op, f] = fieldOnly[t]; const v = sel(b); return done(op, {}, { [f]: [v, t === 'when_broadcast' ? bcId(v) : null] }); }
       if (t === 'broadcast' || t === 'broadcast_wait') { const v = sel(b); return done(t === 'broadcast' ? 'event_broadcast' : 'event_broadcastandwait', { BROADCAST_INPUT: [1, [11, v, bcId(v)]] }); }
       if (t === 'stop') { const v = sel(b) || 'all'; return done('control_stop', {}, { STOP_OPTION: [v, null] }, { mutation: { tagName: 'mutation', children: [], hasnext: String(v === 'other scripts in sprite') } }); }
-      if (t === 'point_towards') return done('motion_pointtowards', { TOWARDS: menuShadow('motion_pointtowards_menu', 'TOWARDS', MAP_SPRITE(sel(b) || 'mouse-pointer'), k) });
+      // v15.50.8 (Claude): a menu input holding a reporter (e.g. "switch costume to ((Player ID * 5) - 4)") is written back
+      // as that reporter over the menu shadow, like Scratch does - it used to be saved as the plain menu value.
+      const menuIn = (opcode, field, value) => { const sh = menuShadow(opcode, field, value, k); let mx = null; try { mx = JSON.parse(b.dataset.gw9MenuExpr || 'null'); } catch {} const e = Array.isArray(mx) ? mx.find(x => x && x.i === 0 && x.node) : null; if (!e) return sh; const v = inputFromNode(e.node, field, k, false); return v && v[0] === 3 ? [3, v[1], sh[1]] : sh; };
+      if (t === 'point_towards') return done('motion_pointtowards', { TOWARDS: menuIn('motion_pointtowards_menu', 'TOWARDS', MAP_SPRITE(sel(b) || 'mouse-pointer')) });
       if (t === 'goto_random') return done('motion_goto', { TO: menuShadow('motion_goto_menu', 'TO', '_random_', k) });
-      if (t === 'switch_costume') return done('looks_switchcostumeto', { COSTUME: menuShadow('looks_costume', 'COSTUME', sel(b), k) });
-      if (t === 'set_backdrop') return done('looks_switchbackdropto', { BACKDROP: menuShadow('looks_backdrops', 'BACKDROP', sel(b), k) });
-      if (t === 'play_sound' || t === 'start_sound') return done(t === 'play_sound' ? 'sound_playuntildone' : 'sound_play', { SOUND_MENU: menuShadow('sound_sounds_menu', 'SOUND_MENU', sel(b), k) });
-      if (t === 'create_clone') return done('control_create_clone_of', { CLONE_OPTION: menuShadow('control_create_clone_of_menu', 'CLONE_OPTION', MAP_SPRITE(sel(b) || 'myself'), k) });
+      if (t === 'switch_costume') return done('looks_switchcostumeto', { COSTUME: menuIn('looks_costume', 'COSTUME', sel(b)) });
+      if (t === 'set_backdrop') return done('looks_switchbackdropto', { BACKDROP: menuIn('looks_backdrops', 'BACKDROP', sel(b)) });
+      if (t === 'play_sound' || t === 'start_sound') return done(t === 'play_sound' ? 'sound_playuntildone' : 'sound_play', { SOUND_MENU: menuIn('sound_sounds_menu', 'SOUND_MENU', sel(b)) });
+      if (t === 'create_clone') return done('control_create_clone_of', { CLONE_OPTION: menuIn('control_create_clone_of_menu', 'CLONE_OPTION', MAP_SPRITE(sel(b) || 'myself')) });
       const map = CMD[t];
       if (!map) { ctx.dropped.add(t); return null; }
       const [op, names = []] = map;
@@ -12928,7 +12946,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const variables = {}; Object.entries(GV).forEach(([nm, v]) => { variables[ctx.varIds[nm] || (ctx.varIds[nm] = 'var' + md5(new TextEncoder().encode(nm)).slice(0, 12))] = /^☁ \S/.test(nm) ? [nm, v, true] : [nm, v]; }); // v15.15.0: [name, value, true] = cloud
     const lists = {}; Object.entries(GL).forEach(([nm, v]) => { lists[ctx.listIds[nm] || (ctx.listIds[nm] = 'list' + md5(new TextEncoder().encode(nm)).slice(0, 12))] = [nm, Array.isArray(v) ? v.slice() : []]; });
     const broadcasts = {}; Object.entries(ctx.bcIds).forEach(([nm, k]) => { broadcasts[k] = nm; });
-    targets.push({ isStage: true, name: 'Stage', variables, lists, broadcasts, blocks: stageBlocks, comments: {}, currentCostume: Math.max(0, E.activeBackdrop || 0), costumes: bds.map(({ bd, cv }) => ({ name: bd.name, bitmapResolution: 1, dataFormat: 'png', ...asset(canvasPng(cv), 'png'), rotationCenterX: 240, rotationCenterY: 180 })), sounds: (stageProxy?.sounds || []).map(sound).filter(Boolean), volume: 100, layerOrder: 0, tempo: 60, videoTransparency: 50, videoState: 'on', textToSpeechLanguage: null });
+    targets.push({ isStage: true, name: 'Stage', variables, lists, broadcasts, blocks: stageBlocks, comments: {}, currentCostume: Math.max(0, E.activeBackdrop || 0), costumes: bds.map(({ bd, cv }) => (bd.svg && bd.image === bd.svgImage) ? { name: bd.name, bitmapResolution: 1, dataFormat: 'svg', ...asset(new TextEncoder().encode(bd.svg), 'svg'), rotationCenterX: bd.svgRc?.x ?? 240, rotationCenterY: bd.svgRc?.y ?? 180 } : ({ name: bd.name, bitmapResolution: 1, dataFormat: 'png', ...asset(canvasPng(cv), 'png'), rotationCenterX: 240, rotationCenterY: 180 })), /* v15.50.8: an unchanged SVG backdrop is saved as the same SVG */ sounds: (stageProxy?.sounds || []).map(sound).filter(Boolean), volume: 100, layerOrder: 0, tempo: 60, videoTransparency: 50, videoState: 'on', textToSpeechLanguage: null });
     const order = window.GW?.drawOrder ? window.GW.drawOrder().filter(s => sprites.includes(s)) : sprites;
     spriteTargets.forEach(({ s, blocks }) => {
       targets.push({ isStage: false, name: s.name, variables: Object.fromEntries(Object.entries(s.localVars || {}).map(([nm, v]) => [vid(nm), [nm, v]])), lists: Object.fromEntries(Object.entries(s.localLists || {}).map(([nm, v]) => [lid(nm), [nm, Array.isArray(v) ? v.slice() : []]])), broadcasts: {}, blocks, comments: {}, currentCostume: s.activeCostume || 0, costumes: (s.costumes || []).map(costume), sounds: (s.sounds || []).map(sound).filter(Boolean), volume: s.volume ?? 100, layerOrder: order.indexOf(s) + 1, visible: s.visible !== false, x: Math.round(s.x * 1000) / 1000, y: Math.round(s.y * 1000) / 1000, size: s.size ?? 100, direction: s.direction ?? 90, draggable: !!s.draggable, rotationStyle: s.rotationStyle || 'all around' });
@@ -14390,7 +14408,55 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   }
   GW.spritesTouch = (a, b) => { if (!a || !b || a === b) return false; const PA = prep(a); return !!PA && touch(PA, b); };
   GW.hitTest = GW.spritesTouch;
+  // v15.50.8 (Claude): "touching color ?" and "color () is touching ()?" - like Scratch, colours match on their top 5/5/4 bits
+  // (red/green/blue), and the sprite's own pixels are compared with what is under them: other sprites (top layer first), then the backdrop.
+  // Not checked: the pen layer and colour effects.
+  const rgbaCache = new WeakMap();
+  function rgbaOf(cv) { const now = performance.now(); let e = rgbaCache.get(cv); if (!e || e.w !== cv.width || e.h !== cv.height || now - e.t > 1000) { let d = null; try { d = cv.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, cv.width, cv.height).data; } catch {} e = { t: now, w: cv.width, h: cv.height, d }; rgbaCache.set(cv, e); } return e; }
+  function colAt(P, x, y) {
+    let dx = (x - P.s.x) / P.sc, dy = (P.s.y - y) / P.sc;
+    const rx = dx * P.cs + dy * P.sn, ry = -dx * P.sn + dy * P.cs; dx = rx * P.f; dy = ry;
+    const cv = P.c.canvas, px = Math.floor((dx - P.b.x0) * P.kx), py = Math.floor((dy - P.b.y0) * P.ky);
+    if (px < 0 || py < 0 || px >= cv.width || py >= cv.height) return -1;
+    const R = rgbaOf(cv); if (!R.d) return -1; const i = (py * R.w + px) * 4; if (R.d[i + 3] <= 8) return -1;
+    return (R.d[i] << 16) | (R.d[i + 1] << 8) | R.d[i + 2];
+  }
+  const BD = { cv: null, key: '', t: 0 };
+  function backdropAt(x, y) {
+    const now = performance.now(), bd = E.backdrops?.[E.activeBackdrop], key = (E.activeBackdrop ?? -1) + '|' + (bd?.name || '') + '|' + (bd?.color || '');
+    if (!BD.cv) { BD.cv = document.createElement('canvas'); BD.cv.width = 480; BD.cv.height = 360; }
+    if (BD.key !== key || now - BD.t > 1000) {
+      const c = BD.cv.getContext('2d', { willReadFrequently: true }); c.setTransform(1, 0, 0, 1, 0, 0); c.globalCompositeOperation = 'source-over'; c.clearRect(0, 0, 480, 360);
+      c.globalCompositeOperation = 'destination-over'; // the same way the stage paints it (picture first, then its colour behind)
+      try { if (bd && GW.paintBackdrop) GW.paintBackdrop(c); else if (bd) { c.fillStyle = bd.color || '#ffffff'; c.fillRect(0, 0, 480, 360); } } catch {}
+      c.fillStyle = '#ffffff'; c.fillRect(0, 0, 480, 360); c.globalCompositeOperation = 'source-over';
+      try { BD.d = c.getImageData(0, 0, 480, 360).data; } catch { BD.d = null; } BD.key = key; BD.t = now;
+    }
+    const X = Math.floor(x + 240), Y = Math.floor(180 - y); if (!BD.d || X < 0 || Y < 0 || X >= 480 || Y >= 360) return 0xffffff;
+    const i = (Y * 480 + X) * 4; return (BD.d[i] << 16) | (BD.d[i + 1] << 8) | BD.d[i + 2];
+  }
+  const colNum = v => { if (typeof v === 'number') return (v >>> 0) & 0xffffff; const t = String(v ?? '').trim(); if (/^#[0-9a-f]{6}$/i.test(t)) return parseInt(t.slice(1), 16); if (/^#[0-9a-f]{3}$/i.test(t)) return parseInt(t.slice(1).split('').map(c => c + c).join(''), 16); const n = Number(t); return Number.isFinite(n) ? (n >>> 0) & 0xffffff : 0; };
+  const MASK = 0xf8f8f0, same = (a, b) => (a & MASK) === (b & MASK);
+  function colourTouch(s, want, mine) {
+    const PA = prep(s); if (!PA) return false;
+    const l = Math.max(-240, PA.l), r = Math.min(240, PA.r), bo = Math.max(-180, PA.bo), t = Math.min(180, PA.t); if (l > r || bo > t) return false;
+    const others = []; (E.sprites || []).forEach((o, i) => { if (o === s || !o.visible) return; const P = prep(o); if (P && !(P.l > r || P.r < l || P.bo > t || P.t < bo)) others.push([o.layer ?? i, i, P]); });
+    others.sort((a, b) => (b[0] - a[0]) || (b[1] - a[1]));
+    const step = Math.max(1, Math.sqrt(((r - l) * (t - bo)) / 2500));
+    for (let y = bo + step / 2; y <= t; y += step) for (let x = l + step / 2; x <= r; x += step) {
+      if (mine == null) { if (!has(PA, x, y)) continue; } else { const c = colAt(PA, x, y); if (c < 0 || !same(c, mine)) continue; }
+      let under = -1; for (let k = 0; k < others.length; k++) { const c = colAt(others[k][2], x, y); if (c >= 0) { under = c; break; } }
+      if (under < 0) under = backdropAt(x, y);
+      if (same(under, want)) return true;
+    }
+    return false;
+  }
+  GW.touchingColor = (s, col) => { try { return !!s && colourTouch(s, colNum(col), null); } catch { return false; } };
+  GW.colorTouchingColor = (s, mine, col) => { try { return !!s && colourTouch(s, colNum(col), colNum(mine)); } catch { return false; } };
   function installTouching(FN, spr) {
+    const G9 = window.GW9, ev = (th, a, ow) => G9.evalNode(th, a, 'value', ow);
+    FN.touching_color = (th, nd, ow) => GW.touchingColor(spr(th, ow), ev(th, nd.args?.[0], ow));
+    FN.color_touching = (th, nd, ow) => GW.colorTouchingColor(spr(th, ow), ev(th, nd.args?.[0], ow), ev(th, nd.args?.[1], ow));
     FN.touching_sprite = (th, nd, ow) => {
       const s = spr(th, ow); if (!s) return false;
       const L = GW.spritesNamed(nd.target); if (!L.length) return false;
@@ -15360,9 +15426,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   window.GW_OPEN_FILE = openFile;
 
   /* ---------- saving ---------- */
-  async function buildSb3() {
+  async function buildSb3(opts = {}) {
     const X = window.GW_V1580_SB3_EXPORT; if (!X) throw new Error('The .sb3 writer is missing');
-    const data = window.GW_PROJECT_DATA ? window.GW_PROJECT_DATA() : null;
+    /* v15.50.8: scratchOnly = a pure Scratch 3 file (no G-Warp copy inside) - smaller, for sharing / remixing on Scratch */
+    const data = !opts.scratchOnly && window.GW_PROJECT_DATA ? window.GW_PROJECT_DATA() : null;
     // v15.24.0 (Claude): measured on the plane game: 9 of the 10.7 MB of gwarp-project.json were PNG pictures of costumes
     // that are vector (their SVG is right next to it). Those now keep only the SVG; opening draws them from it.
     if (data && !window.GW_FEATURE_OFF?.('slimSave')) (data.sprites || []).forEach(sp => (sp.costumes || []).forEach(c => { if (c && c.svg && c.natural && c.w && c.h && typeof c.data === 'string' && c.data.length > 1500) { c.data = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='; c.svgOnly = true; } }));

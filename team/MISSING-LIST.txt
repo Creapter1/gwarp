@@ -67,7 +67,7 @@ E. FROM THE 3-APP AUDIT (claude/GAP-ANALYSIS-2026-10-19.txt - stopped early by t
    menu bar 5 of 8 (1 partial). NOTE: blocks were only checked IN THE PALETTE - whether they run was not tested yet.
 
  E1. Kids hit these in their first hour (P1)
-[ ] E1.1  "touching color ?" and "color is touching color ?" blocks.                              Claude
+[x] E1.1  (v15.50.8) "touching color ?" and "color is touching color ?" blocks.                  Claude
 [x] E1.2  The "<" (less than) block - only ">" exists.                                             Claude
 [x] E1.3  The "contains ?" block (text contains text).                                              Claude
 [x] E1.4  Math functions: only "abs" - add the dropdown with floor, ceiling, sqrt, sin, cos, tan, asin, acos,
