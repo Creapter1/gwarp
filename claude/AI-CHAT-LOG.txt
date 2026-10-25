@@ -116,3 +116,47 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 2):
 - Read-back URL/path: origin/main:claude/AI-CHAT-LOG.txt (git show after fetch)
 - Verified new entry is present at bottom: YES
 - Task status: DONE (remix delivered; real Scratch website upload NOT-TESTED)
+
+--- ENTRY 3 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-25T21:21:00Z (request) - closeout 2026-10-25T21:59Z
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: REMIX-CM2 - "Clone Multiplayer!" G-Warp Smash remix v2 + G-Warp fixes (Beta v15.50.9)
+Branch / starting commit: main @ f29aad2
+
+USER REQUEST (summary, owner's words in quotes):
+v1 had "so little effort". Add Smash-style "percentage", punches ("left punch, right punch") and kicks ("left kick and right kick")
+animated with G-Warp, jump effects, a shield, make "the computer actually fight each other", keep arrow keys ("that's totally fine"),
+intro like Gemini's (G logo + mini G-Warp, fades, then the game runs), G-Warp mentions in the code + a comment on the first sprite
+saying it can be edited in G-Warp with the website. Fix only the bugs that "look disgusting"; keep the original. 100% Scratch.
+
+PROGRESS / AI RESPONSE:
+- Built inside G-Warp again (Playwright drives the app): the Animation tab (bones, G-Warp's solver) made 64 fight frames from the 4
+  original fighters (punch A/B, kick A/B, air, hurt, guard); new sprites G-Warp FX (29 frames + 6 synth sounds), Shield, Damage HUD
+  (Smash-style cards, coloured %, stocks), G-Warp Splash (logo + "hel-lo"). Player keeps every original script; new parts added in
+  warp custom blocks (Fight, Hit check, Take hits, Fighter costume, KO blast, Effect…); AI block rewritten so CPUs chase the closest
+  fighter (anyone), attack, guard and get back on stage. WASD + arrows, Z/J punch, X/K kick, down/S shield, double jump.
+- "Disgusting" bugs fixed: a player at 0 lives kept playing (lives went below 0), HUD/shield setup flicker, end screens behind effects.
+- G-Warp fixes (Beta v15.50.9): Scratch comments import/export (were dropped), comments no longer placed off-screen on import,
+  "broadcast and wait" no longer hangs forever when a clone it started is deleted (deleteClone / stop other scripts mark threads finished).
+
+FILES CHANGED: app.html (v15.50.9); this log; AI-TEAM.txt one line. The remix .sb3 is NOT in the repo (not the owner's project).
+
+COMMANDS / TESTS / RESULTS:
+- REAL Scratch 3 engine (scratch-vm + scratch-render from npm, Chromium): loads, scratch-parser OK, extensions [], 74 standard opcodes;
+  splash -> start game; 4 fighters + HUD 36 clones + 4 shields; CPUs damage and KO each other (lives 5->3/4 in 45 s), human input
+  (scripted keys) punches/kicks/shields; 0-lives player stays out; "loss" shown in front; no page errors.
+- Same .sb3 opened in G-Warp: runs, fighters deal damage, 6 comments kept, no page errors.
+- G-Warp regressions: newblocks, test_gwrap_pack, stageclick, test_mascot, colour_t all PASS.
+
+EVIDENCE CLASS: TESTED in scratch-vm and G-Warp - NOT uploaded to scratch.mit.edu; "You Win" path not reached in tests (original logic).
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- Website link in the comment (https://creapter1.github.io/gwarp/) is the older address the README says still needs owner confirmation.
+- "Infinite" read as Smash-style % with no cap (stocks kept at 5, as the original).
+
+NEXT STEP / HANDOFF: owner plays it on Scratch, then tweak (difficulty, keys, link).
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---

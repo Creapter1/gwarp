@@ -2285,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.50.8</span>
+<span class="app-version">Beta v15.50.9</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4259,7 +4259,7 @@ IMPORTANT:
             document.querySelectorAll('#workspaceCanvas > .block-stack').forEach(stack=>{const first=stack.firstElementChild;if(first?.dataset.type==='when_clone')GW.runHat(stack,clone);});
             renderSpritesGrid(); return clone;
         };
-        GW.deleteClone = function(sprite) { if(!sprite?.isClone)return; Engine.threads=Engine.threads.filter(t=>t.sprite!==sprite); const i=Engine.sprites.indexOf(sprite); if(i>=0)Engine.sprites.splice(i,1); renderSpritesGrid(); Engine.activeSpriteIndex=Math.min(Engine.activeSpriteIndex,Engine.sprites.length-1); };
+        GW.deleteClone = function(sprite) { if(!sprite?.isClone)return; Engine.threads.forEach(t=>{if(t.sprite===sprite)t.finished=true;}); Engine.threads=Engine.threads.filter(t=>t.sprite!==sprite); const i=Engine.sprites.indexOf(sprite); if(i>=0)Engine.sprites.splice(i,1); renderSpritesGrid(); Engine.activeSpriteIndex=Math.min(Engine.activeSpriteIndex,Engine.sprites.length-1); };
 
         // Give every newly created stack a sprite owner, so multiple sprites can have independent scripts.
         document.addEventListener('pointerdown',e=>{
@@ -4338,7 +4338,7 @@ IMPORTANT:
                 case 'op_eq': return String(GW.resolve(ins[0]?.value))===String(GW.resolve(ins[1]?.value));
                 case 'broadcast': GW.dispatchBroadcast(sel,false);return;
                 case 'broadcast_wait': { const before=Engine.threads.length; GW.dispatchBroadcast(sel,true); this.waitBroadcast=()=>Engine.threads.slice(before).every(t=>t.finished); return; }
-                case 'stop': if(sel==='all'){Engine.isRunning=false;Engine.threads=[];}else if(sel==='other scripts in sprite'){Engine.threads=Engine.threads.filter(t=>t===this||t.sprite!==this.sprite);}else this.finished=true; return;
+                case 'stop': if(sel==='all'){Engine.isRunning=false;Engine.threads=[];}else if(sel==='other scripts in sprite'){Engine.threads.forEach(t=>{if(t!==this&&t.sprite===this.sprite)t.finished=true;});Engine.threads=Engine.threads.filter(t=>t===this||t.sprite!==this.sprite);}else this.finished=true; return;
                 case 'say': say(text(0),n(1));return;
                 case 'think': say('💭 '+text(0),0);return;
                 case 'play_sound': playAudioSynth(600,'sine',Math.max(.05,n(0)||.2));return;
@@ -4649,7 +4649,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.8',label:'Beta v15.50.8',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.9',label:'Beta v15.50.9',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -11063,6 +11063,8 @@ nodes.push(el);cur=b.next;}return nodes;};
   GW.cloneCount = function () { const a = Engine.sprites; if (Engine.__ncArr !== a || Engine.__ncLen !== a.length) { let n = 0; for (let i = 0; i < a.length; i++) if (a[i] && a[i].isClone) n++; Engine.__nc = n; Engine.__ncArr = a; Engine.__ncLen = a.length; } return Engine.__nc; };
   GW.deleteClone = function (sprite) {
     if (!sprite?.isClone) return;
+    // v15.50.9 (Claude): its scripts count as finished, so a "broadcast and wait" that started them doesn't wait forever
+    Engine.threads.forEach(t => { if (t.sprite === sprite) t.finished = true; });
     Engine.threads = Engine.threads.filter(t => t.sprite !== sprite);
     const i = Engine.sprites.indexOf(sprite); if (i >= 0) Engine.sprites.splice(i, 1);
     Engine.activeSpriteIndex = Math.min(Engine.activeSpriteIndex, Engine.sprites.filter(s => !s.isClone).length - 1);
@@ -11872,13 +11874,24 @@ nodes.push(el);cur=b.next;}return nodes;};
       targets.forEach((t, idx) => {
         const conv = converter(pj, t, ctx), B = conv.B;
         const tops = Object.entries(B).filter(([, b]) => b && typeof b === 'object' && !Array.isArray(b) && b.topLevel && !b.shadow);
-        const xs = tops.map(([, b]) => Number(b.x) || 0), ys = tops.map(([, b]) => Number(b.y) || 0);
+        const cms = Object.values(t.comments || {}).filter(c => c && typeof c.text === 'string'); // v15.50.9: comments count too, so none ends up off the left/top edge
+        const xs = [...tops.map(([, b]) => Number(b.x) || 0), ...cms.map(c => Number(c.x) || 0)], ys = [...tops.map(([, b]) => Number(b.y) || 0), ...cms.map(c => Number(c.y) || 0)];
         const minX = Math.min(0, ...xs), minY = Math.min(0, ...ys);
         tops.sort((a, b) => (Number(a[1].y) || 0) - (Number(b[1].y) || 0)).forEach(([id, b]) => {
           const blocks = conv.chain(id); if (!blocks.length) return;
           const st = h('div', { class: 'block-stack' }); st.dataset.owner = String(idx);
           st.style.left = Math.round((Number(b.x) || 0) - minX + 40) + 'px'; st.style.top = Math.round((Number(b.y) || 0) - minY + 40) + 'px';
           blocks.forEach(x => st.appendChild(x)); ws.appendChild(st); placed.push(st);
+        });
+        // v15.50.9 (Claude): Scratch comments come in as G-Warp comments (notes on a block are placed where Scratch had them)
+        Object.values(t.comments || {}).forEach(cm => {
+          if (!cm || typeof cm.text !== 'string') return;
+          const st = h('div', { class: 'block-stack gw38-stack' }); st.dataset.owner = String(idx);
+          st.style.left = Math.round((Number(cm.x) || 0) - minX + 40) + 'px'; st.style.top = Math.max(0, Math.round((Number(cm.y) || 0) - minY + 40)) + 'px';
+          st.innerHTML = '<div class="gw38-comment"><div class="gw38-bar"><button type="button" class="gw38-fold" title="Fold / unfold">▾</button><span>Comment</span><button type="button" class="gw38-x" title="Delete comment" aria-label="Delete comment">×</button></div><textarea spellcheck="false" placeholder="Say what this script does…"></textarea></div>';
+          const c = st.firstElementChild; c.querySelector('textarea').textContent = cm.text; if (cm.minimized) c.dataset.folded = '1';
+          if (Number(cm.width) > 60) c.style.width = Math.round(Number(cm.width)) + 'px';
+          ws.appendChild(st);
         });
       });
       Object.values(Engine.variables).length; // keep
@@ -12936,6 +12949,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       stacksOf(s).forEach(st => { const kids = [...st.children].filter(x => x.classList.contains('scratch-block')); if (!kids.length) return; const f = X.chain(kids, null); if (f) { orig[f].topLevel = true; orig[f].parent = null; orig[f].x = Math.round(parseFloat(st.style.left) || 0); orig[f].y = Math.round(parseFloat(st.style.top) || 0); } });
       return orig;
     };
+    // v15.50.9 (Claude): G-Warp comments are saved as Scratch workspace comments (they were left out before)
+    const commentsFor = s => { const out = {}; stacksOf(s).forEach(st => { const c = st.querySelector(':scope > .gw38-comment'); if (!c) return; const ta = c.querySelector('textarea'); const text = String(ta?.value ?? ta?.textContent ?? ''); out['gwc' + md5(new TextEncoder().encode(s.name + '|' + st.style.left + '|' + st.style.top + '|' + text)).slice(0, 12)] = { blockId: null, x: Math.round(parseFloat(st.style.left) || 0), y: Math.round(parseFloat(st.style.top) || 0), width: Math.round(c.offsetWidth || parseFloat(c.style.width) || 200), height: Math.round(c.offsetHeight || 200), minimized: c.classList.contains('gw38-folded') || c.dataset.folded === '1', text }; }); return out; };
     const targets = [];
     const bds = (E.backdrops || []).map(bd => { if (bd.image) { const im = new Image(); im.src = bd.image; } const cv = document.createElement('canvas'); cv.width = 480; cv.height = 360; const g = cv.getContext('2d'); g.fillStyle = bd.color || '#ffffff'; g.fillRect(0, 0, 480, 360); return { bd, cv }; });
     for (const x of bds) { if (x.bd.image) { const im = await new Promise(r => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = x.bd.image; }); if (im) { const g = x.cv.getContext('2d'); if (x.bd.rc) g.drawImage(im, 240 - x.bd.rc.x, 180 - x.bd.rc.y, im.naturalWidth / (x.bd.res || 1), im.naturalHeight / (x.bd.res || 1)); else g.drawImage(im, 0, 0, 480, 360); } } }
@@ -12946,10 +12961,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const variables = {}; Object.entries(GV).forEach(([nm, v]) => { variables[ctx.varIds[nm] || (ctx.varIds[nm] = 'var' + md5(new TextEncoder().encode(nm)).slice(0, 12))] = /^☁ \S/.test(nm) ? [nm, v, true] : [nm, v]; }); // v15.15.0: [name, value, true] = cloud
     const lists = {}; Object.entries(GL).forEach(([nm, v]) => { lists[ctx.listIds[nm] || (ctx.listIds[nm] = 'list' + md5(new TextEncoder().encode(nm)).slice(0, 12))] = [nm, Array.isArray(v) ? v.slice() : []]; });
     const broadcasts = {}; Object.entries(ctx.bcIds).forEach(([nm, k]) => { broadcasts[k] = nm; });
-    targets.push({ isStage: true, name: 'Stage', variables, lists, broadcasts, blocks: stageBlocks, comments: {}, currentCostume: Math.max(0, E.activeBackdrop || 0), costumes: bds.map(({ bd, cv }) => (bd.svg && bd.image === bd.svgImage) ? { name: bd.name, bitmapResolution: 1, dataFormat: 'svg', ...asset(new TextEncoder().encode(bd.svg), 'svg'), rotationCenterX: bd.svgRc?.x ?? 240, rotationCenterY: bd.svgRc?.y ?? 180 } : ({ name: bd.name, bitmapResolution: 1, dataFormat: 'png', ...asset(canvasPng(cv), 'png'), rotationCenterX: 240, rotationCenterY: 180 })), /* v15.50.8: an unchanged SVG backdrop is saved as the same SVG */ sounds: (stageProxy?.sounds || []).map(sound).filter(Boolean), volume: 100, layerOrder: 0, tempo: 60, videoTransparency: 50, videoState: 'on', textToSpeechLanguage: null });
+    targets.push({ isStage: true, name: 'Stage', variables, lists, broadcasts, blocks: stageBlocks, comments: stageProxy ? commentsFor(stageProxy) : {}, currentCostume: Math.max(0, E.activeBackdrop || 0), costumes: bds.map(({ bd, cv }) => (bd.svg && bd.image === bd.svgImage) ? { name: bd.name, bitmapResolution: 1, dataFormat: 'svg', ...asset(new TextEncoder().encode(bd.svg), 'svg'), rotationCenterX: bd.svgRc?.x ?? 240, rotationCenterY: bd.svgRc?.y ?? 180 } : ({ name: bd.name, bitmapResolution: 1, dataFormat: 'png', ...asset(canvasPng(cv), 'png'), rotationCenterX: 240, rotationCenterY: 180 })), /* v15.50.8: an unchanged SVG backdrop is saved as the same SVG */ sounds: (stageProxy?.sounds || []).map(sound).filter(Boolean), volume: 100, layerOrder: 0, tempo: 60, videoTransparency: 50, videoState: 'on', textToSpeechLanguage: null });
     const order = window.GW?.drawOrder ? window.GW.drawOrder().filter(s => sprites.includes(s)) : sprites;
     spriteTargets.forEach(({ s, blocks }) => {
-      targets.push({ isStage: false, name: s.name, variables: Object.fromEntries(Object.entries(s.localVars || {}).map(([nm, v]) => [vid(nm), [nm, v]])), lists: Object.fromEntries(Object.entries(s.localLists || {}).map(([nm, v]) => [lid(nm), [nm, Array.isArray(v) ? v.slice() : []]])), broadcasts: {}, blocks, comments: {}, currentCostume: s.activeCostume || 0, costumes: (s.costumes || []).map(costume), sounds: (s.sounds || []).map(sound).filter(Boolean), volume: s.volume ?? 100, layerOrder: order.indexOf(s) + 1, visible: s.visible !== false, x: Math.round(s.x * 1000) / 1000, y: Math.round(s.y * 1000) / 1000, size: s.size ?? 100, direction: s.direction ?? 90, draggable: !!s.draggable, rotationStyle: s.rotationStyle || 'all around' });
+      targets.push({ isStage: false, name: s.name, variables: Object.fromEntries(Object.entries(s.localVars || {}).map(([nm, v]) => [vid(nm), [nm, v]])), lists: Object.fromEntries(Object.entries(s.localLists || {}).map(([nm, v]) => [lid(nm), [nm, Array.isArray(v) ? v.slice() : []]])), broadcasts: {}, blocks, comments: commentsFor(s), currentCostume: s.activeCostume || 0, costumes: (s.costumes || []).map(costume), sounds: (s.sounds || []).map(sound).filter(Boolean), volume: s.volume ?? 100, layerOrder: order.indexOf(s) + 1, visible: s.visible !== false, x: Math.round(s.x * 1000) / 1000, y: Math.round(s.y * 1000) / 1000, size: s.size ?? 100, direction: s.direction ?? 90, draggable: !!s.draggable, rotationStyle: s.rotationStyle || 'all around' });
     });
     const monitors = Object.keys(GV).filter(nm => E.variableVisible?.[nm]).map(nm => ({ id: ctx.varIds[nm], mode: 'default', opcode: 'data_variable', params: { VARIABLE: nm }, spriteName: null, value: E.variables[nm], width: 0, height: 0, x: 5, y: 5, visible: true, sliderMin: 0, sliderMax: 100, isDiscrete: true }));
     // v15.10.0: list the extensions the project uses (and where TurboWarp can load them from)
