@@ -1,0 +1,36 @@
+AIRPLANE GAME IDEAS (owner, 2026-10-20) - PARKED 2026-10-25 when the owner switched to the AI Developer test
+Written by Claude. Status: IN PROGRESS (sky drafted, nothing in the app yet).
+
+The game: owner's private test project "plaing-game-test" (Jet Lancer-like, multiplayer). Per its scripts
+(SCRIPTS.txt, private repo): walls at x/y +-15,000, camera kept within +-14,000, camera zoom 10% (so the view shows
+about 4,800 x 3,600 world units). So the sky must cover about 30,000 x 30,000.
+
+1. SKY FOR THE WHOLE WORLD - DRAFT DONE (G-Warp's own art, nothing copied from the project)
+   claude/experiments/airplane-sky/world-sky.svg      3000 x 3000. Use as a sprite costume at size 1000% at x 0, y 0,
+                                                        sent to the back layer -> covers +-15,000. Dark starry top,
+                                                        blue middle, warm sunset haze + thick clouds at the bottom.
+   claude/experiments/airplane-sky/cloud-layer-tile.svg  2400 x 1800, tiles with no seams - for a parallax cloud layer
+                                                        (clones in a grid that move slower/faster than the camera).
+   claude/experiments/airplane-sky/make_sky.py         re-generates both (change the seed / colours / cloud count).
+   Open point: at 10% zoom the middle of the sky still looks empty -> add the parallax cloud layer, or more,
+   smaller clouds. The sky has NOT been shown to the owner yet, and NOT tested inside the game.
+   Caution: a 3000 px vector costume is turned into a picture of at most ~4096 px, so at 1000% it is soft
+   (fine for gradients and soft clouds).
+
+2. "3D VECTOR" COSTUME TAB (like Illustrator's Extrude & Bevel) - NOT STARTED
+   Plan: pick a vector costume, choose depth + yaw/pitch, live preview; render = N copies of the shape (back to
+   front), each shifted by depth*sin(yaw) and darker for the sides, with the front face on top (all are affine
+   transforms of the original SVG, so it stays a vector). "Make costumes" -> <name>3d//yaw 0 ... yaw 350 (folders).
+
+3. "AI RECREATION" TAB - NOT STARTED
+   Shows the costume's SVG + an automatic description (size, colours, shapes) + a ready-to-copy prompt for ANY AI
+   (paid or free): "make the 360-degree turnaround / the surrounding scene / a 3D version, return SVG with this
+   viewBox". A paste box imports the AI's SVG answer as costumes, made safe first (no scripts, no event attributes,
+   no outside links).
+
+4. "BACKGROUND GROW" - NOT STARTED
+   Make a bigger background from a small one: mirror-tiling (always seamless) up to a target size, or a prompt for
+   any AI / GWrap AI to extend it (same safe import as 3).
+
+Who: Claude builds 2-4 in the app (they need app.html). ChatGPT: the prompts + SVG description wording.
+Gemini: example 3D turnaround sets + more sky/cloud art. Grok: a spec for the safe SVG import (what to strip).

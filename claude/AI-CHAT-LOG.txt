@@ -1,0 +1,53 @@
+G-WARP - CLAUDE AI CHAT LOG (created 2026-10-25T20:01:56Z from team/AI-CHAT-LOG-TEMPLATE.txt; append only)
+Earlier Claude work is recorded in AI-TEAM.txt (RELEASED / ASSIGNED lines) - this file starts on 2026-10-25.
+
+--- ENTRY 1 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-25T20:01:56Z
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: AI-DEV-T0 - save the "G-Warp AI Developer" idea + resume prompt; park the airplane sky / 3D ideas
+Branch / starting commit: main @ a3ba3be
+
+USER REQUEST (verbatim):
+"sorry to change the topick but readn git hup firt the create a pront and save the idea to your file so we continue later on and do this and take over and do this pls keep in maid this is a test not a relise pls. you mai what to chek my pc first to conform this. As you can see, this is just a wild idea that I have for some random reason. After discovering that I can just have the model that Olama used. So I was like, okay, let's see. Maybe I can tell Claude to add it as a temporary thing, of course only for my computer only, to be pretty much pretending to be UR AI, so that way it can actually, you know, do something. And at the same time, maybe it'll be able to, you know, create the game. Let's give it a big game. That's what I thought in my mind. Let's give it a big game and see how it does."
+(+ attachment: the "G-WARP AI DEVELOPER ULTIMATE MASTER ENGINEERING SPECIFICATION", saved verbatim.)
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Read GitHub first; save the idea + a prompt so work can continue later; start the work as a TEST (not a release).
+The spec's Part 29 says planning only: no app.html edits, no installs, no model downloads until the owner says OK.
+
+PROGRESS / AI RESPONSE:
+- Pulled main; read the new ChatGPT logging gate (TODO.txt) and created this personal log.
+- Saved the spec verbatim; wrote the Phase 0 audit + test plan (T0-T5) from a source check of app.html v15.50.7.
+- Wrote a resume prompt for any future Claude chat.
+- Parked the 2026-10-20 airplane ideas (sky draft art + plans for 3D vector / AI recreation / background grow).
+- Could NOT check the owner's PC: this cloud session is not linked to his computer (no device tools present).
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- TEST ONLY, owner's computer only; nothing in the public app or website. Planning only until the owner approves.
+- Airplane project stays private: only its world size was used; the sky art is G-Warp's own.
+
+FILES CHANGED:
+- team/ideas/ai-developer/MASTER-SPEC-2026-10-25.md - new (owner's spec, verbatim)
+- team/ideas/ai-developer/PHASE0-AUDIT-AND-PLAN-2026-10-25.md - new
+- team/ideas/ai-developer/RESUME-PROMPT.txt - new
+- team/ideas/AIRPLANE-SKY-3D-2026-10-20.txt - new
+- claude/experiments/airplane-sky/world-sky.svg, cloud-layer-tile.svg, make_sky.py - new (own art)
+- claude/AI-CHAT-LOG.txt - new; AI-TEAM.txt - one line
+
+COMMANDS / TESTS / RESULTS:
+- grep checks of app.html for the spec's integration points (results in the plan, table 1).
+- No browser test, no PC check, no Ollama call.
+
+EVIDENCE CLASS:
+- STATIC-ANALYSIS / SOURCE-VERIFIED for the audit table; owner's PC facts NOT-TESTED (from the spec only).
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The owner's PC can't be reached from this session; to check it, open the chat in the Claude desktop app on that PC and link it.
+
+NEXT STEP / HANDOFF:
+- Owner: link the PC (or start the resume prompt in a linked chat) and say OK -> Claude runs T0 (real PC check).
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---
