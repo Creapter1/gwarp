@@ -1,5 +1,5 @@
 You write RECIPES that teach G-Warp's built-in AI helper (GWrap AI). G-Warp = a free Scratch-style block-coding app for kids.
-ITEMS (in order; after PH-116 invent new useful kid game/app skills, never repeating a title):
+ITEMS (in order; skip any drawing/pen item; after PH-116 invent new useful kid game/app skills, never repeating a title):
 PH-061 follow another sprite; PH-062 look at the mouse (point towards); PH-063 shake effect; PH-064 ghost effect fade; PH-065 whirl effect pulse; PH-066 stamp a trail with the pen; PH-067 draw a square with the pen; PH-068 draw a star with the pen; PH-069 random colour pen; PH-070 list of names - say a random one; PH-071 quiz with 3 questions; PH-072 dice roller; PH-073 coin flip; PH-074 rock paper scissors vs computer; PH-075 say what you type; PH-076 stage click counter; PH-077 dodge the falling things; PH-078 move only inside a box; PH-079 smooth movement with a speed variable; PH-080 friction: slow down; PH-081 double jump; PH-082 wall bounce for a ball; PH-083 paddle follows mouse x; PH-084 breakout ball; PH-085 pong ball with two paddles; PH-086 snake head moves on a grid; PH-087 grid step movement (tile size 30); PH-088 camera scroll variable; PH-089 parallax two layers; PH-090 health bar with costumes; PH-091 power-up: faster for 5 seconds; PH-092 shield on key press; PH-093 dash with key a; PH-094 knockback when hit; PH-095 checkpoint saves x/y; PH-096 boss with 3 hits; PH-097 day/night backdrop timer; PH-098 animated walk with 2 costumes; PH-099 idle breathing (size pulse); PH-100 talk: 3 lines of dialogue; PH-101 chat bot answers yes/no; PH-102 add names to a list in order; PH-103 reverse a word; PH-104 count letters in a word; PH-105 join words into a sentence; PH-106 random password from letters; PH-107 clock with the timer; PH-108 stopwatch start/stop; PH-109 metronome beat with a sound; PH-110 keys play notes (start sound); PH-111 teleport between two doors; PH-112 spawn enemies every 2 seconds; PH-113 enemy patrol left-right; PH-114 score popup that floats up; PH-115 confetti clones on win; PH-116 make a button sprite
 EVERYTHING you need is in this message. Do NOT browse or search (the app may show "Content of the URL" errors for words that look like links: ignore them), do NOT plan or explain at length. Answer FAST.
 
@@ -17,6 +17,10 @@ EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 20 items o
   {"r": ["get_var", [], ["score"]]}, {"r": ["answer"]}, {"r": ["x_position"]}. NEVER put {"type": ...} in an input.
   {"type": ...} value nodes are ONLY used inside "cond" (conditions), and a "cond" can NOT contain {"r": ...}.
   Every variable/list the script uses goes in "prep": {"vars": ["score"], "lists": ["my list"]} on the recipe.
+  Inside "cond", numbers/words are literal nodes too: {"type": "op_eq", "args": [{"type": "answer"}, {"type": "literal", "value": "5"}]}.
+- The script must REALLY do what the title says using only the listed blocks. Pen blocks are NOT in the list: no drawing recipes.
+  To follow/chase another sprite use point_towards (menu = that sprite) + move. A falling loop must stop at the bottom
+  (repeat_until y position < -165), not "touching edge" (it starts at the top edge).
   C-blocks (forever, repeat, if, if_else, repeat_until): extra {"body": [...]} (if_else also "else": [...]);
   if / if_else / repeat_until / wait_until need extra {"cond": <condition node>}.
 - Condition nodes: key_pressed, mouse_down, op_and, op_contains, op_eq, op_gt, op_lt, op_not, op_or, touching_edge, touching_pointer, touching_sprite

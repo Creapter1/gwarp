@@ -46,7 +46,7 @@ P = f"""=====================================================================
 =====================================================================
 -----------------------------------------------------------------------------------------------
 You write RECIPES that teach G-Warp's built-in AI helper (GWrap AI). G-Warp = a free Scratch-style block-coding app for kids.
-ITEMS (in order; after PH-116 invent new useful kid game/app skills, never repeating a title):
+ITEMS (in order; skip any drawing/pen item; after PH-116 invent new useful kid game/app skills, never repeating a title):
 {items}
 EVERYTHING you need is in this message. Do NOT browse, do NOT look anything up, do NOT plan or explain at length. Answer FAST.
 
@@ -64,6 +64,10 @@ EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 20 items o
   {{"r": ["get_var", [], ["score"]]}}, {{"r": ["answer"]}}, {{"r": ["x_position"]}}. NEVER put {{"type": ...}} in an input.
   {{"type": ...}} value nodes are ONLY used inside "cond" (conditions), and a "cond" can NOT contain {{"r": ...}}.
   Every variable/list the script uses goes in "prep": {{"vars": ["score"], "lists": ["my list"]}} on the recipe.
+  Inside "cond", numbers/words are literal nodes too: {{"type": "op_eq", "args": [{{"type": "answer"}}, {{"type": "literal", "value": "5"}}]}}.
+- The script must REALLY do what the title says using only the listed blocks. Pen blocks are NOT in the list: no drawing recipes.
+  To follow/chase another sprite use point_towards (menu = that sprite) + move. A falling loop must stop at the bottom
+  (repeat_until y position < -165), not "touching edge" (it starts at the top edge).
   C-blocks (forever, repeat, if, if_else, repeat_until): extra {{"body": [...]}} (if_else also "else": [...]);
   if / if_else / repeat_until / wait_until need extra {{"cond": <condition node>}}.
 - Condition nodes: {', '.join(sorted(v.COND_NODES))}

@@ -683,3 +683,10 @@ UTC timestamp: 2026-10-26T16:41:59Z (owner 12:41 his time)   Who: Claude (config
 USER REQUEST: "go ahead and do the counting, because apparently that is the daily limit for Claude Opus 5.5 ... It is literally just telling me to choose a different model."
 COUNT (from what reached Claude; the phone chats themselves are not visible to me): 1 (first single recipe) + ~5 (packs PH-001..040 in 4 answers, PH-041..060 in 1) + 3 (limits test A, B, C) = about 9-10 Opus messages today. Noted in ai-team/phone/PHONE-BOT-PROMPT.txt: ~10/day, use them for 20-recipe answers, other models can use the same starter (checker + fixer clean their output).
 --- END ENTRY ---
+
+--- ENTRY 30 ---
+UTC timestamp: 2026-10-26T16:46:58Z (owner 12:46 his time)   Who: Claude (configured claude-opus-5-5)   Task: PHONE-6 check PH-061..080
+USER REQUEST: attached the next phone pack (PH-061..080, 20 recipes, NEXT PH-081).
+DONE: fix_phone_pack.py now turns plain values inside conditions into literal nodes; 14 errors fixed; hand review: 2 logic bugs fixed (follow-sprite, dodge-falling), 4 pen recipes dropped (no pen blocks in the list). 16 recipes PASS -> ai-team/shared/2026-10-26-phone-recipes-PH-061-080/ (+ NOTES.md). Rules page: literal-in-cond rule, title-must-be-true rule, no pen recipes, follow/fall patterns.
+EVIDENCE: validator TESTED; runtime NOT-TESTED.
+--- END ENTRY ---

@@ -2,6 +2,7 @@
 """Fixes phone-bot packs to the exact GWrap format (Claude, 2026-10-26):
  - a value node {"type": ...} used as a block INPUT becomes a reporter block {"r": [...]} (value nodes are only for conditions)
  - adds "prep": {"vars": [...], "lists": [...]} for variables/lists the script uses
+- plain strings inside conditions become literal nodes
 Usage: python3 ai-team/phone/fix_phone_pack.py in.json out.json"""
 import json, sys, re
 REP = {'op_add', 'op_sub', 'op_mul', 'op_div', 'op_random', 'op_join'}
@@ -16,9 +17,15 @@ def fix_block(b):
     if len(b) > 1 and isinstance(b[1], list):
         b[1] = [fix_input(v) for v in b[1]]
     if len(b) > 3 and isinstance(b[3], dict):
+        if 'cond' in b[3]: b[3]['cond'] = fix_cond(b[3]['cond'])
         for k in ('body', 'else'):
             if isinstance(b[3].get(k), list): b[3][k] = [fix_block(x) for x in b[3][k]]
     return b
+def fix_cond(n):
+    """inside conditions: plain strings/numbers become literal nodes, args are fixed recursively"""
+    if isinstance(n, (str, int, float)): return {'type': 'literal', 'value': str(n)}
+    if isinstance(n, dict) and isinstance(n.get('args'), list): n['args'] = [fix_cond(a) for a in n['args']]
+    return n
 def fix_input(v):
     if isinstance(v, dict):
         if 'r' in v: v['r'] = fix_block(v['r']); return v

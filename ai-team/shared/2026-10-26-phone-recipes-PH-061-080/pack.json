@@ -1,0 +1,1713 @@
+{
+ "version": 1,
+ "note": "phone recipes PH-061..PH-080",
+ "recipes": [
+  {
+   "id": "r-ph-follow-sprite",
+   "emoji": "🐾",
+   "title": "Follow another sprite",
+   "keys": [
+    "follow",
+    "sprite",
+    "chase",
+    "friend",
+    "pet",
+    "behind"
+   ],
+   "q": [
+    "make my sprite follow another sprite",
+    "how do i chase my freind sprite",
+    "pet that goes after the player"
+   ],
+   "steps": [
+    "Put this on the follower. Pick the sprite to follow in the point towards menu.",
+    "Forever: if it is not touching that sprite yet, it turns to it and moves 3 steps.",
+    "So it walks behind the other sprite like a pet!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_rotation_style",
+      [],
+      [
+       "left-right"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_not",
+           "args": [
+            {
+             "type": "touching_sprite",
+             "target": "OTHER_SPRITE"
+            }
+           ]
+          },
+          "body": [
+           [
+            "point_towards",
+            [],
+            [
+             "OTHER_SPRITE"
+            ]
+           ],
+           [
+            "move",
+            [
+             "3"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-look-at-mouse",
+   "emoji": "👀",
+   "title": "Look at the mouse",
+   "keys": [
+    "look",
+    "mouse",
+    "point",
+    "face",
+    "cursor",
+    "towards"
+   ],
+   "q": [
+    "make my sprite look at the mouse",
+    "face my cursor",
+    "sprite points to mowse"
+   ],
+   "steps": [
+    "Green flag: the sprite checks forever.",
+    "It turns to face the mouse pointer."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "point_towards",
+         [],
+         [
+          "mouse-pointer"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-shake-effect",
+   "emoji": "🫨",
+   "title": "Shake effect when clicked",
+   "keys": [
+    "shake",
+    "wiggle",
+    "tremble",
+    "click",
+    "effect",
+    "jiggle"
+   ],
+   "q": [
+    "make my sprite shake",
+    "wiggle when i click it",
+    "shaking efect"
+   ],
+   "steps": [
+    "When you click the sprite, it starts.",
+    "It turns left and right quickly.",
+    "Then it faces straight again."
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "repeat",
+      [
+       "6"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "turn_cw",
+         [
+          "10"
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.05"
+         ]
+        ],
+        [
+         "turn_ccw",
+         [
+          "20"
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.05"
+         ]
+        ],
+        [
+         "turn_cw",
+         [
+          "10"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "point_direction",
+      [
+       "90"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-ghost-fade",
+   "emoji": "👻",
+   "title": "Ghost fade out and in",
+   "keys": [
+    "ghost",
+    "fade",
+    "invisible",
+    "transparent",
+    "disappear",
+    "effect"
+   ],
+   "q": [
+    "make my sprite fade away",
+    "ghost efect fade in and out",
+    "see through sprite"
+   ],
+   "steps": [
+    "Green flag: the sprite fades by small steps.",
+    "It becomes almost invisible.",
+    "Then it fades back in."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "clear_effects"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "repeat",
+         [
+          "20"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_ghost",
+            [
+             "5"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "0.05"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "repeat",
+         [
+          "20"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_ghost",
+            [
+             "-5"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "0.05"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-whirl-pulse",
+   "emoji": "🌀",
+   "title": "Whirl effect pulse",
+   "keys": [
+    "whirl",
+    "swirl",
+    "twist",
+    "pulse",
+    "effect",
+    "spin"
+   ],
+   "q": [
+    "make a whirl effect",
+    "swirly pulse on my sprite",
+    "twist efect again and again"
+   ],
+   "steps": [
+    "Green flag: the whirl grows bit by bit.",
+    "Then it shrinks back.",
+    "It repeats forever."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "clear_effects"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "repeat",
+         [
+          "15"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_effect",
+            [
+             "10"
+            ],
+            [
+             "whirl"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "0.03"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "repeat",
+         [
+          "15"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_effect",
+            [
+             "-10"
+            ],
+            [
+             "whirl"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "0.03"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-random-name",
+   "emoji": "📝",
+   "title": "Say a random name from a list",
+   "keys": [
+    "list",
+    "names",
+    "random",
+    "pick",
+    "say",
+    "choose"
+   ],
+   "q": [
+    "pick a random name from my list",
+    "say one of my names",
+    "random item from a list"
+   ],
+   "steps": [
+    "Green flag: the list gets 3 names.",
+    "Click the sprite to pick a random number.",
+    "The sprite says that item."
+   ],
+   "prep": {
+    "lists": [
+     "names"
+    ]
+   },
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "list_clear",
+      [],
+      [
+       "names"
+      ]
+     ],
+     [
+      "list_add",
+      [
+       "Sam"
+      ],
+      [
+       "names"
+      ]
+     ],
+     [
+      "list_add",
+      [
+       "Mia"
+      ],
+      [
+       "names"
+      ]
+     ],
+     [
+      "list_add",
+      [
+       "Leo"
+      ],
+      [
+       "names"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "say",
+      [
+       {
+        "r": [
+         "list_item",
+         [
+          {
+           "r": [
+            "op_random",
+            [
+             "1",
+             {
+              "r": [
+               "list_length",
+               [],
+               [
+                "names"
+               ]
+              ]
+             }
+            ]
+           ]
+          }
+         ],
+         [
+          "names"
+         ]
+        ]
+       },
+       "2"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-quiz-three",
+   "emoji": "❓",
+   "title": "Quiz with 3 questions",
+   "keys": [
+    "quiz",
+    "questions",
+    "ask",
+    "answer",
+    "score",
+    "test"
+   ],
+   "q": [
+    "make a quiz game",
+    "ask 3 questions and count score",
+    "quiz with points"
+   ],
+   "steps": [
+    "Green flag: the score starts at 0.",
+    "The sprite asks a question and checks your answer.",
+    "Each right answer adds 1 to the score."
+   ],
+   "prep": {
+    "vars": [
+     "score"
+    ]
+   },
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "score"
+      ]
+     ],
+     [
+      "ask",
+      [
+       "What is 2 + 3?"
+      ]
+     ],
+     [
+      "if",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_eq",
+        "args": [
+         {
+          "type": "answer"
+         },
+         {
+          "type": "literal",
+          "value": "5"
+         }
+        ]
+       },
+       "body": [
+        [
+         "change_var",
+         [
+          "1"
+         ],
+         [
+          "score"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "ask",
+      [
+       "What colour is the sky?"
+      ]
+     ],
+     [
+      "if",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_eq",
+        "args": [
+         {
+          "type": "answer"
+         },
+         {
+          "type": "literal",
+          "value": "blue"
+         }
+        ]
+       },
+       "body": [
+        [
+         "change_var",
+         [
+          "1"
+         ],
+         [
+          "score"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "ask",
+      [
+       "How many legs does a dog have?"
+      ]
+     ],
+     [
+      "if",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_eq",
+        "args": [
+         {
+          "type": "answer"
+         },
+         {
+          "type": "literal",
+          "value": "4"
+         }
+        ]
+       },
+       "body": [
+        [
+         "change_var",
+         [
+          "1"
+         ],
+         [
+          "score"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "say",
+      [
+       {
+        "r": [
+         "op_join",
+         [
+          "Your score: ",
+          {
+           "r": [
+            "get_var",
+            [],
+            [
+             "score"
+            ]
+           ]
+          }
+         ]
+        ]
+       },
+       "3"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-dice-roller",
+   "emoji": "🎲",
+   "title": "Dice roller",
+   "keys": [
+    "dice",
+    "roll",
+    "random",
+    "number",
+    "die",
+    "luck"
+   ],
+   "q": [
+    "make a dice",
+    "roll a die when i click",
+    "random number 1 to 6"
+   ],
+   "steps": [
+    "Click the sprite to roll.",
+    "It picks a random number from 1 to 6.",
+    "The sprite says the number."
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "say",
+      [
+       {
+        "r": [
+         "op_random",
+         [
+          "1",
+          "6"
+         ]
+        ]
+       },
+       "2"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-coin-flip",
+   "emoji": "🪙",
+   "title": "Coin flip",
+   "keys": [
+    "coin",
+    "flip",
+    "heads",
+    "tails",
+    "random",
+    "toss"
+   ],
+   "q": [
+    "flip a coin",
+    "heads or tails game",
+    "toss coin when i click"
+   ],
+   "steps": [
+    "Click the sprite to flip.",
+    "A random number 1 or 2 is picked.",
+    "1 says Heads, 2 says Tails."
+   ],
+   "prep": {
+    "vars": [
+     "flip"
+    ]
+   },
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "set_var",
+      [
+       {
+        "r": [
+         "op_random",
+         [
+          "1",
+          "2"
+         ]
+        ]
+       }
+      ],
+      [
+       "flip"
+      ]
+     ],
+     [
+      "if_else",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_eq",
+        "args": [
+         {
+          "type": "get_var",
+          "name": "flip"
+         },
+         {
+          "type": "literal",
+          "value": "1"
+         }
+        ]
+       },
+       "body": [
+        [
+         "say",
+         [
+          "Heads!",
+          "2"
+         ]
+        ]
+       ],
+       "else": [
+        [
+         "say",
+         [
+          "Tails!",
+          "2"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-rock-paper-scissors",
+   "emoji": "✊",
+   "title": "Rock paper scissors vs computer",
+   "keys": [
+    "rock",
+    "paper",
+    "scissors",
+    "game",
+    "computer",
+    "versus"
+   ],
+   "q": [
+    "rock paper scisors game",
+    "play against the computer",
+    "make rps game"
+   ],
+   "steps": [
+    "Green flag: you type 1 rock, 2 paper or 3 scissors.",
+    "The computer picks a random number.",
+    "The sprite says who won."
+   ],
+   "prep": {
+    "vars": [
+     "cpu",
+     "me"
+    ]
+   },
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "ask",
+      [
+       "Type 1=rock 2=paper 3=scissors"
+      ]
+     ],
+     [
+      "set_var",
+      [
+       {
+        "r": [
+         "answer"
+        ]
+       }
+      ],
+      [
+       "me"
+      ]
+     ],
+     [
+      "set_var",
+      [
+       {
+        "r": [
+         "op_random",
+         [
+          "1",
+          "3"
+         ]
+        ]
+       }
+      ],
+      [
+       "cpu"
+      ]
+     ],
+     [
+      "if_else",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_eq",
+        "args": [
+         {
+          "type": "get_var",
+          "name": "me"
+         },
+         {
+          "type": "get_var",
+          "name": "cpu"
+         }
+        ]
+       },
+       "body": [
+        [
+         "say",
+         [
+          "Draw!",
+          "2"
+         ]
+        ]
+       ],
+       "else": [
+        [
+         "if_else",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_or",
+           "args": [
+            {
+             "type": "op_and",
+             "args": [
+              {
+               "type": "op_eq",
+               "args": [
+                {
+                 "type": "get_var",
+                 "name": "me"
+                },
+                {
+                 "type": "literal",
+                 "value": "1"
+                }
+               ]
+              },
+              {
+               "type": "op_eq",
+               "args": [
+                {
+                 "type": "get_var",
+                 "name": "cpu"
+                },
+                {
+                 "type": "literal",
+                 "value": "3"
+                }
+               ]
+              }
+             ]
+            },
+            {
+             "type": "op_or",
+             "args": [
+              {
+               "type": "op_and",
+               "args": [
+                {
+                 "type": "op_eq",
+                 "args": [
+                  {
+                   "type": "get_var",
+                   "name": "me"
+                  },
+                  {
+                   "type": "literal",
+                   "value": "2"
+                  }
+                 ]
+                },
+                {
+                 "type": "op_eq",
+                 "args": [
+                  {
+                   "type": "get_var",
+                   "name": "cpu"
+                  },
+                  {
+                   "type": "literal",
+                   "value": "1"
+                  }
+                 ]
+                }
+               ]
+              },
+              {
+               "type": "op_and",
+               "args": [
+                {
+                 "type": "op_eq",
+                 "args": [
+                  {
+                   "type": "get_var",
+                   "name": "me"
+                  },
+                  {
+                   "type": "literal",
+                   "value": "3"
+                  }
+                 ]
+                },
+                {
+                 "type": "op_eq",
+                 "args": [
+                  {
+                   "type": "get_var",
+                   "name": "cpu"
+                  },
+                  {
+                   "type": "literal",
+                   "value": "2"
+                  }
+                 ]
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          },
+          "body": [
+           [
+            "say",
+            [
+             "You win!",
+             "2"
+            ]
+           ]
+          ],
+          "else": [
+           [
+            "say",
+            [
+             "Computer wins!",
+             "2"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-say-what-you-type",
+   "emoji": "⌨️",
+   "title": "Say what you type",
+   "keys": [
+    "type",
+    "say",
+    "ask",
+    "answer",
+    "repeat",
+    "talk"
+   ],
+   "q": [
+    "make my sprite say what i type",
+    "sprite repeats my words",
+    "ask and then say the answer"
+   ],
+   "steps": [
+    "Green flag: the sprite asks you to type.",
+    "It takes your answer.",
+    "Then it says it out loud."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "ask",
+      [
+       "Type something!"
+      ]
+     ],
+     [
+      "say",
+      [
+       {
+        "r": [
+         "answer"
+        ]
+       },
+       "3"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-stage-click-counter",
+   "emoji": "🖱️",
+   "title": "Click counter",
+   "keys": [
+    "click",
+    "counter",
+    "count",
+    "score",
+    "clicker",
+    "tap"
+   ],
+   "q": [
+    "count my clicks",
+    "clicker game",
+    "add 1 every time i click"
+   ],
+   "steps": [
+    "Green flag: the counter starts at 0.",
+    "Each click on the sprite adds 1.",
+    "The sprite shows the number."
+   ],
+   "prep": {
+    "vars": [
+     "clicks"
+    ]
+   },
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "clicks"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "clicks"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "change_var",
+      [
+       "1"
+      ],
+      [
+       "clicks"
+      ]
+     ],
+     [
+      "say_only",
+      [
+       {
+        "r": [
+         "get_var",
+         [],
+         [
+          "clicks"
+         ]
+        ]
+       }
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-dodge-falling",
+   "emoji": "☄️",
+   "title": "Dodge the falling things",
+   "keys": [
+    "dodge",
+    "falling",
+    "avoid",
+    "catch",
+    "rain",
+    "enemy"
+   ],
+   "q": [
+    "make things fall and i dodge them",
+    "falling rocks game",
+    "avoid the falling stuff"
+   ],
+   "steps": [
+    "The falling sprite starts at a random spot at the top.",
+    "It drops down until it is near the bottom.",
+    "Then it jumps back to the top at a new spot. Move your player to dodge it!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "goto_xy",
+         [
+          {
+           "r": [
+            "op_random",
+            [
+             "-200",
+             "200"
+            ]
+           ]
+          },
+          "170"
+         ]
+        ],
+        [
+         "repeat_until",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_lt",
+           "args": [
+            {
+             "type": "y_position"
+            },
+            {
+             "type": "literal",
+             "value": "-165"
+            }
+           ]
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "-6"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-move-in-box",
+   "emoji": "📦",
+   "title": "Move only inside a box",
+   "keys": [
+    "box",
+    "limit",
+    "inside",
+    "boundary",
+    "stay",
+    "keep"
+   ],
+   "q": [
+    "keep my sprite inside a box",
+    "stop sprite leaving the area",
+    "limit movement"
+   ],
+   "steps": [
+    "Arrow keys move the sprite.",
+    "If it goes too far, it is put back at the limit.",
+    "The box goes from -100 to 100."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "right arrow"
+          },
+          "body": [
+           [
+            "change_x",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "left arrow"
+          },
+          "body": [
+           [
+            "change_x",
+            [
+             "-5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "up arrow"
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "down arrow"
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "-5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_gt",
+           "args": [
+            {
+             "type": "x_position"
+            },
+            {
+             "type": "literal",
+             "value": "100"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_x",
+            [
+             "100"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_lt",
+           "args": [
+            {
+             "type": "x_position"
+            },
+            {
+             "type": "literal",
+             "value": "-100"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_x",
+            [
+             "-100"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_gt",
+           "args": [
+            {
+             "type": "y_position"
+            },
+            {
+             "type": "literal",
+             "value": "100"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_y",
+            [
+             "100"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_lt",
+           "args": [
+            {
+             "type": "y_position"
+            },
+            {
+             "type": "literal",
+             "value": "-100"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_y",
+            [
+             "-100"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-smooth-speed",
+   "emoji": "🏎️",
+   "title": "Smooth movement with speed",
+   "keys": [
+    "smooth",
+    "speed",
+    "accelerate",
+    "movement",
+    "variable",
+    "glide"
+   ],
+   "q": [
+    "make smooth movement",
+    "speed up slowly when i press a key",
+    "car that accelerates"
+   ],
+   "steps": [
+    "A speed variable starts at 0.",
+    "Holding right arrow makes speed go up a little.",
+    "The sprite moves by the speed each frame."
+   ],
+   "prep": {
+    "vars": [
+     "speed"
+    ]
+   },
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "speed"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "right arrow"
+          },
+          "body": [
+           [
+            "change_var",
+            [
+             "0.5"
+            ],
+            [
+             "speed"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "left arrow"
+          },
+          "body": [
+           [
+            "change_var",
+            [
+             "-0.5"
+            ],
+            [
+             "speed"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "change_x",
+         [
+          {
+           "r": [
+            "get_var",
+            [],
+            [
+             "speed"
+            ]
+           ]
+          }
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-friction-slow",
+   "emoji": "🧊",
+   "title": "Friction: slow down",
+   "keys": [
+    "friction",
+    "slow",
+    "slide",
+    "ice",
+    "stop",
+    "glide"
+   ],
+   "q": [
+    "make my sprite slow down slowly",
+    "slide and stop like ice",
+    "friction for movement"
+   ],
+   "steps": [
+    "Arrow keys push the speed up or down.",
+    "Each frame the speed is multiplied by 0.9.",
+    "So the sprite slides and then stops."
+   ],
+   "prep": {
+    "vars": [
+     "speed"
+    ]
+   },
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "speed"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "right arrow"
+          },
+          "body": [
+           [
+            "change_var",
+            [
+             "1"
+            ],
+            [
+             "speed"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "left arrow"
+          },
+          "body": [
+           [
+            "change_var",
+            [
+             "-1"
+            ],
+            [
+             "speed"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "set_var",
+         [
+          {
+           "r": [
+            "op_mul",
+            [
+             {
+              "r": [
+               "get_var",
+               [],
+               [
+                "speed"
+               ]
+              ]
+             },
+             "0.9"
+            ]
+           ]
+          }
+         ],
+         [
+          "speed"
+         ]
+        ],
+        [
+         "change_x",
+         [
+          {
+           "r": [
+            "get_var",
+            [],
+            [
+             "speed"
+            ]
+           ]
+          }
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  }
+ ],
+ "tips": []
+}
