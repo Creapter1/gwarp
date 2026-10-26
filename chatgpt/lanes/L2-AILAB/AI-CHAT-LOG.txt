@@ -64,3 +64,78 @@ NEXT STEP / HANDOFF:
 CHAT HISTORY COMPLETENESS:
 COMPLETE FOR THIS TASK SESSION START; no earlier AIM-K1 work has been assumed.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION CLOSEOUT / PROGRESS SUMMARY
+UTC timestamp: 2026-10-26T19:28:18.797Z
+AI / agent / exact model identity: ChatGPT / GPT-6
+Task ID / title: AIM-K1 — Basic Knowledge for G-Warp AI
+Branch / ending commit before this log update: main / 7541a7e47ccb6a6d45d2a7e958f391e2f94cd5cf
+
+USER REQUEST:
+"AIM-K1 = BASIC KNOWLEDGE for G-Warp's AI" with approximately 120 verified usage tips, short AI rules plus 20 refusal examples, recipe gaps only; read the specified recipe/catalog/rules sources; validate the pack; never edit app.html; push after each part.
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- AIM-K1 only. AIM-0 model research remains after this task.
+- Use the new lane path chatgpt/lanes/L2-AILAB/; do not use the old chatgpt/ai-lab/ path.
+- Never edit app.html or index.html; no integration.
+- Every usage tip must be true for current app source or QA-kit tested; no unsupported claims.
+- Deliver 120 tips, rules under 350 words plus 20 refusals, and a gaps-only list.
+- Exact Python validator should say PASS; if unavailable, report honestly.
+
+PROGRESS / AI RESPONSE:
+- Read the new lane instructions, lane README, team rulebook, AI log template, starter pack, all three checked phone-recipe packs, block catalog, AIM model section 3, and validator source.
+- Audited current app.html blob Beta v15.54.0, SHA 7ef2e8d17081354e66fc6138ae9cc8a639b839d9, using GitHub blob content. This is SOURCE-VERIFIED, not browser verification.
+- Built a 120-tip knowledge pack; corrected paint Clear wording and Sound Studio FX names after source re-check.
+- Added AI rules (288 words) with 20 refusal examples and friendly answers.
+- Calculated recipe gaps by matching all 139 existing recipe scripts (8 starter + 131 checked phone recipes) against the 176-block catalog.
+- Added NOTES.md with evidence map, source SHA, recipe corpus counts, validation status, and next action.
+- All deliverable files were committed individually and fetched back from GitHub.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- app.html Beta v15.54.0 remains untouched; app/index files were not edited.
+- Paint simple panel: Brush, Eraser, colour, size, Clear, and costume sidebar; do not claim Fill/Text tools in this panel.
+- Sound Studio effects documented by source: Faster, Slower, Louder, Softer, Fade in, Fade out, Reverse, Echo, Robot.
+- 300 clone default is source-confirmed (app.html lines 4185, 13905-13910, 18850).
+- SOURCE-VERIFIED only; no QA-kit/browser run was performed.
+- Validator-equivalent check mirrors the fetched Python validator rules for this tips-only pack and reported PASS / 0 errors / 0 warnings. The exact requested Python CLI was NOT RUN because this connected environment has no shell/Python runner. A local checkout still needs to run the exact command.
+- Shell git pull could not run; main was synced by reading GitHub branch/file APIs. Do not claim shell git pull occurred.
+
+FILES CHANGED (this session):
+- chatgpt/lanes/L2-AILAB/AI-CHAT-LOG.txt — session start was created first (commit 34806963baf1ff8310892290828d86f8f3c0246f); this closeout is appended now.
+- ai-team/shared/2026-10-26-chatgpt-AIM-K1/pack.json — 120 tips; initial commit 34a6dce426fe272f6ed48d57874fe751d46621ee; source accuracy revision commit e21a579a66fb77758bbd01df06c1af853cd1c8d2.
+- ai-team/shared/2026-10-26-chatgpt-AIM-K1/AI-RULES-SHORT.txt — 288-word rules + 20 refusal examples; commit d822ea1c4222ae207329af2593accffff51cec07.
+- ai-team/shared/2026-10-26-chatgpt-AIM-K1/GAPS.md — recipe gap list; commit 9f434003501070d3be05f9e506887254ea23389b.
+- ai-team/shared/2026-10-26-chatgpt-AIM-K1/NOTES.md — source evidence and handoff; commit 7541a7e47ccb6a6d45d2a7e958f391e2f94cd5cf.
+- No app.html or index.html changes.
+
+COMMANDS / TESTS / RESULTS:
+- Remote branch main ending before log: 7541a7e47ccb6a6d45d2a7e958f391e2f94cd5cf.
+- Read-back verification: pack has 120 tips, 0 recipes; all IDs unique; each has 3+ q questions; no validator errors or warnings in the validator-equivalent check.
+- Rules read-back: 288 words in rule section; exactly 20 refusal examples.
+- Recipe source counts: starter 8; phone sets 60 + 16 + 55 = 131; corpus total 139; catalog = 176 blocks.
+- Validator-equivalent result: PASS (0 errors, 0 warnings). Exact command NOT RUN: python3 ai-team/tools/validate_gwrap_pack.py ai-team/shared/2026-10-26-chatgpt-AIM-K1/pack.json ai-team/gwrap-blocks.json.
+- Browser / QA kit tests: NOT RUN.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED: current app source and repository knowledge files read.
+- STATIC-ANALYSIS: recipe coverage and validator-equivalent validation.
+- NOT-TESTED: browser/QA-kit behavior; exact Python CLI.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The exact Python validator must still be run from a local checkout to satisfy the user's requested terminal output. Do not state that it was run here.
+- No runtime/browser tests were possible in this session.
+
+NEXT STEP / HANDOFF:
+- Owner or a shell-enabled lane runner should execute the exact Python validator command in NOTES.md and append its real output/result to this lane log. If PASS, AIM-K1 content is complete and AIM-0 can begin next, in the user's requested order.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — this closeout records the current AIM-K1 session and cited repository evidence; original historical chats are not reconstructed.
+
+GITHUB CLOSEOUT VERIFICATION:
+- Personal log commit SHA: PENDING — fill after this append is committed and read back.
+- Read-back URL/path: chatgpt/lanes/L2-AILAB/AI-CHAT-LOG.txt
+- Verified new entry is present at bottom: PENDING
+- Task status: PARTIAL — content deliverables committed; exact Python validator CLI and browser QA not run.
+--- END ENTRY ---
