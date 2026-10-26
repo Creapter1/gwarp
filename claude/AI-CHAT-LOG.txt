@@ -598,3 +598,9 @@ UTC timestamp: 2026-10-26T15:40:23Z (owner 11:40 his time)   Who: Claude (config
 Starting commit: aeb14ac
 USER REQUEST (summary, his words): own melody exists -> also "your own bass, your own things of everything". Squares: Soundraw has 3 levels (light, mid, strong), ours "has four"; wanted cycle "Nothing, light, medium, a little bit hard, and extreme" with colour brightness per level. Testers: "needs a way to just remove the entire blocks completely and just make my music". Bug: while playing, changed squares ahead are not heard ("it will just play the previous music") - the next chunk must use the change. "add this to the to-do list ... figure out how to do that". (He may run out of ChatGPT usage.)
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 20) - 2026-10-26T15:41:23Z
+DONE: TODO "SONG MAKER - OWNER + TESTERS FEEDBACK" M1-M4; claude/PLAN-NEXT.md section M with checked facts (cells are on/off, level comes from the column energy; play() schedules whole parts <1.2 s ahead) and exact steps/tests; ChatGPT job ai-team/CHATGPT-MUSIC-ICONS-2026-10-26.txt (clear-all, empty-song, level-1..4, create-bass/beat/chords, my-part, A/B/C) + prompt order updated. No app change.
+EVIDENCE: SOURCE-VERIFIED (code read), NOT-TESTED (plans). COMMIT: dc1f3b0
+NEXT: next run follows PLAN-NEXT A then M (M3 bug first).
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
