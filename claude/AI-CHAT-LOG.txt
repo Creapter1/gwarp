@@ -666,3 +666,9 @@ USER REQUEST (summary): the phone app is "extremely limited" though the model is
 DONE: ai-team/phone/PHONE-LIMITS-TEST.txt - 3 short messages: A tools yes/no + open a raw GitHub URL (if it works, future prompts can just point to a URL) + run code + secret word at the end (detects cut pastes); B answer length (numbered lines to 600); C CAPABILITY CARD to send back to Claude.
 EVIDENCE: NOT-TESTED (owner runs it).
 --- END ENTRY ---
+
+--- ENTRY 28 ---
+UTC timestamp: 2026-10-26T16:37:56Z (owner 12:37 his time)   Who: Claude (configured claude-opus-5-5)   Task: PHONE-5 tune the phone prompt to the capability card
+CARD (from the owner): web_search NO; open_url YES (only URLs pasted in the user message, fetched by the app); read_files NO; run_code NO; make_files NO; images NO; memory PARTIAL; README first line "# G-Warp" read OK; prompt last item PH-116 (full prompt seen); secret word OK (no cut); 600 lines in one answer, not cut; ~20 recipes fit; the app auto-fetches anything that looks like a URL/filename ("0.05", "pack.py") -> junk errors. Bot warned PH-001..060 used the old format (already converted by Claude in entry 26).
+PLAN: tiny starter message with the raw GitHub URL of a bot-only rules file (no file names / decimals inside), 20 recipes per answer.
+--- (closeout follows) ---
