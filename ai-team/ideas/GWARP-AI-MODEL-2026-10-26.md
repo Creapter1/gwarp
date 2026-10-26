@@ -103,6 +103,27 @@ without using the user's computer ... just running in the browser ... up to 3 GB
 - Memory: a 0.2–0.7 GB model needs about 0.4–1 GB of the tab's memory. That's fine on most PCs; the AI stays off on weak devices.
 - The AI only loads when the user opens the AI panel, not on every app start, so people who never use it don't pay the download or the memory.
 
+## 0e. UPDATE 2026-10-26 09:23 (owner): how long to make a real "G-Warp model"?
+
+Owner: *"how long would it take to make G-Warp a unique model ... understand, read, and think ... only what it can do ... understand the user's
+input ... create the code, understand the code, and kind of help the user a little bit?"*
+
+**We don't build a model from zero** (that takes months, huge computers and millions of dollars). We **take a small free open model**
+(0.5–1.5B, e.g. Qwen / SmolLM2, licence checked in AIM-0) and **teach it G-Warp** (fine-tune a small add-on, called LoRA). Estimate,
+team working part-time in sessions (owner + Claude + ChatGPT). These are estimates, not promises:
+
+| Step | What | Time |
+|---|---|---|
+| 1 | Foundations: command list, project → text "Snapshot", script → text and back (AIM-1/2) | 1–2 weeks |
+| 2 | **Version 1 without training:** small model + recipes + locked JSON answers + "pick a recipe, fill the blanks" inside G-Warp | 2–3 weeks → **first helper after ~1 month** |
+| 3 | Teaching data: 3,000–10,000 examples (request → commands, script → explanation, bug → fix), each one **run in headless G-Warp** so only correct ones stay | 2–4 weeks |
+| 4 | Training: LoRA on a free GPU (Colab/Kaggle); the training itself takes hours, not weeks. Convert for the browser, host, test against the AIM-4 test set | ~1 week per round, 2–4 rounds |
+| | **A real "G-Warp model" that does the basics well** | **about 2–3 months** |
+
+Cost: about $0 with free GPU time (maybe $10–50 if we rent a faster GPU). After that, every new G-Warp feature = new examples and a quick retrain (a day or two).
+What to expect: it handles common requests (jump, score, enemies, "what does this script do?", "why doesn't my sprite move?"). It is **not**
+a ChatGPT. Big "make me a whole game" requests get broken into small steps, or answered with recipes.
+
 ## 1. The answer to "how does it understand and see?"
 
 A small model can't really *look* at the screen or the code. So G-Warp does the looking and the doing, and the model only makes the

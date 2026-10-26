@@ -505,3 +505,15 @@ month soft bandwidth = the real limit (~500 first-time users for a 204 MB model)
 main/fallback; load only when the AI panel opens.
 FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (section 0d). EVIDENCE: NOT-TESTED (plan).
 --- END ENTRY ---
+
+--- ENTRY 15 ---
+UTC timestamp: 2026-10-26T13:24:19Z (owner 09:23 his time)   Who: Claude (configured claude-opus-5-5)   Task: Q&A - how long to make a G-Warp model
+Starting commit: 8bf6b71
+USER REQUEST: "how long would it take to make G-Warp pretty much a unique model that can be run in G-Warp to be able to understand,
+read, and think ... only what he can do ... understand the user's input ... create the code, understand the code, and kind of help
+the user a little bit?" (He also said "Okay, so that just happened. ... we don't have that enough things." - meaning unclear, not acted on.)
+ANSWER: don't train from zero; fine-tune a small open model (LoRA). Estimate: foundations 1-2 weeks; version 1 without training
+(recipes + locked JSON) ~1 month total; teaching data 2-4 weeks; training rounds ~1 week each; good basic G-Warp model ~2-3 months
+part-time; ~$0-50. Not a ChatGPT: common requests + explaining code.
+FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (section 0e). EVIDENCE: NOT-TESTED (estimate).
+--- END ENTRY ---
