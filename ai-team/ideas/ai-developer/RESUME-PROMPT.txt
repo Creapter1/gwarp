@@ -6,8 +6,8 @@ You are continuing the "G-Warp AI Developer" test for the owner (Creapter1). Rep
 THIS IS A TEST ON THE OWNER'S OWN COMPUTER, NOT A RELEASE. Nothing goes into the public app or website.
 
 Read first, in this order:
-  1. team/ideas/ai-developer/MASTER-SPEC-2026-10-25.md       (owner's full spec - the rules)
-  2. team/ideas/ai-developer/PHASE0-AUDIT-AND-PLAN-2026-10-25.md  (what G-Warp already has + the test plan T0-T5)
+  1. ai-team/ideas/ai-developer/MASTER-SPEC-2026-10-25.md       (owner's full spec - the rules)
+  2. ai-team/ideas/ai-developer/PHASE0-AUDIT-AND-PLAN-2026-10-25.md  (what G-Warp already has + the test plan T0-T5)
   3. claude/AI-CHAT-LOG.txt (bottom entries) and the last 30 lines of AI-TEAM.txt
   4. TODO.txt rule "CRITICAL ZERO-EXCEPTION LOG GATE" - log your session in your own AI-CHAT-LOG.txt
 
@@ -26,5 +26,5 @@ ALSO PARKED (owner's earlier idea, 2026-10-20 - continue after or alongside):
   Airplane game (private test project "plaing-game-test", world about +-15,000): a sky that covers the whole world,
   a "3D vector" costume tab (extrude + rotate a 2D SVG into turnaround costumes, like Illustrator's 3D),
   an "AI recreation" tab (prompt + SVG description for any AI, safe SVG import), and "background grow" (make a bigger
-  seamless background from a small one). Notes: team/ideas/AIRPLANE-SKY-3D-2026-10-20.txt
+  seamless background from a small one). Notes: ai-team/ideas/AIRPLANE-SKY-3D-2026-10-20.txt
 ------------------------------------------------------------------------------------------------

@@ -3,6 +3,11 @@
  EVERY AI MUST READ THIS FILE FIRST, BEFORE STARTING ANY WORK.
 =====================================================================
 
+>>> 2026-10-26: ALL RULES ARE NOW IN ONE FILE: ai-team/README.md  (read it first; it wins if something below is older).
+    Team now: Claude Opus (claude/, integrates) + ChatGPT (chatgpt/) + Claude Haiku helper (claude/haiku/).
+    Gemini, Grok, DeepSeek are retired: their folders moved to ai-team/archive/ (nothing deleted). team/ is now ai-team/.
+    Finished art/code for the app goes in the drop box ai-team/shared/. The WORK LOG below is still where every AI adds one line per job.
+
 AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17) — REQUIRED FOR EVERY AI
 - Every active AI must keep a chronological conversation/context log inside its OWN folder named <ai-folder>/AI-CHAT-LOG.txt (for example, chatgpt/AI-CHAT-LOG.txt, gemini/AI-CHAT-LOG.txt, grok/AI-CHAT-LOG.txt). The former deepseek/AI-CHAT-LOG.txt path is historical only; DeepSeek is no longer an active role.
 - For each task/session, append the user's request accurately and the AI's response/handoff. Include date, task, files changed, evidence/test status, unresolved questions, and exact next step.

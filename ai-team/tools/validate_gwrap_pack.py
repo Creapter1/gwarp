@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Validate a GWrap AI knowledge pack (format: team/GEMINI-GWRAP-AI-300-2026-10-19.txt).
-Usage: python3 validate_gwrap_pack.py <pack.json> [team/gwrap-blocks.json] [other packs to check ids against...]
+"""Validate a GWrap AI knowledge pack (format: ai-team/archive/old-plans/GEMINI-GWRAP-AI-300-2026-10-19.txt).
+Usage: python3 validate_gwrap_pack.py <pack.json> [ai-team/gwrap-blocks.json] [other packs to check ids against...]
 Prints every problem and a summary; exit code 1 if anything is wrong. Written by Claude, 2026-10-19."""
 import json, sys, re, os
 
@@ -56,7 +56,7 @@ def main():
     def block(b, where, top=False):
         if not isinstance(b, list) or not b or not isinstance(b[0], str): errs.append(f'{where}: a block must be ["type", [inputs], [menus], {{...}}]'); return
         t = b[0]
-        if t not in B: errs.append(f'{where}: block type "{t}" does not exist in G-Warp (see team/gwrap-blocks.json)'); return
+        if t not in B: errs.append(f'{where}: block type "{t}" does not exist in G-Warp (see ai-team/gwrap-blocks.json)'); return
         info = B[t]
         inputs = b[1] if len(b) > 1 else []
         menus = b[2] if len(b) > 2 else []

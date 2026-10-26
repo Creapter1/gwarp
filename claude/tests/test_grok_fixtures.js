@@ -1,7 +1,7 @@
-// Runs Grok's GR1 Scratch-parity fixtures (grok/fixtures.json) in G-Warp for real (CL3): every fixture becomes one
+// Runs Grok's GR1 Scratch-parity fixtures (ai-team/archive/grok/fixtures.json) in G-Warp for real (CL3): every fixture becomes one
 // sprite with its own variables / lists in a Scratch 3 .sb3, loaded with Ctrl+O, green flag, then the say bubble,
 // variables and lists are compared with Grok's expected (Scratch 3) result.
-// Run: NODE_PATH=<playwright+jszip> node test_grok_fixtures.js ../../app.html ../../grok/fixtures.json
+// Run: NODE_PATH=<playwright+jszip> node test_grok_fixtures.js ../../app.html ../../ai-team/archive/grok/fixtures.json
 const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path'); const fs = require('fs'); const JSZip = require('jszip'); const crypto = require('crypto');
 const [file, fx] = process.argv.slice(2);
 const F0 = (() => { const d = JSON.parse(fs.readFileSync(fx, 'utf8')); return Array.isArray(d) ? d : (d.fixtures || d.cases || []); })();

@@ -4,7 +4,7 @@ const { chromium } = require('playwright');
 const path = require('path'), fs = require('fs');
 
 const KIT = path.resolve(__dirname, '..');
-const DEFAULT_APP = path.resolve(KIT, '..', '..', '..', 'app.html'); // team/tools/qa-kit -> repo root
+const DEFAULT_APP = path.resolve(KIT, '..', '..', '..', 'app.html'); // ai-team/tools/qa-kit -> repo root
 
 /** Optional offline mode: put tw.css / fa/ / jszip.min.js in qa-kit/offline/ (only needed on machines with no internet). */
 async function offlineRoutes(page) {

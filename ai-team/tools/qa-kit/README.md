@@ -7,7 +7,7 @@ the **real Scratch engine**. No guessing: every tool prints PASS / FAIL or numbe
 ## 0. Setup (once per computer, needs Node.js 18+ and internet)
 
 ```
-cd team/tools/qa-kit
+cd ai-team/tools/qa-kit
 npm install
 npx playwright install chromium
 ```
@@ -66,7 +66,7 @@ Plain numbers / strings are turned into literals for you.
 
 **Blocks**: `B.C(type, inputs, menus, { body, else, cond, menuExpr })` makes any G-Warp block. Short forms: `B.IF(cond, ...body)`,
 `B.IFE(cond, [body], [else])`, `B.SET(var, value)`, `B.CHG(var, by)`, `B.LADD(list, v)`, `B.REP(list, i, v)`, `B.LCLR(list)`,
-`B.COSTUME('name')` or `B.COSTUME(expression)`. Block type names: `team/gwrap-blocks.json`, or `GW_V1580_SB3.CMD` in the app
+`B.COSTUME('name')` or `B.COSTUME(expression)`. Block type names: `ai-team/gwrap-blocks.json`, or `GW_V1580_SB3.CMD` in the app
 (Scratch opcode -> G-Warp type), e.g. `goto_xy`, `change_x`, `set_size`, `set_effect` + menu `ghost`, `go_front_back`, `create_clone`,
 `delete_clone`, `when_clone`, `when_broadcast`, `broadcast`, `broadcast_wait`, `wait`, `repeat`, `repeat_until`, `start_sound`, `say`.
 

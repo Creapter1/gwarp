@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   /* G-Warp v15.49.0 - GWrap AI knowledge pack loader (written by Claude; owner: "add at least 300 questions and
-     possibilities to the chat"). Recipes and tips are plain JSON (format: team/GEMINI-GWRAP-AI-300-2026-10-19.txt),
+     possibilities to the chat"). Recipes and tips are plain JSON (format: ai-team/archive/old-plans/GEMINI-GWRAP-AI-300-2026-10-19.txt),
      so the team can write hundreds without touching code. This turns each recipe's JSON script into real blocks with
      the helper's own builders (GW_V1571.blk / cblk / nestInto) and adds recipes + tips to the GWrap AI helper. */
   const PACKS = [/*PACK-DATA*/];

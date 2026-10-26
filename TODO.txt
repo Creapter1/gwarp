@@ -4,18 +4,20 @@
  Previously documented website: https://creapter1.github.io/gwarp/ (canonical URL pending owner confirmation)   App: app.html (Beta v15.48.0)
 =====================================================================
 
->>> TEAM FROM 2026-10-26: Claude Opus (integrates) + ChatGPT (everything else) + Claude Haiku on Freebuff (helper). Read team/TEAM-2026-10-26.md.
-    ChatGPT: team/CHATGPT-PROMPT-2026-10-26.txt + team/CHATGPT-TODO-2026-10-26.txt   Haiku: team/HAIKU-PROMPT-2026-10-26.txt   Testing: team/tools/qa-kit/ <<<
+>>> TEAM FROM 2026-10-26: Claude Opus (integrates) + ChatGPT (everything else) + Claude Haiku on Freebuff (helper).
+    ALL THE RULES: ai-team/README.md (log gate, who does what, drop box ai-team/shared/, icon rules, time rules). Read it first.
+    Folders: claude/ (+ claude/haiku/), chatgpt/, ai-team/ (rules, shared work, tools, ideas, archive of Gemini/Grok/DeepSeek).
+    ChatGPT: ai-team/CHATGPT-PROMPT-2026-10-26.txt + ai-team/CHATGPT-TODO-2026-10-26.txt   Haiku: ai-team/HAIKU-PROMPT-2026-10-26.txt   Testing: ai-team/tools/qa-kit/ <<<
 
->>> MISSING vs Scratch / TurboWarp / PenguinMod: team/MISSING-LIST.txt (broken + missing features, who does each) <<<
+>>> MISSING vs Scratch / TurboWarp / PenguinMod: ai-team/MISSING-LIST.txt (broken + missing features, who does each) <<<
 
 HOW THE TEAM WORKS
-- CRITICAL ZERO-EXCEPTION LOG GATE: Every AI/agent must read AI-TEAM.txt + team/AI-CHAT-LOG-TEMPLATE.txt + its own AI-CHAT-LOG.txt before work; log session start/progress/closeout; commit and read back verify its own log before handoff or DONE. If logging or verification fails, HARD STOP all project work and notify the owner. No AI, task, review, failed attempt, or short session is exempt. See the ZERO-EXCEPTION AI SESSION LOGGING GATE in AI-TEAM.txt.
+- CRITICAL ZERO-EXCEPTION LOG GATE: Every AI/agent must read AI-TEAM.txt + ai-team/AI-CHAT-LOG-TEMPLATE.txt + its own AI-CHAT-LOG.txt before work; log session start/progress/closeout; commit and read back verify its own log before handoff or DONE. If logging or verification fails, HARD STOP all project work and notify the owner. No AI, task, review, failed attempt, or short session is exempt. See the ZERO-EXCEPTION AI SESSION LOGGING GATE in AI-TEAM.txt.
 - [ ] = not started, [~] = candidate/report handed in and awaiting review, [x] = completed only to the scope stated (not automatically integrated). Check MERGE-QUEUE.txt for proposal status; owner approval is required before live integration/release.
 - See MERGE-QUEUE.txt for candidate dispositions only; Claude must reconcile current evidence and the owner must approve integration.
 - READ AI-TEAM.txt FIRST. If the owner only says "continue", it means:
   re-read the files, keep going on your claimed job (or claim the next one).
-- ChatGPT = independent reviewer of every AI's deliverables, planner, test designer and evidence reconciler. Use team/CROSS-AI-REVIEW-2026-10-15.txt and team/CONTINUOUS-WORK-QUEUE.txt.
+- ChatGPT = independent reviewer of every AI's deliverables, planner, test designer and evidence reconciler. Use ai-team/CROSS-AI-REVIEW-2026-10-15.txt and ai-team/CONTINUOUS-WORK-QUEUE.txt.
   All AIs may inspect/use the app, research, test, write fixes, and prepare code
   proposals. Keep code in your own folder by default. If explicitly assigned to
   place code in app.html/index.html, it must be uniquely marked, inert, and not
@@ -26,7 +28,7 @@ HOW THE TEAM WORKS
   label in the actual Claude interface is exactly Claude Opus 5.5; otherwise stop.
   Owner approval is required before integration/release.
 - The owner decides what goes in. Nothing ships without the owner's OK.
-- Start with team/WORKFLOW-START-HERE.txt for document routing. Read team/AI-WORK-PLAN.txt for the short product roadmap and team/CONTINUOUS-WORK-QUEUE.txt for your next bounded task.
+- Start with ai-team/WORKFLOW-START-HERE.txt for document routing. Read ai-team/AI-WORK-PLAN.txt for the short product roadmap and ai-team/CONTINUOUS-WORK-QUEUE.txt for your next bounded task.
   Every AI may review other AI work, but must report findings rather than edit another AI's folder.
 
 CORE PRODUCT ORDER (owner-confirmed 2026-10-18)
@@ -79,18 +81,18 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
         Browser verification remains for Claude/U3; see audit test plan.
 [~] U2. (legacy lab candidates inherited by Gemini; integration blocked pending source/API evidence and isolated canvas tests) COSTUMES / paint editor must work like Scratch's (tools, select,
         reshape, fill, text, eraser, layers, undo, bitmap<->vector,
-        rotation centre, costume list). See team/CROSS-AI-REVIEW-2026-10-15.txt; acceptance remains pending.
+        rotation centre, costume list). See ai-team/CROSS-AI-REVIEW-2026-10-15.txt; acceptance remains pending.
 [~] U3. Claude released Beta v15.48.0 and records a full regression of 429 PASS / 9 FAIL, with all 9 described as expected legacy/feature-status checks. This is Claude-reported evidence, not independently rerun here. Published-site verification and confirmation that the latest Select-specific assertions were included in that run remain open.
 
 =====================================================================
  NOW (most important first)
 =====================================================================
 [x] 1. CLONE FREEZE / STOP MITIGATION (Claude, v15.46.0; retained in v15.48.0). Source and Claude's P0 report record O(1) clone counting, the 300 default limit, 5000 safety ceiling for Infinite clones, a script frame budget/watchdog, text/list caps and restore points. Claude reports the v15.46.0 chaos test passed. Claude now records a full v15.48.0 regression (429 PASS / 9 expected FAILs); targeted clone/Stop stress should be rerun after any runtime change. chatgpt/clone-safety.js remains SUPERSEDED and disconnected.
-      Evidence: team/P0-CLONE-FREEZE-REPORT.txt; Claude's v15.46.0/v15.48.0 work-log entries.
+      Evidence: ai-team/P0-CLONE-FREEZE-REPORT.txt; Claude's v15.46.0/v15.48.0 work-log entries.
 [x] 2. (ChatGPT candidate merged by Claude in v15.46.1) "Open in G-Warp" hash handler is in app.html: #scratch=<number> prompts before loading; Cancel/bad IDs do nothing. Claude reports test_4611 ALL PASS. The complete browser-extension flow remains open under item 3; handler tests do not prove extension packaging or Scratch SPA behavior.
-[~] (Gemini) 3. Browser-extension proposal delivered -> gemini/extension/ (acceptance pending packaging, permission review, real-browser tests and owner-approved integration).
-[~] 4. (Grok: grok/SPEC-*.txt + tests) Scratch behavior coverage is still incomplete. Grok corrected T043 in grok/fixtures.json and expanded the base fixture file to 60 cases. However, grok/FIXTURE-SOURCES.txt still says repeat 2.7 runs twice, and the additional 10 list cases live separately in grok/fixtures-extra-list.json. The current test_grok_fixtures.js runner reads the 60 base cases plus Claude's 9 extra-fixtures by default; it does not load the separate T130-T139 file. Claude reports an earlier 39/39 run on the older 30+9 set. Re-run the current 60+10 plan, update the source map, and keep overall parity coverage open until the intended current fixture set passes.
-[~] (Gemini inherited) 5. .pmp research + notes + test harness -> gemini/lab/
+[~] (Gemini) 3. Browser-extension proposal delivered -> ai-team/archive/gemini/extension/ (acceptance pending packaging, permission review, real-browser tests and owner-approved integration).
+[~] 4. (Grok: ai-team/archive/grok/SPEC-*.txt + tests) Scratch behavior coverage is still incomplete. Grok corrected T043 in ai-team/archive/grok/fixtures.json and expanded the base fixture file to 60 cases. However, ai-team/archive/grok/FIXTURE-SOURCES.txt still says repeat 2.7 runs twice, and the additional 10 list cases live separately in ai-team/archive/grok/fixtures-extra-list.json. The current test_grok_fixtures.js runner reads the 60 base cases plus Claude's 9 extra-fixtures by default; it does not load the separate T130-T139 file. Claude reports an earlier 39/39 run on the older 30+9 set. Re-run the current 60+10 plan, update the source map, and keep overall parity coverage open until the intended current fixture set passes.
+[~] (Gemini inherited) 5. .pmp research + notes + test harness -> ai-team/archive/gemini/lab/
       (NOTES-pmp.txt, test-pmp-loader.js and protobuf-only pmp-loader.js are
       legacy candidate material, NOT accepted or integrated. Claude still needs
       a confirmed parser API plus a real legal fixture/assets. Existing ZIP-type
@@ -104,10 +106,24 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 =====================================================================
 [~] MUSIC MAKER — EXPAND MELODIC VARIETY + ADD “CREATE MELODY” ZONE (owner request, 2026-10-21). Keep the existing Music Maker, its current music/sounds, established workflow, and Gemini-created music icon/UI assets; the owner says the current music already sounds/looks excellent and wants it expanded, not replaced. Main goal: create genuinely different melody styles and musical phrases, not merely several near-identical variants of the same melody. Expand the available melody library with clearly distinct patterns/styles and alternate variations where useful. Improve ways to build/shape parts including bass lines, drums/percussion, fills, and other song layers. Add a clearly named “Create Melody” (or “Create Zone”) area inside the existing Music Maker instrument section, connected to Song Maker, so a user can create and use original melodies with whichever available instrument they choose (e.g. piano, saxophone, etc.). Preserve existing melody selection by clicking a melody and all current features; new material should be additive and compatible with the current song workflow. Before implementing, inspect Gemini's existing music icon/assets and the current instrument/song-maker connections to avoid duplicating or breaking work. Acceptance: distinct melody patterns are audibly different in rhythm/contour/style; instrument selection changes the sound without losing the created melody; created melodies can be selected/used in Song Maker; bass, drum and fill controls produce the expected musical layers; existing music, icon, and selection flow still work. Browser/audio verification is required; do not mark complete from static inspection alone.
     -> 2026-10-26 Claude, Beta v15.54.0: melody variety = Song maker Tune Mix/Classic/Fresh (28/28 genres, 16/16 moods, 12/12 themes differ) + CREATE MELODY zone in Sounds -> Instruments (8 different melody ideas, any instrument, Save, "Use in Song maker" = Tune: My melody). TESTED in G-Warp 21/21 (claude/AI-CHAT-LOG.txt entry 8). Bass/drum/fill layers: the Song maker rows already have them (not changed). Still open: the owner listens and says if it is enough; new bass/drum/fill PATTERN choices not built yet.
+[ ] ANIMATION - MAKE IT COMPLETE AND GOOD-LOOKING (owner, 2026-10-26; ChatGPT's focus now). Detailed list:
+      ai-team/CHATGPT-ANIMATION-TODO-2026-10-26.txt (check, icon audit, new icons A/B/C, always centred like Scratch, guide lines
+      "liner", layers panel with previews, easing / poses / squash & stretch, frames strip + preview on stage, Animation blocks +
+      mascot readiness, help + samples). ChatGPT proposes, Claude integrates. Animation blocks + G mascot stay Developer-only until ready.
+[ ] ICONS MUST MATCH (owner, 2026-10-26): the same action must have the same icon everywhere (Code, Costumes, Sounds, Animation,
+      Song maker, menus). First step = ChatGPT job ANIM-I1 (audit table for Costumes/Animation), then the same audit for the
+      whole app; Claude swaps them so they match. Icon rules: ai-team/README.md section 7.
+[ ] MUSIC MAKER - KEEP IMPROVING (owner, 2026-10-26: "we still gotta work on that music maker"): still open from the entry
+      above: bass / drum / fill PATTERN choices, the owner's listening feedback on Tune Mix/Classic/Fresh/My melody, and the
+      Gemini music engines A/B/C that never reached GitHub.
+[ ] IN-APP AI ON A SMALL LOCAL MODEL ("GWrap AI Local", owner's idea 2026-10-26): works only inside G-Warp, can do almost
+      anything there, small 2024 Ollama models. Plan, rules and ChatGPT jobs AIM-1..7: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md.
+      Not built yet; Claude builds it behind Developer mode after ChatGPT's command list + tests + model scores.
+[ ] TAB PLUS (owner's idea 2026-10-26, idea only): ai-team/ideas/TAB-PLUS-2026-10-26.md. Waits for the owner's "go".
 
  LATER
 =====================================================================
-[~] GWrap AI / own API key: static feature present in app.html (Beta v15.48.0), but not browser-verified. Session storage is the default; localStorage is opt-in. Exact project context disclosure and default model ID need review. See team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt and chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt.
+[~] GWrap AI / own API key: static feature present in app.html (Beta v15.48.0), but not browser-verified. Session storage is the default; localStorage is opt-in. Exact project context disclosure and default model ID need review. See ai-team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt and chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt.
 [ ] GWrap AI block/script reconstruction animation: briefly animate created blocks into the workspace by default; show a Skip/instant control, plus More -> Settings preference. Default On. Must not delay execution or leave partial scripts if skipped; test cancellation, long scripts and accessibility/reduced motion.
 [x] (Claude) COSTUME EDITOR EMERGENCY FIX (v15.48.0, owner): Select tool rebuilt like Scratch (8 handles +
     rotate, move/resize/rotate never jump - text, shapes, brush, imported costumes, groups); multi-select, group/
@@ -119,12 +135,12 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 [x] (Claude) COSTUME ANIMATION (v15.47.0, owner's focus): Flipbook (Onion skin + Play) in the
     Costumes tab; Animation tab (bones) + Animation blocks out of preview for everyone; G-Spark
     has ready-made walk + wave; made costumes follow changes. claude/flipbook4700.js,
-    test claude/tests/test_cosanim.js. Team jobs: team/ASSIGNMENTS-ANIMATION-2026-10-18.txt
+    test claude/tests/test_cosanim.js. Team jobs: ai-team/ASSIGNMENTS-ANIMATION-2026-10-18.txt
 [x] (Claude) "Power lines" (v15.46.4): while a project runs, animated electric lines
     between broadcast -> when I receive, and my block -> define; start blocks get a
     sparking pole; More -> Settings -> "Power lines" switch. claude/powerlines4640.js
 [ ] Developer mode vs normal mode.
-[ ] Performance benchmark + optimization: aim for 60 FPS or better on representative projects/hardware when feasible (not a universal promise); use team/PERFORMANCE-BENCHMARK-PLAN.txt to measure script-heavy and render-heavy projects separately, including the owner's private test suite.
+[ ] Performance benchmark + optimization: aim for 60 FPS or better on representative projects/hardware when feasible (not a universal promise); use ai-team/PERFORMANCE-BENCHMARK-PLAN.txt to measure script-heavy and render-heavy projects separately, including the owner's private test suite.
 [ ] GPU/rendering research: profile the current Canvas renderer, test low-risk batching/culling and eligible OffscreenCanvas/worker work, and prototype WebGL/WebGPU only if measurements show rendering—not script execution—is the bottleneck.
 [ ] Report-a-bug link on the website (GitHub Issues).
 [ ] Short showcase video / GIF of G-Warp for the website.
@@ -148,23 +164,23 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
 
 
 CONTINUOUS QUEUE
-- Use team/CONTINUOUS-WORK-QUEUE.txt after each assigned task so remaining session time is used on the next in-scope task.
+- Use ai-team/CONTINUOUS-WORK-QUEUE.txt after each assigned task so remaining session time is used on the next in-scope task.
 - Review submissions for bugs, unsupported APIs, missing tests, privacy/performance risks and useful improvements. Report severity, location, evidence and acceptance criteria.
 - A finished report or candidate is not automatically integrated. No live integration/release without Claude's verified integration role and the owner's explicit approval.
 
  
 FORMER DEEPSEEK TEMPORARY-COVERAGE RULE — RETIRED (2026-10-18)
-The owner consolidated this role into Gemini. Do not open or claim new TEMP COVERAGE tasks, do not use the DEEPSEEK-RETURN-HANDOFF template for new work, and do not create new deepseek/ files. Gemini owns the inherited tasks directly in gemini/lab/. Legacy candidate files remain unverified until the assigned tests are actually run.
+The owner consolidated this role into Gemini. Do not open or claim new TEMP COVERAGE tasks, do not use the DEEPSEEK-RETURN-HANDOFF template for new work, and do not create new ai-team/archive/deepseek/ files. Gemini owns the inherited tasks directly in ai-team/archive/gemini/lab/. Legacy candidate files remain unverified until the assigned tests are actually run.
 
 
-SECURITY RULE (2026-10-15): Never put real API keys, tokens, passwords, private keys, or credentials in source, reports, prompts, screenshots, tests, or handoffs. Use placeholders only; never ask the owner to paste a live key into chat. Never embed a shared service key in public browser code. For user-owned AI keys, disclose the provider, destination, cost, project context sent, storage behavior, and removal. Session-only should be the default; persistent browser storage is not a secure vault. Never log/export keys. If exposure is suspected, alert the owner by file/path without reproducing the value, rotate/revoke it, and review history. Do not change the app key flow without owner approval. See team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt.
+SECURITY RULE (2026-10-15): Never put real API keys, tokens, passwords, private keys, or credentials in source, reports, prompts, screenshots, tests, or handoffs. Use placeholders only; never ask the owner to paste a live key into chat. Never embed a shared service key in public browser code. For user-owned AI keys, disclose the provider, destination, cost, project context sent, storage behavior, and removal. Session-only should be the default; persistent browser storage is not a secure vault. Never log/export keys. If exposure is suspected, alert the owner by file/path without reproducing the value, rotate/revoke it, and review history. Do not change the app key flow without owner approval. See ai-team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt.
 
 
 WEBSITE URL NOTE (2026-10-15)
 The URL above is the previously documented GitHub Pages address, not a confirmed replacement for the website the owner says was changed. Do not replace site links, extension targets, or documentation with a guessed URL. Ask the owner for the exact new canonical URL and whether the old GitHub Pages URL should remain as a fallback.
 
 
-AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17): Every AI must append the user's request and its own response/handoff to <own-folder>/AI-CHAT-LOG.txt for each task/session, including date, task, changed files, evidence status, blockers, and next step. Read the log before continuing. Preserve exact wording where practical; separate user quotes from AI summaries; never invent missing context. Do not log secrets or unnecessary sensitive data. If history is missing, say so and ask rather than guessing. Use team/AI-CHAT-LOG-TEMPLATE.txt. This does not grant cross-folder editing or integration permission.
+AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17): Every AI must append the user's request and its own response/handoff to <own-folder>/AI-CHAT-LOG.txt for each task/session, including date, task, changed files, evidence status, blockers, and next step. Read the log before continuing. Preserve exact wording where practical; separate user quotes from AI summaries; never invent missing context. Do not log secrets or unnecessary sensitive data. If history is missing, say so and ask rather than guessing. Use ai-team/AI-CHAT-LOG-TEMPLATE.txt. This does not grant cross-folder editing or integration permission.
 
 
-TEAM ROLE CHANGE (2026-10-18): DeepSeek is retired from active assignments. Gemini 2 now owns its lab/research/A-B-C candidate work. See team/TODO-GEMINI.txt and gemini/lab/. Legacy candidates remain unverified until tested; no automatic integration.
+TEAM ROLE CHANGE (2026-10-18): DeepSeek is retired from active assignments. Gemini 2 now owns its lab/research/A-B-C candidate work. See ai-team/archive/old-plans/TODO-GEMINI.txt and ai-team/archive/gemini/lab/. Legacy candidates remain unverified until tested; no automatic integration.

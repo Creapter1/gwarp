@@ -13,7 +13,7 @@ G-Warp has its own engine. It aims for familiar Scratch-style behavior and proje
 - **[Glossary](docs/glossary.html)** — plain-language explanations of coding and animation terms.
 - **[Parents and teachers](docs/parents.html)** — classroom tips, safety and privacy caveats.
 - **[Credits and licences](docs/credits.html)** — AI-assisted roles, project licence and third-party credit guidance.
-- **[Current team status](team/AI-STATUS.txt)** — verified progress and open blockers.
+- **[Current team status](ai-team/AI-STATUS.txt)** — verified progress and open blockers.
 
 **Quick start:** open the app, create or open a project, select a sprite, drag blocks into the workspace, and press Start. Save a copy often. Use the explicit file menu when saving or exporting.
 
@@ -25,9 +25,9 @@ The previously documented public site address is awaiting owner confirmation. Do
 
 ## How the AI team works
 
-Creapter1 owns product decisions and final approval. ChatGPT reviews work and documents issues; Grok prepares compatibility fixtures and research; Gemini works on assigned visuals, extension and lab research; Claude Opus 5.5 is the designated integration and official runtime/visual-test lead after verifying the active model. Contributions and test claims are tracked in the repository.
+Creapter1 owns product decisions and final approval. The team is **Claude Opus** (the only one who integrates into the app) and **ChatGPT** (research, reviews, tests, icons and art, proposals), with Claude Haiku as a small helper. Gemini, Grok and DeepSeek are retired; their work is kept in `ai-team/archive/`. **All rules: [ai-team/README.md](ai-team/README.md).**
 
-Read **[AI team workflow](docs/team.html)** and **[AI-TEAM.txt](AI-TEAM.txt)** before contributing. Keep proposed code in the assigned contributor folder; do not integrate live behavior or release changes without the required review and owner approval. “Continue” means reread current task/status files and resume the next assigned job.
+Read **[ai-team/README.md](ai-team/README.md)** (the rules), **[AI team workflow](docs/team.html)** and **[AI-TEAM.txt](AI-TEAM.txt)** before contributing. Keep proposed code in the assigned contributor folder; do not integrate live behavior or release changes without the required review and owner approval. “Continue” means reread current task/status files and resume the next assigned job.
 
 ## Licence and independence
 

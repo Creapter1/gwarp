@@ -1,7 +1,7 @@
-// Runs Grok's GA1 fixtures (grok/ANIM-FIXTURES.json) in G-Warp for real: one sprite per fixture, built as a
+// Runs Grok's GA1 fixtures (ai-team/archive/grok/ANIM-FIXTURES.json) in G-Warp for real: one sprite per fixture, built as a
 // Scratch 3 .sb3, loaded through Ctrl+O, green flag, then each sprite's costume / say is compared with Grok's
 // expected result. Numbers are passed as real numbers with (n + 0), strings with join(s, "") like in Scratch.
-// Run: NODE_PATH=<playwright+jszip> node test_grok_anim.js ../../app.html ../../grok/ANIM-FIXTURES.json
+// Run: NODE_PATH=<playwright+jszip> node test_grok_anim.js ../../app.html ../../ai-team/archive/grok/ANIM-FIXTURES.json
 const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path'); const fs = require('fs'); const JSZip = require('jszip'); const crypto = require('crypto');
 const [file, fx] = process.argv.slice(2);
 const F = JSON.parse(fs.readFileSync(fx, 'utf8')).fixtures;

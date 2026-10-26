@@ -12,7 +12,7 @@
      - Animation is now a real tab (before it was a button that looked like a label); it opens the Animation
        editor (bones + frames).
      Note: the tile map data itself is still the project's one tile map (Engine.tilemap); a map per sprite is
-     the next step (team/FUTURE-IDEAS.txt). The sprite remembers its mode in s.gwTileSprite. */
+     the next step (ai-team/FUTURE-IDEAS.txt). The sprite remembers its mode in s.gwTileSprite. */
   const by = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
   const spr = () => (window.Engine && Engine.sprites && Engine.sprites[Engine.activeSpriteIndex]) || null;

@@ -12,32 +12,32 @@ U1 UI audit        chatgpt/UI-AUDIT.txt              REFERENCE (269 lines; #1 HI
                                                      live - see docs/LIVE-UI-VERIFICATION.txt)
 U2 costume editor  (Claude tested the REAL editor with DeepSeek's checklist: select/move/resize/delete/undo/fill/text/brush/shapes already worked;
                    missing Reshape + vector Eraser + Paint-new-as-vector were built in v15.46.3 -> claude/vectools4630.js)
-                   deepseek/costume-select-C.js      REFERENCE (editor already does this)
-                   deepseek/costume-fill-C.js        PICK (fix names)
-                   deepseek/costume-text-B.js        PICK (fix names)
-                   deepseek/costume-eraser-C.js      PICK (fix names)
-                   deepseek/costume-undo-C.js        PICK (fix names)
-                   deepseek/costume-*-A/B (others)   REFERENCE
-                   deepseek/CHECKLIST-costumes.txt   REFERENCE (test list)
-                   deepseek/LAB-costumes.txt         REFERENCE
+                   ai-team/archive/deepseek/costume-select-C.js      REFERENCE (editor already does this)
+                   ai-team/archive/deepseek/costume-fill-C.js        PICK (fix names)
+                   ai-team/archive/deepseek/costume-text-B.js        PICK (fix names)
+                   ai-team/archive/deepseek/costume-eraser-C.js      PICK (fix names)
+                   ai-team/archive/deepseek/costume-undo-C.js        PICK (fix names)
+                   ai-team/archive/deepseek/costume-*-A/B (others)   REFERENCE
+                   ai-team/archive/deepseek/CHECKLIST-costumes.txt   REFERENCE (test list)
+                   ai-team/archive/deepseek/LAB-costumes.txt         REFERENCE
 
 --- FREEZE / SPEED (v15.46) ---------------------------------------
                    chatgpt/clone-safety.js           SUPERSEDED by Claude's v15.46 clone fixes (O(1) count + 5000 ceiling + Stop 1 s)
-                   deepseek/speed-collision-B.js     PICK (wraps GW.spritesTouch)
-                   deepseek/speed-collision-A/C.js   REFERENCE
-                   deepseek/speed-clones-A/B/C.js    SUPERSEDED (skip nothing; redo with waitUntil)
-                   deepseek/LAB-speed.txt            REFERENCE
+                   ai-team/archive/deepseek/speed-collision-B.js     PICK (wraps GW.spritesTouch)
+                   ai-team/archive/deepseek/speed-collision-A/C.js   REFERENCE
+                   ai-team/archive/deepseek/speed-clones-A/B/C.js    SUPERSEDED (skip nothing; redo with waitUntil)
+                   ai-team/archive/deepseek/LAB-speed.txt            REFERENCE
 
 --- LINKS / FILES -------------------------------------------------
                    chatgpt/scratch-link.js           MERGED in Beta v15.46.1 (test_4611 ALL PASS)
-                   deepseek/pmp-loader.js            PICK (protobuf .pmp only)
-                   deepseek/NOTES-pmp.txt, test-pmp-loader.js   REFERENCE
-                   gemini/extension/                 WAITING (placeholder icon; needs
+                   ai-team/archive/deepseek/pmp-loader.js            PICK (protobuf .pmp only)
+                   ai-team/archive/deepseek/NOTES-pmp.txt, test-pmp-loader.js   REFERENCE
+                   ai-team/archive/gemini/extension/                 WAITING (placeholder icon; needs
                                                      PNG icons + real G-Spark + Claude test)
 
 --- SCRATCH BEHAVIOUR (tests for everything) ----------------------
-                   grok/SPEC-*.txt (12 files)        REFERENCE
-                   grok/TESTS.txt (75 cases)         REFERENCE -> Claude turns them into
+                   ai-team/archive/grok/SPEC-*.txt (12 files)        REFERENCE
+                   ai-team/archive/grok/TESTS.txt (75 cases)         REFERENCE -> Claude turns them into
                                                      automatic tests
 
 --- NOT STARTED / OPEN --------------------------------------------
@@ -49,21 +49,21 @@ DeepSeek DS3-DS5, new-AI jobs J1-J7 (see the briefing file).
  MERGED = in the app now (Beta v15.49.0)   READY = checked, next to merge   REFERENCE = Claude uses it
 =====================================================================
 GEMINI
-  gemini/lab/melody-engine.js          MERGED  (Song maker: every style its own melody; +Chiptune/Rock/Trap/Cinematic)
-  gemini/lab/lab-melody.html           REFERENCE (demo page)
-  gemini/lab/easing.js (+A/B/C)        MERGED the ease-in-out curve (Glide button); READY: linear/springy choice
-  gemini/icons-animation/ (36 SVG)     READY  - pick one of A/B/C per icon for the costume editor + Animation tab
-  gemini/rig-characters/ (3 + pivots)  READY  - "ready-made characters" in the Animation tab (like G-Spark's bones)
-  gemini/flipbook-sprites/ (6 sets)    READY  - sprite library: coin, spark, rocket, ball, flag, G-Spark blink
-  gemini/backdrops/ (3 SVG)            READY  - backdrop library: circuit night, city rooftop, neon arcade
-  gemini/lab/auto-rig-A/B/C.js         REFERENCE (ChatGPT review: chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt)
+  ai-team/archive/gemini/lab/melody-engine.js          MERGED  (Song maker: every style its own melody; +Chiptune/Rock/Trap/Cinematic)
+  ai-team/archive/gemini/lab/lab-melody.html           REFERENCE (demo page)
+  ai-team/archive/gemini/lab/easing.js (+A/B/C)        MERGED the ease-in-out curve (Glide button); READY: linear/springy choice
+  ai-team/archive/gemini/icons-animation/ (36 SVG)     READY  - pick one of A/B/C per icon for the costume editor + Animation tab
+  ai-team/archive/gemini/rig-characters/ (3 + pivots)  READY  - "ready-made characters" in the Animation tab (like G-Spark's bones)
+  ai-team/archive/gemini/flipbook-sprites/ (6 sets)    READY  - sprite library: coin, spark, rocket, ball, flag, G-Spark blink
+  ai-team/archive/gemini/backdrops/ (3 SVG)            READY  - backdrop library: circuit night, city rooftop, neon arcade
+  ai-team/archive/gemini/lab/auto-rig-A/B/C.js         REFERENCE (ChatGPT review: chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt)
 GROK
-  grok/fixtures-*.json (9 files, ~250) READY  - Claude adds the new step types to the runner, then runs them all
-  grok/fixtures-tutorials.json         READY  - same
-  grok/REVIEW-V1 (list_item index 0,   READY  - real bugs for Claude to fix (list_item 0 -> "", list_contains
+  ai-team/archive/grok/fixtures-*.json (9 files, ~250) READY  - Claude adds the new step types to the runner, then runs them all
+  ai-team/archive/grok/fixtures-tutorials.json         READY  - same
+  ai-team/archive/grok/REVIEW-V1 (list_item index 0,   READY  - real bugs for Claude to fix (list_item 0 -> "", list_contains
     list_contains strict compare)               compares like Scratch)
-  grok/SPEC-select-tool / sb3-roundtrip / turbowarp-runtime / EXTENSIONS-check-2   REFERENCE
-  grok/REVIEW-V2-docs, REVIEW-TUTORIALS          REFERENCE for ChatGPT's next docs pass
+  ai-team/archive/grok/SPEC-select-tool / sb3-roundtrip / turbowarp-runtime / EXTENSIONS-check-2   REFERENCE
+  ai-team/archive/grok/REVIEW-V2-docs, REVIEW-TUTORIALS          REFERENCE for ChatGPT's next docs pass
 CHATGPT
   docs/ (14 pages + 8 tutorials + glossary + parents)  LIVE on the website (owner should look at it on a phone)
   chatgpt/REVIEW-* (C1-C9)             REFERENCE
@@ -77,19 +77,24 @@ CLAUDE (v15.49.0, this night)
   chatgpt/gwrap-ai-pack.js (5 recipes, /commands)    MERGED v15.50.3 (GW_V1571.blocks + showAnswer now exported)
   chatgpt/gwarp-tutorial.js (3 guided tours)         MERGED v15.50.3 (started from GWrap AI: "tour", "tutorial")
   chatgpt/idea-teacher-check.js, idea-voice-commands.js  WAITING (ideas; voice needs a privacy check - may send audio)
-  gemini/icons-animation (her picks)                 MERGED v15.50.3 in the Animation editor + Animation tab
+  ai-team/archive/gemini/icons-animation (her picks)                 MERGED v15.50.3 in the Animation editor + Animation tab
                                                      (the paint editor keeps its own toolbar icons)
-  gemini/empty-states (code + costumes)              MERGED v15.50.3 ("no sounds" picture: next, needs the sound list)
-  gemini/rig-characters, flipbook-sprites            MERGED v15.50.4 in "Choose a Sprite" (Animated + Characters tabs)
-  gemini/GM12-A (8 electric sprites) + GM5-A (4 G-Spark poses)   MERGED v15.50.7 in Choose a Sprite (Electric tab; "G-Spark Poses" = 4 costumes)
-  gemini/GM15 (backdrops)   NOT MERGED: they are small framed thumbnails (8 in one 384x192 sheet), not 480x360 backdrops
-  gemini/GM1/2/3/4/6/8/9/11/13/16/17/18 (icon sheets)   READY - each needs its spot in the app's buttons (next session)
+  ai-team/archive/gemini/empty-states (code + costumes)              MERGED v15.50.3 ("no sounds" picture: next, needs the sound list)
+  ai-team/archive/gemini/rig-characters, flipbook-sprites            MERGED v15.50.4 in "Choose a Sprite" (Animated + Characters tabs)
+  ai-team/archive/gemini/GM12-A (8 electric sprites) + GM5-A (4 G-Spark poses)   MERGED v15.50.7 in Choose a Sprite (Electric tab; "G-Spark Poses" = 4 costumes)
+  ai-team/archive/gemini/GM15 (backdrops)   NOT MERGED: they are small framed thumbnails (8 in one 384x192 sheet), not 480x360 backdrops
+  ai-team/archive/gemini/GM1/2/3/4/6/8/9/11/13/16/17/18 (icon sheets)   READY - each needs its spot in the app's buttons (next session)
 
 --- 2026-10-26 (Claude, Beta v15.52.0) ---
-  gemini/GM9-C (sound studio tabs + 9 sound effects), GM16-C (instrument groups), GM8-C (Song maker rows)   MERGED v15.52.0
+  ai-team/archive/gemini/GM9-C (sound studio tabs + 9 sound effects), GM16-C (instrument groups), GM8-C (Song maker rows)   MERGED v15.52.0
                                                      (module gw-v1552-gemini-icons, switch off: feature "geminiIcons")
-  gemini/LAB-music.txt (why all melodies sound alike)  MERGED 2026-10-26 (owner: "merge A and B into one"): Beta v15.53.0 Song maker Tune = Mix (default) / Classic / Fresh;
+  ai-team/archive/gemini/LAB-music.txt (why all melodies sound alike)  MERGED 2026-10-26 (owner: "merge A and B into one"): Beta v15.53.0 Song maker Tune = Mix (default) / Classic / Fresh;
                                                      the A/B page stays in claude/experiments/music-compare/ for listening.
-  gemini/music-engine-A/B/C.js                       NEVER REACHED GITHUB - only described in LAB-music.txt (ChatGPT job M2: ask owner)
-  gemini/GM2/3/4/6/11/13/17/18 icon sheets            WAITING - ChatGPT job ICONS makes the placement plan + mocks, owner picks
-  Gemini / Grok / DeepSeek retired; their open jobs moved to team/CHATGPT-TODO-2026-10-26.txt
+  ai-team/archive/gemini/music-engine-A/B/C.js                       NEVER REACHED GITHUB - only described in LAB-music.txt (ChatGPT job M2: ask owner)
+  ai-team/archive/gemini/GM2/3/4/6/11/13/17/18 icon sheets            WAITING - ChatGPT job ICONS makes the placement plan + mocks, owner picks
+  Gemini / Grok / DeepSeek retired; their open jobs moved to ai-team/CHATGPT-TODO-2026-10-26.txt
+
+=====================================================================
+ WAITING FOR CLAUDE (drop box ai-team/shared/) - added 2026-10-26
+ One line per finished job: <UTC time> | <AI> | <job id> | ai-team/shared/<folder>/ | <evidence> | owner pick needed? yes/no
+=====================================================================

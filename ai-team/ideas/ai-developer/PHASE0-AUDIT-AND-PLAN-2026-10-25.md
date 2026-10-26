@@ -18,7 +18,7 @@ Checked in `app.html` Beta v15.50.7 on 2026-10-25 by reading the source (SOURCE-
 | `window.GW_PROJECT_DATA()` | SOURCE-VERIFIED | full project snapshot (sprites, costumes as data URLs, stacks, AST) — used by autosave / crash recovery |
 | `GW8.exportSB3()` / `GW_V1580_SB3_EXPORT` / `GW_FILES.buildSb3()` | SOURCE-VERIFIED + tested daily | `GW_FILES.buildSb3()` is what Claude's tests use. It returns a real .sb3 blob. |
 | GWrap AI helper (`window.GW_V1571`) | SOURCE-VERIFIED + tested | `blk()`, `cblk()`, `nestInto()`, `addRecipe()`, `match()`, `checkProject()` — **builds real blocks in the code area** |
-| JSON recipe packs (`window.GW_GWRAP_PACK.install/make`) | SOURCE-VERIFIED + tested | a script described as JSON → real blocks. **This is the best "bridge" for an AI to write scripts.** Checker: `team/tools/validate_gwrap_pack.py` |
+| JSON recipe packs (`window.GW_GWRAP_PACK.install/make`) | SOURCE-VERIFIED + tested | a script described as JSON → real blocks. **This is the best "bridge" for an AI to write scripts.** Checker: `ai-team/tools/validate_gwrap_pack.py` |
 | Cloud AI call (`api.anthropic.com`, user's own key) | SOURCE-VERIFIED | one `fetch` in Developer mode; the key is in session storage. No local-model support. |
 | Ollama / `127.0.0.1:11434` | **MISSING** | no code talks to a local model |
 | LAN collaboration (WebSocket) | SOURCE-VERIFIED (2 sockets) | relay / LAN code exists; not part of this plan |

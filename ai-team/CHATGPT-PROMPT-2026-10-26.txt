@@ -11,16 +11,17 @@ all their open jobs. The owner says: do not hold back, work non-stop, but every 
 FIRST (no exceptions, before any other work):
 1. Check you can READ and WRITE the repo Creapter1/gwarp. If you can't write, say so in one line and hand in every file as a code
    block with its full path on top.
-2. Read, in this order: team/TEAM-2026-10-26.md, AI-TEAM.txt (last 30 lines), chatgpt/AI-CHAT-LOG.txt (last entry),
-   team/CHATGPT-TODO-2026-10-26.txt, team/tools/qa-kit/README.md.
-3. Log gate: add a session-start entry to chatgpt/AI-CHAT-LOG.txt (template: team/AI-CHAT-LOG-TEMPLATE.txt), commit, read it back.
+2. Read, in this order: ai-team/README.md (ALL the rules), AI-TEAM.txt (last 30 lines), chatgpt/AI-CHAT-LOG.txt (last entry),
+   ai-team/CHATGPT-TODO-2026-10-26.txt, ai-team/tools/qa-kit/README.md.
+3. Log gate: add a session-start entry to chatgpt/AI-CHAT-LOG.txt (template: ai-team/AI-CHAT-LOG-TEMPLATE.txt), commit, read it back.
 
-THEN work down team/CHATGPT-TODO-2026-10-26.txt. On chatgpt.com you can't run the QA kit (no terminal), so do the jobs marked
+THEN work down, in this order: ai-team/CHATGPT-ANIMATION-TODO-2026-10-26.txt (FIRST - owner's focus), ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md
+(jobs AIM-1..7), then ai-team/CHATGPT-TODO-2026-10-26.txt. Finished art/code goes in the drop box ai-team/shared/ (README.md section 7). On chatgpt.com you can't run the QA kit (no terminal), so do the jobs marked
 [WEB] or [ANY] first: research, reviews, specs, test plans, docs, SVG art, proposals. Jobs marked [TERMINAL] wait for Freebuff.
 
-RULES (short version - the full list is in team/TEAM-2026-10-26.md):
+RULES (short version - the full list is in ai-team/README.md):
 - Never edit app.html or index.html. Your files go in chatgpt/ (code proposals: chatgpt/proposals/<job id>/). Claude integrates.
-- Never edit another AI's folder. gemini/, grok/, deepseek/ are read-only archives you can learn from.
+- Never edit another AI's folder. ai-team/archive/gemini/, ai-team/archive/grok/, ai-team/archive/deepseek/ are read-only archives you can learn from.
 - Push after EVERY finished job, open it on GitHub to check it is there, add one line to AI-TEAM.txt:
   <UTC time> | DONE | ChatGPT | <job id> | <files> | <evidence: TESTED in G-Warp / TESTED in scratch-vm / NOT-TESTED>
 - G-Warp's own look, no Scratch art / cats / brands, no AI watermark in anything that ships, no secrets in files.
@@ -35,16 +36,16 @@ You have a terminal: you can run node, npm, git and the QA kit. The session ends
 
 SETUP (first session on this computer only - skip the parts already done):
   git pull
-  cd team/tools/qa-kit && npm install && npx playwright install chromium && cd ../../..
-  node team/tools/qa-kit/smoke-app.js          -> must say ALL PASS. If not: that IS your first bug report.
+  cd ai-team/tools/qa-kit && npm install && npx playwright install chromium && cd ../../..
+  node ai-team/tools/qa-kit/smoke-app.js          -> must say ALL PASS. If not: that IS your first bug report.
 
-FIRST every session: read team/TEAM-2026-10-26.md, AI-TEAM.txt (last 30 lines), chatgpt/AI-CHAT-LOG.txt (last entry),
-team/CHATGPT-TODO-2026-10-26.txt, team/tools/qa-kit/README.md. Then the log gate (session-start entry, commit, push, read back).
+FIRST every session: read ai-team/README.md (all rules), AI-TEAM.txt (last 30 lines), chatgpt/AI-CHAT-LOG.txt (last entry),
+ai-team/CHATGPT-TODO-2026-10-26.txt, ai-team/tools/qa-kit/README.md. Then the log gate (session-start entry, commit, push, read back).
 
-THEN do the jobs marked [TERMINAL] first (they need the QA kit), then [ANY]. Paste the kit's real output into every report.
+THEN the same lists in the same order (animation first). Inside a list do [TERMINAL] jobs first (they need the QA kit), then [ANY]/[WEB]. Paste the kit's real output into every report.
 
 RULES: same as prompt A, plus:
 - Never run `git push --force`, never delete branches or other AIs' files, never commit node_modules or anything in qa-kit/offline/.
 - Never put a Scratch project that isn't ours into the repo (remixes go to the owner only: chatgpt/out/ is git-ignored for that).
-- Don't install anything outside team/tools/qa-kit without asking the owner.
+- Don't install anything outside ai-team/tools/qa-kit without asking the owner.
 - If a kit command fails twice the same way, stop retrying: write the error in your report and move to the next job.

@@ -1,7 +1,0 @@
-HAIKU TO-DO (Claude Haiku on Freebuff). Short, clear jobs. ChatGPT and Claude Opus add more here.
-Format: ID | WHAT | FILES | DONE WHEN
-HK1 | Run node team/tools/qa-kit/smoke-app.js and paste the output into haiku/FIRST-RUN.txt | haiku/FIRST-RUN.txt | the file is on GitHub
-HK2 | Make 3 tiny test projects with the builder (one with clones, one with lists, one with a custom block with 2 inputs), run roundtrip.js and run-in-scratch.js on each, report every DIFF / error as a bug | haiku/bugs/ + haiku/HK2.txt | 3 projects tested, results written
-HK3 | Lists edge cases: item 0, item -1, item "last", item "random", insert at 0, delete "all", list with 200,000 items. Build a project that checks each one and compare G-Warp (roundtrip + behaviour) with scratch-vm | haiku/HK3.txt + bugs | every case PASS or a bug file
-HK4 | Draw 6 small 16x16 SVG tiles in G-Warp colours: grass, stone, water, lava, coin, spike (rules in the prompt, J2) | haiku/tiles/*.svg | 6 files, each opens in a browser
-HK5 | Text vs numbers: "10" = 10? "abc" > 5? 0.1 + 0.2 = 0.3? "1e3" * 1? empty string * 1? Same method as HK3 | haiku/HK5.txt + bugs | every case checked

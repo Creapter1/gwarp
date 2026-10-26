@@ -1,0 +1,176 @@
+=====================================================================
+ CHATGPT - ANIMATION TO-DO  (DO THIS FIRST)        written by Claude for the owner, 2026-10-26
+ Owner: "focus on the animation ... exactly what icons (A, B, C) ... what it should have, what it should not have,
+ how it's supposed to look, how it can make the character look better, the costume and the animation match the costumes
+ and it's always centered just like Scratch, a liner so I always have a guidance, the preview for the layers ..."
+=====================================================================
+
+READ FIRST: ai-team/README.md (all rules: log gate, drop box, icon rules, proof words). This list only says WHAT to make.
+WHERE YOUR WORK GOES: ai-team/shared/<YYYY-MM-DD>-chatgpt-<JOB ID>/  (NOTES.md + preview.html + icons/ + code/ + tests/).
+ORDER: top to bottom. One job -> push -> AI-TEAM.txt line -> next job. [WEB] = no terminal needed, [TERMINAL] = needs Freebuff + QA kit.
+YOU NEVER EDIT app.html. Code = a proposal module Claude plugs in. If you need a hook that doesn't exist, write it under
+"Hooks Claude must add" in NOTES.md (name, what it returns) - don't hack around it.
+
+---------------------------------------------------------------------
+ WHAT G-WARP ALREADY HAS (Beta v15.54.0) - check it before you make anything, don't make it twice
+---------------------------------------------------------------------
+Costumes tab -> paint editor (vector + bitmap):
+  Undo/Redo, Group/Ungroup, Forward/Backward/Front/Back (layer order), Fill/Outline colour, Copy/Paste/Delete, Flip H/V,
+  Select, Rectangle, Circle, Line, Reshape*, Brush, Eraser*, Fill, Text, Convert to Bitmap, Onion skin, Show a grid,
+  Snap shapes to the grid, Zoom. A rotation-centre mark is DRAWN (#gwpeCentre, GW_COSTUME_LOOK.centre) but you can't move it.
+  (*) the buttons still say "coming soon" although v15.46.3 says vector Reshape + Eraser work -> job ANIM-0 checks this.
+Costumes tab -> Flipbook (GW_FLIPBOOK): onion skin (before = violet, after = green, lined up by rotation centre), Play player
+  (FPS, loop, which costumes). Nothing in the project changes.
+Costumes tab -> Animation (GW_ANIM, "Beta", for everyone since v15.47.0): bones INSIDE vector costumes (Pivot Animator idea).
+  Top: animation picker, Undo/Redo, + New, Rename, Delete, Costume picker, Rig | Animate, Make costumes, Close.
+  Rig tools: Add bones, Attach shapes, Select, Attach automatically, Delete bone. Bones list (right) with colour dots.
+  Frames strip: thumbnails, + Frame, < >, delete, In-between, Smooth x2, Glide, Play, FPS, Onion skin, Loop.
+  Make costumes = every frame becomes a normal vector costume ("walk 1", "walk 2" ...) so Scratch can play it.
+  Exports: GW_ANIM = { open, close, solve, deltas, applyPose, frameSvg, partPaths, parseTransform, makeCostumes, newAnim,
+           undo, redo, vectorCostumes, tween, smooth, glide, mix, state }
+Animation blocks (GW_ANIM_BLOCKS, Developer mode only - unfinished): switch to animation / play animation from frame /
+  play animation over and over / stop animation.
+G mascot sprite (GW_MASCOT, Developer mode only - unfinished): walk + wave + hello animations.
+Gemini's icons already in the app (ai-team/archive/gemini/icons-animation, her picks merged v15.50.3): bitmap-select, bones,
+  flip-horizontal, flip-vertical, flipbook-play, group, in-between, make-costumes, onion, rotate-handle, smooth-x2, ungroup.
+Gemini's animated sprites (flipbook-sprites) and bone-ready characters (rig-characters) are in Choose a Sprite.
+Old reviews to reuse (don't redo them): chatgpt/UX-costume-animation.txt (your 10 ranked fixes), chatgpt/REVIEW-costume-animation.txt,
+  ai-team/ASSIGNMENTS-ANIMATION-2026-10-18.txt, ai-team/archive/grok/ANIM-FIXTURES.json (+ claude/tests/test_grok_anim.js).
+Known owner bugs from the Smash remix (fixed for that project, must never happen in the app): costumes made by an animation
+  were NOT centred, the shield was out of place, punch/kick frames jumped out of place and "glided across the room".
+
+---------------------------------------------------------------------
+ THE LOOK (applies to every job)
+---------------------------------------------------------------------
+MUST: G-Warp dark look (#0b0b14 / #141425 panels, violet #8b5cf6 selected, green #4ade80 = "go / playing / after",
+  yellow #facc15 = warnings). Same font + button style as the Animation tab today. Works at 1280x720 and on a 1024 px wide tablet.
+MUST: every new button has an icon + a tooltip that says what it does in kid words ("Put the middle of the costume here").
+MUST: everything can be undone (one Ctrl+Z per action). Nothing is saved into the costume art unless the user pressed "Make costumes"
+  or drew it. Guides, onion skin, centre marks, layer highlights are OVERLAYS - never saved into the SVG.
+MUST: projects still open + play right in Scratch / TurboWarp (extra G-Warp data in the project JSON is ignored by Scratch).
+MUST NOT: Scratch's look or icons, the cat, Pivot Animator's art, Adobe/Toon Boom icons, any brand. No AI watermark.
+MUST NOT: new windows/popups on top of popups. Max one panel open at a time on the right side.
+MUST NOT: change how existing buttons work. New things are ADDED; old ones stay where they are.
+FIX FIRST (seen in the screenshot 2026-10-26): the frame thumbnails have a WHITE background - they must use the dark checker
+  like the canvas, so the frames look like the drawing.
+
+---------------------------------------------------------------------
+ JOBS
+---------------------------------------------------------------------
+
+ANIM-0 [TERMINAL] CHECK WHAT'S THERE (first, ~30 min)
+  Run smoke-app.js. Open the Animation tab with the G mascot (Developer mode) and with one of Gemini's rig-characters.
+  Make an 8-frame walk, Make costumes, save .sb3, open it again, run it in scratch-vm (run-in-scratch.js).
+  Report (one file, chatgpt/ANIM-0-CHECK.md): what works, what breaks (steps + output), and these exact checks:
+   a) Do the made costumes keep the SAME rotation centre? Measure with costume-bounds.js: the body's middle may not move more
+      than 1 px between frames unless the pose moves it on purpose.
+   b) Do Reshape / Eraser work although they say "coming soon"? (bug report either way)
+   c) Does the global Stop stop Flipbook Play, Animation Play and the Animation blocks? (UX review #3)
+   d) Save + reopen keeps frames, bones, attachments, FPS, loop? (UX review #1)
+  Evidence: TESTED in G-Warp / scratch-vm with real output. This list is the base for all jobs below.
+
+ANIM-I1 [WEB] ICON AUDIT - "the same thing must have the same icon" (~40 min)
+  Make a table (chatgpt/ANIM-I1-ICON-AUDIT.md + a preview.html that shows them): every icon in Costumes, Flipbook and the
+  Animation tab: button -> which icon (Font Awesome name or Gemini SVG) -> does the SAME action use a DIFFERENT icon somewhere else?
+  (e.g. Undo in Code vs Costumes vs Animation, Play in Flipbook vs Animation vs Song maker, Delete, Onion skin, Flip.)
+  Output = a list of "make these match: X uses A here and B there -> use B everywhere". Don't fix the app; Claude does that.
+
+ANIM-I2 [WEB] NEW ICONS - 3 options each (A, B, C) - TAKE YOUR TIME, make them beautiful
+  One drop-box folder: ai-team/shared/<date>-chatgpt-ANIM-I2/ with icons/<name>-A|B|C.svg + preview.html (all icons, dark +
+  light, at 16 / 24 / 32 px, next to the existing icons so you can see they are one family). Rules: ai-team/README.md §7.
+  Make these (the jobs below use them):
+   Centre:   set-centre (target you click to put the middle), centre-costume (shape jumps to the middle),
+             centre-all-frames (several frames lined up on one cross), drift-warning (frames jumping out of place)
+   Guides:   guide-lines (the "liner": a ruler with a line pulled out), ground-line (feet on a line), ruler, snap-to-guide,
+             lock-guides
+   Layers:   layers-panel (stacked sheets), layer-visible (eye) + layer-hidden (eye shut), layer-lock + unlock,
+             layer-behind-bone (part goes behind the body for this frame)
+   Motion:   ease-in-out (curve), squash-stretch, follow-through (tail/hair follows later), mirror-pose (swap left/right),
+             copy-pose, paste-pose, hold-frame (this frame lasts longer), keyframe (diamond), timeline
+   Poses:    pose-library (book of poses), walk, run, jump, idle (breathing), punch, kick, wave, hurt, win  (small figure
+             icons; a simple G-Warp bean/blob figure, NOT a stick man from another app and NOT the Scratch cat)
+   Preview:  preview-on-stage (mini stage with a figure), preview-size (real size), export-gif, export-sheet (sprite sheet)
+  MUST: same stroke/corners as the existing Gemini animation icons; readable at 16 px; no letters. MUST NOT: copy any app's icons.
+  Pick your favourite per icon in NOTES.md ("My pick") - the owner decides.
+
+ANIM-C1 [TERMINAL] ALWAYS CENTRED, LIKE SCRATCH  (owner's top worry)
+  Goal: a costume's rotation centre is where the user expects (the middle of the body), and every frame of one animation lines up,
+  in G-Warp AND in Scratch. What Scratch does: the paint editor shows the costume centre as a fixed cross in the middle of the
+  canvas; art is drawn around it; sb3 saves rotationCenterX/Y; SVG rotation centre is measured from the SVG's own (0,0) - G-Warp
+  v15.51.0 already fixed that offset, keep it.
+  Proposal module (code/anim-centre.js) + icons from ANIM-I2:
+   1. "Set centre" tool in the paint editor: click = the rotation centre goes there (the #gwpeCentre mark moves). Undoable.
+   2. "Centre this costume": moves the drawing so the middle of its bounding box sits on the centre (option: "feet on the
+      centre line" for characters = centre x = middle, centre y = a set height above the lowest point).
+   3. "Line up all frames" (Animation tab + costume list right-click on a frame group like "walk 1..8"): every frame gets the
+      SAME centre, taken from the first frame's root joint (the orange base). Never moves the art differently per frame.
+   4. Drift warning: after Make costumes, if any frame's body middle moves > 2 px from frame 1 without the base joint moving,
+      show a small yellow warning "frame 5 jumps 14 px - line them up?" with a one-click fix.
+   5. Make costumes must ALWAYS write the same canvas size + the same rotation centre for all frames (check GW_ANIM.makeCostumes).
+  Tests (tests/anim-centre.test.js, QA kit): make walk + punch (8 frames each) -> costume-bounds.js shows centres equal (<= 1 px);
+  export .sb3 -> run-in-scratch.js -> the sprite's x/y never changes while only costumes switch (the "glide across the room" bug).
+
+ANIM-G1 [WEB then TERMINAL] THE "LINER" - GUIDE LINES  (owner: "so I can always have a guidance")
+  Proposal module (code/anim-guides.js):
+   - Rulers on the top + left edge of the paint editor and the Animation canvas (in stage pixels, 0 = the costume centre).
+   - Drag from a ruler = a guide line (violet, dashed). Drag it back to the ruler = gone. Double-click = type an exact number.
+   - Built-in guides (switch each on/off): centre cross, GROUND LINE (where the feet go, default = lowest point of frame 1),
+     head line, a box the size of the stage (480x360) so you see how big the sprite will look.
+   - Shapes and bone ends SNAP to guides (uses the existing "Snap" button; a small toggle for "snap to guides").
+   - Guides are per sprite, saved in the project as G-Warp data (not in the SVG), shown in the paint editor, Flipbook and Animation
+     tab at the same place. Lock guides button.
+  MUST NOT: draw guides into the costume; slow down drawing (test 200 shapes still smooth).
+
+ANIM-L1 [WEB then TERMINAL] LAYERS PANEL WITH PREVIEWS  (owner: "the preview for the layers")
+  Proposal module (code/anim-layers.js):
+   - A Layers panel (right side, closable) in the vector paint editor AND the Animation tab: one row per shape/group, top = front.
+     Each row: small thumbnail preview of just that layer, name (double-click rename), eye (hide while editing - not saved as
+     hidden unless the user wants), lock, and in the Animation tab the colour dot of the bone it's attached to.
+   - Hover a row = that layer glows on the canvas; click = select it; drag rows = change order (uses the same order as
+     Forward/Backward/Front/Back so both stay in sync).
+   - Animation tab: "Layer order for this frame" - e.g. the far arm goes BEHIND the body when the character turns. Stored per
+     frame, applied by Make costumes. (This is a big part of what makes animations look good.)
+  Test: 12-layer character, reorder, hide, rename, Make costumes -> the costumes have the right order; undo works for each step.
+
+ANIM-P1 [WEB] MAKE THE CHARACTER LOOK BETTER - motion tools  (spec first, then code)
+  Write chatgpt/ANIM-P1-SPEC.md (1-2 pages, pictures welcome) then the proposal:
+   1. EASING: In-between / Glide use ease-in-out by default (slow-fast-slow) with a small curve picker (Linear, Ease, Bounce,
+      Snap). Today it is linear - that is why moves look robotic.
+   2. HOLD FRAMES: a frame can last 1-4 ticks (number badge on the thumbnail). Make costumes repeats that costume, or the
+      Animation blocks wait longer (choose one, explain in NOTES).
+   3. SQUASH & STRETCH per bone (scale along the bone) for jumps/landings, limited to 60-140 %.
+   4. FOLLOW-THROUGH: optional for a chain (tail, hair, cape): it copies the parent's turn one or two frames later, smaller.
+   5. MIRROR POSE (swap left/right limbs), COPY / PASTE POSE between frames and animations.
+   6. POSE LIBRARY: ready poses for any rig with standard bone names (body, head, left/right arm, left/right leg): idle (breath),
+      walk (8), run (6), jump (anticipation, take-off, up, top, fall, land), punch, kick, wave, hurt, win. Applying a pose works
+      on the user's own character, not a stock figure. Data = JSON of bone angles (code/poses.json) - no art.
+   7. Optional nice touches (only if 1-6 are done): ground shadow under the feet that follows the base; smear/blur frame helper.
+  MUST NOT: replace the current In-between / Smooth x2 / Glide - add the curve as an option; default may change only if the owner OKs it.
+
+ANIM-T1 [WEB] FRAMES STRIP + PREVIEW
+   - Thumbnails: dark checker background (fix), big frame number, current frame obvious (UX review #2), hold-frame badge,
+     drag to reorder, Shift-click to select several (copy / delete / mirror several).
+   - Keyboard: , and . = previous/next frame, Space only when no text box has focus (UX review #9).
+   - PREVIEW ON STAGE: a small window that plays the animation at the sprite's REAL size, direction and position, with the current
+     backdrop, so you see how it will look in the game. Same window for Flipbook and Animation tab, one Stop for all.
+   - Onion skin settings: how many frames before/after (1-3), strength - same as Flipbook's, same colours (violet before, green after).
+
+ANIM-B1 [TERMINAL] WHAT'S MISSING BEFORE ANIMATION BLOCKS + MASCOT CAN GO TO EVERYONE
+  They are Developer-mode-only and marked unfinished. Test them (QA kit) and write chatgpt/ANIM-B1-READY.md:
+  what fails, what's missing vs the owner's plan ("switch to animation [ ]", "play animation [ ] from costume [ ]"), and the
+  exact acceptance tests that must pass. Also: how they save in .sb3 so Scratch still plays the costumes (G-Warp blocks must
+  have a Scratch fallback - report what happens today when the project opens in Scratch/TurboWarp).
+  Claude decides + integrates; you only report and propose fixes.
+
+ANIM-D1 [WEB] HELP + SAMPLES
+  - A kid-friendly 1-page guide "Make your first animation in G-Warp" (docs-ready HTML in the drop box, screenshots allowed,
+    G-Warp look): draw -> centre -> guide line -> bones -> 8-frame walk -> ease -> preview -> Make costumes -> code it.
+  - 3 small sample projects made by you with YOUR OWN art (a bouncing ball with squash & stretch, a walking bean character,
+    a punch combo) in chatgpt/out/ (git-ignored) + their build script in the drop box, checked with check-sb3.js (no AI marks).
+
+---------------------------------------------------------------------
+ WHEN YOU ARE DONE WITH A JOB
+---------------------------------------------------------------------
+  push -> one line in AI-TEAM.txt -> a line in MERGE-QUEUE.txt under "WAITING FOR CLAUDE" -> next job.
+  Don't wait for Claude between jobs. If a job needs the owner's pick (icons), push it and go on.
+  Next list after this one: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (the in-app AI), then ai-team/CHATGPT-TODO-2026-10-26.txt.
