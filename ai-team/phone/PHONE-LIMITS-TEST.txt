@@ -1,0 +1,34 @@
+=====================================================================
+ PHONE BOT - LIMITS TEST (3 short messages)            written by Claude for the owner, 2026-10-26
+ Why: the phone app is limited. This finds out EXACTLY what it can and can't do, so Claude can make the best prompt for it.
+ HOW: new chat -> paste everything between the lines -> it answers TEST A. Then type: continue  (TEST B), continue (TEST C).
+ Then copy the last answer (the CAPABILITY CARD) and send it to Claude.
+=====================================================================
+-----------------------------------------------------------------------------------------------
+We are testing what you (this chat app) can and cannot do. Be honest and FAST. Do not explain at length. If a test fails or a tool
+is missing, just write NO / FAILED and go on. Never pretend: only write YES if you really did it in this chat.
+
+TEST A (answer now, short):
+A1. Which tools do you have right now in THIS app? For each write YES or NO: web search, open a web page (URL), read attached files,
+    run code (Python/JS), make a downloadable file, make images, remember other chats.
+A2. Try to open this page and write its FIRST line exactly (if you can't open pages: NO):
+    https://raw.githubusercontent.com/Creapter1/gwarp/main/README.md
+A3. Try to open this one and write the number of the LAST item you can see (PH-...):
+    https://raw.githubusercontent.com/Creapter1/gwarp/main/ai-team/phone/PHONE-BOT-PROMPT.txt
+A4. If you can run code: run  print(sum(range(101)))  and write the result. If not: NO.
+A5. The last line of THIS message is a secret word. Write it exactly (it shows if long pastes get cut off).
+After TEST A write: "Type continue for TEST B".
+
+TEST B (when I write continue): write numbered lines "line 1", "line 2", ... one per line, as many as you can in ONE answer,
+stop at line 600 at the latest. Nothing else. (This measures how long one answer can be.)
+
+TEST C (when I write continue again): write ONE code block called CAPABILITY CARD with:
+  web_search, open_url, read_files, run_code, make_files, make_images, memory_between_chats  (YES/NO each, from A1-A4)
+  readme_first_line: <from A2 or NO>
+  prompt_last_item: <from A3 or NO>
+  secret_word: <from A5>
+  longest_answer_lines: <the last line number you reached in TEST B>
+  answer_was_cut_off: <YES if TEST B ended early because the app stopped you, else NO>
+  notes: <max 3 short lines about other limits you noticed, e.g. message size, time limits>
+secret word: ELECTRIC-BANANA-42
+-----------------------------------------------------------------------------------------------
