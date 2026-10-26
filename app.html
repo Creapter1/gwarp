@@ -2284,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.56.0</span>
+<span class="app-version">Beta v15.57.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -3721,7 +3721,19 @@ IMPORTANT:
                 const gwOrder = GW.drawOrder ? GW.drawOrder() : Engine.sprites;
 
                 if (Engine.isRunning && !Engine.isPaused) {
-                    const gwT0 = performance.now(); let gwPass = 0; do { gwPass++; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isTurbo && Engine.isRunning && !Engine.isPaused && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame */
+                    const gwT0 = performance.now(), gwN0 = Engine.threads.length; let gwPass = 0; do { gwPass++; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isTurbo && Engine.isRunning && !Engine.isPaused && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame */
+                    /* v15.57.0 (Claude, Scratch parity + speed): like Scratch, scripts started DURING this frame (broadcast, clone) run in this
+                       same frame, and a "broadcast and wait" whose receivers have all finished goes on in this frame too. Before, each
+                       broadcast-and-wait "tick" loop cost ~3 frames: Clone Multiplayer ran 5-11 ticks/s in G-Warp vs 40-55 in Scratch. */
+                    if (window.GW_SAME_FRAME !== false && Engine.isRunning && !Engine.isPaused) {
+                      for (let gwR = 0; gwR < 4; gwR++) {
+                        let gwAny = false;
+                        for (let gwI = gwN0; gwI < Engine.threads.length && gwI < gwN0 + 5000; gwI++) { const t = Engine.threads[gwI]; if (t && !t.finished && !t.__gwSF) { t.__gwSF = 1; t.step(); gwAny = true; } }
+                        for (let gwI = 0; gwI < Engine.threads.length; gwI++) { const t = Engine.threads[gwI]; let ok = false; if (t && !t.finished && t.waitBroadcast && !t.__gwWB) { try { ok = t.waitBroadcast(); } catch (e) {} } if (ok) { t.__gwWB = 1; t.step(); gwAny = true; } }
+                        if (!gwAny || performance.now() - gwT0 > 14) break;
+                      }
+                      for (const t of Engine.threads) if (t) { t.__gwSF = 0; t.__gwWB = 0; }
+                    }
                     Engine.threads = Engine.threads.filter(t => !t.finished);
                 }
 
@@ -4648,7 +4660,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.56.0',label:'Beta v15.56.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.57.0',label:'Beta v15.57.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer

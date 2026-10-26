@@ -131,6 +131,12 @@ Anchors: `grep -n "function applyColumn\|function play(fromPart\|function schedu
   URLs kept: compare `ls docs docs/tutorials` with site/docs). Then ask the owner for "go".
 - [ ] GO: copy `site/*` over the repo root (index.html, docs/**, new assets/), keep app.html untouched, link check again, push, log.
 
+### B2. Small things found 2026-10-26 (entry 36)
+- [ ] P3: builder `B.C('set_effect', [100], ['ghost'])` was DROPPED on .sb3 export (no block in the file); `set_ghost` works. Check the
+  exporter for set_effect with a menu value given by the builder (GW_V1580_SB3 'set_effect').
+- [ ] Engine: v15.57.0 runs new threads + finished broadcast-and-wait in the same frame (frame loop, search "v15.57.0 (Claude, Scratch parity").
+  If any project acts differently, it can be switched off with `window.GW_SAME_FRAME = false`.
+
 ### F. Leftovers (only when A–E are waiting on others)
 - [ ] F1. Music maker: bass / drum / fill PATTERN choices (TODO "MUSIC MAKER - KEEP IMPROVING") - partly covered by M4.
 - [ ] F2. test_anim.js: 2 old checks expect the Animation button hidden for normal users (it's for everyone since v15.47) → update the test.
