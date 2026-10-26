@@ -232,3 +232,16 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 5):
 - Read-back URL/path: origin/main:claude/AI-CHAT-LOG.txt
 - Verified new entry is present at bottom: YES
 - Task status: DONE
+
+--- ENTRY 6 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T04:17:00Z (request) - closeout 2026-10-26T04:19Z
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: REMIX-CM5 - controls: IJKL instead of WASD
+USER REQUEST (verbatim): "Let change from wasd to inkling for movement" / "Sorry the auto correct must it up was to ijkl"
+PROGRESS: I = jump, J = left, L = right, K = shield (plus the arrow keys); punch Z, kick X (J/K no longer punch/kick). Notes in the code updated.
+TESTS: scratch-vm - L/J walk, I jumps (peak +55), K raises the shield, W does nothing; scratch-parser OK; AI-mark scan clean.
+EVIDENCE CLASS: TESTED in scratch-vm; Scratch website NOT-TESTED. Remix-only change (no app.html change).
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---
