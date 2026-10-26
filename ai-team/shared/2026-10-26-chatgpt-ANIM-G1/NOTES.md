@@ -52,9 +52,9 @@ Guide metadata is owned by each sprite in `sprite.gwAnimGuides`:
 
 Coordinates are stage pixels relative to the sprite's rotation centre: x=0/y=0 is the rotation-centre cross; the stage is ±240 horizontally and ±180 vertically (480×360). User guides are stored in those same units, so Paint, Animation and Flipbook can render the same guide at the same relative location despite different canvas scales.
 
-The proposal displays violet dashed user guides, green built-in guides and a yellow stage boundary. Rulers appear only on Paint and Animation. Flipbook receives the same visual guides aligned to its canvas; no rulers are drawn in the compact player.
+The proposal displays violet dashed user guides, green built-in guides and a yellow stage boundary. Rulers appear only on Paint and Animation. Animation ruler calculations preserve the actual SVG viewBox x/y origin (not just its width/height), including nonzero viewBox offsets. Flipbook receives the same visual guides aligned to its canvas; no rulers are drawn in the compact player.
 
-The built-in ground/head defaults are measured from frame 1 (active animation frame 0 when the Animation editor is open for that sprite; otherwise the active costume) with an SVG geometry bounding-box or a downscaled bitmap-alpha scan. Auto values are cached. Claude should call `GW_ANIM_GUIDES.invalidateMeasurements(sprite)` after edits to the source frame/costume so the next measurement refreshes; do not scan every frame or every pointer move.
+The built-in ground/head defaults are measured from frame 1 (active animation frame 0 when the Animation editor is open for that sprite; otherwise the active costume) with an SVG geometry bounding-box or a downscaled bitmap-alpha scan. Bitmap pixel bounds are converted through the costume's `res` scale to costume-coordinate units. Auto values are cached; frame-one SVG generation is cached by animation revision. Claude should call `GW_ANIM_GUIDES.invalidateMeasurements(sprite)` after edits to the source frame/costume so the next measurement refreshes; do not scan every frame or every pointer move.
 
 ## Exact integration seams — instructions for Claude, not changes made here
 
@@ -93,7 +93,7 @@ if (guides?.snapEnabled?.(sprite)) {
 }
 ```
 
-This uses the selected art bounds' top-left as the guide anchor. Confirm with the owner whether the desired anchor should instead be the costume rotation centre or nearest edge/handle for multi-select. The helper converts the 512×384 board point through the current costume mapper and rotation centre.
+This uses the selected art bounds' top-left as the guide anchor. It covers Select-tool group movement; shape-creation endpoints and reshape/resize handles are not wired by this WEB candidate and need the same helper added at their actual pointer-coordinate seams if the owner expects new rectangles/lines/brush endpoints and handle edits to snap too. Confirm with the owner whether the multi-select anchor should instead be the rotation centre or nearest edge/handle. The helper converts the 512×384 board point through the current costume mapper and rotation centre.
 
 ### 3. Animation bone/root/new-bone snapping
 
@@ -127,7 +127,7 @@ Verify that users understand this shared-master behaviour. The master Snap curre
 
 - Do not append guides to the artwork SVG, do not change costume data URLs, and do not include guide lines in GIF/sprite-sheet exports.
 - Do not monkey-patch the editor's pointer handlers from a second script. Claude should patch the existing two specific move branches above.
-- The prototype uses a 500ms state/layout refresh plus a scoped MutationObserver to notice when the editors/player appear or resize. It avoids rebuilding an unchanged overlay and caches frame-one measurements; bitmap alpha scan is limited to a downscaled 1024px maximum dimension. This is a prototype strategy only, not a performance claim.
+- The prototype uses a 500ms state/layout refresh plus a scoped MutationObserver to notice when the editors/player appear or resize. It avoids rebuilding an unchanged overlay, caches frame-one SVG generation/measurements by animation revision, and limits bitmap alpha scan to a downscaled 1024px maximum dimension. The animation editor and paint select paths need explicit invalidation after frame-one edits. This is a prototype strategy only, not a performance claim.
 - The candidate exposes `dispose()` and `invalidateMeasurements(sprite)`.
 - No app source, live editor, project serializer, or runtime was changed by ChatGPT.
 
@@ -141,7 +141,7 @@ Verify that users understand this shared-master behaviour. The master Snap curre
 6. Verify Flipbook guide locations match Paint and Animation at several zoom/fit sizes and different rotation centres.
 7. Save project, close/reopen, reload; verify custom guides, lock, toggles and built-in settings restore on the correct sprite only.
 8. Export costume/SVG/GIF/sprite sheet and confirm guides are never included in artwork/export.
-9. Measure performance before/after with 200 shapes and repeated pointer drags; confirm no visible lag or dropped frames. The polling interval must be profiled and, if necessary, replaced with editor lifecycle events before release.
+9. Add guide snapping to actual shape-creation and reshape/resize pointer paths if they are in scope, then measure performance before/after with 200 shapes and repeated pointer drags; confirm no visible lag or dropped frames. The polling interval must be profiled and, if necessary, replaced with editor lifecycle events before release.
 
 ## Evidence classification
 
