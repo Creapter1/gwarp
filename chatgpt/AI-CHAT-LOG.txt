@@ -1184,3 +1184,51 @@ Claude: inspect the WEB candidate and integrate only after owner approval and ex
 CHAT HISTORY COMPLETENESS:
 PARTIAL — request "Continue" recorded in the session-start entry; scope from current task file.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T14:09:52Z
+AI / agent / exact model identity: ChatGPT GPT-6
+Task ID / title: ANIM-L1 — Layers panel with previews (WEB phase)
+Branch / starting commit: main / b641e00cf2aa594b8036966c0eb135f948e82b0f
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+"Continue"
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Continue down ai-team/CHATGPT-ANIMATION-TODO-2026-10-26.txt after ANIM-G1's WEB-phase handoff. Take the next [WEB then TERMINAL] job, ANIM-L1. Inspect and document existing paint layer-order/selection APIs and Animation rig/parts/frame data before designing anything. Prepare an isolated proposal module under ai-team/shared/2026-10-26-chatgpt-ANIM-L1/code/anim-layers.js, plus NOTES.md and a static preview. Required features: closable Layers panel in vector Paint and Animation; one row per shape/group top-to-front, layer-only thumbnail, rename, hide while editing, lock, Animation bone color dot; hover highlights only that layer; click selects; drag reorder updates the same stack order as Forward/Backward/Front/Back; Animation per-frame layer order is stored per frame and applied by Make costumes. No app.html/index.html edits, no cross-AI folder edits, no live integration; terminal acceptance remains separate.
+
+PROGRESS / AI RESPONSE:
+Confirmed the job list places ANIM-L1 immediately after ANIM-G1. Current task line is [WEB then TERMINAL]. Exact task wording was read from the source job file. Starting commit came from GitHub's latest commit search.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Keep current Forward/Backward/Front/Back behavior; the Layers panel must use the same source-of-truth order, not a parallel order.
+- Hide is an editing-only visibility state by default and must not silently change project/export visibility.
+- Animation frame order is distinct from base costume/rig order and must not overwrite other frames.
+- Do not guess undocumented/private APIs. If no safe public hook exists, document the exact hook Claude must add.
+- Keep G-Warp styling and existing features. No Scratch art/logos/cat, Pivot art, third-party brand art, or AI watermark.
+- Claude integrates; owner approves.
+
+FILES CHANGED:
+- NONE at session start.
+
+COMMANDS / TESTS / RESULTS:
+- Read current AI rules, shared log template, own log tail, ChatGPT task line, ANIM-L1 exact scope, QA kit README and job guide.
+- Latest commit at session start: b641e00cf2aa594b8036966c0eb135f948e82b0f.
+- No source modifications or tests yet.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for task scope and repository workflow instructions.
+- NOT-TESTED for source/API inspection, module proposal and runtime behavior (work not started).
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- Existing vector order APIs, SVG source-of-truth, Animation parts mapping, per-frame order support and Make costumes serializer are not yet verified.
+- Thumbnail rendering must not alter active editor selection, onion skin, or project content.
+
+NEXT STEP / HANDOFF:
+Inspect current app.html for the Paint forward/backward functions, shape/group selection and object list; then inspect GW_ANIM state/parts/frame and makeCostumes. Only after identifying actual source APIs, write the isolated candidate and document any hooks Claude must add.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — exact request "Continue" recorded; ANIM-L1 scope is copied from the current task file and not reconstructed from an unavailable original task chat.
+--- END ENTRY ---
