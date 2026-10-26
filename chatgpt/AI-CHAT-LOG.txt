@@ -1232,3 +1232,64 @@ Inspect current app.html for the Paint forward/backward functions, shape/group s
 CHAT HISTORY COMPLETENESS:
 PARTIAL — exact request "Continue" recorded; ANIM-L1 scope is copied from the current task file and not reconstructed from an unavailable original task chat.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION PROGRESS / WEB-PHASE HANDOFF
+UTC timestamp: 2026-10-26T14:21:11Z
+AI / agent / exact model identity: ChatGPT GPT-6
+Task ID / title: ANIM-L1 — Layers panel with previews
+Branch / starting commit: main / b641e00cf2aa594b8036966c0eb135f948e82b0f
+
+USER REQUEST (verbatim when available):
+"Continue"
+
+WHAT WAS COMPLETED IN THE WEB PHASE:
+- Inspected current Paint Forward/Backward/Front/Back source of truth, exact isArt predicate, selected-node state and CE.save(true) behavior.
+- Inspected Animation state, partPaths, anim.parts numeric-path mapping, loadArt, applyPose, markParts, attach, autoAttach, showPose, frameSvg, makeCostumes and undo history KEEP/pack.
+- Built isolated proposal module chatgpt/anim-layers.js and shared it byte-identically at ai-team/shared/2026-10-26-chatgpt-ANIM-L1/code/anim-layers.js.
+- Candidate includes Paint layer list from actual SVG child order, thumbnails, rename, temporary editing hide, lock metadata, hover/selection highlight, drag reorder, Animation bone dots, stable Animation layer IDs, per-frame layerOrder arrays and frame-order application helpers.
+- Corrected the Paint art predicate to exactly match the existing toolbar's isArt predicate.
+- Documented exact missing Claude hooks for Paint selection and lock enforcement; Animation stable ID migration, applyPose/markParts/attach/autoAttach lookup, showPose/frameSvg order application, undo history APIs, and layerMeta history.
+- Created NOTES.md with detailed source references and integration instructions, plus static HTML concept preview.
+- Re-fetched code/notes/preview and verified all static checks listed below.
+
+FILES CHANGED:
+- chatgpt/anim-layers.js
+- ai-team/shared/2026-10-26-chatgpt-ANIM-L1/code/anim-layers.js
+- ai-team/shared/2026-10-26-chatgpt-ANIM-L1/NOTES.md
+- ai-team/shared/2026-10-26-chatgpt-ANIM-L1/preview.html
+- app.html and index.html unchanged.
+
+STATIC CHECKS:
+- ChatGPT working copy and shared drop-box module byte-identical: PASS.
+- Paint predicate matches current toolbar: PASS.
+- Paint reorder reads/writes the existing SVG stacking order, not a parallel ordering array: PASS.
+- Animation stable part ID migration, per-frame order, apply-order and path/original-transform remapping helpers present: PASS.
+- Animation historySnapshot / refresh bridge calls documented and present: PASS.
+- Notes and preview links/content read back from GitHub: PASS.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for the existing Paint/Animation source structures and integration seams.
+- STATIC-ANALYSIS for candidate design and source-string checks.
+- NOT-TESTED for JavaScript parsing/execution, browser UI, individual thumbnails, click/hover/select, lock enforcement, drag reorder, undo/redo, Paint/Animation save/load, per-frame order restoration, Make costumes, exports and performance.
+
+IMPORTANT LIMITATIONS / BLOCKERS:
+- Paint selection requires Claude to expose GW_TRANSFORM.selectLayer(node); locking requires guards in canvas edit and order controls.
+- Animation currently keys attachments by numeric SVG paths. Claude must apply stable-key migration and update applyPose/markParts/attach/autoAttach before enabling reorder, or attachments can silently shift to another shape.
+- Claude must wire applyCurrentFrame into showPose, applyFrameOrder into frameSvg, and add layerMeta/history helper APIs as documented.
+- No browser, QA kit, app runtime, save/load or Make costumes test has been run. ANIM-L1 is NOT COMPLETE; only the WEB candidate is ready for review.
+
+NEXT STEP / HANDOFF:
+Claude: review the proposal; make the explicitly documented source changes only after owner approval and required model verification; then execute all terminal/browser tests in NOTES.md, especially bone attachment preservation, per-frame frameSvg/Make costumes order, 12-layer test, undo/redo and project round-trip. Do not mark complete before these pass.
+
+GITHUB READ-BACK EVIDENCE:
+- Module blob SHA (working + shared): 021d22e11460e3657cbaf021c83c89602e0ad5b4.
+- NOTES blob SHA: b12f8a16248c4bd535cfcad323554f387ba2886b.
+- Preview blob SHA: b8ae38f64069a7dd98a985958c1681d1230d3394.
+- Shared module publish commit: 36090c5def7063618091aa13a89c93aad45720a6.
+- Task status: WEB-PHASE CANDIDATE; terminal/browser acceptance remains NOT-TESTED.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — current request "Continue" captured; exact ANIM-L1 task requirements and source findings captured from GitHub.
+--- END ENTRY ---
