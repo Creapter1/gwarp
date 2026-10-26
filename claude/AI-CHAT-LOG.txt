@@ -201,3 +201,29 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 4):
 - Read-back URL/path: origin/main:claude/AI-CHAT-LOG.txt (git show after fetch)
 - Verified new entry is present at bottom: YES
 - Task status: DONE (Scratch website upload NOT-TESTED)
+
+--- ENTRY 5 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T03:48:00Z (request) - closeout 2026-10-26T03:58Z
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: REMIX-CM4 - platformer collisions (griffpatch method) + a more detailed Battlefield
+Branch / starting commit: main @ effe689
+
+USER REQUEST (summary): fighters don't stick to the ground well; a fighter below another gets popped on top - should be pushed to
+the side. Use the 2D platformer system from griffpatch's Scratch tutorial. Also: same stage, more hand-made SVG detail, not "AI
+looking", with 1-3 small mistakes on purpose.
+
+PROGRESS / AI RESPONSE (remix only - no app.html change this time):
+- New warp blocks in Player: "Move with collisions" (a plain hitbox costume while moving; x then y; pushed back out of Ground; walls
+  stop you, steps up to 5 px are walked up; landing sets On Floor) and "Push other fighters apart" (sideways push when overlapping).
+  Removed the old ground checks (incl. player 1 standing on skin colours, which made fighters climb onto each other). Coyote time 2 ticks.
+- Battlefield: the original backdrop unchanged + detail layers (grass tufts, flowers, stone seams, strata, cracks, pebbles, light
+  glows, platform bolts and shadows, island cracks, clouds, two birds). Mistakes on purpose: a floating grass tuft, a crack that runs
+  into the sky, a mismatched bolt on the right platform, a cloud outline left open.
+
+TESTS: scratch-vm frame watch 40 s - standing fighters move 2 frames out of 6498 (was constant small bouncing), no climbing; pushes are
+sideways; KOs still happen. scratch-parser OK, no extensions; G-Warp runs it; AI-mark scan clean.
+EVIDENCE CLASS: TESTED in scratch-vm and G-Warp; Scratch website NOT-TESTED.
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---
