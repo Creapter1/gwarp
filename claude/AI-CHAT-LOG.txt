@@ -756,3 +756,9 @@ DONE: the NO QUESTIONS, NEVER STOP rule (never ask / never wait; a choice = do b
   (owner switches later with one line). EVIDENCE: NOT-TESTED (rules). COMMIT: 941dee4
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 36 ---
+UTC timestamp: 2026-10-26T22:34:19Z (owner 18:33 his time)   Who: Claude (configured claude-opus-5-5)   Task: REMIX-3 Clone Multiplayer Smash remix: pass-through platforms + speed at 30 fps
+USER REQUEST (verbatim): "the complain the i got in the game clone multiplayer is good but the carter suposto go tru platfourms and all and the the game is to slow for 30fps so let maket fast for 30 fps and real platforms pls"
+NOTE: the remix .sb3 is someone else's project remixed for the owner -> stays OUT of the repo (rule); only this log line is committed.
+--- (closeout follows) ---
