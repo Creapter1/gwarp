@@ -68,7 +68,7 @@
     }
     const c = s?.costumes?.[s.activeCostume] || s?.costumes?.[0];
     if (c?.svg) return { svg: c.svg, rc: c.rc || { x: 0, y: 0 }, key: 'costume:' + c.name + ':' + hashText(c.svg) };
-    if (c?.canvas) return { canvas: c.canvas, rc: c.rc || { x: 0, y: 0 }, key: 'bitmap:' + c.name + ':' + canvasId(c.canvas) + ':' + c.canvas.width + 'x' + c.canvas.height };
+    if (c?.canvas) return { canvas: c.canvas, res: c.res || 1, rc: c.rc || { x: 0, y: 0 }, key: 'bitmap:' + c.name + ':' + canvasId(c.canvas) + ':' + c.canvas.width + 'x' + c.canvas.height + ':res' + (c.res || 1) };
     return null;
   }
   function measureSvg(svgText) {
@@ -127,8 +127,9 @@
     if (!d || !source || d.measureKey === source.key) return;
     const b = source.svg ? measureSvg(source.svg) : measureBitmap(source.canvas);
     if (b) {
-      if (d.ground.auto !== false) d.ground.value = b.y + b.height - Number(source.rc?.y || 0);
-      if (d.head.auto !== false) d.head.value = b.y - Number(source.rc?.y || 0);
+      const unitScale = source.res || 1;
+      if (d.ground.auto !== false) d.ground.value = (b.y + b.height) / unitScale - Number(source.rc?.y || 0);
+      if (d.head.auto !== false) d.head.value = b.y / unitScale - Number(source.rc?.y || 0);
       d.measureKey = source.key;
     }
   }
