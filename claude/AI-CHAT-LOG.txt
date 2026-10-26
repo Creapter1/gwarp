@@ -425,3 +425,18 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 9):
 - Commit SHA of the work: 38b074b (this closeout is the next commit)
 - Read-back: done right after push (see below)
 - Task status: DONE
+
+--- ENTRY 10 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T06:57:32Z (owner's message 02:57 his time)
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: AIM-0 - in-app AI running INSIDE G-Warp (no Ollama): research + deep-research job for ChatGPT
+Branch / starting commit: main @ 7d7805f
+USER REQUEST (summary, his words): "that still does not answer that question ... I am not talking about using Ollama. I'm talking
+about using the model that pretty much you download in your computer. It's like about 1 gigabyte, which is the weakest model ...
+how can we get that model inside the app running?" GitHub storage is only 1 GB, so maybe "run it to an external version" or a
+weaker model. "The problem is knowledge. If that model does not know anything about Scratch ... or even GWARP, then we are
+pretty much doing nothing." "Do the deep research for ChatGPT" (assign it).
+PLAN: short facts check (in-browser LLM engines, model sizes, where to host the files), answer the owner, add section + AIM-0
+deep-research job to ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md, TODO + ChatGPT to-do pointer, closeout.
+--- (closeout follows) ---
