@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero Kid — Three Original G-Warp Options</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0b14;color:#ececf6;font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1100px;margin:auto;padding:28px 20px 40px}h1{margin:0 0 8px;font-size:clamp(1.5rem,3vw,2.2rem)}p{margin:0 0 20px;color:#b9b9ce}.toolbar,.pose-controls{display:flex;gap:8px;margin:0 0 18px}.toolbar button,.pose-controls button{border:1px solid #555570;background:#141425;color:#ececf6;border-radius:9px;padding:8px 14px;font:inherit;cursor:pointer}.toolbar button[aria-pressed=true],.pose-controls button[aria-pressed=true]{border-color:#8b5cf6;box-shadow:0 0 0 2px #8b5cf655}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}.card{border:1px solid #34344d;background:#141425;border-radius:14px;overflow:hidden}.card h2{font-size:1.05rem;margin:14px 16px 4px}.card p{font-size:.9rem;margin:0 16px 12px;min-height:2.7em}.stage{position:relative;width:100%;aspect-ratio:4/3;display:grid;place-items:center;overflow:hidden;background-color:#0b0b14;background-image:linear-gradient(45deg,#141425 25%,transparent 25%),linear-gradient(-45deg,#141425 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#141425 75%),linear-gradient(-45deg,transparent 75%,#141425 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}.stage img{position:relative;z-index:1;width:auto;height:84%;max-width:78%;object-fit:contain}.stage.light{background-color:#ececf6;background-image:linear-gradient(45deg,#d3d3e2 25%,transparent 25%),linear-gradient(-45deg,#d3d3e2 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#d3d3e2 75%),linear-gradient(-45deg,transparent 75%,#d3d3e2 75%)}.caption{padding:0 16px 14px;color:#9b9bb4;font-size:.78rem}.pose-controls{padding:0 16px 14px;margin:0}.pose-controls button{min-width:30px;padding:4px 8px}.light-mode{background:#ececf6;color:#141425}.light-mode .card{background:#f8f8ff;border-color:#c9c9dc}.light-mode p{color:#55556c}.light-mode .toolbar button,.light-mode .pose-controls button{background:#fff;color:#141425;border-color:#aaaabe}.light-mode .caption{color:#5b5b70}
+</style>
+</head>
+<body>
+<main>
+<h1>Hero Kid · Three G-Warp options</h1>
+<p>Original character concepts for the sprite library. Check the same 4:3 stage in both themes; each figure uses the torso centre as its rotation point.</p>
+<div class="toolbar" role="group" aria-label="Preview theme"><button type="button" data-theme="dark" aria-pressed="true">Dark</button><button type="button" data-theme="light" aria-pressed="false">Light</button></div>
+<section class="cards" aria-label="Character options">
+<article class="card"><h2>A · Cape Explorer</h2><p>A bright helmet, violet cape, and green chest badge for an adventurous hero.</p><div class="stage"><img class="pose" src="hero-kid-A.svg" alt="Cape-wearing hero kid with a bright helmet"></div><div class="caption">240 × 300 costume · centre (0, 0) · four subtly different idle poses</div><div class="pose-controls" aria-label="Option A idle frame"><button type="button" data-frame="0" aria-pressed="true">1</button><button type="button" data-frame="1" aria-pressed="false">2</button><button type="button" data-frame="2" aria-pressed="false">3</button><button type="button" data-frame="3" aria-pressed="false">4</button></div></article>
+<article class="card"><h2>B · Friendly Inventor</h2><p>A rounded suit, glowing green visor, and small tool belt for a clever builder.</p><div class="stage"><img src="hero-kid-B.svg" alt="Friendly inventor kid in a helmet with a green visor"></div><div class="caption">240 × 300 costume · rotation centre (0, 0)</div></article>
+<article class="card"><h2>C · Sky Adventurer</h2><p>A soft cloud-shaped hood, star scarf, and wing-like sleeves for a playful explorer.</p><div class="stage"><img src="hero-kid-C.svg" alt="Sky adventurer kid wearing a cloud-shaped hood and star scarf"></div><div class="caption">240 × 300 costume · rotation centre (0, 0)</div></article>
+</section>
+</main>
+<script>
+(() => {
+  const themeButtons=[...document.querySelectorAll('[data-theme]')];
+  themeButtons.forEach(button=>button.addEventListener('click',()=>{
+    const light=button.dataset.theme==='light';
+    document.body.classList.toggle('light-mode',light);
+    document.querySelectorAll('.stage').forEach(stage=>stage.classList.toggle('light',light));
+    themeButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+  }));
+  const frames=['hero-kid-A.svg','hero-kid-A-idle2.svg','hero-kid-A-idle3.svg','hero-kid-A-idle4.svg'];
+  const pose=document.querySelector('.pose');
+  const frameButtons=[...document.querySelectorAll('[data-frame]')];
+  frameButtons.forEach(button=>button.addEventListener('click',()=>{
+    pose.src=frames[Number(button.dataset.frame)];
+    frameButtons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+  }));
+})();
+</script>
+</body>
+</html>
