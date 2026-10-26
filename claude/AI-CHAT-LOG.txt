@@ -631,3 +631,9 @@ EVIDENCE: generated, NOT-TESTED (prompts). COMMIT: 52e9024
 NEXT: owner opens one Freebuff session per lane and pastes its LANE file.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 24 ---
+UTC timestamp: 2026-10-26T16:11:19Z (owner 12:10 his time)   Who: Claude (configured claude-opus-5-5)   Task: PHONE-1 - copy-paste prompt for the phone chatbot (Opus 5.5, code only)
+Starting commit: f41540b
+USER REQUEST (summary, his words): a phone chatbot that uses Opus 5.5 but "is only capable of giving code" (no handoff, no TXT, no GitHub); ~20 prompts per chat then a new chat; replies over ~2-3 minutes time out ("this conversation just tired me out"). Wants "a simple prompt that I can just copy and paste, and then always click on continue" to "make the AI smarter for GWARP", "avoid this chatbot from overthinking", maybe "a specific redirect website" - "basic simple checks and then ... starts working immediately".
+--- (closeout follows) ---
