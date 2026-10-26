@@ -256,7 +256,7 @@
       const addCheck = (key, label, get, set) => {
         const row = document.createElement('label'); row.style.cssText = 'display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer';
         const input = document.createElement('input'); input.type = 'checkbox'; input.dataset.gwagCheck = key; input.style.accentColor = '#8b5cf6';
-        input.addEventListener('change', () => { const d = getData(sprite); set(d, input.checked); renderAll(); });
+        input.addEventListener('change', () => { const current = mounted.get(layer.dataset.gwagLayer)?.sprite || activeSprite() || sprite; const d = getData(current); set(d, input.checked); renderAll(); });
         row.append(input, document.createTextNode(label)); panel.append(row);
       };
       addCheck('centre', 'Centre cross', d => d.builtins.centre, (d, v) => d.builtins.centre = v);
