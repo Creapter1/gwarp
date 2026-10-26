@@ -1,1 +1,0 @@
-ANIM-G1 module stub test
