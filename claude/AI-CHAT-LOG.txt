@@ -528,3 +528,17 @@ EXE? 100% fledged software EXE."
 PLAN: try a real Windows build of G-Warp here (Electron, test only, not committed as a release); write a dedicated "AI Lab" prompt
 (one ChatGPT chat that only does the G-Warp model); desktop plan in ai-team/ideas; TODO; closeout.
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 16) - 2026-10-26T13:37:17Z
+DONE: 1) AI model = its own lane: ai-team/AI-LAB-PROMPT-2026-10-26.txt (one separate ChatGPT chat "G-Warp AI Lab", folder
+  chatgpt/ai-lab/, jobs AIM-0..7 + AIM-8 teaching data + AIM-9 Colab training notebook the owner runs); added to the rulebook table.
+  2) EXE: built a real Windows G-Warp.exe here with Electron 33.4.11 + @electron/packager 18.3.6 (npm needed --noproxy override in
+  this cloud box). file: PE32+ executable (GUI) x86-64, MS Windows; 270 MB folder, 115 MB zip; sandboxed page, no Node access,
+  links open in the browser. Sent the zip to the owner. Recipe in claude/experiments/desktop/ (no binaries in the repo).
+  Plan: ai-team/ideas/GWARP-DESKTOP-EXE-2026-10-26.md (installer via GitHub Actions on Windows, GitHub Releases, model inside,
+  CPU plan B, updates, signing later). TODO.txt: AI Lab + Desktop items.
+SEEN: ChatGPT already pushed ANIM-I2 icon concepts (several commits) - not reviewed yet.
+EVIDENCE: exe = built + file-type checked; NOT-TESTED on Windows (no Windows here). Plans NOT-TESTED.
+COMMIT: afd0a29
+NEXT: owner runs the test exe on his PC and reports; owner opens a separate ChatGPT chat with the AI Lab prompt.
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
