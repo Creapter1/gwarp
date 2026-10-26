@@ -19,6 +19,8 @@ Re-run it after G-Warp changes; it keeps your `[x]` / `[~]` marks.
 | `JOBS-TESTING.txt` | 80 | — | kid critic + chaos |
 | `JOBS-ART.txt` | 40 | all (take your time) | — |
 
+**Several ChatGPT sessions at once?** Use the lanes: `ai-team/lanes/README.md` (one session = one lane = one job file).
+
 **How to work:**
 - Batches of 10.
 - One report per batch in `chatgpt/jobs/`.

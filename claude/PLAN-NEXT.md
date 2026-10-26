@@ -15,6 +15,7 @@ git pull -q --rebase
 tail -40 claude/AI-CHAT-LOG.txt            # my last entry = where I stopped
 git log --since="12 hours ago" --format="%s" | grep -iv "^claude" | sort | uniq -c | sort -rn | head -20   # what ChatGPT did
 ls ai-team/shared/                         # drop-box folders waiting for me
+for d in chatgpt/lanes/*/; do echo "== $d"; tail -5 $d/AI-CHAT-LOG.txt 2>/dev/null; ls $d/bugs 2>/dev/null | head -5; done   # ChatGPT lanes (since 2026-10-26)
 grep -c "^\[x\] \|^\[~\] " ai-team/chatgpt-jobs/JOBS-*.txt ; ls chatgpt/bugs 2>/dev/null | head   # job bank progress + bugs
 ```
 Then the **log gate**: append `--- ENTRY <n> ---` (UTC time, owner's words, plan) to `claude/AI-CHAT-LOG.txt` → commit → push → read back
@@ -65,6 +66,9 @@ Each code package: `ai-team/shared/2026-10-26-chatgpt-ANIM-<x>/` (`NOTES.md`, `c
 - [ ] B3. Music: listened to Tune Mix/Classic/Fresh/My melody + Create Melody? Anything to change?
 - [ ] B4. Show Animation blocks + G mascot to everyone, or keep Developer-only until ANIM-B1?
 - [ ] B5. Tab Plus: "go" or wait? (`ai-team/ideas/TAB-PLUS-2026-10-26.md`)
+
+### C0. Lanes (several ChatGPT sessions): results are in `chatgpt/lanes/<lane>/` (reports/, bugs/, log). I write the AI-TEAM.txt
+summary lines for them (lanes don't). Lane prompts: `ai-team/lanes/` (regenerate with make_lanes.py).
 
 ### C. Job bank results (ChatGPT, `ai-team/chatgpt-jobs/`)
 - [ ] C1. Triage `chatgpt/bugs/BUG-*.md`: P0/P1 first. Reproduce with the given proof (block bugs: `node ai-team/tools/qa-kit/compare.js
