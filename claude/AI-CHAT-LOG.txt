@@ -611,3 +611,10 @@ USER REQUEST (summary): levels should differ musically: the user's melody at lev
 DONE: PLAN-NEXT M1b (per-level richness for user parts, editable per level, S.myLevels) + M5 name = "Spark Studio" (tabs Melody / Bass / Beat / Chords; ids stay). TODO lines added. No app change.
 EVIDENCE: NOT-TESTED (plan).
 --- END ENTRY ---
+
+--- ENTRY 22 ---
+UTC timestamp: 2026-10-26T15:53:19Z (owner 11:52 his time)   Who: Claude (configured claude-opus-5-5)   Task: IDEAS - Plus extensions, any-AI prompt, 3D
+USER REQUEST (summary, his words): "plus extensions for the customs and music maker, in case people want to add something more crazy"; "a basic prompt that anybody can just give to any AI either pay or not pay ... the first thing it is going to ask ... is what are you trying to make?" then build the extension; extra rules so they "don't always try to add useless stuff. They only fix what they have." "This is just a plan ... just an idea." Future: "recreate the same exact app ... turn it to a 3D mode ... basic simple 3D runner online, but the rest ... downloaded ... future idea."
+DONE: ai-team/ideas/PLUS-EXTENSIONS-AND-3D-2026-10-26.md (Plus API needed first + safety; DRAFT any-AI prompt that asks the question first + no-extras / fix-only rules; 3D far future). TODO line. Idea only, no app change.
+EVIDENCE: NOT-TESTED (idea).
+--- END ENTRY ---
