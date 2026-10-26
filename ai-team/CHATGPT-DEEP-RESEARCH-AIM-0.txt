@@ -15,6 +15,9 @@ preview and the user's OK. The model files must NOT be stored in our GitHub repo
 THE BIG PROBLEM: a small model knows almost nothing about Scratch or G-Warp. Find the best way to give it that knowledge.
 
 RESEARCH (cite a source link for EVERY fact, prefer official docs / GitHub repos / model cards; say when something is uncertain or old):
+0. ALREADY-INSTALLED MODELS FIRST (owner's wish: users should not have to download anything): Chrome's built-in AI (Prompt API /
+   Gemini Nano) and any similar built-in browser or OS model (Edge? Windows? macOS?). Which versions/computers have it, how a web page
+   uses it, JSON output, speed, limits, terms for a free kids' app. Also: a G-Warp desktop installer that ships the model inside.
 1. ENGINES that run an LLM in a web page in 2026: WebLLM (MLC), Transformers.js (ONNX Runtime Web), wllama (llama.cpp WASM),
    Chrome built-in AI (Prompt API / Gemini Nano), LiteRT-LM / MediaPipe, and anything newer. For each: browsers + GPUs supported,
    speed on a normal laptop, JSON-schema / grammar-constrained output, Web Worker support, licence, can it load from ONE html file
@@ -39,7 +42,8 @@ RESEARCH (cite a source link for EVERY fact, prefer official docs / GitHub repos
 DELIVER (simple English, the owner reads on a phone):
 - A one-screen TABLE first: the recommended engine, model, hosting, knowledge method and plan B, with a one-line reason each.
 - Then details per question, with sources. Max ~6 pages. No filler.
-- A PROOF PAGE: ai-team/shared/<date>-chatgpt-AIM-0/poc.html (one file, engine from a CDN, the smallest good model) that asks 3
+- Also in the plan: the AI chat is kept while the app is open; option "Save AI chat in this project" (size cap + Clear button).
+- A PROOF PAGE (if Chrome's built-in AI works, test it FIRST in the page, then the downloaded model): ai-team/shared/<date>-chatgpt-AIM-0/poc.html (one file, engine from a CDN, the smallest good model) that asks 3
   G-Warp requests ("make the player jump when space is pressed", "add a score that goes up when I touch a coin",
   "make it rain") in JSON-schema mode and shows the commands. Write in NOTES.md exactly what the owner clicks to test it in Chrome.
   Say TESTED only if it really ran; otherwise NOT-TESTED.

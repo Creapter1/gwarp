@@ -465,3 +465,16 @@ ANSWER GIVEN: ~0.7% used, ~990 MB left; releases add little (compressed changes)
 if small (WebLLM splits weights into small shards) but bandwidth is the real limit -> keep the model on Hugging Face.
 EVIDENCE: TESTED (gh api + git commands). NEXT: none.
 --- END ENTRY ---
+
+--- ENTRY 12 ---
+UTC timestamp: 2026-10-26T07:04:59Z (owner 03:04 his time)   Who: Claude (configured claude-opus-5-5)   Task: Q&A - can the AI be "already installed", only G-Warp
+Starting commit: 7bda6bb
+USER REQUEST: "The goal is not to make the model to be downloaded ... run the model inside our GitHub already installed ... people
+just only have to ask ... log temporarily saved as long the application is open, or ... save it inside the current project ...
+only gonna do what I'm telling it ... just to run G-Warp and nothing else ... no roaming outside ... Can that be possible or no?"
+ANSWER: GitHub can't run a model (it only serves files). "Only G-Warp, no roaming" = yes, enforced by G-Warp's command list.
+Closest to "already installed": A) Chrome's built-in AI (no download), B) automatic first-run download, C) desktop installer with
+the model inside, D) server (data leaves the PC, parent OK, cost). Chat: kept while open + optional "Save AI chat in this project".
+FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (section 0b + AIM-0 question 0), ai-team/CHATGPT-DEEP-RESEARCH-AIM-0.txt.
+EVIDENCE: NOT-TESTED (plan; Chrome built-in AI facts to be checked by ChatGPT in AIM-0).
+--- END ENTRY ---

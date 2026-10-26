@@ -39,6 +39,29 @@ small model once and runs it **in the browser tab on the computer's graphics car
 **Safety for this version:** the download is big, so G-Warp shows the size and asks first ("the AI needs 350 MB, download now?").
 After that, nothing leaves the computer: the model runs locally, and no project data is sent.
 
+## 0b. UPDATE 2026-10-26 03:04 (owner): "already installed, people just ask" + chat saved in the project
+
+Owner: *"The goal is not to make the model to be downloaded ... run the model inside our GitHub already installed ... people just only have to ask
+... just to run G-Warp and nothing else. No roaming outside."*
+
+**The honest facts:**
+- GitHub Pages only **serves files**. It can't run a model. The model must run **either on the user's computer** (then its file has to
+  reach that computer once) **or on a server** (then the questions leave the computer).
+- **"Only G-Warp, no roaming" is possible in every option.** A model can only write text. It has no hands. G-Warp decides what that text may do (§3 rules): it only accepts the command list, there is no internet, and it never runs JS. That's enforced in G-Warp's code, not by trusting the model.
+
+**Ways to get as close as possible to "already installed":**
+
+| Option | User downloads? | Notes |
+|---|---|---|
+| **A. Use the AI that is already in the browser** (Chrome's built-in model, "Prompt API") | **No.** Chrome brings its own model | Runs on the computer, nothing sent. Only Chrome on desktop, newer PCs. Google's terms apply. **Best match to the owner's wish; ChatGPT checks it first in AIM-0.** |
+| **B. Automatic first-run download** (WebLLM / Transformers.js) | Once, done by G-Warp in the background (from Hugging Face) | It feels "installed" after the first time. Works in most browsers with WebGPU. 0.2–1 GB. |
+| **C. G-Warp Desktop app** (installer) with the model **inside** the installer | It's part of installing the app | Truly installed and offline. Needs a desktop build (Electron/Tauri style). Bigger installer. |
+| **D. A server runs the model** (e.g. a free Hugging Face Space) | No | Questions leave the computer → parent's OK for under-13s (TODO rule), free servers are slow or sleep, and it can cost money. Last choice. |
+
+**Plan:** use A when the browser has it, otherwise B; C later with a desktop version. D only if the owner wants it, and with the parent-OK rule.
+
+**Chat history:** it's kept while the app is open. A switch, **"Save AI chat in this project"** (off by default), stores it inside the project file as G-Warp extra data (Scratch ignores it), with a size cap (e.g. the last 200 messages / 200 KB). A **"Clear AI chat"** button deletes it. No personal info is stored.
+
 ## 1. The answer to "how does it understand and see?"
 
 A small model can't really *look* at the screen or the code. So G-Warp does the looking and the doing, and the model only makes the
@@ -116,7 +139,7 @@ Put everything in the drop box `ai-team/shared/<date>-chatgpt-AIM-<n>/` (see `ai
 
 | Job | What | Done when |
 |---|---|---|
-| **AIM-0** [WEB research, then TERMINAL proof] **DEEP RESEARCH — the in-browser model (DO THIS FIRST in this file)** | Answer, **with sources for every fact**, in `chatgpt/AIM-0-IN-BROWSER-AI-RESEARCH.md` (max ~6 pages; a table first, then details): **(1) Engines:** WebLLM vs Transformers.js vs wllama vs Chrome Prompt API vs anything newer. For each: download size, browsers/GPUs, speed, JSON-schema output, Web Worker, licence, how hard it is to load from a single HTML file with no build step (G-Warp is one `app.html`). **(2) Models:** the 6 best ≤ 1.1 GB models for "follow instructions and output JSON". For each: size, licence (can a kids' app use it? Llama and Gemma have their own terms; Qwen and SmolLM2 are Apache 2.0, check), languages, and a quick quality test on 20 G-Warp requests. **(3) Hosting:** Hugging Face (free? speed limits? CORS? terms?) vs GitHub Releases (CORS?) vs a CDN. Which works from `creapter1.github.io` AND from a `file://` app? **Never** put weights in this repo. **(4) Knowledge:** compare "prompt + recipes" vs "pick a recipe + fill blanks" vs "fine-tuned LoRA". Cost, time, how many examples, which free GPU, how to convert to WebLLM/ONNX, and data-licence rules for training data. **(5) Kid safety + privacy:** content filter for a small model, download consent, storage size, how to delete the model. **(6) Recommendation:** one engine + one model + one hosting + one knowledge method, plus a plan B for computers without WebGPU. | Every claim has a link. Each "best" pick has a reason. Plus a **proof page**: `ai-team/shared/<date>-chatgpt-AIM-0/poc.html` that loads the smallest model from a CDN, asks it 3 G-Warp requests in JSON-schema mode and shows the answers. The owner opens it in Chrome. Report what he must click, and **TESTED** only if it really ran. |
+| **AIM-0** [WEB research, then TERMINAL proof] **DEEP RESEARCH — the in-browser model (DO THIS FIRST in this file)** | Answer, **with sources for every fact**, in `chatgpt/AIM-0-IN-BROWSER-AI-RESEARCH.md` (max ~6 pages; a table first, then details): **(0) Already-installed models:** Chrome's built-in AI (Prompt API): which Chrome versions and computers have it, what it can do (JSON output?), its terms for a kids' app, and whether other browsers have something similar. **(1) Engines:** WebLLM vs Transformers.js vs wllama vs Chrome Prompt API vs anything newer. For each: download size, browsers/GPUs, speed, JSON-schema output, Web Worker, licence, how hard it is to load from a single HTML file with no build step (G-Warp is one `app.html`). **(2) Models:** the 6 best ≤ 1.1 GB models for "follow instructions and output JSON". For each: size, licence (can a kids' app use it? Llama and Gemma have their own terms; Qwen and SmolLM2 are Apache 2.0, check), languages, and a quick quality test on 20 G-Warp requests. **(3) Hosting:** Hugging Face (free? speed limits? CORS? terms?) vs GitHub Releases (CORS?) vs a CDN. Which works from `creapter1.github.io` AND from a `file://` app? **Never** put weights in this repo. **(4) Knowledge:** compare "prompt + recipes" vs "pick a recipe + fill blanks" vs "fine-tuned LoRA". Cost, time, how many examples, which free GPU, how to convert to WebLLM/ONNX, and data-licence rules for training data. **(5) Kid safety + privacy:** content filter for a small model, download consent, storage size, how to delete the model. **(6) Recommendation:** one engine + one model + one hosting + one knowledge method, plus a plan B for computers without WebGPU. | Every claim has a link. Each "best" pick has a reason. Plus a **proof page**: `ai-team/shared/<date>-chatgpt-AIM-0/poc.html` that loads the smallest model from a CDN, asks it 3 G-Warp requests in JSON-schema mode and shows the answers. The owner opens it in Chrome. Report what he must click, and **TESTED** only if it really ran. |
 | **AIM-1** [ANY] Command list | Use the app's existing APIs: the QA-kit builder `GWB`, the GWrap AI pack commands (`/add /start /stop /undo /check /open`) and `ENGINE-MAP.txt`. Write `commands.schema.json` (≤ 40 commands, each with inputs, what it changes, and its undo) plus `COMMANDS.md`. | Every command maps to a real function (name it). Nothing can run JS. |
 | **AIM-2** [TERMINAL] Snapshot | Proposal module `code/snapshot.js`: `GW_AI_SNAPSHOT()` → the text from §1, plus a "run 2 s and report what changed" helper. Test on 5 of your own projects. | The size is under the limit, it is the same format every time, and it is TESTED in G-Warp. |
 | **AIM-3** [ANY] Prompt pack | System prompt (the rules in §3, short), 20 few-shot examples, and how the 3 recipes are picked. | It fits in 3,000 words (tokens) including the Snapshot. |
