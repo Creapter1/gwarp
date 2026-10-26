@@ -49,3 +49,16 @@ After G-Warp matches Scratch, make **the same app in 3D**: the same blocks, but 
 - **Online:** a basic, simple 3D runner in the browser.
 - **Full 3D:** the downloaded desktop version (`GWARP-DESKTOP-EXE-2026-10-26.md`).
 - Basic but fun. The owner will think about it more later. Related: the "3D vector" costume idea in `../FUTURE-IDEAS.txt` / the airplane notes.
+
+
+## 4. Product openness and the separate 3D future
+
+Owner clarification, 2026-10-26:
+- The current G-Warp core and reusable creative resources are intended to remain free/open. The owner welcomes other Scratch-derived communities reusing useful G-Warp ideas and resources, subject to the applicable licences and creator credit.
+- G-Warp's ambition remains to become exceptionally capable; if it cannot surpass TurboWarp/PenguinMod overall, being recognized for distinctive music, animation and creative workflows is still a successful outcome.
+- The far-future 3D direction is understood as a separate, substantially expanded product that might eventually justify a price. This is only a possibility; no price, product split, paywall, or business model has been decided.
+- Do not chargewall the existing 2D G-Warp core or its existing user-created projects/assets. Keep the current MIT licence unchanged unless the owner explicitly decides otherwise after a separate review.
+- Any future paid 3D edition requires a code/dependency/asset licence-boundary review. The MIT core and third-party licences cannot be silently overridden.
+
+Strategy detail: ai-team/ideas/GWARP-FREE-OPEN-IDENTITY-AND-3D-BOUNDARY-2026-10-26.md.
+Status remains IDEA ONLY. No implementation or payment infrastructure is authorized.
