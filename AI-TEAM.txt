@@ -357,3 +357,5 @@ DONE | ChatGPT | C6 — AI chat-log coverage audit | chatgpt/REVIEW-AI-CHAT-LOG-
 2026-10-26T20:19:58Z | DONE | ChatGPT | USER-REQUEST creator tutorial research pass 3 — 10 sources, actionable mechanics and optional creator-support policy | ai-team/shared/2026-10-26-chatgpt-AIM-K1/USER-REQUEST-RESEARCH-PASS-3-ENEMIES-WORLDS-COMBAT-CREDIT-2026-10-26.md, chatgpt/lanes/L2-AILAB/AI-CHAT-LOG.txt | 21,786 chars; GitHub read-back; NOT-TESTED in G-Warp; no app edits
 
 2026-10-26T20:27:58Z | CLAIMED | ChatGPT GPT-6 | COMPARE-1 | Current G-Warp vs TurboWarp/PenguinMod comparison; research and gap priorities only | SOURCE-VERIFIED/NOT-TESTED; no app integration
+
+2026-10-26T20:29:58Z | DONE | ChatGPT GPT-6 | COMPARE-1 — G-Warp positioning and side-by-side TurboWarp/PenguinMod comparison | chatgpt/COMPARE-TURBOWARP-PENGUINMOD-GWARP-2026-10-26.md, chatgpt/AI-CHAT-LOG.txt | SOURCE-VERIFIED/STATIC-ANALYSIS; 18,383-char report; GitHub read-back verified; NOT-TESTED in runtime; no app.html/index.html edits
