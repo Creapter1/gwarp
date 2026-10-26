@@ -113,8 +113,10 @@
     return ok;
   }
   function setFrameOrder(anim,index,keys) {
-    if(!anim?.frames?.[index])return false;
-    anim.frames[index].layerOrder=keys.slice();return true;
+    const frame=anim?.frames?.[index];if(!frame)return false;
+    if(JSON.stringify(frame.layerOrder||[])===JSON.stringify(keys))return false;
+    window.GW_ANIM?.historySnapshot?.();
+    frame.layerOrder=keys.slice();return true;
   }
 
   function thumbnail(item) {
@@ -148,11 +150,11 @@
   function setName(item,value) {
     const name=String(value||'').trim().slice(0,80);if(!name)return;
     if(item.kind==='paint'){item.node.dataset.gwLayerName=name;try{CE()?.save?.(true);}catch{}}
-    else {const a=state()?.anim;if(a){a.layerMeta||={};a.layerMeta[item.key]||={};a.layerMeta[item.key].name=name;}}
+    else {const a=state()?.anim;if(a){window.GW_ANIM?.historySnapshot?.();a.layerMeta||={};a.layerMeta[item.key]||={};a.layerMeta[item.key].name=name;window.GW_ANIM?.refresh?.();}}
   }
   function setLock(item,value) {
     if(item.kind==='paint'){item.node.dataset.gwLayerLocked=value?'1':'0';try{CE()?.save?.(true);}catch{}}
-    else {const a=state()?.anim;if(a){a.layerMeta||={};a.layerMeta[item.key]||={};a.layerMeta[item.key].locked=!!value;}}
+    else {const a=state()?.anim;if(a){window.GW_ANIM?.historySnapshot?.();a.layerMeta||={};a.layerMeta[item.key]||={};a.layerMeta[item.key].locked=!!value;window.GW_ANIM?.refresh?.();}}
   }
   function styleState() {
     if(!style){style=document.createElement('style');style.id='gw-anim-layers-preview-style';document.head.appendChild(style);}
@@ -237,6 +239,7 @@
           setFrameOrder(a,index,keys);
           // Claude adds the showPose hook to apply the order to the live view.
           applyCurrentFrame(st);
+          window.GW_ANIM?.refresh?.();
         }
         renderRows();
       });
