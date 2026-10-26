@@ -2284,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.55.0</span>
+<span class="app-version">Beta v15.56.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4648,7 +4648,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.55.0',label:'Beta v15.55.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.56.0',label:'Beta v15.56.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -24067,7 +24067,7 @@ body.gw-calm .gwsb-pop, body.gw-calm #gwSparkBar.open { animation: none; }
     if (!made || !made.length) { out('I couldn’t build “' + esc(rec.title) + '” here: a block it needs is missing.', 'warn'); return; }
     lastMade = made; pop(made);
     const spr = window.Engine?.sprites?.[window.Engine.activeSpriteIndex]?.name || 'your sprite';
-    out('✅ <b>' + esc(rec.emoji || '') + ' ' + esc(rec.title) + '</b> added to ' + esc(spr) + '. Press the green flag to try it. ' +
+    out('✅ <b>' + esc(rec.emoji || '') + ' ' + esc(rec.title) + '</b> added to ' + esc(spr) + '. Press the green flag to try it. <span style="color:#c4b5fd">(Purple electricity = made with G-Spark\'s help.)</span> ' +
       '<button type="button" data-act="undo">Undo</button>', 'ok');
   }
   function ask(q) {
@@ -24128,6 +24128,48 @@ body.gw-calm .gwsb-pop, body.gw-calm #gwSparkBar.open { animation: none; }
   }
   window.GW_SPARK_BAR = { ask, toggle, undo, mount };
   let n = 0; const t = setInterval(() => { if (mount() || ++n > 240) clearInterval(t); }, 500);
+})();
+</script>
+<style id="gw-v1556-ai-purple-css">
+/* blocks made by G-Spark AI: PURPLE electricity (the user's own blocks keep the green) */
+#workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .block-c-body::before { background-image: var(--gwai-wire, var(--gw8-wire)); }
+#workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .block-c-body::after { background-image: var(--gwai-plug-top, var(--gw8-plug-top)), var(--gwai-plug-bottom, var(--gw8-plug-bottom)); }
+body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .block-c-body::after { filter: drop-shadow(0 0 3px rgba(168, 85, 247, .95)); }
+/* blocks without a wire get a thin purple spark line on the left, so every helped block can be seen */
+#workspaceCanvas .scratch-block[data-gw-ai]:not(.block-c-shape) { box-shadow: inset 3px 0 0 #a855f7, -2px 0 6px -2px #a855f7aa; }
+</style>
+<script id="gw-v1556-ai-purple">
+/* G-Warp Beta v15.56.0 (Claude). Owner, 2026-10-26: "anything created by G-Spark AI will always be purple electricity. Anything
+   else created by the user will be ... green. Even if it is the same code where the AI made it and the user decided to modify it,
+   it is still going to be purple for what the AI did and green for what the user did ... it is not a way to say, oh, you did not
+   do this yourself" - it shows you got help, which is fine.
+   How: every block GWrap / G-Spark AI builds gets data-gw-ai="1" (per block, so blocks the user adds into an AI script stay green).
+   The mark lives in the block's own HTML, so it stays through switching sprites, undo / redo and G-Warp saves (.sb3 with the G-Warp
+   copy inside). A pure Scratch file can't keep it (Scratch has no such thing). The purple wire = the same picture as the green
+   one with the greens swapped for G-Warp violets. */
+(() => {
+  'use strict';
+  const SWAP = { '052e16': '2e1065', '16a34a': '7e22ce', '22c55e': '9333ea', '4ade80': 'a855f7', 'bbf7d0': 'e9d5ff', 'f0fdf4': 'faf5ff' };
+  function paint() {
+    const cs = getComputedStyle(document.documentElement), root = document.documentElement.style;
+    [['--gw8-wire', '--gwai-wire'], ['--gw8-plug-top', '--gwai-plug-top'], ['--gw8-plug-bottom', '--gwai-plug-bottom']].forEach(([from, to]) => {
+      const v = cs.getPropertyValue(from).trim(); if (!v) return;
+      root.setProperty(to, v.replace(/%23([0-9a-fA-F]{6})/g, (m, hex) => '%23' + (SWAP[hex.toLowerCase()] || hex)));
+    });
+  }
+  function mark(stacks) {
+    let n = 0; (stacks || []).forEach(st => st && st.querySelectorAll && st.querySelectorAll('.scratch-block').forEach(b => { b.dataset.gwAi = '1'; n++; }));
+    try { window.GW8?.scheduleHistory?.('G-Spark AI blocks'); } catch (e) {}
+    return n;
+  }
+  function wrap() {
+    const A = window.GW_V1571; if (!A?.addRecipe || A.addRecipe.__gwai) return !!A?.addRecipe;
+    const orig = A.addRecipe; A.addRecipe = function (...args) { const made = orig.apply(this, args); mark(made); return made; };
+    A.addRecipe.__gwai = true; return true;
+  }
+  paint();
+  let n = 0; const t = setInterval(() => { if (wrap() || ++n > 240) clearInterval(t); }, 500);
+  window.GW_AI_MARK = { mark, paint, count: () => document.querySelectorAll('#workspaceCanvas .scratch-block[data-gw-ai]').length };
 })();
 </script>
 </body>
