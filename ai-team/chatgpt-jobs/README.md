@@ -1,3 +1,5 @@
+**READ FIRST: [HOW-TO-DO-EACH-JOB.md](HOW-TO-DO-EACH-JOB.md)** — exactly how to do every job type, with examples and templates.
+
 # ChatGPT's job bank — 2,474 jobs (owner, 2026-10-26: "assign thousands of jobs for ChatGPT")
 
 Made by `make_jobs.py` from G-Warp's own data: every block, every gallery extension, every button, plus recipes, tests and art.

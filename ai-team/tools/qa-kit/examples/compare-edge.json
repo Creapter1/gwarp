@@ -1,0 +1,1 @@
+{"name":"EDGE join","vars":["a","b"],"lists":["L"],"script":"return [B.SET(\"a\", B.join(\"10\", 5)), B.SET(\"b\", B.add(\"abc\", 3)), B.LADD(\"L\", B.round(2.5))];"}

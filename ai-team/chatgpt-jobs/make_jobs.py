@@ -28,7 +28,8 @@ def write(name, head, jobs):
         for jid, text in jobs: f.write((marks.get(jid) or f'[ ] {jid} {text}') + '\n')
     return len(jobs)
 
-COMMON = """RULES: ai-team/README.md. Work in batches of 10 jobs (same file, top to bottom, skip [x]). One report per batch:
+COMMON = """READ FIRST: ai-team/chatgpt-jobs/HOW-TO-DO-EACH-JOB.md (step by step for every job type, report + bug templates).
+RULES: ai-team/README.md. Work in batches of 10 jobs (same file, top to bottom, skip [x]). One report per batch:
 chatgpt/jobs/<FILE>-<first id>-<last id>.md (one short section per job: result, proof, bug found? yes/no). Mark each job here
 [x] (done) or [~] (done, found a bug -> also write chatgpt/bugs/BUG-<id>.md). Push after every batch + one AI-TEAM.txt line.
 Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TESTED. Never invent results. Never edit app.html."""

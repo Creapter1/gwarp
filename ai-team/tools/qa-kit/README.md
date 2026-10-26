@@ -22,6 +22,7 @@ No internet? Put `tw.css`, `fa/` (Font Awesome 6.4.0 `css/` + `webfonts/`) and `
 | `node smoke-app.js [app.html] [shot.png]` | Opens G-Warp, reads the version, clicks the main tabs, builds and runs a tiny script, looks for page errors | After **every** change to app.html |
 | `node check-sb3.js game.sb3` | Scratch's own file checker, no extensions, only Scratch blocks, no missing files, sizes, **no AI marks** | Before giving the owner any .sb3 |
 | `node run-in-scratch.js game.sb3 [sec] [--shots dir] [--keys "ArrowRight:600@1500"]` | Plays the project in the real Scratch engine, presses keys, takes screenshots, reports clones / broadcasts / errors | Proof that a project works in Scratch |
+| `node compare.js test.json [sec]` | Builds a tiny script in G-Warp, saves it, runs it in G-Warp AND in the real Scratch engine, prints both answers side by side (variables, lists, x/y/direction/size/costume) → SAME / DIFFERENT. Example: `examples/compare-move.json` | Block parity jobs (BLK-PAR / BLK-EDGE) |
 | `node roundtrip.js game.sb3 [out.sb3] [app.html]` | Opens the project in G-Warp and saves it again, then lists **every** difference (scripts, costumes, centres, sounds, comments) | Finding G-Warp import/export bugs |
 | `node costume-bounds.js game.sb3 "Sprite" ["costume" ...]` | Where Scratch draws each costume (left / right / bottom / top) | Costumes that "jump" when they switch |
 | `node dump-scripts.js game.sb3 > game.txt` | Every script as text. Diff two files to see what changed | Reviews, before/after |
