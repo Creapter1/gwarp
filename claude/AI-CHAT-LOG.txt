@@ -391,3 +391,37 @@ UNDERSTOOD SCOPE / PLAN:
 - ChatGPT: detailed ANIMATION to-do (first) and the in-app AI MODEL job (second, plan + proposals only).
 - TODO.txt: icon matching, music maker, animation, in-app AI.
 --- (closeout follows at the end of this task) ---
+PROGRESS + CLOSEOUT (ENTRY 9) - 2026-10-26T06:53:21Z
+DONE:
+- Folders (owner: "only Claude and ChatGPT + AI team"): team/ -> ai-team/; gemini/ grok/ deepseek/ -> ai-team/archive/; retired AIs'
+  plan files -> ai-team/archive/old-plans/; haiku/ -> claude/haiku/. All by git mv (nothing deleted). Links fixed in live files
+  (TODO, README, prompts, qa-kit, docs/blocks.html, tests, music-compare, app.html credit comments only). Old historical notes keep
+  their old paths; the rulebook says team/ = ai-team/ now. GitHub root now: ai-team/ chatgpt/ claude/ docs/ + app files.
+- ai-team/README.md = ALL the rules in one place: 10-second version, who is who, where work goes, log gate (owner's #1 rule),
+  proof words, how to work without overdoing (do/don't, time budget: quick for code, take time for icons), product rules,
+  the DROP BOX ai-team/shared/<date>-<ai>-<job>/ (code + icons together, like Gemini did) with NOTES.md + preview.html format,
+  icon/art rules (A/B/C, one family, 24px viewBox, G-Warp colours, <4 KB, no watermark), Claude's integration rules, checklist.
+- ai-team/CHATGPT-ANIMATION-TODO-2026-10-26.txt (ChatGPT does this FIRST): what exists today (checked in the app: editor buttons,
+  Animation tab controls, exports), the look rules, jobs ANIM-0 check, I1 icon audit, I2 new icons A/B/C (centre, guides, layers,
+  motion, poses, preview), C1 always centred like Scratch, G1 guide lines ("liner"), L1 layers panel with previews + per-frame
+  layer order, P1 easing/hold/squash/follow-through/mirror/pose library, T1 frames strip + preview on stage, B1 Animation blocks +
+  mascot readiness, D1 help + samples.
+- ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md: "GWrap AI Local" on a small 2024 Ollama model: how it sees (Snapshot text + optional
+  vision line), acts (fixed JSON command list, preview + Apply, undo), remembers (recipes); 14 rules (inside G-Warp only, no
+  internet, no JS, ask before delete, limits, honest, kid-safe, injection-safe); ChatGPT jobs AIM-1..7. Model names marked "check
+  on ollama.com first".
+- TODO.txt: animation, ICONS MUST MATCH, music maker still open, in-app AI, Tab Plus. AI-TEAM.txt banner, MERGE-QUEUE "WAITING
+  FOR CLAUDE" section, prompts (ChatGPT A+B, Haiku) point to the rulebook + new order (animation first).
+FOUND WHILE CHECKING (for ChatGPT ANIM-0, not fixed yet): paint editor still labels Reshape and Eraser "coming soon" although
+  v15.46.3 says they work; Animation tab frame thumbnails have a white background.
+TESTS: qa-kit smoke-app from the new path ALL PASS; every moved link target exists; app.html change = comments only.
+EVIDENCE CLASS: TESTED in G-Warp (smoke); docs = NOT-TESTED (plans).
+COMMIT: 38b074b
+NEXT: owner gives ChatGPT the prompt (ai-team/CHATGPT-PROMPT-2026-10-26.txt); ChatGPT starts ANIM-0.
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---
+GITHUB CLOSEOUT VERIFICATION (ENTRY 9):
+- Commit SHA of the work: 38b074b (this closeout is the next commit)
+- Read-back: done right after push (see below)
+- Task status: DONE
