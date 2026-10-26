@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>G-Warp ANIM-I1 Icon Audit Preview</title>
+<style>
+:root{color-scheme:dark light;--bg:#0b0b14;--panel:#141425;--line:#30304b;--text:#ececf6;--muted:#a4a4bd;--violet:#8b5cf6;--green:#4ade80;--yellow:#facc15}
+*{box-sizing:border-box}body{margin:0;padding:24px;background:var(--bg);color:var(--text);font:14px Inter,system-ui,sans-serif}
+header{max-width:1100px;margin:auto auto 20px}h1{font-size:22px;margin:0 0 6px}p{color:var(--muted);line-height:1.5}
+main{max-width:1100px;margin:auto;display:grid;gap:14px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+h2{font-size:15px;margin:0 0 12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.sample{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;align-items:center;gap:12px;min-height:74px;background:#0f1020}
+.sample svg{width:26px;height:26px;flex:none;color:var(--text);stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.sample b{display:block;font-size:13px}.sample small{color:var(--muted)}
+.pill{font-size:10px;border-radius:99px;padding:3px 7px;background:#29213f;color:#d8c8ff;margin-left:auto}
+.good{color:var(--green)}.warn{color:var(--yellow)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid var(--line);font-size:12px}th{color:#c4b5fd}
+@media(prefers-color-scheme:light){body{background:#f4f3fa;color:#191927}.card{background:#fff;border-color:#d8d6e5}.sample{background:#f5f4fa;border-color:#d8d6e5}.sample small,p{color:#65647a}th{color:#7041c7}}
+</style>
+<header><h1>G-Warp · ANIM-I1 icon audit</h1><p>Source-only preview of current icon choices and the recommended consistent mapping. This page does not change G-Warp.</p></header>
+<main>
+<section class="card"><h2>Undo / Redo — already consistent</h2><div class="grid">
+<div class="sample"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h9a7 7 0 0 1 0 14h-2"/></svg><div><b>Undo</b><small>Code · Costumes · Animation</small></div><span class="pill good">MATCH</span></div>
+<div class="sample"><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9h-9a7 7 0 0 0 0 14h2"/></svg><div><b>Redo</b><small>Code · Costumes · Animation</small></div><span class="pill good">MATCH</span></div>
+</div></section>
+<section class="card"><h2>Play / Stop — normalize generic actions</h2><div class="grid">
+<div class="sample"><svg viewBox="0 0 24 24" style="fill:#4ade80;stroke:#4ade80"><path d="M7 4v16l13-8z"/></svg><div><b>Current: plain Play</b><small>Flipbook launcher · Flipbook player · Song Maker</small></div></div>
+<div class="sample"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="m9 9 6 6m0-6-6 6"/></svg><div><b>Current: filmstrip Play</b><small>Animation preview only</small></div><span class="pill warn">MISMATCH</span></div>
+<div class="sample"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1" style="fill:#facc15;stroke:#facc15"/></svg><div><b>Stop</b><small>Flipbook / Song Maker; Animation needs state icon</small></div></div>
+</div></section>
+<section class="card"><h2>Onion skin — one icon family</h2><div class="grid">
+<div class="sample"><svg viewBox="0 0 24 24"><rect x="2.5" y="6.5" width="11" height="11" rx="2.5" style="stroke:#8b5cf6"/><rect x="10.5" y="6.5" width="11" height="11" rx="2.5" style="stroke:#4ade80"/><rect x="6.5" y="4.5" width="11" height="15" rx="2.5" style="fill:currentColor;stroke:currentColor"/></svg><div><b>Paint editor</b><small>Older inline overlapping sheets</small></div><span class="pill warn">DIFFERENT</span></div>
+<div class="sample"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="12" height="12" rx="2" style="stroke:#8b5cf6;stroke-dasharray:2 2"/><rect x="10" y="5" width="12" height="12" rx="2" style="stroke:#4ade80;stroke-dasharray:2 2"/><rect x="6" y="6" width="12" height="12" rx="2"/><circle cx="12" cy="12" r="2" style="fill:#4ade80;stroke:none"/></svg><div><b>Flipbook + Animation</b><small>Gemini registry onion SVG</small></div><span class="pill good">SHARED</span></div>
+</div></section>
+<section class="card"><h2>Delete — add the existing trash icon to Animation</h2><div class="grid">
+<div class="sample"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m-9 0 1 13h10l1-13M10 11v5m4-5v5"/></svg><div><b>Costumes + Sounds</b><small>Trash-can icon + Delete label</small></div></div>
+<div class="sample"><svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m-9 0 1 13h10l1-13M10 11v5m4-5v5"/></svg><div><b>Animation</b><small>Text-only Delete button today</small></div><span class="pill warn">MISMATCH</span></div>
+</div></section>
+<section class="card"><h2>Animation tab feature icon</h2><div class="sample"><svg viewBox="0 0 24 24"><path d="M6 18 12 10 19 7"/><circle cx="6" cy="18" r="2.5" style="stroke:#8b5cf6"/><circle cx="12" cy="10" r="2.5" style="stroke:#4ade80"/><circle cx="19" cy="7" r="2" style="fill:#4ade80;stroke:none"/></svg><div><b>Animation tab</b><small>Existing bones icon — keep</small></div><span class="pill good">KEEP</span></div></section>
+<section class="card"><h2>Source and test status</h2><p>Baseline app.html SHA: <code>7ef2e8d17081354e66fc6138ae9cc8a639b839d9</code>. Evidence class: SOURCE-VERIFIED. No browser or runtime test was run. Flip-horizontal / flip-vertical registry keys are declared but not applied by the registry's current apply routine; their active paint-toolbar mapping remains to be checked in a real browser.</p></section>
+</main></html>
