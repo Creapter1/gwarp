@@ -25,7 +25,9 @@
   function paintItems() {
     const svg = paintSvg(); if (!svg) return [];
     const nodes = [...svg.children].filter(el => isPaintArt(el,svg));
-    nodes.forEach(el => { if (!el.dataset.gwLayerKey) el.dataset.gwLayerKey = uid('paint'); });
+    let changed = false;
+    nodes.forEach(el => { if (!el.dataset.gwLayerKey) { el.dataset.gwLayerKey = uid('paint'); changed = true; } });
+    if (changed) { try { CE()?.save?.(true); } catch {} }
     return nodes.map((node,i) => makeItem(node,node.dataset.gwLayerKey,i,'paint')).reverse();
   }
   function partPaths(root) {
@@ -40,7 +42,8 @@
   function at(root,path){let el=root;for(const i of String(path).split('/').map(Number)){el=el?.children?.[i];if(!el)return null;}return el;}
   function makeItem(node,key,i,kind,extra={}) {
     const tag=node.localName||'shape';
-    const name=node.getAttribute('data-gw-layer-name')||node.getAttribute('aria-label')||node.id||
+    const meta=kind==='anim'?state()?.anim?.layerMeta?.[key]:null;
+    const name=node.getAttribute('data-gw-layer-name')||meta?.name||node.getAttribute('aria-label')||node.id||
       ((tag==='g'?'Group':tag[0].toUpperCase()+tag.slice(1))+' '+(i+1));
     const anim=state()?.anim, boneId=extra.boneId||null, bi=boneId?anim?.bones?.findIndex(b=>b.id===boneId):-1;
     return {node,key,index:i,kind,name,locked:kind==='paint'?node.dataset.gwLayerLocked==='1':!!anim?.layerMeta?.[key]?.locked,
@@ -217,7 +220,9 @@
       row.addEventListener('drop',e=>{
         e.preventDefault();row.classList.remove('drag-over');
         const from=e.dataTransfer?.getData('text/plain'),to=item.key;if(!from||from===to)return;
-        const keys=(kind==='paint'?paintItems():animationItems()).map(x=>x.key),i=keys.indexOf(from),j=keys.indexOf(to);
+        const rows=kind==='paint'?paintItems():animationItems(),source=rows.find(x=>x.key===from),target=rows.find(x=>x.key===to);
+        if(!source||!target||source.locked||target.locked)return;
+        const keys=rows.map(x=>x.key),i=keys.indexOf(from),j=keys.indexOf(to);
         if(i<0||j<0)return;keys.splice(i,1);keys.splice(j,0,from);
         if(kind==='paint')orderPaint(keys);
         else {
