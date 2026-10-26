@@ -440,3 +440,15 @@ pretty much doing nothing." "Do the deep research for ChatGPT" (assign it).
 PLAN: short facts check (in-browser LLM engines, model sizes, where to host the files), answer the owner, add section + AIM-0
 deep-research job to ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md, TODO + ChatGPT to-do pointer, closeout.
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 10) - 2026-10-26T06:59:12Z
+DONE: checked facts on the web (in-browser engines WebLLM / Transformers.js / wllama / Chrome Prompt API; 4-bit model sizes
+  SmolLM2 360M ~204 MB ... Llama 3.2 1B ~695 MB, Qwen3.5 2B ~1.06 GB; WebLLM JSON-schema mode + Web Worker + Cache API/IndexedDB;
+  GitHub 100 MB file limit). Told the owner: ~1 GB = a 1-2B model (12B would be ~7 GB); files live on Hugging Face, not in the repo;
+  knowledge comes from the prompt + recipes + locked JSON answers + "pick a recipe and fill blanks", later a fine-tuned LoRA.
+FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (new section 0 = main plan in the browser; AIM-0 job; sources),
+  ai-team/CHATGPT-DEEP-RESEARCH-AIM-0.txt (paste-ready deep research prompt), TODO.txt, ai-team/CHATGPT-ANIMATION-TODO-2026-10-26.txt.
+EVIDENCE: research only (web sources linked in the plan); nothing run in G-Warp; NOT-TESTED.
+COMMIT: e0e25f5
+NEXT: owner pastes ai-team/CHATGPT-DEEP-RESEARCH-AIM-0.txt into ChatGPT; ChatGPT pushes the report + poc.html; Claude reviews.
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
