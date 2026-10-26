@@ -1136,3 +1136,51 @@ Inspect source for Flipbook canvas/preview nodes, animation drawing/drag events,
 CHAT HISTORY COMPLETENESS:
 PARTIAL — exact user request "Continue" captured; task details derived from current GitHub task file and verified app source.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION PROGRESS
+UTC timestamp: 2026-10-26T14:08:44Z
+AI / agent / exact model identity: ChatGPT GPT-6
+Task ID / title: ANIM-G1 — Guide-line proposal, WEB phase
+
+PROGRESS / AI RESPONSE:
+- Verified current source hooks: Paint wrapper/canvases, GW_VECTOR_EDITOR.mapFor, GW_V153_VECTOR.snap / #gwV153SnapBtn, GW_TRANSFORM.deltaFor, GW_ANIM.frameSvg/state/move, #gw18View/#gw18Svg, GW_FLIPBOOK state and 440×330 canvas, and projectData/loadProject serializer seams.
+- Published shared candidate at ai-team/shared/2026-10-26-chatgpt-ANIM-G1/code/anim-guides.js, plus NOTES.md and a static concept preview.html.
+- Added per-sprite guide metadata helpers, overlay/ruler renderers, custom guide drag/edit/lock, built-in centre/ground/head/stage guides, aligned Flipbook overlays, Paint/Animation snap helper functions, and project serialize/restore helpers.
+- Static source review caught and corrected: drag preview renderer argument mismatch; preview being cleared by periodic refresh; settings panel retaining the old sprite after a sprite switch; nonzero Animation viewBox origin assumptions; bitmap canvas pixels not converted through costume res; unnecessary bitmap toDataURL polling; and null ground/head values displaying at y=0.
+- Verified shared code and ChatGPT working copy are byte-identical. Read back code, notes and preview from GitHub.
+
+FILES CHANGED:
+- chatgpt/anim-guides.js (working copy)
+- ai-team/shared/2026-10-26-chatgpt-ANIM-G1/code/anim-guides.js
+- ai-team/shared/2026-10-26-chatgpt-ANIM-G1/NOTES.md
+- ai-team/shared/2026-10-26-chatgpt-ANIM-G1/preview.html
+- No app.html, index.html, Claude folder or other AI folder changed.
+
+STATIC CHECKS:
+- Working-copy/drop-box byte equality: PASS.
+- Guide metadata + serialize/restore helpers present: PASS.
+- Paint and Animation snap helper exports present: PASS.
+- Current-surface sprite resolution in reusable panel: PASS.
+- Drag preview uses surface.info and survives refreshes: PASS.
+- Nonzero viewBox origin, bitmap res scaling, null-value guard, no bitmap dataURL poll, and listener cleanup: PASS.
+- Source-symbol checks against current app.html: PASS for identifiers and integration seams.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for inspected app symbols, source coordinate/Flipbook formula and project serialization seam.
+- STATIC-ANALYSIS for candidate code structure and targeted issue corrections.
+- NOT-TESTED for JavaScript parser/runtime, browser display, pointer/drag behavior, project save/load, export exclusion, snap interactions, and 200-shape performance.
+
+BLOCKERS / UNCERTAINTIES:
+- Project data writer/loader still needs Claude's explicit gwAnimGuides integration.
+- Paint Select group move has a documented snap seam; new shape creation and reshape/resize handles require further integration at their actual event seams if the owner expects all such endpoints to snap.
+- Animation move handler remains private and needs a controlled patch by Claude.
+- Candidate uses a 500ms observer/poll refresh; performance must be tested and likely optimized with editor lifecycle events.
+
+NEXT STEP / HANDOFF:
+Claude: inspect the WEB candidate and integrate only after owner approval and exact required active-model verification. Then run the full ANIM-G1 browser/terminal acceptance, including a .gwarp save/reload round-trip and a 200-shape responsiveness test. Do not mark the feature complete before those tests pass.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — request "Continue" recorded in the session-start entry; scope from current task file.
+--- END ENTRY ---
