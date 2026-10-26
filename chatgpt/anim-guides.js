@@ -314,7 +314,7 @@
     svg.addEventListener('pointermove', e => {
       if (!drag) return;
       const q = stagePoint(svgPoint(svg, e)); drag.value = q[drag.axis];
-      renderSurface(surface, { id: drag.id, axis: drag.axis, value: drag.value }, true);
+      renderSurface(surface.info, { id: drag.id, axis: drag.axis, value: drag.value }, true);
     }, true);
     const end = e => {
       if (!drag) return;
