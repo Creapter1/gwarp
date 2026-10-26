@@ -672,3 +672,8 @@ UTC timestamp: 2026-10-26T16:37:56Z (owner 12:37 his time)   Who: Claude (config
 CARD (from the owner): web_search NO; open_url YES (only URLs pasted in the user message, fetched by the app); read_files NO; run_code NO; make_files NO; images NO; memory PARTIAL; README first line "# G-Warp" read OK; prompt last item PH-116 (full prompt seen); secret word OK (no cut); 600 lines in one answer, not cut; ~20 recipes fit; the app auto-fetches anything that looks like a URL/filename ("0.05", "pack.py") -> junk errors. Bot warned PH-001..060 used the old format (already converted by Claude in entry 26).
 PLAN: tiny starter message with the raw GitHub URL of a bot-only rules file (no file names / decimals inside), 20 recipes per answer.
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 28) - 2026-10-26T16:38:36Z
+DONE: ai-team/phone/BOT-RULES.txt = bot-only rules page (no file names / decimals that the app would auto-fetch; checked by an assert in make_phone_prompt.py), 20 recipes per answer, example recipe uses {r} inputs + prep, items PH-061..116 then invent. PHONE-BOT-PROMPT.txt = owner how-to with a 2-line starter (Read this page ... Start at PH-061 + raw URL). Old packs: already converted (entry 26).
+EVIDENCE: rules page served by raw.githubusercontent (checked); not run on the phone. COMMIT: c69a809
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
