@@ -152,7 +152,7 @@
     if (!m || !(m.k > 0)) return point;
     ensureMeasured(s);
     const rc = c.rc || { x: 0, y: 0 };
-    const base = document.getElementById('gwVectorCanvasV15') || document.getElementById('gwBitmapCanvasV15');
+    const base = ['gwVectorCanvasV15', 'gwBitmapCanvasV15'].map(id => document.getElementById(id)).find(x => x && getComputedStyle(x).display !== 'none');
     const rect = base?.getBoundingClientRect();
     const threshold = (Number(thresholdPx) || 6) * 512 / Math.max(1, rect?.width || 512) / m.k;
     const x = (point.x - m.ox) / m.k - rc.x, y = (point.y - m.oy) / m.k - rc.y;
