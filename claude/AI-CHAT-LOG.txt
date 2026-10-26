@@ -549,3 +549,9 @@ Starting commit: f6b5c50
 USER REQUEST: "go ahead and assign thousands of jobs for ChatGPT. So that way ChatGPT has a lot of work to do. And I don't waste your tokens."
 PLAN: generate jobs by script from G-Warp data (blocks, extensions, recipes, UI buttons, sprites, icons) into ai-team/chatgpt-jobs/, claim system, closeout.
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 17) - 2026-10-26T13:46:15Z
+DONE: ai-team/chatgpt-jobs/: make_jobs.py (re-runnable, keeps [x] marks) generated 2,474 jobs: JOBS-BLOCKS 880 (176 blocks x parity/edge/save/doc/AI-data), JOBS-EXTENSIONS 920 (184 x load/run/credit/safety/doc), JOBS-UI 354 (118 controls x click/icon/words), JOBS-RECIPES 200 (50 mechanics x 4), JOBS-TESTING 80 (40 kid critic + 40 chaos), JOBS-ART 40; README with order + web/terminal split. Prompt + TODO point to it.
+EVIDENCE: generated + line counts checked; jobs themselves NOT-TESTED. COMMIT: e547bbf
+NEXT: ChatGPT works the bank after the animation list; AI Lab chat stays on the model.
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
