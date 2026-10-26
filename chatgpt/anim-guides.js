@@ -77,16 +77,23 @@
       host.appendChild(document.importNode(doc.documentElement, true));
       document.body.appendChild(host);
       const root = host.firstElementChild;
-      let b = null;
-      try { b = root.getBBox(); } catch {}
-      if (!b || !Number.isFinite(b.y) || (!b.width && !b.height)) {
-        let y0 = Infinity, y1 = -Infinity;
-        root.querySelectorAll('path,rect,circle,ellipse,line,polyline,polygon,text,use').forEach(el => {
-          try { const q = el.getBBox(); if (Number.isFinite(q.y)) { y0 = Math.min(y0, q.y); y1 = Math.max(y1, q.y + q.height); } } catch {}
-        });
-        if (Number.isFinite(y0)) b = { y: y0, height: y1 - y0 };
-      }
-      return b && Number.isFinite(b.y) ? b : null;
+      const rootCTM = root.getScreenCTM();
+      if (!rootCTM) return null;
+      const toRoot = rootCTM.inverse();
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      [...root.children].filter(node => !/^(defs|style|title|desc|metadata|script)$/i.test(node.localName)).forEach(node => {
+        try {
+          const box = node.getBBox(), ctm = node.getScreenCTM();
+          if (!ctm || !Number.isFinite(box.x) || !Number.isFinite(box.y)) return;
+          const m = toRoot.multiply(ctm);
+          for (const [x, y] of [[box.x, box.y], [box.x + box.width, box.y], [box.x, box.y + box.height], [box.x + box.width, box.y + box.height]]) {
+            const p = new DOMPoint(x, y).matrixTransform(m);
+            x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y);
+            x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y);
+          }
+        } catch {}
+      });
+      return Number.isFinite(y0) ? { x: x0, y: y0, width: x1 - x0, height: y1 - y0 } : null;
     } catch { return null; }
     finally { host?.remove(); }
   }
