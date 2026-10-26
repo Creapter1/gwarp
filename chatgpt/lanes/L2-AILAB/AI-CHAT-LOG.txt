@@ -262,3 +262,66 @@ PROGRESS AT START:
 NEXT STEP:
 - Complete source research, write the standalone expansion note in the same shared folder, read it back, append a closeout to this log, and verify the final GitHub state.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+USER-REQUEST RESEARCH EXPANSION — CLOSEOUT
+UTC timestamp: 2026-10-26T20:13:46Z
+AI / agent / exact model identity: ChatGPT / GPT-6 (chatgpt.com; not running inside Freebuff)
+Task: Expand Griffpatch and broader game-creator/game-design research; research-only, as requested.
+
+USER REQUEST:
+"Nice, do more research. That's very nice. I honestly like it, but do more research. And those ideas you said to create, those actually are nice ideas. But for now let's just focus on the research. Oh, and also, by the way, read the GitHub. You're not part of the free buff, just letting you know, but you still can do some stuff."
+
+SCOPE / ACCEPTANCE:
+- Read the live GitHub repo, current L2 lane notes and prior research.
+- Expand research on Griffpatch, other game educators/designers, tutorial structures, game feel, pedagogy and agent/editor workflows.
+- Save a separate second-pass report in the same AIM-K1 shared folder.
+- Do not create the three proposed demos or any other demo now.
+- Do not edit app.html, index.html, block/recipe packs, or runtime.
+- This is a personal research add-on only. AIM-0 and other assignments remain outside scope.
+
+RESEARCH COMPLETED:
+- Read current main branch and the lane/team rules, lane README, AIM-K1 assignment, complete relevant L2 log, previous creator report, AIM-K1 notes and gaps.
+- Confirmed starting branch at 5364fb5250bf97e3508db00b945fb52943b81109 after the session-start log was committed and read back. The preceding branch head was dc66157806abe46500e4c40c08bb9f5dbf28d445.
+- Current app.html blob at task start: 73da98db21bcc8da72d73c6e1ca3eedce51fb191. Team work log records latest released app as Beta v15.56.0. No app source inspection or edits were needed for research-only scope.
+- Deeper source research: Griffpatch platformer chapter sequence and Cloud Multiplayer constraint/encoding lesson; official Scratch profile/studio index; Shaun Spalding/SaraJS 27-part platformer series; DaFluffyPotato full course; Sebastian Lague 25-part project; Brackeys video and Unlicense source repo; GDQuest modular scenes and save/load cautions; Sakurai design lessons; Mark Brown/GMTK design-learning and prototyping; Scratch Foundation creative-learning philosophy; game-feel survey; game-tutorial-quality research paper; Godot docs.
+- Important discovery: a separate creator/project named Griff (griff.games), NOT Griffpatch. Its platformer, top-down and puzzle tutorials contain short ordered editor steps and play checks. Its "Making a game with an agent" page documents an MCP-connected live-editor agent loop: discover available components, build a small scene, inspect tree/properties/screenshot, play and send inputs, observe state, adjust a property, play again, and save the scene. This is a workflow reference only; it is not evidence of G-Warp MCP support or a reason to copy Griff's implementation.
+- Synthesis separates follow-along game series from short design labs. Future lesson records should track dependencies, action steps, reasons, expected results, tests, edge cases, checkpoint IDs/parents, branchability, evidence status, licenses and source lineage. User should be able to continue from a saved step without forced replay, subject to transparent prerequisites.
+- Added a future research-priority list covering enemy AI/combat, puzzle logic, level design/pacing, progression/persistence, camera/tilemaps, multiplayer/security, game feel/accessibility, audio/visual polish, other genres and 3D concepts.
+- All claims are evidence-labeled. Video titles/descriptions/chapters are not represented as frame-by-frame inspections. No G-Warp support or demo readiness is claimed.
+
+FILES / COMMITS:
+- New report: ai-team/shared/2026-10-26-chatgpt-AIM-K1/USER-REQUEST-RESEARCH-EXPANSION-CREATORS-GAME-DESIGN-2026-10-26.md
+  - Create commit: e1c455d1b6bea9fc3ea61dbfcf4bca6c11b600ae
+  - Blob SHA: ced3a941db6ce6aafb81eeff2dc170ca1e8d2b2b
+  - Read-back size: 37,858 characters; 12 sections; source register: 31 entries; key Griff-vs-Griffpatch disambiguation and agent loop included.
+  - Read back from GitHub; key sections and completion status confirmed.
+- Shared work log AI-TEAM.txt:
+  - Added CLAIMED line (commit 9ba3344a8dea6dd7fdbb0017f646854036747636).
+  - Added DONE line (commit af947ea6cc5ec0e68e59e283f61ea77bbd6beb93).
+  - DONE line was read back from GitHub.
+- This L2 lane log: session-start entry committed first (commit 5364fb5250bf97e3508db00b945fb52943b81109); append this closeout and read it back.
+- Previous research report left unchanged.
+- No app.html, index.html, G-Warp runtime, pack.json, AI-RULES-SHORT.txt or GAPS.md changes in this task.
+
+EVIDENCE / TESTS:
+- WEB-RESEARCH: creator pages, official creator/project listings, video descriptions/chapters, official engine documentation, learning framework and academic papers.
+- READ-BACK VERIFIED: new report, L2 log session-start entry and AI-TEAM claim/done line.
+- NOT-TESTED: external editor was not run; no external source projects were executed; no videos were watched frame-by-frame; no G-Warp runtime/demo tests; no current block compatibility mapping.
+- No shell git pull or terminal command was run. This session is using GitHub API-backed repository reads and commits, not Freebuff or a local Git working tree.
+
+LIMITS / DECISIONS:
+- Griff and Griffpatch are different sources and must remain distinct in future records.
+- MIT/Unlicense statements apply only to the exact repositories/projects that declare them; third-party assets must be reviewed separately.
+- Research is selective and expandable, not exhaustive "every game" knowledge.
+- No endorsement or affiliation is implied.
+- No demos are created now, per user instruction.
+
+NEXT STEP / HANDOFF:
+- Research expansion is complete and saved in the same AIM-K1 folder. Keep all three proposed G-Warp demo ideas as ideas only until the user assigns implementation.
+- AIM-0 and other assignments have not been started by this add-on.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records the user's request, researched sources, output and evidence for this session only.
+--- END ENTRY ---
