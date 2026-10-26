@@ -15,12 +15,12 @@
   const uid = p => p + '-' + (++n).toString(36) + '-' + Math.random().toString(36).slice(2,7);
 
   function isPaintArt(el, svg) {
+    // Keep this predicate identical to the current Forward/Backward/Front/Back toolbar.
     return !!el && el.nodeType === 1 && el.parentNode === svg &&
-      !/^(defs|style|title|metadata)$/i.test(el.localName) &&
-      !/^(gwV153|gwpe|gwTx|gwEr)/.test(el.id || '') &&
+      !/^(defs|style)$/i.test(el.localName) &&
+      !/^gwV153|^gwpe/.test(el.id || '') &&
       !el.classList?.contains('gw-svg-selection') &&
-      !el.classList?.contains('gw-svg-handle') &&
-      !el.classList?.contains('gw-v153-selected');
+      !el.classList?.contains('gw-svg-handle');
   }
   function paintItems() {
     const svg = paintSvg(); if (!svg) return [];
