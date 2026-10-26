@@ -649,3 +649,8 @@ USER REQUEST: owner pasted the phone bot's first recipe (r-ph-follow-mouse); "it
 DONE: the owner's recipe PASSES validate_gwrap_pack.py. Prompt now: each answer = ONE code block = a complete pack file of 10 recipes (copy once, save as PH-001-010.json), "continue with N" for smaller packs if it gets tired, no text outside the block except NEXT. ~10 recipes x ~350 tokens keeps an answer near the 2-3 min limit.
 EVIDENCE: owner sample TESTED with the validator; new prompt NOT-TESTED on the phone.
 --- END ENTRY ---
+
+--- ENTRY 26 ---
+UTC timestamp: 2026-10-26T16:30:36Z (owner 12:30 his time)   Who: Claude (configured claude-opus-5-5)   Task: PHONE-3 - check + save the first phone recipes
+USER REQUEST: owner attached the phone bot output (G-Warp__261026_122912.txt): 5 packs, PH-001..040 + PH-041..060 (the bot said the pasted LIST stopped at PH-040 and invented 20 new items).
+--- (closeout follows) ---
