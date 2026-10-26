@@ -44,17 +44,23 @@
     return sprite.gwAnimGuides;
   }
 
+  function hashText(value) {
+    let h = 2166136261;
+    for (let i = 0; i < value.length; i++) h = Math.imul(h ^ value.charCodeAt(i), 16777619);
+    return (h >>> 0).toString(36);
+  }
   function firstFrame(s) {
-    const a = s?.gwAnimations?.[0];
+    const live = window.GW_ANIM?.state;
+    const a = live?.s === s && live?.anim ? live.anim : s?.gwAnimations?.[0];
     if (a && typeof window.GW_ANIM?.frameSvg === 'function') {
       try {
         const svg = window.GW_ANIM.frameSvg(a, 0);
-        if (svg) return { svg, rc: a.rc || { x: 0, y: 0 }, key: 'anim:' + a.id + ':' + (a.rev || 0) + ':' + svg.length };
+        if (svg) return { svg, rc: a.rc || { x: 0, y: 0 }, key: 'anim:' + a.id + ':' + (a.rev || 0) + ':' + hashText(svg) };
       } catch {}
     }
-    const c = (s?.costumes || []).find(x => x?.dataFormat === 'svg' && x.svg) || s?.costumes?.[0];
-    if (c?.svg) return { svg: c.svg, rc: c.rc || { x: 0, y: 0 }, key: 'costume:' + c.name + ':' + c.svg.length };
-    if (c?.canvas) return { canvas: c.canvas, rc: c.rc || { x: 0, y: 0 }, key: 'bitmap:' + c.name + ':' + c.canvas.width + 'x' + c.canvas.height };
+    const c = s?.costumes?.[s.activeCostume] || s?.costumes?.[0];
+    if (c?.svg) return { svg: c.svg, rc: c.rc || { x: 0, y: 0 }, key: 'costume:' + c.name + ':' + hashText(c.svg) };
+    if (c?.canvas) return { canvas: c.canvas, rc: c.rc || { x: 0, y: 0 }, key: 'bitmap:' + c.name + ':' + c.canvas.width + 'x' + c.canvas.height + ':' + c.canvas.toDataURL?.().slice(-32) };
     return null;
   }
   function measureSvg(svgText) {
@@ -379,7 +385,7 @@
     if (f) renderSurface(f); else { mounted.get('flip')?.layer.remove(); mounted.delete('flip'); }
   }
 
-  let timer = 0, observer = null;
+  let timer = 0, observer = null, changeHandler = null;
   function relevantMutation(records) {
     return records.some(r => {
       const t = r.target;
@@ -396,7 +402,8 @@
       observer.observe(document.body, { childList: true, subtree: true });
     }
     window.addEventListener('resize', renderAll);
-    document.addEventListener('change', e => { if (e.target?.closest?.('#gw18Anim,#gwCostumeStudio')) renderAll(); }, true);
+    changeHandler = e => { if (e.target?.closest?.('#gw18Anim,#gwCostumeStudio')) renderAll(); };
+    document.addEventListener('change', changeHandler, true);
   }
   const api = {
     version: VERSION, getData, serializeSprite, restoreSprite, refresh: renderAll,
@@ -406,6 +413,7 @@
       observer?.disconnect();
       mounted.forEach(x => x.layer?.remove()); mounted.clear();
       window.removeEventListener('resize', renderAll);
+      if (changeHandler) document.removeEventListener('change', changeHandler, true);
     },
     state: { mounted }
   };
