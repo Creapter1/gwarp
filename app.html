@@ -2284,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.54.0</span>
+<span class="app-version">Beta v15.55.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4648,7 +4648,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.54.0',label:'Beta v15.54.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.55.0',label:'Beta v15.55.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -24006,6 +24006,128 @@ body.gw-calm .gw-pl-w .core{animation:none}
   window.GW_CREATE_MELODY = { ideas: IDEAS, state: st, build, play, stop, use, save, notes: list, toSong, set(notes) { st.notes = new Map(notes.map(n => [n.col, { deg: n.deg, len: n.len || 1 }])); draw(); } };
   let tries = 0; const t = setInterval(() => { if (build() || ++tries > 240) clearInterval(t); }, 500);
   setInterval(() => { if (!by('gwCreateMelody') && by('gwInstrumentStudio')) build(); }, 3000); // the studio can be rebuilt later
+})();
+</script>
+<style id="gw-v1555-gspark-bar-css">
+/* the old GWrap AI rail button + palette section are hidden (owner: "too many icons"); feature switch gsparkBar brings them back */
+body.gw-sparkbar .cat-btn[data-cat="gwrap"], body.gw-sparkbar #sec-gwrap { display: none !important; }
+#gwSparkBtn { width: 32px; height: 32px; padding: 0; border-radius: 999px; border: 0; cursor: pointer; display: grid; place-items: center;
+  background: radial-gradient(circle at 35% 30%, #a855f7, #6d28d9 70%); box-shadow: 0 0 0 1px #c4b5fd55, 0 0 10px #8b5cf688; margin-left: 2px; }
+#gwSparkBtn:hover { box-shadow: 0 0 0 1px #4ade80, 0 0 14px #4ade8099; }
+#gwSparkBtn[aria-expanded="true"] { box-shadow: 0 0 0 2px #4ade80, 0 0 16px #4ade80aa; }
+#gwSparkBtn svg { width: 22px; height: 22px; display: block; }
+#gwSparkBar { position: absolute; bottom: 16px; left: 24px; z-index: 31; display: none; flex-direction: column; gap: 6px;
+  padding: 8px 8px 8px 14px; border-radius: 22px; background: rgba(18, 22, 41, .97); border: 1px solid #8b5cf6;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .45), 0 0 18px #8b5cf640; color: #ececf6; transform-origin: right center; }
+#gwSparkBar.open { display: flex; animation: gwsbOpen .18s ease-out; }
+@keyframes gwsbOpen { from { opacity: 0; transform: scaleX(.6); } to { opacity: 1; transform: none; } }
+#gwSparkBar form { display: flex; align-items: center; gap: 8px; }
+#gwSparkBar input, #gwSparkBar input:focus { border: 0 !important; box-shadow: none !important; outline: none !important; }
+#gwSparkBar input { flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: #ececf6; font: inherit; font-size: 14px; padding: 6px 0; }
+#gwSparkBar input::placeholder { color: #8f93b8; }
+#gwSparkBar .gwsb-go { width: 32px; height: 32px; border-radius: 999px; border: 0; background: #4ade80; color: #0b0b14; font-weight: 900; cursor: pointer; flex: none; }
+#gwSparkBar .gwsb-go:disabled { opacity: .5; cursor: default; }
+#gwSparkBar .gwsb-out { font-size: 12.5px; line-height: 1.4; color: #c9cbe3; padding-right: 6px; max-height: 120px; overflow: auto; }
+#gwSparkBar .gwsb-out:empty { display: none; }
+#gwSparkBar .gwsb-out b { color: #ececf6; }
+#gwSparkBar .gwsb-out button { background: #232a47; color: #ececf6; border: 1px solid #3a4270; border-radius: 999px; padding: 2px 10px; margin: 4px 6px 0 0; font: inherit; font-size: 12px; cursor: pointer; }
+#gwSparkBar .gwsb-out button:hover { border-color: #8b5cf6; }
+#gwSparkBar .gwsb-out[data-kind="ok"] { color: #b8f5cc; }
+#gwSparkBar .gwsb-out[data-kind="warn"] { color: #fde68a; }
+/* new blocks pop in, one after another */
+.gwsb-pop { animation: gwsbPop .32s cubic-bezier(.2, 1.4, .4, 1) both; }
+@keyframes gwsbPop { from { opacity: 0; transform: scale(.6) translateY(8px); } to { opacity: 1; transform: none; } }
+body.gw-calm .gwsb-pop, body.gw-calm #gwSparkBar.open { animation: none; }
+</style>
+<script id="gw-v1555-gspark-bar">
+/* G-Warp Beta v15.55.0 (Claude) - G-SPARK AI BAR. Owner, 2026-10-26: the GWrap AI in the code area "has too many icons. All those
+   icons should be hidden"; instead "a little tiny icon ... right next to" the zoom - / + with the G-Spark logo (electric G); click =
+   "a large bar ... from the circle location ... to close to the ... coding area"; type, press Enter and "instead of asking you, do you
+   want me to build this, it will just immediately build it". It only lives in the code area (the zoom dock is only there).
+   Uses GWrap AI's own brain (GW_V1571.match / addRecipe: Claude's recipes + Gemini's + packs). Old panel: hidden, not deleted -
+   feature switch "gsparkBar" off (localStorage gwarp-off-gsparkBar = 1) shows it again. */
+(() => {
+  'use strict';
+  if (window.GW_FEATURE_OFF?.('gsparkBar')) return;
+  const by = id => document.getElementById(id);
+  const LOGO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 7.2A7 7 0 1 0 19 12h-6.2" fill="none" stroke="#ececf6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.6 9.6 12.2 13h2.6l-2.3 3.6" fill="none" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  let lastMade = null;
+  const A = () => window.GW_V1571;
+  function out(html, kind) { const o = by('gwSparkOut'); if (!o) return; o.innerHTML = html; o.dataset.kind = kind || ''; }
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function pop(stacks) {
+    if (document.body.classList.contains('gw-calm')) return;
+    let i = 0; (stacks || []).forEach(st => st.querySelectorAll('.scratch-block').forEach(b => {
+      b.style.animationDelay = Math.min(i++ * 35, 900) + 'ms'; b.classList.add('gwsb-pop');
+      b.addEventListener('animationend', () => { b.classList.remove('gwsb-pop'); b.style.animationDelay = ''; }, { once: true });
+    }));
+  }
+  function build(rec, q) {
+    const made = A().addRecipe(rec.id);
+    if (!made || !made.length) { out('I couldn’t build “' + esc(rec.title) + '” here: a block it needs is missing.', 'warn'); return; }
+    lastMade = made; pop(made);
+    const spr = window.Engine?.sprites?.[window.Engine.activeSpriteIndex]?.name || 'your sprite';
+    out('✅ <b>' + esc(rec.emoji || '') + ' ' + esc(rec.title) + '</b> added to ' + esc(spr) + '. Press the green flag to try it. ' +
+      '<button type="button" data-act="undo">Undo</button>', 'ok');
+  }
+  function ask(q) {
+    const api = A(); if (!api?.match) { out('The helper is still loading - try again in a second.', 'warn'); return; }
+    if (!q) return;
+    const list = api.match(q), best = list[0];
+    if (!best) {
+      const ideas = (api.recipes || []).slice(0, 4);
+      out('I don’t know that one yet. Try: ' + ideas.map(r => '<button type="button" data-q="' + esc(r.title) + '">' + esc(r.title) + '</button>').join(''), 'warn');
+      return;
+    }
+    if (best.kind === 'recipe') { build(best.r, q); return; }
+    const t = best.r; // a tip: answer it right here
+    out('💡 <b>' + esc(t.title) + '</b><br>' + esc(t.text) + (Array.isArray(t.action) ? ' <button type="button" data-act="tip">' + esc(t.action[0]) + '</button>' : ''), '');
+    by('gwSparkOut').__tip = t;
+  }
+  function undo() {
+    const gone = (lastMade || []).filter(st => st.isConnected); gone.forEach(st => st.remove()); lastMade = null;
+    try { window.GW8?.pushHistory?.('undo G-Spark AI'); } catch (e) {}
+    out(gone.length ? 'Removed the blocks I added.' : 'Nothing to undo.', '');
+  }
+  function toggle(open) {
+    const bar = by('gwSparkBar'), btn = by('gwSparkBtn'); if (!bar || !btn) return;
+    const want = open == null ? !bar.classList.contains('open') : open;
+    if (want) { place(); bar.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); setTimeout(() => by('gwSparkAsk')?.focus(), 30); }
+    else { bar.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  }
+  function place() { // from the left of the code area to just before the zoom dock
+    const bar = by('gwSparkBar'), dock = by('gw9ZoomDock'); if (!bar || !dock) return;
+    const host = dock.parentElement, hr = host.getBoundingClientRect(), dr = dock.getBoundingClientRect();
+    bar.style.right = Math.max(16, Math.round(hr.right - dr.left + 8)) + 'px';
+    bar.style.bottom = Math.max(8, Math.round(hr.bottom - dr.bottom)) + 'px';
+    const ws = by('workspace') || host; // start at the code area, not over the block palette
+    bar.style.left = Math.max(16, Math.round(ws.getBoundingClientRect().left - hr.left + 16)) + 'px';
+  }
+  function mount() {
+    const dock = by('gw9ZoomDock'); if (!dock) return false;
+    if (by('gwSparkBtn')) return true;
+    document.body.classList.add('gw-sparkbar');
+    const btn = document.createElement('button'); btn.type = 'button'; btn.id = 'gwSparkBtn'; btn.className = 'gw9-zoom-btn';
+    btn.title = 'G-Spark AI: type what you want to make'; btn.setAttribute('aria-label', 'G-Spark AI'); btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', 'gwSparkBar'); btn.innerHTML = LOGO; btn.onclick = () => toggle();
+    dock.appendChild(btn);
+    const bar = document.createElement('div'); bar.id = 'gwSparkBar'; bar.setAttribute('role', 'dialog'); bar.setAttribute('aria-label', 'G-Spark AI');
+    bar.innerHTML = '<form><input id="gwSparkAsk" type="text" autocomplete="off" maxlength="160" placeholder="Ask G-Spark… e.g. make it jump, add a score, make it rain" aria-label="What do you want to make?">' +
+      '<button type="submit" class="gwsb-go" aria-label="Build it" title="Build it (Enter)">➜</button></form><div class="gwsb-out" id="gwSparkOut" aria-live="polite"></div>';
+    dock.parentElement.appendChild(bar);
+    bar.querySelector('form').onsubmit = e => { e.preventDefault(); const i = by('gwSparkAsk'); const q = i.value.trim(); ask(q); i.select(); };
+    bar.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); toggle(false); btn.focus(); } e.stopPropagation(); }); // keys stay in the box (game keys don't fire)
+    bar.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.act === 'undo') undo();
+      else if (b.dataset.act === 'tip') { try { by('gwSparkOut').__tip?.action?.[1]?.(); } catch (err) {} }
+      else if (b.dataset.q) { by('gwSparkAsk').value = b.dataset.q; ask(b.dataset.q); }
+    });
+    window.addEventListener('resize', () => { if (bar.classList.contains('open')) place(); });
+    return true;
+  }
+  window.GW_SPARK_BAR = { ask, toggle, undo, mount };
+  let n = 0; const t = setInterval(() => { if (mount() || ++n > 240) clearInterval(t); }, 500);
 })();
 </script>
 </body>

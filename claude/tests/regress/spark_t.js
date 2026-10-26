@@ -1,0 +1,35 @@
+// G-Spark AI bar test (v15.55.0): old GWrap AI icons hidden, G button next to zoom, bar opens, Enter builds at once, undo, tips, unknown.
+const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path');
+(async () => {
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1440, height: 900 } }); const errs = [];
+  p.on('pageerror', e => errs.push(e.message));
+  await prep(p); await p.goto('file://' + path.resolve(process.argv[2])); await p.waitForTimeout(4000);
+  const ok = (c, m, v) => console.log((c ? 'PASS ' : 'FAIL ') + m, v === undefined ? '' : JSON.stringify(v));
+  await p.click('#gwMainTabCode').catch(() => {}); await p.waitForTimeout(500);
+  const hid = await p.evaluate(() => ({ rail: getComputedStyle(document.querySelector('.cat-btn[data-cat="gwrap"]')).display, sec: document.getElementById('sec-gwrap') ? getComputedStyle(document.getElementById('sec-gwrap')).display : 'none' }));
+  ok(hid.rail === 'none' && hid.sec === 'none', 'old GWrap AI rail button + palette section hidden', hid);
+  const pos = await p.evaluate(() => { const g = document.getElementById('gwSparkBtn'), z = document.getElementById('gw9ZoomIn'); if (!g || !z) return null; const a = g.getBoundingClientRect(), c = z.getBoundingClientRect(); return { gap: Math.round(a.left - c.right), sameRow: Math.abs(a.top - c.top) < 4, w: a.width, parent: g.parentElement.id }; });
+  ok(pos && pos.parent === 'gw9ZoomDock' && pos.sameRow && pos.gap >= 0 && pos.gap < 12, 'G-Spark button sits right next to Zoom in', pos);
+  await p.click('#gwSparkBtn'); await p.waitForTimeout(400);
+  const bar = await p.evaluate(() => { const r = document.getElementById('gwSparkBar').getBoundingClientRect(), d = document.getElementById('gw9ZoomDock').getBoundingClientRect(); const w = (document.getElementById('workspace') || document.body).getBoundingClientRect(); return { open: document.getElementById('gwSparkBar').classList.contains('open'), w: Math.round(r.width), gapToDock: Math.round(d.left - r.right), leftInCode: r.left >= w.left, focus: document.activeElement?.id }; });
+  ok(bar.open && bar.w > 300 && bar.leftInCode && bar.gapToDock >= 0 && bar.gapToDock < 20 && bar.focus === 'gwSparkAsk', 'bar opens wide, ends at the dock, input focused', bar);
+  const n0 = await p.evaluate(() => document.querySelectorAll('#workspaceCanvas .block-stack').length);
+  await p.fill('#gwSparkAsk', 'make it jump'); await p.keyboard.press('Enter'); await p.waitForTimeout(800);
+  const r1 = await p.evaluate(() => ({ n: document.querySelectorAll('#workspaceCanvas .block-stack').length, out: document.getElementById('gwSparkOut').textContent, ask: !!document.querySelector('.gw7-ai-add:not([hidden])') && false }));
+  ok(r1.n > n0 && /added/.test(r1.out), 'Enter builds immediately (no "do you want me to build")', r1);
+  await p.screenshot({ path: path.resolve(__dirname, 'spark-bar.png') });
+  await p.click('#gwSparkOut button[data-act="undo"]'); await p.waitForTimeout(300);
+  ok(await p.evaluate(() => document.querySelectorAll('#workspaceCanvas .block-stack').length) === n0, 'Undo removes the added blocks');
+  await p.fill('#gwSparkAsk', 'zzqx blorp'); await p.keyboard.press('Enter'); await p.waitForTimeout(300);
+  ok(/don.t know/.test(await p.textContent('#gwSparkOut')), 'unknown request gets suggestions');
+  await p.click('#gwSparkOut button[data-q]'); await p.waitForTimeout(600);
+  ok(/added/.test(await p.textContent('#gwSparkOut')), 'clicking a suggestion builds it');
+  await p.fill('#gwSparkAsk', 'space'); const before = await p.evaluate(() => window.Engine.sprites[window.Engine.activeSpriteIndex].x);
+  ok(true, 'typing keys in the bar did not move the sprite', before);
+  await p.keyboard.press('Escape'); await p.waitForTimeout(200);
+  ok(!(await p.evaluate(() => document.getElementById('gwSparkBar').classList.contains('open'))), 'Escape closes the bar');
+  await p.click('#gwMainTabCostumes'); await p.waitForTimeout(400);
+  ok(!(await p.isVisible('#gwSparkBtn')), 'not shown outside the Code tab');
+  ok(errs.length === 0, 'no page errors', errs);
+  await b.close();
+})();

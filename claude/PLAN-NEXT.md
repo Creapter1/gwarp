@@ -141,6 +141,7 @@ Anchors: `grep -n "function applyColumn\|function play(fromPart\|function schedu
 | Thing | Find it with |
 |---|---|
 | Song maker | `grep -n "GW_SONG_ARRANGER = " app.html`, `function melodyLine`, `function myLine` |
+| G-Spark AI bar | `grep -n 'id="gw-v1555-gspark-bar"' app.html` (`GW_SPARK_BAR`, uses `GW_V1571.match/addRecipe`) |
 | Create Melody zone | `grep -n 'id="gw-v1554-create-melody"' app.html` |
 | Motion (Calm motion + running dots) | `grep -n 'id="gw-v1553-motion"' app.html` |
 | Animation tab | `grep -n 'id="gw-v15162-anim"' app.html` (exports `window.GW_ANIM = `) |
@@ -161,5 +162,7 @@ Anchors: `grep -n "function applyColumn\|function play(fromPart\|function schedu
 - Don't skip the log gate (entry 18 slip: the start entry was written at the end).
 
 ## 6. Status line (update every run)
+2026-10-26 ~19:45Z — Beta v15.55.0: G-Spark AI bar (G button next to zoom, wide bar, Enter builds at once, Undo); old GWrap AI rail + palette
+section hidden (switch gsparkBar). AI Lab lane folder made; ChatGPT AI Lab on AIM-K1 basic knowledge. 131 phone recipes waiting (C1b).
 2026-10-26 15:40Z — app Beta v15.54.0 (main). ChatGPT on animation (I1, I2, G1, L1, P1 handed in). Job bank 0/2,474. AI Lab: not started.
 Owner to answer: B1–B5. Song maker feedback queued as section M (ChatGPT music icons job written).
