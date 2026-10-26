@@ -68,8 +68,9 @@
     return out;
   }
 
-  function makePlaybackClock(frame=0) {
-    return { frame:Math.max(0,frame|0), remaining:0 };
+  function makePlaybackClock(frame=0,frames=[]) {
+    const index=Math.max(0,frame|0);
+    return { frame:index, remaining:holdTicks(frames?.[index])-1 };
   }
   function resetPlaybackClock(clock,frames,frame=clock?.frame||0) {
     const c=clock||makePlaybackClock(frame);
@@ -162,10 +163,11 @@
     pairs.forEach(([left,right])=>{
       const a=map.get(left),b=map.get(right);
       if(!a||!b){if(a||b)skipped.push(a||b);return;}
+      const boneA=(anim.bones||[]).find(x=>x.id===a),boneB=(anim.bones||[]).find(x=>x.id===b);
       const aAngle=frame?.angles?.[a],bAngle=frame?.angles?.[b];
-      if(aAngle!==undefined)out.angles[b]=normAngle(-Number(aAngle));
+      if(aAngle!==undefined&&boneA&&boneB)out.angles[b]=normAngle(Number(boneB.angle||0)-shortAngle(Number(boneA.angle||0),Number(aAngle)));
       else delete out.angles[b];
-      if(bAngle!==undefined)out.angles[a]=normAngle(-Number(bAngle));
+      if(bAngle!==undefined&&boneA&&boneB)out.angles[a]=normAngle(Number(boneA.angle||0)-shortAngle(Number(boneB.angle||0),Number(bAngle)));
       else delete out.angles[a];
       const aStretch=frame?.stretch?.[a],bStretch=frame?.stretch?.[b];
       if(aStretch!==undefined)out.stretch[b]=clamp(Number(aStretch),.6,1.4);else delete out.stretch[b];
@@ -180,8 +182,8 @@
   function copyPose(anim,frame) {
     const byId=new Map((anim?.bones||[]).map(b=>[b.id,b]));
     const anglesByName={},rootsByName={},stretchByName={};
-    Object.entries(frame?.angles||{}).forEach(([id,value])=>{const b=byId.get(id);if(b)anglesByName[canonicalName(b.name)]=Number(value);});
-    Object.entries(frame?.roots||{}).forEach(([id,value])=>{const b=byId.get(id);if(b)rootsByName[canonicalName(b.name)]={x:Number(value.x)||0,y:Number(value.y)||0};});
+    Object.entries(frame?.angles||{}).forEach(([id,value])=>{const b=byId.get(id),name=canonicalName(b?.name);if(b&&name)anglesByName[name]=shortAngle(Number(b.angle)||0,Number(value));});
+    Object.entries(frame?.roots||{}).forEach(([id,value])=>{const b=byId.get(id),name=canonicalName(b?.name);if(b&&name)rootsByName[name]={x:(Number(value.x)||0)-(Number(b.x)||0),y:(Number(value.y)||0)-(Number(b.y)||0)};});
     Object.entries(frame?.stretch||{}).forEach(([id,value])=>{const b=byId.get(id);if(b)stretchByName[canonicalName(b.name)]=clamp(Number(value),.6,1.4);});
     return {version:VERSION,anglesByName,rootsByName,stretchByName};
   }
@@ -190,11 +192,13 @@
     let angles=0,roots=0,stretch=0,skipped=0;
     Object.entries(clipboard?.anglesByName||{}).forEach(([name,value])=>{
       const id=map.get(canonicalName(name));
-      if(!id){skipped++;return;}out.angles[id]=normAngle(Number(value));angles++;
+      const bone=(anim?.bones||[]).find(b=>b.id===id);
+      if(!id||!bone){skipped++;return;}out.angles[id]=normAngle((Number(bone.angle)||0)+Number(value));angles++;
     });
     Object.entries(clipboard?.rootsByName||{}).forEach(([name,value])=>{
       const id=map.get(canonicalName(name));
-      if(!id){skipped++;return;}out.roots[id]={x:Number(value.x)||0,y:Number(value.y)||0};roots++;
+      const bone=(anim?.bones||[]).find(b=>b.id===id);
+      if(!id||!bone){skipped++;return;}out.roots[id]={x:(Number(bone.x)||0)+(Number(value.x)||0),y:(Number(bone.y)||0)+(Number(value.y)||0)};roots++;
     });
     Object.entries(clipboard?.stretchByName||{}).forEach(([name,value])=>{
       const id=map.get(canonicalName(name));
@@ -208,7 +212,8 @@
     Object.entries(pose?.anglesByName||{}).forEach(([name,value])=>{
       const id=map.get(canonicalName(name));
       if(!id||!Number.isFinite(Number(value))){skipped++;return;}
-      out.angles[id]=normAngle(Number(value));applied++;
+      const bone=(anim?.bones||[]).find(b=>b.id===id);if(!bone){skipped++;return;}
+      out.angles[id]=normAngle((Number(bone.angle)||0)+Number(value));applied++;
     });
     return {frame:out,applied,skipped};
   }
@@ -227,7 +232,8 @@
     if(!bone)return false;
     const enabled=!!options.enabled;
     if(!bone.parent){bone.followThrough={enabled:false,delay:1,amount:.35};return false;}
-    bone.followThrough={enabled,delay:clamp(Math.round(Number(options.delay)||1),1,2),amount:clamp(Number(options.amount)||.35,.15,.75)};
+    const rawAmount=options.amount===undefined?.35:Number(options.amount);
+    bone.followThrough={enabled,delay:clamp(Math.round(Number(options.delay)||1),1,2),amount:clamp(Number.isFinite(rawAmount)?rawAmount:.35,.15,.75)};
     return true;
   }
 
