@@ -136,8 +136,8 @@
   function linesFor(d, axis) {
     const out = [];
     if (d.builtins.centre) out.push({ id: 'centre', axis, value: 0, kind: 'builtin' });
-    if (axis === 'y' && d.builtins.ground && Number.isFinite(Number(d.ground.value))) out.push({ id: 'ground', axis, value: Number(d.ground.value), kind: 'builtin' });
-    if (axis === 'y' && d.builtins.head && Number.isFinite(Number(d.head.value))) out.push({ id: 'head', axis, value: Number(d.head.value), kind: 'builtin' });
+    if (axis === 'y' && d.builtins.ground && d.ground.value != null && Number.isFinite(Number(d.ground.value))) out.push({ id: 'ground', axis, value: Number(d.ground.value), kind: 'builtin' });
+    if (axis === 'y' && d.builtins.head && d.head.value != null && Number.isFinite(Number(d.head.value))) out.push({ id: 'head', axis, value: Number(d.head.value), kind: 'builtin' });
     if (d.builtins.stage) {
       if (axis === 'x') out.push({ id: 'stage-left', axis, value: -240, kind: 'builtin' }, { id: 'stage-right', axis, value: 240, kind: 'builtin' });
       else out.push({ id: 'stage-top', axis, value: -180, kind: 'builtin' }, { id: 'stage-bottom', axis, value: 180, kind: 'builtin' });
@@ -237,8 +237,8 @@
       svg.append(el('line', { ...common, stroke: color, 'stroke-width': 1.4, 'stroke-dasharray': kind === 'builtin' ? '3 4' : '6 4', opacity: kind === 'builtin' ? '.8' : '.95', 'pointer-events': kind === 'user' ? 'stroke' : 'none', 'data-guide-id': kind === 'user' ? id : '', 'data-guide-axis': axis }));
       if (kind === 'user') svg.append(el('line', { ...common, stroke: 'transparent', 'stroke-width': 12, 'pointer-events': 'stroke', 'data-guide-id': id, 'data-guide-axis': axis }));
     };
-    if (d.builtins.ground && Number.isFinite(Number(d.ground.value))) addLine('y', Number(d.ground.value), 'ground', 'builtin', false);
-    if (d.builtins.head && Number.isFinite(Number(d.head.value))) addLine('y', Number(d.head.value), 'head', 'builtin', false);
+    if (d.builtins.ground && d.ground.value != null && Number.isFinite(Number(d.ground.value))) addLine('y', Number(d.ground.value), 'ground', 'builtin', false);
+    if (d.builtins.head && d.head.value != null && Number.isFinite(Number(d.head.value))) addLine('y', Number(d.head.value), 'head', 'builtin', false);
     d.lines.forEach(g => addLine(g.axis, g.value, g.id, 'user', preview?.id === g.id));
     if (preview && !preview.id) addLine(preview.axis, preview.value, 'preview', 'user', true);
   }
