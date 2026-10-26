@@ -196,3 +196,8 @@ NEXT STEP / HANDOFF: owner re-tests the new file.
 CHAT HISTORY COMPLETENESS:
 COMPLETE FOR THIS TASK
 --- END ENTRY ---
+GITHUB CLOSEOUT VERIFICATION (ENTRY 4):
+- Commit SHA: c9fc61b
+- Read-back URL/path: origin/main:claude/AI-CHAT-LOG.txt (git show after fetch)
+- Verified new entry is present at bottom: YES
+- Task status: DONE (Scratch website upload NOT-TESTED)
