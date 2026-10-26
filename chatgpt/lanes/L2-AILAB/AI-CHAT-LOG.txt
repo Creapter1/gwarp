@@ -234,3 +234,31 @@ NEXT STEP / HANDOFF:
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this research add-on and repository evidence.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION START — USER-REQUEST RESEARCH EXPANSION
+UTC timestamp: 2026-10-26T20:10:34Z
+AI / agent / exact model identity: ChatGPT / GPT-6 (chatgpt.com; not running inside Freebuff)
+Task: Expand the creator/game-design research only; no demo generation or app work.
+Starting main commit: dc66157806abe46500e4c40c08bb9f5dbf28d445
+
+USER REQUEST:
+"Nice, do more research. That's very nice. I honestly like it, but do more research. And those ideas you said to create, those actually are nice ideas. But for now let's just focus on the research. Oh, and also, by the way, read the GitHub. You're not part of the free buff, just letting you know, but you still can do some stuff."
+
+SCOPE / ACCEPTANCE:
+- Read the live GitHub repository and the existing L2-AILAB research/log before continuing.
+- Expand the Griffpatch and game-creator study with additional primary sources and credible research on teaching sequences, reusable systems, game feel, design and tutorial quality.
+- Save a separate research expansion in the same AIM-K1 shared folder; leave the earlier report intact.
+- This is the user's personal research add-on, not AIM-0 model research and not an implementation task.
+- Do not create the proposed demos now. Do not edit app.html, index.html, recipes, packs or runtime.
+- Clearly label any source based on descriptions/chapters rather than full video/code inspection; distinguish transferable principles from copied material.
+
+PROGRESS AT START:
+- Current main head read as dc66157806abe46500e4c40c08bb9f5dbf28d445.
+- Read ai-team/README.md, the AIM-K1 lane assignment, L2-AILAB README, the previous creator research note, and the existing L2 log.
+- The latest main commit is a Claude log/rulebook commit; its diff does not change app.html. Repository log records Beta v15.56.0 as the latest released app version. Current app.html blob is 73da98db21bcc8da72d73c6e1ca3eedce51fb191; this session will not inspect or modify runtime code because the requested scope is research-only.
+
+NEXT STEP:
+- Complete source research, write the standalone expansion note in the same shared folder, read it back, append a closeout to this log, and verify the final GitHub state.
+--- END ENTRY ---
