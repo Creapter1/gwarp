@@ -99,3 +99,4 @@ CLAUDE (v15.49.0, this night)
  One line per finished job: <UTC time> | <AI> | <job id> | ai-team/shared/<folder>/ | <evidence> | owner pick needed? yes/no
 =====================================================================
 2026-10-26T13:47:29Z | ChatGPT | ANIM-I2 | ai-team/shared/2026-10-26-chatgpt-ANIM-I2/ | SOURCE-VERIFIED; 114 SVG static checks PASS; browser NOT-TESTED | yes
+2026-10-26T14:08:44Z | ChatGPT | ANIM-G1 | ai-team/shared/2026-10-26-chatgpt-ANIM-G1/ | WEB-PHASE CANDIDATE; source verified; JS/browser/terminal NOT-TESTED; save/load + complete snap integration + 200-shape test pending | yes
