@@ -187,3 +187,50 @@ EVIDENCE CLASS:
 NEXT STEP:
 - Complete the research synthesis, create the note in the same AIM-K1 shared drop-box folder, commit it, read it back, then append closeout evidence here.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+USER-REQUEST RESEARCH ADD-ON — CLOSEOUT
+UTC timestamp: 2026-10-26T19:35:36.006Z
+AI / agent / exact model identity: ChatGPT / GPT-6
+Task reference: Griffpatch and game-creator research add-on; AIM-0 not started.
+Branch / research commit: main / 2378d3f2e8827de441a7eef67e3ba17b6ecba572
+
+USER REQUEST:
+Research “Grift Patch” (interpreted as Griffpatch) and other capable game creators; learn their step-by-step showcase/demo methods so G-Warp AI can later create playable episode sequences that users can branch from; save the research in the same folder before moving to the next assignment.
+
+SCOPE / ACCEPTANCE:
+- Add a standalone research document inside ai-team/shared/2026-10-26-chatgpt-AIM-K1/.
+- Study Griffpatch's platformer, tile-scrolling, RPG and Geometry Dash series; compare other game-making educators/design researchers.
+- Propose reusable, numbered and checkpointed demo format, sources, first original demo candidates, and ongoing research record design.
+- Do not start AIM-0 or any further assignment. No G-Warp app changes or integration.
+
+PROGRESS / FINDINGS:
+- Researched Griffpatch's official Scratch profile, curated studios, creator site/Academy and available video descriptions/chapter lists.
+- Compared Brackeys, GDQuest, HeartBeast, Clear Code, Mark Brown / Game Maker's Toolkit, and official Godot documentation.
+- Main reusable pattern: build a playable core early, add one visible mechanic at a time, save every successful checkpoint, test in a small scene, improve feel, then let the learner customize or branch.
+- Proposed series studies: G-Warp Platformer Lab, G-Warp Arcade Runner, and G-Warp Top-Down Adventure. These are original demo proposals inspired by teaching structures, not copies of the source games.
+- The report clearly distinguishes research observations from synthesis and warns that video descriptions/timestamps do not independently verify every internal code detail.
+
+FILES CHANGED:
+- ai-team/shared/2026-10-26-chatgpt-AIM-K1/USER-REQUEST-RESEARCH-GRIFFPATCH-AND-GAME-CREATORS-2026-10-26.md — created and read back; commit 2378d3f2e8827de441a7eef67e3ba17b6ecba572; blob SHA 10e72125c32298605f8a14f02a3e1a43803d5c6e; 23,594 characters, 9 top-level sections, 15 bibliography sources.
+- chatgpt/lanes/L2-AILAB/AI-CHAT-LOG.txt — this closeout is appended here.
+- No app.html, index.html, pack.json, AI-RULES-SHORT.txt, or GAPS.md changes in this add-on.
+
+EVIDENCE / TESTS:
+- WEB-RESEARCH from creator-owned sites, official Scratch profile/studios, YouTube descriptions/chapter data, creator course pages, and Godot documentation.
+- SYNTHESIS of transferable teaching patterns and future demo workflow.
+- No G-Warp runtime tests or Python validator command were needed or run in this research-only add-on.
+
+LIMITS:
+- Course/Academy curriculum claims are attributed to the creators' own descriptions.
+- Not every video was watched frame-by-frame; inspect the exact project/video before deriving executable recipes.
+- Research is a selective first collection, not exhaustive “all game knowledge.” Future mechanics must be checked against the current G-Warp block catalog and runtime before demo generation.
+- No endorsement or affiliation is implied; protected code, art, levels, music and branding must not be copied without permission/licence.
+
+NEXT STEP / HANDOFF:
+- This user-request research add-on is complete and saved. Wait for the user-directed next assignment. AIM-0 remains not started.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records this research add-on and repository evidence.
+--- END ENTRY ---
