@@ -786,3 +786,13 @@ UTC timestamp: 2026-10-26T23:22:26Z (owner 19:22 his time)   Who: Claude (config
 USER REQUEST (verbatim): "soo cool idea the i have this is my projec i buld this wen i was like 10 but the idea use all the animations and replace the read carter whit my and all animation the hitbos is fine but there is a cahs my can doge so istead off dow shild it well be the key C and if pres shild and left or rite doge. XD"
 NOTE: owner's own project + the remix stay OUT of the repo (private projects rule).
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 37) - 2026-10-26
+DONE: Remix v4 (scratchpad only, NOT in the repo - owner's private project + someone else's remix). Player 1 (red) uses ALL the
+  owner's fighter animations (91 costumes "ME <anim>//frame k": idle, walk 11, z 4, atk 4, roll 17, aero 12, backaero 14, upaero 10,
+  xk 17, jump). Hitbox unchanged. Shield key down/K -> C. C + left/right = dodge roll (17 ticks, ~100 px, no damage while rolling,
+  cooldown 27). Moves map: punch A=z, punch B=atk, kick B=upaero, air kick=aero/backaero, ground kick A=xk. Other players unchanged.
+TESTS: scratch-vm play test: idle -> ME idle; walk cycles all 11 frames; z punch shows ME z frames; C+left rolls 101 px with ME roll
+  frames; C held -> Shielding 1; air kick shows ME aero frames; 0 errors. check-sb3 ALL PASS.
+EVIDENCE: TESTED in scratch-vm. No app.html change.
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
