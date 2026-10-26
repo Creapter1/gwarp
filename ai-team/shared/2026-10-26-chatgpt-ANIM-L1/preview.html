@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>G-Warp ANIM-L1 — Layers panel concept</title>
+<style>
+:root{color-scheme:dark;--bg:#090910;--panel:#121426;--edge:#34344a;--text:#eeeef8;--muted:#a1a1b5;--v:#8b5cf6;--g:#4ade80;--y:#facc15}
+*{box-sizing:border-box}body{margin:0;padding:24px;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,sans-serif}
+main{max-width:1120px;margin:auto}header{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:22px;margin:0 0 5px}h2{font-size:14px;margin:0 0 10px}p{margin:0;color:var(--muted)}
+.badge{align-self:flex-start;border:1px solid #6551a6;border-radius:8px;color:#c4b5fd;padding:7px 10px;font-weight:700;font-size:11px}
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}.editor{padding:14px;border:1px solid var(--edge);border-radius:12px;background:#10111e;min-width:0}
+.workspace{height:310px;border:1px solid #45455e;border-radius:8px;background:#1b1d30;position:relative;overflow:hidden;display:grid;place-items:center}
+.art{position:relative;width:220px;height:250px}.body{position:absolute;left:60px;top:35px;width:100px;height:165px;border-radius:48% 48% 44% 44%;background:#8054d9;border:3px solid #c4b5fd}
+.arm{position:absolute;left:20px;top:90px;width:75px;height:16px;background:#a78bfa;border-radius:12px;transform:rotate(-24deg);z-index:3}
+.leg{position:absolute;left:74px;top:180px;width:18px;height:65px;background:#a78bfa;border-radius:10px;transform:rotate(12deg);z-index:1}
+.face{position:absolute;left:85px;top:77px;display:flex;gap:24px}.eye{width:9px;height:12px;border-radius:50%;background:#fff}
+.layer-panel{position:absolute;right:10px;top:10px;bottom:10px;width:220px;border:1px solid #5c4a91;border-radius:10px;background:#111327;box-shadow:0 10px 30px #0008;display:flex;flex-direction:column}
+.panel-head{padding:8px 9px;border-bottom:1px solid var(--edge);display:flex;justify-content:space-between;font-weight:800}
+.rows{padding:6px;display:flex;flex-direction:column;gap:5px;overflow:hidden}
+.row{border:1px solid transparent;border-radius:7px;background:#1b1e32;padding:6px;display:grid;grid-template-columns:32px 1fr auto;gap:7px;align-items:center}
+.row.selected{border-color:var(--g);background:#1b2a31}.row.hover{border-color:var(--v)}
+.thumb{width:32px;height:32px;border-radius:5px;background:#e7e7eb;position:relative;overflow:hidden}
+.thumb .shape{position:absolute;background:#8b5cf6;border:2px solid #5533a0;border-radius:40%}
+.thumb.body .shape{width:13px;height:25px;left:9px;top:3px}.thumb.arm .shape{width:25px;height:7px;left:3px;top:13px;transform:rotate(-24deg)}.thumb.leg .shape{width:8px;height:25px;left:13px;top:4px}
+.name{font-size:11px;font-weight:700}.sub{font-size:9px;color:var(--muted)}.actions{display:flex;flex-direction:column;gap:3px}
+.actions b{font-size:9px;border:1px solid #42425d;border-radius:4px;padding:2px 4px;color:#d8d8e8}
+.locked{color:var(--y)!important;border-color:#82702d!important}
+.bone-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#06b6d4;margin-right:4px}
+.note{font-size:10px;color:var(--muted);padding:7px 8px;border-top:1px solid var(--edge)}
+.tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.tools span{font-size:10px;color:#ddd6fe;background:#24223a;border:1px solid #4a3b79;padding:4px 7px;border-radius:6px}
+footer{margin-top:16px;border-top:1px solid var(--edge);padding-top:10px;font-size:11px;color:var(--muted)}
+@media(max-width:760px){body{padding:13px}.columns{grid-template-columns:1fr}.workspace{height:300px}}
+</style>
+</head>
+<body><main>
+<header><div><h1>Layers panel with individual previews</h1><p>Top row = front. Paint uses the existing SVG stack; Animation stores a separate order per frame.</p></div><div class="badge">WEB CANDIDATE · NOT INTEGRATED</div></header>
+<section class="columns">
+<article class="editor">
+<h2>Costumes · Paint editor</h2>
+<div class="workspace">
+<div class="art"><div class="leg"></div><div class="arm"></div><div class="body"></div><div class="face"><i class="eye"></i><i class="eye"></i></div></div>
+<div class="layer-panel">
+<div class="panel-head"><span>Layers</span><span>×</span></div>
+<div class="rows">
+<div class="row selected"><div class="thumb leg"><i class="shape"></i></div><div><div class="name">Leg</div><div class="sub">Artwork layer · selected</div></div><div class="actions"><b>Hide</b><b>Lock</b></div></div>
+<div class="row hover"><div class="thumb arm"><i class="shape"></i></div><div><div class="name">Arm</div><div class="sub">Artwork layer · hover</div></div><div class="actions"><b>Hide</b><b class="locked">Unlock</b></div></div>
+<div class="row"><div class="thumb body"><i class="shape"></i></div><div><div class="name">Body</div><div class="sub">Artwork layer</div></div><div class="actions"><b>Hide</b><b>Lock</b></div></div>
+</div>
+<div class="note">Hide is temporary; the exported artwork remains unchanged.</div>
+</div></div>
+<div class="tools"><span>Rename</span><span>Hide / Show</span><span>Lock</span><span>Drag to reorder</span><span>Forward / Back match</span></div>
+</article>
+<article class="editor">
+<h2>Animation · Layer order for this frame</h2>
+<div class="workspace">
+<div class="art"><div class="leg"></div><div class="arm"></div><div class="body"></div><div class="face"><i class="eye"></i><i class="eye"></i></div></div>
+<div class="layer-panel">
+<div class="panel-head"><span>Layers · Frame 4</span><span>×</span></div>
+<div class="rows">
+<div class="row selected"><div class="thumb arm"><i class="shape"></i></div><div><div class="name">Arm</div><div class="sub"><i class="bone-dot"></i>Upper arm bone</div></div><div class="actions"><b>Hide</b><b>Lock</b></div></div>
+<div class="row"><div class="thumb body"><i class="shape"></i></div><div><div class="name">Body</div><div class="sub"><i class="bone-dot" style="background:#a855f7"></i>Torso bone</div></div><div class="actions"><b>Hide</b><b>Lock</b></div></div>
+<div class="row"><div class="thumb leg"><i class="shape"></i></div><div><div class="name">Leg</div><div class="sub"><i class="bone-dot" style="background:#ef4444"></i>Leg bone</div></div><div class="actions"><b>Hide</b><b>Lock</b></div></div>
+</div>
+<div class="note">Each frame owns its order. Make costumes applies that frame's stack.</div>
+</div></div>
+<div class="tools"><span>Per-frame order</span><span>Bone color dot</span><span>Hide only while editing</span><span>Undo / Redo</span></div>
+</article>
+</section>
+<footer>Static concept illustration, not an app screenshot. The source hooks, stable part ID migration, undo/persistence changes and terminal acceptance steps are documented in NOTES.md. Nothing in app.html has been changed.</footer>
+</main></body></html>
