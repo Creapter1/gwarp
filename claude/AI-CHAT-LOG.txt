@@ -637,3 +637,8 @@ UTC timestamp: 2026-10-26T16:11:19Z (owner 12:10 his time)   Who: Claude (config
 Starting commit: f41540b
 USER REQUEST (summary, his words): a phone chatbot that uses Opus 5.5 but "is only capable of giving code" (no handoff, no TXT, no GitHub); ~20 prompts per chat then a new chat; replies over ~2-3 minutes time out ("this conversation just tired me out"). Wants "a simple prompt that I can just copy and paste, and then always click on continue" to "make the AI smarter for GWARP", "avoid this chatbot from overthinking", maybe "a specific redirect website" - "basic simple checks and then ... starts working immediately".
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 24) - 2026-10-26T16:12:53Z
+DONE: ai-team/phone/PHONE-BOT-PROMPT.txt (+ make_phone_prompt.py): self-contained (no browsing), each "continue" = ONE GWrap AI recipe JSON + "NEXT: PH-0NN", restart rule "start at PH-0NN", real 176-block list + condition/value nodes + keys/hats from the validator, 96 items PH-001..096, kid-safe rules. Checked: a recipe in this format passes validate_gwrap_pack.py (after fixing the id rule to r-ph-). PLAN-NEXT C1b: how to merge the owner's note.
+EVIDENCE: sample recipe TESTED with the validator; prompt NOT-TESTED on the phone bot. COMMIT: 0568acd
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
