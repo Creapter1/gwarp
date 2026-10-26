@@ -717,3 +717,10 @@ UTC timestamp: 2026-10-26T19:24:37Z (owner 15:24 his time)   Who: Claude (config
 Starting commit: 34a6dce
 USER REQUEST: "anything created by G-Spark AI ... will always be purple electricity. Anything else created by the user will be ... green. Even if it is the same code where the AI made it and the user decided to modify it, it is still going to be purple for what the AI did and green for what the user did ... so that the user knows ... you got helped. But it is still acceptable ... It is not a way to say, oh, you did not do this yourself."
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 33) - 2026-10-26T19:30:01Z
+OWNER 15:26: in a pure Scratch export the purple marks disappear ("totally fine ... as long as it is compatible"); in projects that stay G-Warp/TurboWarp/PenguinMod the electricity "will remain forever".
+DONE: app.html Beta v15.56.0, module gw-v1556-ai-purple: every block GWrap/G-Spark AI builds gets data-gw-ai="1" (wraps GW_V1571.addRecipe, per block); C-blocks with the mark show the SAME wire/plug pictures recoloured to violets (052e16/16a34a/22c55e/4ade80/bbf7d0/f0fdf4 -> 2e1065/7e22ce/9333ea/a855f7/e9d5ff/faf5ff), purple glow while running; marked blocks without a wire get a thin purple left edge. User blocks (also inside an AI script) stay green. The mark is in the block HTML -> kept by sprite switch, undo/redo (snapshot = innerHTML) and normal G-Warp .sb3 (G-Warp copy inside); pure Scratch export drops it (as the owner wants). G-Spark bar message explains "Purple electricity = made with G-Spark's help". Known limit: duplicating an AI block copies the mark.
+TESTS: claude/tests/regress/aipurple_t.js 7/7 PASS (all built blocks marked, AI wire purple, user block in same script green, edge, undo keeps marks, save + reopen keeps 11 AI + 1 user, no errors); spark 11, motion 8, cm 21, newblocks 5, gwrap_pack 14 PASS; smoke ALL PASS.
+EVIDENCE: TESTED in G-Warp. COMMIT: 00145f7
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
