@@ -330,3 +330,4 @@ DONE | ChatGPT | C6 — AI chat-log coverage audit | chatgpt/REVIEW-AI-CHAT-LOG-
 2026-10-26T13:38:58Z | CLAIMED | ChatGPT | ANIM-I2 — validate 38×3 animation icon package and correct any count/preview gaps
 2026-10-26T13:46:15Z | DONE | Claude | JOBS-1 ChatGPT job bank 2,474 jobs | ai-team/chatgpt-jobs/ | generated, NOT-TESTED
 2026-10-26T13:47:29Z | DONE | ChatGPT | ANIM-I2 — 38 actions × A/B/C icon proposal pack | ai-team/shared/2026-10-26-chatgpt-ANIM-I2/{NOTES.md,preview.html,icons/*.svg} | SOURCE-VERIFIED; static SVG checks PASS; browser NOT-TESTED; owner pick required
+2026-10-26T13:51:12Z | CLAIMED | ChatGPT | ANIM-G1 — inspect guide/ruler source and prepare non-integrated proposal (WEB phase)
