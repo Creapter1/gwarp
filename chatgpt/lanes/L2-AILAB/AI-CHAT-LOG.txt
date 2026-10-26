@@ -325,3 +325,32 @@ NEXT STEP / HANDOFF:
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records the user's request, researched sources, output and evidence for this session only.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION START — CREATOR TUTORIAL RESEARCH PASS 3
+UTC timestamp: 2026-10-26T20:17:27Z
+AI / agent / exact model identity: ChatGPT / GPT-6 (chatgpt.com; not running inside Freebuff)
+Task: Continue researching additional game-development tutorials and features for future G-Warp AI learning material. Separately answer the user's quick question about the Scratch-mod ecosystem.
+
+USER REQUEST:
+"This is another unrelated research. How many Scratch versions are there besides mine? The only ones I know is TurboWarp and Penguin. How many are there that are similar to mine? Of course, mine is supposed to be one of the best ones that everybody will eventually look up and say, Oh, this is good. But how many out there are there? This is an unrelated question. I just want to know the answer to that and then continue on the research for more information of it to check and see what all the stuff we can still add from all those YouTubers. They have a lot in common and a lot good things. Something we definitely gonna do since I'm technically using their tutorial, we definitely gonna go. We give credit to where it belongs. I did not discover, so it's not for them. One thing that we can do to help them out, of course once we build the app and be able to create an AI that can pretty much locate and everything, one thing that we might do, I guess for those people who want to, you know, continue, why not let's just promote those YouTubers since they're the ones who created, like saying, subscribe, make sure to subscribe and hit the bell on the YouTube channel for the creator of the tutorial. And if you can, ask your parents for, you know, the Patreon, whatever, because some of them do have Patreon, some might as well. But that's for future stuff. But beyond that point, just continue researching on more tutorials. And the other question, please answer if you can. It should be a quick research for that answer."
+
+SCOPE:
+- Answer Scratch-mod count in chat as a separate quick research answer; do not overstate an exact total.
+- Continue tutorial research in a separate new file in the existing AIM-K1 shared folder.
+- Research additional mechanics and lesson sequences from primary creator pages/video descriptions/chapters and reputable course indexes.
+- Record the user's future creator-credit/support idea as optional and age-appropriate; do not implement promotional UI or send messages to creators.
+- No demos; no app.html/index.html edits; no runtime, packs, recipes or block mappings.
+- Keep Griffpatch distinct from Griff and distinguish Scratch mods from broader block-based tools.
+
+STARTING STATE:
+- Main head: 0ead7164bf8c95af7588ef21b956ed393e4298a2.
+- Read ai-team/README.md, AIM-K1 assignment, L2 README and full L2 log; read previous creator research expansion.
+- Rules confirm ChatGPT must not edit app.html/index.html, work only in own lane/shared folder, log start/closeout, credit creators and respect licences, keep G-Warp's own identity, safety first.
+- Prior research notes have user preference: focus on actual G-Warp implementation and useful source-grounded detail, not generic padded research lists. This pass will therefore prioritize actionable tutorial mechanics and explicit evidence/limitations.
+- User says future demos should credit original tutorial creators and may optionally invite users to subscribe; Patreon/support should be phrased for a child to ask a parent, only where an official creator support link exists. This remains an idea only.
+
+NEXT:
+- Complete and save the additional tutorial/feature research; read back; append closeout and shared AI-TEAM completion line; verify final main head.
+--- END ENTRY ---
