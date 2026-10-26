@@ -1,0 +1,2182 @@
+{
+  "version": 1,
+  "note": "AIM-K1 basic usage knowledge. 120 tips SOURCE-VERIFIED against app.html Beta v15.54.0, blob 7ef2e8d17081354e66fc6138ae9cc8a639b839d9. Tips-only pack; no application code is changed.",
+  "recipes": [],
+  "tips": [
+    {
+      "id": "t-k1-001",
+      "emoji": "🚩",
+      "title": "Start your project",
+      "keys": [
+        "start",
+        "flag",
+        "run",
+        "green",
+        "button"
+      ],
+      "q": [
+        "how do i start my project",
+        "what does the green flag do",
+        "how can i run my code"
+      ],
+      "text": "Press the green Start button at the top. It runs scripts that begin with the green-flag hat.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-002",
+      "emoji": "⏸️",
+      "title": "Pause or resume",
+      "keys": [
+        "pause",
+        "resume",
+        "run",
+        "button"
+      ],
+      "q": [
+        "how do i pause my game",
+        "how do i make it play again",
+        "what does pause do"
+      ],
+      "text": "Press Pause to pause the running project. Press it again to resume.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-003",
+      "emoji": "🛑",
+      "title": "Stop the project",
+      "keys": [
+        "stop",
+        "all",
+        "button",
+        "script"
+      ],
+      "q": [
+        "how do i stop everything",
+        "what does the stop button do",
+        "how can i stop my game"
+      ],
+      "text": "Press Stop at the top to stop all running scripts.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-004",
+      "emoji": "🎩",
+      "title": "Use a starter block",
+      "keys": [
+        "hat",
+        "script",
+        "start",
+        "flag",
+        "event"
+      ],
+      "q": [
+        "why does my script not start",
+        "what block goes at the top",
+        "how do i start code with a key"
+      ],
+      "text": "A script needs a hat block at the top, such as when green flag clicked. Put the blocks you want to run under it.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-005",
+      "emoji": "⌨️",
+      "title": "Start code with a key",
+      "keys": [
+        "key",
+        "press",
+        "event",
+        "start",
+        "menu"
+      ],
+      "q": [
+        "how do i start code with space",
+        "how can arrow keys start a script",
+        "where is the key pressed block"
+      ],
+      "text": "Use the Events block when key pressed, then choose a key from its menu. Put the actions below it.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-006",
+      "emoji": "⏳",
+      "title": "Wait for a moment",
+      "keys": [
+        "wait",
+        "control",
+        "seconds",
+        "pause"
+      ],
+      "q": [
+        "how do i wait one second",
+        "how can i pause one script",
+        "what does wait do"
+      ],
+      "text": "The Control wait block pauses that script for the number of seconds you enter, then it continues.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-007",
+      "emoji": "🔁",
+      "title": "Repeat a set number",
+      "keys": [
+        "repeat",
+        "loop",
+        "control",
+        "count"
+      ],
+      "q": [
+        "how do i repeat something ten times",
+        "when does repeat finish",
+        "what happens after repeat"
+      ],
+      "text": "Repeat runs the blocks inside it the number of times you choose, then continues below the loop.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-008",
+      "emoji": "♾️",
+      "title": "Keep repeating forever",
+      "keys": [
+        "forever",
+        "loop",
+        "control",
+        "stop"
+      ],
+      "q": [
+        "how do i keep moving forever",
+        "when does forever stop",
+        "why does code below forever not run"
+      ],
+      "text": "Forever keeps running the blocks inside it until the project is stopped. Blocks below it in that same stack do not run.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-009",
+      "emoji": "🔀",
+      "title": "Use an if block",
+      "keys": [
+        "if",
+        "condition",
+        "control",
+        "true"
+      ],
+      "q": [
+        "how do i make code happen only sometimes",
+        "what does if then mean",
+        "how do i check a condition"
+      ],
+      "text": "Put blocks inside an if block to run them only when its condition is true.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-010",
+      "emoji": "↔️",
+      "title": "Choose between two paths",
+      "keys": [
+        "if",
+        "else",
+        "choice",
+        "condition"
+      ],
+      "q": [
+        "how do i make two different outcomes",
+        "what is if else",
+        "how do i do one thing or another"
+      ],
+      "text": "Use if then else when you want one set of blocks for true and another set for false.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-011",
+      "emoji": "↶",
+      "title": "Undo a change",
+      "keys": [
+        "undo",
+        "back",
+        "change",
+        "shortcut"
+      ],
+      "q": [
+        "how do i undo something",
+        "what is the shortcut for undo",
+        "can i get my last change back"
+      ],
+      "text": "Choose More, then Undo, or use Ctrl+Z, to go back one editing step.",
+      "action": "undo"
+    },
+    {
+      "id": "t-k1-012",
+      "emoji": "↷",
+      "title": "Redo a change",
+      "keys": [
+        "redo",
+        "forward",
+        "change",
+        "shortcut"
+      ],
+      "q": [
+        "how do i redo",
+        "what is the redo shortcut",
+        "i pressed undo by mistake what now"
+      ],
+      "text": "Choose More, then Redo, or use Ctrl+Y, to bring back a change you just undid.",
+      "action": "undo"
+    },
+    {
+      "id": "t-k1-013",
+      "emoji": "🧍",
+      "title": "See your sprites",
+      "keys": [
+        "sprites",
+        "select",
+        "choose",
+        "character"
+      ],
+      "q": [
+        "where are my sprites",
+        "how do i select a sprite",
+        "how do i work on another character"
+      ],
+      "text": "The Your sprites area shows the sprites in your project. Select one to work on its code, costumes, and sounds.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-014",
+      "emoji": "➕",
+      "title": "Open Add Sprite",
+      "keys": [
+        "add",
+        "sprite",
+        "menu",
+        "upload",
+        "paint"
+      ],
+      "q": [
+        "how do i add a character",
+        "where is add sprite",
+        "what choices are in add sprite"
+      ],
+      "text": "Press Add Sprite to open choices for adding a sprite: Upload Sprite, Surprise, Paint, or Plain sprite.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-015",
+      "emoji": "📤",
+      "title": "Upload a sprite picture",
+      "keys": [
+        "upload",
+        "sprite",
+        "picture",
+        "image",
+        "file"
+      ],
+      "q": [
+        "how do i add my own picture",
+        "can i upload a character",
+        "where do i upload an image"
+      ],
+      "text": "Choose Add Sprite, then Upload Sprite. Pick a picture file your browser can open.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-016",
+      "emoji": "🎲",
+      "title": "Make a surprise sprite",
+      "keys": [
+        "surprise",
+        "random",
+        "sprite",
+        "colour",
+        "add"
+      ],
+      "q": [
+        "what does surprise sprite do",
+        "can g warp pick a sprite for me",
+        "how do i add a random sprite"
+      ],
+      "text": "Choose Add Sprite, then Surprise to add a randomly coloured sprite at a random spot near the middle.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-017",
+      "emoji": "🖌️",
+      "title": "Paint a new sprite",
+      "keys": [
+        "paint",
+        "blank",
+        "sprite",
+        "costume",
+        "draw"
+      ],
+      "q": [
+        "how do i draw a new sprite",
+        "how do i make a blank character",
+        "where is paint sprite"
+      ],
+      "text": "Choose Add Sprite, then Paint. G-Warp makes a blank costume and opens the Costumes tab so you can draw.",
+      "action": "costumes"
+    },
+    {
+      "id": "t-k1-018",
+      "emoji": "🧰",
+      "title": "Choose from G-Warp's sprite library",
+      "keys": [
+        "choose",
+        "sprite",
+        "library",
+        "picture",
+        "costume"
+      ],
+      "q": [
+        "where is the sprite library",
+        "can i pick a ready made sprite",
+        "are these pictures editable"
+      ],
+      "text": "The Choose a Sprite library has G-Warp-made pictures you can add. They are editable costumes, not Scratch library art.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-019",
+      "emoji": "🏷️",
+      "title": "Rename a sprite",
+      "keys": [
+        "rename",
+        "sprite",
+        "name",
+        "property"
+      ],
+      "q": [
+        "how do i rename my sprite",
+        "where do i change a sprite name",
+        "can i give my character a new name"
+      ],
+      "text": "Select the sprite, then edit the Sprite name field in its properties. The sprite list updates with the new name.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-020",
+      "emoji": "📍",
+      "title": "Move a sprite with X and Y",
+      "keys": [
+        "position",
+        "x",
+        "y",
+        "move",
+        "sprite"
+      ],
+      "q": [
+        "how do i set my sprite position",
+        "what are x and y",
+        "how do i move it to the middle"
+      ],
+      "text": "Select a sprite and change its X or Y property to move it to a precise spot.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-021",
+      "emoji": "🔎",
+      "title": "Change sprite size",
+      "keys": [
+        "size",
+        "sprite",
+        "bigger",
+        "smaller"
+      ],
+      "q": [
+        "how do i make a sprite bigger",
+        "where do i change size",
+        "how do i shrink my character"
+      ],
+      "text": "Select a sprite and change its Size property to make it larger or smaller.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-022",
+      "emoji": "👯",
+      "title": "Duplicate a sprite",
+      "keys": [
+        "duplicate",
+        "sprite",
+        "copy",
+        "costumes",
+        "sounds"
+      ],
+      "q": [
+        "how do i copy my sprite",
+        "can i make a second copy",
+        "does duplicate copy scripts too"
+      ],
+      "text": "Use the sprite tile's Duplicate option to copy a sprite, including its costumes, sounds, and scripts.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-023",
+      "emoji": "🗑️",
+      "title": "Delete and restore a sprite",
+      "keys": [
+        "delete",
+        "sprite",
+        "restore",
+        "undo"
+      ],
+      "q": [
+        "how do i delete a sprite",
+        "can i restore a deleted sprite",
+        "where is delete sprite"
+      ],
+      "text": "Use the delete control on a sprite tile or its menu. G-Warp shows a Restore message after deletion.",
+      "action": "undo"
+    },
+    {
+      "id": "t-k1-024",
+      "emoji": "🧍",
+      "title": "Keep one sprite in the project",
+      "keys": [
+        "last",
+        "sprite",
+        "delete",
+        "limit"
+      ],
+      "q": [
+        "why cannot i delete my last sprite",
+        "how do i remove the only sprite",
+        "what if i need a different sprite"
+      ],
+      "text": "G-Warp will not delete the last real sprite. Add another sprite first if you need to remove the current one.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-025",
+      "emoji": "🎭",
+      "title": "Use the Stage blocks",
+      "keys": [
+        "stage",
+        "backdrop",
+        "category",
+        "blocks"
+      ],
+      "q": [
+        "where are the stage blocks",
+        "how do i change the backdrop with code",
+        "what is the stage category"
+      ],
+      "text": "The Stage category has blocks for changing the backdrop and reading the backdrop number or name.",
+      "action": "backdrops"
+    },
+    {
+      "id": "t-k1-026",
+      "emoji": "🖼️",
+      "title": "Switch to a backdrop",
+      "keys": [
+        "switch",
+        "backdrop",
+        "scene",
+        "menu"
+      ],
+      "q": [
+        "how do i choose a backdrop",
+        "how can i change the scene",
+        "where is switch backdrop"
+      ],
+      "text": "Use switch backdrop to and choose the backdrop you want from the menu.",
+      "action": "backdrops"
+    },
+    {
+      "id": "t-k1-027",
+      "emoji": "➡️",
+      "title": "Go to the next backdrop",
+      "keys": [
+        "next",
+        "backdrop",
+        "stage",
+        "scene"
+      ],
+      "q": [
+        "how do i go to the next scene",
+        "what does next backdrop do",
+        "how can i cycle backgrounds"
+      ],
+      "text": "Use next backdrop to move to the next backdrop in the Stage's list.",
+      "action": "backdrops"
+    },
+    {
+      "id": "t-k1-028",
+      "emoji": "🏃",
+      "title": "Move with Motion blocks",
+      "keys": [
+        "motion",
+        "move",
+        "turn",
+        "position"
+      ],
+      "q": [
+        "what are motion blocks for",
+        "how do i move a sprite",
+        "where are turn blocks"
+      ],
+      "text": "Motion blocks move, turn, point, and change a sprite's X or Y position. Try move 10 steps to see the sprite travel.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-029",
+      "emoji": "🔄",
+      "title": "Turn a sprite",
+      "keys": [
+        "turn",
+        "rotate",
+        "degrees",
+        "direction"
+      ],
+      "q": [
+        "how do i rotate a sprite",
+        "what does turn 15 degrees mean",
+        "how do i spin the character"
+      ],
+      "text": "Use the clockwise or counterclockwise turn blocks to rotate a sprite by the number of degrees you enter.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-030",
+      "emoji": "📐",
+      "title": "Set X or Y exactly",
+      "keys": [
+        "set",
+        "x",
+        "y",
+        "coordinates"
+      ],
+      "q": [
+        "how do i set x to zero",
+        "what is change y by",
+        "how do coordinates work"
+      ],
+      "text": "Use set X or set Y to place a sprite at a coordinate. Change X or change Y moves it by an amount instead.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-031",
+      "emoji": "🧭",
+      "title": "Point in a direction",
+      "keys": [
+        "point",
+        "direction",
+        "angle",
+        "aim"
+      ],
+      "q": [
+        "how do i point my sprite right",
+        "what does direction 90 mean",
+        "how do i aim a character"
+      ],
+      "text": "Use point in direction to aim the sprite. The number is an angle in degrees.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-032",
+      "emoji": "🏓",
+      "title": "Bounce at the edge",
+      "keys": [
+        "bounce",
+        "edge",
+        "motion",
+        "stage"
+      ],
+      "q": [
+        "how do i bounce off the edge",
+        "how do i keep my sprite on screen",
+        "what does bounce do"
+      ],
+      "text": "Put if on edge, bounce in a moving script to make the sprite turn back when it reaches a Stage edge.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-033",
+      "emoji": "👀",
+      "title": "Use Looks blocks",
+      "keys": [
+        "looks",
+        "costume",
+        "say",
+        "show",
+        "effect"
+      ],
+      "q": [
+        "what do looks blocks do",
+        "how do i change a costume with code",
+        "where is the hide block"
+      ],
+      "text": "Looks blocks change what a sprite says, which costume it shows, its size, visibility, and graphic effects.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-034",
+      "emoji": "💬",
+      "title": "Make a sprite speak",
+      "keys": [
+        "say",
+        "speech",
+        "bubble",
+        "talk"
+      ],
+      "q": [
+        "how do i make my sprite talk",
+        "how do i show a message",
+        "how do i make the speech bubble go away"
+      ],
+      "text": "Use say for a speech bubble, or say for seconds when you want the bubble to disappear after a time.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-035",
+      "emoji": "💭",
+      "title": "Make a sprite think",
+      "keys": [
+        "think",
+        "thought",
+        "bubble",
+        "looks"
+      ],
+      "q": [
+        "how do i make a thought bubble",
+        "what is the think block",
+        "how can my sprite think"
+      ],
+      "text": "Use think to show a thought bubble, or think for seconds to show it for a set time.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-036",
+      "emoji": "🎨",
+      "title": "Switch costumes in a script",
+      "keys": [
+        "switch",
+        "next",
+        "costume",
+        "looks"
+      ],
+      "q": [
+        "how do i change costume while playing",
+        "how do i cycle costumes",
+        "what does next costume do"
+      ],
+      "text": "Use switch costume to for a chosen costume, or next costume to move to the next one in the costume list.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-037",
+      "emoji": "👁️",
+      "title": "Show or hide a sprite",
+      "keys": [
+        "show",
+        "hide",
+        "visible",
+        "invisible"
+      ],
+      "q": [
+        "how do i hide a sprite",
+        "how do i make it appear again",
+        "does a hidden sprite still run code"
+      ],
+      "text": "Use show to make a sprite visible and hide to make it invisible. Scripts can still use a hidden sprite.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-038",
+      "emoji": "🌈",
+      "title": "Change a graphic effect",
+      "keys": [
+        "effect",
+        "colour",
+        "whirl",
+        "brightness",
+        "ghost"
+      ],
+      "q": [
+        "how do i change sprite colour",
+        "what is the ghost effect",
+        "where are graphic effects"
+      ],
+      "text": "Use the Looks effect blocks to set or change an effect such as colour, whirl, brightness, or ghost.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-039",
+      "emoji": "🔊",
+      "title": "Use Sound blocks",
+      "keys": [
+        "sound",
+        "play",
+        "start",
+        "volume"
+      ],
+      "q": [
+        "where are sound blocks",
+        "what is play sound until done",
+        "how do i stop sounds"
+      ],
+      "text": "Sound blocks can play a sound, start one without waiting, stop all sounds, and change the volume.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-040",
+      "emoji": "🎵",
+      "title": "Play a sound and wait",
+      "keys": [
+        "play",
+        "sound",
+        "wait",
+        "done"
+      ],
+      "q": [
+        "how do i play a sound then continue",
+        "what does until done mean",
+        "how do i make a sound finish first"
+      ],
+      "text": "Play sound until done waits for that sound to finish before the next block runs.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-041",
+      "emoji": "▶️",
+      "title": "Start a sound and keep going",
+      "keys": [
+        "start",
+        "sound",
+        "continue",
+        "script"
+      ],
+      "q": [
+        "how do i play a sound without waiting",
+        "what is start sound",
+        "how do i keep code moving while music plays"
+      ],
+      "text": "Start sound begins the sound but lets the script continue to its next block right away.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-042",
+      "emoji": "🔇",
+      "title": "Stop all sounds",
+      "keys": [
+        "stop",
+        "all",
+        "sounds",
+        "audio"
+      ],
+      "q": [
+        "how do i stop music and effects",
+        "where is stop all sounds",
+        "how do i silence everything"
+      ],
+      "text": "Use stop all sounds when you want every sound to stop.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-043",
+      "emoji": "🎚️",
+      "title": "Change project volume",
+      "keys": [
+        "volume",
+        "set",
+        "change",
+        "sound"
+      ],
+      "q": [
+        "how do i make sound quieter",
+        "how do i set volume to 50",
+        "where is the volume block"
+      ],
+      "text": "Use set volume to choose a level, or change volume by to move it up or down.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-044",
+      "emoji": "🖱️",
+      "title": "Start an event when a sprite is clicked",
+      "keys": [
+        "sprite",
+        "clicked",
+        "event",
+        "start"
+      ],
+      "q": [
+        "how do i run code when i click my sprite",
+        "what is when this sprite clicked",
+        "how do i make a click event"
+      ],
+      "text": "Use when this sprite clicked to run a script after that sprite is clicked.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-045",
+      "emoji": "📣",
+      "title": "Send a message to sprites",
+      "keys": [
+        "broadcast",
+        "message",
+        "receive",
+        "event"
+      ],
+      "q": [
+        "how do sprites talk to each other",
+        "how do i send a message",
+        "what is broadcast"
+      ],
+      "text": "Use broadcast to send a named message. Other sprites can use when I receive to react to it.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-046",
+      "emoji": "📨",
+      "title": "Wait for message scripts",
+      "keys": [
+        "broadcast",
+        "wait",
+        "receive",
+        "message"
+      ],
+      "q": [
+        "what is broadcast and wait",
+        "how do i wait for another sprite",
+        "what is the difference from broadcast"
+      ],
+      "text": "Broadcast and wait sends a message, then waits for the matching receiver scripts to finish before continuing.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-047",
+      "emoji": "👥",
+      "title": "Start a clone script",
+      "keys": [
+        "clone",
+        "start",
+        "event",
+        "script"
+      ],
+      "q": [
+        "how do i start code on a clone",
+        "what is when i start as a clone",
+        "how can each clone do something"
+      ],
+      "text": "Use when I start as a clone for the script that each new clone should run.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-048",
+      "emoji": "🎬",
+      "title": "Start code when the backdrop changes",
+      "keys": [
+        "backdrop",
+        "switches",
+        "event",
+        "start"
+      ],
+      "q": [
+        "how do i run code after a scene changes",
+        "what is when backdrop switches to",
+        "how do i react to a new backdrop"
+      ],
+      "text": "Use when backdrop switches to and choose a backdrop to run a script when that backdrop appears.",
+      "action": "backdrops"
+    },
+    {
+      "id": "t-k1-049",
+      "emoji": "🔁",
+      "title": "Repeat until a condition is true",
+      "keys": [
+        "repeat",
+        "until",
+        "condition",
+        "control"
+      ],
+      "q": [
+        "how do i repeat until i touch something",
+        "what is repeat until",
+        "when will this loop stop"
+      ],
+      "text": "Repeat until keeps running its inner blocks until the condition becomes true.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-050",
+      "emoji": "⌨️",
+      "title": "Check a key",
+      "keys": [
+        "key",
+        "pressed",
+        "condition",
+        "sensing"
+      ],
+      "q": [
+        "how do i check if space is down",
+        "what is key pressed",
+        "how do i make a key condition"
+      ],
+      "text": "Use key pressed? to check a key inside an if block or another condition.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-051",
+      "emoji": "🤝",
+      "title": "Check whether things touch",
+      "keys": [
+        "touching",
+        "sprite",
+        "pointer",
+        "edge"
+      ],
+      "q": [
+        "how do i check if two sprites touch",
+        "what is touching edge",
+        "how do i detect a collision"
+      ],
+      "text": "Use a touching block to check the pointer, an edge, or another sprite.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-052",
+      "emoji": "🖱️",
+      "title": "Read the mouse position",
+      "keys": [
+        "mouse",
+        "x",
+        "y",
+        "pointer",
+        "sensing"
+      ],
+      "q": [
+        "how do i read mouse position",
+        "what is mouse x",
+        "how do i make something follow the mouse"
+      ],
+      "text": "Use mouse x or mouse y to read the pointer's position on the Stage.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-053",
+      "emoji": "❔",
+      "title": "Ask a question and use the answer",
+      "keys": [
+        "ask",
+        "answer",
+        "question",
+        "text"
+      ],
+      "q": [
+        "how do i ask a question in my game",
+        "where does the answer go",
+        "how do i use what someone types"
+      ],
+      "text": "Ask and wait shows a question. The answer reporter gives you the words the user typed.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-054",
+      "emoji": "⏱️",
+      "title": "Use the timer",
+      "keys": [
+        "timer",
+        "reset",
+        "elapsed",
+        "seconds"
+      ],
+      "q": [
+        "how do i use the timer block",
+        "how do i reset the timer",
+        "how can i count seconds"
+      ],
+      "text": "Use timer to read elapsed time, and reset timer when you want to start counting from zero.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-055",
+      "emoji": "➗",
+      "title": "Do maths with Operators",
+      "keys": [
+        "operators",
+        "math",
+        "add",
+        "subtract"
+      ],
+      "q": [
+        "where are the maths blocks",
+        "how do i add two numbers",
+        "how do i compare numbers"
+      ],
+      "text": "Operators include addition, subtraction, multiplication, division, comparisons, and other number tools.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-056",
+      "emoji": "🔗",
+      "title": "Join words together",
+      "keys": [
+        "join",
+        "words",
+        "text",
+        "sentence"
+      ],
+      "q": [
+        "how do i join two words",
+        "how do i make a sentence",
+        "what does join do"
+      ],
+      "text": "Use join to put two pieces of text together into one message.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-057",
+      "emoji": "🔤",
+      "title": "Count letters in text",
+      "keys": [
+        "length",
+        "letters",
+        "text",
+        "count"
+      ],
+      "q": [
+        "how do i count letters in a word",
+        "what does length do",
+        "how can i find the word size"
+      ],
+      "text": "Use length of to find how many characters are in a piece of text.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-058",
+      "emoji": "🎲",
+      "title": "Pick a random number",
+      "keys": [
+        "random",
+        "number",
+        "pick",
+        "choose"
+      ],
+      "q": [
+        "how do i make a random number",
+        "what does pick random do",
+        "how do i choose a random score"
+      ],
+      "text": "Use pick random to choose a number between the two numbers you enter.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-059",
+      "emoji": "🔢",
+      "title": "Make a variable",
+      "keys": [
+        "variable",
+        "score",
+        "make",
+        "create"
+      ],
+      "q": [
+        "how do i make a score",
+        "where is make a variable",
+        "how do i add points"
+      ],
+      "text": "Choose Make a Variable in Variables, give it a name such as score, then use set or change to update it.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-060",
+      "emoji": "0️⃣",
+      "title": "Set a variable's starting value",
+      "keys": [
+        "set",
+        "variable",
+        "start",
+        "value"
+      ],
+      "q": [
+        "how do i reset my score",
+        "how do i set a variable to zero",
+        "where should i set my score"
+      ],
+      "text": "Use set variable near the start of your game, such as setting score to 0.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-061",
+      "emoji": "➕",
+      "title": "Add to or take from a variable",
+      "keys": [
+        "change",
+        "variable",
+        "add",
+        "subtract"
+      ],
+      "q": [
+        "how do i add one point",
+        "how do i take away a life",
+        "what does change variable do"
+      ],
+      "text": "Use change variable by to add or subtract from its current value. A negative number takes value away.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-062",
+      "emoji": "📊",
+      "title": "Show a variable on Stage",
+      "keys": [
+        "show",
+        "variable",
+        "monitor",
+        "stage"
+      ],
+      "q": [
+        "how do i show my score",
+        "where did my variable go",
+        "how can i hide a score display"
+      ],
+      "text": "Use show variable to display its monitor on the Stage. A checkbox beside a variable can also show or hide its monitor.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-063",
+      "emoji": "👥",
+      "title": "Choose who can use a variable",
+      "keys": [
+        "variable",
+        "all",
+        "sprite",
+        "scope"
+      ],
+      "q": [
+        "what does for this sprite only mean",
+        "how do i share a score with every sprite",
+        "which variable choice should i pick"
+      ],
+      "text": "When you make a variable, choose For all sprites or For this sprite only. The second choice keeps it with that sprite.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-064",
+      "emoji": "📋",
+      "title": "Make a list",
+      "keys": [
+        "make",
+        "list",
+        "create",
+        "data"
+      ],
+      "q": [
+        "how do i make a list",
+        "where is make a list",
+        "can a list belong to one sprite"
+      ],
+      "text": "Choose Make a List in Lists, name it, and choose whether it belongs to all sprites or just this sprite.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-065",
+      "emoji": "➕",
+      "title": "Add an item to a list",
+      "keys": [
+        "list",
+        "add",
+        "item"
+      ],
+      "q": [
+        "how do i add something to my list",
+        "what does add to list do",
+        "how do i save an answer in a list"
+      ],
+      "text": "Use add item to list to put a new value at the end of the list.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-066",
+      "emoji": "➖",
+      "title": "Remove an item from a list",
+      "keys": [
+        "list",
+        "delete",
+        "item",
+        "position"
+      ],
+      "q": [
+        "how do i delete one list item",
+        "how do i remove the second item",
+        "what does delete item do"
+      ],
+      "text": "Use delete item of list to remove the item at the position you choose. Check the item number first.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-067",
+      "emoji": "🧾",
+      "title": "Show or hide a list",
+      "keys": [
+        "list",
+        "show",
+        "hide",
+        "monitor"
+      ],
+      "q": [
+        "how do i show my list on stage",
+        "how do i hide a list",
+        "where did my list display go"
+      ],
+      "text": "Use show list or hide list to choose whether the list display appears on the Stage.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-068",
+      "emoji": "🧱",
+      "title": "Make your own block",
+      "keys": [
+        "myblocks",
+        "define",
+        "custom",
+        "procedure"
+      ],
+      "q": [
+        "what are my blocks",
+        "how do i make my own block",
+        "what does define mean"
+      ],
+      "text": "The My Blocks area has define and call custom blocks. A custom block lets you group steps under a name you choose.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-069",
+      "emoji": "📞",
+      "title": "Call a custom block",
+      "keys": [
+        "call",
+        "custom",
+        "block",
+        "procedure"
+      ],
+      "q": [
+        "how do i use my custom block",
+        "what does call custom do",
+        "how do i run a block i made"
+      ],
+      "text": "Use call custom with the same block name to run the steps in that custom block.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-070",
+      "emoji": "🧩",
+      "title": "Use parameters in a custom block",
+      "keys": [
+        "custom",
+        "parameters",
+        "arguments",
+        "myblocks"
+      ],
+      "q": [
+        "what are custom block inputs",
+        "how do arguments work",
+        "why is the order important"
+      ],
+      "text": "The My Blocks palette shows comma-separated parameter names and arguments. Use the same order when calling the block.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-071",
+      "emoji": "👥",
+      "title": "Make a clone",
+      "keys": [
+        "create",
+        "clone",
+        "myself",
+        "copy"
+      ],
+      "q": [
+        "how do i make clones",
+        "what block creates a clone",
+        "where do i put clone code"
+      ],
+      "text": "Use create clone of myself to make a copy while the project runs. Put clone behaviour under when I start as a clone.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-072",
+      "emoji": "🗑️",
+      "title": "Delete a clone when it is done",
+      "keys": [
+        "delete",
+        "clone",
+        "cleanup",
+        "control"
+      ],
+      "q": [
+        "how do i delete a clone",
+        "how do i stop too many raindrops",
+        "when should a clone delete itself"
+      ],
+      "text": "Use delete this clone when a clone has finished its job, such as reaching the bottom of the Stage.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-073",
+      "emoji": "🔢",
+      "title": "Keep clone numbers under control",
+      "keys": [
+        "clone",
+        "limit",
+        "300",
+        "cleanup"
+      ],
+      "q": [
+        "how many clones can i have",
+        "why did my clones stop appearing",
+        "how do i keep clones under control"
+      ],
+      "text": "G-Warp uses a 300-clone default limit. Delete clones when they are no longer needed to help avoid reaching the limit.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-074",
+      "emoji": "🎨",
+      "title": "Open the Costumes tab",
+      "keys": [
+        "costumes",
+        "tab",
+        "sprite",
+        "pictures"
+      ],
+      "q": [
+        "where do i edit a costume",
+        "how do i open costumes",
+        "how do i change my sprite picture"
+      ],
+      "text": "Choose Costumes in the main tabs to work on the selected sprite's pictures.",
+      "action": "costumes"
+    },
+    {
+      "id": "t-k1-075",
+      "emoji": "🖌️",
+      "title": "Use the Brush tool",
+      "keys": [
+        "brush",
+        "draw",
+        "paint",
+        "canvas"
+      ],
+      "q": [
+        "how do i draw on my costume",
+        "where is the brush",
+        "how do i paint my sprite"
+      ],
+      "text": "In the simple paint panel, choose Brush, then draw on the canvas. The drawing is synced to the selected costume.",
+      "action": "costumes"
+    },
+    {
+      "id": "t-k1-076",
+      "emoji": "🧽",
+      "title": "Use the Eraser tool",
+      "keys": [
+        "eraser",
+        "remove",
+        "paint",
+        "canvas"
+      ],
+      "q": [
+        "how do i erase part of my drawing",
+        "where is the eraser",
+        "how do i fix a paint mistake"
+      ],
+      "text": "Choose Eraser, then draw over the parts you want to remove from the costume canvas.",
+      "action": "costumes"
+    },
+    {
+      "id": "t-k1-077",
+      "emoji": "🖍️",
+      "title": "Choose paint colour and size",
+      "keys": [
+        "paint",
+        "colour",
+        "size",
+        "brush"
+      ],
+      "q": [
+        "how do i change brush colour",
+        "how do i make the brush smaller",
+        "where is the paint size slider"
+      ],
+      "text": "Use the colour picker to choose a colour and the size slider to make your brush thicker or thinner.",
+      "action": "costumes"
+    },
+    {
+      "id": "t-k1-078",
+      "emoji": "🧹",
+      "title": "Clear the paint canvas",
+      "keys": [
+        "clear",
+        "paint",
+        "canvas",
+        "costume"
+      ],
+      "q": [
+        "how do i clear my costume drawing",
+        "what does clear do",
+        "can i undo after clear"
+      ],
+      "text": "Press Clear in the simple paint panel to clear the canvas. Use Undo if you clear it by mistake.",
+      "action": "costumes"
+    },
+    {
+      "id": "t-k1-079",
+      "emoji": "📚",
+      "title": "Choose a costume in the list",
+      "keys": [
+        "costume",
+        "list",
+        "select",
+        "sidebar"
+      ],
+      "q": [
+        "where are my costumes listed",
+        "how do i choose a costume",
+        "how do i edit a different costume"
+      ],
+      "text": "The costume sidebar lists the selected sprite's costumes. Choose one there to work on that costume.",
+      "action": "costumes"
+    },
+    {
+      "id": "t-k1-080",
+      "emoji": "🔊",
+      "title": "Open the Sounds tab",
+      "keys": [
+        "sounds",
+        "tab",
+        "audio",
+        "sprite"
+      ],
+      "q": [
+        "where do i edit a sound",
+        "how do i open sounds",
+        "where are my sprite sounds"
+      ],
+      "text": "Choose Sounds in the main tabs to work with sounds for the selected sprite.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-081",
+      "emoji": "📤",
+      "title": "Upload a sound",
+      "keys": [
+        "upload",
+        "sound",
+        "audio",
+        "file"
+      ],
+      "q": [
+        "how do i add my own sound",
+        "what sound files can i upload",
+        "where is sound upload"
+      ],
+      "text": "In Sound Studio, use Upload and choose an audio file such as MP3, WAV, or OGG.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-082",
+      "emoji": "🎙️",
+      "title": "Record a sound",
+      "keys": [
+        "record",
+        "microphone",
+        "sound",
+        "audio"
+      ],
+      "q": [
+        "how do i record a sound",
+        "where is the microphone button",
+        "how long can a recording be"
+      ],
+      "text": "Use Record in Sound Studio to record with your microphone. Recording is up to 15 seconds when recording is available in your browser.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-083",
+      "emoji": "▶️",
+      "title": "Preview a sound",
+      "keys": [
+        "preview",
+        "sound",
+        "play",
+        "audio"
+      ],
+      "q": [
+        "how do i listen to my sound",
+        "where is sound preview",
+        "can i hear it before using it"
+      ],
+      "text": "Choose a sound and press Play in its sound editor to listen before using it in a script.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-084",
+      "emoji": "🎚️",
+      "title": "Use sound effects",
+      "keys": [
+        "sound",
+        "effects",
+        "pitch",
+        "pan"
+      ],
+      "q": [
+        "how do i change pitch",
+        "what is pan in sound",
+        "where are sound effects"
+      ],
+      "text": "Sound Studio has effect controls, including pitch and pan. Try a small change and preview the sound.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-085",
+      "emoji": "🎼",
+      "title": "Open Song maker",
+      "keys": [
+        "song",
+        "maker",
+        "sounds",
+        "music"
+      ],
+      "q": [
+        "where is song maker",
+        "how do i make music in g warp",
+        "where are song styles"
+      ],
+      "text": "In Sounds, open Song maker to build a song with parts, styles, moods, and themes.",
+      "action": "song"
+    },
+    {
+      "id": "t-k1-086",
+      "emoji": "🎧",
+      "title": "Choose a song style",
+      "keys": [
+        "song",
+        "style",
+        "genre",
+        "music"
+      ],
+      "q": [
+        "how do i change music style",
+        "where is the genre menu",
+        "how do i make a different kind of song"
+      ],
+      "text": "Use the Song maker style menu to choose the kind of music you want to hear.",
+      "action": "song"
+    },
+    {
+      "id": "t-k1-087",
+      "emoji": "🙂",
+      "title": "Choose a song mood and theme",
+      "keys": [
+        "song",
+        "mood",
+        "theme",
+        "feeling"
+      ],
+      "q": [
+        "how do i make the song happier",
+        "where is the mood menu",
+        "how do i choose a song theme"
+      ],
+      "text": "Use the mood and theme menus in Song maker to change the feeling and subject of the song.",
+      "action": "song"
+    },
+    {
+      "id": "t-k1-088",
+      "emoji": "✨",
+      "title": "Generate a song",
+      "keys": [
+        "generate",
+        "song",
+        "create",
+        "music"
+      ],
+      "q": [
+        "how do i make a song",
+        "what does generate do",
+        "how do i create new music"
+      ],
+      "text": "Press Generate in Song maker after choosing the settings you want. G-Warp creates the song parts for those choices.",
+      "action": "song"
+    },
+    {
+      "id": "t-k1-089",
+      "emoji": "▶️",
+      "title": "Play and stop a song",
+      "keys": [
+        "song",
+        "play",
+        "stop",
+        "music"
+      ],
+      "q": [
+        "how do i listen to my song",
+        "how do i stop the song",
+        "where are play and stop"
+      ],
+      "text": "Use Play to hear the Song maker output and Stop to end playback.",
+      "action": "song"
+    },
+    {
+      "id": "t-k1-090",
+      "emoji": "🎶",
+      "title": "Use Mix, Classic, or Fresh",
+      "keys": [
+        "mix",
+        "classic",
+        "fresh",
+        "tune"
+      ],
+      "q": [
+        "what are mix classic and fresh",
+        "how do i choose a tune",
+        "where is my melody choice"
+      ],
+      "text": "The Song maker has Mix, Classic, and Fresh tune choices. My melody is available after you make a melody in the instrument area.",
+      "action": "song"
+    },
+    {
+      "id": "t-k1-091",
+      "emoji": "🎼",
+      "title": "Open Create Melody",
+      "keys": [
+        "create",
+        "melody",
+        "instrument",
+        "sounds"
+      ],
+      "q": [
+        "where is create melody",
+        "how do i write my own tune",
+        "how do i make a two bar melody"
+      ],
+      "text": "In Sounds, find the instrument area and open Create Melody to write a two-bar tune on the note grid.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-092",
+      "emoji": "💡",
+      "title": "Start a melody from an idea",
+      "keys": [
+        "melody",
+        "idea",
+        "starter",
+        "create"
+      ],
+      "q": [
+        "how do i start a melody",
+        "where are the melody ideas",
+        "can i change a starter tune"
+      ],
+      "text": "In Create Melody, use Start from to pick one of the eight starter melody ideas. Then change squares to make it yours.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-093",
+      "emoji": "🟪",
+      "title": "Add or remove a melody note",
+      "keys": [
+        "melody",
+        "grid",
+        "note",
+        "tap"
+      ],
+      "q": [
+        "how do i add a note",
+        "how do i remove a note",
+        "what do the melody squares do"
+      ],
+      "text": "Tap a square in the Create Melody grid to add a note there. Tap that same note again to remove it.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-094",
+      "emoji": "▶️",
+      "title": "Play your melody",
+      "keys": [
+        "melody",
+        "play",
+        "instrument",
+        "sound"
+      ],
+      "q": [
+        "how do i hear my melody",
+        "where is play in create melody",
+        "which instrument plays my tune"
+      ],
+      "text": "Press Play in Create Melody to hear your tune with the instrument you selected above.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-095",
+      "emoji": "⚡",
+      "title": "Change melody speed",
+      "keys": [
+        "melody",
+        "speed",
+        "slow",
+        "fast"
+      ],
+      "q": [
+        "how do i make my melody faster",
+        "where is melody speed",
+        "what are the speed choices"
+      ],
+      "text": "Choose Slow, Normal, or Fast in the Create Melody speed menu.",
+      "action": "sounds"
+    },
+    {
+      "id": "t-k1-096",
+      "emoji": "💾",
+      "title": "Save and use your melody",
+      "keys": [
+        "save",
+        "melody",
+        "song",
+        "maker"
+      ],
+      "q": [
+        "how do i save my tune",
+        "how do i put my tune in a song",
+        "where are saved melodies"
+      ],
+      "text": "Press Save melody to keep it. Press Use in Song maker, then choose My melody in Song maker to play it in your song.",
+      "action": "song"
+    },
+    {
+      "id": "t-k1-097",
+      "emoji": "🎞️",
+      "title": "Open Animation",
+      "keys": [
+        "animation",
+        "tool",
+        "costumes",
+        "frames"
+      ],
+      "q": [
+        "where is animation",
+        "how do i animate my character",
+        "is animation only for developer mode"
+      ],
+      "text": "Open Animation from the costume tools to work with a rigged character and its frames. Animation is available to everyone.",
+      "action": "animation"
+    },
+    {
+      "id": "t-k1-098",
+      "emoji": "🦴",
+      "title": "Rig a vector character",
+      "keys": [
+        "rig",
+        "bones",
+        "vector",
+        "character"
+      ],
+      "q": [
+        "what kind of costume can i rig",
+        "how do i add bones",
+        "why does my bitmap not rig"
+      ],
+      "text": "The rigging tool works with vector costumes. Make a vector character first, then add bones and joints to it.",
+      "action": "animation"
+    },
+    {
+      "id": "t-k1-099",
+      "emoji": "🦴",
+      "title": "Pose a character with bones",
+      "keys": [
+        "bone",
+        "pose",
+        "joint",
+        "animate"
+      ],
+      "q": [
+        "how do i move a bone",
+        "how do joints work",
+        "how do i pose my character"
+      ],
+      "text": "In Animate mode, drag a red bone end to turn it around its joint. The bones after it follow.",
+      "action": "animation"
+    },
+    {
+      "id": "t-k1-100",
+      "emoji": "🟠",
+      "title": "Move the whole rig",
+      "keys": [
+        "base",
+        "joint",
+        "move",
+        "rig"
+      ],
+      "q": [
+        "how do i move the whole character",
+        "what is the orange base",
+        "how do i reposition a pose"
+      ],
+      "text": "Drag the orange base joint to move the whole figure to a new place in the frame.",
+      "action": "animation"
+    },
+    {
+      "id": "t-k1-101",
+      "emoji": "🧩",
+      "title": "Add animation frames",
+      "keys": [
+        "animation",
+        "frames",
+        "strip",
+        "add"
+      ],
+      "q": [
+        "how do i add a frame",
+        "where is the frame strip",
+        "how do i make another pose"
+      ],
+      "text": "Use the frame strip at the bottom to add or copy frames for different poses.",
+      "action": "animation"
+    },
+    {
+      "id": "t-k1-102",
+      "emoji": "👻",
+      "title": "Turn on onion skin",
+      "keys": [
+        "onion",
+        "skin",
+        "previous",
+        "frame"
+      ],
+      "q": [
+        "what is onion skin",
+        "how do i see the last pose",
+        "where is onion skin"
+      ],
+      "text": "Turn on Onion skin to see the previous frame while you pose the current one.",
+      "action": "animation"
+    },
+    {
+      "id": "t-k1-103",
+      "emoji": "▶️",
+      "title": "Preview and loop an animation",
+      "keys": [
+        "animation",
+        "preview",
+        "play",
+        "loop"
+      ],
+      "q": [
+        "how do i preview my animation",
+        "how do i loop my animation",
+        "how do i stop the preview"
+      ],
+      "text": "Press Play to preview frames. Turn on Loop to go from the last frame back to the first.",
+      "action": "animation"
+    },
+    {
+      "id": "t-k1-104",
+      "emoji": "🎨",
+      "title": "Make animation frames into costumes",
+      "keys": [
+        "make",
+        "costumes",
+        "animation",
+        "vector"
+      ],
+      "q": [
+        "what does make costumes do",
+        "how do i use my frames as costumes",
+        "can i export the animation"
+      ],
+      "text": "Press Make costumes to turn each animation frame into a normal vector costume in order.",
+      "action": "animation"
+    },
+    {
+      "id": "t-k1-105",
+      "emoji": "💾",
+      "title": "Save your project",
+      "keys": [
+        "save",
+        "project",
+        "file",
+        "more"
+      ],
+      "q": [
+        "how do i save my project",
+        "where is save",
+        "does save update the file i opened"
+      ],
+      "text": "Open More, then the File options, and choose Save. When the browser allows it, Save writes back to the file you opened.",
+      "action": "save"
+    },
+    {
+      "id": "t-k1-106",
+      "emoji": "📥",
+      "title": "Save a separate copy",
+      "keys": [
+        "save",
+        "copy",
+        "project",
+        "file"
+      ],
+      "q": [
+        "how do i save a copy",
+        "where is save as",
+        "how do i keep two versions"
+      ],
+      "text": "Open More, then the File options, and choose Save as to save a separate project file.",
+      "action": "save"
+    },
+    {
+      "id": "t-k1-107",
+      "emoji": "📂",
+      "title": "Load from your computer",
+      "keys": [
+        "load",
+        "open",
+        "computer",
+        "project"
+      ],
+      "q": [
+        "how do i open my project file",
+        "where is load from computer",
+        "how do i open a saved project"
+      ],
+      "text": "Open More, then choose Load from your computer and select a project file.",
+      "action": "save"
+    },
+    {
+      "id": "t-k1-108",
+      "emoji": "🌐",
+      "title": "Load from the web",
+      "keys": [
+        "load",
+        "web",
+        "scratch",
+        "project"
+      ],
+      "q": [
+        "how do i load a project from the web",
+        "can i open a Scratch project link",
+        "where is load from web"
+      ],
+      "text": "Open More, then choose Load from the web to open a project using a supported Scratch project link or number.",
+      "action": "save"
+    },
+    {
+      "id": "t-k1-109",
+      "emoji": "🕘",
+      "title": "Restore an earlier version",
+      "keys": [
+        "restore",
+        "previous",
+        "version",
+        "history"
+      ],
+      "q": [
+        "how do i get an older version back",
+        "where are restore points",
+        "can i undo a save"
+      ],
+      "text": "Open More, then choose Restore a previous version to look through the saved restore points in this browser.",
+      "action": "save"
+    },
+    {
+      "id": "t-k1-110",
+      "emoji": "📦",
+      "title": "Know the .sb3 file type",
+      "keys": [
+        "sb3",
+        "file",
+        "save",
+        "scratch"
+      ],
+      "q": [
+        "what file type does g warp save",
+        "can i open my project in Scratch",
+        "where are g warp extras stored"
+      ],
+      "text": "G-Warp saves projects as .sb3 files. G-Warp-only extras are kept in hidden project data so they do not appear as Scratch blocks.",
+      "action": "save"
+    },
+    {
+      "id": "t-k1-111",
+      "emoji": "🧩",
+      "title": "Open the Extensions library",
+      "keys": [
+        "extensions",
+        "library",
+        "category",
+        "rail"
+      ],
+      "q": [
+        "where is extensions",
+        "how do i open extension library",
+        "where can i find extra blocks"
+      ],
+      "text": "Choose Extensions at the bottom of the category rail to open the extension library.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-112",
+      "emoji": "⚠️",
+      "title": "Read extension safety labels",
+      "keys": [
+        "extension",
+        "safety",
+        "safe",
+        "moderate",
+        "dangerous"
+      ],
+      "q": [
+        "how do i know if an extension is safe",
+        "what does dangerous mean",
+        "where are extension warnings"
+      ],
+      "text": "The extension library shows safety levels such as Safe, Moderate, or Dangerous. Read the warning before loading an extension.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-113",
+      "emoji": "🪶",
+      "title": "Use Calm motion",
+      "keys": [
+        "calm",
+        "motion",
+        "settings",
+        "animation"
+      ],
+      "q": [
+        "how do i turn off moving effects",
+        "where is calm motion",
+        "what does calm motion change"
+      ],
+      "text": "Open More, then Settings, and switch Calm motion on if you want fewer animations. It is off by default.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-114",
+      "emoji": "🎨",
+      "title": "Keep G-Warp's own look",
+      "keys": [
+        "look",
+        "scratch",
+        "style",
+        "setting"
+      ],
+      "q": [
+        "how do i change block appearance",
+        "where is look like scratch",
+        "does this change how blocks work"
+      ],
+      "text": "The Look like Scratch option changes the block appearance. It is off by default, so G-Warp keeps its own electric style.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-115",
+      "emoji": "🧩",
+      "title": "Snap blocks together",
+      "keys": [
+        "snap",
+        "blocks",
+        "connect",
+        "workspace"
+      ],
+      "q": [
+        "how do i connect blocks",
+        "why does the snap line appear",
+        "how do i stack blocks"
+      ],
+      "text": "Drag a block close to a compatible connector in the workspace. G-Warp shows a snap preview to help place it.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-116",
+      "emoji": "🖱️",
+      "title": "Use the block right-click menu",
+      "keys": [
+        "right",
+        "click",
+        "block",
+        "menu",
+        "duplicate"
+      ],
+      "q": [
+        "how do i copy a block",
+        "where is delete full stack",
+        "what does right click do"
+      ],
+      "text": "Right-click a block in the workspace to see Duplicate, Delete Block, and Delete Full Stack.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-117",
+      "emoji": "🔎",
+      "title": "Find a block in your scripts",
+      "keys": [
+        "find",
+        "scripts",
+        "search",
+        "ctrl"
+      ],
+      "q": [
+        "how do i search my code",
+        "what does ctrl f do",
+        "how do i find the next block"
+      ],
+      "text": "In the code area, Ctrl+F opens Find in scripts when that add-on is on. Press Enter to jump to the next match.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-118",
+      "emoji": "📝",
+      "title": "Name your project",
+      "keys": [
+        "project",
+        "title",
+        "name",
+        "top"
+      ],
+      "q": [
+        "where do i rename my project",
+        "what is the title field",
+        "how do i name my game"
+      ],
+      "text": "Edit the project title field at the top of G-Warp to give your project a name.",
+      "action": "save"
+    },
+    {
+      "id": "t-k1-119",
+      "emoji": "🛡️",
+      "title": "Confirm before a dangerous extension",
+      "keys": [
+        "dangerous",
+        "extension",
+        "warning",
+        "confirm",
+        "parent"
+      ],
+      "q": [
+        "what if an extension says dangerous",
+        "can i cancel loading it",
+        "who should i ask first"
+      ],
+      "text": "A dangerous extension shows a warning and asks you to confirm. You can choose Don’t load it; kids should ask a parent first.",
+      "action": "code"
+    },
+    {
+      "id": "t-k1-120",
+      "emoji": "🖱️",
+      "title": "Start a script when the Stage is clicked",
+      "keys": [
+        "stage",
+        "clicked",
+        "event",
+        "start"
+      ],
+      "q": [
+        "how do i start code when stage is clicked",
+        "is stage click different from sprite click",
+        "where is that event"
+      ],
+      "text": "Use when stage clicked in Events when you want a script to start after the Stage is clicked.",
+      "action": "code"
+    }
+  ]
+}
