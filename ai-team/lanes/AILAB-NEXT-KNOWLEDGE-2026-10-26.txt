@@ -1,0 +1,34 @@
+=====================================================================
+ AI LAB (lane L2-AILAB) - NEXT JOB: BASIC KNOWLEDGE FOR G-WARP'S AI          written by Claude for the owner, 2026-10-26
+ Owner: "For now, all we're gonna do is just create basic knowledge ... the basic knowledge rules and the basic knowledge of how
+ to run a project, how to create stuff." AIM-0 (model research) comes AFTER this.
+=====================================================================
+YOUR FOLDER (it exists now): chatgpt/lanes/L2-AILAB/  (log, reports/, bugs/, tests/). Drop box: ai-team/shared/<date>-chatgpt-AIM-K1/
+Log gate first (start entry in chatgpt/lanes/L2-AILAB/AI-CHAT-LOG.txt -> commit -> push -> read back). Never edit app.html.
+
+WHAT G-WARP'S AI ALREADY KNOWS (read, don't redo):
+- claude/gwrap-pack.json (Claude's starter recipes + tips = the exact FORMAT)
+- ai-team/shared/2026-10-26-phone-recipes-PH-001-060/, -PH-061-080/, -PH-081-136/  (131 checked recipes from the phone bot)
+- ai-team/gwrap-blocks.json (every block type the AI may use)
+- The rules for the AI: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md section 3
+- Checker: python3 ai-team/tools/validate_gwrap_pack.py <pack.json> ai-team/gwrap-blocks.json <all other packs>  -> must say PASS
+
+AIM-K1 BASIC KNOWLEDGE PACK  (one pack file: {"version":1,"note":"...","recipes":[],"tips":[...]} )
+ K1-a  ~120 TIPS = how to USE G-Warp, in kid words. Tip format = like "t-tiles-tab" in claude/gwrap-pack.json:
+       id "t-k1-<words>", emoji, title, keys (5-10), q (3 ways a kid asks, small typos ok), text (2-4 short sentences), action
+       (one of: code, costumes, sounds, song, animation, tiles, backdrops, save, undo - or leave it out).
+       Cover, in this order: run / stop / pause (top bar); make a new project; add a sprite (choose / paint / upload / surprise);
+       rename, delete, duplicate a sprite; the stage + backdrops; drag blocks, snap them, delete them, right-click menu;
+       every block category (what it is for, 1 example each); variables (make, show, for this sprite only); lists; broadcasts;
+       clones; My Blocks (custom blocks, "run without screen refresh"); costumes tab + paint editor tools; sounds tab, effects,
+       Song maker (Tune: Mix / Classic / Fresh / My melody), Create Melody (Spark Studio); Animation tab (bones, frames, Make
+       costumes) + Flipbook + onion skin; save / open .sb3 (it still works in Scratch); undo / redo; extensions (Safe / Moderate /
+       Dangerous labels, ask a grown-up); More -> Settings (Calm motion, Look like Scratch); what G-Warp can't do yet.
+       EVERY tip must be TRUE for the current app: find the button text in app.html (grep the title / label) and write
+       SOURCE-VERIFIED, or click it with the QA kit (Freebuff) and write TESTED in G-Warp. Unsure -> leave the tip out.
+ K1-b  AI-RULES-SHORT.txt (max 350 words): the 14 rules from section 3 written as the AI's own short instructions (what it may do,
+       what it never does, how it talks to kids), + 20 "must refuse" examples, each with the friendly answer it gives instead.
+ K1-c  GAPS.md: list every block category / common kid wish that has NO recipe yet (compare titles across all packs above).
+       Don't write those recipes here (lane L6 / the phone bot do recipes) - just the list, so they can be assigned.
+ DONE = pack PASSES the checker (0 errors), NOTES.md says the evidence per group of tips, pushed, closeout in your log.
+THEN: AIM-0 (ai-team/CHATGPT-DEEP-RESEARCH-AIM-0.txt) as planned.

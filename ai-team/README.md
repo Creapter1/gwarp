@@ -25,7 +25,7 @@ This is the **one rulebook** for every AI that works on G-Warp. If another file 
 | **Owner (Creapter1)** | — | The boss. Decides what goes in, picks A/B/C, says "push". |
 | **Claude Opus** ("Claude") | `claude/` | The **only** integrator: changes `app.html` / `index.html`, merges, releases, official tests. |
 | **ChatGPT** | `chatgpt/` | Everything else: research, reviews, plans, test plans, bug hunting, **icons and art**, code **proposals**, docs, website text, remixes. Took over all Gemini / Grok / DeepSeek jobs. Runs on chatgpt.com and in Freebuff (terminal, ~50 min). |
-| **ChatGPT – AI Lab** (a separate ChatGPT chat) | `chatgpt/ai-lab/` | ONLY builds G-Warp's own small AI model (research, data, training notebook, tests). Prompt: `ai-team/AI-LAB-PROMPT-2026-10-26.txt`. |
+| **ChatGPT – AI Lab** (a separate ChatGPT chat) | `chatgpt/lanes/L2-AILAB/` | ONLY builds G-Warp's own small AI model (research, data, training notebook, tests). Prompt: `ai-team/AI-LAB-PROMPT-2026-10-26.txt`. |
 | **Claude Haiku** (helper, Freebuff) | `claude/haiku/` | Bug hunting with the QA kit, small SVG art, small proposals. Never integrates. Signs "Claude Haiku (Freebuff)". |
 
 **Retired** (nothing deleted, read-only): Gemini, Grok, DeepSeek → `ai-team/archive/gemini/`, `ai-team/archive/grok/`,
