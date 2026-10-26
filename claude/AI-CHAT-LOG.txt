@@ -745,3 +745,7 @@ EVIDENCE: NOT-TESTED (brief). COMMIT: 2abc9c6
 NEXT: owner pastes ai-team/lanes/LANE-L9-WEB.txt into a ChatGPT / Freebuff session; owner picks A/B/C after W1.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 35 ---
+UTC timestamp: 2026-10-26T20:02:55Z (owner 16:02 his time)   Who: Claude (configured claude-opus-5-5)   Task: RULE - no questions, never stop (Freebuff sessions)
+USER REQUEST (summary, his words): Freebuff (running the ChatGPT lanes) sometimes asks "do you want this or both?" - avoid all questions: "if you have questions to create either A or B ... do both. No questions, non-negotiable ... Or just do it." If a task needs verification: "add it as a to-do list, and then you will move to a new task. So the work will always continue and never stop"; 50 minutes, "once those 50 minutes are gone, it is gone for good"; chatgpt.com tends to stop early, Freebuff can go on until the session ends.

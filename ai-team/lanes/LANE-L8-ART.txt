@@ -23,6 +23,15 @@ YOUR LANE
 HOW TO DO EACH JOB: ai-team/chatgpt-jobs/HOW-TO-DO-EACH-JOB.md (where it says chatgpt/jobs/ or chatgpt/bugs/, use YOUR folder
   chatgpt/lanes/L8-ART/reports/ and .../bugs/ instead). All rules: ai-team/README.md. You NEVER edit app.html or index.html.
 
+NO QUESTIONS, NEVER STOP (owner, 2026-10-26, NON-NEGOTIABLE): you have ONE session (~50 min) and nobody will answer you.
+  - NEVER ask the owner (or anyone) a question and NEVER wait for an answer.
+  - A choice between options (A or B, this way or that way)? Do BOTH (or all), side by side, and write one line about it. Or just do it.
+  - Something unclear? Pick the most reasonable reading, write it in ONE line in your log, and do it.
+  - Blocked (needs a check, a login, the owner, or a tool failed twice)? Add it to your to-do list as "BLOCKED: <why>" and go to the
+    NEXT task at once. Never write "I cannot continue, so I stop here".
+  - Keep a to-do list for the session and keep working until the time is up: when it is empty, take the next job from your lane /
+    job file. Use ALL of the ~50 minutes; start the closeout at minute 45. Don't end early.
+
 THE ~50 MINUTES (Freebuff)
   min 0-5   git pull. Read ai-team/README.md section 0, the HOW-TO part A, and the LAST entry of your log
             chatgpt/lanes/L8-ART/AI-CHAT-LOG.txt (= where the last L8-ART session stopped). Setup if needed:

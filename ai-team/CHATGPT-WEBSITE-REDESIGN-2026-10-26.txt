@@ -37,7 +37,7 @@ R8  NO BIG FRAMEWORKS: plain HTML + CSS + small vanilla JS files. No React/Vue/T
     One shared CSS (site/assets/site.css) + one shared JS (site/assets/site.js) + small per-demo JS files are fine.
 R9  The app link and words stay the owner's: primary button "Create your first code" -> app.html, second button "Use your project"
     -> app.html#open. Keep the hero line "Block coding, with electricity." (you may add a short second line).
-R10 Approval: nothing goes live without the owner's "go" (Claude does the swap). Design direction is picked by the owner (W1 STOP).
+R10 Approval: nothing goes live without the owner's "go" (Claude does the swap). The owner picks the direction later - you never wait for it.
 
 ---------------------------------------------------------------------
  1. WHAT EXISTS TODAY (Claude checked, 2026-10-26)
@@ -138,8 +138,9 @@ W1 THREE DIRECTIONS  [chatgpt.com]  -> ai-team/shared/<date>-chatgpt-WEB-W1/  (A
      B "Workbench": the page looks like a tidy G-Warp workspace - tiles are block-shaped, things snap together.
      C "Arcade": bold, playful, big G-Spark, chunky buttons, more colour (still the same palette).
    NOTES.md: pros/cons, weight in KB, "My pick". preview.html links all three (desktop + phone frames side by side).
-   >>> STOP: write in your log closeout "OWNER: please pick A, B or C" and push. Don't start W2 until the owner/Claude picks.
-       While waiting you MAY do W2 prep that works for any direction: optimize/move images, new screenshots, the docs search index.
+   >>> DON'T WAIT (no-questions rule): write "OWNER: pick A, B or C when you can" in your log, push, and go straight on to W2 with
+       YOUR pick - but build W2 so the direction is ONE theme file (site/assets/theme-A.css / theme-B.css / theme-C.css + the same
+       HTML), so the owner's later pick is a one-line switch. Make all three theme files work (= do all of them, don't ask).
 W2 BUILD  [chatgpt.com writes, Freebuff tests]  -> ai-team/shared/<date>-chatgpt-WEB/site/  (the complete new site, rule R1)
    Order: shared CSS/JS + top bar -> landing -> docs layout -> all 16 docs pages -> tutorials -> changelog -> 404 page (optional).
    Push after each page group. Keep a CHANGES.md: per page, what changed and which old facts were updated.

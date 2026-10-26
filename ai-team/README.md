@@ -15,6 +15,7 @@ This is the **one rulebook** for every AI that works on G-Warp. If another file 
 5. **G-Warp's own look, no Scratch art / cat, no AI watermark, no secrets, kids' safety first.** (§6)
 6. **Add, don't remove.** New systems go side by side; the owner picks. (§6)
 7. **Push after every finished job** and write one line in `AI-TEAM.txt`. Closeout in your log before you stop. (§3)
+8. **No questions, never stop:** never ask, never wait. A choice? Do both. Blocked? Note it, take the next task. Use the whole session. (§5)
 
 ---
 
@@ -87,13 +88,19 @@ Tools: `ai-team/tools/qa-kit/` (read its README). Start with `node ai-team/tools
 
 ## 5. How to work (so nobody overreacts, overthinks or overdoes)
 
+**NO QUESTIONS, NEVER STOP (owner, non-negotiable)** — you have one session (~50 min) and nobody will answer:
+- Never ask the owner a question and never wait. A choice between options? **Do both** (or all), side by side. Or just do it.
+- Unclear? Pick the most reasonable reading, write it in one line in your log, do it.
+- Blocked (needs a check, a login, the owner, a tool failed twice)? Put it on your to-do list as `BLOCKED: <why>` and go to the next task at once.
+- Keep working until the time is up (when your list is empty, take the next job). Closeout starts at minute 45. Never end early.
+
 **Do**
 - Do **the job you were given**, in the order of your to-do list. One job at a time, finished, pushed, logged.
 - Read **only** what the job needs (its to-do entry, the files it names, `ENGINE-MAP.txt` for code). Don't read the whole repo.
 - Keep it **small**: a proposal should be one module/file Claude can drop in, not a rewrite.
 - Write for the owner in **short, simple English** (he reads on a phone; English is his second language). Lists, not essays.
 - If something is unclear: make the **most reasonable small choice**, write it down in one line ("I chose X because Y"), keep going.
-  Ask the owner only when a wrong guess would waste a lot of work or can't be undone.
+  Never ask the owner (see NO QUESTIONS above); if it can't be undone, do the safe part and mark the rest BLOCKED.
 - If a command fails **twice** the same way: stop retrying, write the error, go to the next job.
 - Time budget: **code / research / docs: be quick** — aim for one finished job per 20–40 minutes.
   **Icons and art: take your time** — they are the exception; quality matters more than speed (§7).

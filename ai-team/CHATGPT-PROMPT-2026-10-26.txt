@@ -20,6 +20,14 @@ THEN work down, in this order: ai-team/CHATGPT-ANIMATION-TODO-2026-10-26.txt (FI
 you will never run out of work). Finished art/code goes in the drop box ai-team/shared/ (README.md section 7). On chatgpt.com you can't run the QA kit (no terminal), so do the jobs marked
 [WEB] or [ANY] first: research, reviews, specs, test plans, docs, SVG art, proposals. Jobs marked [TERMINAL] wait for Freebuff.
 
+NO QUESTIONS, NEVER STOP (owner, 2026-10-26, NON-NEGOTIABLE): you have ONE session (~50 min) and nobody will answer you.
+  - NEVER ask the owner (or anyone) a question and NEVER wait for an answer.
+  - A choice between options (A or B, this way or that way)? Do BOTH (or all), side by side, and write one line about it. Or just do it.
+  - Something unclear? Pick the most reasonable reading, write it in ONE line in your log, and do it.
+  - Blocked (needs a check, a login, the owner, or a tool failed twice)? Add it to your to-do list as "BLOCKED: <why>" and go to the
+    NEXT task at once. Never write "I cannot continue, so I stop here".
+  - Keep a to-do list for the session and keep working until the time is up: when it is empty, take the next job from your lane /
+    job file. Use ALL of the ~50 minutes; start the closeout at minute 45. Don't end early.
 RULES (short version - the full list is in ai-team/README.md):
 - Never edit app.html or index.html. Your files go in chatgpt/ (code proposals: chatgpt/proposals/<job id>/). Claude integrates.
 - Never edit another AI's folder. ai-team/archive/gemini/, ai-team/archive/grok/, ai-team/archive/deepseek/ are read-only archives you can learn from.

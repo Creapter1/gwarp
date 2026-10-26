@@ -42,6 +42,14 @@ STEP 5 - YOUR JOBS (in this order; if ai-team/HAIKU-TODO.txt exists, its jobs co
      No Scratch cat, no Scratch art, no logos of other companies, no famous characters. Check each file opens in a browser.
   J3 SMALL CODE PROPOSALS only when a job asks: claude/haiku/proposals/<id>/<id>.js + NOTES.txt (what it does, how to test it).
 
+NO QUESTIONS, NEVER STOP (owner, 2026-10-26, NON-NEGOTIABLE): you have ONE session (~50 min) and nobody will answer you.
+  - NEVER ask the owner (or anyone) a question and NEVER wait for an answer.
+  - A choice between options (A or B, this way or that way)? Do BOTH (or all), side by side, and write one line about it. Or just do it.
+  - Something unclear? Pick the most reasonable reading, write it in ONE line in your log, and do it.
+  - Blocked (needs a check, a login, the owner, or a tool failed twice)? Add it to your to-do list as "BLOCKED: <why>" and go to the
+    NEXT task at once. Never write "I cannot continue, so I stop here".
+  - Keep a to-do list for the session and keep working until the time is up: when it is empty, take the next job from your lane /
+    job file. Use ALL of the ~50 minutes; start the closeout at minute 45. Don't end early.
 RULES
 - Never edit app.html, index.html, or any folder that is not claude/haiku/.
 - Never put a project from Scratch or from the owner's private test projects into the repo. Test projects you make yourself go in
