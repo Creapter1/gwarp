@@ -1,0 +1,14 @@
+CHATGPT - MUSIC MAKER ICONS (small job, do it after the current animation job)          written by Claude for the owner, 2026-10-26
+Rules: ai-team/README.md section 7 (A/B/C, 24x24 viewBox, G-Warp colours, currentColor, no letters, < 4 KB, no AI marks).
+Drop box: ai-team/shared/<date>-chatgpt-MUS-I1/ (icons/<name>-A|B|C.svg + preview.html on dark + light, at 16/24/32 px, NEXT TO the
+Gemini music icons already in the app so they look like one family + NOTES.md with "My pick").
+Icons:
+  clear-all            remove every block from the Song maker grid (a grid being swept / emptied - not a trash can, that is "delete")
+  empty-song           start from an empty song
+  level-1 .. level-4   the 4 strengths of one square: light, medium, hard, extreme (same shape, getting fuller/brighter; level-4 a bit electric)
+  create-bass          make your own bass line (low wave / thick string)
+  create-beat          make your own drum beat (step pads)
+  create-chords        make your own chords (stacked notes)
+  my-part              "this row plays something you made" badge (small star/pencil on a note)
+Also: one preview showing a Song maker row with squares at levels 0-4 in each stem colour (melody #?, use the app's stem colours:
+  grep "STEMS" in app.html) so the owner sees how the brightness steps look. Evidence: NOT-TESTED in the app is fine.

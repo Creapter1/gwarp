@@ -86,8 +86,28 @@ Each code package: `ai-team/shared/2026-10-26-chatgpt-ANIM-<x>/` (`NOTES.md`, `c
 - [ ] E1. Only after the owner says the test exe works: add `.github/workflows/desktop.yml` (windows-latest, electron-builder NSIS,
   upload to a GitHub Release on tag `desktop-v*`). npm here needs: `NO_PROXY= no_proxy= npm i --noproxy=example.invalid ...`.
 
+### M. Song maker feedback (owner + testers, 2026-10-26 11:40) — do after A, before F
+Facts (checked): cells are on/off (`S.grid[stem][part]` 0/1; brightness var `--l` comes from the COLUMN energy, `ENERGY` = 4 levels);
+playback = `function play(fromPart)` with a pump every 150 ms that schedules WHOLE parts when they start < 1.2 s ahead (`schedulePart`).
+Anchors: `grep -n "function applyColumn\|function play(fromPart\|function schedulePart\|class: 'gwarr-cell'" app.html`.
+- [ ] M3 first (bug). Reproduce: Playwright, play, at part 1 change a square in part 4 (`.gwarr-cell[data-cell="bass:4"]`), wrap
+  `schedulePart` to log the grid it used → was the change used? Likely causes: the click handler re-generates/re-renders and loses it,
+  or the part was already scheduled. Fix: schedule per BAR (not per part) with 0.4 s lookahead; keep the nodes per part; on a cell change
+  for a part that is scheduled but not started → stop those nodes and schedule again. Already-sounding notes finish. Test: offline-render
+  analysis or the logged grid shows the new value for every part after the change.
+- [ ] M1 levels per cell: grid values 0-4; click cycles 0→1→2→3→4→0 (right-click / Shift = backwards); `--l` from the CELL
+  (0.45/0.62/0.8/1 + glow at 4); schedulePart scales by cell level (1 light: softer + fewer notes; 2 = today's mid; 3 hard; 4 extreme:
+  louder + extra layer/fill). Old songs/saves: a 1 = the level the column energy gave before (so old songs sound the same). Column
+  energy buttons stay and SET the cells of that column. aria-label says the level. Test: cycle, save/load, render differs by level.
+- [ ] M2 "Clear all" button (all cells 0, confirm, Undo) + "Empty song" choice next to Surprise me. Test: clear → play = silence → click cells.
+- [ ] M4 Create Bass / Create Beat / Create Chords next to Create Melody (`gw-v1554-create-melody` module is the pattern: grid + ideas +
+  Use in Song maker → `S.myBass` / `S.myBeat` / `S.myChords`, Tune-like "My …" option per row). Bass uses the bass scale, beat = drum pads
+  × 16 steps, chords = one chord per bar from the key. Same tests as cm_t.js.
+- Icons for all of M: ChatGPT job `ai-team/CHATGPT-MUSIC-ICONS-2026-10-26.txt` → owner picks → plug in. Never draw them myself.
+- Release: Beta v15.56.0 (or with A if both are ready).
+
 ### F. Leftovers (only when A–E are waiting on others)
-- [ ] F1. Music maker: bass / drum / fill PATTERN choices (TODO "MUSIC MAKER - KEEP IMPROVING"). Additive, behind a Tune-like dropdown.
+- [ ] F1. Music maker: bass / drum / fill PATTERN choices (TODO "MUSIC MAKER - KEEP IMPROVING") - partly covered by M4.
 - [ ] F2. test_anim.js: 2 old checks expect the Animation button hidden for normal users (it's for everyone since v15.47) → update the test.
 
 ## 3. Release checklist (copy-paste)
@@ -124,4 +144,4 @@ Each code package: `ai-team/shared/2026-10-26-chatgpt-ANIM-<x>/` (`NOTES.md`, `c
 
 ## 6. Status line (update every run)
 2026-10-26 15:40Z — app Beta v15.54.0 (main). ChatGPT on animation (I1, I2, G1, L1, P1 handed in). Job bank 0/2,474. AI Lab: not started.
-Owner to answer: B1–B5.
+Owner to answer: B1–B5. Song maker feedback queued as section M (ChatGPT music icons job written).
