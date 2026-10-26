@@ -97,13 +97,19 @@
     desired.forEach(el=>parent.appendChild(el));return true;
   }
   function applyFrameOrder(root,anim,index) {
-    const frame=anim?.frames?.[index], paths=partPaths(root), keys=paths.map((p,i)=>at(root,p)?.dataset.gwLayerKey||p);
+    const frame=anim?.frames?.[index], paths=partPaths(root), keys=paths.map(p=>at(root,p)?.dataset.gwLayerKey);
+    if(!keys.length||keys.some(k=>!k))return false;
     return applyOrder(root,Array.isArray(frame?.layerOrder)?frame.layerOrder:keys.slice().reverse());
   }
   function applyCurrentFrame(st=state()) {
     if(!st?.anim||!st.view||st.mode!=='animate')return false;
+    const before=new Map((st.parts||[]).map(p=>{const el=at(st.view,p);return [el?.dataset.gwLayerKey,st.orig?.get(p)??''];}));
     const ok=applyFrameOrder(st.view,st.anim,st.frame||0);
-    if(ok&&window.GW_ANIM?.partPaths)st.parts=window.GW_ANIM.partPaths(st.view);
+    if(ok&&window.GW_ANIM?.partPaths){
+      st.parts=window.GW_ANIM.partPaths(st.view);
+      st.orig=new Map(st.parts.map(p=>[p,before.get(at(st.view,p)?.dataset.gwLayerKey)??'']));
+      st.parts.forEach(p=>{const el=at(st.view,p);if(el)el.setAttribute('data-gw18-part',p);});
+    }
     return ok;
   }
   function setFrameOrder(anim,index,keys) {
