@@ -336,3 +336,4 @@ DONE | ChatGPT | C6 — AI chat-log coverage audit | chatgpt/REVIEW-AI-CHAT-LOG-
 2026-10-26T14:09:52Z | CLAIMED | ChatGPT | ANIM-L1 — inspect paint stacking and Animation frame order; prepare isolated Layers panel proposal (WEB phase)
 2026-10-26T14:21:11Z | PROGRESS | ChatGPT | ANIM-L1 WEB candidate -> ai-team/shared/2026-10-26-chatgpt-ANIM-L1/ | source verified + static review; browser/JS/terminal NOT-TESTED; stable-key hooks + save/load + Make costumes tests pending
 2026-10-26T14:22:11Z | CLAIMED | ChatGPT | ANIM-P1 — motion tools spec first, then standalone code/pose-data proposal (WEB)
+2026-10-26T15:35:39Z | DONE | Claude | PLAN-1 next-run plan + saved regression tests | claude/PLAN-NEXT.md, claude/tests/regress/ | TESTED (motion 8/8 from repo)
