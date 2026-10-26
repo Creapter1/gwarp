@@ -1,0 +1,6 @@
+const { chromium } = require('playwright'); const { prep } = require('./harness'); const path = require('path');
+(async () => { const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1440, height: 900 } }); await prep(p); await p.goto('file://' + path.resolve(process.argv[2])); await p.waitForTimeout(4000);
+  await p.evaluate(() => { const A = GW_V1571, i = Engine.activeSpriteIndex, ws = document.getElementById('workspaceCanvas'); const st = document.createElement('div'); st.className = 'block-stack'; st.dataset.owner = String(i); st.style.left = '80px'; st.style.top = '80px';
+    st.append(A.blk('when_flag'), A.cblk('forever', [A.blk('turn_cw', ['5']), A.blk('wait', ['0.2'])])); ws.appendChild(st); });
+  await p.click('#greenFlagBtn'); await p.waitForTimeout(700);
+  console.log(JSON.stringify(await p.evaluate(() => Engine.threads.map(t => ({ keys: Object.keys(t), pc: t.pc, n: t.blocks?.length, b0: t.blocks?.[0]?.dataset?.type || typeof t.blocks?.[0], cs: (t.callStack || []).map(f => ({ type: f.type, mode: f.mode, i: f.i, cur: f.cur?.dataset?.type || typeof f.cur, c: Array.isArray(f.c) ? f.c.map(x => x?.dataset?.type || x?.el?.dataset?.type || x?.b?.dataset?.type || Object.keys(x || {}).join('|')).slice(0, 4) : typeof f.c })), live: !!t.__live }))), null, 1)); await b.close(); })();
