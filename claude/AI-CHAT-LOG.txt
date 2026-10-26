@@ -654,3 +654,8 @@ EVIDENCE: owner sample TESTED with the validator; new prompt NOT-TESTED on the p
 UTC timestamp: 2026-10-26T16:30:36Z (owner 12:30 his time)   Who: Claude (configured claude-opus-5-5)   Task: PHONE-3 - check + save the first phone recipes
 USER REQUEST: owner attached the phone bot output (G-Warp__261026_122912.txt): 5 packs, PH-001..040 + PH-041..060 (the bot said the pasted LIST stopped at PH-040 and invented 20 new items).
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 26) - 2026-10-26T16:31:47Z
+RESULT: 5 packs, 60 recipes, no duplicate ids. First check: 25 errors (my prompt wrongly allowed value nodes {type} as block inputs; G-Warp wants {r: reporter}) + 14 warnings (no prep.vars). Wrote ai-team/phone/fix_phone_pack.py (auto-converts + adds prep), rewrote r-ph-enemy-chase-player -> 60 recipes, 0 errors, 0 warnings, PASS. Saved ai-team/shared/2026-10-26-phone-recipes-PH-001-060/ (pack.json + NOTES.md). Prompt fixed: input rule, prep rule, LIST moved before the long block list (the owner's paste was cut after PH-040), list continues at PH-061, invent new items after the list ends. PLAN-NEXT C1b updated.
+EVIDENCE: validator TESTED; runtime in G-Warp NOT-TESTED (planned). COMMIT: 0c46c79
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
