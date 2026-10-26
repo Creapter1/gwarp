@@ -13,6 +13,7 @@
   const costumeOf = s => s?.costumes?.[s.activeCostume] || null;
   const copy = x => JSON.parse(JSON.stringify(x));
   const canvasIds = new WeakMap(); let canvasIdN = 0;
+  const frameSvgCache = new WeakMap();
   const canvasId = canvas => { if (!canvas || typeof canvas !== 'object') return 'none'; if (!canvasIds.has(canvas)) canvasIds.set(canvas, ++canvasIdN); return canvasIds.get(canvas); };
   const defaults = () => ({
     version: VERSION, locked: false, snapToGuides: false,
@@ -56,7 +57,12 @@
     const a = live?.s === s && live?.anim ? live.anim : s?.gwAnimations?.[0];
     if (a && typeof window.GW_ANIM?.frameSvg === 'function') {
       try {
-        const svg = window.GW_ANIM.frameSvg(a, 0);
+        let cached = frameSvgCache.get(a);
+        if (!cached || cached.rev !== (a.rev || 0)) {
+          cached = { rev: a.rev || 0, svg: window.GW_ANIM.frameSvg(a, 0) };
+          frameSvgCache.set(a, cached);
+        }
+        const svg = cached.svg;
         if (svg) return { svg, rc: a.rc || { x: 0, y: 0 }, key: 'anim:' + a.id + ':' + (a.rev || 0) + ':' + hashText(svg) };
       } catch {}
     }
@@ -416,7 +422,7 @@
   }
   const api = {
     version: VERSION, getData, serializeSprite, restoreSprite, refresh: renderAll,
-    invalidateMeasurements(sprite = activeSprite()) { const d = getData(sprite); if (d) d.measureKey = ''; },
+    invalidateMeasurements(sprite = activeSprite()) { const d = getData(sprite); if (d) d.measureKey = ''; const live = window.GW_ANIM?.state; if (live?.s === sprite && live.anim) frameSvgCache.delete(live.anim); (sprite?.gwAnimations || []).forEach(a => frameSvgCache.delete(a)); },
     snapEnabled, snapPaintPoint, snapAnimationPoint,
     dispose() {
       if (timer) clearInterval(timer);
