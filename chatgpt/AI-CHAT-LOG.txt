@@ -1293,3 +1293,51 @@ GITHUB READ-BACK EVIDENCE:
 CHAT HISTORY COMPLETENESS:
 PARTIAL — current request "Continue" captured; exact ANIM-L1 task requirements and source findings captured from GitHub.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T14:22:11Z
+AI / agent / exact model identity: ChatGPT GPT-6
+Task ID / title: ANIM-P1 — Motion tools: spec first, then isolated proposal
+Branch / starting commit: main / latest branch tip read before this entry; prior ANIM-L1 shared code commit 36090c5def7063618091aa13a89c93aad45720a6
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+"Continue"
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Current job file assigns ANIM-P1 [WEB]. Write chatgpt/ANIM-P1-SPEC.md first, then isolated code proposal(s). Scope: (1) add ease curve options Linear/Ease/Bounce/Snap to existing In-between / Smooth x2 / Glide without replacing them; owner must approve any default change; (2) hold frames 1-4 ticks; choose and justify whether Make costumes repeats a generated costume or Animation blocks wait longer; (3) per-bone squash/stretch constrained to 60-140%; (4) optional delayed, reduced follow-through for chains; (5) mirror pose and copy/paste pose across frames/animations; (6) pose library JSON angle data for rigs with standard names, usable on the user's own character. Optional ground shadow / smear blur only after items 1-6. No art; pose data is JSON angles only. Keep proposals disconnected from app.html/index.html. Do not take or change the default easing without owner approval.
+
+PROGRESS / AI RESPONSE:
+Read current README, mandatory log template, personal log tail, and exact ANIM-P1 job scope. ANIM-L1 WEB candidate has already been handed off. No ANIM-P1 source inspection or code changes yet.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Current In-between / Smooth x2 / Glide remain available unchanged; curve option layers on top.
+- Default ease-in-out recommendation requires explicit owner approval.
+- Hold frames should be data on each frame and affect generated costume timing without breaking Scratch sprite/costume behavior; inspect actual frame timing and block runtime first.
+- Scale along bone axis around joint; 60-140%, must not distort unrelated bones/art.
+- Follow-through is optional and only for explicitly enabled chains.
+- Pose library contains JSON bone-angle/pose data only, applied to user rig by standard bone names; no bundled art.
+- Claude alone integrates; owner approves; all browser/runtime checks remain Claude's responsibility.
+
+FILES CHANGED:
+- NONE at session start.
+
+COMMANDS / TESTS / RESULTS:
+- Read ai-team/README.md, ai-team/AI-CHAT-LOG-TEMPLATE.txt, own log, and exact ANIM-P1 task line.
+- No code or tests yet.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for current task assignment and team instructions.
+- NOT-TESTED for app behavior and proposed motion features (work not started).
+
+BLOCKERS / UNCERTAINTIES:
+- Need inspect current interpolation/Glide/Smooth x2, animation frame object, rig bone transforms, mirroring, undo and Make costumes timing APIs before specifying implementation.
+- Need decide hold-frame representation only after checking existing Scratch animation block/runtime and project serialization.
+
+NEXT STEP / HANDOFF:
+Inspect current app.html source for tween interpolation, frame state, bone transforms, frame mutation and pose creation; write the spec first. Then create a disconnected proposal module and data-only poses.json with exact integration seams/terminal test checklist.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — request "Continue" captured; task scope copied from current GitHub task list, not reconstructed from an unavailable original chat.
+--- END ENTRY ---
