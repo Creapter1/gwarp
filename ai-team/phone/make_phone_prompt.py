@@ -31,19 +31,22 @@ items = '\n'.join(f"  PH-{i:03d} {s}" for i, s in enumerate(SK, 1))
 P = f"""=====================================================================
  G-WARP PHONE BOT PROMPT (for the phone chatbot: code only, ~20 messages per chat, 2-3 min per answer)
  Written by Claude for the owner, 2026-10-26. HOW TO USE:
- 1. New chat -> paste everything between the lines. 2. Then just type: continue   (each answer = ONE recipe, quick).
- 3. When the chat ends: new chat -> paste the prompt again + type: start at PH-0NN   (the NEXT number from the last answer).
- 4. Copy every JSON answer into one note on your phone. Later give the note to Claude or ChatGPT (lane L6):
+ 1. New chat -> paste everything between the lines. 2. Then just type: continue   (each answer = a FULL pack of 10 recipes).
+ 3. Each answer is ONE code block = one complete file. Copy it once, save it as a note / file named like PH-001-010.json.
+ 4. When the chat ends: new chat -> paste the prompt again + type: start at PH-0NN   (the NEXT number from the last answer).
+ 5. If an answer gets cut off or "tired": type  continue with 5   (smaller pack). Give the files to Claude or ChatGPT (lane L6):
     "add the phone recipes" -> they check them with ai-team/tools/validate_gwrap_pack.py and add the good ones to G-Warp.
 =====================================================================
 -----------------------------------------------------------------------------------------------
 You write RECIPES that teach G-Warp's built-in AI helper (GWrap AI). G-Warp = a free Scratch-style block-coding app for kids.
 EVERYTHING you need is in this message. Do NOT browse, do NOT look anything up, do NOT plan or explain at length. Answer FAST.
 
-EACH ANSWER = exactly ONE recipe for the next item in the LIST below, then one line "NEXT: PH-0NN". Nothing else.
-- First answer: item PH-001, unless I wrote "start at PH-0NN". When I write "continue": the next item.
-- Keep it SHORT: a script of 4-20 blocks. Think 10 seconds, not minutes. If an item is too hard, make the simplest working version.
-- Output one JSON object in ONE code block, exactly this shape (example):
+EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 10 items of the LIST, then one line "NEXT: PH-0NN". Nothing else.
+- Pack file shape:  {{"version": 1, "note": "phone recipes PH-0AA..PH-0BB", "recipes": [ <10 recipe objects> ], "tips": []}}
+- First answer: PH-001..PH-010, unless I wrote "start at PH-0NN". "continue" = the next 10. "continue with N" = the next N.
+- Start writing the code block right away. No planning text, no explanation before or after. Each recipe 4-20 blocks.
+  If an item is too hard, make the simplest working version. Valid JSON: double quotes, no comments, no trailing commas.
+- Each recipe object looks exactly like this example:
 {ex}
 - "id": "r-ph-<short-words>" (MUST start with r-ph-, lowercase, dashes). "emoji": one emoji. "title": 3-8 words. "keys": 5-10 search words.
   "q": 3 different ways a KID would ask (simple words, small typos OK). "steps": 2-4 short kid sentences explaining the script.
@@ -61,7 +64,8 @@ EACH ANSWER = exactly ONE recipe for the next item in the LIST below, then one l
 {blist}
 
 RULES: only blocks from the list (no made-up blocks); logic that works in Scratch; kid-safe; no real people's names;
-no Scratch cat, no brands; no "made by AI"; one recipe per answer; never repeat an id; no long text outside the code block.
+no Scratch cat, no brands; no "made by AI"; 10 recipes per answer (unless I say another number); never repeat an id; no text outside the code block
+except the NEXT line.
 
 LIST:
 {items}

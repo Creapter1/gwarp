@@ -642,3 +642,10 @@ DONE: ai-team/phone/PHONE-BOT-PROMPT.txt (+ make_phone_prompt.py): self-containe
 EVIDENCE: sample recipe TESTED with the validator; prompt NOT-TESTED on the phone bot. COMMIT: 0568acd
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 25 ---
+UTC timestamp: 2026-10-26T16:16:03Z (owner 12:15 his time)   Who: Claude (configured claude-opus-5-5)   Task: PHONE-2 - bigger answers
+USER REQUEST: owner pasted the phone bot's first recipe (r-ph-follow-mouse); "it's only creating one line of code on an instant ... use the entire available chat text to create the entire code ... copying everything one by one is honestly a pain."
+DONE: the owner's recipe PASSES validate_gwrap_pack.py. Prompt now: each answer = ONE code block = a complete pack file of 10 recipes (copy once, save as PH-001-010.json), "continue with N" for smaller packs if it gets tired, no text outside the block except NEXT. ~10 recipes x ~350 tokens keeps an answer near the 2-3 min limit.
+EVIDENCE: owner sample TESTED with the validator; new prompt NOT-TESTED on the phone.
+--- END ENTRY ---
