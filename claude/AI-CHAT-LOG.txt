@@ -478,3 +478,17 @@ the model inside, D) server (data leaves the PC, parent OK, cost). Chat: kept wh
 FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (section 0b + AIM-0 question 0), ai-team/CHATGPT-DEEP-RESEARCH-AIM-0.txt.
 EVIDENCE: NOT-TESTED (plan; Chrome built-in AI facts to be checked by ChatGPT in AIM-0).
 --- END ENTRY ---
+
+--- ENTRY 13 ---
+UTC timestamp: 2026-10-26T07:08:53Z (owner 03:08 his time)   Who: Claude (configured claude-opus-5-5)   Task: Q&A - free Gemini in Chrome / Copilot working on G-Warp
+Starting commit: a8b5c63
+USER REQUEST: people use the FREE Gemini (Chrome) or Copilot (Edge) to read the whole project, recommend, or do the work for them,
+"without making other people pay" - "can it be possible? That's the question I'm asking."
+FACTS CHECKED (web): Gemini in Chrome core = free, reads the open tab(s); acting on pages (auto-browse) = paid AI Pro/Ultra, US,
+preview; 18+; not EU/UK yet.
+ANSWER: yes for reading + advice (G-Warp shows an "AI view" text of the project); "do it for them" for free = "Paste from AI"
+(the AI writes a gwarp: command block, user pastes, preview + Apply) - works with every free chatbot; kids: Gemini is 18+, so the
+in-app model stays the kids' AI; outside chatbots = parent OK for under-13s.
+FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (section 0c), ai-team/CHATGPT-DEEP-RESEARCH-AIM-0.txt (question 0b).
+EVIDENCE: NOT-TESTED (plan + web facts).
+--- END ENTRY ---

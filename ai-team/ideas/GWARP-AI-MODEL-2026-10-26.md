@@ -62,6 +62,30 @@ Owner: *"The goal is not to make the model to be downloaded ... run the model in
 
 **Chat history:** it's kept while the app is open. A switch, **"Save AI chat in this project"** (off by default), stores it inside the project file as G-Warp extra data (Scratch ignores it), with a size cap (e.g. the last 200 messages / 200 KB). A **"Clear AI chat"** button deletes it. No personal info is stored.
 
+## 0c. UPDATE 2026-10-26 03:08 (owner): let people use the FREE Gemini in Chrome / Copilot in Edge on G-Warp
+
+Owner: *"I want people to be able to use Gemini to code inside of it ... read the entire project ... recommend ... or in fact do it for
+them ... without making other people pay ... the free version that is already on Chrome, or ... Copilot."*
+
+**Facts (checked 2026-10-26, source below; ChatGPT re-checks in AIM-0):** Gemini in Chrome's core features are **free** and it **can read the
+open tab** (and up to 10 tabs). **Clicking and typing for you ("auto-browse") is paid** (Google AI Pro / Ultra), US only, and in preview.
+It needs users **18+**, is only in some countries (not the EU/UK yet), and runs on desktop and iOS.
+A web page **can't call** these assistants. The user talks to them, and they read our page.
+
+**So G-Warp makes itself easy for ANY free AI to read and to drive, with no paid plan:**
+1. **"AI view" (read):** a G-Warp panel / page text that shows the whole project as plain text: sprites, variables, every script as
+   block text, errors, and what happened in the last run. Gemini in Chrome / Copilot read the tab, so they "see" the project and can advise.
+2. **"Paste from AI" box (do), the free way to "do it for them":** the AI answers with a **G-Warp code block** (our command list as
+   text, e.g. starting with `gwarp:`). The user copies it into G-Warp. G-Warp shows a preview, they press Apply, and Undo works.
+   It works with **every** free chatbot (Gemini, Copilot, ChatGPT, Claude ...) in any browser. A "Copy AI instructions" button gives the
+   user a short prompt that teaches any chatbot G-Warp's command format.
+3. **Agent-friendly buttons:** clear labels on every button, so assistants that *can* click (paid today) work well later.
+4. Same rules as §3: only G-Warp commands, preview + OK, no JS, ask before delete.
+5. **Kids:** Gemini in Chrome is 18+, so for kids the **in-app model** (sections 0 / 0b) is still the main AI. Using any outside chatbot
+   sends the project to that company, so G-Warp shows a parent-OK note for under-13s (TODO safety rule).
+
+Source: [Gemini in Chrome: how it works, where it's available (2026)](https://pasqualepillitteri.it/en/news/3256/gemini-in-chrome-skills-how-they-work-countries-availability)
+
 ## 1. The answer to "how does it understand and see?"
 
 A small model can't really *look* at the screen or the code. So G-Warp does the looking and the doing, and the model only makes the

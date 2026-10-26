@@ -18,6 +18,10 @@ RESEARCH (cite a source link for EVERY fact, prefer official docs / GitHub repos
 0. ALREADY-INSTALLED MODELS FIRST (owner's wish: users should not have to download anything): Chrome's built-in AI (Prompt API /
    Gemini Nano) and any similar built-in browser or OS model (Edge? Windows? macOS?). Which versions/computers have it, how a web page
    uses it, JSON output, speed, limits, terms for a free kids' app. Also: a G-Warp desktop installer that ships the model inside.
+0b. FREE OUTSIDE ASSISTANTS (owner: people use free Gemini in Chrome / Copilot in Edge on G-Warp, no paid plan): what each can do for
+   FREE today (read the tab? see pictures? click/type?), age limits, countries, and the best way for a web app to be read by them
+   (page text, accessibility labels, a plain-text "AI view"). Design the "Paste from AI" format (gwarp: command block) and a short
+   "teach any chatbot G-Warp" prompt; test it on free Gemini, Copilot and ChatGPT with the same 3 requests and report which got it right.
 1. ENGINES that run an LLM in a web page in 2026: WebLLM (MLC), Transformers.js (ONNX Runtime Web), wllama (llama.cpp WASM),
    Chrome built-in AI (Prompt API / Gemini Nano), LiteRT-LM / MediaPipe, and anything newer. For each: browsers + GPUs supported,
    speed on a normal laptop, JSON-schema / grammar-constrained output, Web Worker support, licence, can it load from ONE html file
