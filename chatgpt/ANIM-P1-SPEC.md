@@ -69,7 +69,7 @@ Copy stores a deep snapshot of the selected frame's pose fields (angles, roots a
 
 ### 7. Pose library (JSON angles only)
 
-Store pose data as `code/poses.json`. No SVGs, images, sample characters, or art. Data maps standard names (`body`, `head`, `left_arm`, `right_arm`, `left_leg`, `right_leg`) to local angle degrees. Missing names are ignored; unmapped target bones retain their current pose.
+Store pose data as `code/poses.json`. No SVGs, images, sample characters, or art. Data maps standard names (`body`, `head`, `left_arm`, `right_arm`, `left_leg`, `right_leg`) to local angle offsets in degrees relative to each matching bone's rest angle. This makes a pose reusable on rigs with different rest angles. Missing names are ignored; unmapped target bones retain their current pose.
 
 Required sets:
 - Idle/breath: a short 4-frame loop.
