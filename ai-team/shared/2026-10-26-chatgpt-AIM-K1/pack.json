@@ -1416,7 +1416,7 @@
         "what does clear do",
         "can i undo after clear"
       ],
-      "text": "Press Clear in the simple paint panel to clear the canvas. Use Undo if you clear it by mistake.",
+      "text": "Press Clear in the simple paint panel to clear the canvas. This removes the drawing from the selected costume.",
       "action": "costumes"
     },
     {
@@ -1524,7 +1524,7 @@
         "what is pan in sound",
         "where are sound effects"
       ],
-      "text": "Sound Studio has effect controls, including pitch and pan. Try a small change and preview the sound.",
+      "text": "The Sound Studio has buttons such as Faster, Slower, Louder, Softer, Fade in, Fade out, Reverse, Echo, and Robot. Try one, then press Play to hear the change.",
       "action": "sounds"
     },
     {
