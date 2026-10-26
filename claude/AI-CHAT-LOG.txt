@@ -363,3 +363,31 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 8):
 - Read-back: origin/main:claude/AI-CHAT-LOG.txt has ENTRY 8; origin/main:app.html has gw-v1554-create-melody + Beta v15.54.0
 - Verified new entry is present at bottom: YES
 - Task status: DONE (owner listens; dev-only features + Tab Plus wait for the owner)
+
+--- ENTRY 9 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T06:46:22Z (owner's messages 02:44 + 02:46 his time = 06:44Z / 06:46Z)
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: TEAM-3 - AI team rules folder, ChatGPT animation to-do, in-app AI (local model) plan for ChatGPT, new TODO items
+Branch / starting commit: main @ 469e872
+
+USER REQUEST (summary, his words where possible):
+1) The unfinished things (animation, AI): "create a model version of the AI and assign that goal to ChatGPT". Give ALL the rules for
+   the AI: it only works inside G-Warp and can do almost anything inside G-Warp. Idea: use a small/old Ollama model (2024, "the
+   weakest one") to run G-Warp - "how do I make it understand what's going on, be able to see". Idea for now; assign to ChatGPT.
+2) Gemini and Grok are retired: "the files on GitHub should be only Claude and ChatGPT. The other file ... will be called AI team
+   with all the rules". Every AI can add its work there (like Gemini did: the code + the icon included). "Do not hold back" on the
+   rules so they don't overreact / overthink / overdo, don't waste time, but DO take their time making nice icons.
+3) TODO: icons that connect to the same things must match / look the same; the music maker still needs work; "app still far from
+   finished".
+4) ChatGPT's focus now = ANIMATION: a detailed to-do - which icons (A/B/C options), what it must / must not have, how it looks, make
+   characters look better, costumes + animation always centred like Scratch, a liner (guide lines), layer previews, etc.
+5) (02:46) "Don't forget to follow the rules already in GitHub ... especially the chat log ... you will always forget what we did".
+
+UNDERSTOOD SCOPE / PLAN:
+- New folder ai-team/ = the rules + shared work place (team/ moves into it; gemini/ grok/ deepseek/ move to ai-team/archive/,
+  haiku/ moves to claude/haiku/). Nothing deleted (git mv), links fixed.
+- ai-team/README.md: every rule in one place (TODO.txt + owner rules + time / scope rules + icon rules + the shared drop box).
+- ChatGPT: detailed ANIMATION to-do (first) and the in-app AI MODEL job (second, plan + proposals only).
+- TODO.txt: icon matching, music maker, animation, in-app AI.
+--- (closeout follows at the end of this task) ---
