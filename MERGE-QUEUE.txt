@@ -98,3 +98,4 @@ CLAUDE (v15.49.0, this night)
  WAITING FOR CLAUDE (drop box ai-team/shared/) - added 2026-10-26
  One line per finished job: <UTC time> | <AI> | <job id> | ai-team/shared/<folder>/ | <evidence> | owner pick needed? yes/no
 =====================================================================
+2026-10-26T13:47:29Z | ChatGPT | ANIM-I2 | ai-team/shared/2026-10-26-chatgpt-ANIM-I2/ | SOURCE-VERIFIED; 114 SVG static checks PASS; browser NOT-TESTED | yes
