@@ -919,8 +919,8 @@ CHAT HISTORY COMPLETENESS:
 PARTIAL — exact current request captured; detailed ANIM-I1 scope came from current repository instructions.
 
 GITHUB CLOSEOUT VERIFICATION:
-- Personal log commit SHA: PENDING READ-BACK
+- Personal log commit SHA: 8129725bc5c3d1b33a40d88b4020b6d614b45af4 (closeout entry committed)
 - Read-back URL/path: https://github.com/Creapter1/gwarp/blob/main/chatgpt/AI-CHAT-LOG.txt
-- Verified new entry is present at bottom: PENDING
-- Task status: DONE AFTER READ-BACK
+- Verified closeout entry is present at bottom: YES (read back immediately after commit)
+- Task status: DONE
 --- END ENTRY ---
