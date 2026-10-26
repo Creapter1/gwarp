@@ -492,3 +492,16 @@ in-app model stays the kids' AI; outside chatbots = parent OK for under-13s.
 FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (section 0c), ai-team/CHATGPT-DEEP-RESEARCH-AIM-0.txt (question 0b).
 EVIDENCE: NOT-TESTED (plan + web facts).
 --- END ENTRY ---
+
+--- ENTRY 14 ---
+UTC timestamp: 2026-10-26T13:17:17Z (owner 09:16 his time)   Who: Claude (configured claude-opus-5-5)   Task: Q&A - store the model on GitHub, app loads it into the tab
+Starting commit: dbf2c9f
+USER REQUEST: "use the model and save it on GitHub, but every time the app launches, it will try to load or pre-install ... the
+model inside the app and then run it from there ... without using the user's computer ... just running in the browser ... up to
+3 GB ... into one single tab. So can it be possible or no?"
+ANSWER: yes (= section 0 with GitHub as host). The tab runs on the user's computer (memory/GPU) and the file has to travel to it once;
+cache it so later launches don't re-download; GitHub: <100 MB per file (WebLLM splits it), repo ~7 MB used of ~1 GB, Pages ~100 GB/
+month soft bandwidth = the real limit (~500 first-time users for a 204 MB model) -> smallest model on GitHub for a test, Hugging Face
+main/fallback; load only when the AI panel opens.
+FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (section 0d). EVIDENCE: NOT-TESTED (plan).
+--- END ENTRY ---

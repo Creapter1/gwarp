@@ -86,6 +86,23 @@ A web page **can't call** these assistants. The user talks to them, and they rea
 
 Source: [Gemini in Chrome: how it works, where it's available (2026)](https://pasqualepillitteri.it/en/news/3256/gemini-in-chrome-skills-how-they-work-countries-availability)
 
+## 0d. UPDATE 2026-10-26 09:16 (owner): keep the model ON GITHUB, the app loads it into the tab at launch
+
+Owner: *"save it on GitHub, but every time the app launches, it will ... load the model inside the app and then run it from there ...
+without using the user's computer ... just running in the browser ... up to 3 GB ... into one single tab."*
+
+**Answer: yes, this works.** It's the section 0 plan with GitHub as the host. Three facts to design around:
+1. **"In the browser" still means on the user's computer.** The tab's memory and graphics card *are* their computer. Loading = the file
+   travels GitHub → their browser (a download, done by the app, invisible to the user). There's no way around that; it's just automatic.
+2. **Load once, not every launch.** The browser keeps it (Cache API / IndexedDB). Later launches load it from the cache in seconds and
+   download nothing. Without the cache, every launch would download 200 MB+ again.
+3. **GitHub limits:** each file must be under 100 MB (WebLLM already splits models into small parts, so OK). The repo should stay under
+   ~1 GB (only ~7 MB used now). **The real limit: GitHub Pages is meant for ~100 GB of downloads per month** (soft limit), so a
+   204 MB model is about 500 first-time users a month. Plan: the **smallest model on GitHub** for a test (SmolLM2 360M, ~204 MB), with
+   **Hugging Face as the main host** (or as the fallback once traffic grows). G-Warp tries one, then the other.
+- Memory: a 0.2–0.7 GB model needs about 0.4–1 GB of the tab's memory. That's fine on most PCs; the AI stays off on weak devices.
+- The AI only loads when the user opens the AI panel, not on every app start, so people who never use it don't pay the download or the memory.
+
 ## 1. The answer to "how does it understand and see?"
 
 A small model can't really *look* at the screen or the code. So G-Warp does the looking and the doing, and the model only makes the
