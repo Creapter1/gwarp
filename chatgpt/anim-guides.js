@@ -12,6 +12,8 @@
   const activeSprite = () => window.Engine?.sprites?.[window.Engine?.activeSpriteIndex] || null;
   const costumeOf = s => s?.costumes?.[s.activeCostume] || null;
   const copy = x => JSON.parse(JSON.stringify(x));
+  const canvasIds = new WeakMap(); let canvasIdN = 0;
+  const canvasId = canvas => { if (!canvas || typeof canvas !== 'object') return 'none'; if (!canvasIds.has(canvas)) canvasIds.set(canvas, ++canvasIdN); return canvasIds.get(canvas); };
   const defaults = () => ({
     version: VERSION, locked: false, snapToGuides: false,
     builtins: { centre: true, ground: true, head: true, stage: true },
@@ -60,7 +62,7 @@
     }
     const c = s?.costumes?.[s.activeCostume] || s?.costumes?.[0];
     if (c?.svg) return { svg: c.svg, rc: c.rc || { x: 0, y: 0 }, key: 'costume:' + c.name + ':' + hashText(c.svg) };
-    if (c?.canvas) return { canvas: c.canvas, rc: c.rc || { x: 0, y: 0 }, key: 'bitmap:' + c.name + ':' + c.canvas.width + 'x' + c.canvas.height + ':' + c.canvas.toDataURL?.().slice(-32) };
+    if (c?.canvas) return { canvas: c.canvas, rc: c.rc || { x: 0, y: 0 }, key: 'bitmap:' + c.name + ':' + canvasId(c.canvas) + ':' + c.canvas.width + 'x' + c.canvas.height };
     return null;
   }
   function measureSvg(svgText) {
@@ -407,6 +409,7 @@
   }
   const api = {
     version: VERSION, getData, serializeSprite, restoreSprite, refresh: renderAll,
+    invalidateMeasurements(sprite = activeSprite()) { const d = getData(sprite); if (d) d.measureKey = ''; },
     snapEnabled, snapPaintPoint, snapAnimationPoint,
     dispose() {
       if (timer) clearInterval(timer);
