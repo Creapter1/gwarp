@@ -555,3 +555,22 @@ EVIDENCE: generated + line counts checked; jobs themselves NOT-TESTED. COMMIT: e
 NEXT: ChatGPT works the bank after the animation list; AI Lab chat stays on the model.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 18 ---
+UTC timestamp: 2026-10-26T13:55:31Z (written at the END of this task - the work below started at the owner's message 09:51 his time = 13:51Z;
+the start entry was not written first: a log-gate slip, recorded here honestly)
+Who: Claude (configured claude-opus-5-5)   Task: JOBS-2 - explain every job so ChatGPT can't misread them
+USER REQUEST: "Make sure everything is explained, because ChatGPT might be smart, but at the same time it can act a bit dumb."
+DONE: ai-team/chatgpt-jobs/HOW-TO-DO-EACH-JOB.md - Part A (session start, picking jobs, batch report template, marking, bug
+  template, after-batch, closeout, 12 time-wasting mistakes), Part B (step-by-step for all 17 job types with examples and
+  pass/fail rules), Part C (what to do when tools fail). New tool ai-team/tools/qa-kit/compare.js: builds a script in G-Warp, saves
+  .sb3, runs it in G-Warp AND scratch-vm, prints both answers side by side (SAME / DIFFERENT / TEST BROKE exit codes 0/1/2);
+  examples/compare-move.json + compare-edge.json; qa-kit README row; out/ git-ignored. All job files regenerated with "READ
+  FIRST: HOW-TO" (marks kept).
+TESTS: compare.js on move(10) -> SAME (x 10 = 10, result 10 = 10); on join/add/list -> SAME after the list compare was made
+  item-by-item. FOUND (P3, not fixed): G-Warp stores a number added to a list as text ("3") where Scratch stores 3 - invisible to
+  kids, noted for later.
+EVIDENCE: TESTED in G-Warp + TESTED in scratch-vm (compare.js runs). COMMIT: 9808c34
+NEXT: ChatGPT reads HOW-TO first; owner can paste the prompt.
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
