@@ -9,6 +9,36 @@ models). This plan is the **small-model** version, and it plugs into the **GWrap
 
 ---
 
+## 0. UPDATE 2026-10-26 (owner): NO Ollama — the model runs INSIDE G-Warp, in the browser
+
+Owner: *"I am not talking about using Ollama. I'm talking about using the model that you download in your computer ... about 1 gigabyte
+... how can we get that model inside the app running?"* and *"the problem is knowledge"*. So the **main plan** is now: G-Warp downloads a
+small model once and runs it **in the browser tab on the computer's graphics card (WebGPU)**. No install, no server, no Ollama.
+(Ollama stays only as an optional "strong mode" for people who have it.)
+
+**How it works (facts checked 2026-10-26; ChatGPT re-checks them in AIM-0):**
+- **Engines that run a model in a web page:** WebLLM (`@mlc-ai/web-llm`, WebGPU, OpenAI-style chat, **JSON-schema output**,
+  runs in a Web Worker so the app doesn't freeze), Transformers.js (WebGPU + a slower CPU fallback), wllama (llama.cpp in WebAssembly,
+  CPU only), Chrome's built-in model (Prompt API / Gemini Nano: no download for us, but Chrome desktop only).
+- **Sizes (4-bit, WebLLM builds, from the article in Sources):** SmolLM2 360M ≈ 204 MB · Qwen3 0.6B ≈ 335 MB ·
+  Gemma 3 1B ≈ 563 MB · Llama 3.2 1B ≈ 695 MB · Qwen3.5 2B ≈ 1.06 GB.
+  **About 1 GB ≈ a 1–2 billion-parameter model.** A 12-billion one is about 7 GB at the same compression, too big for a web page.
+- **Where the file lives: NOT in our GitHub repo.** GitHub rejects files over 100 MB, and a Pages site should stay under 1 GB.
+  The usual home is **Hugging Face** (free model hosting; WebLLM and Transformers.js download from it by default).
+  G-Warp downloads it **once, when the user turns the AI on**, and the browser keeps it (Cache API / IndexedDB). After that it starts in seconds and works offline.
+- **Who can run it:** WebGPU is in Chrome/Edge (Windows, Mac, ChromeOS, Android) and Safari 26, and only partly in Firefox.
+  Speed on a laptop: tens of words per second for a 1B model. Phones and old PCs: use the smallest model or no AI.
+
+**The knowledge problem, and the answer:** a small model knows almost nothing about Scratch or G-Warp. So G-Warp must **give** it the knowledge:
+1. **In the prompt (always):** the Snapshot (§1), the 3 best recipes and only the blocks that matter (from `ai-team/gwrap-blocks.json`). It reads them instead of remembering them.
+2. **A locked answer shape:** WebLLM's JSON-schema mode means the answer can only be our commands, so it can't invent blocks.
+3. **Small model = small job:** the tiny model mostly **picks a recipe and fills in the blanks** ("jump, height 12, key space"). G-Warp builds the blocks. Even a 360M model can do that.
+4. **Teach it G-Warp (fine-tune, later):** make a few thousand "request → commands" examples from our recipes, run each one in headless G-Warp (QA kit) to keep only the ones that work, then train a small add-on (LoRA) for a 0.5–1B model on a free GPU (Colab/Kaggle). Convert it to the WebLLM/ONNX format and put it on the owner's Hugging Face account. That model then "knows" G-Warp.
+5. **Check every answer:** G-Warp checks each command, previews it, runs it and reads the Snapshot. If the result is wrong, the model gets 2 tries, then a recipe is offered instead.
+
+**Safety for this version:** the download is big, so G-Warp shows the size and asks first ("the AI needs 350 MB, download now?").
+After that, nothing leaves the computer: the model runs locally, and no project data is sent.
+
 ## 1. The answer to "how does it understand and see?"
 
 A small model can't really *look* at the screen or the code. So G-Warp does the looking and the doing, and the model only makes the
@@ -34,7 +64,7 @@ There are **at most 5 rounds per request**.
 
 ## 2. Which models (to check, not decided)
 
-The owner wants **old and small** models (2024), so they run on most computers. Candidates to test through **Ollama** (check every name and
+The owner wants **old and small** models (2024), so they run on most computers. (Section 0 is now the main plan: in the browser. This Ollama list is for the optional strong mode.) Candidates to test through **Ollama** (check every name and
 size on ollama.com/library before use, because the list changes):
 - **Text:** Qwen2.5 (0.5B / 1.5B / 3B, plus the Coder versions), Llama 3.2 (1B / 3B), Gemma 2 2B, Phi-3.5 mini, SmolLM2 1.7B.
 - **Vision (optional):** Moondream, LLaVA, Llama 3.2 Vision (big, 11B).
@@ -80,16 +110,25 @@ size on ollama.com/library before use, because the list changes):
 
 ## 4. ChatGPT's jobs (in this order, after the animation list)
 
+Ready-to-paste prompt for AIM-0 (ChatGPT Deep Research): `ai-team/CHATGPT-DEEP-RESEARCH-AIM-0.txt`.
+
 Put everything in the drop box `ai-team/shared/<date>-chatgpt-AIM-<n>/` (see `ai-team/README.md` §7). **Never edit `app.html`.**
 
 | Job | What | Done when |
 |---|---|---|
+| **AIM-0** [WEB research, then TERMINAL proof] **DEEP RESEARCH — the in-browser model (DO THIS FIRST in this file)** | Answer, **with sources for every fact**, in `chatgpt/AIM-0-IN-BROWSER-AI-RESEARCH.md` (max ~6 pages; a table first, then details): **(1) Engines:** WebLLM vs Transformers.js vs wllama vs Chrome Prompt API vs anything newer. For each: download size, browsers/GPUs, speed, JSON-schema output, Web Worker, licence, how hard it is to load from a single HTML file with no build step (G-Warp is one `app.html`). **(2) Models:** the 6 best ≤ 1.1 GB models for "follow instructions and output JSON". For each: size, licence (can a kids' app use it? Llama and Gemma have their own terms; Qwen and SmolLM2 are Apache 2.0, check), languages, and a quick quality test on 20 G-Warp requests. **(3) Hosting:** Hugging Face (free? speed limits? CORS? terms?) vs GitHub Releases (CORS?) vs a CDN. Which works from `creapter1.github.io` AND from a `file://` app? **Never** put weights in this repo. **(4) Knowledge:** compare "prompt + recipes" vs "pick a recipe + fill blanks" vs "fine-tuned LoRA". Cost, time, how many examples, which free GPU, how to convert to WebLLM/ONNX, and data-licence rules for training data. **(5) Kid safety + privacy:** content filter for a small model, download consent, storage size, how to delete the model. **(6) Recommendation:** one engine + one model + one hosting + one knowledge method, plus a plan B for computers without WebGPU. | Every claim has a link. Each "best" pick has a reason. Plus a **proof page**: `ai-team/shared/<date>-chatgpt-AIM-0/poc.html` that loads the smallest model from a CDN, asks it 3 G-Warp requests in JSON-schema mode and shows the answers. The owner opens it in Chrome. Report what he must click, and **TESTED** only if it really ran. |
 | **AIM-1** [ANY] Command list | Use the app's existing APIs: the QA-kit builder `GWB`, the GWrap AI pack commands (`/add /start /stop /undo /check /open`) and `ENGINE-MAP.txt`. Write `commands.schema.json` (≤ 40 commands, each with inputs, what it changes, and its undo) plus `COMMANDS.md`. | Every command maps to a real function (name it). Nothing can run JS. |
 | **AIM-2** [TERMINAL] Snapshot | Proposal module `code/snapshot.js`: `GW_AI_SNAPSHOT()` → the text from §1, plus a "run 2 s and report what changed" helper. Test on 5 of your own projects. | The size is under the limit, it is the same format every time, and it is TESTED in G-Warp. |
 | **AIM-3** [ANY] Prompt pack | System prompt (the rules in §3, short), 20 few-shot examples, and how the 3 recipes are picked. | It fits in 3,000 words (tokens) including the Snapshot. |
 | **AIM-4** [ANY] Test set | 100 real kid requests ("make the cat jump" → no cat! "make my character jump"; "add a score"; "make it rain"; "make enemies chase me" ...), each with a **checkable** expected result (a variable exists, the sprite moves up when Space is pressed ...), plus 20 "must refuse" requests (JS, personal info, delete-everything without asking, scary content). | Each test can be checked by a script, not by opinion. |
-| **AIM-5** [TERMINAL, owner's PC] Model test | Use Freebuff on the owner's PC with Ollama: a harness (`tests/eval.js`) that runs the test set through each candidate model in headless G-Warp and scores it: % correct, % refused correctly, seconds per answer, memory used. Install models only after the owner OKs which ones and how much disk space. | A score table + the weakest model that passes ≥ 70 % correct and 100 % of the refusals. |
+| **AIM-5** [TERMINAL, owner's PC] Model test | Use the AIM-0 winner (in-browser engine; Ollama only as an extra): a harness (`tests/eval.js`) that runs the test set through each candidate model in headless G-Warp and scores it: % correct, % refused correctly, seconds per answer, memory used. Install models only after the owner OKs which ones and how much disk space. | A score table + the weakest model that passes ≥ 70 % correct and 100 % of the refusals. |
 | **AIM-6** [WEB] UI mock | Mock-up of the GWrap AI panel with a "Local (on this computer)" badge, model picker, Ollama setup help (`OLLAMA_ORIGINS`), Preview/Apply/Undo, Stop, and "show me how". In the G-Warp look; icons with A/B/C options. | `preview.html` opens and shows every state (connecting, thinking, preview, done, error, refused). |
 | **AIM-7** [ANY] Safety review | Check AIM-1 to AIM-6 against the rules in §3 and the TODO safety rules. List every way it could break a rule, and the fix. | No open "can break a rule" item without a fix. |
 
 Claude then builds it behind **Developer mode** first, using the winning model, and the owner decides when everyone gets it.
+
+### Sources (checked 2026-10-26)
+- [Run an LLM inside a browser tab: WebGPU and local inference in 2026 (Pinggy)](https://pinggy.io/blog/run_llm_in_browser_webgpu/): engines, model sizes, browser support, speed
+- [WebLLM README (v0.2.85)](https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.85/README.md): JSON mode / JSON schema, Web Worker / Service Worker, cache backends, custom models
+- [Transformers.js v3: WebGPU support (Hugging Face)](https://www.huggingface.co/blog/transformersjs-v3)
+- [GitHub file size limits explained (Fast.io)](https://fast.io/resources/github-file-size-limit-guide/)

@@ -1,0 +1,47 @@
+=====================================================================
+ CHATGPT DEEP RESEARCH PROMPT - AIM-0: G-Warp's AI running INSIDE the app        written by Claude for the owner, 2026-10-26
+ Paste everything between the lines into ChatGPT (Deep Research mode if you have it). Then push the answer as
+ chatgpt/AIM-0-IN-BROWSER-AI-RESEARCH.md (rules: ai-team/README.md, log gate first).
+=====================================================================
+-----------------------------------------------------------------------------------------------
+You are ChatGPT on the G-Warp team. G-Warp is a free Scratch-style block-coding app for kids. It is ONE big HTML file (app.html,
+~2.6 MB, no build step) hosted on GitHub Pages (creapter1.github.io/gwarp) and also opened straight from disk (file://).
+Repo: Creapter1/gwarp. Read ai-team/README.md (rules) and ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (the plan, section 0) first.
+
+GOAL: an AI helper that runs INSIDE G-Warp, in the browser, with NO server, NO Ollama, NO install: G-Warp downloads a small language
+model once (about 0.2-1 GB, the weakest that still works) and runs it on the user's computer (WebGPU, or CPU as plan B). It only acts
+inside G-Warp, using a fixed list of JSON commands (add sprite, add script, set input, make variable, run, stop, undo ...), with a
+preview and the user's OK. The model files must NOT be stored in our GitHub repo (GitHub: 100 MB per file, the site should stay small).
+THE BIG PROBLEM: a small model knows almost nothing about Scratch or G-Warp. Find the best way to give it that knowledge.
+
+RESEARCH (cite a source link for EVERY fact, prefer official docs / GitHub repos / model cards; say when something is uncertain or old):
+1. ENGINES that run an LLM in a web page in 2026: WebLLM (MLC), Transformers.js (ONNX Runtime Web), wllama (llama.cpp WASM),
+   Chrome built-in AI (Prompt API / Gemini Nano), LiteRT-LM / MediaPipe, and anything newer. For each: browsers + GPUs supported,
+   speed on a normal laptop, JSON-schema / grammar-constrained output, Web Worker support, licence, can it load from ONE html file
+   with a <script> from a CDN (cdn.jsdelivr.net / unpkg), does it work from file:// and from github.io.
+2. MODELS up to ~1.1 GB download that follow instructions and output JSON well: e.g. SmolLM2 (135M/360M/1.7B), Qwen2.5/Qwen3 0.5-1.7B,
+   Llama 3.2 1B, Gemma 3 1B, Phi small models, anything better. For each: download size per engine, memory needed, licence (is it OK
+   in a free app for kids? check Llama / Gemma terms carefully), and how good it is at following a JSON schema.
+3. HOSTING the model files: Hugging Face Hub (free? limits? CORS? terms for public download from a website), GitHub Releases
+   (CORS for browser fetch?), jsDelivr / other CDNs (size limits), Cloudflare R2 free tier. Which one works from github.io AND file://.
+   Browser caching (Cache API, IndexedDB, OPFS): storage limits, how the user deletes it.
+4. KNOWLEDGE - compare, with cost / time / quality:
+   a) everything in the prompt (a short "snapshot" of the project + the 3 best recipes + only the needed block list), retrieval with a
+      tiny embedding model in the browser;
+   b) the model only PICKS a recipe and FILLS IN values (classification + slot filling) - G-Warp builds the blocks;
+   c) FINE-TUNING a LoRA on a 0.5-1B model with a few thousand G-Warp examples (made from our recipes and checked by running them),
+      on a free GPU (Colab / Kaggle): steps, time, how many examples, how to convert the result for WebLLM / Transformers.js, how to
+      publish it on Hugging Face; licence rules for training data (can examples made by another AI be used? check the terms).
+   Which mix is best for the WEAKEST model that still helps kids?
+5. KIDS' SAFETY + PRIVACY: content safety for a small model (filters / refusal training), asking before a big download, nothing sent
+   off the computer, no personal data, what happens on phones / old PCs without WebGPU (plan B).
+
+DELIVER (simple English, the owner reads on a phone):
+- A one-screen TABLE first: the recommended engine, model, hosting, knowledge method and plan B, with a one-line reason each.
+- Then details per question, with sources. Max ~6 pages. No filler.
+- A PROOF PAGE: ai-team/shared/<date>-chatgpt-AIM-0/poc.html (one file, engine from a CDN, the smallest good model) that asks 3
+  G-Warp requests ("make the player jump when space is pressed", "add a score that goes up when I touch a coin",
+  "make it rain") in JSON-schema mode and shows the commands. Write in NOTES.md exactly what the owner clicks to test it in Chrome.
+  Say TESTED only if it really ran; otherwise NOT-TESTED.
+- A list of the open questions only the owner can answer (e.g. "make a Hugging Face account for the model?").
+-----------------------------------------------------------------------------------------------

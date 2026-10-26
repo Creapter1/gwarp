@@ -117,7 +117,8 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
       above: bass / drum / fill PATTERN choices, the owner's listening feedback on Tune Mix/Classic/Fresh/My melody, and the
       Gemini music engines A/B/C that never reached GitHub.
 [ ] IN-APP AI ON A SMALL LOCAL MODEL ("GWrap AI Local", owner's idea 2026-10-26): works only inside G-Warp, can do almost
-      anything there, small 2024 Ollama models. Plan, rules and ChatGPT jobs AIM-1..7: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md.
+      anything there. MAIN PLAN (owner, 02:57): the model runs INSIDE the app in the browser (WebGPU, ~0.2-1 GB, downloaded once
+      from Hugging Face, NOT stored in our repo; no Ollama). ChatGPT does the DEEP RESEARCH first (job AIM-0). Plan, rules and ChatGPT jobs AIM-1..7: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md.
       Not built yet; Claude builds it behind Developer mode after ChatGPT's command list + tests + model scores.
 [ ] TAB PLUS (owner's idea 2026-10-26, idea only): ai-team/ideas/TAB-PLUS-2026-10-26.md. Waits for the owner's "go".
 

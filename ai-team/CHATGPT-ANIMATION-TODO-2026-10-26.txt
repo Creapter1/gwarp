@@ -173,4 +173,5 @@ ANIM-D1 [WEB] HELP + SAMPLES
 ---------------------------------------------------------------------
   push -> one line in AI-TEAM.txt -> a line in MERGE-QUEUE.txt under "WAITING FOR CLAUDE" -> next job.
   Don't wait for Claude between jobs. If a job needs the owner's pick (icons), push it and go on.
-  Next list after this one: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (the in-app AI), then ai-team/CHATGPT-TODO-2026-10-26.txt.
+  Next list after this one: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (the in-app AI - start with AIM-0, the DEEP RESEARCH on running
+  the model inside the browser; the owner may also ask you to do AIM-0 before the animation list - then do that), then ai-team/CHATGPT-TODO-2026-10-26.txt.
