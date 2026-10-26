@@ -517,3 +517,14 @@ ANSWER: don't train from zero; fine-tune a small open model (LoRA). Estimate: fo
 part-time; ~$0-50. Not a ChatGPT: common requests + explaining code.
 FILES: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md (section 0e). EVIDENCE: NOT-TESTED (estimate).
 --- END ENTRY ---
+
+--- ENTRY 16 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T13:34:21Z (owner 09:33 his time)   Who: Claude (configured claude-opus-5-5)   Task: AI-LAB lane + desktop EXE question
+Starting commit: c858be7
+USER REQUEST: "Can that task be assigned to a specific AI that can just focus on making that up?" + "for the download version ...
+100% full EXE, then on that one we can just automatically install the AI model into it. The question is, are you able to create
+EXE? 100% fledged software EXE."
+PLAN: try a real Windows build of G-Warp here (Electron, test only, not committed as a release); write a dedicated "AI Lab" prompt
+(one ChatGPT chat that only does the G-Warp model); desktop plan in ai-team/ideas; TODO; closeout.
+--- (closeout follows) ---
