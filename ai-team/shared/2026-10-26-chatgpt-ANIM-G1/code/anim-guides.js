@@ -326,10 +326,10 @@
         if (onRuler) d.lines = d.lines.filter(g => g.id !== drag.id);
         else if (item) item.value = drag.value;
       }
-      drag = null; renderAll();
+      drag = null; surface.preview = null; renderAll();
     };
     svg.addEventListener('pointerup', end, true);
-    svg.addEventListener('pointercancel', () => { drag = null; renderAll(); }, true);
+    svg.addEventListener('pointercancel', () => { drag = null; surface.preview = null; renderAll(); }, true);
     svg.addEventListener('dblclick', e => {
       const id = e.target.getAttribute('data-guide-id'), d = getData(surface.sprite);
       if (!id || d.locked) return;
@@ -357,6 +357,8 @@
       if (info.rulers) bindEvents(surface);
     }
     surface.info = info; surface.sprite = info.sprite; surface.context = info.context;
+    if (preview === undefined) preview = surface.preview || null;
+    else surface.preview = preview;
     positionLayer(surface.layer, info.parent, info.base, info.key);
     surface.svg.setAttribute('viewBox', info.viewBox); surface.svg.setAttribute('preserveAspectRatio', info.preserve || 'none');
     const d = getData(info.sprite), sig = JSON.stringify([info.viewBox, info.context, d, preview || null]);
