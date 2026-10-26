@@ -592,3 +592,9 @@ EVIDENCE: TESTED (saved motion test). COMMIT: 78eadbf
 NEXT: when ChatGPT finishes - follow claude/PLAN-NEXT.md section 2 from A1.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 20 ---
+UTC timestamp: 2026-10-26T15:40:23Z (owner 11:40 his time)   Who: Claude (configured claude-opus-5-5)   Task: TODO-MUSIC - song maker feedback into TODO + plan
+Starting commit: aeb14ac
+USER REQUEST (summary, his words): own melody exists -> also "your own bass, your own things of everything". Squares: Soundraw has 3 levels (light, mid, strong), ours "has four"; wanted cycle "Nothing, light, medium, a little bit hard, and extreme" with colour brightness per level. Testers: "needs a way to just remove the entire blocks completely and just make my music". Bug: while playing, changed squares ahead are not heard ("it will just play the previous music") - the next chunk must use the change. "add this to the to-do list ... figure out how to do that". (He may run out of ChatGPT usage.)
+--- (closeout follows) ---
