@@ -762,3 +762,21 @@ UTC timestamp: 2026-10-26T22:34:19Z (owner 18:33 his time)   Who: Claude (config
 USER REQUEST (verbatim): "the complain the i got in the game clone multiplayer is good but the carter suposto go tru platfourms and all and the the game is to slow for 30fps so let maket fast for 30 fps and real platforms pls"
 NOTE: the remix .sb3 is someone else's project remixed for the owner -> stays OUT of the repo (rule); only this log line is committed.
 --- (closeout follows) ---
+CLOSEOUT (ENTRY 36) - 2026-10-26T22:47:58Z
+FOUND: speed - the remix ran 5-11 "tick"s per second in G-Warp vs 40-55 in scratch-vm: G-Warp's frame loop only stepped threads that
+  existed when the frame began, so a thread started by a broadcast waited a frame and broadcast-and-wait needed another one (~3 frames
+  per tick). Platforms - Ground was ONE solid invisible shape (main stage + 3 floating platforms), so fighters hit their heads.
+DONE: (1) app.html Beta v15.57.0: frame loop runs threads started during the frame in the same frame and re-steps a broadcast-and-wait
+  thread whose receivers finished (max 4 rounds, 14 ms budget, switch window.GW_SAME_FRAME = false). Remix in G-Warp: 17-30 ticks/s =
+  one per frame (headless box draws 18-32 fps), was 5-11. (2) Remix v3 (scratchpad only, NOT in the repo - someone else's project):
+  Ground keeps costume1 and now uses "solid stage" (same SVG clipped below y=81), new invisible sprite "Platforms" (same SVG clipped
+  above y=81, ghost 100), one-way rule at the end of "Move with collisions": falling + touching Platforms -> push up at most |vy|+1 px,
+  free = land (On Floor 1, Y Velocity 0), still inside = undo (keep passing through). Down/K stays the shield key (no drop-through).
+TESTS: platform test in scratch-vm: before = jump under a platform rises 3-4 px and falls back (head bump); after = goes through and
+  lands on top (+51 px) for the left and right platforms. check-sb3 ALL PASS (no AI marks). Scratch tick rate 39-56/s, no errors.
+  Engine regression: motion 8, cm 21, spark 11, aipurple 7, newblocks 5, gwrap_pack 14, stageclick 4, mascot 11 PASS, anim 16/18 (same
+  2 old checks), smoke ALL PASS; Grok's Scratch-parity fixtures ALL PASS before AND after.
+FOUND P3: the builder's set_effect ghost block was dropped on export (set_ghost works) - noted in PLAN-NEXT B2.
+EVIDENCE: TESTED in G-Warp + TESTED in scratch-vm. COMMIT: 94bae99
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
