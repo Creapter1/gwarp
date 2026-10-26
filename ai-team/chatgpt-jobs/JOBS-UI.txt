@@ -1,0 +1,360 @@
+JOBS - EVERY BUTTON / TOOLTIP (118 x 3 = 354 jobs)   source: title texts in app.html
+RULES: ai-team/README.md. Work in batches of 10 jobs (same file, top to bottom, skip [x]). One report per batch:
+chatgpt/jobs/<FILE>-<first id>-<last id>.md (one short section per job: result, proof, bug found? yes/no). Mark each job here
+[x] (done) or [~] (done, found a bug -> also write chatgpt/bugs/BUG-<id>.md). Push after every batch + one AI-TEAM.txt line.
+Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TESTED. Never invent results. Never edit app.html.
+
+[ ] UI-0001-CLICK [TERMINAL] button/control "About G-Warp": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0001-ICON [WEB] "About G-Warp": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0001-WORDS [WEB] "About G-Warp": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0002-CLICK [TERMINAL] button/control "Add a picture (png, jpg, svg)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0002-ICON [WEB] "Add a picture (png, jpg, svg)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0002-WORDS [WEB] "Add a picture (png, jpg, svg)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0003-CLICK [TERMINAL] button/control "Add a sound file (mp3, wav, ogg)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0003-ICON [WEB] "Add a sound file (mp3, wav, ogg)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0003-WORDS [WEB] "Add a sound file (mp3, wav, ogg)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0004-CLICK [TERMINAL] button/control "Add text": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0004-ICON [WEB] "Add text": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0004-WORDS [WEB] "Add text": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0005-CLICK [TERMINAL] button/control "Addons": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0005-ICON [WEB] "Addons": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0005-WORDS [WEB] "Addons": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0006-CLICK [TERMINAL] button/control "Advanced settings": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0006-ICON [WEB] "Advanced settings": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0006-WORDS [WEB] "Advanced settings": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0007-CLICK [TERMINAL] button/control "Ask the helper": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0007-ICON [WEB] "Ask the helper": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0007-WORDS [WEB] "Ask the helper": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0008-CLICK [TERMINAL] button/control "Basics: how G-Warp works": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0008-ICON [WEB] "Basics: how G-Warp works": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0008-WORDS [WEB] "Basics: how G-Warp works": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0009-CLICK [TERMINAL] button/control "Blocks and scripts in the code area (Addons: block counter)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0009-ICON [WEB] "Blocks and scripts in the code area (Addons: block counter)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0009-WORDS [WEB] "Blocks and scripts in the code area (Addons: block counter)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0010-CLICK [TERMINAL] button/control "Bounce around the stage": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0010-ICON [WEB] "Bounce around the stage": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0010-WORDS [WEB] "Bounce around the stage": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0011-CLICK [TERMINAL] button/control "Bug Hunter trophies": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0011-ICON [WEB] "Bug Hunter trophies": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0011-WORDS [WEB] "Bug Hunter trophies": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0012-CLICK [TERMINAL] button/control "Build a script": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0012-ICON [WEB] "Build a script": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0012-WORDS [WEB] "Build a script": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0013-CLICK [TERMINAL] button/control "Change text": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0013-ICON [WEB] "Change text": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0013-WORDS [WEB] "Change text": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0014-CLICK [TERMINAL] button/control "Choose a Backdrop": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0014-ICON [WEB] "Choose a Backdrop": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0014-WORDS [WEB] "Choose a Backdrop": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0015-CLICK [TERMINAL] button/control "Choose a Sprite": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0015-ICON [WEB] "Choose a Sprite": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0015-WORDS [WEB] "Choose a Sprite": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0016-CLICK [TERMINAL] button/control "Clear all scripts": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0016-ICON [WEB] "Clear all scripts": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0016-WORDS [WEB] "Clear all scripts": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0017-CLICK [TERMINAL] button/control "Click to play from that part": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0017-ICON [WEB] "Click to play from that part": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0017-WORDS [WEB] "Click to play from that part": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0018-CLICK [TERMINAL] button/control "Clones right now (Addons: clone counter)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0018-ICON [WEB] "Clones right now (Addons: clone counter)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0018-WORDS [WEB] "Clones right now (Addons: clone counter)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0019-CLICK [TERMINAL] button/control "Close": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0019-ICON [WEB] "Close": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0019-WORDS [WEB] "Close": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0020-CLICK [TERMINAL] button/control "Cloud variables": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0020-ICON [WEB] "Cloud variables": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0020-WORDS [WEB] "Cloud variables": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0021-CLICK [TERMINAL] button/control "Code: your first script": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0021-ICON [WEB] "Code: your first script": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0021-WORDS [WEB] "Code: your first script": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0022-CLICK [TERMINAL] button/control "Copy this frame after it": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0022-ICON [WEB] "Copy this frame after it": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0022-WORDS [WEB] "Copy this frame after it": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0023-CLICK [TERMINAL] button/control "Costumes": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0023-ICON [WEB] "Costumes": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0023-WORDS [WEB] "Costumes": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0024-CLICK [TERMINAL] button/control "Countdown from 10": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0024-ICON [WEB] "Countdown from 10": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0024-WORDS [WEB] "Countdown from 10": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0025-CLICK [TERMINAL] button/control "Dangerous: can read": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0025-ICON [WEB] "Dangerous: can read": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0025-WORDS [WEB] "Dangerous: can read": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0026-CLICK [TERMINAL] button/control "Debug panel": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0026-ICON [WEB] "Debug panel": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0026-WORDS [WEB] "Debug panel": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0027-CLICK [TERMINAL] button/control "Delete": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0027-ICON [WEB] "Delete": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0027-WORDS [WEB] "Delete": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0028-CLICK [TERMINAL] button/control "Delete comment": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0028-ICON [WEB] "Delete comment": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0028-WORDS [WEB] "Delete comment": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0029-CLICK [TERMINAL] button/control "Delete frame": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0029-ICON [WEB] "Delete frame": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0029-WORDS [WEB] "Delete frame": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0030-CLICK [TERMINAL] button/control "Delete this behavior": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0030-ICON [WEB] "Delete this behavior": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0030-WORDS [WEB] "Delete this behavior": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0031-CLICK [TERMINAL] button/control "Drag to take this block out": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0031-ICON [WEB] "Drag to take this block out": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0031-WORDS [WEB] "Drag to take this block out": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0032-CLICK [TERMINAL] button/control "Draw a costume": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0032-ICON [WEB] "Draw a costume": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0032-WORDS [WEB] "Draw a costume": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0033-CLICK [TERMINAL] button/control "Duplicate": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0033-ICON [WEB] "Duplicate": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0033-WORDS [WEB] "Duplicate": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0034-CLICK [TERMINAL] button/control "Export .gwarp project": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0034-ICON [WEB] "Export .gwarp project": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0034-WORDS [WEB] "Export .gwarp project": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0035-CLICK [TERMINAL] button/control "Export .sb3 (experimental)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0035-ICON [WEB] "Export .sb3 (experimental)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0035-WORDS [WEB] "Export .sb3 (experimental)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0036-CLICK [TERMINAL] button/control "Extension library": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0036-ICON [WEB] "Extension library": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0036-WORDS [WEB] "Extension library": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0037-CLICK [TERMINAL] button/control "Extensions": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0037-ICON [WEB] "Extensions": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0037-WORDS [WEB] "Extensions": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0038-CLICK [TERMINAL] button/control "Fade away and back": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0038-ICON [WEB] "Fade away and back": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0038-WORDS [WEB] "Fade away and back": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0039-CLICK [TERMINAL] button/control "Fall with gravity": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0039-ICON [WEB] "Fall with gravity": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0039-WORDS [WEB] "Fall with gravity": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0040-CLICK [TERMINAL] button/control "Flipbook: play the costumes in order, like an animation": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0040-ICON [WEB] "Flipbook: play the costumes in order, like an animation": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0040-WORDS [WEB] "Flipbook: play the costumes in order, like an animation": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0041-CLICK [TERMINAL] button/control "Fold / unfold": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0041-ICON [WEB] "Fold / unfold": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0041-WORDS [WEB] "Fold / unfold": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0042-CLICK [TERMINAL] button/control "Follow the mouse": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0042-ICON [WEB] "Follow the mouse": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0042-WORDS [WEB] "Follow the mouse": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0043-CLICK [TERMINAL] button/control "Frames per second": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0043-ICON [WEB] "Frames per second": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0043-WORDS [WEB] "Frames per second": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0044-CLICK [TERMINAL] button/control "From the middle of a song over 1 minute": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0044-ICON [WEB] "From the middle of a song over 1 minute": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0044-WORDS [WEB] "From the middle of a song over 1 minute": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0045-CLICK [TERMINAL] button/control "G-Warp Desktop v15.7.1 — Sound & Costume Studio": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0045-ICON [WEB] "G-Warp Desktop v15.7.1 — Sound & Costume Studio": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0045-WORDS [WEB] "G-Warp Desktop v15.7.1 — Sound & Costume Studio": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0046-CLICK [TERMINAL] button/control "Generate a loop": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0046-ICON [WEB] "Generate a loop": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0046-WORDS [WEB] "Generate a loop": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0047-CLICK [TERMINAL] button/control "Grow and shrink": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0047-ICON [WEB] "Grow and shrink": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0047-WORDS [WEB] "Grow and shrink": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0048-CLICK [TERMINAL] button/control "Hear": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0048-ICON [WEB] "Hear": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0048-WORDS [WEB] "Hear": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0049-CLICK [TERMINAL] button/control "Import .gwarp project": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0049-ICON [WEB] "Import .gwarp project": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0049-WORDS [WEB] "Import .gwarp project": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0050-CLICK [TERMINAL] button/control "Import .sb3 (experimental)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0050-ICON [WEB] "Import .sb3 (experimental)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0050-WORDS [WEB] "Import .sb3 (experimental)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0051-CLICK [TERMINAL] button/control "Input of your block: use it inside its "define" script": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0051-ICON [WEB] "Input of your block: use it inside its "define" script": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0051-WORDS [WEB] "Input of your block: use it inside its "define" script": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0052-CLICK [TERMINAL] button/control "Jump when space is pressed": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0052-ICON [WEB] "Jump when space is pressed": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0052-WORDS [WEB] "Jump when space is pressed": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0053-CLICK [TERMINAL] button/control "Keep score": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0053-ICON [WEB] "Keep score": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0053-WORDS [WEB] "Keep score": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0054-CLICK [TERMINAL] button/control "Listen": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0054-ICON [WEB] "Listen": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0054-WORDS [WEB] "Listen": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0055-CLICK [TERMINAL] button/control "Load a project from the web": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0055-ICON [WEB] "Load a project from the web": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0055-WORDS [WEB] "Load a project from the web": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0056-CLICK [TERMINAL] button/control "Make your own song": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0056-ICON [WEB] "Make your own song": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0056-WORDS [WEB] "Make your own song": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0057-CLICK [TERMINAL] button/control "More tools": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0057-ICON [WEB] "More tools": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0057-WORDS [WEB] "More tools": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0058-CLICK [TERMINAL] button/control "Move frame left": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0058-ICON [WEB] "Move frame left": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0058-WORDS [WEB] "Move frame left": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0059-CLICK [TERMINAL] button/control "Move frame right": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0059-ICON [WEB] "Move frame right": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0059-WORDS [WEB] "Move frame right": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0060-CLICK [TERMINAL] button/control "Move the whole tune one note down": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0060-ICON [WEB] "Move the whole tune one note down": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0060-WORDS [WEB] "Move the whole tune one note down": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0061-CLICK [TERMINAL] button/control "Move the whole tune one note up": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0061-ICON [WEB] "Move the whole tune one note up": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0061-WORDS [WEB] "Move the whole tune one note up": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0062-CLICK [TERMINAL] button/control "Move with the arrow keys": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0062-ICON [WEB] "Move with the arrow keys": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0062-WORDS [WEB] "Move with the arrow keys": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0063-CLICK [TERMINAL] button/control "Music: make a loop": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0063-ICON [WEB] "Music: make a loop": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0063-WORDS [WEB] "Music: make a loop": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0064-CLICK [TERMINAL] button/control "Next frame": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0064-ICON [WEB] "Next frame": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0064-WORDS [WEB] "Next frame": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0065-CLICK [TERMINAL] button/control "No colour": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0065-ICON [WEB] "No colour": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0065-WORDS [WEB] "No colour": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0066-CLICK [TERMINAL] button/control "On: every note lasts until the next one (smooth). Off: short notes.": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0066-ICON [WEB] "On: every note lasts until the next one (smooth). Off: short notes.": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0066-WORDS [WEB] "On: every note lasts until the next one (smooth). Off: short notes.": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0067-CLICK [TERMINAL] button/control "Open the Sounds tab": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0067-ICON [WEB] "Open the Sounds tab": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0067-WORDS [WEB] "Open the Sounds tab": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0068-CLICK [TERMINAL] button/control "Pause / Resume": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0068-ICON [WEB] "Pause / Resume": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0068-WORDS [WEB] "Pause / Resume": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0069-CLICK [TERMINAL] button/control "Pick a colour from the screen": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0069-ICON [WEB] "Pick a colour from the screen": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0069-WORDS [WEB] "Pick a colour from the screen": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0070-CLICK [TERMINAL] button/control "Pick a seed": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0070-ICON [WEB] "Pick a seed": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0070-WORDS [WEB] "Pick a seed": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0071-CLICK [TERMINAL] button/control "Pick a style and mood": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0071-ICON [WEB] "Pick a style and mood": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0071-WORDS [WEB] "Pick a style and mood": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0072-CLICK [TERMINAL] button/control "Play / stop": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0072-ICON [WEB] "Play / stop": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0072-WORDS [WEB] "Play / stop": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0073-CLICK [TERMINAL] button/control "Play a sound when clicked": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0073-ICON [WEB] "Play a sound when clicked": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0073-WORDS [WEB] "Play a sound when clicked": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0074-CLICK [TERMINAL] button/control "Play it in a script": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0074-ICON [WEB] "Play it in a script": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0074-WORDS [WEB] "Play it in a script": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0075-CLICK [TERMINAL] button/control "Play music forever": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0075-ICON [WEB] "Play music forever": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0075-WORDS [WEB] "Play music forever": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0076-CLICK [TERMINAL] button/control "Play the frames (the button turns into Stop)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0076-ICON [WEB] "Play the frames (the button turns into Stop)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0076-WORDS [WEB] "Play the frames (the button turns into Stop)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0077-CLICK [TERMINAL] button/control "Previous frame": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0077-ICON [WEB] "Previous frame": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0077-WORDS [WEB] "Previous frame": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0078-CLICK [TERMINAL] button/control "Record or upload a sound": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0078-ICON [WEB] "Record or upload a sound": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0078-WORDS [WEB] "Record or upload a sound": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0079-CLICK [TERMINAL] button/control "Record with your microphone (up to 15 seconds)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0079-ICON [WEB] "Record with your microphone (up to 15 seconds)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0079-WORDS [WEB] "Record with your microphone (up to 15 seconds)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0080-CLICK [TERMINAL] button/control "Redo (Ctrl+Shift+Z)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0080-ICON [WEB] "Redo (Ctrl+Shift+Z)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0080-WORDS [WEB] "Redo (Ctrl+Shift+Z)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0081-CLICK [TERMINAL] button/control "Redo (Ctrl+Y)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0081-ICON [WEB] "Redo (Ctrl+Y)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0081-WORDS [WEB] "Redo (Ctrl+Y)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0082-CLICK [TERMINAL] button/control "Rename animation": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0082-ICON [WEB] "Rename animation": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0082-WORDS [WEB] "Rename animation": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0083-CLICK [TERMINAL] button/control "Report a bug": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0083-ICON [WEB] "Report a bug": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0083-WORDS [WEB] "Report a bug": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0084-CLICK [TERMINAL] button/control "Restore a previous version": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0084-ICON [WEB] "Restore a previous version": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0084-WORDS [WEB] "Restore a previous version": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0085-CLICK [TERMINAL] button/control "Run it": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0085-ICON [WEB] "Run it": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0085-WORDS [WEB] "Run it": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0086-CLICK [TERMINAL] button/control "Runs without screen refresh": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0086-ICON [WEB] "Runs without screen refresh": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0086-WORDS [WEB] "Runs without screen refresh": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0087-CLICK [TERMINAL] button/control "Save a bug report kit": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0087-ICON [WEB] "Save a bug report kit": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0087-WORDS [WEB] "Save a bug report kit": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0088-CLICK [TERMINAL] button/control "Save it to a sprite": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0088-ICON [WEB] "Save it to a sprite": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0088-WORDS [WEB] "Save it to a sprite": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0089-CLICK [TERMINAL] button/control "Save your project": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0089-ICON [WEB] "Save your project": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0089-WORDS [WEB] "Save your project": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0090-CLICK [TERMINAL] button/control "Saves a bug report kit file on this computer (nothing is sent)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0090-ICON [WEB] "Saves a bug report kit file on this computer (nothing is sent)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0090-WORDS [WEB] "Saves a bug report kit file on this computer (nothing is sent)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0091-CLICK [TERMINAL] button/control "Say hello when clicked": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0091-ICON [WEB] "Say hello when clicked": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0091-WORDS [WEB] "Say hello when clicked": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0092-CLICK [TERMINAL] button/control "Say “Ouch!” at the edge": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0092-ICON [WEB] "Say “Ouch!” at the edge": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0092-WORDS [WEB] "Say “Ouch!” at the edge": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0093-CLICK [TERMINAL] button/control "Set speed and length": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0093-ICON [WEB] "Set speed and length": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0093-WORDS [WEB] "Set speed and length": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0094-CLICK [TERMINAL] button/control "Shake when clicked": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0094-ICON [WEB] "Shake when clicked": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0094-WORDS [WEB] "Shake when clicked": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0095-CLICK [TERMINAL] button/control "Share cloud variables online?": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0095-ICON [WEB] "Share cloud variables online?": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0095-WORDS [WEB] "Share cloud variables online?": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0096-CLICK [TERMINAL] button/control "Sounds": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0096-ICON [WEB] "Sounds": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0096-WORDS [WEB] "Sounds": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0097-CLICK [TERMINAL] button/control "Spin around": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0097-ICON [WEB] "Spin around": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0097-WORDS [WEB] "Spin around": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0098-CLICK [TERMINAL] button/control "Start (green flag)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0098-ICON [WEB] "Start (green flag)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0098-WORDS [WEB] "Start (green flag)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0099-CLICK [TERMINAL] button/control "Start a blank costume": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0099-ICON [WEB] "Start a blank costume": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0099-WORDS [WEB] "Start a blank costume": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0100-CLICK [TERMINAL] button/control "Start again after the last costume": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0100-ICON [WEB] "Start again after the last costume": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0100-WORDS [WEB] "Start again after the last costume": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0101-CLICK [TERMINAL] button/control "Start and Stop": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0101-ICON [WEB] "Start and Stop": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0101-WORDS [WEB] "Start and Stop": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0102-CLICK [TERMINAL] button/control "Start and stop your game": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0102-ICON [WEB] "Start and stop your game": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0102-WORDS [WEB] "Start and stop your game": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0103-CLICK [TERMINAL] button/control "Stop All Scripts": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0103-ICON [WEB] "Stop All Scripts": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0103-WORDS [WEB] "Stop All Scripts": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0104-CLICK [TERMINAL] button/control "Teleport to a random spot": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0104-ICON [WEB] "Teleport to a random spot": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0104-WORDS [WEB] "Teleport to a random spot": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0105-CLICK [TERMINAL] button/control "The Code tab": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0105-ICON [WEB] "The Code tab": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0105-WORDS [WEB] "The Code tab": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0106-CLICK [TERMINAL] button/control "Toggle Turbo Mode": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0106-ICON [WEB] "Toggle Turbo Mode": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0106-WORDS [WEB] "Toggle Turbo Mode": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0107-CLICK [TERMINAL] button/control "Turn away from the edge": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0107-ICON [WEB] "Turn away from the edge": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0107-WORDS [WEB] "Turn away from the edge": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0108-CLICK [TERMINAL] button/control "Turn onion skin off": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0108-ICON [WEB] "Turn onion skin off": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0108-WORDS [WEB] "Turn onion skin off": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0109-CLICK [TERMINAL] button/control "Type commands": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0109-ICON [WEB] "Type commands": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0109-WORDS [WEB] "Type commands": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0110-CLICK [TERMINAL] button/control "Undo (Ctrl+Z)": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0110-ICON [WEB] "Undo (Ctrl+Z)": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0110-WORDS [WEB] "Undo (Ctrl+Z)": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0111-CLICK [TERMINAL] button/control "Undo a mistake": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0111-ICON [WEB] "Undo a mistake": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0111-WORDS [WEB] "Undo a mistake": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0112-CLICK [TERMINAL] button/control "Update G-Warp": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0112-ICON [WEB] "Update G-Warp": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0112-WORDS [WEB] "Update G-Warp": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0113-CLICK [TERMINAL] button/control "Using “if” blocks": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0113-ICON [WEB] "Using “if” blocks": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0113-WORDS [WEB] "Using “if” blocks": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0114-CLICK [TERMINAL] button/control "Walking animation": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0114-ICON [WEB] "Walking animation": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0114-WORDS [WEB] "Walking animation": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0115-CLICK [TERMINAL] button/control "Welcome": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0115-ICON [WEB] "Welcome": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0115-WORDS [WEB] "Welcome": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0116-CLICK [TERMINAL] button/control "Welcome back": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0116-ICON [WEB] "Welcome back": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0116-WORDS [WEB] "Welcome back": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0117-CLICK [TERMINAL] button/control "Your project is stuck": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0117-ICON [WEB] "Your project is stuck": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0117-WORDS [WEB] "Your project is stuck": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.
+[ ] UI-0118-CLICK [TERMINAL] button/control "⚠ Dangerous extension": find it, click it, does it do what the tooltip says? no page errors?
+[ ] UI-0118-ICON [WEB] "⚠ Dangerous extension": which icon does it use? Is the same action shown with a DIFFERENT icon somewhere else? (feeds "icons must match")
+[ ] UI-0118-WORDS [WEB] "⚠ Dangerous extension": is the tooltip clear for an 8-year-old and correct? Suggest better words (max 10) if not.

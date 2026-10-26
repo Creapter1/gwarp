@@ -1,0 +1,927 @@
+JOBS - EVERY GALLERY EXTENSION (184 x 5 = 920 jobs)   source: app.html gw10GalleryData
+RULES: ai-team/README.md. Work in batches of 10 jobs (same file, top to bottom, skip [x]). One report per batch:
+chatgpt/jobs/<FILE>-<first id>-<last id>.md (one short section per job: result, proof, bug found? yes/no). Mark each job here
+[x] (done) or [~] (done, found a bug -> also write chatgpt/bugs/BUG-<id>.md). Push after every batch + one AI-TEAM.txt line.
+Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TESTED. Never invent results. Never edit app.html.
+Never run an extension's JavaScript outside the sandbox G-Warp already uses. Dangerous ones: read only, don't run.
+
+[ ] EXT-0001-LOAD [TERMINAL] Animated Text (TurboWarp/text, by LilyMakesThings, GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0001-RUN [TERMINAL] Animated Text (TurboWarp/text, by LilyMakesThings, GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0001-CREDIT [WEB] Animated Text (TurboWarp/text, by LilyMakesThings, GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0001-SAFE [WEB] Animated Text (TurboWarp/text, by LilyMakesThings, GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0001-DOC [WEB] Animated Text (TurboWarp/text, by LilyMakesThings, GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0002-LOAD [TERMINAL] Face Sensing (TurboWarp/faceSensing, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0002-RUN [TERMINAL] Face Sensing (TurboWarp/faceSensing, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0002-CREDIT [WEB] Face Sensing (TurboWarp/faceSensing, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0002-SAFE [WEB] Face Sensing (TurboWarp/faceSensing, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0002-DOC [WEB] Face Sensing (TurboWarp/faceSensing, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0003-LOAD [TERMINAL] Video Sprites (TurboWarp/videoSprites, by Staevski_G): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0003-RUN [TERMINAL] Video Sprites (TurboWarp/videoSprites, by Staevski_G): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0003-CREDIT [WEB] Video Sprites (TurboWarp/videoSprites, by Staevski_G): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0003-SAFE [WEB] Video Sprites (TurboWarp/videoSprites, by Staevski_G): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0003-DOC [WEB] Video Sprites (TurboWarp/videoSprites, by Staevski_G): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0004-LOAD [TERMINAL] Stretch (TurboWarp/stretch, by GarboMuffin, TheStarWorld): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0004-RUN [TERMINAL] Stretch (TurboWarp/stretch, by GarboMuffin, TheStarWorld): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0004-CREDIT [WEB] Stretch (TurboWarp/stretch, by GarboMuffin, TheStarWorld): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0004-SAFE [WEB] Stretch (TurboWarp/stretch, by GarboMuffin, TheStarWorld): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0004-DOC [WEB] Stretch (TurboWarp/stretch, by GarboMuffin, TheStarWorld): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0005-LOAD [TERMINAL] Gamepad (TurboWarp/Gamepad, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0005-RUN [TERMINAL] Gamepad (TurboWarp/Gamepad, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0005-CREDIT [WEB] Gamepad (TurboWarp/Gamepad, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0005-SAFE [WEB] Gamepad (TurboWarp/Gamepad, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0005-DOC [WEB] Gamepad (TurboWarp/Gamepad, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0006-LOAD [TERMINAL] Box2D Physics (TurboWarp/griffpatch, by ?): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0006-RUN [TERMINAL] Box2D Physics (TurboWarp/griffpatch, by ?): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0006-CREDIT [WEB] Box2D Physics (TurboWarp/griffpatch, by ?): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0006-SAFE [WEB] Box2D Physics (TurboWarp/griffpatch, by ?): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0006-DOC [WEB] Box2D Physics (TurboWarp/griffpatch, by ?): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0007-LOAD [TERMINAL] Files (TurboWarp/files, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0007-RUN [TERMINAL] Files (TurboWarp/files, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0007-CREDIT [WEB] Files (TurboWarp/files, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0007-SAFE [WEB] Files (TurboWarp/files, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0007-DOC [WEB] Files (TurboWarp/files, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0008-LOAD [TERMINAL] Pointerlock (TurboWarp/pointerlock, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0008-RUN [TERMINAL] Pointerlock (TurboWarp/pointerlock, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0008-CREDIT [WEB] Pointerlock (TurboWarp/pointerlock, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0008-SAFE [WEB] Pointerlock (TurboWarp/pointerlock, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0008-DOC [WEB] Pointerlock (TurboWarp/pointerlock, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0009-LOAD [TERMINAL] Mouse Cursor (TurboWarp/MouseCursor, by Samq64, GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0009-RUN [TERMINAL] Mouse Cursor (TurboWarp/MouseCursor, by Samq64, GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0009-CREDIT [WEB] Mouse Cursor (TurboWarp/MouseCursor, by Samq64, GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0009-SAFE [WEB] Mouse Cursor (TurboWarp/MouseCursor, by Samq64, GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0009-DOC [WEB] Mouse Cursor (TurboWarp/MouseCursor, by Samq64, GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0010-LOAD [TERMINAL] Runtime Options (TurboWarp/runtimeoptions, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0010-RUN [TERMINAL] Runtime Options (TurboWarp/runtimeoptions, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0010-CREDIT [WEB] Runtime Options (TurboWarp/runtimeoptions, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0010-SAFE [WEB] Runtime Options (TurboWarp/runtimeoptions, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0010-DOC [WEB] Runtime Options (TurboWarp/runtimeoptions, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0011-LOAD [TERMINAL] Fetch (TurboWarp/fetch, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0011-RUN [TERMINAL] Fetch (TurboWarp/fetch, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0011-CREDIT [WEB] Fetch (TurboWarp/fetch, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0011-SAFE [WEB] Fetch (TurboWarp/fetch, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0011-DOC [WEB] Fetch (TurboWarp/fetch, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0012-LOAD [TERMINAL] Text (TurboWarp/strings, by CST1229, BludIsAnLemon, Man-o-Valor): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0012-RUN [TERMINAL] Text (TurboWarp/strings, by CST1229, BludIsAnLemon, Man-o-Valor): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0012-CREDIT [WEB] Text (TurboWarp/strings, by CST1229, BludIsAnLemon, Man-o-Valor): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0012-SAFE [WEB] Text (TurboWarp/strings, by CST1229, BludIsAnLemon, Man-o-Valor): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0012-DOC [WEB] Text (TurboWarp/strings, by CST1229, BludIsAnLemon, Man-o-Valor): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0013-LOAD [TERMINAL] Local Storage (TurboWarp/localstorage, by infernostars, GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0013-RUN [TERMINAL] Local Storage (TurboWarp/localstorage, by infernostars, GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0013-CREDIT [WEB] Local Storage (TurboWarp/localstorage, by infernostars, GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0013-SAFE [WEB] Local Storage (TurboWarp/localstorage, by infernostars, GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0013-DOC [WEB] Local Storage (TurboWarp/localstorage, by infernostars, GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0014-LOAD [TERMINAL] Base (TurboWarp/truefantombase, by TrueFantom): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0014-RUN [TERMINAL] Base (TurboWarp/truefantombase, by TrueFantom): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0014-CREDIT [WEB] Base (TurboWarp/truefantombase, by TrueFantom): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0014-SAFE [WEB] Base (TurboWarp/truefantombase, by TrueFantom): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0014-DOC [WEB] Base (TurboWarp/truefantombase, by TrueFantom): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0015-LOAD [TERMINAL] Bitwise (TurboWarp/Bitwise, by TrueFantom): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0015-RUN [TERMINAL] Bitwise (TurboWarp/Bitwise, by TrueFantom): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0015-CREDIT [WEB] Bitwise (TurboWarp/Bitwise, by TrueFantom): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0015-SAFE [WEB] Bitwise (TurboWarp/Bitwise, by TrueFantom): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0015-DOC [WEB] Bitwise (TurboWarp/Bitwise, by TrueFantom): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0016-LOAD [TERMINAL] BigInt (TurboWarp/skyhigh173BigInt, by Skyhigh173): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0016-RUN [TERMINAL] BigInt (TurboWarp/skyhigh173BigInt, by Skyhigh173): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0016-CREDIT [WEB] BigInt (TurboWarp/skyhigh173BigInt, by Skyhigh173): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0016-SAFE [WEB] BigInt (TurboWarp/skyhigh173BigInt, by Skyhigh173): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0016-DOC [WEB] BigInt (TurboWarp/skyhigh173BigInt, by Skyhigh173): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0017-LOAD [TERMINAL] Utilities (TurboWarp/utilities, by ?): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0017-RUN [TERMINAL] Utilities (TurboWarp/utilities, by ?): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0017-CREDIT [WEB] Utilities (TurboWarp/utilities, by ?): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0017-SAFE [WEB] Utilities (TurboWarp/utilities, by ?): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0017-DOC [WEB] Utilities (TurboWarp/utilities, by ?): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0018-LOAD [TERMINAL] Video (TurboWarp/lmsVideo, by LilyMakesThings, SharkPool, Fath11): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0018-RUN [TERMINAL] Video (TurboWarp/lmsVideo, by LilyMakesThings, SharkPool, Fath11): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0018-CREDIT [WEB] Video (TurboWarp/lmsVideo, by LilyMakesThings, SharkPool, Fath11): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0018-SAFE [WEB] Video (TurboWarp/lmsVideo, by LilyMakesThings, SharkPool, Fath11): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0018-DOC [WEB] Video (TurboWarp/lmsVideo, by LilyMakesThings, SharkPool, Fath11): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0019-LOAD [TERMINAL] Iframe (TurboWarp/iframe, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0019-RUN [TERMINAL] Iframe (TurboWarp/iframe, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0019-CREDIT [WEB] Iframe (TurboWarp/iframe, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0019-SAFE [WEB] Iframe (TurboWarp/iframe, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0019-DOC [WEB] Iframe (TurboWarp/iframe, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0020-LOAD [TERMINAL] HTML Encode (TurboWarp/clayhtmlencode, by clay-rip): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0020-RUN [TERMINAL] HTML Encode (TurboWarp/clayhtmlencode, by clay-rip): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0020-CREDIT [WEB] HTML Encode (TurboWarp/clayhtmlencode, by clay-rip): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0020-SAFE [WEB] HTML Encode (TurboWarp/clayhtmlencode, by clay-rip): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0020-DOC [WEB] HTML Encode (TurboWarp/clayhtmlencode, by clay-rip): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0021-LOAD [TERMINAL] Clipping & Blending (TurboWarp/xeltallivclipblend, by Vadik1): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0021-RUN [TERMINAL] Clipping & Blending (TurboWarp/xeltallivclipblend, by Vadik1): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0021-CREDIT [WEB] Clipping & Blending (TurboWarp/xeltallivclipblend, by Vadik1): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0021-SAFE [WEB] Clipping & Blending (TurboWarp/xeltallivclipblend, by Vadik1): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0021-DOC [WEB] Clipping & Blending (TurboWarp/xeltallivclipblend, by Vadik1): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0022-LOAD [TERMINAL] Clipboard (TurboWarp/clipboard, by tomyo-code, AdamMady, NamelessCat): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0022-RUN [TERMINAL] Clipboard (TurboWarp/clipboard, by tomyo-code, AdamMady, NamelessCat): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0022-CREDIT [WEB] Clipboard (TurboWarp/clipboard, by tomyo-code, AdamMady, NamelessCat): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0022-SAFE [WEB] Clipboard (TurboWarp/clipboard, by tomyo-code, AdamMady, NamelessCat): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0022-DOC [WEB] Clipboard (TurboWarp/clipboard, by tomyo-code, AdamMady, NamelessCat): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0023-LOAD [TERMINAL] Pen Plus V7 (TurboWarp/penP, by ObviousAlexC, Pen-Group): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0023-RUN [TERMINAL] Pen Plus V7 (TurboWarp/penP, by ObviousAlexC, Pen-Group): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0023-CREDIT [WEB] Pen Plus V7 (TurboWarp/penP, by ObviousAlexC, Pen-Group): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0023-SAFE [WEB] Pen Plus V7 (TurboWarp/penP, by ObviousAlexC, Pen-Group): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0023-DOC [WEB] Pen Plus V7 (TurboWarp/penP, by ObviousAlexC, Pen-Group): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0024-LOAD [TERMINAL] Pen Plus V5 (Old) (TurboWarp/betterpen, by ObviousAlexC): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0024-RUN [TERMINAL] Pen Plus V5 (Old) (TurboWarp/betterpen, by ObviousAlexC): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0024-CREDIT [WEB] Pen Plus V5 (Old) (TurboWarp/betterpen, by ObviousAlexC): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0024-SAFE [WEB] Pen Plus V5 (Old) (TurboWarp/betterpen, by ObviousAlexC): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0024-DOC [WEB] Pen Plus V5 (Old) (TurboWarp/betterpen, by ObviousAlexC): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0025-LOAD [TERMINAL] Simple 3D (TurboWarp/xeltallivSimple3D, by Vadik1): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0025-RUN [TERMINAL] Simple 3D (TurboWarp/xeltallivSimple3D, by Vadik1): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0025-CREDIT [WEB] Simple 3D (TurboWarp/xeltallivSimple3D, by Vadik1): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0025-SAFE [WEB] Simple 3D (TurboWarp/xeltallivSimple3D, by Vadik1): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0025-DOC [WEB] Simple 3D (TurboWarp/xeltallivSimple3D, by Vadik1): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0026-LOAD [TERMINAL] Skins (TurboWarp/lmsSkins, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0026-RUN [TERMINAL] Skins (TurboWarp/lmsSkins, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0026-CREDIT [WEB] Skins (TurboWarp/lmsSkins, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0026-SAFE [WEB] Skins (TurboWarp/lmsSkins, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0026-DOC [WEB] Skins (TurboWarp/lmsSkins, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0027-LOAD [TERMINAL] Sensing Plus (TurboWarp/obviousalexsensing, by ObviousAlexC): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0027-RUN [TERMINAL] Sensing Plus (TurboWarp/obviousalexsensing, by ObviousAlexC): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0027-CREDIT [WEB] Sensing Plus (TurboWarp/obviousalexsensing, by ObviousAlexC): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0027-SAFE [WEB] Sensing Plus (TurboWarp/obviousalexsensing, by ObviousAlexC): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0027-DOC [WEB] Sensing Plus (TurboWarp/obviousalexsensing, by ObviousAlexC): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0028-LOAD [TERMINAL] Key Simulation (TurboWarp/cubesterKeySimulation, by CubesterYT): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0028-RUN [TERMINAL] Key Simulation (TurboWarp/cubesterKeySimulation, by CubesterYT): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0028-CREDIT [WEB] Key Simulation (TurboWarp/cubesterKeySimulation, by CubesterYT): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0028-SAFE [WEB] Key Simulation (TurboWarp/cubesterKeySimulation, by CubesterYT): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0028-DOC [WEB] Key Simulation (TurboWarp/cubesterKeySimulation, by CubesterYT): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0029-LOAD [TERMINAL] Clones Plus (TurboWarp/lmsclonesplus, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0029-RUN [TERMINAL] Clones Plus (TurboWarp/lmsclonesplus, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0029-CREDIT [WEB] Clones Plus (TurboWarp/lmsclonesplus, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0029-SAFE [WEB] Clones Plus (TurboWarp/lmsclonesplus, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0029-DOC [WEB] Clones Plus (TurboWarp/lmsclonesplus, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0030-LOAD [TERMINAL] Looks Plus (TurboWarp/lmsLooksPlus, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0030-RUN [TERMINAL] Looks Plus (TurboWarp/lmsLooksPlus, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0030-CREDIT [WEB] Looks Plus (TurboWarp/lmsLooksPlus, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0030-SAFE [WEB] Looks Plus (TurboWarp/lmsLooksPlus, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0030-DOC [WEB] Looks Plus (TurboWarp/lmsLooksPlus, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0031-LOAD [TERMINAL] More Events (TurboWarp/lmsMoreEvents, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0031-RUN [TERMINAL] More Events (TurboWarp/lmsMoreEvents, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0031-CREDIT [WEB] More Events (TurboWarp/lmsMoreEvents, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0031-SAFE [WEB] More Events (TurboWarp/lmsMoreEvents, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0031-DOC [WEB] More Events (TurboWarp/lmsMoreEvents, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0032-LOAD [TERMINAL] Messages+ (TurboWarp/SPmessagePlus, by SharkPool): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0032-RUN [TERMINAL] Messages+ (TurboWarp/SPmessagePlus, by SharkPool): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0032-CREDIT [WEB] Messages+ (TurboWarp/SPmessagePlus, by SharkPool): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0032-SAFE [WEB] Messages+ (TurboWarp/SPmessagePlus, by SharkPool): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0032-DOC [WEB] Messages+ (TurboWarp/SPmessagePlus, by SharkPool): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0033-LOAD [TERMINAL] List Tools (TurboWarp/lmsListTools, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0033-RUN [TERMINAL] List Tools (TurboWarp/lmsListTools, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0033-CREDIT [WEB] List Tools (TurboWarp/lmsListTools, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0033-SAFE [WEB] List Tools (TurboWarp/lmsListTools, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0033-DOC [WEB] List Tools (TurboWarp/lmsListTools, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0034-LOAD [TERMINAL] Mobile Keyboard (TurboWarp/mobilekeyboard0419, by veggiecan0419): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0034-RUN [TERMINAL] Mobile Keyboard (TurboWarp/mobilekeyboard0419, by veggiecan0419): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0034-CREDIT [WEB] Mobile Keyboard (TurboWarp/mobilekeyboard0419, by veggiecan0419): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0034-SAFE [WEB] Mobile Keyboard (TurboWarp/mobilekeyboard0419, by veggiecan0419): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0034-DOC [WEB] Mobile Keyboard (TurboWarp/mobilekeyboard0419, by veggiecan0419): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0035-LOAD [TERMINAL] More Motion (TurboWarp/nkmoremotion, by NamelessCat): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0035-RUN [TERMINAL] More Motion (TurboWarp/nkmoremotion, by NamelessCat): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0035-CREDIT [WEB] More Motion (TurboWarp/nkmoremotion, by NamelessCat): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0035-SAFE [WEB] More Motion (TurboWarp/nkmoremotion, by NamelessCat): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0035-DOC [WEB] More Motion (TurboWarp/nkmoremotion, by NamelessCat): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0036-LOAD [TERMINAL] Window Controls (TurboWarp/cubesterWindowControls, by CubesterYT): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0036-RUN [TERMINAL] Window Controls (TurboWarp/cubesterWindowControls, by CubesterYT): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0036-CREDIT [WEB] Window Controls (TurboWarp/cubesterWindowControls, by CubesterYT): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0036-SAFE [WEB] Window Controls (TurboWarp/cubesterWindowControls, by CubesterYT): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0036-DOC [WEB] Window Controls (TurboWarp/cubesterWindowControls, by CubesterYT): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0037-LOAD [TERMINAL] Browser Fullscreen (TurboWarp/fullscreen0419, by Veggiecan0419): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0037-RUN [TERMINAL] Browser Fullscreen (TurboWarp/fullscreen0419, by Veggiecan0419): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0037-CREDIT [WEB] Browser Fullscreen (TurboWarp/fullscreen0419, by Veggiecan0419): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0037-SAFE [WEB] Browser Fullscreen (TurboWarp/fullscreen0419, by Veggiecan0419): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0037-DOC [WEB] Browser Fullscreen (TurboWarp/fullscreen0419, by Veggiecan0419): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0038-LOAD [TERMINAL] Screen Resolution (TurboWarp/shreder95resolution, by shreder95ua): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0038-RUN [TERMINAL] Screen Resolution (TurboWarp/shreder95resolution, by shreder95ua): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0038-CREDIT [WEB] Screen Resolution (TurboWarp/shreder95resolution, by shreder95ua): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0038-SAFE [WEB] Screen Resolution (TurboWarp/shreder95resolution, by shreder95ua): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0038-DOC [WEB] Screen Resolution (TurboWarp/shreder95resolution, by shreder95ua): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0039-LOAD [TERMINAL] Ask Before Closing Tab (TurboWarp/xmerclosecontrol, by XmerOriginals): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0039-RUN [TERMINAL] Ask Before Closing Tab (TurboWarp/xmerclosecontrol, by XmerOriginals): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0039-CREDIT [WEB] Ask Before Closing Tab (TurboWarp/xmerclosecontrol, by XmerOriginals): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0039-SAFE [WEB] Ask Before Closing Tab (TurboWarp/xmerclosecontrol, by XmerOriginals): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0039-DOC [WEB] Ask Before Closing Tab (TurboWarp/xmerclosecontrol, by XmerOriginals): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0040-LOAD [TERMINAL] Navigator (TurboWarp/navigatorinfo, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0040-RUN [TERMINAL] Navigator (TurboWarp/navigatorinfo, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0040-CREDIT [WEB] Navigator (TurboWarp/navigatorinfo, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0040-SAFE [WEB] Navigator (TurboWarp/navigatorinfo, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0040-DOC [WEB] Navigator (TurboWarp/navigatorinfo, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0041-LOAD [TERMINAL] Battery (TurboWarp/battery, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0041-RUN [TERMINAL] Battery (TurboWarp/battery, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0041-CREDIT [WEB] Battery (TurboWarp/battery, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0041-SAFE [WEB] Battery (TurboWarp/battery, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0041-DOC [WEB] Battery (TurboWarp/battery, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0042-LOAD [TERMINAL] Vibration (TurboWarp/pwldevvibration, by PwLDev): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0042-RUN [TERMINAL] Vibration (TurboWarp/pwldevvibration, by PwLDev): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0042-CREDIT [WEB] Vibration (TurboWarp/pwldevvibration, by PwLDev): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0042-SAFE [WEB] Vibration (TurboWarp/pwldevvibration, by PwLDev): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0042-DOC [WEB] Vibration (TurboWarp/pwldevvibration, by PwLDev): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0043-LOAD [TERMINAL] Custom Styles (TurboWarp/shovelcss, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0043-RUN [TERMINAL] Custom Styles (TurboWarp/shovelcss, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0043-CREDIT [WEB] Custom Styles (TurboWarp/shovelcss, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0043-SAFE [WEB] Custom Styles (TurboWarp/shovelcss, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0043-DOC [WEB] Custom Styles (TurboWarp/shovelcss, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0044-LOAD [TERMINAL] Color Picker (TurboWarp/shovelColorPicker, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0044-RUN [TERMINAL] Color Picker (TurboWarp/shovelColorPicker, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0044-CREDIT [WEB] Color Picker (TurboWarp/shovelColorPicker, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0044-SAFE [WEB] Color Picker (TurboWarp/shovelColorPicker, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0044-DOC [WEB] Color Picker (TurboWarp/shovelColorPicker, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0045-LOAD [TERMINAL] Control Controls (TurboWarp/nkcontrols, by NamelessCat): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0045-RUN [TERMINAL] Control Controls (TurboWarp/nkcontrols, by NamelessCat): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0045-CREDIT [WEB] Control Controls (TurboWarp/nkcontrols, by NamelessCat): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0045-SAFE [WEB] Control Controls (TurboWarp/nkcontrols, by NamelessCat): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0045-DOC [WEB] Control Controls (TurboWarp/nkcontrols, by NamelessCat): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0046-LOAD [TERMINAL] Notifications (TurboWarp/mdwaltersnotifications, by mdwalters): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0046-RUN [TERMINAL] Notifications (TurboWarp/mdwaltersnotifications, by mdwalters): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0046-CREDIT [WEB] Notifications (TurboWarp/mdwaltersnotifications, by mdwalters): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0046-SAFE [WEB] Notifications (TurboWarp/mdwaltersnotifications, by mdwalters): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0046-DOC [WEB] Notifications (TurboWarp/mdwaltersnotifications, by mdwalters): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0047-LOAD [TERMINAL] Delta Time (TurboWarp/dtbyxeroname, by XeroName): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0047-RUN [TERMINAL] Delta Time (TurboWarp/dtbyxeroname, by XeroName): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0047-CREDIT [WEB] Delta Time (TurboWarp/dtbyxeroname, by XeroName): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0047-SAFE [WEB] Delta Time (TurboWarp/dtbyxeroname, by XeroName): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0047-DOC [WEB] Delta Time (TurboWarp/dtbyxeroname, by XeroName): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0048-LOAD [TERMINAL] Augmented Reality (TurboWarp/AR, by Vadik1): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0048-RUN [TERMINAL] Augmented Reality (TurboWarp/AR, by Vadik1): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0048-CREDIT [WEB] Augmented Reality (TurboWarp/AR, by Vadik1): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0048-SAFE [WEB] Augmented Reality (TurboWarp/AR, by Vadik1): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0048-DOC [WEB] Augmented Reality (TurboWarp/AR, by Vadik1): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0049-LOAD [TERMINAL] Encoding (TurboWarp/Encoding, by -SIPC-): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0049-RUN [TERMINAL] Encoding (TurboWarp/Encoding, by -SIPC-): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0049-CREDIT [WEB] Encoding (TurboWarp/Encoding, by -SIPC-): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0049-SAFE [WEB] Encoding (TurboWarp/Encoding, by -SIPC-): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0049-DOC [WEB] Encoding (TurboWarp/Encoding, by -SIPC-): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0050-LOAD [TERMINAL] Tune Shark V3 (TurboWarp/SPtuneShark3, by SharkPool): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0050-RUN [TERMINAL] Tune Shark V3 (TurboWarp/SPtuneShark3, by SharkPool): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0050-CREDIT [WEB] Tune Shark V3 (TurboWarp/SPtuneShark3, by SharkPool): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0050-SAFE [WEB] Tune Shark V3 (TurboWarp/SPtuneShark3, by SharkPool): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0050-DOC [WEB] Tune Shark V3 (TurboWarp/SPtuneShark3, by SharkPool): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0051-LOAD [TERMINAL] Sound Expanded (TurboWarp/lmsSoundExpanded, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0051-RUN [TERMINAL] Sound Expanded (TurboWarp/lmsSoundExpanded, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0051-CREDIT [WEB] Sound Expanded (TurboWarp/lmsSoundExpanded, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0051-SAFE [WEB] Sound Expanded (TurboWarp/lmsSoundExpanded, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0051-DOC [WEB] Sound Expanded (TurboWarp/lmsSoundExpanded, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0052-LOAD [TERMINAL] Temporary Variables (TurboWarp/lmsTempVars2, by LilyMakesThings, Mio): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0052-RUN [TERMINAL] Temporary Variables (TurboWarp/lmsTempVars2, by LilyMakesThings, Mio): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0052-CREDIT [WEB] Temporary Variables (TurboWarp/lmsTempVars2, by LilyMakesThings, Mio): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0052-SAFE [WEB] Temporary Variables (TurboWarp/lmsTempVars2, by LilyMakesThings, Mio): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0052-DOC [WEB] Temporary Variables (TurboWarp/lmsTempVars2, by LilyMakesThings, Mio): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0053-LOAD [TERMINAL] More Timers (TurboWarp/lmsTimers, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0053-RUN [TERMINAL] More Timers (TurboWarp/lmsTimers, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0053-CREDIT [WEB] More Timers (TurboWarp/lmsTimers, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0053-SAFE [WEB] More Timers (TurboWarp/lmsTimers, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0053-DOC [WEB] More Timers (TurboWarp/lmsTimers, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0054-LOAD [TERMINAL] Ping Cloud Data (TurboWarp/clouddataping, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0054-RUN [TERMINAL] Ping Cloud Data (TurboWarp/clouddataping, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0054-CREDIT [WEB] Ping Cloud Data (TurboWarp/clouddataping, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0054-SAFE [WEB] Ping Cloud Data (TurboWarp/clouddataping, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0054-DOC [WEB] Ping Cloud Data (TurboWarp/clouddataping, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0055-LOAD [TERMINAL] CloudLink V4 (TurboWarp/cloudlink, by MikeDEV): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0055-RUN [TERMINAL] CloudLink V4 (TurboWarp/cloudlink, by MikeDEV): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0055-CREDIT [WEB] CloudLink V4 (TurboWarp/cloudlink, by MikeDEV): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0055-SAFE [WEB] CloudLink V4 (TurboWarp/cloudlink, by MikeDEV): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0055-DOC [WEB] CloudLink V4 (TurboWarp/cloudlink, by MikeDEV): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0056-LOAD [TERMINAL] Network (TurboWarp/truefantomnetwork, by TrueFantom): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0056-RUN [TERMINAL] Network (TurboWarp/truefantomnetwork, by TrueFantom): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0056-CREDIT [WEB] Network (TurboWarp/truefantomnetwork, by TrueFantom): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0056-SAFE [WEB] Network (TurboWarp/truefantomnetwork, by TrueFantom): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0056-DOC [WEB] Network (TurboWarp/truefantomnetwork, by TrueFantom): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0057-LOAD [TERMINAL] Math (TurboWarp/truefantommath, by TrueFantom): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0057-RUN [TERMINAL] Math (TurboWarp/truefantommath, by TrueFantom): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0057-CREDIT [WEB] Math (TurboWarp/truefantommath, by TrueFantom): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0057-SAFE [WEB] Math (TurboWarp/truefantommath, by TrueFantom): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0057-DOC [WEB] Math (TurboWarp/truefantommath, by TrueFantom): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0058-LOAD [TERMINAL] RegExp (TurboWarp/truefantomregexp, by TrueFantom): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0058-RUN [TERMINAL] RegExp (TurboWarp/truefantomregexp, by TrueFantom): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0058-CREDIT [WEB] RegExp (TurboWarp/truefantomregexp, by TrueFantom): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0058-SAFE [WEB] RegExp (TurboWarp/truefantomregexp, by TrueFantom): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0058-DOC [WEB] RegExp (TurboWarp/truefantomregexp, by TrueFantom): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0059-LOAD [TERMINAL] Couplers (TurboWarp/truefantomcouplers, by TrueFantom): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0059-RUN [TERMINAL] Couplers (TurboWarp/truefantomcouplers, by TrueFantom): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0059-CREDIT [WEB] Couplers (TurboWarp/truefantomcouplers, by TrueFantom): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0059-SAFE [WEB] Couplers (TurboWarp/truefantomcouplers, by TrueFantom): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0059-DOC [WEB] Couplers (TurboWarp/truefantomcouplers, by TrueFantom): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0060-LOAD [TERMINAL] Geolocation (TurboWarp/samuelloufgeolocation, by SamuelLouf): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0060-RUN [TERMINAL] Geolocation (TurboWarp/samuelloufgeolocation, by SamuelLouf): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0060-CREDIT [WEB] Geolocation (TurboWarp/samuelloufgeolocation, by SamuelLouf): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0060-SAFE [WEB] Geolocation (TurboWarp/samuelloufgeolocation, by SamuelLouf): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0060-DOC [WEB] Geolocation (TurboWarp/samuelloufgeolocation, by SamuelLouf): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0061-LOAD [TERMINAL] Format Numbers (TurboWarp/dogeiscutformatnumbers, by DogeisCut): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0061-RUN [TERMINAL] Format Numbers (TurboWarp/dogeiscutformatnumbers, by DogeisCut): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0061-CREDIT [WEB] Format Numbers (TurboWarp/dogeiscutformatnumbers, by DogeisCut): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0061-SAFE [WEB] Format Numbers (TurboWarp/dogeiscutformatnumbers, by DogeisCut): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0061-DOC [WEB] Format Numbers (TurboWarp/dogeiscutformatnumbers, by DogeisCut): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0062-LOAD [TERMINAL] All Menus (TurboWarp/lmsAllMenus, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0062-RUN [TERMINAL] All Menus (TurboWarp/lmsAllMenus, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0062-CREDIT [WEB] All Menus (TurboWarp/lmsAllMenus, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0062-SAFE [WEB] All Menus (TurboWarp/lmsAllMenus, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0062-DOC [WEB] All Menus (TurboWarp/lmsAllMenus, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0063-LOAD [TERMINAL] Hidden Block Collection (TurboWarp/lmsHackedBlocks, by LilyMakesThings, pumpkinhasapatch): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0063-RUN [TERMINAL] Hidden Block Collection (TurboWarp/lmsHackedBlocks, by LilyMakesThings, pumpkinhasapatch): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0063-CREDIT [WEB] Hidden Block Collection (TurboWarp/lmsHackedBlocks, by LilyMakesThings, pumpkinhasapatch): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0063-SAFE [WEB] Hidden Block Collection (TurboWarp/lmsHackedBlocks, by LilyMakesThings, pumpkinhasapatch): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0063-DOC [WEB] Hidden Block Collection (TurboWarp/lmsHackedBlocks, by LilyMakesThings, pumpkinhasapatch): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0064-LOAD [TERMINAL] Cast (TurboWarp/lmsCast, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0064-RUN [TERMINAL] Cast (TurboWarp/lmsCast, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0064-CREDIT [WEB] Cast (TurboWarp/lmsCast, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0064-SAFE [WEB] Cast (TurboWarp/lmsCast, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0064-DOC [WEB] Cast (TurboWarp/lmsCast, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0065-LOAD [TERMINAL] Time (TurboWarp/sipctime, by -SIPC-, SharkPool): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0065-RUN [TERMINAL] Time (TurboWarp/sipctime, by -SIPC-, SharkPool): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0065-CREDIT [WEB] Time (TurboWarp/sipctime, by -SIPC-, SharkPool): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0065-SAFE [WEB] Time (TurboWarp/sipctime, by -SIPC-, SharkPool): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0065-DOC [WEB] Time (TurboWarp/sipctime, by -SIPC-, SharkPool): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0066-LOAD [TERMINAL] Consoles (TurboWarp/sipcconsole, by -SIPC-): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0066-RUN [TERMINAL] Consoles (TurboWarp/sipcconsole, by -SIPC-): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0066-CREDIT [WEB] Consoles (TurboWarp/sipcconsole, by -SIPC-): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0066-SAFE [WEB] Consoles (TurboWarp/sipcconsole, by -SIPC-): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0066-DOC [WEB] Consoles (TurboWarp/sipcconsole, by -SIPC-): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0067-LOAD [TERMINAL] Search Params (TurboWarp/zxmushroom63searchparams, by ZXMushroom63): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0067-RUN [TERMINAL] Search Params (TurboWarp/zxmushroom63searchparams, by ZXMushroom63): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0067-CREDIT [WEB] Search Params (TurboWarp/zxmushroom63searchparams, by ZXMushroom63): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0067-SAFE [WEB] Search Params (TurboWarp/zxmushroom63searchparams, by ZXMushroom63): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0067-DOC [WEB] Search Params (TurboWarp/zxmushroom63searchparams, by ZXMushroom63): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0068-LOAD [TERMINAL] ShovelUtils (TurboWarp/ShovelUtils, by TheShovel, Mio): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0068-RUN [TERMINAL] ShovelUtils (TurboWarp/ShovelUtils, by TheShovel, Mio): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0068-CREDIT [WEB] ShovelUtils (TurboWarp/ShovelUtils, by TheShovel, Mio): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0068-SAFE [WEB] ShovelUtils (TurboWarp/ShovelUtils, by TheShovel, Mio): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0068-DOC [WEB] ShovelUtils (TurboWarp/ShovelUtils, by TheShovel, Mio): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0069-LOAD [TERMINAL] Asset Manager (TurboWarp/lmsAssets, by LilyMakesThings, Mio): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0069-RUN [TERMINAL] Asset Manager (TurboWarp/lmsAssets, by LilyMakesThings, Mio): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0069-CREDIT [WEB] Asset Manager (TurboWarp/lmsAssets, by LilyMakesThings, Mio): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0069-SAFE [WEB] Asset Manager (TurboWarp/lmsAssets, by LilyMakesThings, Mio): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0069-DOC [WEB] Asset Manager (TurboWarp/lmsAssets, by LilyMakesThings, Mio): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0070-LOAD [TERMINAL] Font Manager (TurboWarp/SPASfontManager, by SharkPool, Mio): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0070-RUN [TERMINAL] Font Manager (TurboWarp/SPASfontManager, by SharkPool, Mio): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0070-CREDIT [WEB] Font Manager (TurboWarp/SPASfontManager, by SharkPool, Mio): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0070-SAFE [WEB] Font Manager (TurboWarp/SPASfontManager, by SharkPool, Mio): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0070-DOC [WEB] Font Manager (TurboWarp/SPASfontManager, by SharkPool, Mio): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0071-LOAD [TERMINAL] Wake Lock (TurboWarp/dninwakelock, by D-ScratchNinja): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0071-RUN [TERMINAL] Wake Lock (TurboWarp/dninwakelock, by D-ScratchNinja): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0071-CREDIT [WEB] Wake Lock (TurboWarp/dninwakelock, by D-ScratchNinja): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0071-SAFE [WEB] Wake Lock (TurboWarp/dninwakelock, by D-ScratchNinja): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0071-DOC [WEB] Wake Lock (TurboWarp/dninwakelock, by D-ScratchNinja): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0072-LOAD [TERMINAL] JSON (TurboWarp/skyhigh173JSON, by Skyhigh173, Mio): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0072-RUN [TERMINAL] JSON (TurboWarp/skyhigh173JSON, by Skyhigh173, Mio): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0072-CREDIT [WEB] JSON (TurboWarp/skyhigh173JSON, by Skyhigh173, Mio): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0072-SAFE [WEB] JSON (TurboWarp/skyhigh173JSON, by Skyhigh173, Mio): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0072-DOC [WEB] JSON (TurboWarp/skyhigh173JSON, by Skyhigh173, Mio): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0073-LOAD [TERMINAL] XML (TurboWarp/mbwxml, by mybearworld): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0073-RUN [TERMINAL] XML (TurboWarp/mbwxml, by mybearworld): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0073-CREDIT [WEB] XML (TurboWarp/mbwxml, by mybearworld): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0073-SAFE [WEB] XML (TurboWarp/mbwxml, by mybearworld): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0073-DOC [WEB] XML (TurboWarp/mbwxml, by mybearworld): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0074-LOAD [TERMINAL] Numerical Encoding V2 (TurboWarp/numericalencoding2, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0074-RUN [TERMINAL] Numerical Encoding V2 (TurboWarp/numericalencoding2, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0074-CREDIT [WEB] Numerical Encoding V2 (TurboWarp/numericalencoding2, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0074-SAFE [WEB] Numerical Encoding V2 (TurboWarp/numericalencoding2, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0074-DOC [WEB] Numerical Encoding V2 (TurboWarp/numericalencoding2, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0075-LOAD [TERMINAL] Numerical Encoding V1 (TurboWarp/cs2627883NumericalEncoding, by cs2627883): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0075-RUN [TERMINAL] Numerical Encoding V1 (TurboWarp/cs2627883NumericalEncoding, by cs2627883): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0075-CREDIT [WEB] Numerical Encoding V1 (TurboWarp/cs2627883NumericalEncoding, by cs2627883): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0075-SAFE [WEB] Numerical Encoding V1 (TurboWarp/cs2627883NumericalEncoding, by cs2627883): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0075-DOC [WEB] Numerical Encoding V1 (TurboWarp/cs2627883NumericalEncoding, by cs2627883): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0076-LOAD [TERMINAL] Camera V2 (TurboWarp/SPcamera, by SharkPool): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0076-RUN [TERMINAL] Camera V2 (TurboWarp/SPcamera, by SharkPool): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0076-CREDIT [WEB] Camera V2 (TurboWarp/SPcamera, by SharkPool): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0076-SAFE [WEB] Camera V2 (TurboWarp/SPcamera, by SharkPool): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0076-DOC [WEB] Camera V2 (TurboWarp/SPcamera, by SharkPool): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0077-LOAD [TERMINAL] Camera V1 (Buggy) (TurboWarp/DTcameracontrols, by DT): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0077-RUN [TERMINAL] Camera V1 (Buggy) (TurboWarp/DTcameracontrols, by DT): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0077-CREDIT [WEB] Camera V1 (Buggy) (TurboWarp/DTcameracontrols, by DT): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0077-SAFE [WEB] Camera V1 (Buggy) (TurboWarp/DTcameracontrols, by DT): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0077-DOC [WEB] Camera V1 (Buggy) (TurboWarp/DTcameracontrols, by DT): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0078-LOAD [TERMINAL] Canvas Effects (TurboWarp/theshovelcanvaseffects, by TheShovel, SharkPool): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0078-RUN [TERMINAL] Canvas Effects (TurboWarp/theshovelcanvaseffects, by TheShovel, SharkPool): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0078-CREDIT [WEB] Canvas Effects (TurboWarp/theshovelcanvaseffects, by TheShovel, SharkPool): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0078-SAFE [WEB] Canvas Effects (TurboWarp/theshovelcanvaseffects, by TheShovel, SharkPool): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0078-DOC [WEB] Canvas Effects (TurboWarp/theshovelcanvaseffects, by TheShovel, SharkPool): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0079-LOAD [TERMINAL] RGB Channels (TurboWarp/lbdrawtest, by Longboost): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0079-RUN [TERMINAL] RGB Channels (TurboWarp/lbdrawtest, by Longboost): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0079-CREDIT [WEB] RGB Channels (TurboWarp/lbdrawtest, by Longboost): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0079-SAFE [WEB] RGB Channels (TurboWarp/lbdrawtest, by Longboost): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0079-DOC [WEB] RGB Channels (TurboWarp/lbdrawtest, by Longboost): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0080-LOAD [TERMINAL] Zip (TurboWarp/cst1229zip, by CST1229): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0080-RUN [TERMINAL] Zip (TurboWarp/cst1229zip, by CST1229): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0080-CREDIT [WEB] Zip (TurboWarp/cst1229zip, by CST1229): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0080-SAFE [WEB] Zip (TurboWarp/cst1229zip, by CST1229): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0080-DOC [WEB] Zip (TurboWarp/cst1229zip, by CST1229): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0081-LOAD [TERMINAL] Images (TurboWarp/images, by ?): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0081-RUN [TERMINAL] Images (TurboWarp/images, by ?): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0081-CREDIT [WEB] Images (TurboWarp/images, by ?): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0081-SAFE [WEB] Images (TurboWarp/images, by ?): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0081-DOC [WEB] Images (TurboWarp/images, by ?): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0082-LOAD [TERMINAL] LZ Compress (TurboWarp/shovellzcompress, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0082-RUN [TERMINAL] LZ Compress (TurboWarp/shovellzcompress, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0082-CREDIT [WEB] LZ Compress (TurboWarp/shovellzcompress, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0082-SAFE [WEB] LZ Compress (TurboWarp/shovellzcompress, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0082-DOC [WEB] LZ Compress (TurboWarp/shovellzcompress, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0083-LOAD [TERMINAL] rxFS (TurboWarp/0832rxfs2, by 0832): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0083-RUN [TERMINAL] rxFS (TurboWarp/0832rxfs2, by 0832): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0083-CREDIT [WEB] rxFS (TurboWarp/0832rxfs2, by 0832): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0083-SAFE [WEB] rxFS (TurboWarp/0832rxfs2, by 0832): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0083-DOC [WEB] rxFS (TurboWarp/0832rxfs2, by 0832): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0084-LOAD [TERMINAL] S-Grab (TurboWarp/nexuskittensgrab, by NamelessCat): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0084-RUN [TERMINAL] S-Grab (TurboWarp/nexuskittensgrab, by NamelessCat): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0084-CREDIT [WEB] S-Grab (TurboWarp/nexuskittensgrab, by NamelessCat): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0084-SAFE [WEB] S-Grab (TurboWarp/nexuskittensgrab, by NamelessCat): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0084-DOC [WEB] S-Grab (TurboWarp/nexuskittensgrab, by NamelessCat): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0085-LOAD [TERMINAL] Graphics 2D (TurboWarp/nonameawagraph, by NOname-awa): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0085-RUN [TERMINAL] Graphics 2D (TurboWarp/nonameawagraph, by NOname-awa): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0085-CREDIT [WEB] Graphics 2D (TurboWarp/nonameawagraph, by NOname-awa): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0085-SAFE [WEB] Graphics 2D (TurboWarp/nonameawagraph, by NOname-awa): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0085-DOC [WEB] Graphics 2D (TurboWarp/nonameawagraph, by NOname-awa): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0086-LOAD [TERMINAL] More Comparisons (TurboWarp/nonameawacomparisons, by NOname-awa): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0086-RUN [TERMINAL] More Comparisons (TurboWarp/nonameawacomparisons, by NOname-awa): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0086-CREDIT [WEB] More Comparisons (TurboWarp/nonameawacomparisons, by NOname-awa): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0086-SAFE [WEB] More Comparisons (TurboWarp/nonameawacomparisons, by NOname-awa): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0086-DOC [WEB] More Comparisons (TurboWarp/nonameawacomparisons, by NOname-awa): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0087-LOAD [TERMINAL] Tween (TurboWarp/jeremygamerTweening, by JeremyGamer13, Fath11): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0087-RUN [TERMINAL] Tween (TurboWarp/jeremygamerTweening, by JeremyGamer13, Fath11): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0087-CREDIT [WEB] Tween (TurboWarp/jeremygamerTweening, by JeremyGamer13, Fath11): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0087-SAFE [WEB] Tween (TurboWarp/jeremygamerTweening, by JeremyGamer13, Fath11): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0087-DOC [WEB] Tween (TurboWarp/jeremygamerTweening, by JeremyGamer13, Fath11): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0088-LOAD [TERMINAL] RixxyX (TurboWarp/RixxyX, by RixTheTyrunt): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0088-RUN [TERMINAL] RixxyX (TurboWarp/RixxyX, by RixTheTyrunt): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0088-CREDIT [WEB] RixxyX (TurboWarp/RixxyX, by RixTheTyrunt): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0088-SAFE [WEB] RixxyX (TurboWarp/RixxyX, by RixTheTyrunt): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0088-DOC [WEB] RixxyX (TurboWarp/RixxyX, by RixTheTyrunt): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0089-LOAD [TERMINAL] Lily's Toolbox (TurboWarp/lmsutilsblocks, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0089-RUN [TERMINAL] Lily's Toolbox (TurboWarp/lmsutilsblocks, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0089-CREDIT [WEB] Lily's Toolbox (TurboWarp/lmsutilsblocks, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0089-SAFE [WEB] Lily's Toolbox (TurboWarp/lmsutilsblocks, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0089-DOC [WEB] Lily's Toolbox (TurboWarp/lmsutilsblocks, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0090-LOAD [TERMINAL] Data Analysis (TurboWarp/qxsckdataanalysis, by qxsck): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0090-RUN [TERMINAL] Data Analysis (TurboWarp/qxsckdataanalysis, by qxsck): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0090-CREDIT [WEB] Data Analysis (TurboWarp/qxsckdataanalysis, by qxsck): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0090-SAFE [WEB] Data Analysis (TurboWarp/qxsckdataanalysis, by qxsck): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0090-DOC [WEB] Data Analysis (TurboWarp/qxsckdataanalysis, by qxsck): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0091-LOAD [TERMINAL] Variable and list (TurboWarp/qxsckvarandlist, by qxsck): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0091-RUN [TERMINAL] Variable and list (TurboWarp/qxsckvarandlist, by qxsck): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0091-CREDIT [WEB] Variable and list (TurboWarp/qxsckvarandlist, by qxsck): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0091-SAFE [WEB] Variable and list (TurboWarp/qxsckvarandlist, by qxsck): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0091-DOC [WEB] Variable and list (TurboWarp/qxsckvarandlist, by qxsck): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0092-LOAD [TERMINAL] Dictionaries (TurboWarp/verctedictionaries, by Vercte): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0092-RUN [TERMINAL] Dictionaries (TurboWarp/verctedictionaries, by Vercte): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0092-CREDIT [WEB] Dictionaries (TurboWarp/verctedictionaries, by Vercte): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0092-SAFE [WEB] Dictionaries (TurboWarp/verctedictionaries, by Vercte): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0092-DOC [WEB] Dictionaries (TurboWarp/verctedictionaries, by Vercte): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0093-LOAD [TERMINAL] HTTP (TurboWarp/gsaHTTPRequests, by RedMan13): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0093-RUN [TERMINAL] HTTP (TurboWarp/gsaHTTPRequests, by RedMan13): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0093-CREDIT [WEB] HTTP (TurboWarp/gsaHTTPRequests, by RedMan13): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0093-SAFE [WEB] HTTP (TurboWarp/gsaHTTPRequests, by RedMan13): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0093-DOC [WEB] HTTP (TurboWarp/gsaHTTPRequests, by RedMan13): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0094-LOAD [TERMINAL] WebSocket (TurboWarp/gsaWebsocket, by RedMan13): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0094-RUN [TERMINAL] WebSocket (TurboWarp/gsaWebsocket, by RedMan13): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0094-CREDIT [WEB] WebSocket (TurboWarp/gsaWebsocket, by RedMan13): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0094-SAFE [WEB] WebSocket (TurboWarp/gsaWebsocket, by RedMan13): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0094-DOC [WEB] WebSocket (TurboWarp/gsaWebsocket, by RedMan13): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0095-LOAD [TERMINAL] Webhooks (TurboWarp/cubesterWebhooks, by CubesterYT): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0095-RUN [TERMINAL] Webhooks (TurboWarp/cubesterWebhooks, by CubesterYT): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0095-CREDIT [WEB] Webhooks (TurboWarp/cubesterWebhooks, by CubesterYT): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0095-SAFE [WEB] Webhooks (TurboWarp/cubesterWebhooks, by CubesterYT): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0095-DOC [WEB] Webhooks (TurboWarp/cubesterWebhooks, by CubesterYT): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0096-LOAD [TERMINAL] Comment Blocks (TurboWarp/lmscomments, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0096-RUN [TERMINAL] Comment Blocks (TurboWarp/lmscomments, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0096-CREDIT [WEB] Comment Blocks (TurboWarp/lmscomments, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0096-SAFE [WEB] Comment Blocks (TurboWarp/lmscomments, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0096-DOC [WEB] Comment Blocks (TurboWarp/lmscomments, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0097-LOAD [TERMINAL] Longman Dictionary (TurboWarp/longvegdictionary, by veggiecan0419): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0097-RUN [TERMINAL] Longman Dictionary (TurboWarp/longvegdictionary, by veggiecan0419): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0097-CREDIT [WEB] Longman Dictionary (TurboWarp/longvegdictionary, by veggiecan0419): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0097-SAFE [WEB] Longman Dictionary (TurboWarp/longvegdictionary, by veggiecan0419): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0097-DOC [WEB] Longman Dictionary (TurboWarp/longvegdictionary, by veggiecan0419): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0098-LOAD [TERMINAL] NFCWarp (TurboWarp/alestorenfc, by Alestore Games): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0098-RUN [TERMINAL] NFCWarp (TurboWarp/alestorenfc, by Alestore Games): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0098-CREDIT [WEB] NFCWarp (TurboWarp/alestorenfc, by Alestore Games): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0098-SAFE [WEB] NFCWarp (TurboWarp/alestorenfc, by Alestore Games): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0098-DOC [WEB] NFCWarp (TurboWarp/alestorenfc, by Alestore Games): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0099-LOAD [TERMINAL] DECtalk Text to Speech (TurboWarp/nishiowoDectalk, by NishiOwO): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0099-RUN [TERMINAL] DECtalk Text to Speech (TurboWarp/nishiowoDectalk, by NishiOwO): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0099-CREDIT [WEB] DECtalk Text to Speech (TurboWarp/nishiowoDectalk, by NishiOwO): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0099-SAFE [WEB] DECtalk Text to Speech (TurboWarp/nishiowoDectalk, by NishiOwO): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0099-DOC [WEB] DECtalk Text to Speech (TurboWarp/nishiowoDectalk, by NishiOwO): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0100-LOAD [TERMINAL] Steamworks (TurboWarp/steamworks, by GarboMuffin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0100-RUN [TERMINAL] Steamworks (TurboWarp/steamworks, by GarboMuffin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0100-CREDIT [WEB] Steamworks (TurboWarp/steamworks, by GarboMuffin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0100-SAFE [WEB] Steamworks (TurboWarp/steamworks, by GarboMuffin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0100-DOC [WEB] Steamworks (TurboWarp/steamworks, by GarboMuffin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0101-LOAD [TERMINAL] itch.io (TurboWarp/itch, by softed): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0101-RUN [TERMINAL] itch.io (TurboWarp/itch, by softed): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0101-CREDIT [WEB] itch.io (TurboWarp/itch, by softed): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0101-SAFE [WEB] itch.io (TurboWarp/itch, by softed): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0101-DOC [WEB] itch.io (TurboWarp/itch, by softed): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0102-LOAD [TERMINAL] Game Jolt (TurboWarp/GameJoltAPI, by softed): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0102-RUN [TERMINAL] Game Jolt (TurboWarp/GameJoltAPI, by softed): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0102-CREDIT [WEB] Game Jolt (TurboWarp/GameJoltAPI, by softed): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0102-SAFE [WEB] Game Jolt (TurboWarp/GameJoltAPI, by softed): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0102-DOC [WEB] Game Jolt (TurboWarp/GameJoltAPI, by softed): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0103-LOAD [TERMINAL] Newgrounds (TurboWarp/NGIO, by ObviousAlexC): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0103-RUN [TERMINAL] Newgrounds (TurboWarp/NGIO, by ObviousAlexC): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0103-CREDIT [WEB] Newgrounds (TurboWarp/NGIO, by ObviousAlexC): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0103-SAFE [WEB] Newgrounds (TurboWarp/NGIO, by ObviousAlexC): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0103-DOC [WEB] Newgrounds (TurboWarp/NGIO, by ObviousAlexC): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0104-LOAD [TERMINAL] McUtils (TurboWarp/lmsmcutils, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0104-RUN [TERMINAL] McUtils (TurboWarp/lmsmcutils, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0104-CREDIT [WEB] McUtils (TurboWarp/lmsmcutils, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0104-SAFE [WEB] McUtils (TurboWarp/lmsmcutils, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0104-DOC [WEB] McUtils (TurboWarp/lmsmcutils, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0105-LOAD [TERMINAL] Pen+ (PenguinMod/, by pinksheep2917): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0105-RUN [TERMINAL] Pen+ (PenguinMod/, by pinksheep2917): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0105-CREDIT [WEB] Pen+ (PenguinMod/, by pinksheep2917): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0105-SAFE [WEB] Pen+ (PenguinMod/, by pinksheep2917): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0105-DOC [WEB] Pen+ (PenguinMod/, by pinksheep2917): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0106-LOAD [TERMINAL] Shovel Debugger (PenguinMod/, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0106-RUN [TERMINAL] Shovel Debugger (PenguinMod/, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0106-CREDIT [WEB] Shovel Debugger (PenguinMod/, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0106-SAFE [WEB] Shovel Debugger (PenguinMod/, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0106-DOC [WEB] Shovel Debugger (PenguinMod/, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0107-LOAD [TERMINAL] Server Storage (PenguinMod/, by Ikelene): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0107-RUN [TERMINAL] Server Storage (PenguinMod/, by Ikelene): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0107-CREDIT [WEB] Server Storage (PenguinMod/, by Ikelene): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0107-SAFE [WEB] Server Storage (PenguinMod/, by Ikelene): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0107-DOC [WEB] Server Storage (PenguinMod/, by Ikelene): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0108-LOAD [TERMINAL] Storage Plus (PenguinMod/, by Gen1x): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0108-RUN [TERMINAL] Storage Plus (PenguinMod/, by Gen1x): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0108-CREDIT [WEB] Storage Plus (PenguinMod/, by Gen1x): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0108-SAFE [WEB] Storage Plus (PenguinMod/, by Gen1x): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0108-DOC [WEB] Storage Plus (PenguinMod/, by Gen1x): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0109-LOAD [TERMINAL] MotionSprite (PenguinMod/, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0109-RUN [TERMINAL] MotionSprite (PenguinMod/, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0109-CREDIT [WEB] MotionSprite (PenguinMod/, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0109-SAFE [WEB] MotionSprite (PenguinMod/, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0109-DOC [WEB] MotionSprite (PenguinMod/, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0110-LOAD [TERMINAL] Iris Text (PenguinMod/, by Gen1xLol): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0110-RUN [TERMINAL] Iris Text (PenguinMod/, by Gen1xLol): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0110-CREDIT [WEB] Iris Text (PenguinMod/, by Gen1xLol): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0110-SAFE [WEB] Iris Text (PenguinMod/, by Gen1xLol): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0110-DOC [WEB] Iris Text (PenguinMod/, by Gen1xLol): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0111-LOAD [TERMINAL] Boxed Physics (PenguinMod/, by pooiod7): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0111-RUN [TERMINAL] Boxed Physics (PenguinMod/, by pooiod7): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0111-CREDIT [WEB] Boxed Physics (PenguinMod/, by pooiod7): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0111-SAFE [WEB] Boxed Physics (PenguinMod/, by pooiod7): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0111-DOC [WEB] Boxed Physics (PenguinMod/, by pooiod7): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0112-LOAD [TERMINAL] Lighting (PenguinMod/, by Gen1xLol): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0112-RUN [TERMINAL] Lighting (PenguinMod/, by Gen1xLol): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0112-CREDIT [WEB] Lighting (PenguinMod/, by Gen1xLol): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0112-SAFE [WEB] Lighting (PenguinMod/, by Gen1xLol): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0112-DOC [WEB] Lighting (PenguinMod/, by Gen1xLol): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0113-LOAD [TERMINAL] 3D Math (PenguinMod/, by pinksheep2917): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0113-RUN [TERMINAL] 3D Math (PenguinMod/, by pinksheep2917): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0113-CREDIT [WEB] 3D Math (PenguinMod/, by pinksheep2917): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0113-SAFE [WEB] 3D Math (PenguinMod/, by pinksheep2917): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0113-DOC [WEB] 3D Math (PenguinMod/, by pinksheep2917): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0114-LOAD [TERMINAL] Beat Sync (PenguinMod/, by Gen1xLol): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0114-RUN [TERMINAL] Beat Sync (PenguinMod/, by Gen1xLol): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0114-CREDIT [WEB] Beat Sync (PenguinMod/, by Gen1xLol): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0114-SAFE [WEB] Beat Sync (PenguinMod/, by Gen1xLol): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0114-DOC [WEB] Beat Sync (PenguinMod/, by Gen1xLol): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0115-LOAD [TERMINAL] Object (PenguinMod/, by skyhigh173): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0115-RUN [TERMINAL] Object (PenguinMod/, by skyhigh173): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0115-CREDIT [WEB] Object (PenguinMod/, by skyhigh173): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0115-SAFE [WEB] Object (PenguinMod/, by skyhigh173): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0115-DOC [WEB] Object (PenguinMod/, by skyhigh173): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0116-LOAD [TERMINAL] Array Buffers (PenguinMod/, by AndrewGaming587): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0116-RUN [TERMINAL] Array Buffers (PenguinMod/, by AndrewGaming587): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0116-CREDIT [WEB] Array Buffers (PenguinMod/, by AndrewGaming587): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0116-SAFE [WEB] Array Buffers (PenguinMod/, by AndrewGaming587): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0116-DOC [WEB] Array Buffers (PenguinMod/, by AndrewGaming587): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0117-LOAD [TERMINAL] Extra Timers (PenguinMod/, by Steve0Greatness): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0117-RUN [TERMINAL] Extra Timers (PenguinMod/, by Steve0Greatness): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0117-CREDIT [WEB] Extra Timers (PenguinMod/, by Steve0Greatness): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0117-SAFE [WEB] Extra Timers (PenguinMod/, by Steve0Greatness): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0117-DOC [WEB] Extra Timers (PenguinMod/, by Steve0Greatness): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0118-LOAD [TERMINAL] Dictation (PenguinMod/, by pooiod7): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0118-RUN [TERMINAL] Dictation (PenguinMod/, by pooiod7): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0118-CREDIT [WEB] Dictation (PenguinMod/, by pooiod7): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0118-SAFE [WEB] Dictation (PenguinMod/, by pooiod7): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0118-DOC [WEB] Dictation (PenguinMod/, by pooiod7): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0119-LOAD [TERMINAL] Doodle Recognition (PenguinMod/, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0119-RUN [TERMINAL] Doodle Recognition (PenguinMod/, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0119-CREDIT [WEB] Doodle Recognition (PenguinMod/, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0119-SAFE [WEB] Doodle Recognition (PenguinMod/, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0119-DOC [WEB] Doodle Recognition (PenguinMod/, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0120-LOAD [TERMINAL] Text To Speech: Redone (PenguinMod/, by PuzzlingGGG): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0120-RUN [TERMINAL] Text To Speech: Redone (PenguinMod/, by PuzzlingGGG): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0120-CREDIT [WEB] Text To Speech: Redone (PenguinMod/, by PuzzlingGGG): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0120-SAFE [WEB] Text To Speech: Redone (PenguinMod/, by PuzzlingGGG): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0120-DOC [WEB] Text To Speech: Redone (PenguinMod/, by PuzzlingGGG): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0121-LOAD [TERMINAL] CloudLink (PenguinMod/, by MikeDev101): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0121-RUN [TERMINAL] CloudLink (PenguinMod/, by MikeDev101): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0121-CREDIT [WEB] CloudLink (PenguinMod/, by MikeDev101): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0121-SAFE [WEB] CloudLink (PenguinMod/, by MikeDev101): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0121-DOC [WEB] CloudLink (PenguinMod/, by MikeDev101): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0122-LOAD [TERMINAL] E2EE (PenguinMod/, by MikeDev101): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0122-RUN [TERMINAL] E2EE (PenguinMod/, by MikeDev101): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0122-CREDIT [WEB] E2EE (PenguinMod/, by MikeDev101): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0122-SAFE [WEB] E2EE (PenguinMod/, by MikeDev101): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0122-DOC [WEB] E2EE (PenguinMod/, by MikeDev101): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0123-LOAD [TERMINAL] WebRTC (PenguinMod/, by MikeDev101): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0123-RUN [TERMINAL] WebRTC (PenguinMod/, by MikeDev101): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0123-CREDIT [WEB] WebRTC (PenguinMod/, by MikeDev101): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0123-SAFE [WEB] WebRTC (PenguinMod/, by MikeDev101): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0123-DOC [WEB] WebRTC (PenguinMod/, by MikeDev101): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0124-LOAD [TERMINAL] PenguinHook (PenguinMod/, by MubiLop): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0124-RUN [TERMINAL] PenguinHook (PenguinMod/, by MubiLop): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0124-CREDIT [WEB] PenguinHook (PenguinMod/, by MubiLop): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0124-SAFE [WEB] PenguinHook (PenguinMod/, by MubiLop): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0124-DOC [WEB] PenguinHook (PenguinMod/, by MubiLop): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0125-LOAD [TERMINAL] Number Utilities (PenguinMod/, by MubiLop): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0125-RUN [TERMINAL] Number Utilities (PenguinMod/, by MubiLop): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0125-CREDIT [WEB] Number Utilities (PenguinMod/, by MubiLop): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0125-SAFE [WEB] Number Utilities (PenguinMod/, by MubiLop): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0125-DOC [WEB] Number Utilities (PenguinMod/, by MubiLop): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0126-LOAD [TERMINAL] Mathematics (PenguinMod/, by jwklong): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0126-RUN [TERMINAL] Mathematics (PenguinMod/, by jwklong): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0126-CREDIT [WEB] Mathematics (PenguinMod/, by jwklong): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0126-SAFE [WEB] Mathematics (PenguinMod/, by jwklong): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0126-DOC [WEB] Mathematics (PenguinMod/, by jwklong): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0127-LOAD [TERMINAL] Big Decimal (PenguinMod/, by qxsck): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0127-RUN [TERMINAL] Big Decimal (PenguinMod/, by qxsck): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0127-CREDIT [WEB] Big Decimal (PenguinMod/, by qxsck): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0127-SAFE [WEB] Big Decimal (PenguinMod/, by qxsck): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0127-DOC [WEB] Big Decimal (PenguinMod/, by qxsck): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0128-LOAD [TERMINAL] Date Format (PenguinMod/, by ddededodediamante): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0128-RUN [TERMINAL] Date Format (PenguinMod/, by ddededodediamante): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0128-CREDIT [WEB] Date Format (PenguinMod/, by ddededodediamante): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0128-SAFE [WEB] Date Format (PenguinMod/, by ddededodediamante): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0128-DOC [WEB] Date Format (PenguinMod/, by ddededodediamante): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0129-LOAD [TERMINAL] Yet Another String Extension (PenguinMod/, by DogeisCut): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0129-RUN [TERMINAL] Yet Another String Extension (PenguinMod/, by DogeisCut): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0129-CREDIT [WEB] Yet Another String Extension (PenguinMod/, by DogeisCut): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0129-SAFE [WEB] Yet Another String Extension (PenguinMod/, by DogeisCut): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0129-DOC [WEB] Yet Another String Extension (PenguinMod/, by DogeisCut): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0130-LOAD [TERMINAL] Regular Expressions (PenguinMod/, by DogeisCut): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0130-RUN [TERMINAL] Regular Expressions (PenguinMod/, by DogeisCut): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0130-CREDIT [WEB] Regular Expressions (PenguinMod/, by DogeisCut): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0130-SAFE [WEB] Regular Expressions (PenguinMod/, by DogeisCut): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0130-DOC [WEB] Regular Expressions (PenguinMod/, by DogeisCut): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0131-LOAD [TERMINAL] Sets (PenguinMod/, by DogeisCut): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0131-RUN [TERMINAL] Sets (PenguinMod/, by DogeisCut): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0131-CREDIT [WEB] Sets (PenguinMod/, by DogeisCut): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0131-SAFE [WEB] Sets (PenguinMod/, by DogeisCut): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0131-DOC [WEB] Sets (PenguinMod/, by DogeisCut): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0132-LOAD [TERMINAL] Iterators (PenguinMod/, by Div): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0132-RUN [TERMINAL] Iterators (PenguinMod/, by Div): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0132-CREDIT [WEB] Iterators (PenguinMod/, by Div): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0132-SAFE [WEB] Iterators (PenguinMod/, by Div): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0132-DOC [WEB] Iterators (PenguinMod/, by Div): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0133-LOAD [TERMINAL] Algebraic Effects (PenguinMod/, by Div): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0133-RUN [TERMINAL] Algebraic Effects (PenguinMod/, by Div): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0133-CREDIT [WEB] Algebraic Effects (PenguinMod/, by Div): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0133-SAFE [WEB] Algebraic Effects (PenguinMod/, by Div): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0133-DOC [WEB] Algebraic Effects (PenguinMod/, by Div): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0134-LOAD [TERMINAL] 3D Vectors & Quaternions (PenguinMod/, by Div): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0134-RUN [TERMINAL] 3D Vectors & Quaternions (PenguinMod/, by Div): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0134-CREDIT [WEB] 3D Vectors & Quaternions (PenguinMod/, by Div): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0134-SAFE [WEB] 3D Vectors & Quaternions (PenguinMod/, by Div): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0134-DOC [WEB] 3D Vectors & Quaternions (PenguinMod/, by Div): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0135-LOAD [TERMINAL] Blobs (PenguinMod/, by Faunks): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0135-RUN [TERMINAL] Blobs (PenguinMod/, by Faunks): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0135-CREDIT [WEB] Blobs (PenguinMod/, by Faunks): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0135-SAFE [WEB] Blobs (PenguinMod/, by Faunks): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0135-DOC [WEB] Blobs (PenguinMod/, by Faunks): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0136-LOAD [TERMINAL] Random Utilities (PenguinMod/, by Gen1xLol): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0136-RUN [TERMINAL] Random Utilities (PenguinMod/, by Gen1xLol): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0136-CREDIT [WEB] Random Utilities (PenguinMod/, by Gen1xLol): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0136-SAFE [WEB] Random Utilities (PenguinMod/, by Gen1xLol): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0136-DOC [WEB] Random Utilities (PenguinMod/, by Gen1xLol): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0137-LOAD [TERMINAL] Toast Notifications (PenguinMod/, by MubiLop): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0137-RUN [TERMINAL] Toast Notifications (PenguinMod/, by MubiLop): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0137-CREDIT [WEB] Toast Notifications (PenguinMod/, by MubiLop): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0137-SAFE [WEB] Toast Notifications (PenguinMod/, by MubiLop): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0137-DOC [WEB] Toast Notifications (PenguinMod/, by MubiLop): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0138-LOAD [TERMINAL] Project Interfaces (PenguinMod/, by Lord cat): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0138-RUN [TERMINAL] Project Interfaces (PenguinMod/, by Lord cat): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0138-CREDIT [WEB] Project Interfaces (PenguinMod/, by Lord cat): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0138-SAFE [WEB] Project Interfaces (PenguinMod/, by Lord cat): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0138-DOC [WEB] Project Interfaces (PenguinMod/, by Lord cat): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0139-LOAD [TERMINAL] Git Penguin (PenguinMod/, by justablock): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0139-RUN [TERMINAL] Git Penguin (PenguinMod/, by justablock): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0139-CREDIT [WEB] Git Penguin (PenguinMod/, by justablock): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0139-SAFE [WEB] Git Penguin (PenguinMod/, by justablock): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0139-DOC [WEB] Git Penguin (PenguinMod/, by justablock): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0140-LOAD [TERMINAL] Pang API (PenguinMod/, by oc9x97): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0140-RUN [TERMINAL] Pang API (PenguinMod/, by oc9x97): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0140-CREDIT [WEB] Pang API (PenguinMod/, by oc9x97): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0140-SAFE [WEB] Pang API (PenguinMod/, by oc9x97): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0140-DOC [WEB] Pang API (PenguinMod/, by oc9x97): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0141-LOAD [TERMINAL] TurboWeather (PenguinMod/, by RubyDevs): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0141-RUN [TERMINAL] TurboWeather (PenguinMod/, by RubyDevs): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0141-CREDIT [WEB] TurboWeather (PenguinMod/, by RubyDevs): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0141-SAFE [WEB] TurboWeather (PenguinMod/, by RubyDevs): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0141-DOC [WEB] TurboWeather (PenguinMod/, by RubyDevs): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0142-LOAD [TERMINAL] Cockatiel Location (PenguinMod/, by bruhbeast-pixel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0142-RUN [TERMINAL] Cockatiel Location (PenguinMod/, by bruhbeast-pixel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0142-CREDIT [WEB] Cockatiel Location (PenguinMod/, by bruhbeast-pixel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0142-SAFE [WEB] Cockatiel Location (PenguinMod/, by bruhbeast-pixel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0142-DOC [WEB] Cockatiel Location (PenguinMod/, by bruhbeast-pixel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0143-LOAD [TERMINAL] CORS Proxy (PenguinMod/, by NamelessCat): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0143-RUN [TERMINAL] CORS Proxy (PenguinMod/, by NamelessCat): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0143-CREDIT [WEB] CORS Proxy (PenguinMod/, by NamelessCat): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0143-SAFE [WEB] CORS Proxy (PenguinMod/, by NamelessCat): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0143-DOC [WEB] CORS Proxy (PenguinMod/, by NamelessCat): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0144-LOAD [TERMINAL] Translation Keys (PenguinMod/, by Embin): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0144-RUN [TERMINAL] Translation Keys (PenguinMod/, by Embin): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0144-CREDIT [WEB] Translation Keys (PenguinMod/, by Embin): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0144-SAFE [WEB] Translation Keys (PenguinMod/, by Embin): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0144-DOC [WEB] Translation Keys (PenguinMod/, by Embin): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0145-LOAD [TERMINAL] All Menus (PenguinMod/, by LilyMakesThings): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0145-RUN [TERMINAL] All Menus (PenguinMod/, by LilyMakesThings): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0145-CREDIT [WEB] All Menus (PenguinMod/, by LilyMakesThings): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0145-SAFE [WEB] All Menus (PenguinMod/, by LilyMakesThings): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0145-DOC [WEB] All Menus (PenguinMod/, by LilyMakesThings): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0146-LOAD [TERMINAL] Extension Exposer (PenguinMod/, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0146-RUN [TERMINAL] Extension Exposer (PenguinMod/, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0146-CREDIT [WEB] Extension Exposer (PenguinMod/, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0146-SAFE [WEB] Extension Exposer (PenguinMod/, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0146-DOC [WEB] Extension Exposer (PenguinMod/, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0147-LOAD [TERMINAL] More Fields (PenguinMod/, by yuri-kiss): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0147-RUN [TERMINAL] More Fields (PenguinMod/, by yuri-kiss): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0147-CREDIT [WEB] More Fields (PenguinMod/, by yuri-kiss): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0147-SAFE [WEB] More Fields (PenguinMod/, by yuri-kiss): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0147-DOC [WEB] More Fields (PenguinMod/, by yuri-kiss): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0148-LOAD [TERMINAL] Beepbox Player (PenguinMod/, by DogeisCut): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0148-RUN [TERMINAL] Beepbox Player (PenguinMod/, by DogeisCut): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0148-CREDIT [WEB] Beepbox Player (PenguinMod/, by DogeisCut): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0148-SAFE [WEB] Beepbox Player (PenguinMod/, by DogeisCut): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0148-DOC [WEB] Beepbox Player (PenguinMod/, by DogeisCut): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0149-LOAD [TERMINAL] Update File (Direct Access) (PenguinMod/, by Anonymous-cat1): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0149-RUN [TERMINAL] Update File (Direct Access) (PenguinMod/, by Anonymous-cat1): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0149-CREDIT [WEB] Update File (Direct Access) (PenguinMod/, by Anonymous-cat1): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0149-SAFE [WEB] Update File (Direct Access) (PenguinMod/, by Anonymous-cat1): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0149-DOC [WEB] Update File (Direct Access) (PenguinMod/, by Anonymous-cat1): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0150-LOAD [TERMINAL] YeetYourFiles (PenguinMod/, by MubiLop): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0150-RUN [TERMINAL] YeetYourFiles (PenguinMod/, by MubiLop): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0150-CREDIT [WEB] YeetYourFiles (PenguinMod/, by MubiLop): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0150-SAFE [WEB] YeetYourFiles (PenguinMod/, by MubiLop): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0150-DOC [WEB] YeetYourFiles (PenguinMod/, by MubiLop): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0151-LOAD [TERMINAL] File Upload (PenguinMod/, by Codefoxy): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0151-RUN [TERMINAL] File Upload (PenguinMod/, by Codefoxy): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0151-CREDIT [WEB] File Upload (PenguinMod/, by Codefoxy): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0151-SAFE [WEB] File Upload (PenguinMod/, by Codefoxy): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0151-DOC [WEB] File Upload (PenguinMod/, by Codefoxy): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0152-LOAD [TERMINAL] Device Motion (PenguinMod/, by gaimerI17): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0152-RUN [TERMINAL] Device Motion (PenguinMod/, by gaimerI17): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0152-CREDIT [WEB] Device Motion (PenguinMod/, by gaimerI17): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0152-SAFE [WEB] Device Motion (PenguinMod/, by gaimerI17): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0152-DOC [WEB] Device Motion (PenguinMod/, by gaimerI17): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0153-LOAD [TERMINAL] Video Sharing (PenguinMod/, by pooiod7): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0153-RUN [TERMINAL] Video Sharing (PenguinMod/, by pooiod7): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0153-CREDIT [WEB] Video Sharing (PenguinMod/, by pooiod7): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0153-SAFE [WEB] Video Sharing (PenguinMod/, by pooiod7): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0153-DOC [WEB] Video Sharing (PenguinMod/, by pooiod7): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0154-LOAD [TERMINAL] WindowHasher (PenguinMod/, by pooiod7): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0154-RUN [TERMINAL] WindowHasher (PenguinMod/, by pooiod7): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0154-CREDIT [WEB] WindowHasher (PenguinMod/, by pooiod7): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0154-SAFE [WEB] WindowHasher (PenguinMod/, by pooiod7): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0154-DOC [WEB] WindowHasher (PenguinMod/, by pooiod7): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0155-LOAD [TERMINAL] Scratchblocks (PenguinMod/, by pooiod7): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0155-RUN [TERMINAL] Scratchblocks (PenguinMod/, by pooiod7): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0155-CREDIT [WEB] Scratchblocks (PenguinMod/, by pooiod7): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0155-SAFE [WEB] Scratchblocks (PenguinMod/, by pooiod7): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0155-DOC [WEB] Scratchblocks (PenguinMod/, by pooiod7): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0156-LOAD [TERMINAL] AuthPenguin (PenguinMod/, by MubiLop): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0156-RUN [TERMINAL] AuthPenguin (PenguinMod/, by MubiLop): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0156-CREDIT [WEB] AuthPenguin (PenguinMod/, by MubiLop): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0156-SAFE [WEB] AuthPenguin (PenguinMod/, by MubiLop): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0156-DOC [WEB] AuthPenguin (PenguinMod/, by MubiLop): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0157-LOAD [TERMINAL] Google Auth (PenguinMod/, by Ikelene): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0157-RUN [TERMINAL] Google Auth (PenguinMod/, by Ikelene): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0157-CREDIT [WEB] Google Auth (PenguinMod/, by Ikelene): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0157-SAFE [WEB] Google Auth (PenguinMod/, by Ikelene): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0157-DOC [WEB] Google Auth (PenguinMod/, by Ikelene): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0158-LOAD [TERMINAL] Discord Auth (PenguinMod/, by enderhacker): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0158-RUN [TERMINAL] Discord Auth (PenguinMod/, by enderhacker): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0158-CREDIT [WEB] Discord Auth (PenguinMod/, by enderhacker): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0158-SAFE [WEB] Discord Auth (PenguinMod/, by enderhacker): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0158-DOC [WEB] Discord Auth (PenguinMod/, by enderhacker): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0159-LOAD [TERMINAL] More Types (PenguinMod/, by VeryGoodScratcher42): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0159-RUN [TERMINAL] More Types (PenguinMod/, by VeryGoodScratcher42): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0159-CREDIT [WEB] More Types (PenguinMod/, by VeryGoodScratcher42): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0159-SAFE [WEB] More Types (PenguinMod/, by VeryGoodScratcher42): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0159-DOC [WEB] More Types (PenguinMod/, by VeryGoodScratcher42): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0160-LOAD [TERMINAL] Resolution (PenguinMod/, by DogeisCut): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0160-RUN [TERMINAL] Resolution (PenguinMod/, by DogeisCut): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0160-CREDIT [WEB] Resolution (PenguinMod/, by DogeisCut): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0160-SAFE [WEB] Resolution (PenguinMod/, by DogeisCut): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0160-DOC [WEB] Resolution (PenguinMod/, by DogeisCut): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0161-LOAD [TERMINAL] Cryptography (PenguinMod/, by gaimerI17): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0161-RUN [TERMINAL] Cryptography (PenguinMod/, by gaimerI17): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0161-CREDIT [WEB] Cryptography (PenguinMod/, by gaimerI17): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0161-SAFE [WEB] Cryptography (PenguinMod/, by gaimerI17): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0161-DOC [WEB] Cryptography (PenguinMod/, by gaimerI17): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0162-LOAD [TERMINAL] Twitch (PenguinMod/, by bop_tw): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0162-RUN [TERMINAL] Twitch (PenguinMod/, by bop_tw): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0162-CREDIT [WEB] Twitch (PenguinMod/, by bop_tw): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0162-SAFE [WEB] Twitch (PenguinMod/, by bop_tw): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0162-DOC [WEB] Twitch (PenguinMod/, by bop_tw): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0163-LOAD [TERMINAL] Chess (PenguinMod/, by Gen1xLol): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0163-RUN [TERMINAL] Chess (PenguinMod/, by Gen1xLol): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0163-CREDIT [WEB] Chess (PenguinMod/, by Gen1xLol): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0163-SAFE [WEB] Chess (PenguinMod/, by Gen1xLol): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0163-DOC [WEB] Chess (PenguinMod/, by Gen1xLol): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0164-LOAD [TERMINAL] CATS (PenguinMod/, by Gen1xLol): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0164-RUN [TERMINAL] CATS (PenguinMod/, by Gen1xLol): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0164-CREDIT [WEB] CATS (PenguinMod/, by Gen1xLol): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0164-SAFE [WEB] CATS (PenguinMod/, by Gen1xLol): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0164-DOC [WEB] CATS (PenguinMod/, by Gen1xLol): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0165-LOAD [TERMINAL] Free Servers (PenguinMod/, by WAYLIVES): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0165-RUN [TERMINAL] Free Servers (PenguinMod/, by WAYLIVES): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0165-CREDIT [WEB] Free Servers (PenguinMod/, by WAYLIVES): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0165-SAFE [WEB] Free Servers (PenguinMod/, by WAYLIVES): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0165-DOC [WEB] Free Servers (PenguinMod/, by WAYLIVES): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0166-LOAD [TERMINAL] More Types (PenguinMod/, by VeryGoodScratcher42): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0166-RUN [TERMINAL] More Types (PenguinMod/, by VeryGoodScratcher42): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0166-CREDIT [WEB] More Types (PenguinMod/, by VeryGoodScratcher42): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0166-SAFE [WEB] More Types (PenguinMod/, by VeryGoodScratcher42): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0166-DOC [WEB] More Types (PenguinMod/, by VeryGoodScratcher42): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0167-LOAD [TERMINAL] oneko (PenguinMod/, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0167-RUN [TERMINAL] oneko (PenguinMod/, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0167-CREDIT [WEB] oneko (PenguinMod/, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0167-SAFE [WEB] oneko (PenguinMod/, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0167-DOC [WEB] oneko (PenguinMod/, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0168-LOAD [TERMINAL] Counter++ (PenguinMod/, by MrRedstonia): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0168-RUN [TERMINAL] Counter++ (PenguinMod/, by MrRedstonia): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0168-CREDIT [WEB] Counter++ (PenguinMod/, by MrRedstonia): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0168-SAFE [WEB] Counter++ (PenguinMod/, by MrRedstonia): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0168-DOC [WEB] Counter++ (PenguinMod/, by MrRedstonia): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0169-LOAD [TERMINAL] How many lines? (PenguinMod/, by Monochromasity): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0169-RUN [TERMINAL] How many lines? (PenguinMod/, by Monochromasity): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0169-CREDIT [WEB] How many lines? (PenguinMod/, by Monochromasity): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0169-SAFE [WEB] How many lines? (PenguinMod/, by Monochromasity): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0169-DOC [WEB] How many lines? (PenguinMod/, by Monochromasity): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0170-LOAD [TERMINAL] Paint Utils (PenguinMod/, by Fruits555000): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0170-RUN [TERMINAL] Paint Utils (PenguinMod/, by Fruits555000): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0170-CREDIT [WEB] Paint Utils (PenguinMod/, by Fruits555000): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0170-SAFE [WEB] Paint Utils (PenguinMod/, by Fruits555000): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0170-DOC [WEB] Paint Utils (PenguinMod/, by Fruits555000): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0171-LOAD [TERMINAL] Smoke Detector (PenguinMod/, by ElectricFuzzball_PM): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0171-RUN [TERMINAL] Smoke Detector (PenguinMod/, by ElectricFuzzball_PM): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0171-CREDIT [WEB] Smoke Detector (PenguinMod/, by ElectricFuzzball_PM): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0171-SAFE [WEB] Smoke Detector (PenguinMod/, by ElectricFuzzball_PM): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0171-DOC [WEB] Smoke Detector (PenguinMod/, by ElectricFuzzball_PM): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0172-LOAD [TERMINAL] Stage Brah (PenguinMod/, by ElectricFuzzball_PM): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0172-RUN [TERMINAL] Stage Brah (PenguinMod/, by ElectricFuzzball_PM): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0172-CREDIT [WEB] Stage Brah (PenguinMod/, by ElectricFuzzball_PM): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0172-SAFE [WEB] Stage Brah (PenguinMod/, by ElectricFuzzball_PM): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0172-DOC [WEB] Stage Brah (PenguinMod/, by ElectricFuzzball_PM): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0173-LOAD [TERMINAL] MIDI Controller (PenguinMod/, by ElectricFuzzball_PM): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0173-RUN [TERMINAL] MIDI Controller (PenguinMod/, by ElectricFuzzball_PM): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0173-CREDIT [WEB] MIDI Controller (PenguinMod/, by ElectricFuzzball_PM): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0173-SAFE [WEB] MIDI Controller (PenguinMod/, by ElectricFuzzball_PM): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0173-DOC [WEB] MIDI Controller (PenguinMod/, by ElectricFuzzball_PM): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0174-LOAD [TERMINAL] Black Mold (PenguinMod/, by ElectricFuzzball_PM): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0174-RUN [TERMINAL] Black Mold (PenguinMod/, by ElectricFuzzball_PM): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0174-CREDIT [WEB] Black Mold (PenguinMod/, by ElectricFuzzball_PM): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0174-SAFE [WEB] Black Mold (PenguinMod/, by ElectricFuzzball_PM): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0174-DOC [WEB] Black Mold (PenguinMod/, by ElectricFuzzball_PM): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0175-LOAD [TERMINAL] ODE (PenguinMod/, by NishiOwO): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0175-RUN [TERMINAL] ODE (PenguinMod/, by NishiOwO): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0175-CREDIT [WEB] ODE (PenguinMod/, by NishiOwO): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0175-SAFE [WEB] ODE (PenguinMod/, by NishiOwO): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0175-DOC [WEB] ODE (PenguinMod/, by NishiOwO): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0176-LOAD [TERMINAL] TurboSynth (PenguinMod/, by NishiOwO): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0176-RUN [TERMINAL] TurboSynth (PenguinMod/, by NishiOwO): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0176-CREDIT [WEB] TurboSynth (PenguinMod/, by NishiOwO): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0176-SAFE [WEB] TurboSynth (PenguinMod/, by NishiOwO): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0176-DOC [WEB] TurboSynth (PenguinMod/, by NishiOwO): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0177-LOAD [TERMINAL] Libxmp (PenguinMod/, by NishiOwO): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0177-RUN [TERMINAL] Libxmp (PenguinMod/, by NishiOwO): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0177-CREDIT [WEB] Libxmp (PenguinMod/, by NishiOwO): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0177-SAFE [WEB] Libxmp (PenguinMod/, by NishiOwO): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0177-DOC [WEB] Libxmp (PenguinMod/, by NishiOwO): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0178-LOAD [TERMINAL] Scope Variable (PenguinMod/, by yuri-kiss): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0178-RUN [TERMINAL] Scope Variable (PenguinMod/, by yuri-kiss): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0178-CREDIT [WEB] Scope Variable (PenguinMod/, by yuri-kiss): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0178-SAFE [WEB] Scope Variable (PenguinMod/, by yuri-kiss): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0178-DOC [WEB] Scope Variable (PenguinMod/, by yuri-kiss): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0179-LOAD [TERMINAL] PenguinAI (PenguinMod/, by MubiLop): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0179-RUN [TERMINAL] PenguinAI (PenguinMod/, by MubiLop): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0179-CREDIT [WEB] PenguinAI (PenguinMod/, by MubiLop): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0179-SAFE [WEB] PenguinAI (PenguinMod/, by MubiLop): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0179-DOC [WEB] PenguinAI (PenguinMod/, by MubiLop): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0180-LOAD [TERMINAL] Block AI (PenguinMod/, by TheShovel): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0180-RUN [TERMINAL] Block AI (PenguinMod/, by TheShovel): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0180-CREDIT [WEB] Block AI (PenguinMod/, by TheShovel): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0180-SAFE [WEB] Block AI (PenguinMod/, by TheShovel): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0180-DOC [WEB] Block AI (PenguinMod/, by TheShovel): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0181-LOAD [TERMINAL] Format Numbers (PenguinMod/, by DogeisCut): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0181-RUN [TERMINAL] Format Numbers (PenguinMod/, by DogeisCut): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0181-CREDIT [WEB] Format Numbers (PenguinMod/, by DogeisCut): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0181-SAFE [WEB] Format Numbers (PenguinMod/, by DogeisCut): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0181-DOC [WEB] Format Numbers (PenguinMod/, by DogeisCut): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0182-LOAD [TERMINAL] Online Captcha (PenguinMod/, by enderhacker): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0182-RUN [TERMINAL] Online Captcha (PenguinMod/, by enderhacker): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0182-CREDIT [WEB] Online Captcha (PenguinMod/, by enderhacker): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0182-SAFE [WEB] Online Captcha (PenguinMod/, by enderhacker): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0182-DOC [WEB] Online Captcha (PenguinMod/, by enderhacker): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0183-LOAD [TERMINAL] Better Storage (PenguinMod/, by G1nX): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0183-RUN [TERMINAL] Better Storage (PenguinMod/, by G1nX): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0183-CREDIT [WEB] Better Storage (PenguinMod/, by G1nX): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0183-SAFE [WEB] Better Storage (PenguinMod/, by G1nX): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0183-DOC [WEB] Better Storage (PenguinMod/, by G1nX): 2-line kid description + 1 example idea for the extension gallery card.
+[ ] EXT-0184-LOAD [TERMINAL] Mouth Washer (PenguinMod/, by G1nX): loads in G-Warp (file:// and the github.io site)? blocks appear? page errors?
+[ ] EXT-0184-RUN [TERMINAL] Mouth Washer (PenguinMod/, by G1nX): build a 3-block test with its main block; does it work like in TurboWarp/PenguinMod? (paste output)
+[ ] EXT-0184-CREDIT [WEB] Mouth Washer (PenguinMod/, by G1nX): check credit + licence in G-Warp against the original page (url/license fields). Mismatch = bug.
+[ ] EXT-0184-SAFE [WEB] Mouth Washer (PenguinMod/, by G1nX): read its code/docs: does it use the internet, personal data, IP/location, logins? Is its Safe/Moderate/Dangerous label right?
+[ ] EXT-0184-DOC [WEB] Mouth Washer (PenguinMod/, by G1nX): 2-line kid description + 1 example idea for the extension gallery card.
