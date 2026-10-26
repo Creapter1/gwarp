@@ -697,3 +697,9 @@ USER REQUEST: attached 3 phone packs (PH-081..100, 101..116, 117..136; NEXT PH-1
 DONE: 56 recipes -> fixer -> 1 format error (switch_costume) + hand review: 7 logic fixes, 1 pen recipe dropped -> 55 PASS in ai-team/shared/2026-10-26-phone-recipes-PH-081-136/ (pack, fixes.txt, NOTES). Rules page: steps must match script, switch_costume rule; starter now says Start at PH-137. TOTAL phone recipes ready: 60 + 16 + 55 = 131.
 EVIDENCE: validator TESTED; runtime NOT-TESTED.
 --- END ENTRY ---
+
+--- ENTRY 32 ---
+UTC timestamp: 2026-10-26T19:15:03Z (owner 15:14 his time)   Who: Claude (configured claude-opus-5-5)   Task: AILAB-SETUP + GSPARK-BAR
+Starting commit: 66594de
+USER REQUEST (summary): ChatGPT (AI Lab chat) reports chatgpt/ai-lab/ does not exist and the AIM-0 deliverable is missing. "do what you gotta do on your end, and then give me the prompt so I can tell ChatGPT what to continue for the AI stuff. For now ... just create basic knowledge ... basic knowledge rules and the basic knowledge of how to run a project, how to create stuff". THEN (after the prompt): GWrap AI in the code area "has too many icons. All those icons should be hidden"; add "a little tiny icon ... right next to" the zoom +/- with the G-Spark logo (G electric style); click = opens "a large bar ... from the circle location ... to close to the ... coding area"; type + Enter = "instead of asking you, do you want me to build this, it will just immediately build it" with the usual animation; only shown with the code; "make sure to give me the prompt before you start working on the little tab bar".
+--- (closeout follows) ---
