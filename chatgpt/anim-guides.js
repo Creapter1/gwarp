@@ -202,38 +202,38 @@
     }
   }
   function drawRulers(svg, ctx) {
-    const w = ctx.w, h = ctx.h, ox = ctx.origin.x, oy = ctx.origin.y, sx = ctx.scale.x, sy = ctx.scale.y;
-    svg.append(el('rect', { x: 0, y: 0, width: w, height: 18, fill: '#141425', opacity: '.97', 'data-ruler-axis': 'x', 'pointer-events': 'all' }));
-    svg.append(el('rect', { x: 0, y: 18, width: 18, height: h - 18, fill: '#141425', opacity: '.97', 'data-ruler-axis': 'y', 'pointer-events': 'all' }));
+    const w = ctx.w, h = ctx.h, left = ctx.left || 0, top = ctx.top || 0, ox = ctx.origin.x, oy = ctx.origin.y, sx = ctx.scale.x, sy = ctx.scale.y;
+    svg.append(el('rect', { x: left, y: top, width: w, height: 18, fill: '#141425', opacity: '.97', 'data-ruler-axis': 'x', 'pointer-events': 'all' }));
+    svg.append(el('rect', { x: left, y: top + 18, width: 18, height: h - 18, fill: '#141425', opacity: '.97', 'data-ruler-axis': 'y', 'pointer-events': 'all' }));
     const text = (x, y, value, rotate) => {
       const t = el('text', { x, y, fill: '#c4b5fd', 'font-size': 8, 'font-family': 'system-ui,sans-serif', 'pointer-events': 'none' });
       t.textContent = String(value);
       if (rotate) t.setAttribute('transform', 'rotate(-90 ' + x + ' ' + y + ')');
       svg.append(t);
     };
-    for (let v = Math.ceil((-ox / sx) / 40) * 40; v <= Math.floor(((w - ox) / sx) / 40) * 40; v += 40) {
+    for (let v = Math.ceil(((left - ox) / sx) / 40) * 40; v <= Math.floor(((left + w - ox) / sx) / 40) * 40; v += 40) {
       const x = ox + v * sx;
-      svg.append(el('line', { x1: x, y1: 0, x2: x, y2: 18, stroke: '#8b5cf6', 'stroke-width': 1, 'pointer-events': 'none' }));
-      if (Math.abs(x - ox) > 22) text(x + 2, 8, v, false);
+      svg.append(el('line', { x1: x, y1: top, x2: x, y2: top + 18, stroke: '#8b5cf6', 'stroke-width': 1, 'pointer-events': 'none' }));
+      if (Math.abs(x - ox) > 22) text(x + 2, top + 8, v, false);
     }
-    for (let v = Math.ceil((-oy / sy) / 40) * 40; v <= Math.floor(((h - oy) / sy) / 40) * 40; v += 40) {
+    for (let v = Math.ceil(((top - oy) / sy) / 40) * 40; v <= Math.floor(((top + h - oy) / sy) / 40) * 40; v += 40) {
       const y = oy + v * sy;
-      svg.append(el('line', { x1: 0, y1: y, x2: 18, y2: y, stroke: '#8b5cf6', 'stroke-width': 1, 'pointer-events': 'none' }));
-      if (Math.abs(y - oy) > 22) text(14, y - 2, v, true);
+      svg.append(el('line', { x1: left, y1: y, x2: left + 18, y2: y, stroke: '#8b5cf6', 'stroke-width': 1, 'pointer-events': 'none' }));
+      if (Math.abs(y - oy) > 22) text(left + 14, y - 2, v, true);
     }
   }
   function drawLines(svg, ctx, d, preview) {
-    const w = ctx.w, h = ctx.h, ox = ctx.origin.x, oy = ctx.origin.y, sx = ctx.scale.x, sy = ctx.scale.y;
+    const w = ctx.w, h = ctx.h, left = ctx.left || 0, top = ctx.top || 0, ox = ctx.origin.x, oy = ctx.origin.y, sx = ctx.scale.x, sy = ctx.scale.y;
     if (d.builtins.stage) svg.append(el('rect', { x: ox - 240 * sx, y: oy - 180 * sy, width: 480 * sx, height: 360 * sy, fill: 'none', stroke: '#facc15', 'stroke-width': 1.3, 'stroke-dasharray': '4 4', 'pointer-events': 'none' }));
     if (d.builtins.centre) {
-      svg.append(el('line', { x1: ox, y1: 18, x2: ox, y2: h, stroke: '#4ade80', 'stroke-width': 1.1, 'stroke-dasharray': '2 5', opacity: '.9', 'pointer-events': 'none' }));
-      svg.append(el('line', { x1: 18, y1: oy, x2: w, y2: oy, stroke: '#4ade80', 'stroke-width': 1.1, 'stroke-dasharray': '2 5', opacity: '.9', 'pointer-events': 'none' }));
+      svg.append(el('line', { x1: ox, y1: top + 18, x2: ox, y2: top + h, stroke: '#4ade80', 'stroke-width': 1.1, 'stroke-dasharray': '2 5', opacity: '.9', 'pointer-events': 'none' }));
+      svg.append(el('line', { x1: left + 18, y1: oy, x2: left + w, y2: oy, stroke: '#4ade80', 'stroke-width': 1.1, 'stroke-dasharray': '2 5', opacity: '.9', 'pointer-events': 'none' }));
     }
     const addLine = (axis, value, id, kind, temporary) => {
       const v = temporary ? preview.value : value;
       const common = axis === 'x'
-        ? { x1: ox + v * sx, y1: 18, x2: ox + v * sx, y2: h }
-        : { x1: 18, y1: oy + v * sy, x2: w, y2: oy + v * sy };
+        ? { x1: ox + v * sx, y1: top + 18, x2: ox + v * sx, y2: top + h }
+        : { x1: left + 18, y1: oy + v * sy, x2: left + w, y2: oy + v * sy };
       const color = kind === 'builtin' ? '#4ade80' : '#8b5cf6';
       svg.append(el('line', { ...common, stroke: color, 'stroke-width': 1.4, 'stroke-dasharray': kind === 'builtin' ? '3 4' : '6 4', opacity: kind === 'builtin' ? '.8' : '.95', 'pointer-events': kind === 'user' ? 'stroke' : 'none', 'data-guide-id': kind === 'user' ? id : '', 'data-guide-axis': axis }));
       if (kind === 'user') svg.append(el('line', { ...common, stroke: 'transparent', 'stroke-width': 12, 'pointer-events': 'stroke', 'data-guide-id': id, 'data-guide-axis': axis }));
@@ -319,9 +319,9 @@
     }, true);
     const end = e => {
       if (!drag) return;
-      const p = svgPoint(svg, e), d = getData(surface.sprite), onRuler = drag.axis === 'x' ? p.y <= 18 : p.x <= 18;
+      const p = svgPoint(svg, e), d = getData(surface.sprite), onRuler = drag.axis === 'x' ? p.y <= (surface.context.top || 0) + 18 : p.x <= (surface.context.left || 0) + 18;
       if (drag.kind === 'new') {
-        if (!onRuler && p.x > 18 && p.y > 18) d.lines.push({ id: 'g' + Math.random().toString(36).slice(2, 9), axis: drag.axis, value: drag.value });
+        if (!onRuler && p.x > (surface.context.left || 0) + 18 && p.y > (surface.context.top || 0) + 18) d.lines.push({ id: 'g' + Math.random().toString(36).slice(2, 9), axis: drag.axis, value: drag.value });
       } else {
         const item = d.lines.find(g => g.id === drag.id);
         if (onRuler) d.lines = d.lines.filter(g => g.id !== drag.id);
@@ -386,7 +386,7 @@
     if (n.length !== 4 || n.some(x => !Number.isFinite(x))) return null;
     const rc = st.anim.rc || { x: 0, y: 0 };
     return { key: 'anim', parent, base, viewBox, preserve: base.getAttribute('preserveAspectRatio') || 'xMidYMid meet', rulers: true, sprite: st.s,
-      context: { w: n[2], h: n[3], origin: { x: rc.x, y: rc.y }, scale: { x: 1, y: 1 } } };
+      context: { w: n[2], h: n[3], left: n[0], top: n[1], origin: { x: rc.x, y: rc.y }, scale: { x: 1, y: 1 } } };
   }
   function flipbookSurface() {
     const parent = document.getElementById('gwFlipbook'), base = document.getElementById('gwFlipCanvas'), P = window.GW_FLIPBOOK?.state, s = activeSprite();
