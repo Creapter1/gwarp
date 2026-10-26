@@ -27,7 +27,8 @@ SK = ['follow the mouse', 'spin when clicked', 'grow and shrink (pulse)', 'bounc
  'chat bot answers yes/no', 'add names to a list in order', 'reverse a word', 'count letters in a word', 'join words into a sentence',
  'random password from letters', 'clock with the timer', 'stopwatch start/stop', 'metronome beat with a sound', 'keys play notes (start sound)',
  'teleport between two doors', 'spawn enemies every 2 seconds', 'enemy patrol left-right', 'score popup that floats up', 'confetti clones on win', 'make a button sprite']
-items = '\n'.join(f"  PH-{i:03d} {s}" for i, s in enumerate(SK, 1))
+START = 61  # PH-001..060 are done (2026-10-26); the list goes on from the original items 41+
+items = '; '.join(f"PH-{i:03d} {s}" for i, s in enumerate(SK[40:], START))
 P = f"""=====================================================================
  G-WARP PHONE BOT PROMPT (for the phone chatbot: code only, ~20 messages per chat, 2-3 min per answer)
  Written by Claude for the owner, 2026-10-26. HOW TO USE:
@@ -39,11 +40,13 @@ P = f"""=====================================================================
 =====================================================================
 -----------------------------------------------------------------------------------------------
 You write RECIPES that teach G-Warp's built-in AI helper (GWrap AI). G-Warp = a free Scratch-style block-coding app for kids.
+LIST of items (do them in order; when the list ends, invent new useful kid game/app skills, never repeating a title):
+{items}
 EVERYTHING you need is in this message. Do NOT browse, do NOT look anything up, do NOT plan or explain at length. Answer FAST.
 
 EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 10 items of the LIST, then one line "NEXT: PH-0NN". Nothing else.
 - Pack file shape:  {{"version": 1, "note": "phone recipes PH-0AA..PH-0BB", "recipes": [ <10 recipe objects> ], "tips": []}}
-- First answer: PH-001..PH-010, unless I wrote "start at PH-0NN". "continue" = the next 10. "continue with N" = the next N.
+- First answer: PH-061..PH-070, unless I wrote "start at PH-0NN". "continue" = the next 10. "continue with N" = the next N.
 - Start writing the code block right away. No planning text, no explanation before or after. Each recipe 4-20 blocks.
   If an item is too hard, make the simplest working version. Valid JSON: double quotes, no comments, no trailing commas.
 - Each recipe object looks exactly like this example:
@@ -51,7 +54,10 @@ EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 10 items o
 - "id": "r-ph-<short-words>" (MUST start with r-ph-, lowercase, dashes). "emoji": one emoji. "title": 3-8 words. "keys": 5-10 search words.
   "q": 3 different ways a KID would ask (simple words, small typos OK). "steps": 2-4 short kid sentences explaining the script.
   "script": a list of scripts; each script = a list of blocks; a block = ["type", [inputs], [menus], {{extra}}] (unused parts can be left out).
-  Inputs are strings ("10"), or a value node {{"type": ...}}, or a nested block {{"r": ["type", [inputs], [menus]]}}.
+  INPUTS are strings ("10") or a round reporter block {{"r": ["type", [inputs], [menus]]}}, e.g. {{"r": ["op_random", ["1", "6"]]}},
+  {{"r": ["get_var", [], ["score"]]}}, {{"r": ["answer"]}}, {{"r": ["x_position"]}}. NEVER put {{"type": ...}} in an input.
+  {{"type": ...}} value nodes are ONLY used inside "cond" (conditions), and a "cond" can NOT contain {{"r": ...}}.
+  Every variable/list the script uses goes in "prep": {{"vars": ["score"], "lists": ["my list"]}} on the recipe.
   C-blocks (forever, repeat, if, if_else, repeat_until): extra {{"body": [...]}} (if_else also "else": [...]);
   if / if_else / repeat_until / wait_until need extra {{"cond": <condition node>}}.
 - Condition nodes: {', '.join(sorted(v.COND_NODES))}
@@ -67,8 +73,6 @@ RULES: only blocks from the list (no made-up blocks); logic that works in Scratc
 no Scratch cat, no brands; no "made by AI"; 10 recipes per answer (unless I say another number); never repeat an id; no text outside the code block
 except the NEXT line.
 
-LIST:
-{items}
 -----------------------------------------------------------------------------------------------
 """
 open('ai-team/phone/PHONE-BOT-PROMPT.txt', 'w', encoding='utf-8').write(P)

@@ -1,0 +1,5554 @@
+{
+ "version": 1,
+ "note": "Phone bot recipes PH-001..060 (owner's phone chatbot, 2026-10-26), checked by Claude",
+ "recipes": [
+  {
+   "id": "r-ph-follow-mouse",
+   "emoji": "🖱️",
+   "title": "Follow the mouse pointer smoothly",
+   "keys": [
+    "follow",
+    "mouse",
+    "pointer",
+    "cursor",
+    "chase",
+    "move",
+    "track",
+    "point"
+   ],
+   "q": [
+    "make my sprite follow the mouse",
+    "how do i make it chase the mousse pointer",
+    "sprite go where my cursor is"
+   ],
+   "steps": [
+    "Green flag: the sprite keeps checking forever.",
+    "If it is not touching the mouse yet, it turns to face the mouse and moves 5 steps.",
+    "Want it faster? Use a bigger number like 10."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_rotation_style",
+      [],
+      [
+       "all around"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_not",
+           "args": [
+            {
+             "type": "touching_pointer"
+            }
+           ]
+          },
+          "body": [
+           [
+            "point_towards",
+            [],
+            [
+             "mouse-pointer"
+            ]
+           ],
+           [
+            "move",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-spin-when-clicked",
+   "emoji": "🌀",
+   "title": "Spin around when clicked",
+   "keys": [
+    "spin",
+    "click",
+    "clicked",
+    "turn",
+    "rotate",
+    "twirl",
+    "round",
+    "circle"
+   ],
+   "q": [
+    "make my sprite spin when i click it",
+    "how do i make it spinn around when clicked",
+    "turn in a circle when i press on it"
+   ],
+   "steps": [
+    "When you click the sprite, it plays a Pop sound.",
+    "It turns 10 degrees, 36 times. That makes one full circle!",
+    "At the end it faces right again."
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "repeat",
+      [
+       "36"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "turn_cw",
+         [
+          "10"
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.01"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "point_direction",
+      [
+       "90"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-grow-shrink-pulse",
+   "emoji": "💓",
+   "title": "Grow and shrink like a heartbeat",
+   "keys": [
+    "grow",
+    "shrink",
+    "pulse",
+    "size",
+    "bigger",
+    "smaller",
+    "heartbeat",
+    "throb"
+   ],
+   "q": [
+    "make my sprite grow and shrink",
+    "how do i make it pulse like a hart",
+    "get bigger then smaller again and again"
+   ],
+   "steps": [
+    "Green flag: the sprite starts at normal size.",
+    "It grows a little 10 times, then shrinks back 10 times.",
+    "Forever makes it keep pulsing. Smaller waits = faster pulse."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_size",
+      [
+       "100"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "repeat",
+         [
+          "10"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_size",
+            [
+             "5"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "0.03"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "repeat",
+         [
+          "10"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_size",
+            [
+             "-5"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "0.03"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-bounce-edges",
+   "emoji": "🏓",
+   "title": "Bounce off the edges",
+   "keys": [
+    "bounce",
+    "edge",
+    "edges",
+    "wall",
+    "walls",
+    "move",
+    "screen",
+    "dvd"
+   ],
+   "q": [
+    "make it bounce off the walls",
+    "how do i make my sprite bounse on the edge",
+    "keep moving and hit the sides"
+   ],
+   "steps": [
+    "Green flag: the sprite points at an angle so it moves diagonally.",
+    "Forever it moves 5 steps.",
+    "If it touches the edge, it bounces back the other way."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_rotation_style",
+      [],
+      [
+       "left-right"
+      ]
+     ],
+     [
+      "point_direction",
+      [
+       "45"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "move",
+         [
+          "5"
+         ]
+        ],
+        [
+         "bounce"
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-fade-in-out",
+   "emoji": "👻",
+   "title": "Fade in and out forever",
+   "keys": [
+    "fade",
+    "ghost",
+    "disappear",
+    "appear",
+    "invisible",
+    "transparent",
+    "effect",
+    "flicker"
+   ],
+   "q": [
+    "make my sprite fade in and out",
+    "how do i make it go invisable slowly",
+    "ghost effect that comes and goes"
+   ],
+   "steps": [
+    "Green flag: the ghost effect starts at 0, so you can fully see the sprite.",
+    "It adds ghost 20 times until it is almost invisible.",
+    "Then it takes the ghost away again. Forever repeats it!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_effect",
+      [
+       "0"
+      ],
+      [
+       "ghost"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "repeat",
+         [
+          "20"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_effect",
+            [
+             "5"
+            ],
+            [
+             "ghost"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "0.05"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "repeat",
+         [
+          "20"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_effect",
+            [
+             "-5"
+            ],
+            [
+             "ghost"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "0.05"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-random-spot-every-second",
+   "emoji": "🎲",
+   "title": "Jump to a random spot every second",
+   "keys": [
+    "random",
+    "position",
+    "teleport",
+    "jump",
+    "anywhere",
+    "second",
+    "spot",
+    "move"
+   ],
+   "q": [
+    "make my sprite go to a random place every second",
+    "teleport randomly over and over",
+    "how do i make it jump around randum"
+   ],
+   "steps": [
+    "Green flag starts a forever loop.",
+    "The sprite jumps to a random spot on the stage.",
+    "Then it waits 1 second and does it again."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "goto_random"
+        ],
+        [
+         "wait",
+         [
+          "1"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-say-hello-click",
+   "emoji": "👋",
+   "title": "Say hello when clicked",
+   "keys": [
+    "hello",
+    "say",
+    "click",
+    "clicked",
+    "talk",
+    "speech",
+    "bubble",
+    "greet"
+   ],
+   "q": [
+    "make my sprite say hello when i click it",
+    "how do i make it talk when clicked",
+    "speech bubble hi when i press it"
+   ],
+   "steps": [
+    "When you click the sprite, it plays a Pop sound.",
+    "Then it says Hello! in a speech bubble for 2 seconds.",
+    "Change the words to anything you like!"
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "say",
+      [
+       "Hello!",
+       "2"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-ask-name-greet",
+   "emoji": "🙋",
+   "title": "Ask your name and say hi",
+   "keys": [
+    "ask",
+    "name",
+    "greet",
+    "answer",
+    "question",
+    "type",
+    "hello",
+    "join"
+   ],
+   "q": [
+    "make it ask my name and say hi",
+    "how do i ask a question and use the anser",
+    "sprite says hello to whatever name i type"
+   ],
+   "steps": [
+    "Green flag: the sprite asks your name and waits for you to type.",
+    "Your words are saved in the answer block.",
+    "Join sticks Hello and your answer together, and the sprite says it!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "ask",
+      [
+       "What's your name?"
+      ]
+     ],
+     [
+      "say",
+      [
+       {
+        "r": [
+         "op_join",
+         [
+          "Hello, ",
+          {
+           "r": [
+            "answer"
+           ]
+          }
+         ]
+        ]
+       },
+       "2"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-count-clicks",
+   "emoji": "🔢",
+   "title": "Count how many times you click",
+   "keys": [
+    "count",
+    "clicks",
+    "click",
+    "counter",
+    "variable",
+    "score",
+    "number",
+    "tap"
+   ],
+   "q": [
+    "count how many times i click my sprite",
+    "how do i make a click counter",
+    "number goes up evry time i tap it"
+   ],
+   "steps": [
+    "Make a variable called clicks first.",
+    "Green flag: clicks starts at 0 and shows on the stage.",
+    "Each time you click the sprite, clicks goes up by 1 with a Pop!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "clicks"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "clicks"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "change_var",
+      [
+       "1"
+      ],
+      [
+       "clicks"
+      ]
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "clicks"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-countdown-10-to-0",
+   "emoji": "⏳",
+   "title": "Countdown from 10 to 0",
+   "keys": [
+    "countdown",
+    "count",
+    "down",
+    "timer",
+    "blast",
+    "seconds",
+    "number",
+    "variable"
+   ],
+   "q": [
+    "make a countdown from 10",
+    "how do i count down to zero",
+    "10 9 8 blast off timer"
+   ],
+   "steps": [
+    "Make a variable called count first.",
+    "Green flag: count starts at 10.",
+    "11 times: the sprite says the number, waits 1 second, and takes 1 away.",
+    "After 0 it shouts Blast off!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "10"
+      ],
+      [
+       "count"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "count"
+      ]
+     ],
+     [
+      "repeat",
+      [
+       "11"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "say_only",
+         [
+          {
+           "r": [
+            "get_var",
+            [],
+            [
+             "count"
+            ]
+           ]
+          }
+         ]
+        ],
+        [
+         "wait",
+         [
+          "1"
+         ]
+        ],
+        [
+         "change_var",
+         [
+          "-1"
+         ],
+         [
+          "count"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "say",
+      [
+       "Blast off!",
+       "2"
+      ]
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "count"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-change-colour-keys",
+   "emoji": "🌈",
+   "title": "Change colour with the keys",
+   "keys": [
+    "colour",
+    "color",
+    "change",
+    "keys",
+    "effect",
+    "rainbow",
+    "arrow",
+    "tint"
+   ],
+   "q": [
+    "change my sprite colour with the keys",
+    "how do i make it a diffrent color when i press a key",
+    "rainbow colors with arrow keys"
+   ],
+   "steps": [
+    "Right arrow: the colour effect goes up by 25.",
+    "Left arrow: the colour goes back down by 25.",
+    "Space: all effects are cleared, so it looks normal again."
+   ],
+   "script": [
+    [
+     [
+      "when_key",
+      [],
+      [
+       "right arrow"
+      ]
+     ],
+     [
+      "change_effect",
+      [
+       "25"
+      ],
+      [
+       "color"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "left arrow"
+      ]
+     ],
+     [
+      "change_effect",
+      [
+       "-25"
+      ],
+      [
+       "color"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "clear_effects"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-draw-trail-mouse",
+   "emoji": "✏️",
+   "title": "Draw a trail that follows the mouse",
+   "keys": [
+    "draw",
+    "pen",
+    "paint",
+    "trail",
+    "mouse",
+    "follow",
+    "clone",
+    "brush"
+   ],
+   "q": [
+    "draw with the mouse like a pen",
+    "how do i make a paint trail where my mouse goes",
+    "drawing game with the mowse"
+   ],
+   "steps": [
+    "Use a tiny dot costume for this sprite.",
+    "Forever the dot follows the mouse.",
+    "While you hold the mouse button, it makes clones that stay behind like paint!",
+    "Space wipes all the paint by restarting."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_size",
+      [
+       "30"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "goto_target",
+         [],
+         [
+          "mouse-pointer"
+         ]
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "mouse_down"
+          },
+          "body": [
+           [
+            "create_clone",
+            [],
+            [
+             "myself"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ],
+     [
+      "delete_clone"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-jump-space-simple",
+   "emoji": "🦘",
+   "title": "Jump with the space key",
+   "keys": [
+    "jump",
+    "space",
+    "hop",
+    "up",
+    "down",
+    "leap",
+    "platformer",
+    "key"
+   ],
+   "q": [
+    "make my sprite jump when i press space",
+    "how do i make it jumpp",
+    "hop up and come back down"
+   ],
+   "steps": [
+    "When you press space, the sprite goes up 10 steps, 10 times.",
+    "Then it comes back down the same way.",
+    "Bigger numbers = a higher jump!"
+   ],
+   "script": [
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "repeat",
+      [
+       "10"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "change_y",
+         [
+          "10"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "repeat",
+      [
+       "10"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "change_y",
+         [
+          "-10"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-gravity-fall-land",
+   "emoji": "🍎",
+   "title": "Fall with gravity and land",
+   "keys": [
+    "gravity",
+    "fall",
+    "land",
+    "drop",
+    "ground",
+    "floor",
+    "speed",
+    "physics"
+   ],
+   "q": [
+    "make my sprite fall down with gravity",
+    "how do i make it fall and stop on the grownd",
+    "drop from the sky and land"
+   ],
+   "steps": [
+    "Make a variable called y speed first.",
+    "The sprite starts at the top. Every moment, y speed gets 1 smaller, so it falls faster and faster.",
+    "When it gets low (y below -120), it lands: it stays at -120 and stops falling."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "goto_xy",
+      [
+       "0",
+       "150"
+      ]
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "y speed"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "change_var",
+         [
+          "-1"
+         ],
+         [
+          "y speed"
+         ]
+        ],
+        [
+         "change_y",
+         [
+          {
+           "r": [
+            "get_var",
+            [],
+            [
+             "y speed"
+            ]
+           ]
+          }
+         ]
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_lt",
+           "args": [
+            {
+             "type": "y_position"
+            },
+            {
+             "type": "literal",
+             "value": "-120"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_y",
+            [
+             "-120"
+            ]
+           ],
+           [
+            "set_var",
+            [
+             "0"
+            ],
+            [
+             "y speed"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "y speed"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-walk-arrows-flip",
+   "emoji": "↔️",
+   "title": "Walk left and right and flip",
+   "keys": [
+    "walk",
+    "left",
+    "right",
+    "arrow",
+    "arrows",
+    "flip",
+    "turn",
+    "move"
+   ],
+   "q": [
+    "walk left and right with arrow keys",
+    "how do i make him flip when he goes left",
+    "my sprite is upside down when walking left"
+   ],
+   "steps": [
+    "Green flag: left-right rotation stops the sprite from going upside down.",
+    "Right arrow: face right and move 5.",
+    "Left arrow: face left (it flips!) and move 5."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_rotation_style",
+      [],
+      [
+       "left-right"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "right arrow"
+          },
+          "body": [
+           [
+            "point_direction",
+            [
+             "90"
+            ]
+           ],
+           [
+            "move",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "left arrow"
+          },
+          "body": [
+           [
+            "point_direction",
+            [
+             "-90"
+            ]
+           ],
+           [
+            "move",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-move-wasd-8-dir",
+   "emoji": "🎮",
+   "title": "Move in 8 directions with WASD",
+   "keys": [
+    "wasd",
+    "move",
+    "8",
+    "direction",
+    "diagonal",
+    "keys",
+    "controls",
+    "topdown"
+   ],
+   "q": [
+    "move with w a s d keys",
+    "how do i go diagonal with wasd",
+    "top down movment controls"
+   ],
+   "steps": [
+    "Forever the sprite checks all 4 keys.",
+    "W goes up, S goes down, A goes left, D goes right.",
+    "Press two keys together, like W and D, to move diagonally!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "w"
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "s"
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "-5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "d"
+          },
+          "body": [
+           [
+            "change_x",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "a"
+          },
+          "body": [
+           [
+            "change_x",
+            [
+             "-5"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-shoot-ball-clones",
+   "emoji": "⚽",
+   "title": "Shoot a ball with clones",
+   "keys": [
+    "shoot",
+    "ball",
+    "clone",
+    "clones",
+    "bullet",
+    "fire",
+    "space",
+    "throw"
+   ],
+   "q": [
+    "shoot a ball when i press space",
+    "how do i make bullets with clones",
+    "fire lots of balls from my player"
+   ],
+   "steps": [
+    "Put this on a Ball sprite. Your hero sprite must be called Player.",
+    "The real Ball hides. Space makes a clone.",
+    "The clone jumps to the Player, shows, and flies right until it hits the edge, then deletes itself."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "hide"
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "create_clone",
+      [],
+      [
+       "myself"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_clone"
+     ],
+     [
+      "goto_xy",
+      [
+       {
+        "r": [
+         "sprite_prop",
+         [],
+         [
+          "x position",
+          "Player"
+         ]
+        ]
+       },
+       {
+        "r": [
+         "sprite_prop",
+         [],
+         [
+          "y position",
+          "Player"
+         ]
+        ]
+       }
+      ]
+     ],
+     [
+      "point_direction",
+      [
+       "90"
+      ]
+     ],
+     [
+      "show"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Zap"
+      ]
+     ],
+     [
+      "repeat_until",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "touching_edge"
+       },
+       "body": [
+        [
+         "move",
+         [
+          "10"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "delete_clone"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-enemy-chase-player",
+   "emoji": "👾",
+   "title": "Enemy moves toward the player",
+   "keys": [
+    "enemy",
+    "chase",
+    "follow",
+    "player",
+    "toward",
+    "hunt",
+    "monster",
+    "move"
+   ],
+   "q": [
+    "make the enemy chase my player",
+    "how do i make a monster folow me",
+    "bad guy moves to the player"
+   ],
+   "steps": [
+    "Put this on the Enemy. Your hero sprite must be called Player.",
+    "Green flag: the enemy starts in the top corner.",
+    "Forever it turns to face the Player and moves 2 steps, so it slowly chases you!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_rotation_style",
+      [],
+      [
+       "left-right"
+      ]
+     ],
+     [
+      "goto_xy",
+      [
+       "200",
+       "150"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "point_towards",
+         [],
+         [
+          "Player"
+         ]
+        ],
+        [
+         "move",
+         [
+          "2"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-collect-coin-score",
+   "emoji": "🪙",
+   "title": "Collect a coin and get points",
+   "keys": [
+    "coin",
+    "collect",
+    "score",
+    "points",
+    "touching",
+    "pickup",
+    "variable",
+    "money"
+   ],
+   "q": [
+    "collect coins and get score",
+    "how do i pick up a coin and get a point",
+    "when player touches coin score goes up"
+   ],
+   "steps": [
+    "Put this on the Coin. Make a variable called score. Your hero must be called Player.",
+    "Green flag: score starts at 0 and the coin goes to a random spot.",
+    "When the Player touches the coin: +1 score, a Pop, and the coin jumps somewhere new!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "score"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "score"
+      ]
+     ],
+     [
+      "goto_random"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "touching_sprite",
+           "target": "Player"
+          },
+          "body": [
+           [
+            "change_var",
+            [
+             "1"
+            ],
+            [
+             "score"
+            ]
+           ],
+           [
+            "start_sound",
+            [],
+            [
+             "Pop"
+            ]
+           ],
+           [
+            "goto_random"
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "score"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-lose-life-touched",
+   "emoji": "💔",
+   "title": "Lose a life when touched",
+   "keys": [
+    "lives",
+    "life",
+    "lose",
+    "hit",
+    "touch",
+    "enemy",
+    "health",
+    "damage"
+   ],
+   "q": [
+    "lose a life when the enemy touches me",
+    "how do i make lifes go down",
+    "health goes down when i get hit"
+   ],
+   "steps": [
+    "Put this on your Player. Make a variable called lives. The bad guy must be called Enemy.",
+    "Green flag: you start with 3 lives.",
+    "When you touch the Enemy: lose 1 life, hear a Zap, and flash ghostly for 1 second so you don't lose all lives at once."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "3"
+      ],
+      [
+       "lives"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "lives"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "touching_sprite",
+           "target": "Enemy"
+          },
+          "body": [
+           [
+            "change_var",
+            [
+             "-1"
+            ],
+            [
+             "lives"
+            ]
+           ],
+           [
+            "start_sound",
+            [],
+            [
+             "Zap"
+            ]
+           ],
+           [
+            "set_effect",
+            [
+             "50"
+            ],
+            [
+             "ghost"
+            ]
+           ],
+           [
+            "wait",
+            [
+             "1"
+            ]
+           ],
+           [
+            "clear_effects"
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "lives"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-game-over-lives-zero",
+   "emoji": "💀",
+   "title": "Game over when lives reach zero",
+   "keys": [
+    "game",
+    "over",
+    "lives",
+    "zero",
+    "end",
+    "lose",
+    "stop",
+    "dead"
+   ],
+   "q": [
+    "game over when my lives are 0",
+    "how do i end the game when i have no lifes",
+    "stop everything when lives run out"
+   ],
+   "steps": [
+    "Put this on your Player. You need the lives variable from the lose-a-life recipe.",
+    "Green flag: the sprite waits until lives is 0.",
+    "Then it plays a Zap, says Game Over!, waits 2 seconds and stops everything."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "wait_until",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_eq",
+        "args": [
+         {
+          "type": "get_var",
+          "name": "lives"
+         },
+         {
+          "type": "literal",
+          "value": "0"
+         }
+        ]
+       }
+      }
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Zap"
+      ]
+     ],
+     [
+      "say_only",
+      [
+       "Game Over!"
+      ]
+     ],
+     [
+      "wait",
+      [
+       "2"
+      ]
+     ],
+     [
+      "stop",
+      [],
+      [
+       "all"
+      ]
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "lives"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-timer-count-up",
+   "emoji": "⏱️",
+   "title": "Timer that counts up",
+   "keys": [
+    "timer",
+    "count",
+    "up",
+    "seconds",
+    "time",
+    "clock",
+    "stopwatch",
+    "variable"
+   ],
+   "q": [
+    "make a timer that counts up",
+    "how do i show how many seconds i played",
+    "stopwatch that goes 1 2 3"
+   ],
+   "steps": [
+    "Make a variable called time first.",
+    "Green flag: time starts at 0 and shows on the stage.",
+    "Forever: wait 1 second, then add 1 to time."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "time"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "time"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "wait",
+         [
+          "1"
+         ]
+        ],
+        [
+         "change_var",
+         [
+          "1"
+         ],
+         [
+          "time"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "time"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-high-score-variable",
+   "emoji": "🏆",
+   "title": "Keep a high score",
+   "keys": [
+    "high",
+    "score",
+    "best",
+    "record",
+    "highscore",
+    "variable",
+    "points",
+    "save"
+   ],
+   "q": [
+    "make a high score",
+    "how do i save my best scor",
+    "remember the highest points"
+   ],
+   "steps": [
+    "Make two variables: score and high score.",
+    "Do NOT reset high score on green flag, so it stays between games.",
+    "Forever: if score is bigger than high score, high score becomes the new score!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "high score"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_gt",
+           "args": [
+            {
+             "type": "get_var",
+             "name": "score"
+            },
+            {
+             "type": "get_var",
+             "name": "high score"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_var",
+            [
+             {
+              "r": [
+               "get_var",
+               [],
+               [
+                "score"
+               ]
+              ]
+             }
+            ],
+            [
+             "high score"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "high score",
+     "score"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-next-level-score-10",
+   "emoji": "🚀",
+   "title": "Next level when score hits 10",
+   "keys": [
+    "level",
+    "next",
+    "score",
+    "10",
+    "backdrop",
+    "win",
+    "stage",
+    "progress"
+   ],
+   "q": [
+    "go to next level when score is 10",
+    "how do i make levels",
+    "change level after 10 points"
+   ],
+   "steps": [
+    "Make a variable called level. You need the score variable too.",
+    "Green flag: start on level 1 and the first backdrop.",
+    "Each time score reaches 10: level goes up, the backdrop changes, and score goes back to 0."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "1"
+      ],
+      [
+       "level"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "level"
+      ]
+     ],
+     [
+      "set_backdrop",
+      [],
+      [
+       "stage1"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "wait_until",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_eq",
+           "args": [
+            {
+             "type": "get_var",
+             "name": "score"
+            },
+            {
+             "type": "literal",
+             "value": "10"
+            }
+           ]
+          }
+         }
+        ],
+        [
+         "change_var",
+         [
+          "1"
+         ],
+         [
+          "level"
+         ]
+        ],
+        [
+         "set_var",
+         [
+          "0"
+         ],
+         [
+          "score"
+         ]
+        ],
+        [
+         "next_backdrop"
+        ],
+        [
+         "start_sound",
+         [],
+         [
+          "Pop"
+         ]
+        ],
+        [
+         "say",
+         [
+          "Next level!",
+          "2"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "level",
+     "score"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-sound-on-click",
+   "emoji": "🔊",
+   "title": "Play a sound when clicked",
+   "keys": [
+    "sound",
+    "click",
+    "clicked",
+    "play",
+    "noise",
+    "button",
+    "pop",
+    "music"
+   ],
+   "q": [
+    "play a sound when i click my sprite",
+    "how do i make a noise when clicked",
+    "click it and it goes pop"
+   ],
+   "steps": [
+    "When you click the sprite, it starts the Pop sound.",
+    "It also grows a bit and shrinks back, like a button.",
+    "Pick any sound you like in the menu!"
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "change_size",
+      [
+       "10"
+      ]
+     ],
+     [
+      "wait",
+      [
+       "0.1"
+      ]
+     ],
+     [
+      "change_size",
+      [
+       "-10"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-background-music-loop",
+   "emoji": "🎵",
+   "title": "Background music that loops",
+   "keys": [
+    "music",
+    "background",
+    "loop",
+    "song",
+    "sound",
+    "repeat",
+    "forever",
+    "theme"
+   ],
+   "q": [
+    "play background music forever",
+    "how do i loop my song",
+    "music that keeps playing in my game"
+   ],
+   "steps": [
+    "Add a music sound in the Sounds tab, then pick it in the menu.",
+    "Green flag: the volume is set to 50 so it is not too loud.",
+    "Forever plays the sound until it ends, then starts it again."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_volume",
+      [
+       "50"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "play_sound",
+         [],
+         [
+          "Pop"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-change-backdrop-keys",
+   "emoji": "🖼️",
+   "title": "Change the backdrop with keys",
+   "keys": [
+    "backdrop",
+    "background",
+    "change",
+    "keys",
+    "scene",
+    "stage",
+    "switch",
+    "next"
+   ],
+   "q": [
+    "change the background with a key",
+    "how do i switch backdrops",
+    "next scene when i press right arrow"
+   ],
+   "steps": [
+    "Add a few backdrops to the Stage first.",
+    "Right arrow: go to the next backdrop.",
+    "Space: go back to the first backdrop."
+   ],
+   "script": [
+    [
+     [
+      "when_key",
+      [],
+      [
+       "right arrow"
+      ]
+     ],
+     [
+      "next_backdrop"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "set_backdrop",
+      [],
+      [
+       "stage1"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-drag-to-move",
+   "emoji": "✋",
+   "title": "Drag the sprite to move it",
+   "keys": [
+    "drag",
+    "move",
+    "mouse",
+    "hold",
+    "pick",
+    "draggable",
+    "grab",
+    "click"
+   ],
+   "q": [
+    "drag my sprite with the mouse",
+    "how do i pick it up and move it",
+    "make it dragable"
+   ],
+   "steps": [
+    "Green flag: the sprite is set to draggable.",
+    "Forever: if the mouse is touching it AND the button is held down, it sticks to the mouse.",
+    "Let go of the button to drop it!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_drag_mode",
+      [],
+      [
+       "draggable"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_and",
+           "args": [
+            {
+             "type": "touching_pointer"
+            },
+            {
+             "type": "mouse_down"
+            }
+           ]
+          },
+          "body": [
+           [
+            "goto_target",
+            [],
+            [
+             "mouse-pointer"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-show-hide-keys",
+   "emoji": "🙈",
+   "title": "Show and hide with keys",
+   "keys": [
+    "show",
+    "hide",
+    "keys",
+    "appear",
+    "disappear",
+    "invisible",
+    "visible",
+    "toggle"
+   ],
+   "q": [
+    "hide my sprite when i press a key",
+    "how do i make it disapear and come back",
+    "show and hide with arrows"
+   ],
+   "steps": [
+    "Green flag: the sprite starts visible.",
+    "Down arrow: the sprite hides.",
+    "Up arrow: the sprite shows again with a Pop!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "show"
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "down arrow"
+      ]
+     ],
+     [
+      "hide"
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "up arrow"
+      ]
+     ],
+     [
+      "show"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-glide-random-spots",
+   "emoji": "🦋",
+   "title": "Glide to random spots",
+   "keys": [
+    "glide",
+    "random",
+    "move",
+    "smooth",
+    "slide",
+    "wander",
+    "float",
+    "spot"
+   ],
+   "q": [
+    "make my sprite glide around randomly",
+    "how do i make it slide to random places",
+    "float around the screen by itself"
+   ],
+   "steps": [
+    "Green flag starts a forever loop.",
+    "The sprite glides for 1 second to a random x and a random y.",
+    "It rests for half a second, then glides somewhere new."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "glide_xy",
+         [
+          "1",
+          {
+           "r": [
+            "op_random",
+            [
+             "-200",
+             "200"
+            ]
+           ]
+          },
+          {
+           "r": [
+            "op_random",
+            [
+             "-150",
+             "150"
+            ]
+           ]
+          }
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.5"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-orbit-centre",
+   "emoji": "🪐",
+   "title": "Orbit around the centre",
+   "keys": [
+    "orbit",
+    "circle",
+    "around",
+    "centre",
+    "center",
+    "planet",
+    "spin",
+    "rotate"
+   ],
+   "q": [
+    "make my sprite go around in a circle",
+    "how do i make it orbit the middle like a planit",
+    "move round and round the center"
+   ],
+   "steps": [
+    "Green flag: the sprite will not turn its picture, it only moves.",
+    "Forever: it jumps to the middle, turns 3 degrees, then moves 120 steps out.",
+    "Doing that again and again makes a circle! Bigger move number = bigger circle."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_rotation_style",
+      [],
+      [
+       "don't rotate"
+      ]
+     ],
+     [
+      "point_direction",
+      [
+       "90"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "goto_xy",
+         [
+          "0",
+          "0"
+         ]
+        ],
+        [
+         "turn_cw",
+         [
+          "3"
+         ]
+        ],
+        [
+         "move",
+         [
+          "120"
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.02"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-zig-zag-move",
+   "emoji": "⚡",
+   "title": "Move in a zig-zag",
+   "keys": [
+    "zigzag",
+    "zig",
+    "zag",
+    "move",
+    "up",
+    "down",
+    "pattern",
+    "wave"
+   ],
+   "q": [
+    "make my sprite move in a zig zag",
+    "how do i make it go up and down while moving",
+    "zigzagg across the screen"
+   ],
+   "steps": [
+    "Green flag: the sprite starts on the left side.",
+    "It goes up-right 15 times, then down-right 15 times. That is one zig-zag!",
+    "When it reaches the right side, it jumps back to the left."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "goto_xy",
+      [
+       "-220",
+       "0"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "repeat",
+         [
+          "15"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_x",
+            [
+             "3"
+            ]
+           ],
+           [
+            "change_y",
+            [
+             "3"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "repeat",
+         [
+          "15"
+         ],
+         [],
+         {
+          "body": [
+           [
+            "change_x",
+            [
+             "3"
+            ]
+           ],
+           [
+            "change_y",
+            [
+             "-3"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_gt",
+           "args": [
+            {
+             "type": "x_position"
+            },
+            {
+             "type": "literal",
+             "value": "210"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_x",
+            [
+             "-220"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-wrap-screen-edges",
+   "emoji": "🔁",
+   "title": "Wrap around the screen edges",
+   "keys": [
+    "wrap",
+    "edge",
+    "edges",
+    "screen",
+    "loop",
+    "other",
+    "side",
+    "teleport"
+   ],
+   "q": [
+    "go off one side and come back on the other",
+    "how do i make it wrap around the screen",
+    "sprite comes back from the other side"
+   ],
+   "steps": [
+    "Green flag: the sprite keeps moving right.",
+    "If it goes too far right, it jumps to the left side.",
+    "The same for left, top and bottom, so it never gets stuck!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "point_direction",
+      [
+       "90"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "move",
+         [
+          "5"
+         ]
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_gt",
+           "args": [
+            {
+             "type": "x_position"
+            },
+            {
+             "type": "literal",
+             "value": "230"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_x",
+            [
+             "-230"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_lt",
+           "args": [
+            {
+             "type": "x_position"
+            },
+            {
+             "type": "literal",
+             "value": "-230"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_x",
+            [
+             "230"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_gt",
+           "args": [
+            {
+             "type": "y_position"
+            },
+            {
+             "type": "literal",
+             "value": "170"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_y",
+            [
+             "-170"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_lt",
+           "args": [
+            {
+             "type": "y_position"
+            },
+            {
+             "type": "literal",
+             "value": "-170"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_y",
+            [
+             "170"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-stop-all-space",
+   "emoji": "🛑",
+   "title": "Stop everything with space",
+   "keys": [
+    "stop",
+    "all",
+    "space",
+    "end",
+    "freeze",
+    "quit",
+    "key",
+    "halt"
+   ],
+   "q": [
+    "stop everything when i press space",
+    "how do i make a stop key",
+    "freeze the whole game with spase"
+   ],
+   "steps": [
+    "Green flag: the sprite spins forever so you can test it.",
+    "When you press space, all sounds stop.",
+    "Then stop all ends every script in the whole project!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "turn_cw",
+         [
+          "5"
+         ]
+        ]
+       ]
+      }
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "stop_all_sounds"
+     ],
+     [
+      "stop",
+      [],
+      [
+       "all"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-broadcast-start-game",
+   "emoji": "📣",
+   "title": "Broadcast to start the game",
+   "keys": [
+    "broadcast",
+    "start",
+    "game",
+    "message",
+    "button",
+    "begin",
+    "play",
+    "signal"
+   ],
+   "q": [
+    "start the game with a message",
+    "how do i use brodcast to start",
+    "click play button and game starts"
+   ],
+   "steps": [
+    "Script 1 goes on a Play button sprite: click it and it sends message1, then hides.",
+    "Script 2 goes on your Player: it hides at the start.",
+    "Script 3 on the Player: when it gets message1, it shows up in the middle and says Go!"
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ],
+     [
+      "hide"
+     ]
+    ],
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "hide"
+     ]
+    ],
+    [
+     [
+      "when_broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ],
+     [
+      "goto_xy",
+      [
+       "0",
+       "0"
+      ]
+     ],
+     [
+      "show"
+     ],
+     [
+      "say",
+      [
+       "Go!",
+       "1"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-title-screen-then-game",
+   "emoji": "🎬",
+   "title": "Title screen then start the game",
+   "keys": [
+    "title",
+    "screen",
+    "menu",
+    "start",
+    "intro",
+    "begin",
+    "backdrop",
+    "game"
+   ],
+   "q": [
+    "make a title screen before the game",
+    "how do i make a start menu",
+    "press space to start screen"
+   ],
+   "steps": [
+    "Make 2 backdrops: a title one first, then the game one.",
+    "Script 1 goes on a Title sprite: it shows the title and waits for space.",
+    "When you press space, it hides, switches to the game backdrop and sends message1.",
+    "Script 2 goes on your Player: it appears when message1 arrives."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_backdrop",
+      [],
+      [
+       "stage1"
+      ]
+     ],
+     [
+      "goto_xy",
+      [
+       "0",
+       "0"
+      ]
+     ],
+     [
+      "show"
+     ],
+     [
+      "say_only",
+      [
+       "Press space to start!"
+      ]
+     ],
+     [
+      "wait_until",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "key_pressed",
+        "key": "space"
+       }
+      }
+     ],
+     [
+      "say_only",
+      [
+       ""
+      ]
+     ],
+     [
+      "hide"
+     ],
+     [
+      "next_backdrop"
+     ],
+     [
+      "broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ],
+     [
+      "goto_xy",
+      [
+       "0",
+       "-100"
+      ]
+     ],
+     [
+      "show"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-pause-with-p",
+   "emoji": "⏸️",
+   "title": "Pause the game with P",
+   "keys": [
+    "pause",
+    "p",
+    "stop",
+    "resume",
+    "freeze",
+    "break",
+    "key",
+    "unpause"
+   ],
+   "q": [
+    "pause my game when i press p",
+    "how do i make a pawse button",
+    "press p to stop and p again to play"
+   ],
+   "steps": [
+    "Make a variable called paused first.",
+    "Script 1: pressing P flips paused between 0 and 1. It waits for you to let go so it does not flicker.",
+    "Script 2: the sprite only moves when paused is 0, and says Paused when it is 1."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "paused"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "wait_until",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "p"
+          }
+         }
+        ],
+        [
+         "set_var",
+         [
+          {
+           "r": [
+            "op_sub",
+            [
+             "1",
+             {
+              "r": [
+               "get_var",
+               [],
+               [
+                "paused"
+               ]
+              ]
+             }
+            ]
+           ]
+          }
+         ],
+         [
+          "paused"
+         ]
+        ],
+        [
+         "wait_until",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_not",
+           "args": [
+            {
+             "type": "key_pressed",
+             "key": "p"
+            }
+           ]
+          }
+         }
+        ]
+       ]
+      }
+     ]
+    ],
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "point_direction",
+      [
+       "45"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if_else",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_eq",
+           "args": [
+            {
+             "type": "get_var",
+             "name": "paused"
+            },
+            {
+             "type": "literal",
+             "value": "0"
+            }
+           ]
+          },
+          "body": [
+           [
+            "say_only",
+            [
+             ""
+            ]
+           ],
+           [
+            "move",
+            [
+             "5"
+            ]
+           ],
+           [
+            "bounce"
+           ]
+          ],
+          "else": [
+           [
+            "say_only",
+            [
+             "Paused"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "paused"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-speed-up-over-time",
+   "emoji": "🏎️",
+   "title": "Speed up as time goes on",
+   "keys": [
+    "speed",
+    "faster",
+    "time",
+    "harder",
+    "increase",
+    "difficulty",
+    "quick",
+    "variable"
+   ],
+   "q": [
+    "make my game get faster over time",
+    "how do i make it speed up",
+    "get harder and harder evry few seconds"
+   ],
+   "steps": [
+    "Make a variable called speed first.",
+    "Script 1: speed starts at 2, then the sprite moves by speed and bounces forever.",
+    "Script 2: every 5 seconds, speed goes up by 1. Faster and faster!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "2"
+      ],
+      [
+       "speed"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "speed"
+      ]
+     ],
+     [
+      "point_direction",
+      [
+       "45"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "move",
+         [
+          {
+           "r": [
+            "get_var",
+            [],
+            [
+             "speed"
+            ]
+           ]
+          }
+         ]
+        ],
+        [
+         "bounce"
+        ]
+       ]
+      }
+     ]
+    ],
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "wait",
+         [
+          "5"
+         ]
+        ],
+        [
+         "change_var",
+         [
+          "1"
+         ],
+         [
+          "speed"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "speed"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-falling-rain-clones",
+   "emoji": "🌧️",
+   "title": "Make rain fall with clones",
+   "keys": [
+    "rain",
+    "falling",
+    "clone",
+    "clones",
+    "drops",
+    "weather",
+    "spawn",
+    "sky"
+   ],
+   "q": [
+    "make it rain in my game",
+    "how do i make lots of raindrops fall",
+    "falling drops with clones"
+   ],
+   "steps": [
+    "Use a small raindrop costume. The real drop hides and makes a clone every 0.1 seconds.",
+    "Each clone starts at the top at a random x spot and shows.",
+    "It falls down until it reaches the bottom, then deletes itself."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "hide"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "create_clone",
+         [],
+         [
+          "myself"
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.1"
+         ]
+        ]
+       ]
+      }
+     ]
+    ],
+    [
+     [
+      "when_clone"
+     ],
+     [
+      "goto_xy",
+      [
+       {
+        "r": [
+         "op_random",
+         [
+          "-230",
+          "230"
+         ]
+        ]
+       },
+       "170"
+      ]
+     ],
+     [
+      "show"
+     ],
+     [
+      "repeat_until",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_lt",
+        "args": [
+         {
+          "type": "y_position"
+         },
+         {
+          "type": "literal",
+          "value": "-165"
+         }
+        ]
+       },
+       "body": [
+        [
+         "change_y",
+         [
+          "-8"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "delete_clone"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-delete-clones-bottom",
+   "emoji": "🗑️",
+   "title": "Delete clones at the bottom",
+   "keys": [
+    "delete",
+    "clone",
+    "clones",
+    "bottom",
+    "remove",
+    "falling",
+    "lag",
+    "cleanup"
+   ],
+   "q": [
+    "delete clones when they reach the bottom",
+    "my game is laggy with too many clones",
+    "how do i get rid of clones at the botom"
+   ],
+   "steps": [
+    "The real sprite hides and makes a clone every second.",
+    "Each clone falls from the top at a random spot.",
+    "Forever it checks: if it is near the bottom, it deletes itself. This keeps your game fast!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "hide"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "create_clone",
+         [],
+         [
+          "myself"
+         ]
+        ],
+        [
+         "wait",
+         [
+          "1"
+         ]
+        ]
+       ]
+      }
+     ]
+    ],
+    [
+     [
+      "when_clone"
+     ],
+     [
+      "goto_xy",
+      [
+       {
+        "r": [
+         "op_random",
+         [
+          "-220",
+          "220"
+         ]
+        ]
+       },
+       "170"
+      ]
+     ],
+     [
+      "show"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "change_y",
+         [
+          "-4"
+         ]
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_lt",
+           "args": [
+            {
+             "type": "y_position"
+            },
+            {
+             "type": "literal",
+             "value": "-165"
+            }
+           ]
+          },
+          "body": [
+           [
+            "delete_clone"
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-solid-wall-block",
+   "emoji": "🧱",
+   "title": "Walls you cannot walk through",
+   "keys": [
+    "wall",
+    "walls",
+    "solid",
+    "maze",
+    "block",
+    "collision",
+    "stop",
+    "touching"
+   ],
+   "q": [
+    "make walls my player cant go thru",
+    "how do i stop walking into the wall",
+    "maze walls that block me"
+   ],
+   "steps": [
+    "Put this on your Player. Draw a sprite called Wall.",
+    "Each arrow key moves the Player 5 steps.",
+    "If the Player touches the Wall, it steps back 5 the other way, so it can never go inside!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "right arrow"
+          },
+          "body": [
+           [
+            "change_x",
+            [
+             "5"
+            ]
+           ],
+           [
+            "if",
+            [],
+            [],
+            {
+             "cond": {
+              "type": "touching_sprite",
+              "target": "Wall"
+             },
+             "body": [
+              [
+               "change_x",
+               [
+                "-5"
+               ]
+              ]
+             ]
+            }
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "left arrow"
+          },
+          "body": [
+           [
+            "change_x",
+            [
+             "-5"
+            ]
+           ],
+           [
+            "if",
+            [],
+            [],
+            {
+             "cond": {
+              "type": "touching_sprite",
+              "target": "Wall"
+             },
+             "body": [
+              [
+               "change_x",
+               [
+                "5"
+               ]
+              ]
+             ]
+            }
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "up arrow"
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "5"
+            ]
+           ],
+           [
+            "if",
+            [],
+            [],
+            {
+             "cond": {
+              "type": "touching_sprite",
+              "target": "Wall"
+             },
+             "body": [
+              [
+               "change_y",
+               [
+                "-5"
+               ]
+              ]
+             ]
+            }
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "down arrow"
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "-5"
+            ]
+           ],
+           [
+            "if",
+            [],
+            [],
+            {
+             "cond": {
+              "type": "touching_sprite",
+              "target": "Wall"
+             },
+             "body": [
+              [
+               "change_y",
+               [
+                "5"
+               ]
+              ]
+             ]
+            }
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-click-button-next-scene",
+   "emoji": "🔘",
+   "title": "Button that changes the scene",
+   "keys": [
+    "button",
+    "click",
+    "scene",
+    "backdrop",
+    "next",
+    "menu",
+    "press",
+    "change"
+   ],
+   "q": [
+    "make a button that changes the background",
+    "how do i make a next button",
+    "click button to go to next scene"
+   ],
+   "steps": [
+    "Put this on a Button sprite.",
+    "When you click it, it squishes a little like a real button and goes Pop.",
+    "Then the stage switches to the next backdrop."
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "change_size",
+      [
+       "-10"
+      ]
+     ],
+     [
+      "wait",
+      [
+       "0.1"
+      ]
+     ],
+     [
+      "change_size",
+      [
+       "10"
+      ]
+     ],
+     [
+      "next_backdrop"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-enemy-spawn-right",
+   "emoji": "🛸",
+   "title": "Enemies fly in from the right",
+   "keys": [
+    "enemy",
+    "enemies",
+    "spawn",
+    "clone",
+    "clones",
+    "fly",
+    "shooter",
+    "wave"
+   ],
+   "q": [
+    "make enemys come from the right side",
+    "how do i spawn lots of enemies",
+    "bad guys fly across the screen"
+   ],
+   "steps": [
+    "Put this on the Enemy. The real one hides and makes a clone every 1 to 2 seconds.",
+    "Each clone starts on the right side at a random height.",
+    "It flies left until it reaches the left edge, then deletes itself."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "hide"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "create_clone",
+         [],
+         [
+          "myself"
+         ]
+        ],
+        [
+         "wait",
+         [
+          {
+           "r": [
+            "op_random",
+            [
+             "1",
+             "2"
+            ]
+           ]
+          }
+         ]
+        ]
+       ]
+      }
+     ]
+    ],
+    [
+     [
+      "when_clone"
+     ],
+     [
+      "goto_xy",
+      [
+       "240",
+       {
+        "r": [
+         "op_random",
+         [
+          "-150",
+          "150"
+         ]
+        ]
+       }
+      ]
+     ],
+     [
+      "show"
+     ],
+     [
+      "repeat_until",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_lt",
+        "args": [
+         {
+          "type": "x_position"
+         },
+         {
+          "type": "literal",
+          "value": "-235"
+         }
+        ]
+       },
+       "body": [
+        [
+         "change_x",
+         [
+          "-4"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "delete_clone"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-flash-when-hit",
+   "emoji": "✨",
+   "title": "Blink when you get hit",
+   "keys": [
+    "flash",
+    "blink",
+    "hit",
+    "hurt",
+    "damage",
+    "enemy",
+    "invincible",
+    "flicker"
+   ],
+   "q": [
+    "make my player blink when hit",
+    "how do i make it flash when the enemy touches",
+    "flicker after getting hurt"
+   ],
+   "steps": [
+    "Put this on your Player. The bad guy must be called Enemy.",
+    "When the Player touches the Enemy, it plays a Zap.",
+    "It hides and shows 5 times very fast, so it blinks!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "show"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "touching_sprite",
+           "target": "Enemy"
+          },
+          "body": [
+           [
+            "start_sound",
+            [],
+            [
+             "Zap"
+            ]
+           ],
+           [
+            "repeat",
+            [
+             "5"
+            ],
+            [],
+            {
+             "body": [
+              [
+               "hide"
+              ],
+              [
+               "wait",
+               [
+                "0.1"
+               ]
+              ],
+              [
+               "show"
+              ],
+              [
+               "wait",
+               [
+                "0.1"
+               ]
+              ]
+             ]
+            }
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-quiz-question",
+   "emoji": "❓",
+   "title": "Ask a quiz question",
+   "keys": [
+    "quiz",
+    "question",
+    "answer",
+    "correct",
+    "wrong",
+    "math",
+    "test",
+    "ask"
+   ],
+   "q": [
+    "make a quiz game",
+    "how do i check if the anser is right",
+    "ask a math question and say correct"
+   ],
+   "steps": [
+    "Make a variable called score first.",
+    "The sprite asks a question and waits for you to type.",
+    "If your answer is 7, it says Correct! and you get a point. If not, it tells you the right answer."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "score"
+      ]
+     ],
+     [
+      "show_var",
+      [],
+      [
+       "score"
+      ]
+     ],
+     [
+      "ask",
+      [
+       "What is 3 + 4?"
+      ]
+     ],
+     [
+      "if_else",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "op_eq",
+        "args": [
+         {
+          "type": "answer"
+         },
+         {
+          "type": "literal",
+          "value": "7"
+         }
+        ]
+       },
+       "body": [
+        [
+         "start_sound",
+         [],
+         [
+          "Pop"
+         ]
+        ],
+        [
+         "change_var",
+         [
+          "1"
+         ],
+         [
+          "score"
+         ]
+        ],
+        [
+         "say",
+         [
+          "Correct!",
+          "2"
+         ]
+        ]
+       ],
+       "else": [
+        [
+         "start_sound",
+         [],
+         [
+          "Zap"
+         ]
+        ],
+        [
+         "say",
+         [
+          "Oops! It is 7.",
+          "2"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "score"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-dice-roll",
+   "emoji": "🎲",
+   "title": "Roll a dice when clicked",
+   "keys": [
+    "dice",
+    "die",
+    "roll",
+    "random",
+    "number",
+    "board",
+    "game",
+    "click"
+   ],
+   "q": [
+    "make a dice that rolls",
+    "how do i get a random number 1 to 6",
+    "roll the dise when i click"
+   ],
+   "steps": [
+    "Make a variable called roll first.",
+    "Click the sprite: it flashes random numbers 10 times, like a spinning dice.",
+    "Then it picks the real number from 1 to 6 and says it!"
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "repeat",
+      [
+       "10"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "say_only",
+         [
+          {
+           "r": [
+            "op_random",
+            [
+             "1",
+             "6"
+            ]
+           ]
+          }
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.05"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "set_var",
+      [
+       {
+        "r": [
+         "op_random",
+         [
+          "1",
+          "6"
+         ]
+        ]
+       }
+      ],
+      [
+       "roll"
+      ]
+     ],
+     [
+      "say",
+      [
+       {
+        "r": [
+         "op_join",
+         [
+          "You rolled ",
+          {
+           "r": [
+            "get_var",
+            [],
+            [
+             "roll"
+            ]
+           ]
+          }
+         ]
+        ]
+       },
+       "2"
+      ]
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "roll"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-screen-shake",
+   "emoji": "📳",
+   "title": "Shake the screen",
+   "keys": [
+    "shake",
+    "screen",
+    "camera",
+    "boom",
+    "explosion",
+    "rumble",
+    "earthquake",
+    "effect"
+   ],
+   "q": [
+    "make the screen shake",
+    "how do i do a camra shake",
+    "earthquake effect when something explodes"
+   ],
+   "steps": [
+    "Press space to test it (or send message1 from your game).",
+    "The camera jumps to a tiny random spot 10 times, really fast.",
+    "At the end it goes back to the middle, so everything is normal again."
+   ],
+   "script": [
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Zap"
+      ]
+     ],
+     [
+      "repeat",
+      [
+       "10"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "cam_set_xy",
+         [
+          {
+           "r": [
+            "op_random",
+            [
+             "-8",
+             "8"
+            ]
+           ]
+          },
+          {
+           "r": [
+            "op_random",
+            [
+             "-8",
+             "8"
+            ]
+           ]
+          }
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.03"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "cam_set_xy",
+      [
+       "0",
+       "0"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-turret-aim-mouse",
+   "emoji": "🎯",
+   "title": "Aim at the mouse and shoot",
+   "keys": [
+    "aim",
+    "turret",
+    "mouse",
+    "shoot",
+    "point",
+    "clone",
+    "cannon",
+    "fire"
+   ],
+   "q": [
+    "make a cannon that points at my mouse",
+    "how do i shoot where the mouse is",
+    "turret aim and fire"
+   ],
+   "steps": [
+    "Green flag: the sprite always turns to face the mouse.",
+    "Press space to make a clone.",
+    "The clone flies forward the way it was pointing until it hits the edge, then deletes itself."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "show"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "point_towards",
+         [],
+         [
+          "mouse-pointer"
+         ]
+        ]
+       ]
+      }
+     ]
+    ],
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "create_clone",
+      [],
+      [
+       "myself"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_clone"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Zap"
+      ]
+     ],
+     [
+      "set_size",
+      [
+       "40"
+      ]
+     ],
+     [
+      "repeat_until",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "touching_edge"
+       },
+       "body": [
+        [
+         "move",
+         [
+          "12"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "delete_clone"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-jump-gravity-ground",
+   "emoji": "🏃",
+   "title": "Jump with real gravity",
+   "keys": [
+    "jump",
+    "gravity",
+    "platformer",
+    "ground",
+    "fall",
+    "space",
+    "physics",
+    "land"
+   ],
+   "q": [
+    "jump with gravity like a real game",
+    "how do i make a smooth jump that falls back",
+    "platformer jump only on the grownd"
+   ],
+   "steps": [
+    "Make a variable called y speed first.",
+    "Every moment y speed gets smaller, so the sprite falls.",
+    "When it reaches the ground (y = -120) it stops. Only then can space make it jump up with speed 15!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "goto_xy",
+      [
+       "0",
+       "-120"
+      ]
+     ],
+     [
+      "set_var",
+      [
+       "0"
+      ],
+      [
+       "y speed"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "change_var",
+         [
+          "-1"
+         ],
+         [
+          "y speed"
+         ]
+        ],
+        [
+         "change_y",
+         [
+          {
+           "r": [
+            "get_var",
+            [],
+            [
+             "y speed"
+            ]
+           ]
+          }
+         ]
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "op_lt",
+           "args": [
+            {
+             "type": "y_position"
+            },
+            {
+             "type": "literal",
+             "value": "-120"
+            }
+           ]
+          },
+          "body": [
+           [
+            "set_y",
+            [
+             "-120"
+            ]
+           ],
+           [
+            "set_var",
+            [
+             "0"
+            ],
+            [
+             "y speed"
+            ]
+           ],
+           [
+            "if",
+            [],
+            [],
+            {
+             "cond": {
+              "type": "key_pressed",
+              "key": "space"
+             },
+             "body": [
+              [
+               "set_var",
+               [
+                "15"
+               ],
+               [
+                "y speed"
+               ]
+              ]
+             ]
+            }
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ],
+   "prep": {
+    "vars": [
+     "y speed"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-physics-ball-drop",
+   "emoji": "🏀",
+   "title": "Bouncy physics ball",
+   "keys": [
+    "physics",
+    "ball",
+    "bounce",
+    "drop",
+    "gravity",
+    "floor",
+    "realistic",
+    "fall"
+   ],
+   "q": [
+    "make a real bouncy ball",
+    "how do i use fisics blocks",
+    "drop a ball and it bounces on the floor"
+   ],
+   "steps": [
+    "Green flag: the stage gets a floor and the ball goes to the top.",
+    "Physics is turned on with a circle shape, and bounce is set to 70.",
+    "Forever ticks the physics, so the ball falls and bounces by itself!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "phys_set_stage",
+      [],
+      [
+       "floor"
+      ]
+     ],
+     [
+      "goto_xy",
+      [
+       "0",
+       "150"
+      ]
+     ],
+     [
+      "phys_enable",
+      [],
+      [
+       "circle",
+       "normal"
+      ]
+     ],
+     [
+      "phys_bounce",
+      [],
+      [
+       "70"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "phys_tick"
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-camera-follow-player",
+   "emoji": "🎥",
+   "title": "Camera follows the player",
+   "keys": [
+    "camera",
+    "follow",
+    "scroll",
+    "player",
+    "view",
+    "big",
+    "world",
+    "move"
+   ],
+   "q": [
+    "make the camera follow my player",
+    "how do i make the screen scroll with me",
+    "big world camra moves with sprite"
+   ],
+   "steps": [
+    "Put this on your Player.",
+    "Arrow keys move the Player around.",
+    "Forever the camera jumps to the Player, so you always stay in the middle of the screen!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "right arrow"
+          },
+          "body": [
+           [
+            "change_x",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "left arrow"
+          },
+          "body": [
+           [
+            "change_x",
+            [
+             "-5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "up arrow"
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "if",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "key_pressed",
+           "key": "down arrow"
+          },
+          "body": [
+           [
+            "change_y",
+            [
+             "-5"
+            ]
+           ]
+          ]
+         }
+        ],
+        [
+         "cam_goto",
+         [],
+         [
+          "myself"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-dance-costumes",
+   "emoji": "💃",
+   "title": "Make your sprite dance",
+   "keys": [
+    "dance",
+    "dancing",
+    "costume",
+    "music",
+    "party",
+    "move",
+    "groove",
+    "animate"
+   ],
+   "q": [
+    "make my sprite dance",
+    "how do i do a dance move",
+    "dancing with costumes when i press space"
+   ],
+   "steps": [
+    "Give your sprite 2 or more costumes.",
+    "Press space: a sound plays and the sprite hops up and down 4 times.",
+    "Each hop shows the next costume, so it looks like dancing!"
+   ],
+   "script": [
+    [
+     [
+      "when_key",
+      [],
+      [
+       "space"
+      ]
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "repeat",
+      [
+       "4"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "next_costume"
+        ],
+        [
+         "change_y",
+         [
+          "15"
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.2"
+         ]
+        ],
+        [
+         "next_costume"
+        ],
+        [
+         "change_y",
+         [
+          "-15"
+         ]
+        ],
+        [
+         "wait",
+         [
+          "0.2"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-two-sprite-chat",
+   "emoji": "💬",
+   "title": "Two sprites talk to each other",
+   "keys": [
+    "talk",
+    "chat",
+    "conversation",
+    "story",
+    "broadcast",
+    "dialogue",
+    "two",
+    "speak"
+   ],
+   "q": [
+    "make two sprites talk",
+    "how do i make a conversashun",
+    "one sprite says hi and the other answers"
+   ],
+   "steps": [
+    "Script 1 goes on the first sprite: it says hi, then sends message1 and waits.",
+    "Script 2 goes on the second sprite: when it gets message1, it answers.",
+    "After the answer, the first sprite talks again. That is a story!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "say",
+      [
+       "Hi! How are you?",
+       "2"
+      ]
+     ],
+     [
+      "broadcast_wait",
+      [],
+      [
+       "message1"
+      ]
+     ],
+     [
+      "say",
+      [
+       "Cool! Let's play!",
+       "2"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_broadcast",
+      [],
+      [
+       "message1"
+      ]
+     ],
+     [
+      "say",
+      [
+       "I'm great, thanks!",
+       "2"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-random-colour-click",
+   "emoji": "🎨",
+   "title": "Random colour when clicked",
+   "keys": [
+    "colour",
+    "color",
+    "random",
+    "click",
+    "change",
+    "effect",
+    "rainbow",
+    "paint"
+   ],
+   "q": [
+    "change to a random color when i click",
+    "how do i make it a random colour",
+    "click and it turns a new colur"
+   ],
+   "steps": [
+    "When you click the sprite, it goes Pop.",
+    "The colour effect is set to a random number from 0 to 200.",
+    "Every click gives a surprise colour!"
+   ],
+   "script": [
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "set_effect",
+      [
+       {
+        "r": [
+         "op_random",
+         [
+          "0",
+          "200"
+         ]
+        ]
+       }
+      ],
+      [
+       "color"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-hover-grow",
+   "emoji": "🔍",
+   "title": "Grow when the mouse is over it",
+   "keys": [
+    "hover",
+    "mouse",
+    "over",
+    "grow",
+    "bigger",
+    "button",
+    "menu",
+    "touching"
+   ],
+   "q": [
+    "make it get bigger when my mouse is on it",
+    "how do i do a hover effect",
+    "button grows when mouse touches"
+   ],
+   "steps": [
+    "Green flag starts a forever loop.",
+    "If the mouse is touching the sprite, it becomes size 120.",
+    "If not, it goes back to size 100. Great for menu buttons!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "if_else",
+         [],
+         [],
+         {
+          "cond": {
+           "type": "touching_pointer"
+          },
+          "body": [
+           [
+            "set_size",
+            [
+             "120"
+            ]
+           ]
+          ],
+          "else": [
+           [
+            "set_size",
+            [
+             "100"
+            ]
+           ]
+          ]
+         }
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-list-add-answers",
+   "emoji": "📝",
+   "title": "Save answers in a list",
+   "keys": [
+    "list",
+    "save",
+    "answers",
+    "ask",
+    "add",
+    "items",
+    "remember",
+    "fruit"
+   ],
+   "q": [
+    "save what i type in a list",
+    "how do i add things to a lisst",
+    "make a list of my favorite fruits"
+   ],
+   "steps": [
+    "Make a list called my list first.",
+    "Green flag: the list is emptied and shown on the stage.",
+    "The sprite asks 3 times, and every answer gets added to the list!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "list_clear",
+      [],
+      [
+       "my list"
+      ]
+     ],
+     [
+      "list_show",
+      [],
+      [
+       "my list"
+      ]
+     ],
+     [
+      "repeat",
+      [
+       "3"
+      ],
+      [],
+      {
+       "body": [
+        [
+         "ask",
+         [
+          "Name a fruit you like!"
+         ]
+        ],
+        [
+         "list_add",
+         [
+          {
+           "r": [
+            "answer"
+           ]
+          }
+         ],
+         [
+          "my list"
+         ]
+        ]
+       ]
+      }
+     ],
+     [
+      "say",
+      [
+       "Thanks! Look at your list!",
+       "2"
+      ]
+     ]
+    ]
+   ],
+   "prep": {
+    "lists": [
+     "my list"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-random-joke-list",
+   "emoji": "😂",
+   "title": "Tell a random joke from a list",
+   "keys": [
+    "joke",
+    "jokes",
+    "random",
+    "list",
+    "funny",
+    "say",
+    "click",
+    "laugh"
+   ],
+   "q": [
+    "make my sprite tell jokes",
+    "how do i pick a random thing from a list",
+    "random joke when i click"
+   ],
+   "steps": [
+    "Make a list called jokes first.",
+    "Green flag: the list is filled with 3 jokes.",
+    "Click the sprite: it picks item 1, 2 or 3 at random and says it!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "list_clear",
+      [],
+      [
+       "jokes"
+      ]
+     ],
+     [
+      "list_add",
+      [
+       "Why did the cookie cry? Its mom was a wafer so long!"
+      ],
+      [
+       "jokes"
+      ]
+     ],
+     [
+      "list_add",
+      [
+       "What do you call a sleeping dinosaur? A dino-snore!"
+      ],
+      [
+       "jokes"
+      ]
+     ],
+     [
+      "list_add",
+      [
+       "Why are fish so smart? They live in schools!"
+      ],
+      [
+       "jokes"
+      ]
+     ]
+    ],
+    [
+     [
+      "when_clicked"
+     ],
+     [
+      "say",
+      [
+       {
+        "r": [
+         "list_item",
+         [
+          {
+           "r": [
+            "op_random",
+            [
+             "1",
+             "3"
+            ]
+           ]
+          }
+         ],
+         [
+          "jokes"
+         ]
+        ]
+       },
+       "3"
+      ]
+     ]
+    ]
+   ],
+   "prep": {
+    "lists": [
+     "jokes"
+    ]
+   }
+  },
+  {
+   "id": "r-ph-show-clock-time",
+   "emoji": "🕒",
+   "title": "Show the real time",
+   "keys": [
+    "clock",
+    "time",
+    "hour",
+    "minute",
+    "real",
+    "watch",
+    "current",
+    "now"
+   ],
+   "q": [
+    "show the real time in my game",
+    "how do i make a clock",
+    "what time is it sprite"
+   ],
+   "steps": [
+    "Green flag starts a forever loop.",
+    "It joins the hour, a colon and the minute together, like 4:30.",
+    "The sprite says it and updates every second."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "say_only",
+         [
+          {
+           "r": [
+            "op_join",
+            [
+             {
+              "r": [
+               "op_join",
+               [
+                {
+                 "r": [
+                  "current_part",
+                  [],
+                  [
+                   "HOUR"
+                  ]
+                 ]
+                },
+                ":"
+               ]
+              ]
+             },
+             {
+              "r": [
+               "current_part",
+               [],
+               [
+                "MINUTE"
+               ]
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        ],
+        [
+         "wait",
+         [
+          "1"
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-pet-follow-player",
+   "emoji": "🐶",
+   "title": "Pet that follows the player",
+   "keys": [
+    "pet",
+    "follow",
+    "player",
+    "buddy",
+    "friend",
+    "companion",
+    "glide",
+    "behind"
+   ],
+   "q": [
+    "make a pet that follows me",
+    "how do i make a sprite folow another sprite",
+    "little buddy goes where my player goes"
+   ],
+   "steps": [
+    "Put this on the Pet. Your hero sprite must be called Player.",
+    "Forever the Pet glides to where the Player is, taking half a second.",
+    "Because it is a bit slow, it always walks right behind you!"
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "set_size",
+      [
+       "60"
+      ]
+     ],
+     [
+      "forever",
+      [],
+      [],
+      {
+       "body": [
+        [
+         "glide_xy",
+         [
+          "0.5",
+          {
+           "r": [
+            "sprite_prop",
+            [],
+            [
+             "x position",
+             "Player"
+            ]
+           ]
+          },
+          {
+           "r": [
+            "sprite_prop",
+            [],
+            [
+             "y position",
+             "Player"
+            ]
+           ]
+          }
+         ]
+        ]
+       ]
+      }
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "r-ph-win-touch-goal",
+   "emoji": "🏁",
+   "title": "Win when you reach the goal",
+   "keys": [
+    "win",
+    "goal",
+    "finish",
+    "flag",
+    "end",
+    "level",
+    "touch",
+    "victory"
+   ],
+   "q": [
+    "win the game when i touch the flag",
+    "how do i make a finish line",
+    "you win screen when reach the goal"
+   ],
+   "steps": [
+    "Put this on your Player. Draw a sprite called Goal.",
+    "The Player waits until it touches the Goal.",
+    "Then it plays a sound, says You win!, shows the next backdrop and stops the game."
+   ],
+   "script": [
+    [
+     [
+      "when_flag"
+     ],
+     [
+      "wait_until",
+      [],
+      [],
+      {
+       "cond": {
+        "type": "touching_sprite",
+        "target": "Goal"
+       }
+      }
+     ],
+     [
+      "start_sound",
+      [],
+      [
+       "Pop"
+      ]
+     ],
+     [
+      "next_backdrop"
+     ],
+     [
+      "say",
+      [
+       "You win!",
+       "2"
+      ]
+     ],
+     [
+      "stop",
+      [],
+      [
+       "all"
+      ]
+     ]
+    ]
+   ]
+  }
+ ],
+ "tips": []
+}

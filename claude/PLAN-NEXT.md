@@ -73,6 +73,8 @@ summary lines for them (lanes don't). Lane prompts: `ai-team/lanes/` (regenerate
 ### C1b. Phone recipes (owner's phone chatbot, `ai-team/phone/PHONE-BOT-PROMPT.txt`, items PH-001..096)
 When the owner gives the note: save as `ai-team/shared/<date>-phone-recipes/pack.json` (`{"version":1,"recipes":[...],"tips":[]}`),
 run `python3 ai-team/tools/validate_gwrap_pack.py <pack>`, drop failing ones (or fix tiny errors), merge like C3.
+- [ ] PH-001..060 READY: `ai-team/shared/2026-10-26-phone-recipes-PH-001-060/pack.json` (validator PASS). Merge into PACKS in the
+  next release + runtime test (GWrap AI builds 5 of them). New phone outputs: `python3 ai-team/phone/fix_phone_pack.py in out` first.
 
 ### C. Job bank results (ChatGPT, `ai-team/chatgpt-jobs/`)
 - [ ] C1. Triage `chatgpt/bugs/BUG-*.md`: P0/P1 first. Reproduce with the given proof (block bugs: `node ai-team/tools/qa-kit/compare.js
