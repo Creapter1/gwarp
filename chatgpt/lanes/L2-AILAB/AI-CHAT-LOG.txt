@@ -146,3 +146,44 @@ GITHUB LOG VERIFICATION ADDENDUM
 UTC timestamp: 2026-10-26T19:28:26.464Z
 The AIM-K1 closeout entry above was committed as `e81c85dc9150f5b7a1f8915c89f286c5475e4f27` and read back from GitHub. The returned file blob SHA is `b8f03d8163b8175d3610d5e710ce55f7474d64e5`. The new closeout entry is present at the bottom. This addendum records the verification; it does not change the PARTIAL status or claim that the exact Python validator command was run.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+USER-REQUEST RESEARCH ADD-ON — GRIFFPATCH AND GAME CREATORS
+UTC timestamp: 2026-10-26T19:34:08.972Z
+AI / agent / exact model identity: ChatGPT / GPT-6
+Task reference: User-requested research add-on after AIM-K1; do not treat this as the next numbered assignment or as AIM-0.
+Branch sync before research: main / 665a708f0944bc35f66388b1789e93859c927b6e (read from current GitHub branch metadata).
+
+USER REQUEST (verbatim):
+"Another thing that we're going to be adding, this is just me, as a user request. So right now what I need you to do is to do some investigation, do some deep researching. And when I mean deep researching, I mean I want you to go and research Grift Patch way of creating codes, way of creating games, and other creators that knows how to create games and make them good. Your goal to learning of them, it will be just to create the demo so the GWarp AI can create demos like those and, you know, do step one, step two, step three, just like they did on their pages to showcase everything. So that way the user is capable to be like, Oh, look at this. This is what Grift Patch did this time. Okay, maybe from here or this step I can continue doing whatever I want. Or maybe step three, or maybe, you know, episode four. But GWarp AI will always know all those things. Of course, this is going to be like a constant research all the time, but after we finish the real AI, which is the goal at the end of the day, for now we're only doing the basics, then GWarp will be able to have everything, every knowledge possible in order to create any game, doesn't matter if it's on YouTube or not. But for now, this is just personal request for now. Before you continue on, just do a little research and add it to the same exact location where you're working as user request research before continuing with the next assignment."
+
+UNDERSTOOD SCOPE / ACCEPTANCE:
+- Interpret "Grift Patch" as Griffpatch, the Scratch creator/tutorial maker, and state this spelling normalization in the research note.
+- Research Griffpatch's real step-by-step game/tutorial workflows plus other established game-development educators and game-design creators.
+- Extract reusable demo/showcase methods for future G-Warp AI: incremental playable milestones, episode/step labels, source attribution, checkpoints, playtests, optional branches/fork points, and original extensions.
+- Save a standalone research note inside the same current drop-box folder: ai-team/shared/2026-10-26-chatgpt-AIM-K1/.
+- This is a user-requested research add-on, not AIM-0 or the next assignment. Do not start model research or implementation.
+- Do not edit app.html, index.html, knowledge pack, G-Warp runtime or integration. Research artifact and this log only.
+
+PROGRESS / AI RESPONSE:
+- Read the live main branch metadata and the existing AIM-K1 notes and personal log before work.
+- Current main branch was read as 665a708f0944bc35f66388b1789e93859c927b6e.
+- Conducting web research using creator-owned sites, official project/tutorial listings, tutorial descriptions, and official engine docs. Evidence will be linked in the research note; derived principles will be clearly distinguished from the creators' own claims.
+
+DECISIONS / LIMITS:
+- Study design and teaching patterns, not copy protected game code, art, music, levels, characters, names, or branding.
+- Do not imply endorsement, partnership, or affiliation by Griffpatch or any other creator.
+- Do not claim the research covers every game developer or all possible game knowledge. Record sources, access date, and uncertainty so future research can extend it.
+- No asynchronous/automatic monitoring is being promised; propose a repeatable update workflow for future research sessions.
+
+FILES CHANGED:
+- This log append only; research note not written yet.
+- app.html and index.html remain untouched.
+
+EVIDENCE CLASS:
+- WEB-RESEARCH IN PROGRESS. No G-Warp runtime verification is part of this request.
+
+NEXT STEP:
+- Complete the research synthesis, create the note in the same AIM-K1 shared drop-box folder, commit it, read it back, then append closeout evidence here.
+--- END ENTRY ---
