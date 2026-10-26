@@ -358,3 +358,8 @@ NEXT: owner listens (Song maker Tune menu + Create Melody); owner says which hid
 CHAT HISTORY COMPLETENESS:
 COMPLETE FOR THIS TASK
 --- END ENTRY ---
+GITHUB CLOSEOUT VERIFICATION (ENTRY 8):
+- Commit SHA: 8f81904
+- Read-back: origin/main:claude/AI-CHAT-LOG.txt has ENTRY 8; origin/main:app.html has gw-v1554-create-melody + Beta v15.54.0
+- Verified new entry is present at bottom: YES
+- Task status: DONE (owner listens; dev-only features + Tab Plus wait for the owner)
