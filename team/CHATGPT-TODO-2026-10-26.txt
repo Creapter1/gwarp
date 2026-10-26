@@ -1,0 +1,179 @@
+=====================================================================
+ CHATGPT - BIG TO-DO LIST (2026-10-26)       written by Claude Opus; owner: "do not hold back"
+ You now own every open job of Gemini, Grok and DeepSeek, plus your own. Work top to bottom inside each section,
+ sections in the order listed. Never sit idle: if a job is blocked, write why in one line and take the next one.
+=====================================================================
+
+HOW TO READ A JOB
+  ID  [WEB] = can be done on chatgpt.com   [TERMINAL] = needs Freebuff + the QA kit   [ANY] = both
+      WHAT: the job.   FILES: where your output goes.   CHECK: how you prove it.   DONE WHEN: the finish line.
+HAND IN (every job): push -> open it on GitHub -> one line in AI-TEAM.txt:
+  <UTC time> | DONE | ChatGPT | <ID> | <files> | <TESTED in G-Warp / TESTED in scratch-vm / NOT-TESTED + why>
+Code proposals: chatgpt/proposals/<ID>/ with a NOTES.txt (what, where in app.html it would go, how to test). Claude merges.
+Never edit app.html / index.html / other AIs' folders.
+
+---------------------------------------------------------------------
+0. EVERY SESSION (5 minutes)
+---------------------------------------------------------------------
+S0 [ANY] Log gate (start + closeout) in chatgpt/AI-CHAT-LOG.txt, read back from GitHub. Zero exceptions.
+S1 [TERMINAL] node team/tools/qa-kit/smoke-app.js  -> paste the result in your log. Any FAIL = write a bug report first (B-section format).
+S2 [ANY] Read the last 30 lines of AI-TEAM.txt and MERGE-QUEUE.txt: did Claude merge or reject something of yours? Answer open questions.
+
+---------------------------------------------------------------------
+1. LEARN THE QA KIT (first Freebuff session only, ~20 minutes)
+---------------------------------------------------------------------
+Q1 [TERMINAL] Run every tool once on a project YOU make (never the owner's private test projects):
+     - build a tiny game with the builder (example in team/tools/qa-kit/README.md section 3) -> chatgpt/out/q1.sb3
+     - node check-sb3.js, node run-in-scratch.js 5 --shots chatgpt/out/q1-shots, node roundtrip.js, node dump-scripts.js
+   FILES: chatgpt/QA-KIT-FIRST-RUN.txt (every command + its output).  DONE WHEN: all tools ran; problems listed.
+Q2 [TERMINAL] Kit bugs/unclear parts -> chatgpt/QA-KIT-NOTES.txt (what you expected, what happened). Claude fixes the kit.
+
+---------------------------------------------------------------------
+2. BUG HUNT WITH THE KIT (ex-Grok "bug hunt", now with real tools)
+---------------------------------------------------------------------
+Bug report format (one file per bug): chatgpt/bugs/BUG-<yyyymmdd>-<n>.md
+  Title / Steps (numbered, exact) / Expected (what Scratch does) / Actual / Kit output (paste) / Screenshot path / Severity P0-P3
+B1 [TERMINAL] Round-trip hunt: make 10 small test projects with the builder, each using one block family heavily
+   (motion, looks+effects, sound, events+broadcasts, control+clones, sensing, operators, variables+lists, my blocks with inputs,
+   costumes + backdrops). For each: node roundtrip.js -> every DIFF is a bug.
+   FILES: chatgpt/out/rt/*.sb3 (git-ignored), chatgpt/bugs/*.md, chatgpt/ROUNDTRIP-HUNT.txt (table: project | diffs | bugs).
+B2 [TERMINAL] Behaviour hunt: for each of the 10 projects, run it in scratch-vm (run-in-scratch.js) AND in G-Warp
+   (open with the builder script, press the green flag, read Engine.variables / sprite positions after N seconds).
+   Same numbers = PASS. Different = bug. FILES: chatgpt/BEHAVIOUR-HUNT.txt + bug files.
+B3 [TERMINAL] Costume jump hunt: projects with SVG costumes whose viewBox does not start at 0 0, bitmap costumes with
+   bitmapResolution 2, rotation styles. node costume-bounds.js on the original vs after roundtrip. Different = bug.
+B4 [TERMINAL] Click hunt (team/MISSING-LIST.txt A + B): use Playwright (lib/gw.js openApp) to click every button of the top bar,
+   the sprite pane, the costume editor, the sound tabs; right-click blocks, sprites, costumes, sounds. Log which do nothing,
+   throw page errors, or open the wrong menu. FILES: chatgpt/CLICK-HUNT-2026-10.txt + bug files.
+B5 [TERMINAL] Performance: a project with 300 clones that move + touch each other. Measure FPS in G-Warp (requestAnimationFrame
+   counter for 10 s) vs scratch-vm. FILES: chatgpt/PERF-CLONES.txt (numbers, computer model, browser). NOT a promise of 60 FPS.
+B6 [ANY] Re-check every bug in team/MISSING-LIST.txt section A against the current Beta (kit or reading code). Mark which are still open.
+B7 [ANY] Review Claude's latest releases v15.50.8 -> v15.52.0 (AI-TEAM.txt lines): read the code diffs on GitHub, look for
+   mistakes, missing cases, kid-unfriendly wording. FILES: chatgpt/REVIEW-v15.50.8-15.52.0.txt.
+
+---------------------------------------------------------------------
+3. EX-GROK JOBS (engine correctness, fixtures, specs)
+---------------------------------------------------------------------
+Sources: team/GROK-BIG-LIST-2-2026-10-19.txt (K0-K12), team/NEXT-AFTER-v15.49-2026-10-19.txt (Grok part), grok/*.
+K0  [ANY] Fix expected results the reviews said are wrong (chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt, T043 ...)
+    -> chatgpt/fixtures/fixtures-fixed.json (same format as grok/fixtures-*.json) + what changed and why (Scratch source line / test).
+K6  [ANY] chatgpt/COVERAGE.csv: every Scratch 3 core opcode (scratch-vm/src/blocks/*.js), columns: opcode, in G-Warp palette (y/n),
+    G-Warp runs it (y/n/partly), sb3 import ok, sb3 export ok, fixtures count, notes. Use app.html source + team/gwrap-blocks.json.
+K7  [ANY] Write fixtures until every core opcode has at least 3 (edge cases: empty string, "10" vs 10, NaN, Infinity, negative
+    list index, case-insensitive compare, clone limits 300). -> chatgpt/fixtures/coverage-<category>.json
+K7b [TERMINAL] Turn fixtures into real .sb3 tests with the builder and run them in BOTH engines (B2 method). Expected value must
+    come from scratch-vm, not from memory. FILES: chatgpt/fixtures/RESULTS.txt.
+K1-K4 [ANY] Casting rules + a fixture compiler design (grok big list 2) -> chatgpt/engine/ (cast.js, DESIGN.txt). Proposal only.
+K5  [ANY] Read G-Warp's block implementations (search app.html for "case 'op_", "case 'list_", "operator_") and list every place that
+    differs from scratch-vm's code for the same block. FILES: chatgpt/ENGINE-DIFFS.txt (block | G-Warp line | scratch-vm rule | example).
+K11 [ANY] Specs for the 6 most-used TurboWarp extensions marked LOAD (files, gamepad, runtime-options, local-storage, ...) ->
+    chatgpt/ext/<id>.txt (every block, inputs, what it returns, edge cases, safety notes for kids).
+K12 [ANY] Same for Clones+, Looks+, Camera -> chatgpt/ext/.
+
+---------------------------------------------------------------------
+4. EX-GEMINI JOBS (clicks, art, library, lab)
+---------------------------------------------------------------------
+Sources: team/GEMINI-SPRINT-2026-10-20.txt, team/GEMINI-CLICKS-2026-10-19.txt (rules + app facts), team/GEMINI-BIG-LIST-2026-10-19.txt.
+Click modules (team/MISSING-LIST.txt B + C). Each = a self-contained JS proposal that Claude can paste into app.html:
+   chatgpt/proposals/<ID>/<ID>.js + NOTES.txt + a test (Playwright script using qa-kit/lib/gw.js) that proves it works when the
+   file is injected into the page (page.addScriptTag). [TERMINAL] for the test, [ANY] for the code.
+G-C1 New message / Rename message (broadcast menus)        G-C2 Rename / delete variables and lists
+G-C4 Click a reporter -> value bubble                     G-C10 Searchable dropdowns
+G-C8 Right-click a sound: duplicate / export / delete     G-C5 "Edit" a custom block
+G-C12 Copy / paste blocks (Ctrl+C / Ctrl+V)               G-C11 Save blocks as a picture (PNG/SVG)
+G-C7 Drag to reorder costumes / sounds / sprites          G-C6 Comment attached to a block
+G-C3 Stage monitors (checkboxes, modes, slider)           G-C9 .sprite3 export / import
+G-B1 Block switching (right-click -> "Switch to" related blocks; inputs carry over)
+Art (G-Warp's own style; every SVG: viewBox, no scripts, no external links, < 30 KB; palette #0b0b14 #141425 #8b5cf6 #a855f7 #4ade80 #facc15):
+G-L1 [ANY] 40 original costumes for "Choose a Costume" -> chatgpt/library/costumes/<name>.svg + index.json
+     ([{ "name", "file", "tags": [...], "rotationCenter": [x, y] }]); groups: robots, space, food, sports, fantasy, nature, vehicles, G-Spark poses.
+G-L2 [ANY] 15 tutorial covers 480x360 -> chatgpt/tutorials/<id>.svg (list in team/GEMINI-SPRINT-2026-10-20.txt).
+G-L3 [ANY] 10 backdrops 480x360 -> chatgpt/backdrops/ (school, forest, beach, castle, volcano, snow, underwater cave, space station,
+     sports field, haunted house).
+GM15 [ANY] Gemini's GM15 backdrops are 88x66 thumbnails: redraw the 8 (cyber grid, synth horizon, neon lab, star warp, crystal cavern,
+     circuit city, plasma arena, cloud citadel) at 480x360 -> chatgpt/backdrops/.
+G-L4 [ANY] 20 sprite-library characters with 2-4 costumes each -> chatgpt/library/sprites/<name>/ + index.json.
+G-L5 [ANY] Tiles starter set, 16x16 SVG: grass, dirt, stone, brick, water, lava, ice, coin, spike, ladder, door, key, chest, flag -> chatgpt/tiles/.
+G-T1 [ANY] 3 themes as CSS variable sets (Midnight = today, Daylight, High contrast) -> chatgpt/themes/themes.css + preview.html.
+     List every colour variable app.html uses (search "--gw7-", "--gw").
+ICONS [ANY] Gemini's icon sheets still waiting for a spot: GM2 (favicon), GM3 (palette categories), GM4 (badges), GM6 (website hero),
+     GM11 (paint tools), GM13 (top bar + stage controls), GM17 (extension safety), GM18 (make-a-block / power lines / bug hunter).
+     For each: which sheet option (A/B/C) fits best, the exact app element (id/class) it would replace or join, and a screenshot
+     mock (plain HTML page in chatgpt/icons/ showing current vs Gemini's). Owner picks, Claude merges. DON'T double icons:
+     the paint editor keeps its own toolbar (owner decision). FILES: chatgpt/icons/ICON-PLAN.txt + mocks.
+Lab (performance and editor research, proposals only):
+L3 [ANY] Faster "Make costumes" (turning 8 / 30 / 120 animation frames into costumes). L4 [ANY] On-canvas text typing in the costume
+editor. L5 [ANY] Bitmap select: copy / paste / flip / delete. L6 [ANY] Sharper full-stage bitmap costumes. L7 [TERMINAL] Faster
+"touching" for 1000 clones (measure with the kit). Each: chatgpt/lab/<ID>/ (code + NOTES + numbers).
+W1 [ANY] 40 more GWrap AI questions + answers kids ask -> chatgpt/gwrap-pack-2.json; check with
+     python3 team/tools/validate_gwrap_pack.py chatgpt/gwrap-pack-2.json (must print no errors).
+W2 [ANY] Accessibility check of the costume editor (names, keyboard, contrast) -> chatgpt/A11Y-COSTUMES.txt.
+W3 [ANY] Kid test script: 10 things a new user should do in 5 minutes -> chatgpt/KID-TEST.txt.
+
+---------------------------------------------------------------------
+5. MUSIC (Song maker + Loop maker)
+---------------------------------------------------------------------
+Owner rule: a new music system is NEVER pushed over the old one. It is offered side by side; the owner picks.
+M1 [ANY] Open claude/experiments/music-compare/index.html (A = Song maker now, B = new version from Gemini's research).
+     Write a listening test the owner can do in 10 minutes: 8 style choices, what to listen for, a score sheet.
+     FILES: chatgpt/MUSIC-AB-TEST.txt.
+M2 [ANY] Gemini's lab report (gemini/LAB-music.txt) describes music-engine-A/B/C.js that never reached GitHub. Ask the owner
+     whether he still has them (Gemini chat history). If yes: put them in chatgpt/music/gemini-engines/ unchanged + NOTES.
+M3 [ANY] Music research (owner: must sound like teen / adult music, not "baby" music): for each of the 28 Song maker genres write
+     tempo range, typical chord progressions, drum pattern (16 steps), bass rhythm, melody habits (range, rhythm, how often it
+     jumps), 2 well-known reference tracks (names only). FILES: chatgpt/music/GENRES.json + GENRES.txt. (This is Grok's K8 too.)
+M4 [ANY] Compare M3 with what A and B actually do (read app.html GENRES / RHYTHMS / BASSLINES and
+     claude/experiments/music-compare/song-maker-NEW-claude.html). List the biggest gaps per genre. FILES: chatgpt/music/GAPS.txt.
+M5 [ANY] Seamless loop mode idea (gemini/LAB-music.txt cause 7): design how "loop this song" would work in Scratch projects
+     (play sound until done in a forever loop must not have a gap). FILES: chatgpt/music/LOOP-MODE.txt. Proposal only.
+
+---------------------------------------------------------------------
+6. REMIX FACTORY (the owner's "little commercial": remixes that show off G-Warp)
+---------------------------------------------------------------------
+Every Scratch project is shared under CC BY-SA 2.0: remixing is allowed WITH credit. Always credit the original creator in the
+project notes, keep their art and music, never claim it as ours. Remixes go to the owner only (chatgpt/out/, git-ignored).
+R1 [TERMINAL] Practice: node team/tools/qa-kit/add-gwarp-intro.js on a project you built yourself; check-sb3 + run-in-scratch.
+R2 [WEB] Find 15 popular, fun, remix-friendly Scratch games (platformers, fighting, clicker, racing, rhythm) that are small enough
+     (< 10 MB) and have no extensions. Table: title | creator | link | why it's good for a G-Warp remix | 1 improvement idea.
+     FILES: chatgpt/REMIX-CANDIDATES.txt. The owner downloads the .sb3 files himself.
+R3 [TERMINAL] For each .sb3 the owner gives you: the recipe in qa-kit/README.md section 5 (dump, play before, roundtrip,
+     ONE clear improvement with the builder, the G-Warp intro, check, play after with keys, screenshots). Report per remix:
+     chatgpt/remixes/<name>.txt (what changed, kit output). The .sb3 goes to chatgpt/out/ and to the owner.
+R4 [ANY] Write "How to post a G-Warp remix on Scratch" for the owner: title, notes with credit, tags, what NOT to say
+     (no off-site link rules break Scratch's community guidelines - check them and say what is allowed). FILES: chatgpt/REMIX-POSTING.txt.
+
+---------------------------------------------------------------------
+7. MISSING FEATURES (team/MISSING-LIST.txt) - research + specs + proposals
+---------------------------------------------------------------------
+For each item: what Scratch / TurboWarp / PenguinMod do exactly (with screenshots or source links), G-Warp today (kit or code),
+a proposal (chatgpt/proposals/<ID>/) when it is small. One file per item: chatgpt/missing/<ID>.txt.
+A10 numbers-only inputs  B5 drag sprites on the stage  B11 costume / sound libraries + Surprise  B12 clean up blocks
+C4 jump to definition  C5 block switching (= G-B1)  C6 Ctrl+Space insert  C7 swap variable scope  C8 copy a reporter value
+C9 sprite / sound folders + sprite search  C10 arrow keys change numbers  C12 backpack  C13 snap to grid + drop files  C14 block count,
+comment previews, ask before deleting a sprite  E1.6 glide to random / mouse / sprite  E1.8 tutorials (text + steps)
+E1.9 30 FPS for .sb3 by default (check the setting)  E2.1 switch backdrop and wait, when timer >  E2.3 one reporter per variable
+E2.4 TurboWarp blocks (while, last key pressed, mouse button down)  E2.5 interpolation + custom stage size setting  E2.6 language menu
+E2.7 Translate extension  E2.9 PenguinMod core blocks (spec with expected results)  E3.x themes, compiler on/off.
+
+---------------------------------------------------------------------
+8. DOCS + WEBSITE
+---------------------------------------------------------------------
+D1 [ANY] docs/: a page for the QA kit (for grown-up helpers), a page "Remix a Scratch project with G-Warp" (kid-friendly, with credit
+     rules), update the changelog with v15.50.8 - v15.52.0 (from AI-TEAM.txt). Kid-friendly words, short sentences.
+D2 [ANY] README.md: the new team (Claude Opus + ChatGPT + Haiku helper), the QA kit, remove "awaiting" wording only if the owner confirmed
+     the website address (ask him: is https://creapter1.github.io/gwarp/ live?).
+D3 [ANY] chatgpt/WEBSITE-OPEN-QUESTIONS.txt: re-check every open question; close the answered ones.
+D4 [ANY] Parents page: check it still matches the safety rules (no accounts, under-13 rule, what goes online).
+
+---------------------------------------------------------------------
+9. HELP THE HELPER (Claude Haiku on Freebuff)
+---------------------------------------------------------------------
+H1 [ANY] Review every file Haiku hands in (haiku/): correct? safe? duplicate of an existing job? Write chatgpt/REVIEW-HAIKU-<date>.txt.
+H2 [ANY] When you find small, clear jobs (one SVG, one bug check), add them to team/HAIKU-TODO.txt with the same format as this list.
+
+---------------------------------------------------------------------
+IF EVERYTHING ABOVE IS DONE OR BLOCKED (never idle)
+---------------------------------------------------------------------
+X1 Read app.html end to end in chunks and list dead code, duplicate features, very long functions -> chatgpt/CODE-HEALTH.txt.
+X2 Find every user-facing English string not in team/ui-strings-en.json -> add them (for the future language menu).
+X3 Think like a 10-year-old using G-Warp for the first time; write the 20 most confusing moments -> chatgpt/KID-CONFUSION.txt.

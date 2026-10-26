@@ -1,0 +1,4 @@
+node_modules/
+offline/
+*.roundtrip.sb3
+shots/

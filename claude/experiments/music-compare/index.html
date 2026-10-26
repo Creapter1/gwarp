@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Song Maker A/B</title>
+<style>
+:root{--bg:#0b0b14;--panel:#141425;--line:#2a2a48;--text:#ececf6;--muted:#a3a3c2;--violet:#8b5cf6;--green:#4ade80;--yellow:#facc15}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,sans-serif;padding:16px}
+.wrap{max-width:980px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}p{color:var(--muted);margin:6px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+select,button,a.btn{background:#1b1b31;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font:inherit;text-decoration:none;cursor:pointer}
+button.a{border-color:#64748b}button.b{border-color:var(--green)}button.stop{border-color:#ef4444}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left}
+th{color:var(--muted);font-weight:600}.good{color:var(--green)}.bad{color:#f87171}#status{color:var(--yellow);min-height:1.5em}
+iframe{width:1px;height:1px;border:0;position:absolute;left:-9999px}
+.notes{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);white-space:pre-wrap;max-height:120px;overflow:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Song Maker A/B test</h1>
+<p>A test page, not part of the app. <b>A</b> = the Song maker that is in G-Warp now. <b>B</b> = a new version made from Gemini's music research (gemini/LAB-music.txt).
+Nothing here changes the app. Pick one, then tell Claude or ChatGPT which you want.</p>
+
+<div class="card">
+  <div class="row">
+    <label>Genre <select id="genre"></select></label>
+    <label>Mood <select id="mood"></select></label>
+    <label>Theme <select id="theme"></select></label>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <button class="a" id="playA">▶ Play A (now)</button>
+    <button class="b" id="playB">▶ Play B (new)</button>
+    <button class="stop" id="stop">■ Stop</button>
+    <button id="seed">🎲 New seed (both)</button>
+  </div>
+  <div id="status">Loading both versions… (first time can take a few seconds)</div>
+  <div class="row"><div style="flex:1;min-width:280px"><b>B's melody notes (part 1)</b><div class="notes" id="notesB"></div></div></div>
+</div>
+
+<div class="card">
+  <b>Measured (Claude, 2026-10-26)</b> - how many different tunes you get:
+  <table>
+    <tr><th></th><th>A (now)</th><th>B (new)</th></tr>
+    <tr><td>28 genres</td><td class="bad">17 / 28*</td><td class="good">28 / 28</td></tr>
+    <tr><td>16 moods</td><td class="bad">11 / 16*</td><td class="good">16 / 16</td></tr>
+    <tr><td>12 themes</td><td class="bad">1 / 12</td><td class="good">12 / 12</td></tr>
+    <tr><td>genre × mood (448)</td><td class="bad">153 / 448*</td><td class="good">448 / 448</td></tr>
+  </table>
+  <p>* for A this counts different tune "recipes"; the notes you actually hear are even closer (Gemini measured 7 genres, 6 moods, 1 theme).</p>
+  <p>What B changes: each mood has its own scale and how far the tune jumps; each theme gives the tune a shape (climb, arch, hook, falling…);
+  each genre gets its own rhythm; changing the style changes the tune; passing notes can jump instead of only moving one step; medium parts keep half the passing notes instead of none.
+  Same instruments, drums, bass, chords and song layout as A.</p>
+</div>
+
+<div class="card">
+  <b>Open them yourself</b>
+  <div class="row" style="margin-top:8px">
+    <a class="btn" href="../../../app.html" target="_blank">A: G-Warp now</a>
+    <a class="btn" href="song-maker-NEW-claude.html" target="_blank">B: G-Warp with the new Song maker</a>
+    <a class="btn" href="../../../gemini/lab/lab-melody.html" target="_blank">C: Gemini's melody engine lab</a>
+  </div>
+  <p>In the app: <b>Sounds</b> tab → <b>Song</b>. C is Gemini's own page (8 styles); her engine already makes the <b>Loop maker</b> melodies in the app.</p>
+  <p><b>Missing:</b> Gemini's report also describes three full music engines (music-engine-A/B/C.js). Those files never reached GitHub, so they can't be tested here.
+  If you still have them in a Gemini chat, add them to <code>gemini/</code> and they can be added to this page as more choices.</p>
+</div>
+</div>
+
+<iframe id="fa" title="A" src="../../../app.html"></iframe>
+<iframe id="fb" title="B" src="song-maker-NEW-claude.html"></iframe>
+<script>
+(() => {
+  const $ = id => document.getElementById(id), st = $('status');
+  const api = f => { try { return f.contentWindow && f.contentWindow.GW_SONG_ARRANGER; } catch (e) { return 'blocked'; } };
+  let tries = 0;
+  function ready() {
+    const A = api($('fa')), B = api($('fb'));
+    if (A === 'blocked' || B === 'blocked') { st.textContent = 'Your browser blocks this page from talking to the two apps (this happens when the files are opened straight from the disk). Use the buttons below to open them, or open this page from the website / a local server.'; return; }
+    if (!A || !B) { if (tries++ < 60) return setTimeout(ready, 500); st.textContent = 'The apps did not load. Use the buttons below instead.'; return; }
+    const fill = (sel, list) => { list.forEach(x => sel.add(new Option(x.label || x.id, x.id))); };
+    fill($('genre'), B.genres); fill($('mood'), B.moods); fill($('theme'), B.themes);
+    $('genre').value = 'lofi'; $('mood').value = 'chill'; $('theme').value = 'vlog';
+    const style = () => ({ genre: $('genre').value, mood: $('mood').value, theme: $('theme').value });
+    const showNotes = () => { try { B.setStyle(style()); const names = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']; $('notesB').textContent = B.melodyNotes(0).map(([s, l, n]) => names[n % 12] + Math.floor(n / 12 - 1)).join('  '); } catch (e) { $('notesB').textContent = ''; } };
+    const play = async (X, name) => { A.stop(); B.stop(); X.setStyle(style()); st.textContent = 'Playing ' + name + '…'; try { await X.play(); } catch (e) { st.textContent = 'Could not play: ' + e.message; } };
+    $('playA').onclick = () => play(A, 'A (now)'); $('playB').onclick = () => play(B, 'B (new)');
+    $('stop').onclick = () => { A.stop(); B.stop(); st.textContent = 'Stopped.'; };
+    $('seed').onclick = () => { const sd = (Math.random() * 1e9) >>> 0; A.state.seed = sd; B.state.seed = sd; A.generate(false); B.generate(false); showNotes(); st.textContent = 'New seed ' + sd + ' for both.'; };
+    ['genre', 'mood', 'theme'].forEach(id => $(id).onchange = showNotes); showNotes();
+    st.textContent = 'Ready. Pick a style, then play A and B.';
+  }
+  window.addEventListener('load', () => setTimeout(ready, 800));
+})();
+</script>
+</body>
+</html>

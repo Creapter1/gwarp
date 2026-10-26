@@ -1,0 +1,22 @@
+{
+  "name": "gwarp-qa-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Test G-Warp like Claude does: drive the real app with Playwright, play .sb3 files in the real Scratch engine, check files before uploading, build G-Warp remixes.",
+  "license": "MIT",
+  "scripts": {
+    "setup": "npx playwright install chromium",
+    "smoke": "node smoke-app.js",
+    "check": "node check-sb3.js",
+    "scratch": "node run-in-scratch.js"
+  },
+  "dependencies": {
+    "jszip": "3.10.1",
+    "playwright": "1.56.0",
+    "scratch-parser": "6.0.1",
+    "scratch-render": "2.2.84",
+    "scratch-storage": "6.2.1",
+    "scratch-svg-renderer": "3.1.19",
+    "scratch-vm": "5.0.300"
+  }
+}

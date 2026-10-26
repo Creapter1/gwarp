@@ -250,3 +250,43 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 6):
 - Read-back: origin/main:claude/AI-CHAT-LOG.txt
 - Verified new entry is present at bottom: YES
 - Task status: DONE
+
+--- ENTRY 7 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T05:53:00Z (request) - closeout 2026-10-26T06:12Z
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: TEAM-2 - two-AI team, Gemini's work merged, QA kit + prompts for ChatGPT and Claude Haiku (Freebuff)
+Branch / starting commit: main @ 98880a9
+
+USER REQUEST (summary): Gemini retired (no more free use); team is now Claude + ChatGPT, plus Claude Haiku on Freebuff as a helper.
+Claude: add everything Gemini already did (icons, music animations, extra melodies, music maker ideas). Then prompts: one for Haiku
+(bug hunting / testing / SVG, simple and explicit), a file for Claude + ChatGPT, and a huge explicit to-do + prompt for ChatGPT who
+takes over Grok / Gemini / DeepSeek jobs - and give ChatGPT what it needs to test and remix like Claude did.
+Mid-task (05:55Z): "a chance Gemini suggested a new way of creating music - compare them, do not push if different, give me both,
+outside the project if possible so I can test".
+
+PROGRESS:
+- Music: built Gemini's LAB-music ideas into the Song maker as version B, then KEPT IT OUT OF THE APP (owner's rule):
+  claude/experiments/music-compare/index.html (play A = now vs B = new with the same genre/mood/theme/seed) + song-maker-NEW-claude.html.
+  Measured different tunes: A 17/28 genres, 11/16 moods, 1/12 themes, 153/448 genre x mood (motif level); B 28/28, 16/16, 12/12, 448/448.
+  Gemini's own full engines (music-engine-A/B/C.js) are only described in her report - the files never reached GitHub.
+- Icons merged (app.html Beta v15.52.0): GM9-C sound tabs + effects, GM16-C instrument groups, GM8-C Song maker rows; old icons kept
+  hidden, switch "geminiIcons". Other icon sheets left for an owner pick (ChatGPT plan job).
+- team/tools/qa-kit/: Claude's test + remix tools for ChatGPT / Haiku (smoke-app, check-sb3 incl. AI-mark scan, run-in-scratch,
+  roundtrip, costume-bounds, dump-scripts, add-gwarp-intro, the in-page builder GWB, README with the rules learned).
+- team/TEAM-2026-10-26.md, team/CHATGPT-PROMPT-2026-10-26.txt (chatgpt.com + Freebuff versions), team/CHATGPT-TODO-2026-10-26.txt,
+  team/HAIKU-PROMPT-2026-10-26.txt, team/HAIKU-TODO.txt, haiku/README.txt; TODO-GEMINI / TODO-GROK marked retired; TODO.txt pointer.
+
+TESTS:
+- qa-kit from a clean npm install: smoke-app ALL PASS; check-sb3 ALL PASS on the Smash remix; run-in-scratch ok; costume-bounds ok;
+  roundtrip on the original Clone Multiplayer = NO DIFFERENCES; add-gwarp-intro on the original -> check ALL PASS + runs in scratch-vm;
+  README builder example runs (space adds to score).
+- A/B music page over a local server: plays A and B, shows B's notes, no errors; B plays + renders offline (45 s song).
+- Icons: 26 icons, 0 doubled, no page errors (screenshots). Regression: newblocks, gwrap_pack, stageclick, mascot, colour_t PASS;
+  test_anim 16/18 (same 2 old checks).
+EVIDENCE CLASS: TESTED in G-Warp / scratch-vm as listed; the A/B page NOT tested from file:// in every browser (needs same-origin;
+  the page says so and offers direct links).
+NEXT: owner listens to A/B and picks; owner pastes the prompts into ChatGPT / Freebuff.
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---

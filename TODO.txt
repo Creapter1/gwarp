@@ -4,6 +4,9 @@
  Previously documented website: https://creapter1.github.io/gwarp/ (canonical URL pending owner confirmation)   App: app.html (Beta v15.48.0)
 =====================================================================
 
+>>> TEAM FROM 2026-10-26: Claude Opus (integrates) + ChatGPT (everything else) + Claude Haiku on Freebuff (helper). Read team/TEAM-2026-10-26.md.
+    ChatGPT: team/CHATGPT-PROMPT-2026-10-26.txt + team/CHATGPT-TODO-2026-10-26.txt   Haiku: team/HAIKU-PROMPT-2026-10-26.txt   Testing: team/tools/qa-kit/ <<<
+
 >>> MISSING vs Scratch / TurboWarp / PenguinMod: team/MISSING-LIST.txt (broken + missing features, who does each) <<<
 
 HOW THE TEAM WORKS
