@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-120 -150 240 300" role="img" aria-labelledby="gwi-hero-kid-b-asset-01 gwi-hero-kid-b-asset-02">
+<title id="gwi-hero-kid-b-asset-01">Hero kid, option B</title><desc id="gwi-hero-kid-b-asset-02">A kind inventor with a rounded helmet, teal-glowing visor and tool belt.</desc>
+<defs><linearGradient id="gwi-hero-kid-b-asset-03" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#4ade80"/><stop offset="1" stop-color="#a8f7c4"/></linearGradient></defs>
+<!-- Rotation centre is the body centre at (0, 0). -->
+<path d="M-31-50 Q-77-40-70 11 L-57 36-38 24Z M31-50Q77-40 70 11L57 36 38 24Z" fill="#a855f7" stroke="#0b0b14" stroke-width="6" stroke-linejoin="round"/>
+<path d="M-45-44 Q0-63 45-44 L41 39 Q0 61-41 39Z" fill="#ececf6" stroke="#0b0b14" stroke-width="6" stroke-linejoin="round"/>
+<path d="M-39-34 Q0-50 39-34 L35-2 Q0 10-35-2Z" fill="url(#gwi-hero-kid-b-asset-03)" stroke="#1b1b31" stroke-width="4" stroke-linejoin="round"/>
+<path d="M-18-20l8 7M0-23l8 7M18-20l-8 7" stroke="#1b1b31" stroke-width="3" stroke-linecap="round"/>
+<path d="M-41 11 Q-49 26-38 48 L-29 58 Q0 71 29 58 L38 48 Q49 26 41 11Z" fill="#8b5cf6" stroke="#0b0b14" stroke-width="6" stroke-linejoin="round"/>
+<path d="M-35 38Q0 49 35 38" fill="none" stroke="#facc15" stroke-width="8"/>
+<path d="M-25 44l-4 15h58l-4-15" fill="#1b1b31" stroke="#0b0b14" stroke-width="4" stroke-linejoin="round"/>
+<path d="M-12 49v8M0 49v8M12 49v8" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>
+<path d="M-31 55l-8 48q-2 13 12 14h18q11-2 9-14L-2 61M31 55l8 48q2 13-12 14H9q-11-2-9-14l2-42" fill="#a855f7" stroke="#0b0b14" stroke-width="5" stroke-linejoin="round"/>
+<path d="M-39 101h32M7 101h32" stroke="#4ade80" stroke-width="7" stroke-linecap="round"/>
+<path d="M-47-18l-15 13 10 15M47-18L62-5 52 10" fill="none" stroke="#facc15" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

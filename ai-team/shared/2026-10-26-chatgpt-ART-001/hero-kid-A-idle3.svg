@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-120 -150 240 300" role="img" aria-labelledby="gwi-hero-kid-a-idle3-asset-01 gwi-hero-kid-a-idle3-asset-02">
+<title id="gwi-hero-kid-a-idle3-asset-01">Hero kid idle frame 3</title><desc id="gwi-hero-kid-a-idle3-asset-02">An idle pose for the cape-wearing hero kid.</desc>
+<defs><linearGradient id="gwi-hero-kid-a-idle3-asset-03" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a855f7"/><stop offset="1" stop-color="#6d28d9"/></linearGradient></defs>
+<!-- Rotation centre is the body centre at (0, 0). -->
+<path d="M-29-43 Q-61-29-73 4 L-82 57 Q-67 53-53 68 L-23 38Z" fill="url(#gwi-hero-kid-a-idle3-asset-03)" stroke="#0b0b14" stroke-width="5" stroke-linejoin="round"/>
+<path d="M-37-75 Q0-92 37-75 L32-42 Q0-31-32-42Z" fill="#4ade80" stroke="#0b0b14" stroke-width="5" stroke-linejoin="round"/>
+<path d="M-31-43 Q-52-24-45 13 L-36 43 Q0 57 36 43 L45 13 Q52-24 31-43Z" fill="#8b5cf6" stroke="#0b0b14" stroke-width="6" stroke-linejoin="round"/>
+<path d="M-27-72 Q-49-96-34-118 Q-3-139 31-119 Q48-99 27-72 L19-63H-20Z" fill="#facc15" stroke="#0b0b14" stroke-width="5" stroke-linejoin="round"/>
+<path d="M-36-98 Q-18-124 3-116 Q21-132 37-104 Q21-111 12-103 Q-2-111-12-99 Q-26-105-36-98Z" fill="#1b1b31"/>
+<path d="M-16-91v5M16-91v5" stroke="#0b0b14" stroke-width="6" stroke-linecap="round"/><path d="M-10-75q10 9 20 0" fill="none" stroke="#0b0b14" stroke-width="4" stroke-linecap="round"/>
+<path d="M-36 42l-10 57q-1 15 15 15h18q7-3 7-13l-2-56M8 45l-2 56q0 12 12 13h18q16-2 11-17L36 42" fill="#1b1b31" stroke="#0b0b14" stroke-width="5" stroke-linejoin="round"/>
+<path d="M-47 101h34M6 102h34" stroke="#4ade80" stroke-width="7" stroke-linecap="round"/>
+<path d="M-43-25l-16 12-4 19M43-25l16 12 4 19" fill="none" stroke="#facc15" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
