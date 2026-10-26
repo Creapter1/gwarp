@@ -88,8 +88,8 @@ CLAUDE (v15.49.0, this night)
 --- 2026-10-26 (Claude, Beta v15.52.0) ---
   gemini/GM9-C (sound studio tabs + 9 sound effects), GM16-C (instrument groups), GM8-C (Song maker rows)   MERGED v15.52.0
                                                      (module gw-v1552-gemini-icons, switch off: feature "geminiIcons")
-  gemini/LAB-music.txt (why all melodies sound alike)  BUILT AS A SIDE-BY-SIDE TEST, NOT MERGED (owner rule: new systems are offered,
-                                                     not pushed): claude/experiments/music-compare/ (A = now, B = new). Owner picks.
+  gemini/LAB-music.txt (why all melodies sound alike)  MERGED 2026-10-26 (owner: "merge A and B into one"): Beta v15.53.0 Song maker Tune = Mix (default) / Classic / Fresh;
+                                                     the A/B page stays in claude/experiments/music-compare/ for listening.
   gemini/music-engine-A/B/C.js                       NEVER REACHED GITHUB - only described in LAB-music.txt (ChatGPT job M2: ask owner)
   gemini/GM2/3/4/6/11/13/17/18 icon sheets            WAITING - ChatGPT job ICONS makes the placement plan + mocks, owner picks
   Gemini / Grok / DeepSeek retired; their open jobs moved to team/CHATGPT-TODO-2026-10-26.txt

@@ -1095,7 +1095,7 @@ body { height:100dvh !important; min-height:0 !important; overflow:hidden !impor
 #gwSndAdd .gw7-btn{padding:9px 6px;font-size:12px}
 #gwSndAdd .gw7-btn.recording{background:#7f1d1d;border-color:var(--gw7-bad);color:#fff;animation:gw7pulse 1s ease-in-out infinite}
 @keyframes gw7pulse{50%{box-shadow:0 0 0 4px rgba(248,113,113,.25)}}
-@media (prefers-reduced-motion:reduce){#gwSndAdd .gw7-btn.recording{animation:none}}
+body.gw-calm #gwSndAdd .gw7-btn.recording{animation:none}
 /* main */
 #gwSndMain{display:flex;flex-direction:column;min-height:0;min-width:0}
 #gwSndTabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;flex:0 0 auto}
@@ -1442,9 +1442,7 @@ body.gw7-slotting #snapPreviewLine{opacity:0 !important}
 .gw7-ai-finding[data-kind="warn"]{border-color:rgba(251,191,36,.45)}
 .gw7-ai-show{grid-column:2;justify-self:start;padding:3px 9px;border-radius:999px;border:1px solid #6366f1;background:#312e81;color:#fff;font-size:11px;font-weight:800}
 .gw7-ai-foot{margin:0;font-size:10.5px;color:#8b93b8;line-height:1.4}
-@media (prefers-reduced-motion:reduce){
-  #workspaceCanvas .scratch-block[data-type="when_flag"]::before,.gw7-ai-card{animation:none !important}
-}
+body.gw-calm #workspaceCanvas .scratch-block[data-type="when_flag"]::before,body.gw-calm .gw7-ai-card{animation:none !important}
 
 /* ---------- AI Report (replaces AI Handoff + Gemini Review) ---------- */
 #gwAiReport{position:fixed;inset:0;z-index:100001;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(5,7,15,.7)}
@@ -1516,7 +1514,7 @@ body.gw7-slotting #snapPreviewLine{opacity:0 !important}
 #gw8ImportBusy{position:fixed;inset:0;z-index:100003;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:rgba(5,7,15,.78);color:#eef0fa;font-size:15px}
 .gw8-g-dance{display:grid;place-items:center;width:84px;height:84px;border-radius:22px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font:1000 46px/1 system-ui,sans-serif;box-shadow:0 10px 40px rgba(79,70,229,.6);animation:gw8Dance 1.1s ease-in-out infinite}
 @keyframes gw8Dance{0%{transform:translateY(0) rotate(0)}20%{transform:translateY(-14px) rotate(-18deg) scale(1.05)}40%{transform:translateY(0) rotate(0)}60%{transform:translateY(-14px) rotate(18deg) scale(1.05)}80%{transform:translateY(0) rotate(360deg)}100%{transform:translateY(0) rotate(360deg)}}
-@media (prefers-reduced-motion:reduce){.gw8-g-dance{animation:gw8Pulse 1.6s ease-in-out infinite}@keyframes gw8Pulse{50%{opacity:.6}}}
+body.gw-calm .gw8-g-dance{animation:gw8Pulse 1.6s ease-in-out infinite}@keyframes gw8Pulse{50%{opacity:.6}}
 #gw8ImportReport{position:fixed;right:18px;bottom:18px;z-index:100003;width:min(380px,calc(100vw - 32px));background:#121629;border:1px solid #3b2a77;border-radius:14px;padding:14px;color:#eef0fa;font-size:12.5px;line-height:1.45;box-shadow:0 20px 60px rgba(0,0,0,.6);display:flex;flex-direction:column;gap:6px}
 #gw8ImportReport b{font-size:14px}
 #gw8ImportReport p{margin:0}
@@ -1613,7 +1611,8 @@ body.gw8-user-mode .gw8-dev-only{display:none !important}
 body.gw8-running #workspaceCanvas .scratch-block.block-c-shape > .block-c-body::before{background-repeat:no-repeat repeat;animation:gw8Flow .55s linear infinite}
 body.gw8-running #workspaceCanvas .scratch-block.block-c-shape > .block-c-body::after{filter:drop-shadow(0 0 3px rgba(74,222,128,.9))}
 @keyframes gw8Flow{from{background-position:0 0}to{background-position:0 24px}}
-@media (prefers-reduced-motion:reduce){body.gw8-running #workspaceCanvas .scratch-block.block-c-shape > .block-c-body::before{animation:none}}
+/* v15.53.0 (Claude): the electricity follows G-Warp's own "Calm motion" setting (off by default), not the computer's "reduce animations" (owner: the electricity had stopped) */
+body.gw-calm.gw8-running #workspaceCanvas .scratch-block.block-c-shape > .block-c-body::before{animation:none}
 .scratch-block.block-c-shape > .block-c-footer{height:10px;width:46px;border-radius:0 0 6px 6px;position:relative}
 /* the “else” bar is part of the block: prongs underneath for the first block of the “else” mouth */
 .scratch-block[data-type="if_else"] > div:not(.block-c-header):not(.block-c-body):not(.block-c-footer){display:inline-flex;align-items:center;align-self:flex-start;min-width:46px;padding:4px 10px !important;margin:0 !important;background:var(--control-color,#ffab19);color:#000 !important;font-size:11px !important;font-weight:900 !important;text-transform:lowercase;border-radius:0 6px 6px 0;position:relative;z-index:auto}
@@ -1656,7 +1655,7 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape > .block-c-body::
 #workspaceCanvas .scratch-block.gw8-warp-culprit{outline:3px solid #f59e0b;outline-offset:3px;box-shadow:0 0 0 7px rgba(245,158,11,.25),0 0 28px rgba(245,158,11,.55)}
 #workspaceCanvas .scratch-block.gw8-warp-flash{animation:gw8WarpFlash .5s ease-in-out 3}
 @keyframes gw8WarpFlash{50%{box-shadow:0 0 0 10px rgba(245,158,11,.5),0 0 36px rgba(245,158,11,.8)}}
-@media (prefers-reduced-motion:reduce){#workspaceCanvas .scratch-block.gw8-warp-flash{animation:none}}
+body.gw-calm #workspaceCanvas .scratch-block.gw8-warp-flash{animation:none}
 .gw8-warp-alert{position:fixed;top:76px;left:50%;transform:translateX(-50%);z-index:100003;width:min(520px,calc(100vw - 32px));display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:16px;background:#121629;border:1px solid #f59e0b;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 4px rgba(245,158,11,.15);color:#eef0fa;font-size:13px;line-height:1.5}
 .gw8-warp-head{display:flex;align-items:center;gap:10px;font-size:15px}
 .gw8-warp-g{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-weight:1000;flex:none}
@@ -2285,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.52.0</span>
+<span class="app-version">Beta v15.54.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4649,7 +4648,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.51.0',label:'Beta v15.52.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.54.0',label:'Beta v15.54.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -8251,7 +8250,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     const oldStyle=by('gwMusicStyle');if(oldStyle&&!oldStyle.value)oldStyle.value='lofi';
     if(window.GW_BUILD&&document.title!==window.GW_BUILD.title)document.title=window.GW_BUILD.title;
   }
-  window.GW_INSTRUMENT_STUDIO={instruments:INSTRUMENTS,drums:DRUMS,scheduleVoice,scheduleInstrumentNote,loadInstrumentSamples,playNote,playInstrumentNote,playDrum,trackInstrument:trackName,stopAll,getPatch:currentPatch};
+  window.GW_INSTRUMENT_STUDIO={instruments:INSTRUMENTS,drums:DRUMS,scheduleVoice,scheduleInstrumentNote,loadInstrumentSamples,playNote,playInstrumentNote,playDrum,trackInstrument:trackName,stopAll,getPatch:currentPatch,currentInstrument:()=>state.instrument};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{initMarkup();wire();},{once:true});else{initMarkup();wire();}
 })();
 </script>
@@ -9158,7 +9157,7 @@ nodes.push(el);cur=b.next;}return nodes;};
   const MODERN_SWAP = { 'Music Box': 'Bell Synth', 'Pluck Synth': 'Dark Pluck', 'Synth Pad': 'Wide Pad', 'Rhodes Keys': 'Warm Keys' };
   const modern = () => S.sound !== 'classic';
   const DUSTY = ['lofi', 'boombap', 'rnb', 'jazz', 'sexydrill'];
-  const specOf = (stem, name) => (CATALOG[stem].find(x => x[0] === name) || CATALOG[stem][0])[1];
+  const specOf = (stem, name) => (CATALOG[stem].find(x => x[0] === name) || (stem !== 'drums' && stem !== 'fills' && (window.GW_INSTRUMENT_STUDIO?.instruments || []).some(i => i.name === name) ? [name, 'studio:' + name] : null) || CATALOG[stem][0])[1]; // v15.54.0: any Instrument Playground voice (Create Melody)
 
   /* ---------- grooves: 16 steps per bar, [mid, intense, extreme] ---------- */
   const E8 = [0, 2, 4, 6, 8, 10, 12, 14], E16 = [...Array(16).keys()], OFF = [2, 6, 10, 14], FOUR = [0, 4, 8, 12];
@@ -9294,7 +9293,7 @@ nodes.push(el);cur=b.next;}return nodes;};
   const SEND = { melody: 0.22, backing: 0.3, bass: 0, drums: 0.06, fills: 0.28 };
 
   /* ---------------- song state ---------------- */
-  const S = { genre: 'electro', mood: 'happy', theme: 'gaming', root: 0, mode: 'major', bpm: 128, parts: 12, seed: 1, prog: ['I', 'V', 'vi', 'IV'], prog2: null, energy: [], grid: {}, inst: {}, motifs: null, bright: 1, vol: 100, dyn: [], sound: 'modern', tempo: 'normal', lenSec: 45, shift: true, alt: null, genres: [], moods: [], themes: [] };
+  const S = { genre: 'electro', mood: 'happy', theme: 'gaming', root: 0, mode: 'major', bpm: 128, parts: 12, seed: 1, prog: ['I', 'V', 'vi', 'IV'], prog2: null, energy: [], grid: {}, inst: {}, motifs: null, bright: 1, vol: 100, dyn: [], sound: 'modern', tune: 'mix', tempo: 'normal', lenSec: 45, shift: true, alt: null, genres: [], moods: [], themes: [] };
   /* v15.19.0 (Claude): like Soundraw's “dynamic” parts, a song longer than one minute gets TWISTS after the first
      minute: the familiar tune comes back, but every other pair of parts has a new tune, a twist in the chords, an
      extra beat layer and a livelier bass, so it doesn't just repeat. Click ✦ to turn a twist on or off. */
@@ -9358,7 +9357,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     return { melody: 1, backing: 1, bass: 1, drums: 1, fills: 1 };
   }
   function applyColumn(p) { const d = stemDefaults(S.energy[p], S.energy[p + 1]); STEMS.forEach(st => { S.grid[st.id][p] = d[st.id]; }); }
-  function makeMotif(r, base) {
+  function makeMotifClassic(r, base) { // the original tune maker (unchanged)
     const rh = modern() && G().rhythm === 'bouncy' ? 'syncopated' : G().rhythm; // modern: no sing-song bounce
     const tpl = RHYTHMS[rh] || RHYTHMS.bouncy, rest = M().rest + (modern() ? 0.08 : 0);
     const out = []; let deg = Math.floor(r() * 3);
@@ -9368,6 +9367,56 @@ nodes.push(el);cur=b.next;}return nodes;};
       if (strong) deg = Math.floor(r() * 3) + (r() < 0.25 ? 3 : 0);
       else deg += r() < 0.5 ? 1 : -1;
       out.push({ step, len, chord: strong, idx: deg + base, dir: r() < 0.5 ? 1 : -1 });
+    });
+    return out;
+  }
+  /* v15.53.0 (Claude, merged A+B on owner's request): the FRESH tunes (from Gemini's music lab - gemini/LAB-music.txt) sit next to the
+     original (classic) tunes. Tune: Mix (default: old + new in every song) / Classic (only the old tunes) / Fresh (only the new). Fresh tunes:
+     every genre, mood and theme changes the TUNE, not just the sound. Before, the 12 themes made 1 melody, the 16 moods ~6, the 28 genres 7 (measured by Gemini).
+     - mood: its own scale (mode), how far the tune jumps, which way it leans, short or long notes
+     - theme: the shape of the tune over 2 bars (arch, climb, hook, pedal, question-and-answer, falling ...)
+     - genre: its own rhythm (the genre's template, changed in a fixed way for that genre)
+     - the style is mixed into the random seed, so changing it gives a new tune; the same choice always gives the same tune */
+  const MOOD_TUNE = { // scale steps from the root, jump chance, biggest jump (scale steps), lean (+ up / - down), note length (gate)
+    happy: [[0, 2, 4, 5, 7, 9, 11], 0.30, 4, 0.15, 0.85], chill: [[0, 2, 3, 5, 7, 9, 10], 0.18, 3, -0.05, 1.0], hype: [[0, 2, 3, 5, 7, 8, 10], 0.38, 5, 0.1, 0.6],
+    dreamy: [[0, 2, 4, 6, 7, 9, 11], 0.26, 5, 0.1, 1.0], elegant: [[0, 2, 4, 5, 7, 9, 11], 0.22, 3, 0, 0.95], epic: [[0, 2, 3, 5, 7, 8, 11], 0.42, 5, 0.2, 0.95],
+    dark: [[0, 1, 3, 5, 7, 8, 10], 0.25, 4, -0.15, 0.85], busy: [[0, 2, 3, 5, 7, 8, 10], 0.34, 3, 0.05, 0.55], angry: [[0, 1, 3, 5, 6, 8, 10], 0.4, 4, -0.1, 0.55],
+    restless: [[0, 2, 3, 5, 7, 9, 10], 0.32, 4, 0.05, 0.65], mysterious: [[0, 1, 4, 5, 7, 8, 10], 0.28, 4, -0.05, 0.9], heavy: [[0, 2, 3, 5, 7, 8, 10], 0.15, 2, -0.2, 1.0],
+    suspense: [[0, 2, 3, 5, 7, 8, 11], 0.2, 6, 0, 0.8], fear: [[0, 1, 3, 4, 6, 8, 10], 0.3, 6, -0.1, 0.7], scary: [[0, 1, 3, 4, 6, 7, 9, 10], 0.35, 6, -0.15, 0.75],
+    horror: [[0, 1, 4, 5, 7, 8, 10], 0.36, 6, -0.2, 0.8] };
+  const THEME_SHAPE = { // where the tune goes over 2 bars (8 slots, in scale steps from the start)
+    gaming: [0, 4, 0, 4, 2, 5, 1, 0], vlog: [0, 1, 2, 4, 5, 4, 2, 0], cinematic: [0, 0, 1, 2, 3, 5, 6, 7], fashion: [2, 4, 2, 4, 1, 3, 1, 0],
+    sports: [0, 2, 3, 5, 6, 7, 8, 7], corporate: [0, 1, 2, 3, 4, 3, 2, 1], ads: [4, 2, 4, 5, 4, 2, 1, 0], tech: [0, 0, 3, 0, 0, 4, 0, -1],
+    travel: [0, 2, 4, 3, 5, 4, 2, 0], anime: [7, 6, 5, 4, 5, 3, 2, 0], documentary: [0, 0, 1, 2, 2, 3, 2, 1], horror: [0, 0, 1, 0, -1, 0, 1, -2] };
+  const fnv = t => { let h = 2166136261; for (const ch of String(t)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; };
+  const moodTune = () => MOOD_TUNE[S.mood] || MOOD_TUNE.happy;
+  function genreRhythm() { // the genre's template, changed the same way every time for that genre, so all 28 genres differ
+    const rh = modern() && G().rhythm === 'bouncy' ? 'syncopated' : G().rhythm, base = (RHYTHMS[rh] || RHYTHMS.bouncy).map(x => [...x]);
+    const r = rng(fnv('rhythm:' + S.genre)), out = [];
+    base.forEach(([st, len], k) => {
+      const roll = r();
+      if (len >= 4 && roll < 0.35) { const a = len >> 1; out.push([st, a], [st + a, len - a]); } // split a long note
+      else if (len === 2 && roll > 0.82 && k > 0 && st % 4 !== 0) out.push([st + 1, 1]); // push it off the beat
+      else out.push([st, len]);
+    });
+    if (r() < 0.5 && !out.some(([st]) => st === 15)) out.push([15, 1]); // a pick-up into bar 2
+    if (r() < 0.4 && !out.some(([st]) => st === 31)) out.push([31, 1]);
+    return out.sort((a, b) => a[0] - b[0]).filter(([st, len], i, a) => !i || st >= a[i - 1][0] + 1);
+  }
+  function makeMotifFresh(r, base) {
+    const tpl = genreRhythm(), rest = M().rest + (modern() ? 0.08 : 0), [sc, jump, maxJ, lean, gate] = moodTune(), shape = THEME_SHAPE[S.theme] || THEME_SHAPE.vlog;
+    const out = []; let deg = Math.floor(r() * 3), cur = shape[0] + base;
+    tpl.forEach(([step, len], idx) => {
+      if (idx > 0 && r() < rest) return; // mood decides how much the tune breathes
+      const strong = step % 4 === 0, target = shape[Math.min(7, Math.floor(step / 4))] + base;
+      if (strong) deg = Math.floor(r() * 3) + (r() < 0.25 ? 3 : 0);
+      else deg += r() < 0.5 ? 1 : -1;
+      // the line: head for the theme's shape, sometimes with a jump, leaning the mood's way
+      const diff = target - cur; let mv;
+      if (diff && r() < 0.6) mv = Math.sign(diff) * Math.min(Math.abs(diff), r() < jump ? 1 + Math.floor(r() * maxJ) : 1);
+      else mv = r() < jump * 0.5 ? (r() < 0.5 + lean ? 1 : -1) * (2 + Math.floor(r() * (maxJ - 1))) : (r() < 0.5 + lean ? 1 : -1);
+      cur = Math.max(-5, Math.min(12, cur + mv));
+      out.push({ step, len, chord: strong, idx: deg + base, dir: r() < 0.5 ? 1 : -1, deg: cur, gate });
     });
     return out;
   }
@@ -9390,9 +9439,11 @@ nodes.push(el);cur=b.next;}return nodes;};
     }
     S.energy = curve; S.grid = {}; STEMS.forEach(st => { S.grid[st.id] = new Array(S.parts).fill(0); });
     for (let p = 0; p < S.parts; p++) applyColumn(p);
-    S.motifs = { A: makeMotif(r, 0), B: makeMotif(r, 1) };
+    S.motifs = { A: makeMotifClassic(r, 0), B: makeMotifClassic(r, 1) };
     // twists (v15.19.0): two more tunes and a second chord pattern, drawn after the first ones so old songs stay the same
-    S.motifs.C = makeMotif(r, 2); S.motifs.D = makeMotif(r, 1);
+    S.motifs.C = makeMotifClassic(r, 2); S.motifs.D = makeMotifClassic(r, 1);
+    { const rm = rng((S.seed ^ fnv(S.genre + '|' + S.mood + '|' + S.theme)) >>> 0); // v15.53.0: the fresh tunes, their own seed (the classic ones stay the same)
+      S.motifs.nA = makeMotifFresh(rm, 0); S.motifs.nB = makeMotifFresh(rm, 1); S.motifs.nC = makeMotifFresh(rm, 2); S.motifs.nD = makeMotifFresh(rm, 1); }
     const others = mood.progs.filter(pg => pg.join() !== S.prog.join()); S.prog2 = others.length ? others[Math.floor(r() * others.length)] : [S.prog[2], S.prog[3], S.prog[0], S.prog[1]];
     twists();
     const fam = GENRES.filter(x => x.family === G().family && x.id !== S.genre && x.id !== 'orchestra'), alt = fam.length ? fam[Math.floor(r() * fam.length)] : null;
@@ -9581,6 +9632,44 @@ nodes.push(el);cur=b.next;}return nodes;};
     const root = 28 + ((c.pc - 4) % 12 + 12) % 12;
     return root + ({ r: 0, 3: c.dim || c.minor ? 3 : 4, 5: c.dim ? 6 : 7, 8: 12, 7: 10 }[role] ?? 0);
   }
+  // v15.53.0 (Claude, merged A+B): the melody notes of one part, worked out without sound (schedulePart plays them; melodyNotes() shows them)
+  function melodyLine(p, lv, chords, tw) {
+    if (S.tune === 'mine' && Array.isArray(S.myMelody) && S.myMelody.length) return myLine(p, lv, tw);
+    const mo = S.motifs, tune = S.tune === 'mine' ? 'mix' : S.tune || 'classic', fr = !!mo.nA;
+    const motif = (tune === 'fresh' && fr ? (tw ? [mo.nC, mo.nC, mo.nD, mo.nC] : [mo.nA, mo.nA, mo.nB, mo.nA]) : tune === 'mix' && fr ? (tw ? [mo.nC, mo.C, mo.nD, mo.nC] : [mo.A, mo.A, mo.nA, mo.B]) : (tw && mo.C ? [mo.C, mo.C, mo.D, mo.C] : [mo.A, mo.A, mo.B, mo.A]))[p % 4], inScale = new Set(SCALES[S.mode].map(v => (S.root + v) % 12));
+    const sc = moodTune()[0], hiM = modern() ? 77 : 84, loM = modern() ? 57 : 62; let prev = (modern() ? 64 : 72) + chords[0].pc; // modern: an octave lower, less like a nursery tune
+    const vr = modern() && p >= 2 ? rng(((S.seed >>> 0) ^ Math.imul(p + 1, 2654435761)) >>> 0) : null; // same tune, a little different every part (rhythm and main notes stay)
+    const out = []; let keep = 0;
+    motif.forEach(ev => {
+      if (lv === 1 && !ev.chord && (ev.deg == null || (keep++ % 2))) return; // mid: a simpler tune (classic: no passing notes; fresh: every other one)
+      const c = chords[ev.step >= 16 ? 1 : 0];
+      let midi;
+      if (ev.chord) { const ci = ((ev.idx % 4) + 4) % 4; midi = 60 + (ci === 3 ? c.pc + 12 : c.tones[ci]); while (midi < prev - 6) midi += 12; while (midi > prev + 6) midi -= 12; }
+      else if (ev.deg != null) { // the mood's scale, from the theme's shape: real jumps, not only one step
+        const d = ev.deg + (vr && vr() < 0.25 ? (vr() < 0.5 ? 1 : -1) : 0), n = sc.length, o = Math.floor(d / n), pc = sc[((d % n) + n) % n];
+        midi = (modern() ? 60 : 72) + S.root + pc + 12 * o; while (midi < prev - 9) midi += 12; while (midi > prev + 9) midi -= 12;
+      } else { const dv = vr && vr() < 0.3 ? -ev.dir : ev.dir; midi = prev + dv; let guard = 0; while (!inScale.has(((midi % 12) + 12) % 12) && guard++ < 3) midi += dv; }
+      while (midi > hiM) midi -= 12; while (midi < loM) midi += 12; prev = midi;
+      out.push([ev.step, ev.len * 0.92 * (ev.chord ? 1 : (ev.gate || 1)), midi]);
+    });
+    return out;
+  }
+  /* v15.54.0 (Claude, owner's TODO 2026-10-21 "Create Melody"): a melody the user drew in Instruments -> Create Melody.
+     notes: [{ step 0-31, len in steps, deg 0-7 }] (deg = do re mi ... do). It follows the song's key and the mood's scale.
+     Twist parts play it a little higher; calm (mid) parts keep the notes on the beat. */
+  function myLine(p, lv, tw) {
+    const sc = moodTune()[0], n = sc.length, base = (modern() ? 60 : 72) + S.root - (S.root > 5 ? 12 : 0);
+    let list = S.myMelody.filter(x => x && x.step >= 0 && x.step < 32);
+    if (lv === 1) { const k = list.filter(x => x.step % 4 === 0 || x.len >= 4); if (k.length) list = k; }
+    return list.map(x => { const d = (x.deg | 0) + (tw ? 2 : 0), o = Math.floor(d / 7); return [x.step, Math.max(1, x.len) * 0.92, base + sc[((d % 7) + 7) % 7 % n] + 12 * o]; });
+  }
+  function setMyMelody(notes, inst) {
+    S.myMelody = Array.isArray(notes) ? notes.map(x => ({ step: x.step | 0, len: x.len | 0 || 2, deg: x.deg | 0 })) : null;
+    if (S.myMelody && S.myMelody.length) { S.tune = 'mine'; if (inst) S.inst.melody = [inst]; }
+    try { refresh(); } catch (e) {}
+    return S.myMelody;
+  }
+  function melodyNotes(p = 0) { if (!S.motifs) generate(false); const e = S.energy[p] || 'intense'; return melodyLine(p, Math.max(2, level(e)), chordsOfPart(p), !!S.dyn?.[p]).map(([st, len, n]) => [st, +len.toFixed(2), n]); }
   function schedulePart(ctx, b, p, tp) {
     const sec = schedulePart.__alt ? null : sectionAt(p);
     if (sec && sec.i > 0 && GENRE[sec.genre]) { // v15.21.0: this section plays in another style's sounds and beat (same tune, chords and key)
@@ -9643,17 +9732,8 @@ nodes.push(el);cur=b.next;}return nodes;};
     // melody (C4–C6); every layer plays the same line
     if (S.grid.melody[p] && S.motifs) {
       const plan = layerPlan(ctx, b, 'melody');
-      const mo = S.motifs, motif = (tw && mo.C ? [mo.C, mo.C, mo.D, mo.C] : [mo.A, mo.A, mo.B, mo.A])[p % 4], inScale = new Set(SCALES[S.mode].map(v => (S.root + v) % 12));
-      const hiM = modern() ? 77 : 84, loM = modern() ? 57 : 62; let prev = (modern() ? 64 : 72) + chords[0].pc; // modern: an octave lower, less like a nursery tune
-      const vr = modern() && p >= 2 ? rng(((S.seed >>> 0) ^ Math.imul(p + 1, 2654435761)) >>> 0) : null; // same tune, a little different every part (rhythm and main notes stay)
-      motif.forEach(ev => {
-        if (lv === 1 && !ev.chord) return; // mid: simpler tune
-        const c = chords[ev.step >= 16 ? 1 : 0];
-        let midi;
-        if (ev.chord) { const ci = ((ev.idx % 4) + 4) % 4; midi = 60 + (ci === 3 ? c.pc + 12 : c.tones[ci]); while (midi < prev - 6) midi += 12; while (midi > prev + 6) midi -= 12; }
-        else { const dv = vr && vr() < 0.3 ? -ev.dir : ev.dir; midi = prev + dv; let guard = 0; while (!inScale.has(((midi % 12) + 12) % 12) && guard++ < 3) midi += dv; } // modern: the passing notes move a little differently each time
-        while (midi > hiM) midi -= 12; while (midi < loM) midi += 12; prev = midi;
-        const t = tp + ev.step * step + sw(ev.step % 16), dur = ev.len * step * 0.92, vel = lv === 1 ? 0.55 : lv === 2 ? 0.8 : 0.92;
+      melodyLine(p, lv, chords, tw).forEach(([st, len, midi]) => {
+        const t = tp + st * step + sw(st % 16), dur = len * step, vel = lv === 1 ? 0.55 : lv === 2 ? 0.8 : 0.92;
         plan.forEach(Lr => playSpec(ctx, Lr.dest, 'melody', Lr.spec, midi, t, dur, vel * Lr.vel));
         if (lv === 3 && plan[0].spec.startsWith('synth:')) playSpec(ctx, b.melody, 'melody', plan[0].spec, midi + 12, t, dur, 0.3 * plan[0].vel);
       });
@@ -9776,7 +9856,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     const btn = by('gwArrSave'); if (btn) btn.disabled = true; setStatus('Making your song…');
     try {
       const buf = await renderOffline(22050, 1, f => setStatus(`Making your song… ${Math.round(f * 100)}%`));
-      const a = ST()?.addSound?.(songName(), buf, { generator: 'G-Warp Song maker', sound: S.sound, sections: sectionsFor().map(x => ({ genre: x.genre, from: x.from })), genres: tagsOf('genres', S.genre, GENRE), moods: tagsOf('moods', S.mood, MOOD), themes: tagsOf('themes', S.theme, THEME), genre: S.genre, mood: S.mood, theme: S.theme, key: keyName(), bpm: S.bpm, parts: S.parts, seed: S.seed, layers: JSON.parse(JSON.stringify(S.inst)) });
+      const a = ST()?.addSound?.(songName(), buf, { generator: 'G-Warp Song maker', sound: S.sound, tune: S.tune, myMelody: S.tune === 'mine' ? S.myMelody : undefined, sections: sectionsFor().map(x => ({ genre: x.genre, from: x.from })), genres: tagsOf('genres', S.genre, GENRE), moods: tagsOf('moods', S.mood, MOOD), themes: tagsOf('themes', S.theme, THEME), genre: S.genre, mood: S.mood, theme: S.theme, key: keyName(), bpm: S.bpm, parts: S.parts, seed: S.seed, layers: JSON.parse(JSON.stringify(S.inst)) });
       setStatus(a ? `Saved “${a.name}” (${fmt(buf.duration)}). Use it with a “play sound” block.${buf.duration > 225 ? ' It is over 3:45, so the Scratch website won’t take it (sounds there must be under 10 MB); G-Warp and TurboWarp play it fine.' : ''}` : 'Select a sprite first.');
       try { window.GW?.toast?.('Song saved to sprite sounds'); } catch {}
     } catch (e) { console.error('[Song maker]', e); setStatus('Could not make the song in this browser.'); }
@@ -9839,6 +9919,8 @@ nodes.push(el);cur=b.next;}return nodes;};
         h('div', { class: 'gwarr-field gwarr-tagfield' }, h('span', { text: 'Theme' }), themeSel, h('div', { class: 'gwarr-tags', id: 'gwArrTags-themes' })),
         h('label', { class: 'gwarr-field' }, h('span', { text: 'Sound' }), h('select', { id: 'gwArrSound', class: 'gw7-field', title: 'Modern: grown-up chords, lower tunes, darker instruments, real-feeling drums. Playful: the older bright sound.', onchange: e => { S.sound = e.target.value; applyGenre(); generate(false); refresh(true); if (P.out) play(0); setStatus(S.sound === 'classic' ? 'Playful: the bright, simple sound.' : 'Modern: teen / adult sound.'); } },
           h('option', { value: 'modern', text: '🎧 Modern (teen / adult)' }), h('option', { value: 'classic', text: '🧸 Playful' }))),
+        h('label', { class: 'gwarr-field' }, h('span', { text: 'Tune' }), h('select', { id: 'gwArrTune', class: 'gw7-field', title: 'Mix: the old tunes and new tunes in every song. Classic: only the old tunes. Fresh: only the new tunes (each genre, mood and theme gets its own).', onchange: e => { S.tune = e.target.value; generate(false); refresh(true); if (P.out) play(0); setStatus(S.tune === 'mine' ? (S.myMelody?.length ? 'Your own melody (from Instruments → Create Melody), in this song\'s key.' : 'No melody yet: make one in Instruments → Create Melody, then press “Use in Song maker”. Until then the Mix tunes play.') : S.tune === 'classic' ? 'Classic tunes.' : S.tune === 'fresh' ? 'Fresh tunes: new melodies for every style.' : 'Mix: classic and fresh tunes together.'); } },
+          h('option', { value: 'mix', text: '🎶 Mix (old + new)' }), h('option', { value: 'classic', text: '🎵 Classic (old)' }), h('option', { value: 'fresh', text: '✨ Fresh (new)' }), h('option', { value: 'mine', text: '🎼 My melody' }))),
         h('button', { type: 'button', class: 'gw7-btn', id: 'gwArrSurprise', html: '<i class="fa-solid fa-dice"></i> Surprise me', onclick: surprise })),
       h('div', { class: 'gwarr-controls' },
         h('label', { class: 'gwarr-field' }, h('span', { text: 'Key' }), h('span', { class: 'gwarr-pair' }, rootSel, modeSel)),
@@ -9914,7 +9996,7 @@ nodes.push(el);cur=b.next;}return nodes;};
   }
   function refreshTop() {
     const set = (id, v) => { const el = by(id); if (el) el.value = String(v); };
-    set('gwArrGenre', S.genre); set('gwArrMood', S.mood); set('gwArrTheme', S.theme); set('gwArrSound', S.sound); set('gwArrRoot', S.root); set('gwArrMode', S.mode); 
+    set('gwArrGenre', S.genre); set('gwArrMood', S.mood); set('gwArrTheme', S.theme); set('gwArrSound', S.sound); set('gwArrTune', S.tune || 'mix'); set('gwArrRoot', S.root); set('gwArrMode', S.mode); 
     const bv = by('gwArrBpmVal'); if (bv) bv.textContent = S.bpm + ' BPM';
     const ls = by('gwArrLen'); if (ls) { [...ls.options].forEach(o => { o.textContent = `${fmt(+o.value)}${+o.value === 300 ? ' (max)' : ''} · ${partsFor(+o.value)} parts`; }); ls.value = String(S.lenSec || 45); }
     const sn = by('gwArrShiftName'); if (sn) { const L = sectionsFor(); sn.textContent = L.length > 1 ? L.slice(1).map(x => `→ ${GENRE[x.genre].label} at ${fmt(x.from * partSeconds())}`).join(' ') : (S.alt && GENRE[S.alt] && !tagsOf('genres', S.genre, GENRE)[1] ? `→ ${GENRE[S.alt].label} (songs over 1:00)` : ''); }
@@ -9991,7 +10073,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     const mt = by('gwSongArrangerMount'); if (!mt || by('gwArr')) return !!by('gwArr');
     applyGenre(); generate(false); build(mt); return true;
   }
-  window.GW_SONG_ARRANGER = { state: S, generate, setStyle, play, stop, previewLayer, renderOffline, saveToSprite, diagnostics, catalog: CATALOG, genres: GENRES, moods: MOODS, themes: THEMES, maxLayers: MAX_LAYERS, twists, lengths: LENGTHS, lenSec: LEN_SEC, tempos: TEMPOS, snapBpm, tempoFor, refresh, partsFor, shiftAt, altOn, sectionsFor, sectionAt, addTag, removeTag, maxTags: MAX_TAGS, mix: MIX, loudness, limit };
+  window.GW_SONG_ARRANGER = { state: S, generate, setStyle, melodyNotes, setMyMelody, play, stop, previewLayer, renderOffline, saveToSprite, diagnostics, catalog: CATALOG, genres: GENRES, moods: MOODS, themes: THEMES, maxLayers: MAX_LAYERS, twists, lengths: LENGTHS, lenSec: LEN_SEC, tempos: TEMPOS, snapBpm, tempoFor, refresh, partsFor, shiftAt, altOn, sectionsFor, sectionAt, addTag, removeTag, maxTags: MAX_TAGS, mix: MIX, loudness, limit };
   window.GW_RUN_V1570_SONG_MAKER_TEST = diagnostics;
   const tryMount = () => { if (!mount()) setTimeout(tryMount, 300); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(tryMount, 50), { once: true }); else setTimeout(tryMount, 50);
@@ -10023,7 +10105,7 @@ nodes.push(el);cur=b.next;}return nodes;};
   const G9 = () => window.GW9, G8 = () => window.GW8;
   const history = reason => { try { G8()?.scheduleHistory?.(reason); } catch {} };
   const Eng = () => window.Engine || {};
-  const calm = () => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { return false; } };
+  const calm = () => !!document.body?.classList.contains('gw-calm'); // v15.53.0: G-Warp's "Calm motion" setting
   const glow = el => { if (!el?.animate || calm()) return; try { el.animate([{ filter: 'drop-shadow(0 0 10px #a78bfa) drop-shadow(0 0 3px #fff)' }, { filter: 'drop-shadow(0 0 10px #a78bfa) drop-shadow(0 0 3px #fff)', offset: .45 }, { filter: 'none' }], { duration: 1600, easing: 'ease-out' }); } catch {} };
   const pop = el => { if (!el?.animate || calm()) return; try { el.animate([{ transform: 'scale(.6)' }, { transform: 'scale(1.08)', offset: .6 }, { transform: 'scale(1)' }], { duration: 480, easing: 'cubic-bezier(.175,.885,.32,1.275)' }); } catch {} };
 
@@ -22025,7 +22107,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   const E = () => window.Engine;
   const mk = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
   const norm = v => String(v ?? '').trim().toLowerCase();
-  const reduce = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)'); } catch { return { matches: false }; } })();
+  const reduce = { get matches() { return !!document.body?.classList.contains('gw-calm'); } }; // v15.53.0: G-Warp's "Calm motion" setting
 
   const PL = window.GW_POWER_LINES = {
     on: true, live: false,
@@ -22065,7 +22147,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
 .gw-pl-pole.hot .ring{opacity:.85;filter:drop-shadow(0 0 5px #4ade80)}
 .gw-pl-spark{fill:#f0fff4;filter:drop-shadow(0 0 4px #4ade80) drop-shadow(0 0 2px #4ade80)}
 .gw-pl-mb.gw-pl-spark{filter:drop-shadow(0 0 4px #a78bfa) drop-shadow(0 0 2px #8b5cf6)}
-@media (prefers-reduced-motion: reduce){.gw-pl-w .core{animation:none}}
+body.gw-calm .gw-pl-w .core{animation:none}
 `;
   document.head.appendChild(css);
 
@@ -23705,6 +23787,225 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
   function start(n = 0) { if (!document.body) return setTimeout(() => start(n + 1), 200); new MutationObserver(later).observe(document.body, { childList: true, subtree: true }); apply(); }
   start();
   window.GW_GEMINI_ICONS = { apply, ids: Object.keys(CROP) };
+})();
+</script>
+<script id="gw-v1553-motion">
+(() => {
+  'use strict';
+  /* v15.53.0 (Claude) - owner's P0 (TODO.txt, 2026-10-21): "the electricity on the event loops, if, wait, repeat ... no longer
+     animates when the green flag is pressed", plus "the moving circle that shows the block that is running".
+     Why it stopped: every block animation was switched off when the computer asks for fewer animations (Windows: Accessibility ->
+     Animation effects off). Now G-Warp's own switch decides: More -> Settings -> "Calm motion" (off by default).
+     Also: a glowing dot runs along the code to the block each running script is on (the "active block" indicator). */
+  const KEY = 'gwarp-calm', by = id => document.getElementById(id), E = () => window.Engine || {};
+  const isCalm = () => { try { return localStorage.getItem(KEY) === 'on'; } catch { return false; } };
+  function setCalm(on) { try { localStorage.setItem(KEY, on ? 'on' : 'off'); } catch {} document.body.classList.toggle('gw-calm', on); paint(); }
+  const css = document.createElement('style');
+  css.textContent = `.gw1553-dot{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:radial-gradient(circle,#fff 0 25%,#4ade80 45%,rgba(74,222,128,0) 72%);
+    box-shadow:0 0 8px 3px rgba(74,222,128,.75);pointer-events:none;z-index:30;transition:left .12s linear,top .12s linear,opacity .2s;opacity:0}
+    .gw1553-dot.on{opacity:1;animation:gw1553pulse .5s ease-in-out infinite alternate}
+    @keyframes gw1553pulse{to{box-shadow:0 0 14px 6px rgba(74,222,128,.95);transform:scale(1.25)}}
+    body.gw-calm .gw1553-dot.on{animation:none}`;
+  document.head.appendChild(css);
+  /* ---- the running-block dots ---- */
+  const dots = [];
+  function current(t) { // the block this script is on now (the innermost loop / custom block it is inside)
+    const cs = t?.callStack;
+    if (Array.isArray(cs)) for (let k = cs.length - 1; k >= 0; k--) { const c = cs[k]?.cur; if (c && c.nodeType === 1) return c; } // fast runner frames: {type, c, cur, i}
+    const list = t?.blocks, pc = t?.pc; // older runner: blocks + pc
+    if (!Array.isArray(list) || !list.length) return null; const b = list[Math.max(0, Math.min(list.length - 1, (pc || 1) - 1))];
+    return b && b.nodeType === 1 ? b : null;
+  }
+  let last = 0;
+  function frame(now) {
+    requestAnimationFrame(frame); if (now - last < 50) return; last = now;
+    const ws = by('workspaceCanvas'), e = E(); const live = !!(ws && e.isRunning && !e.isPaused);
+    const want = [];
+    if (live) for (const t of e.threads || []) { if (t?.finished) continue; const b = current(t); if (b && b.isConnected && b.offsetParent && ws.contains(b)) want.push(b); if (want.length >= 16) break; }
+    const z = window.GW_WSZOOM ? window.GW_WSZOOM() : 1, r = ws ? ws.getBoundingClientRect() : null;
+    want.forEach((b, i) => {
+      let d = dots[i]; if (!d) { d = document.createElement('div'); d.className = 'gw1553-dot'; d.setAttribute('aria-hidden', 'true'); dots[i] = d; }
+      if (d.parentElement !== ws) ws.appendChild(d);
+      const br = b.getBoundingClientRect(), hy = (b.querySelector(':scope > .block-c-header') || b).getBoundingClientRect();
+      d.style.left = ((br.left - r.left) / z + ws.scrollLeft) + 'px'; d.style.top = ((hy.top + hy.height / 2 - r.top) / z + ws.scrollTop) + 'px'; d.classList.add('on');
+    });
+    for (let i = want.length; i < dots.length; i++) dots[i].classList.remove('on');
+  }
+  /* ---- More -> Settings switch ---- */
+  let btn = null;
+  function paint() { if (!btn) return; const on = document.body.classList.contains('gw-calm'); btn.setAttribute('aria-checked', String(on)); btn.innerHTML = `<i class="fa-solid fa-feather"></i><span>Calm motion</span><span class="gw8-state">${on ? 'On' : 'Off'}</span>`; }
+  function addBtn(n = 0) {
+    const anchor = by('gw464PowerBtn') || by('gw44LookBtn') || by('gw9AdvancedBtn'); if (!anchor) return n < 80 && setTimeout(() => addBtn(n + 1), 300);
+    if (by('gw1553CalmBtn')) return;
+    btn = anchor.cloneNode(false); btn.id = 'gw1553CalmBtn'; btn.setAttribute('role', 'menuitemcheckbox');
+    btn.title = 'Fewer moving effects: the electricity, the running-block dot and other block animations stand still. Off = full G-Warp animations.';
+    btn.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); setCalm(!document.body.classList.contains('gw-calm')); });
+    paint(); anchor.after(btn);
+    const keep = () => { const a = by('gw464PowerBtn') || by('gw44LookBtn') || by('gw9AdvancedBtn'); if (a && btn && a.nextElementSibling !== btn) a.after(btn); };
+    by('extra-menu-trigger')?.addEventListener('click', () => setTimeout(keep, 0), true); let k = 0; const t = setInterval(() => { keep(); if (++k > 24) clearInterval(t); }, 500);
+  }
+  function start() { document.body.classList.toggle('gw-calm', isCalm()); addBtn(); requestAnimationFrame(frame); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+  window.GW_MOTION = { setCalm, isCalm: () => document.body.classList.contains('gw-calm'), dots: () => dots.filter(d => d.classList.contains('on')).length };
+})();
+</script>
+<style id="gw-v1554-create-melody-css">
+#gwCreateMelody{background:#141425;border:1px solid #2a2a48;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:9px;color:#ececf6}
+#gwCreateMelody .gwcm-head{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;justify-content:space-between}
+#gwCreateMelody .gwcm-title{font-size:15px;font-weight:800}
+#gwCreateMelody .gwcm-sub{font-size:12px;color:#a3a3c2;max-width:620px}
+#gwCreateMelody .gwcm-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+#gwCreateMelody button,#gwCreateMelody select{background:#1b1b31;color:#ececf6;border:1px solid #2a2a48;border-radius:8px;padding:6px 10px;font:inherit;font-size:12.5px;cursor:pointer}
+#gwCreateMelody button:hover{border-color:#8b5cf6}
+#gwCreateMelody button.gwcm-go{border-color:#4ade80;color:#4ade80;font-weight:800}
+#gwCreateMelody button.gwcm-use{background:#8b5cf6;border-color:#8b5cf6;color:#fff;font-weight:800}
+#gwCreateMelody button[aria-pressed="true"]{background:#2a1f4d;border-color:#a855f7}
+#gwCreateMelody .gwcm-gridwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+#gwCreateMelody .gwcm-grid{display:grid;grid-template-columns:52px repeat(16,minmax(22px,1fr));gap:3px;min-width:470px}
+#gwCreateMelody .gwcm-lab{font-size:11px;color:#a3a3c2;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-weight:700}
+#gwCreateMelody .gwcm-cell{height:22px;border-radius:5px;background:#1b1b31;border:1px solid #23233d;padding:0;cursor:pointer}
+#gwCreateMelody .gwcm-cell.bar{margin-left:3px}
+#gwCreateMelody .gwcm-cell.beat{background:#202039}
+#gwCreateMelody .gwcm-cell.on{background:#8b5cf6;border-color:#c4b5fd}
+#gwCreateMelody .gwcm-cell.hold{background:#5b3fa8;border-color:#7c5cd6}
+#gwCreateMelody .gwcm-cell.now{outline:2px solid #4ade80;outline-offset:-1px}
+#gwCreateMelody .gwcm-saved{display:flex;flex-wrap:wrap;gap:6px}
+#gwCreateMelody .gwcm-chip{display:inline-flex;align-items:center;gap:4px;border:1px solid #2a2a48;border-radius:999px;padding:2px 4px 2px 10px;font-size:12px;background:#1b1b31}
+#gwCreateMelody .gwcm-chip button{border:0;background:transparent;padding:3px 6px;border-radius:999px}
+#gwCreateMelody .gwcm-chip.active{border-color:#4ade80}
+#gwCreateMelody .gwcm-status{font-size:12px;color:#facc15;min-height:1.3em}
+</style>
+<script id="gw-v1554-create-melody">
+/* G-Warp Beta v15.54.0 (Claude) - CREATE MELODY zone (owner's TODO, 2026-10-21: "add a Create Melody zone in the instrument section,
+   connected to Song maker"). In Sounds -> Instruments: draw a 2-bar tune on a grid (do re mi ... do), hear it with ANY instrument you
+   picked above (change the instrument, the tune stays), start from 8 different melody ideas, save your melodies, and press
+   "Use in Song maker" - the Song maker then plays YOUR tune (Tune: My melody) in the song's key and mood, with your instrument.
+   Additive: nothing old is changed; the Song maker's own tunes (Mix / Classic / Fresh) are untouched. */
+(() => {
+  'use strict';
+  const COLS = 16, ROWS = 8, KEY = 'gwarp-my-melodies';
+  const NAMES = ['Do', 'Re', 'Mi', 'Fa', 'So', 'La', 'Ti', 'Do↑'], MAJOR = [0, 2, 4, 5, 7, 9, 11, 12];
+  // 8 melody ideas, all different in rhythm AND shape: [column, note (0-7), length in columns]
+  const IDEAS = {
+    climb: ['🧗 Climb', [[0, 0, 1], [1, 1, 1], [2, 2, 2], [4, 3, 1], [5, 4, 1], [6, 5, 2], [8, 4, 1], [9, 5, 1], [10, 6, 2], [12, 7, 4]]],
+    bounce: ['🏀 Bounce', [[0, 0, 1], [1, 4, 1], [2, 2, 1], [3, 4, 1], [4, 0, 1], [5, 4, 1], [6, 2, 1], [7, 4, 1], [8, 1, 1], [9, 4, 1], [10, 3, 1], [11, 4, 1], [12, 2, 2], [14, 0, 2]]],
+    call: ['💬 Question & answer', [[0, 2, 1], [1, 3, 1], [2, 4, 2], [4, 5, 3], [8, 4, 1], [9, 3, 1], [10, 2, 2], [12, 0, 4]]],
+    fanfare: ['🎺 Fanfare', [[0, 0, 1], [1, 0, 1], [2, 0, 1], [3, 4, 3], [7, 2, 1], [8, 4, 1], [9, 4, 1], [10, 4, 1], [11, 7, 5]]],
+    wave: ['🌊 Wave', [[0, 2, 1], [1, 3, 1], [2, 4, 1], [3, 5, 1], [4, 4, 1], [5, 3, 1], [6, 2, 1], [7, 1, 1], [8, 2, 1], [9, 3, 1], [10, 4, 1], [11, 6, 1], [12, 5, 2], [14, 4, 2]]],
+    lullaby: ['🌙 Lullaby', [[0, 4, 3], [3, 2, 1], [4, 3, 2], [6, 2, 2], [8, 1, 3], [11, 0, 1], [12, 0, 4]]],
+    riff: ['🎸 Riff', [[0, 0, 1], [2, 0, 1], [3, 2, 1], [5, 3, 1], [6, 2, 2], [8, 0, 1], [10, 0, 1], [11, 5, 1], [13, 4, 1], [14, 2, 2]]],
+    star: ['🌠 Falling star', [[0, 7, 2], [2, 6, 1], [3, 5, 1], [4, 4, 2], [6, 2, 1], [7, 3, 1], [8, 4, 3], [11, 2, 1], [12, 1, 1], [13, 0, 3]]]
+  };
+  const by = id => document.getElementById(id);
+  const st = { notes: new Map(), hold: false, loop: true, bpm: 112, timer: 0, playing: false, active: -1 };
+  const IS = () => window.GW_INSTRUMENT_STUDIO, SA = () => window.GW_SONG_ARRANGER;
+  const load = () => { try { const v = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } };
+  const store = list => { try { localStorage.setItem(KEY, JSON.stringify(list.slice(0, 24))); } catch (e) {} };
+  const say = m => { const e = by('gwcmStatus'); if (e) e.textContent = m; };
+  const instName = () => { try { const n = IS()?.currentInstrument?.(); if (n) return n; } catch (e) {} return document.querySelector('#gwInstPicks .gw-inst-pick[aria-pressed="true"] strong')?.textContent || 'Piano'; };
+  // a note lasts until the next one (Hold) or its own length
+  function list() {
+    const cols = [...st.notes.keys()].sort((a, b) => a - b);
+    return cols.map((c, i) => { const n = st.notes.get(c), next = i + 1 < cols.length ? cols[i + 1] : COLS; return { col: c, deg: n.deg, len: Math.max(1, Math.min(st.hold ? next - c : n.len, next - c)) }; });
+  }
+  function draw() {
+    const g = by('gwcmGrid'); if (!g) return;
+    const L = list(), held = new Set(); L.forEach(n => { for (let k = 1; k < n.len; k++) held.add((n.col + k) + ':' + n.deg); });
+    g.querySelectorAll('.gwcm-cell').forEach(c => {
+      const col = +c.dataset.col, deg = +c.dataset.deg, n = st.notes.get(col);
+      c.classList.toggle('on', !!n && n.deg === deg); c.classList.toggle('hold', held.has(col + ':' + deg));
+      c.classList.toggle('now', col === st.active);
+      c.setAttribute('aria-pressed', String(!!n && n.deg === deg));
+    });
+  }
+  function build() {
+    const studio = by('gwInstrumentStudio'); if (!studio || by('gwCreateMelody')) return !!by('gwCreateMelody');
+    const box = document.createElement('div'); box.id = 'gwCreateMelody'; box.setAttribute('aria-label', 'Create Melody');
+    box.innerHTML = `<div class="gwcm-head"><div><div class="gwcm-title">🎼 Create Melody</div>
+      <div class="gwcm-sub">Tap the squares to write your own tune (2 bars). It plays with the instrument you picked above - pick another one and the tune stays. Then use it in the Song maker.</div></div>
+      <div class="gwcm-row"><label style="font-size:12px;color:#a3a3c2">Start from <select id="gwcmIdea"><option value="">an idea…</option>${Object.entries(IDEAS).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></label></div></div>
+      <div class="gwcm-gridwrap"><div class="gwcm-grid" id="gwcmGrid" role="grid" aria-label="Melody grid: 8 notes by 16 steps"></div></div>
+      <div class="gwcm-row">
+        <button type="button" class="gwcm-go" id="gwcmPlay">▶ Play</button><button type="button" id="gwcmStop">■ Stop</button>
+        <button type="button" id="gwcmHold" aria-pressed="false" title="On: every note lasts until the next one (smooth). Off: short notes.">〰 Hold notes</button>
+        <button type="button" id="gwcmLoop" aria-pressed="true">🔁 Loop</button>
+        <label style="font-size:12px;color:#a3a3c2">Speed <select id="gwcmBpm"><option value="84">Slow</option><option value="112" selected>Normal</option><option value="140">Fast</option></select></label>
+        <button type="button" id="gwcmShift" title="Move the whole tune one note up">⬆</button><button type="button" id="gwcmShiftDn" title="Move the whole tune one note down">⬇</button>
+        <button type="button" id="gwcmClear">🧹 Clear</button>
+      </div>
+      <div class="gwcm-row">
+        <button type="button" id="gwcmSave">💾 Save melody</button>
+        <button type="button" class="gwcm-use" id="gwcmUse" title="The Song maker plays this tune (Tune: My melody) in the song's key, with your instrument.">✨ Use in Song maker</button>
+        <label style="font-size:12px;color:#a3a3c2"><input type="checkbox" id="gwcmUseInst" checked> with this instrument</label>
+      </div>
+      <div class="gwcm-saved" id="gwcmSaved" aria-label="Saved melodies"></div>
+      <div class="gwcm-status" id="gwcmStatus" role="status" aria-live="polite">Tap a square, or start from an idea.</div>`;
+    const wb = by('gwInstWorkbench'); (wb && wb.parentNode === studio) ? wb.after(box) : studio.appendChild(box);
+    const g = by('gwcmGrid');
+    for (let r = ROWS - 1; r >= 0; r--) {
+      const lab = document.createElement('div'); lab.className = 'gwcm-lab'; lab.textContent = NAMES[r]; g.appendChild(lab);
+      for (let c = 0; c < COLS; c++) {
+        const b = document.createElement('button'); b.type = 'button'; b.className = 'gwcm-cell' + (c % 8 === 0 && c ? ' bar' : '') + (c % 2 === 0 ? ' beat' : '');
+        b.dataset.col = c; b.dataset.deg = r; b.setAttribute('aria-label', NAMES[r] + ', step ' + (c + 1));
+        b.onclick = () => { const n = st.notes.get(c); if (n && n.deg === r) st.notes.delete(c); else { st.notes.set(c, { deg: r, len: n?.len || 1 }); tap(r); } draw(); };
+        g.appendChild(b);
+      }
+    }
+    by('gwcmIdea').onchange = e => { const v = IDEAS[e.target.value]; if (!v) return; st.notes.clear(); v[1].forEach(([c, d, l]) => st.notes.set(c, { deg: d, len: l })); draw(); say(v[0] + ' - change any square to make it yours.'); e.target.value = ''; if (st.playing) { stop(); play(); } };
+    by('gwcmPlay').onclick = play; by('gwcmStop').onclick = () => { stop(); say('Stopped.'); };
+    by('gwcmHold').onclick = e => { st.hold = !st.hold; e.currentTarget.setAttribute('aria-pressed', String(st.hold)); draw(); };
+    by('gwcmLoop').onclick = e => { st.loop = !st.loop; e.currentTarget.setAttribute('aria-pressed', String(st.loop)); };
+    by('gwcmBpm').onchange = e => { st.bpm = +e.target.value || 112; };
+    const shift = d => { const m = new Map(); for (const [c, n] of st.notes) m.set(c, { ...n, deg: Math.max(0, Math.min(ROWS - 1, n.deg + d)) }); st.notes = m; draw(); };
+    by('gwcmShift').onclick = () => shift(1); by('gwcmShiftDn').onclick = () => shift(-1);
+    by('gwcmClear').onclick = () => { st.notes.clear(); draw(); say('Cleared.'); };
+    by('gwcmSave').onclick = save; by('gwcmUse').onclick = use;
+    renderSaved(); draw(); return true;
+  }
+  function midiOf(deg) { const low = +(by('gwInstRange')?.value || 48); return low + 12 + MAJOR[deg]; }
+  function tap(deg) { try { IS()?.playInstrumentNote?.(midiOf(deg), 0.35, 0.85); } catch (e) {} }
+  function play() {
+    stop(); if (!st.notes.size) { say('Tap some squares first (or pick an idea).'); return; }
+    const is = IS(); if (!is?.playInstrumentNote) { say('The instruments are still loading - try again in a second.'); return; }
+    st.playing = true; const name = instName(); let col = 0; const L = () => list();
+    const step = () => {
+      if (!st.playing) return; const eighth = 60 / st.bpm / 2, n = L().find(x => x.col === col);
+      if (n) try { is.playInstrumentNote(midiOf(n.deg), Math.max(0.12, n.len * eighth * 0.92), 0.85, null, instName()); } catch (e) {}
+      st.active = col; draw(); col++;
+      if (col >= COLS) { if (!st.loop) { st.timer = setTimeout(() => { stop(); say('Done. Press Play again, or Use in Song maker.'); }, eighth * 1000); return; } col = 0; }
+      st.timer = setTimeout(step, eighth * 1000);
+    };
+    say('Playing with ' + name + '…'); step();
+  }
+  function stop() { st.playing = false; clearTimeout(st.timer); st.active = -1; draw(); }
+  function toSong() { return list().map(n => ({ step: n.col * 2, len: n.len * 2, deg: n.deg })); }
+  function renderSaved() {
+    const box = by('gwcmSaved'); if (!box) return; box.innerHTML = '';
+    load().forEach((m, i) => {
+      const chip = document.createElement('span'); chip.className = 'gwcm-chip';
+      const open = document.createElement('button'); open.type = 'button'; open.textContent = '🎵 ' + m.name; open.title = 'Open this melody';
+      open.onclick = () => { st.notes = new Map((m.notes || []).map(n => [n.col, { deg: n.deg, len: n.len }])); st.hold = !!m.hold; by('gwcmHold')?.setAttribute('aria-pressed', String(st.hold)); draw(); say('Opened “' + m.name + '”.'); };
+      const del = document.createElement('button'); del.type = 'button'; del.textContent = '✕'; del.title = 'Remove ' + m.name; del.setAttribute('aria-label', 'Remove ' + m.name);
+      del.onclick = () => { const l = load(); l.splice(i, 1); store(l); renderSaved(); say('Removed.'); };
+      chip.append(open, del); box.appendChild(chip);
+    });
+  }
+  function save() {
+    if (!st.notes.size) { say('Nothing to save yet.'); return; }
+    const l = load(), used = new Set(l.map(m => m.name)); let k = l.length + 1; while (used.has('My melody ' + k)) k++;
+    l.unshift({ name: 'My melody ' + k, inst: instName(), hold: st.hold, notes: [...st.notes].map(([col, n]) => ({ col, deg: n.deg, len: n.len })) }); store(l); renderSaved();
+    say('Saved as “My melody ' + k + '” (on this computer).');
+  }
+  function use() {
+    const sa = SA(); if (!st.notes.size) { say('Make a melody first.'); return; } if (!sa?.setMyMelody) { say('The Song maker is not ready yet.'); return; }
+    stop(); const inst = by('gwcmUseInst')?.checked ? instName() : null; sa.setMyMelody(toSong(), inst);
+    try { window.GW_V1570_STUDIO?.showPane?.('song'); } catch (e) {}
+    say('The Song maker now plays your melody' + (inst ? ' with ' + inst : '') + '. (Tune: 🎼 My melody)');
+    try { window.GW?.toast?.('Song maker: your melody is in'); } catch (e) {}
+  }
+  window.GW_CREATE_MELODY = { ideas: IDEAS, state: st, build, play, stop, use, save, notes: list, toSong, set(notes) { st.notes = new Map(notes.map(n => [n.col, { deg: n.deg, len: n.len || 1 }])); draw(); } };
+  let tries = 0; const t = setInterval(() => { if (build() || ++tries > 240) clearInterval(t); }, 500);
+  setInterval(() => { if (!by('gwCreateMelody') && by('gwInstrumentStudio')) build(); }, 3000); // the studio can be rebuilt later
 })();
 </script>
 </body>

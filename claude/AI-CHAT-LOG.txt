@@ -295,3 +295,66 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 7):
 - Read-back: origin/main:claude/AI-CHAT-LOG.txt + team/tools/qa-kit listed on origin/main
 - Verified new entry is present at bottom: YES
 - Task status: DONE (music choice waits for the owner)
+
+--- ENTRY 8 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T02:19Z (owner's request, his clock) - log written 2026-10-26T06:36Z
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: FIX-1 - merge Song maker A+B, find "removed" features (P0 animation regression), Tab Plus idea, Create Melody zone, log answer
+Branch / starting commit: main @ 32e0e1f
+
+USER REQUEST (summary): 1) Merge Song maker A and B into one: keep the old way, add the new tunes ("they both sound good").
+2) "You fixed something and recently deleted it ... we are fixing, not destroying": the to-do list + animations that were in the
+app went away (ChatGPT was asked to re-add them). Check old versions, keep what is cool. 3) "Where is your log?"
+4) New idea, IDEA ONLY for now: a "+" tab (Tab Plus) next to Code / Costumes / Sounds so creators can add extra tabs - G-Warp's
+new way to extend the app. 5) Check the to-do list for missing work and do it. Use several agents.
+
+ANSWER TO "WHERE IS YOUR LOG?": this file, claude/AI-CHAT-LOG.txt. It was started on 2026-10-25 when ChatGPT added the
+log gate to TODO.txt; entries 1-7 are above. Before that, Claude's work was logged only as one line per release in AI-TEAM.txt.
+RECONSTRUCTED HISTORY (from AI-TEAM.txt RELEASED lines + git log; NOT a live log, written today):
+  v15.46.0-46.4 (10-18) freeze fixes, faster "item # of", sound restarts, vector Paint/Reshape/Eraser, POWER LINES animation
+  v15.47.0 (10-18) Flipbook + onion skin   v15.48.0 (10-19) costume editor Select tool   v15.49.0-49.1 (10-19) costume folders,
+  GWrap AI packs, dropped-block fix   v15.49.2-50.7 (10-20) addons pack, editor fixes, missing blocks, stage-clicked hat,
+  team merges (ChatGPT, Gemini, Grok fixtures)   v15.50.8-50.9 (10-25) .sb3 fidelity, comments   v15.51.0 (10-26) SVG centres
+  v15.52.0 (10-26) Gemini's music icons + team of two. Older work (v15.0-v15.45): the version comments inside app.html + git log.
+
+WHAT WAS "REMOVED" (checked, with proof):
+- Compared every script id, GW_* global and gw* element id of 50 old builds (v15.11-v15.46) and all 30 git versions of app.html
+  with today's file: NOTHING was deleted from the code.
+- The real problem (owner's P0, TODO.txt line ~101, via ChatGPT 10-21): the electric C-block wire + the running-block dot.
+  ROOT CAUSE: every animation was switched off when the computer asks for "fewer animations" (Windows: Animation effects off /
+  prefers-reduced-motion). Playwright with reducedMotion=reduce showed animation: none. So on the owner's PC they looked deleted.
+- FIX: G-Warp's own "Calm motion" switch (More -> Settings, OFF by default) now decides, not the Windows setting. The running-block
+  dot is back as a module (gw-v1553-motion) and follows the block that is running (fast runner frames {type,c,cur,i}).
+- Other things that are only hidden (not deleted): Animation blocks, the G mascot and AI connect are Developer-mode only
+  (marked unfinished); Gemini's old paint icons were doubled so one copy is hidden; one extra Ctrl+Shift+Z handler removed (bug).
+  Left as they are; owner can say "show them to everyone".
+
+PROGRESS / FILES:
+- app.html Beta v15.54.0:
+  * Song maker A+B merged (fork agent): Tune = Mix (default, old + new in every song) / Classic (old only, identical to before) /
+    Fresh (new only). + v15.54.0: Tune = My melody.
+  * Calm motion setting + running-block dots (gw-v1553-motion); reduced-motion CSS now keyed to body.gw-calm.
+  * CREATE MELODY zone (TODO line ~104, gw-v1554-create-melody): Sounds -> Instruments: 8x16 grid (Do..Do, 2 bars), 8 melody ideas
+    (all different shape + rhythm), Play/Stop/Loop/Hold/Speed/up-down, plays with ANY playground instrument (change it, tune stays),
+    Save (this computer), "Use in Song maker" -> Tune: My melody, in the song's key + mood scale, with that instrument.
+    Song maker accepts any playground instrument as the melody voice (specOf fallback). Saved songs keep myMelody.
+- team/ideas/TAB-PLUS-2026-10-26.md - the owner's Tab Plus idea (idea only).
+- claude/experiments/music-compare/index.html - says it is merged now.
+- TODO.txt, MERGE-QUEUE.txt, AI-TEAM.txt - status lines.
+
+TESTS (TESTED in G-Warp, Playwright + Chromium):
+- motion: 8/8 PASS (electricity animates with reduced-motion on; dot appears and moves 371->256->192 px; Calm ON stops, OFF
+  restores; Stop clears dots; restart brings both back; switch in More menu; no page errors).
+- Create Melody: 21/21 PASS (zone visible; tap adds/removes; 8 ideas, 8 shapes, 7 rhythms; Play moves the green column; Saxophone
+  plays the same notes; Stop; Hold; Save + reopen; Use -> Tune mine + Song pane + Saxophone; same rhythm + up/down shape; follows
+  key; plays + renders 50.65 s; Mix/Classic/Fresh unchanged; no page errors).
+- Song merge (agent): Classic = same motifs as before for 10 styles; Mix/Fresh 28/28 genres, 16/16 moods, 12/12 themes, 448/448.
+- Regression: qa-kit smoke ALL PASS; newblocks, gwrap_pack, stageclick ALL PASS; mascot 11/11; anim 16/18 (same 2 old checks);
+  icons 26, 0 doubled; music_play 3 genres + offline render, no errors. colour_t skipped (needs the owner's private project file).
+EVIDENCE CLASS: TESTED in G-Warp (headless Chromium; audio played into a silent device, not listened to by a person).
+NEXT: owner listens (Song maker Tune menu + Create Melody); owner says which hidden dev-only features to show to everyone;
+  Tab Plus waits for "go"; Tilemap move still deferred.
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---
