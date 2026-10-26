@@ -354,3 +354,33 @@ STARTING STATE:
 NEXT:
 - Complete and save the additional tutorial/feature research; read back; append closeout and shared AI-TEAM completion line; verify final main head.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+CREATOR TUTORIAL RESEARCH PASS 3 — CLOSEOUT
+UTC timestamp: 2026-10-26T20:19:58Z
+AI: ChatGPT / GPT-6 (chatgpt.com; not running inside Freebuff)
+
+USER REQUEST: Continue researching more game-creator tutorials and features; answer the Scratch-mod ecosystem question separately; record the user's future creator-credit/support idea.
+
+RESEARCH COMPLETED:
+- Studied Griffpatch platformer-enemy and tile-scrolling tutorials; official Griffpatch and griffpatch_tutor profile/resource listings; HeartBeast's Heart Platformer syllabus; Gad's 20-episode Fists of Fury course; Scott Westover's Phaser Zelda-like series overview; KidsCanCode's 23-part tile-based Pygame course; Mina Pecheux's Godot/C# tutorial repository.
+- Extracted useful subjects: enemy patrol/spawn/despawn/edge safety; tile-grid alignment, scrolling and clone/performance limits; coyote time and movement forgiveness; combat/hit/damage/health/boss/checkpoint loops; top-down dungeon interaction/dialogue/UI; map editors, camera, parallax, lighting, transitions, screen shake, sound, state machines and source versioning.
+- Documented user's future creator-credit idea: cite creator and exact tutorial/episode, link to original, optional subscribe invitation; official support link only, framed as optional and parent/guardian-reviewed for children. No pressure, no payment requirement, no guessed links, no implied endorsement. Attribution does not replace licence permission.
+- Scratch-mod answer: no authoritative total. A current community thread lists 20+ Scratch 3 modifications; many historical entries are inactive/obsolete. Broader block environments must be counted separately. Stronger close comparisons include TurboWarp, PenguinMod, Gandi, ClipCC, Adacraft, Snail IDE, MistWarp, Unsandboxed and E羊icques; activity and feature depth vary.
+
+FILE:
+- ai-team/shared/2026-10-26-chatgpt-AIM-K1/USER-REQUEST-RESEARCH-PASS-3-ENEMIES-WORLDS-COMBAT-CREDIT-2026-10-26.md
+- Commit: bedb16d4501fbdba741612a79e482be9a8fed98f
+- Blob: c7180048b11ca55de47dc7d66b0371dd25893420
+- Read-back: 21,786 characters, 12 sections, 10 source entries.
+
+LIMITS:
+- Web-researched creator pages, chapter/description lists, course indexes, README/folder listing and community mod lists. NOT-TESTED: no frame-by-frame video review, external project execution, G-Warp runtime tests, compatibility mapping or demo.
+- Scratch-mod count is not exact; community lists change and include inactive projects, duplicates and adjacent tools.
+- No local git pull or Freebuff operation; GitHub API connection used.
+- No app.html/index.html, runtime, packs, recipes or block catalogue changes. Earlier reports unchanged. No demos. AIM-0 not started.
+
+NEXT: Further research should target enemy state machines/pathfinding, boss telegraphs, puzzles, dialogue/quests, accessibility, audio and animation, then compare against current G-Warp capabilities before suggesting mappings.
+CHAT HISTORY COMPLETENESS: PARTIAL — this request and work only.
+--- END ENTRY ---
