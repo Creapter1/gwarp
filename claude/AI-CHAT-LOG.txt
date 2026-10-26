@@ -165,3 +165,34 @@ GITHUB CLOSEOUT VERIFICATION (ENTRY 3):
 - Read-back URL/path: origin/main:claude/AI-CHAT-LOG.txt (git show after fetch)
 - Verified new entry is present at bottom: YES
 - Task status: DONE (remix v2 delivered; Scratch website upload NOT-TESTED)
+
+--- ENTRY 4 ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T03:06:00Z (request) - closeout 2026-10-26T03:14Z
+AI / agent / exact model identity (only if verified): Claude (session configured as claude-opus-5-5; serving model not independently verified)
+Task ID / title: REMIX-CM3 - fight costumes / shield out of place after G-Warp export (Beta v15.51.0)
+Branch / starting commit: main @ fef6a9e
+
+USER REQUEST (summary): owner played the remix: fight costumes "not centered", the shield "out of place", fighters jump/"glide" when
+they punch or kick. "Fix in GWarp", "full check on the entire thing", make it better. (Earlier the same day: "make sure there is no ai
+water mark" - done: the only hit was a variable "AI Guard", renamed "CPU Guard".)
+
+ROOT CAUSE: Scratch measures an SVG costume's rotation centre from the SVG's own (0,0); G-Warp measured it from the top-left of the
+viewBox. Every SVG whose viewBox does not start at 0 0 moved on export (the fight frames by ~21 px x / 12 px y) - and imported Scratch
+SVGs were off by their viewBox offset inside G-Warp (0.75 px for this project).
+FIX (app.html Beta v15.51.0): import subtracts the viewBox origin, export adds it back (sprite costumes + SVG backdrops).
+
+COMMANDS / TESTS / RESULTS:
+- Scratch engine bounds, same sprite position: before - punch/kick/guard frames 21-34 px left and 12-15 px up; after - they line up
+  with the normal costume (only the arm / leg sticks out). Shield bubble now centred on the fighter (screenshots).
+- Original project round trip through G-Warp: 0 rotation centres changed. Regression: newblocks, stageclick, test_mascot PASS,
+  test_anim 16/18 (the same 2 old checks as before).
+- Remix rebuilt: scratch-parser OK, no extensions, 40 s run in scratch-vm with no errors, runs in G-Warp, AI-mark scan clean.
+- Also: knockback slide uses the air friction only in the air (no long slides along the ground).
+
+FILES CHANGED: app.html; this log; AI-TEAM.txt one line. Remix .sb3 not in the repo.
+EVIDENCE CLASS: TESTED in scratch-vm and G-Warp; Scratch website NOT-TESTED.
+NEXT STEP / HANDOFF: owner re-tests the new file.
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK
+--- END ENTRY ---

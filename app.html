@@ -2285,7 +2285,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.50.9</span>
+<span class="app-version">Beta v15.51.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4649,7 +4649,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.50.9',label:'Beta v15.50.9',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.51.0',label:'Beta v15.51.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -11485,6 +11485,10 @@ nodes.push(el);cur=b.next;}return nodes;};
     const worker = async () => { for (let k; bgDraw.tok === tok && (k = pick());) { try { await lazyDraw(k); } catch {} st.done++; } };
     Promise.all([0, 1, 2, 3, 4, 5].map(worker)).then(() => { if (bgDraw.tok !== tok) return; st.ready = true; try { renderSpritesGrid(); } catch {} try { dispatchEvent(new CustomEvent('gwarp-costumes-ready')); } catch {} });
   }
+  // v15.51.0 (Claude): Scratch measures an SVG costume's rotation centre from the SVG's own (0, 0), not from the top-left of its
+  // viewBox; G-Warp measures from the top-left. Costumes whose viewBox does not start at 0 0 were moved on import / export.
+  const svgOrigin = svg => { const m = String(svg || '').match(/<svg[^>]*?\sviewBox\s*=\s*["']\s*([-+\d.eE]+)[\s,]+([-+\d.eE]+)/); return m ? [Number(m[1]) || 0, Number(m[2]) || 0] : [0, 0]; };
+  window.GW_SVG_ORIGIN = svgOrigin;
   async function costumeFrom(zip, c, warn, lazy) {
     const fmt = (c.dataFormat || (c.md5ext || '').split('.').pop() || 'png').toLowerCase();
     const bytes = await zip.bytes(c.md5ext || (c.assetId + '.' + fmt));
@@ -11495,12 +11499,12 @@ nodes.push(el);cur=b.next;}return nodes;};
       if (!/<svg[^>]*\swidth=/.test(svg)) { const vb = svg.match(/viewBox="\s*([-\d.e]+)[\s,]+([-\d.e]+)[\s,]+([-\d.e]+)[\s,]+([-\d.e]+)/); if (vb) svg = svg.replace('<svg', `<svg width="${vb[3]}" height="${vb[4]}"`); }
       const sz = lazy ? svgSize(svg) : null;
       if (sz) { const w = Math.max(1, Math.round(sz[0])), hgt = Math.max(1, Math.round(sz[1])), R = Math.max(0.25, Math.min(w * hgt > 1.5e6 ? 1 : 2, 4096 / Math.max(w, hgt))); cv.width = Math.ceil(w * R); cv.height = Math.ceil(hgt * R);
-        return { name: c.name, canvas: cv, rc: { x: Number(c.rotationCenterX) || 0, y: Number(c.rotationCenterY) || 0 }, res: R, natural: true, dataFormat: 'svg', svg, __gwLoad: svg }; } // drawn later (v15.22.0)
+        const o = svgOrigin(svg); return { name: c.name, canvas: cv, rc: { x: (Number(c.rotationCenterX) || 0) - o[0], y: (Number(c.rotationCenterY) || 0) - o[1] }, res: R, natural: true, dataFormat: 'svg', svg, __gwLoad: svg }; } // drawn later (v15.22.0)
       let im = null; { const u = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' })); im = await loadImg(u); URL.revokeObjectURL(u); } if (!im) im = await loadImg('data:image/svg+xml;base64,' + b64(new TextEncoder().encode(svg))); // v15.17.5: no base64 step
       const w = Math.max(1, im?.naturalWidth || 1), hgt = Math.max(1, im?.naturalHeight || 1), R = Math.max(0.25, Math.min(w * hgt > 1.5e6 ? 1 : 2, 4096 / Math.max(w, hgt)));
       cv.width = Math.ceil(w * R); cv.height = Math.ceil(hgt * R);
       if (im) cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height); else warn.push(`Costume “${c.name}” SVG could not be drawn`);
-      return { name: c.name, canvas: cv, rc: { x: Number(c.rotationCenterX) || 0, y: Number(c.rotationCenterY) || 0 }, res: R, natural: true, dataFormat: 'svg', svg };
+      const o = svgOrigin(svg); return { name: c.name, canvas: cv, rc: { x: (Number(c.rotationCenterX) || 0) - o[0], y: (Number(c.rotationCenterY) || 0) - o[1] }, res: R, natural: true, dataFormat: 'svg', svg };
     }
     let im = null; try { im = await createImageBitmap(new Blob([bytes], { type: MIME[fmt] || 'image/png' })); } catch { im = null; } // v15.17.5: decoded off the main thread
     if (!im) im = await loadImg(`data:${MIME[fmt] || 'image/png'};base64,${b64(bytes)}`);
@@ -12933,7 +12937,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const files = [], assets = new Map();
     const asset = (bytes, ext) => { const h = md5(bytes); const name = h + '.' + ext; if (!assets.has(name)) { assets.set(name, 1); files.push({ name, data: bytes }); } return { assetId: h, md5ext: name }; };
     const costume = c => {
-      if (c.svg && c.dataFormat === 'svg') { const a = asset(new TextEncoder().encode(c.svg), 'svg'); return { name: c.name, bitmapResolution: 1, dataFormat: 'svg', ...a, rotationCenterX: c.rc?.x ?? 0, rotationCenterY: c.rc?.y ?? 0 }; }
+      if (c.svg && c.dataFormat === 'svg') { const a = asset(new TextEncoder().encode(c.svg), 'svg'); return { name: c.name, bitmapResolution: 1, dataFormat: 'svg', ...a, rotationCenterX: (c.rc?.x ?? 0) + window.GW_SVG_ORIGIN(c.svg)[0], rotationCenterY: (c.rc?.y ?? 0) + window.GW_SVG_ORIGIN(c.svg)[1] }; } // v15.51.0: Scratch's SVG origin
       const a = asset(canvasPng(c.canvas), 'png');
       if (c.rc) { const r = c.res || 1; return { name: c.name, bitmapResolution: r, dataFormat: 'png', ...a, rotationCenterX: c.rc.x * r, rotationCenterY: c.rc.y * r }; }
       return { name: c.name, bitmapResolution: 1, dataFormat: 'png', ...a, rotationCenterX: c.canvas.width / 2, rotationCenterY: c.canvas.height / 2 };
@@ -12961,7 +12965,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const variables = {}; Object.entries(GV).forEach(([nm, v]) => { variables[ctx.varIds[nm] || (ctx.varIds[nm] = 'var' + md5(new TextEncoder().encode(nm)).slice(0, 12))] = /^☁ \S/.test(nm) ? [nm, v, true] : [nm, v]; }); // v15.15.0: [name, value, true] = cloud
     const lists = {}; Object.entries(GL).forEach(([nm, v]) => { lists[ctx.listIds[nm] || (ctx.listIds[nm] = 'list' + md5(new TextEncoder().encode(nm)).slice(0, 12))] = [nm, Array.isArray(v) ? v.slice() : []]; });
     const broadcasts = {}; Object.entries(ctx.bcIds).forEach(([nm, k]) => { broadcasts[k] = nm; });
-    targets.push({ isStage: true, name: 'Stage', variables, lists, broadcasts, blocks: stageBlocks, comments: stageProxy ? commentsFor(stageProxy) : {}, currentCostume: Math.max(0, E.activeBackdrop || 0), costumes: bds.map(({ bd, cv }) => (bd.svg && bd.image === bd.svgImage) ? { name: bd.name, bitmapResolution: 1, dataFormat: 'svg', ...asset(new TextEncoder().encode(bd.svg), 'svg'), rotationCenterX: bd.svgRc?.x ?? 240, rotationCenterY: bd.svgRc?.y ?? 180 } : ({ name: bd.name, bitmapResolution: 1, dataFormat: 'png', ...asset(canvasPng(cv), 'png'), rotationCenterX: 240, rotationCenterY: 180 })), /* v15.50.8: an unchanged SVG backdrop is saved as the same SVG */ sounds: (stageProxy?.sounds || []).map(sound).filter(Boolean), volume: 100, layerOrder: 0, tempo: 60, videoTransparency: 50, videoState: 'on', textToSpeechLanguage: null });
+    targets.push({ isStage: true, name: 'Stage', variables, lists, broadcasts, blocks: stageBlocks, comments: stageProxy ? commentsFor(stageProxy) : {}, currentCostume: Math.max(0, E.activeBackdrop || 0), costumes: bds.map(({ bd, cv }) => (bd.svg && bd.image === bd.svgImage) ? { name: bd.name, bitmapResolution: 1, dataFormat: 'svg', ...asset(new TextEncoder().encode(bd.svg), 'svg'), rotationCenterX: (bd.svgRc?.x ?? 240) + window.GW_SVG_ORIGIN(bd.svg)[0], rotationCenterY: (bd.svgRc?.y ?? 180) + window.GW_SVG_ORIGIN(bd.svg)[1] } : ({ name: bd.name, bitmapResolution: 1, dataFormat: 'png', ...asset(canvasPng(cv), 'png'), rotationCenterX: 240, rotationCenterY: 180 })), /* v15.50.8: an unchanged SVG backdrop is saved as the same SVG */ sounds: (stageProxy?.sounds || []).map(sound).filter(Boolean), volume: 100, layerOrder: 0, tempo: 60, videoTransparency: 50, videoState: 'on', textToSpeechLanguage: null });
     const order = window.GW?.drawOrder ? window.GW.drawOrder().filter(s => sprites.includes(s)) : sprites;
     spriteTargets.forEach(({ s, blocks }) => {
       targets.push({ isStage: false, name: s.name, variables: Object.fromEntries(Object.entries(s.localVars || {}).map(([nm, v]) => [vid(nm), [nm, v]])), lists: Object.fromEntries(Object.entries(s.localLists || {}).map(([nm, v]) => [lid(nm), [nm, Array.isArray(v) ? v.slice() : []]])), broadcasts: {}, blocks, comments: commentsFor(s), currentCostume: s.activeCostume || 0, costumes: (s.costumes || []).map(costume), sounds: (s.sounds || []).map(sound).filter(Boolean), volume: s.volume ?? 100, layerOrder: order.indexOf(s) + 1, visible: s.visible !== false, x: Math.round(s.x * 1000) / 1000, y: Math.round(s.y * 1000) / 1000, size: s.size ?? 100, direction: s.direction ?? 90, draggable: !!s.draggable, rotationStyle: s.rotationStyle || 'all around' });
