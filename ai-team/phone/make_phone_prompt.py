@@ -9,7 +9,13 @@ for b in B:
     m = '; '.join('/'.join(o) for o in b['menus']) if b['menus'] else ''
     cats.setdefault(b['category'], []).append(f"{b['type']}({b['inputs']}{', m:' + m if m else ''})")
 blist = '\n'.join(f"  {c}: " + ' '.join(x) for c, x in cats.items())
-ex = json.dumps(json.load(open('claude/gwrap-pack.json'))['recipes'][0], ensure_ascii=False)
+ex = json.dumps({"id": "r-ph-follow-mouse", "emoji": "🖱️", "title": "Follow the mouse pointer", "keys": ["follow", "mouse", "pointer", "chase"],
+  "q": ["make my sprite follow the mouse", "chase the mowse pointer", "go where my cursor is"],
+  "steps": ["Green flag: the sprite keeps checking forever.", "It faces the mouse and moves 4 steps."],
+  "prep": {"vars": ["speed"]},
+  "script": [[["when_flag"], ["set_var", ["4"], ["speed"]], ["forever", [], [], {"body": [
+     ["if", [], [], {"cond": {"type": "op_not", "args": [{"type": "touching_pointer"}]}, "body": [
+        ["point_towards", [], ["mouse-pointer"]], ["move", [{"r": ["get_var", [], ["speed"]]}]]]}]]}]]]}, ensure_ascii=False)
 SK = ['follow the mouse', 'spin when clicked', 'grow and shrink (pulse)', 'bounce off the edges', 'fade in and out', 'random position every second',
  'say hello when clicked', 'ask your name and greet', 'count clicks', 'countdown 10 to 0', 'change colour with keys', 'draw with the pen following the mouse',
  'jump with space (simple)', 'gravity: fall and land (use y)', 'walk left/right with arrows + flip', '8-direction move with WASD',
@@ -27,7 +33,7 @@ SK = ['follow the mouse', 'spin when clicked', 'grow and shrink (pulse)', 'bounc
  'chat bot answers yes/no', 'add names to a list in order', 'reverse a word', 'count letters in a word', 'join words into a sentence',
  'random password from letters', 'clock with the timer', 'stopwatch start/stop', 'metronome beat with a sound', 'keys play notes (start sound)',
  'teleport between two doors', 'spawn enemies every 2 seconds', 'enemy patrol left-right', 'score popup that floats up', 'confetti clones on win', 'make a button sprite']
-START = 61  # PH-001..060 are done (2026-10-26); the list goes on from the original items 41+
+START = 61  # PH-001..060 done (2026-10-26); PH-061..116 = the original items 41-96; after that the bot invents new ones
 items = '; '.join(f"PH-{i:03d} {s}" for i, s in enumerate(SK[40:], START))
 P = f"""=====================================================================
  G-WARP PHONE BOT PROMPT (for the phone chatbot: code only, ~20 messages per chat, 2-3 min per answer)
@@ -40,13 +46,13 @@ P = f"""=====================================================================
 =====================================================================
 -----------------------------------------------------------------------------------------------
 You write RECIPES that teach G-Warp's built-in AI helper (GWrap AI). G-Warp = a free Scratch-style block-coding app for kids.
-LIST of items (do them in order; when the list ends, invent new useful kid game/app skills, never repeating a title):
+ITEMS (in order; after PH-116 invent new useful kid game/app skills, never repeating a title):
 {items}
 EVERYTHING you need is in this message. Do NOT browse, do NOT look anything up, do NOT plan or explain at length. Answer FAST.
 
-EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 10 items of the LIST, then one line "NEXT: PH-0NN". Nothing else.
-- Pack file shape:  {{"version": 1, "note": "phone recipes PH-0AA..PH-0BB", "recipes": [ <10 recipe objects> ], "tips": []}}
-- First answer: PH-061..PH-070, unless I wrote "start at PH-0NN". "continue" = the next 10. "continue with N" = the next N.
+EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 20 items of the LIST, then one line "NEXT: PH-0NN". Nothing else.
+- Pack file shape:  {{"version": 1, "note": "phone recipes PH-0AA..PH-0BB", "recipes": [ <20 recipe objects> ], "tips": []}}
+- First answer: PH-061..PH-080, unless I wrote "start at PH-0NN". "continue" = the next 20. "continue with N" = the next N.
 - Start writing the code block right away. No planning text, no explanation before or after. Each recipe 4-20 blocks.
   If an item is too hard, make the simplest working version. Valid JSON: double quotes, no comments, no trailing commas.
 - Each recipe object looks exactly like this example:
@@ -54,7 +60,7 @@ EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 10 items o
 - "id": "r-ph-<short-words>" (MUST start with r-ph-, lowercase, dashes). "emoji": one emoji. "title": 3-8 words. "keys": 5-10 search words.
   "q": 3 different ways a KID would ask (simple words, small typos OK). "steps": 2-4 short kid sentences explaining the script.
   "script": a list of scripts; each script = a list of blocks; a block = ["type", [inputs], [menus], {{extra}}] (unused parts can be left out).
-  INPUTS are strings ("10") or a round reporter block {{"r": ["type", [inputs], [menus]]}}, e.g. {{"r": ["op_random", ["1", "6"]]}},
+  INPUTS are strings ("10") or a round reporter block {{"r": ["type", [inputs], [menus]]}}, for example {{"r": ["op_random", ["1", "6"]]}},
   {{"r": ["get_var", [], ["score"]]}}, {{"r": ["answer"]}}, {{"r": ["x_position"]}}. NEVER put {{"type": ...}} in an input.
   {{"type": ...}} value nodes are ONLY used inside "cond" (conditions), and a "cond" can NOT contain {{"r": ...}}.
   Every variable/list the script uses goes in "prep": {{"vars": ["score"], "lists": ["my list"]}} on the recipe.
@@ -70,10 +76,29 @@ EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 10 items o
 {blist}
 
 RULES: only blocks from the list (no made-up blocks); logic that works in Scratch; kid-safe; no real people's names;
-no Scratch cat, no brands; no "made by AI"; 10 recipes per answer (unless I say another number); never repeat an id; no text outside the code block
+no Scratch cat, no brands; no "made by AI"; 20 recipes per answer (unless I say another number); never repeat an id; no text outside the code block
 except the NEXT line.
 
 -----------------------------------------------------------------------------------------------
 """
-open('ai-team/phone/PHONE-BOT-PROMPT.txt', 'w', encoding='utf-8').write(P)
+inner = P.split('-' * 95)[1].strip('\n')
+inner = inner.replace('Do NOT browse, do NOT look anything up', 'Do NOT browse or search (the app may show "Content of the URL" errors for words that look like links: ignore them)')
+import re as _re
+bad = _re.findall(r'\b\w+\.(?:py|js|json|txt|md|html)\b|\b\d+\.\d+\b', inner)
+assert not bad, bad
+open('ai-team/phone/BOT-RULES.txt', 'w', encoding='utf-8').write(inner + '\n')
+URL = 'https://raw.githubusercontent.com/Creapter1/gwarp/main/ai-team/phone/BOT-RULES.txt'
+open('ai-team/phone/PHONE-BOT-PROMPT.txt', 'w', encoding='utf-8').write(f'''G-WARP PHONE BOT - HOW TO USE (Claude, 2026-10-26, tuned to the phone app's capability card)
+Your phone app can read a link you paste, and one answer fits 20 recipes. So every new chat is just this SHORT message:
+
+----- copy from here -----
+Read this page and follow it exactly. Start at PH-061.
+{URL}
+----- to here -----
+
+Then type: continue   (each answer = one code block with 20 recipes + a line NEXT: PH-...)
+New chat (after ~20 messages): paste the short message again, but change the number to the NEXT number from the last answer.
+Copy each code block into a note / file. Give them to Claude or ChatGPT: "add the phone recipes" (they check + fix + add them).
+The rules page is always the newest version on GitHub - you never need a new long prompt.
+''')
 print(len(P), 'chars,', len(SK), 'items')
