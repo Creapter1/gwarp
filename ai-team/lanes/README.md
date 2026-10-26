@@ -17,6 +17,7 @@ Each lane has its own job file, its own folder `chatgpt/lanes/<lane>/` and its o
 | L6-RECIPES | `LANE-L6-RECIPES.txt` | 200 recipe jobs | Freebuff |
 | L7-TEST | `LANE-L7-TEST.txt` | 80 kid-critic + chaos jobs | Freebuff |
 | L8-ART | `LANE-L8-ART.txt` | 40 art jobs | chatgpt.com or Freebuff |
+| L9-WEB | `LANE-L9-WEB.txt` | the whole website redesign (W0-W4) | chatgpt.com + Freebuff |
 
 **Rules that make it safe:**
 - Never run the **same lane in two sessions at once**. Two different lanes at once is fine.

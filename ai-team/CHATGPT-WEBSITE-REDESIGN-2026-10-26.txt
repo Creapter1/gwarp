@@ -1,0 +1,164 @@
+=====================================================================
+ CHATGPT - WEBSITE REDESIGN (lane L9-WEB)          written by Claude for the owner, 2026-10-26
+ Owner, word for word: "not just the letters, the documentation ... I mean the entire thing. We need to make it a bit more appealing
+ ... the design and everything ... keep what we have, make it better ... I don't want a super website that you just gotta scroll
+ down in order to get some future nice little stuff ... very appealing, to the point it's almost to the point of touch ... extra
+ animation, because we definitely need them ... it needs to wait for your [Claude's] approval or my approval."
+=====================================================================
+Read first: ai-team/README.md (all rules; log gate!). Your lane folder: chatgpt/lanes/L9-WEB/ (log, reports/, bugs/, tests/).
+Do the phases IN ORDER. Each phase ends with: push -> closeout line in your log -> next phase (except where it says STOP).
+
+---------------------------------------------------------------------
+ 0. HARD RULES (breaking one = the work can't go live)
+---------------------------------------------------------------------
+R1  NEVER edit the live site files (index.html, docs/**, app.html). Build the new site as a COPY in the drop box:
+      ai-team/shared/<date>-chatgpt-WEB/site/            <- same paths as the real site:
+        site/index.html, site/docs/<same 16 page names>.html, site/docs/tutorials/<same 8 names>.html + index.html,
+        site/assets/ (css, js, img, fonts if self-hosted)
+    Claude copies it over the real site ONLY after the owner says "go". Every page must work when site/ is served as the root.
+    For local testing you may COPY app.html into site/ - but never commit that copy (add site/app.html to .gitignore in your folder).
+R2  KEEP EVERY URL: all 16 docs pages, all 8 tutorials, docs/images/*, docs/screens/*, and these anchors (other pages link to them):
+      #get-started #flow #music #ext #whats-new #more #docs (landing) and docs/costumes.html#costume-tabs, #paint-new,
+      docs/blocks.html#bug-hunter, #editing-scripts, #power-lines, docs/start.html#stage-backdrops, docs/scratch.html#look-like-scratch,
+      docs/troubleshoot.html#recovery, #clone-safety.  (Run a link check - phase W3 - to find any others.)
+R3  KEEP THE CONTENT: every fact/section on today's pages survives (moved, shortened, merged is fine; lost is not). Outdated facts get
+    FIXED (see section 2), not deleted.
+R4  TRUE ONLY: no invented numbers, users, downloads, stars, reviews, testimonials, quotes, awards or "trusted by". Numbers that are
+    used must be real and checked in app.html (e.g. 184 gallery extensions = the gw10GalleryData list; 176 blocks = ai-team/gwrap-blocks.json).
+    Say "Beta". Don't claim Scratch/TurboWarp/PenguinMod will never have a feature.
+R5  THEIRS IS THEIRS: no Scratch cat, no Scratch / TurboWarp / PenguinMod logos or art, no copied page designs. Mention them in TEXT with
+    links, plus one line "G-Warp is an independent project, not made by or affiliated with Scratch, TurboWarp or PenguinMod."
+    Keep docs/credits.html complete (every extension creator + licence). No famous characters, no brands.
+R6  NO AI WATERMARK in anything shown on the site ("made by AI", AI names in pictures). Credits go in NOTES.md / credits page as normal.
+R7  KIDS + PRIVACY: no analytics, no trackers, no cookies, no forms that collect data, no newsletter pop-ups, no third-party embeds
+    (YouTube, social widgets), no autoplay sound. Keep the safety + parents pages. The only outside request allowed: Google Fonts
+    (already used: Inter) - or self-host the fonts (better, option in W1).
+R8  NO BIG FRAMEWORKS: plain HTML + CSS + small vanilla JS files. No React/Vue/Tailwind build, no npm build step needed to view it.
+    One shared CSS (site/assets/site.css) + one shared JS (site/assets/site.js) + small per-demo JS files are fine.
+R9  The app link and words stay the owner's: primary button "Create your first code" -> app.html, second button "Use your project"
+    -> app.html#open. Keep the hero line "Block coding, with electricity." (you may add a short second line).
+R10 Approval: nothing goes live without the owner's "go" (Claude does the swap). Design direction is picked by the owner (W1 STOP).
+
+---------------------------------------------------------------------
+ 1. WHAT EXISTS TODAY (Claude checked, 2026-10-26)
+---------------------------------------------------------------------
+- index.html: 596 KB, of which ~553 KB are 7 JPEG screenshots embedded as data: URLs (slow!). 0 <script> tags. 2 @keyframes.
+  Has prefers-reduced-motion. Sections (ids): get-started, flow, music, ext, whats-new, more, docs.
+  Headings: "Block coding, with electricity." / Choose your next step / Make G-Spark move in 3 blocks / A song maker built in /
+  Extension library and safety labels / Beta v15.49.0 (OUTDATED) / Same blocks, its own style / About the project / Try the G-Warp Beta.
+  Colours (keep these as the design tokens): --bg #0b0b14, --panel #141425, --panel2 #1b1b31, --line #2a2a48, --text #ececf6,
+  --muted #a3a3c2, --violet #8b5cf6, --violet2 #a855f7, --wire #4ade80, --yellow #facc15, --pink #ec4899. Font: Inter (Google Fonts).
+- docs/: 16 pages (index, start, blocks, costumes, animation, sounds, extensions, safety, credits, scratch, troubleshoot, shortcuts,
+  changelog, team, glossary, parents), EACH with its own inline <style> (no shared CSS). docs/tutorials/: index + 8 tutorials
+  (01-g-spark-walk ... 08-pen-drawing-app). docs/images/: 4 SVG diagrams. docs/screens/: 11 PNG screenshots (old version).
+- Mascot + logo (use the REAL ones, don't redraw them): G-Spark = window.GW_DEFAULT_MASCOT in app.html
+  (grep -n "window.GW_DEFAULT_MASCOT =" app.html; the SVG string is defined just above it). G-Spark animation frames:
+  ai-team/archive/gemini/flipbook-sprites/gspark/frame1-3.svg; poses: ai-team/archive/gemini/GM5-A/B/C.svg (credit "G-Spark poses: Gemini").
+  The app's logo: the violet "G" tile at the top-left of app.html.
+
+---------------------------------------------------------------------
+ 2. FACTS THE SITE MUST SHOW (app is now Beta v15.56.0) - check each one in app.html before writing it
+---------------------------------------------------------------------
+  v15.50.x  missing blocks added (< , contains, math functions, "when stage clicked"), Scratch comments import/export, .sb3 fidelity
+  v15.51.0  SVG costumes keep their exact place (rotation centres like Scratch)
+  v15.52.0  new music icons in Sounds / Song maker
+  v15.53.0  Song maker "Tune": Mix (old + new tunes, default) / Classic / Fresh; G-Warp's own "Calm motion" switch (More -> Settings);
+            running-block dots + electricity always visible (grep -n 'id="gw-v1553-motion"' app.html)
+  v15.54.0  Create Melody in Sounds -> Instruments (8 melody ideas, any instrument, "Use in Song maker" = Tune: My melody)
+            (grep -n 'id="gw-v1554-create-melody"' app.html). Its planned name is "Spark Studio" - call it "Create Melody (Spark Studio)".
+  v15.55.0  G-Spark AI bar: the G button next to the zoom buttons in the code area; type what you want, Enter builds it at once, Undo
+            (grep -n 'id="gw-v1555-gspark-bar"' app.html). It is an OFFLINE helper with built-in recipes - not a chatbot. Say so.
+  v15.56.0  blocks made by G-Spark AI have PURPLE electricity, your own blocks GREEN (grep -n 'id="gw-v1556-ai-purple"' app.html).
+  Also true: Animation tab (bones inside vector costumes, frames, Make costumes) + Flipbook + onion skin; 184 gallery extensions with
+  Safe / Moderate / Dangerous labels and credits; opens and saves .sb3 that still work in Scratch/TurboWarp; no accounts.
+  Coming (say "planned", never "available"): desktop .exe, G-Warp's own AI model in the browser, Tab Plus. Changelog: only versions
+  that have a "RELEASED" line in AI-TEAM.txt.
+
+---------------------------------------------------------------------
+ 3. THE DESIGN (what "appealing, almost touchable, not a long scroll" means here)
+---------------------------------------------------------------------
+3.1 FIRST SCREEN SHOWS THE BEST STUFF (1440x900 AND a phone 390x844 - no scrolling needed to see it):
+    - top bar: G logo, Docs, Tutorials, Safety, "Calm motion" toggle, button "Create your first code".
+    - hero left: "Block coding, with electricity." + one short line + the 2 buttons (R9) + a tiny line "Free · Beta v15.56.0 · no account".
+    - hero right: a LIVE DEMO (pure HTML/CSS/SVG/JS, NOT an iframe of the app): 3-4 G-Warp-looking blocks snap together one by one,
+      the C-block wire lights up green and electricity flows, and G-Spark walks on a tiny stage. Loop every ~8 s; pause on hover;
+      stops in Calm motion (shows the finished state instead).
+    - under the hero, still on the first screen: a row of 5-6 FEATURE TILES (Blocks, Song maker, Animation, G-Spark AI, Extensions,
+      Works with Scratch files) that react to hover/tap (lift + glow) and open their demo in place.
+3.2 INSTEAD OF A LONG PAGE: an interactive "control panel" (bento grid) - each tile is a small thing you can TOUCH:
+    a) Blocks tile: drag 3 blocks into place; when they snap, G-Spark moves (pointer + touch + keyboard: Tab to a block, Enter to place).
+    b) Song maker tile: a 6x4 grid of squares like the app; click/tap cycles off -> light -> medium -> hard -> extreme (brighter each
+       step, like the owner's plan); a Play button plays a short pattern with WebAudio ONLY after a click (no autoplay), mute button.
+    c) Animation tile: G-Spark's real walk frames as a flipbook; buttons Play / Onion skin (shows the frame before in violet, after in green).
+    d) G-Spark AI tile: a bar like the app's with 3 ready examples ("make it jump", "add a score", "make it rain"); pressing one
+       "builds" blocks with PURPLE electricity, then a user block snaps in GREEN - this tells the purple/green story. Label: "demo".
+    e) Extensions tile: chips Safe / Moderate / Dangerous filter a short list of real extension names (+ "184 in the app") with credits.
+    f) "Works with your Scratch files" tile: a simple animation of a .sb3 file going in and out of G-Warp (+ "opens in Scratch/TurboWarp").
+    g) Safety tile (for parents): no accounts, under-13 parent OK, no ads, no tracking - link to parents/safety pages.
+    Each tile has "More" -> a drawer/modal with the details and the docs link, so nothing important needs a long scroll.
+    Below the grid only: what's new (short timeline of the last 5 versions), about the project, footer. That's the whole landing page.
+3.3 MOTION LANGUAGE (lots of life, but smooth and kind):
+    - Electricity = the brand: SVG wires with stroke-dasharray + animated stroke-dashoffset; GREEN = you, PURPLE = G-Spark AI.
+    - Buttons: small "magnetic" pull toward the pointer (max 6 px) + a spark burst on click.
+    - Tiles: 3D tilt toward the pointer (max 6 deg) with a soft glare; lift + glow on hover; press-down on tap.
+    - Section reveal: fade-up 12 px, <= 400 ms, only the first time, IntersectionObserver. No scroll-jacking, no parallax that moves text.
+    - Background: a very subtle dark grid with a soft violet glow that follows the pointer in the hero only.
+    - Optional particles: <= 40 sparks on a canvas in the hero, paused when the tab is hidden.
+    - Page changes between docs: quick fade (<= 200 ms).
+    - Everything uses transform/opacity only (GPU friendly); 60 fps on a normal laptop; nothing blocks reading.
+    - CALM MOTION: prefers-reduced-motion = calm by default; plus the visible "Calm motion" toggle (same name as in the app), saved in
+      localStorage (wrap in try/catch). Calm = no loops, no particles, no tilt; demos show their end state; reveals are instant.
+3.4 LOOK: dark, glassy panels (#141425 at 80-90% + 1px #2a2a48 line + soft inner glow), radius 16-24 px, block-shaped decorations
+    (puzzle notches) used sparingly, violet->purple gradients for headlines/CTAs, green only for "electricity / go". Headings: Inter
+    800 or ONE display font (offer options in W1). Body 16-18 px, line-height 1.6. Max text width ~70 characters.
+3.5 DOCS (all 16 pages + tutorials): one shared layout: top bar (same as landing), left sidebar with ALL pages + a search box that
+    filters pages AND headings (plain JS, index built from the pages), "On this page" mini table of contents, prev/next buttons, callout
+    boxes (Tip / Watch out / Safety), copy buttons on code/step blocks, images open bigger on click (lightbox, Esc closes), screenshots
+    with width/height (no layout jump). Keep every page's text; fix outdated facts (section 2). Tutorials index = cards with level
+    (easy/medium/hard), time ("10 min"), a small picture and "Open in G-Warp". Changelog = a vertical timeline (real versions only).
+3.6 PHONES: the site must be great on a phone (the owner reads on one): 390 px wide, no sideways scrolling, tap targets >= 44 px,
+    the bento grid becomes swipeable cards, demos work with touch, top bar becomes a menu button. (The APP is desktop-first; the
+    website is not.)
+3.7 SPEED + QUALITY: landing page first load <= 350 KB (fonts not counted): move the embedded JPEGs out to files, use WebP (+ PNG/JPEG
+    fallback) with loading="lazy" and width/height; take NEW screenshots of v15.56.0 from a FRESH project with the QA kit (never the
+    owner's test projects). Accessibility: landmarks, one h1 per page, alt text, visible focus, contrast AA, every demo usable by
+    keyboard, aria-live for demo results. Meta: title + description per page, Open Graph image 1200x630 (own art), favicon = G logo,
+    theme-color #0b0b14.
+
+---------------------------------------------------------------------
+ 4. PHASES
+---------------------------------------------------------------------
+W0 AUDIT  [chatgpt.com or Freebuff]  -> chatgpt/lanes/L9-WEB/reports/W0-AUDIT.md
+   For every page: purpose, sections, what to keep, what's outdated (with the app evidence from section 2), size, broken/missing links
+   (check every href points to an existing file/anchor), images used. Then a one-page "site map of the new site" (which page has what).
+W1 THREE DIRECTIONS  [chatgpt.com]  -> ai-team/shared/<date>-chatgpt-WEB-W1/  (A.html, B.html, C.html, preview.html, NOTES.md)
+   Each = the FULL first screen (3.1) + the bento grid (3.2) with at least 3 tiles really working + one docs page sample, with the real
+   motion (3.3) and Calm motion. Make them truly DIFFERENT ideas, for example:
+     A "Power grid": circuit-board lines connect the tiles, electricity runs between them.
+     B "Workbench": the page looks like a tidy G-Warp workspace - tiles are block-shaped, things snap together.
+     C "Arcade": bold, playful, big G-Spark, chunky buttons, more colour (still the same palette).
+   NOTES.md: pros/cons, weight in KB, "My pick". preview.html links all three (desktop + phone frames side by side).
+   >>> STOP: write in your log closeout "OWNER: please pick A, B or C" and push. Don't start W2 until the owner/Claude picks.
+       While waiting you MAY do W2 prep that works for any direction: optimize/move images, new screenshots, the docs search index.
+W2 BUILD  [chatgpt.com writes, Freebuff tests]  -> ai-team/shared/<date>-chatgpt-WEB/site/  (the complete new site, rule R1)
+   Order: shared CSS/JS + top bar -> landing -> docs layout -> all 16 docs pages -> tutorials -> changelog -> 404 page (optional).
+   Push after each page group. Keep a CHANGES.md: per page, what changed and which old facts were updated.
+W3 CHECK  [Freebuff, QA kit Playwright]  -> tests/web-check.js in your lane folder + report W3-CHECK.md (paste real output)
+   For EVERY page at 1440x900 and 390x844: screenshot (into chatgpt/out/, not committed), no console errors, no horizontal scroll
+   (document.scrollingElement.scrollWidth <= innerWidth), every internal link + anchor exists, every image loads, the page weight
+   (sum of loaded bytes), and with reducedMotion "reduce": no running CSS animations (document.getAnimations() all paused/finished).
+   Click every tile demo once (no errors). Fix and re-run until ALL PASS.
+W4 HANDOFF  -> NOTES.md in the WEB drop-box folder: file list (old path -> new path, same names), how Claude swaps it in (copy
+   site/* over the repo root, nothing else changes), the W3 result, before/after screenshots list, open questions. One line in
+   MERGE-QUEUE.txt "WAITING FOR CLAUDE" is written by CLAUDE - you only push. Then Claude reviews and the owner says "go".
+
+---------------------------------------------------------------------
+ 5. DON'T (things that would make it worse)
+---------------------------------------------------------------------
+- Don't make a long marketing page with huge empty hero space and features 5 screens down.
+- Don't add sections nobody asked for (pricing, newsletter, blog, testimonials, team photos, chat widget).
+- Don't use stock photos, emoji walls, or generic "AI startup" gradients that hide the G-Warp look. G-Warp = dark + violet + electric green.
+- Don't let animation make text hard to read or move while someone reads it. Don't loop sounds. Don't flash faster than 3 times/second.
+- Don't break Scratch-style trust: no claims you can't prove; "Beta" stays visible.
+- Don't rewrite docs into marketing - docs stay clear, short, kid-friendly, with steps.
+- Don't spend more than ~1 session on W0; most time goes to W1 + W2. Art/icons: take your time (README section 7: A/B/C rules).

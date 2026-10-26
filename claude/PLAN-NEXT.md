@@ -124,6 +124,13 @@ Anchors: `grep -n "function applyColumn\|function play(fromPart\|function schedu
 - Icons for all of M: ChatGPT job `ai-team/CHATGPT-MUSIC-ICONS-2026-10-26.txt` → owner picks → plug in. Never draw them myself.
 - Release: Beta v15.56.0 (or with A if both are ready).
 
+### W. Website redesign (ChatGPT lane L9-WEB; brief `ai-team/CHATGPT-WEBSITE-REDESIGN-2026-10-26.txt`)
+- [ ] W1 arrives (`ai-team/shared/*WEB-W1/preview.html`): open A/B/C with Playwright at 1440 + 390, send the owner 3 screenshots, ask him
+  to pick ONE letter. Write the pick in MERGE-QUEUE + the lane log is ChatGPT's (tell the owner to tell ChatGPT).
+- [ ] W2+W3 arrive: run their `web-check.js` myself; check rules R1-R10 (no app.html copy committed, no trackers, no fake numbers,
+  URLs kept: compare `ls docs docs/tutorials` with site/docs). Then ask the owner for "go".
+- [ ] GO: copy `site/*` over the repo root (index.html, docs/**, new assets/), keep app.html untouched, link check again, push, log.
+
 ### F. Leftovers (only when A–E are waiting on others)
 - [ ] F1. Music maker: bass / drum / fill PATTERN choices (TODO "MUSIC MAKER - KEEP IMPROVING") - partly covered by M4.
 - [ ] F2. test_anim.js: 2 old checks expect the Animation button hidden for normal users (it's for everyone since v15.47) → update the test.

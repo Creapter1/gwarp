@@ -17,6 +17,9 @@ LANES = [
    'Icon mismatches go in chatgpt/lanes/L5-UI/ICON-MISMATCHES.md.'),
   ('L6-RECIPES', 'GWrap AI recipes', 'ai-team/chatgpt-jobs/JOBS-RECIPES.txt', 'Freebuff (build + prove each recipe)', ''),
   ('L7-TEST', 'Kid critic + chaos tests', 'ai-team/chatgpt-jobs/JOBS-TESTING.txt', 'Freebuff', ''),
+  ('L9-WEB', 'Website redesign', 'ai-team/CHATGPT-WEBSITE-REDESIGN-2026-10-26.txt (phases W0 audit -> W1 three designs, STOP for the owner pick -> W2 build -> W3 check -> W4 handoff)',
+   'chatgpt.com (design + writing the pages) and Freebuff (previews, screenshots, the W3 checks)',
+   'You build the new site as a COPY in ai-team/shared/ - never edit index.html, docs/ or app.html. Nothing goes live without the owner.'),
   ('L8-ART', 'Library art', 'ai-team/chatgpt-jobs/JOBS-ART.txt', 'chatgpt.com or Freebuff', 'Art takes time - that is fine. Quality first.'),
 ]
 
