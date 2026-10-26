@@ -1087,3 +1087,52 @@ GITHUB CLOSEOUT VERIFICATION:
 - NOTES latest fetched blob SHA: ae8b929377782ad46a95a6cd842b09973c9612a8.
 - Task status: DONE for the static proposal package; browser / integration remains NOT-TESTED.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T13:51:12Z
+AI / agent / exact model identity: ChatGPT GPT-6
+Task ID / title: ANIM-G1 — The Liner / guide lines (WEB phase; terminal validation remains pending)
+Branch / starting commit: main / 3c07db67e471bec835938c8df864d07c1c6cda83
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+"Continue"
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Continue in the ChatGPT animation task list after ANIM-I2. Take ANIM-G1, beginning with its WEB phase: source inspection, coordinate/data model, non-integrated proposal module and integration handoff. Requirements: rulers on paint editor + Animation canvas; free guides and built-in centre/ground/head/stage guides; snapping model for shapes/bone ends; per-sprite persistent data outside SVG; same guide positions in paint, Flipbook and Animation; guide lock. Do not touch app.html/index.html, do not guess private APIs, do not activate/integrate. Terminal/browser/200-shape smoothness checks are NOT part of this WEB-only deliverable and must remain pending.
+
+PROGRESS / AI RESPONSE:
+Read own log, task list, README, shared logging template, AI-TEAM, and merge queue. ANIM-I2 is fully closed out. The next free item is ANIM-G1 [WEB then TERMINAL]. Initial source inspection shows `GW_VECTOR_EDITOR.mapFor(c)`, `GW_V15_COSTUME_EDITOR.state`, `window.GW_ANIM.state`, `#gwCostumeCanvasWrapV15`, and `#gw18Svg` are real current names. The project serializer explicitly preserves `gwAnimations` but no guide-data property has yet been confirmed. Existing workspace `#snapPreviewLine` is block-stack snapping, not shape/bone snapping.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Keep guides as overlays separate from costume SVG; NEVER serialize/draw guide lines into costume art.
+- Keep G-Warp look and existing editor/animation controls; do not replace existing features.
+- Zero is costume rotation-centre; rulers report stage pixels, 480×360 outline.
+- Per-sprite guide data must be explicitly included by Claude in project save/load serialization; do not assume arbitrary sprite fields persist.
+- Avoid monkey-patching private pointer event handlers or inventing a generic Snap button. Mark unavailable integration hooks UNSURE and specify the narrow hook Claude needs.
+- Claude alone performs runtime/browser integration tests and final app integration after required model verification and owner approval.
+
+FILES CHANGED:
+- NONE at session start.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub reads: own full log, current animation task list, README, AI-CHAT-LOG template, AI-TEAM, MERGE-QUEUE; current G1 acceptance text read.
+- Latest repository commit search: `3c07db67e471bec835938c8df864d07c1c6cda83`, main history tip at session start.
+- No source changes or tests yet.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for repository rules/task scope and first source-symbol excerpts.
+- NOT-TESTED for implementation, browser display, drag interactions, serialization round-trip, snapping and performance.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- Need inspect current Flipbook/player DOM and whether any editor Snap control or shape snap hook really exists.
+- Save/load serializer has no verified gwAnimGuides hook; Claude may need to add it.
+- Official coordinates for frame-one geometry and animation viewBox relative to costume centre must be verified before setting default ground/head lines.
+
+NEXT STEP / HANDOFF:
+Inspect source for Flipbook canvas/preview nodes, animation drawing/drag events, paint editor event paths and Snap UI. Then build a self-contained non-integrated candidate and document exact missing integration seams. Do not declare G1 fully DONE until terminal/browser 200-shape test passes.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — exact user request "Continue" captured; task details derived from current GitHub task file and verified app source.
+--- END ENTRY ---
