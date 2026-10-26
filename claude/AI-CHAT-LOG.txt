@@ -690,3 +690,10 @@ USER REQUEST: attached the next phone pack (PH-061..080, 20 recipes, NEXT PH-081
 DONE: fix_phone_pack.py now turns plain values inside conditions into literal nodes; 14 errors fixed; hand review: 2 logic bugs fixed (follow-sprite, dodge-falling), 4 pen recipes dropped (no pen blocks in the list). 16 recipes PASS -> ai-team/shared/2026-10-26-phone-recipes-PH-061-080/ (+ NOTES.md). Rules page: literal-in-cond rule, title-must-be-true rule, no pen recipes, follow/fall patterns.
 EVIDENCE: validator TESTED; runtime NOT-TESTED.
 --- END ENTRY ---
+
+--- ENTRY 31 ---
+UTC timestamp: 2026-10-26T17:05:44Z (owner 13:04-13:05 his time)   Who: Claude (configured claude-opus-5-5)   Task: PHONE-7 check PH-081..136
+USER REQUEST: attached 3 phone packs (PH-081..100, 101..116, 117..136; NEXT PH-137). 13:05: "now I am completely blocked for using any other models ... even though I pay for Lifetime".
+DONE: 56 recipes -> fixer -> 1 format error (switch_costume) + hand review: 7 logic fixes, 1 pen recipe dropped -> 55 PASS in ai-team/shared/2026-10-26-phone-recipes-PH-081-136/ (pack, fixes.txt, NOTES). Rules page: steps must match script, switch_costume rule; starter now says Start at PH-137. TOTAL phone recipes ready: 60 + 16 + 55 = 131.
+EVIDENCE: validator TESTED; runtime NOT-TESTED.
+--- END ENTRY ---

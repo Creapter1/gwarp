@@ -68,6 +68,8 @@ EACH ANSWER = ONE code block with ONE complete pack file for the NEXT 20 items o
 - The script must REALLY do what the title says using only the listed blocks. Pen blocks are NOT in the list: no drawing recipes.
   To follow/chase another sprite use point_towards (menu = that sprite) + move. A falling loop must stop at the bottom
   (repeat_until y position < -165), not "touching edge" (it starts at the top edge).
+  The "steps" text must match the script exactly (same keys, same numbers). Any letter key works (s, e, r ...).
+  switch_costume has NO number input: pick the costume name in its menu (use ifs for "costume by number").
   C-blocks (forever, repeat, if, if_else, repeat_until): extra {{"body": [...]}} (if_else also "else": [...]);
   if / if_else / repeat_until / wait_until need extra {{"cond": <condition node>}}.
 - Condition nodes: {', '.join(sorted(v.COND_NODES))}
@@ -96,7 +98,7 @@ open('ai-team/phone/PHONE-BOT-PROMPT.txt', 'w', encoding='utf-8').write(f'''G-WA
 Your phone app can read a link you paste, and one answer fits 20 recipes. So every new chat is just this SHORT message:
 
 ----- copy from here -----
-Read this page and follow it exactly. Start at PH-061.
+Read this page and follow it exactly. Start at PH-137.
 {URL}
 ----- to here -----
 

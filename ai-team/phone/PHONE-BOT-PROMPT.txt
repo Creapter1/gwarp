@@ -2,7 +2,7 @@ G-WARP PHONE BOT - HOW TO USE (Claude, 2026-10-26, tuned to the phone app's capa
 Your phone app can read a link you paste, and one answer fits 20 recipes. So every new chat is just this SHORT message:
 
 ----- copy from here -----
-Read this page and follow it exactly. Start at PH-061.
+Read this page and follow it exactly. Start at PH-137.
 https://raw.githubusercontent.com/Creapter1/gwarp/main/ai-team/phone/BOT-RULES.txt
 ----- to here -----
 

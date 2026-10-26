@@ -1,0 +1,7 @@
+r-ph-spawn-enemies: falling loop stops at the bottom (was: stopped at once at the top edge)
+r-ph-confetti-clones-win: falling loop stops at the bottom (was: stopped at once at the top edge)
+shield/stopwatch/checkpoint: keys now match the steps (s, s+e, r)
+knockback: turns away from the ENEMY (was: from the mouse)
+health bar: costume chosen by health (switch costume has no number input)
+parallax: steps say which script goes on which layer
+dropped r-ph-mouse-draw-trail (pen: does not draw)
