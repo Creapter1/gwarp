@@ -542,3 +542,10 @@ COMMIT: afd0a29
 NEXT: owner runs the test exe on his PC and reports; owner opens a separate ChatGPT chat with the AI Lab prompt.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 17 ---
+UTC timestamp: 2026-10-26T13:44:37Z (owner 09:44 his time)   Who: Claude (configured claude-opus-5-5)   Task: JOBS-1 - thousands of ChatGPT jobs
+Starting commit: f6b5c50
+USER REQUEST: "go ahead and assign thousands of jobs for ChatGPT. So that way ChatGPT has a lot of work to do. And I don't waste your tokens."
+PLAN: generate jobs by script from G-Warp data (blocks, extensions, recipes, UI buttons, sprites, icons) into ai-team/chatgpt-jobs/, claim system, closeout.
+--- (closeout follows) ---
