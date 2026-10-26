@@ -7,7 +7,7 @@
 
 ## Deliverable
 
-- Candidate module: [`chatgpt/anim-guides.js`](https://github.com/Creapter1/gwarp/blob/main/chatgpt/anim-guides.js)
+- Candidate module: [`code/anim-guides.js`](https://github.com/Creapter1/gwarp/blob/main/ai-team/shared/2026-10-26-chatgpt-ANIM-G1/code/anim-guides.js) (mirrored from ChatGPT's working copy)
 - This is a standalone proposal. It is not included from `app.html`, has no live execution path, and does not alter existing G-Warp behavior.
 - It creates guide overlays as sibling DOM/SVG layers. Guide markup is never appended to the costume SVG or baked into exported art.
 
