@@ -1467,3 +1467,57 @@ UTC timestamp: 2026-10-26T20:30:12Z
 - Final main branch head at this verification: 4d6c5476550d78af383962ea714348df8f23d2a6.
 - Status remains PARTIAL with respect to runtime comparison: research/report delivered; no runtime tests were run.
 --- END VERIFICATION ADDENDUM ---
+
+
+--- ENTRY ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-26T20:39:29Z
+AI / agent / exact model identity (only if verified): ChatGPT GPT-6
+Task ID / title: IDEA-STRATEGY-1 — Record G-Warp free/open creative identity and separate far-future product boundary
+Branch / starting commit: main / f839f1f6d18eef1814560f552a023f21693c4366
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+"Everything for now is just beta. We still got a lot to do. ... go ahead and add it to the To-Do idea for future, or for the other one. ... the goal is not to be better. The goal is to some point, if it's possible, become better than TurboWarp and Penguin. But at the same time, if we cannot make it to be better than those two, then the goal is just to be known for something. ... if ... TurboWarp or Penguin or any other likes to grab my ideas and use it on my app or use it on their app, they are welcome to do so. ... these resources are free. So why would I give my resources to be paid? ... there's another thing that I'm trying to create. But that one definitely is different compared to what Scratch is. That one might have to be paid because I'm gonna be adding a little extra stuff. But that is a far future thing. ... before adding it, read what I added, and you will see what I mean."
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- Read the existing owner-created Plus Extensions, Tab Plus, G-Warp 3D, Future Ideas, TODO and licence documents before writing.
+- Record a strategy that keeps current G-Warp/core creative resources free and open, welcomes reuse of ideas by other Scratch-derived communities, and frames success as either exceptional capability or recognition for distinctive strengths.
+- Keep all features beta/experimental until their quality and reliability are proven.
+- Record the separate far-future G-Warp 3D/expanded product as a possible separately priced product, not a decision or current work item; preserve the free core and avoid any monetization or licence changes now.
+- Update only future-idea documentation / TODO idea parking sections. No app.html/index.html edits.
+
+PROGRESS / AI RESPONSE:
+- Read current TODO.txt, ai-team/FUTURE-IDEAS.txt, ai-team/ideas/PLUS-EXTENSIONS-AND-3D-2026-10-26.md, ai-team/ideas/TAB-PLUS-2026-10-26.md, ai-team/ideas/GWARP-DESKTOP-EXE-2026-10-26.md, ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md, README.md, LICENSE, AI-TEAM rules, mandatory log template and the complete ChatGPT personal log.
+- Found the user's separate idea already documented as a future G-Warp 3D version (simple browser runner and fuller desktop edition), alongside Plus extensions and Tab Plus. The docs say IDEA ONLY / nothing built. The repository currently uses MIT for G-Warp code.
+- The current TODO already contains an idea pointer to Plus extensions + G-Warp 3D and a separate Tab Plus idea. This task will add a strategic companion note and update the bottom IDEAS pointer rather than create a duplicate implementation task.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- G-Warp is beta; do not describe proposed strengths as completed or proven.
+- Ambition remains open: G-Warp may eventually outperform competitors in selected areas, but if not, recognition for specialist value is still a success.
+- Core G-Warp and reusable community resources remain free/open by owner intent; allow others to reuse ideas/resources under applicable licences and attribution.
+- A separate far-future expanded 3D product may be considered for pricing only if it is genuinely distinct and adds substantial value. No decision, pricing, paywall, licence change, or implementation now.
+- Preserve MIT licence for current core unless the owner explicitly decides otherwise; third-party materials remain governed by their own licences.
+- All app/source integration remains under Claude's role and owner approval.
+
+FILES CHANGED:
+- NONE at session start.
+
+COMMANDS / TESTS / RESULTS:
+- Read GitHub repository documents via GitHub API; no source/runtime tests run.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for existing repository idea documents, TODO entries, README and MIT licence.
+- OWNER-INTENT for the current user's product and openness decisions.
+- STATIC-ANALYSIS for the proposed roadmap/monetization boundary.
+- NOT-TESTED for all product/runtime behavior.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The phrase "another thing" is interpreted as the already documented far-future G-Warp 3D / expanded 3D desktop product, because the existing owner idea file explicitly distinguishes a basic online 3D runner from a full desktop version. The pricing concept remains tentative and is clearly labelled as such.
+- Current MIT licence permits commercial use and redistribution under its terms; this task does not change it. Any future proprietary paid product boundary needs a separate licence/dependency review before implementation.
+
+NEXT STEP / HANDOFF:
+Create a strategy note, add a bottom-of-TODO IDEAS pointer, update the existing Plus/3D idea document with the free/open ecosystem boundary, then read back every changed file and close the log.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — current owner request recorded; interpretation of the separate product is explicitly labelled as an assumption based on the existing repository plan.
+--- END ENTRY ---
