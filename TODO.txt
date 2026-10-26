@@ -131,6 +131,9 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
       M2 "Clear all" (testers: "remove the entire blocks completely and just make my music") + start from an empty song; Undo.
       M3 BUG: while the song plays, squares changed AHEAD are not heard ("it will just play the previous music"). The next chunk must
          use the change; a part that is already playing may finish as it is. Also change levels while playing (like Soundraw).
+      M1b each level makes the USER'S OWN part richer (1 smooth: just their notes, 2 mid: + light touch, 3 hard: + harmony / 2nd
+         instrument, 4 extreme: + fills/accents) and the user can change what each level adds (owner 11:47).
+      M5 name: the Create zone = "Spark Studio" (Claude's pick, owner asked; tabs Melody / Bass / Beat / Chords).
       M4 "Make your own everything": after Create Melody -> Create Bass, Create Beat (drums), Create Chords, usable in the Song maker.
       Icons for M1-M4: ChatGPT (ai-team/CHATGPT-MUSIC-ICONS-2026-10-26.txt), Claude only plugs the owner's pick in.
 [ ] CHATGPT JOB BANK (owner 2026-10-26: "thousands of jobs"): ai-team/chatgpt-jobs/ - 2,474 jobs (every block, extension, button,

@@ -604,3 +604,10 @@ EVIDENCE: SOURCE-VERIFIED (code read), NOT-TESTED (plans). COMMIT: dc1f3b0
 NEXT: next run follows PLAN-NEXT A then M (M3 bug first).
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 21 ---
+UTC timestamp: 2026-10-26T15:47:46Z (owner 11:47 his time)   Who: Claude (configured claude-opus-5-5)   Task: TODO-MUSIC-2 levels = richness of the user part + name
+USER REQUEST (summary): levels should differ musically: the user's melody at level 1, then "adding a little bit more touch ... more extra sounds" per level, "super quiet or super smooth ... mid smooth ... extreme"; the user can modify all levels. Name: not "melody maker" ("electrifying music ... sounds kind of lame") - "I leave you for that decision".
+DONE: PLAN-NEXT M1b (per-level richness for user parts, editable per level, S.myLevels) + M5 name = "Spark Studio" (tabs Melody / Bass / Beat / Chords; ids stay). TODO lines added. No app change.
+EVIDENCE: NOT-TESTED (plan).
+--- END ENTRY ---

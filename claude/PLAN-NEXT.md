@@ -99,6 +99,14 @@ Anchors: `grep -n "function applyColumn\|function play(fromPart\|function schedu
   (0.45/0.62/0.8/1 + glow at 4); schedulePart scales by cell level (1 light: softer + fewer notes; 2 = today's mid; 3 hard; 4 extreme:
   louder + extra layer/fill). Old songs/saves: a 1 = the level the column energy gave before (so old songs sound the same). Column
   energy buttons stay and SET the cells of that column. aria-label says the level. Test: cycle, save/load, render differs by level.
+- [ ] M1b (owner 11:47) a level = HOW RICH the user's own part sounds, not only louder. For a part the user made (melody, later bass/
+  beat/chords): level 1 smooth/quiet = just their notes, soft; level 2 mid = + a light touch (soft echo/pad doubling); level 3 hard =
+  + extra sounds (harmony a third/octave, a second instrument, fuller rhythm); level 4 extreme = everything + fills/accents. The user
+  can CHANGE what each level adds (in Spark Studio: per level, tick: louder / octave / harmony / 2nd instrument / echo / fills).
+  Store as `S.myLevels = {1:{...},2:{...},3:{...},4:{...}}` with good defaults; generated tunes keep today's behaviour.
+- [ ] M5 NAME (owner left it to Claude): the Create zone is called **"Spark Studio"** (G-Spark is our mascot; electric, kid-friendly,
+  not "melody maker"). Tabs inside: Melody · Bass · Beat · Chords. Rename the "🎼 Create Melody" title + Tune option "My melody" stays
+  ("🎼 My melody" = made in Spark Studio). Only a title change; ids (`gwCreateMelody`, `GW_CREATE_MELODY`) stay for compatibility.
 - [ ] M2 "Clear all" button (all cells 0, confirm, Undo) + "Empty song" choice next to Surprise me. Test: clear → play = silence → click cells.
 - [ ] M4 Create Bass / Create Beat / Create Chords next to Create Melody (`gw-v1554-create-melody` module is the pattern: grid + ideas +
   Use in Song maker → `S.myBass` / `S.myBeat` / `S.myChords`, Tune-like "My …" option per row). Bass uses the bass scale, beat = drum pads
