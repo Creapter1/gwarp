@@ -120,6 +120,11 @@ HOW TO HAND IN CODE PROPOSALS (important, app.html is huge: ~2.3 MB)
       anything there. MAIN PLAN (owner, 02:57): the model runs INSIDE the app in the browser (WebGPU, ~0.2-1 GB, downloaded once
       from Hugging Face, NOT stored in our repo; no Ollama). ChatGPT does the DEEP RESEARCH first (job AIM-0). Plan, rules and ChatGPT jobs AIM-1..7: ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md.
       Not built yet; Claude builds it behind Developer mode after ChatGPT's command list + tests + model scores.
+[ ] G-WARP AI MODEL = its own lane (owner 2026-10-26): one separate ChatGPT chat "G-Warp AI Lab" does only this
+      (prompt: ai-team/AI-LAB-PROMPT-2026-10-26.txt; plan sections 0-0e incl. timeline ~1 month first helper, ~2-3 months trained model).
+[ ] G-WARP DESKTOP .EXE with the AI model inside (owner 2026-10-26): test G-Warp.exe built by Claude (Electron, Windows x64,
+      not tested on Windows yet, unsigned). Plan: ai-team/ideas/GWARP-DESKTOP-EXE-2026-10-26.md (installer via GitHub Actions,
+      GitHub Releases, model inside, updates, signing later). Owner runs the test exe and reports.
 [ ] TAB PLUS (owner's idea 2026-10-26, idea only): ai-team/ideas/TAB-PLUS-2026-10-26.md. Waits for the owner's "go".
 
  LATER
