@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>G-Warp ANIM-G1 — Guide-line concept preview</title>
+<style>
+:root{color-scheme:dark;--bg:#090910;--panel:#11111d;--edge:#29293d;--text:#eeeef8;--muted:#a1a1b5;--violet:#8b5cf6;--green:#4ade80;--yellow:#facc15}
+*{box-sizing:border-box}body{margin:0;padding:24px;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,Segoe UI,sans-serif}
+main{max-width:1180px;margin:auto}header{display:flex;gap:20px;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap}
+h1{font-size:22px;margin:0 0 6px}p{margin:0;color:var(--muted)}.status{border:1px solid #6250a4;border-radius:8px;padding:7px 10px;color:#c4b5fd;font-weight:700;font-size:12px}
+.cards{display:grid;grid-template-columns:1.15fr 1.15fr .8fr;gap:14px}
+.card{border:1px solid var(--edge);border-radius:12px;background:var(--panel);padding:12px;min-width:0}
+.card h2{font-size:14px;margin:0 0 9px}.hint{font-size:11px;color:var(--muted);margin:8px 0 0}
+.art{position:relative;border:1px solid #34344a;border-radius:8px;background:#1a1c2e;overflow:hidden;aspect-ratio:4/3}
+.art svg{display:block;width:100%;height:100%}
+.flip-art{background:#fff;aspect-ratio:4/3}
+.flip-art .sprite{fill:#8b5cf6;fill-opacity:.25;stroke:#6d28d9;stroke-width:4;stroke-linejoin:round}
+.panel{border:1px solid #4d3b78;background:#0c0c17;border-radius:8px;padding:9px;margin-top:10px;font-size:11px}
+.panel strong{display:block;margin-bottom:6px;color:#ddd6fe}.checks{display:grid;grid-template-columns:1fr 1fr;gap:5px 9px;color:#ddd}
+.check::before{content:"✓";color:var(--green);font-weight:900;margin-right:5px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0 4px;color:var(--muted);font-size:11px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.violet{background:var(--violet)}.green{background:var(--green)}.yellow{background:var(--yellow)}
+footer{border-top:1px solid var(--edge);margin-top:18px;padding-top:12px;color:var(--muted);font-size:11px}
+@media(max-width:850px){.cards{grid-template-columns:1fr 1fr}.card:last-child{grid-column:1/-1}.flip-art{max-width:420px}}
+@media(max-width:560px){body{padding:14px}.cards{grid-template-columns:1fr}.card:last-child{grid-column:auto}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div><h1>Guide lines — one coordinate system across the animation tools</h1><p>Concept preview only. Values are relative to the sprite rotation centre (0,0); guides are overlays, not costume artwork.</p></div>
+  <div class="status">WEB PROPOSAL · NOT INTEGRATED</div>
+</header>
+<section class="cards" aria-label="Guide-line preview">
+  <article class="card">
+    <h2>Costumes · Paint editor</h2>
+    <div class="art">
+      <svg viewBox="0 0 530 402" role="img" aria-label="Paint canvas with rulers, centre cross, ground and head guides and stage boundary">
+        <rect width="530" height="18" fill="#141425"/><rect y="18" width="18" height="384" fill="#141425"/>
+        <g stroke="#8b5cf6" stroke-width="1"><path d="M78 0v18M118 0v18M158 0v18M198 0v18M238 0v18M278 0v18M318 0v18M358 0v18M398 0v18M438 0v18M478 0v18"/><path d="M0 58h18M0 98h18M0 138h18M0 178h18M0 218h18M0 258h18M0 298h18M0 338h18M0 378h18"/></g>
+        <g fill="#c4b5fd" font-size="8" font-family="system-ui"><text x="22" y="9">-200</text><text x="102" y="9">-120</text><text x="222" y="9">0</text><text x="342" y="9">120</text><text x="462" y="9">240</text><text x="9" y="55" transform="rotate(-90 9 55)">-160</text><text x="9" y="175" transform="rotate(-90 9 175)">-40</text><text x="9" y="295" transform="rotate(-90 9 295)">80</text></g>
+        <rect x="25" y="28" width="480" height="360" fill="none" stroke="#facc15" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <g transform="translate(265 208)">
+          <path d="M0-96c-47 0-69 32-65 75 2 22 15 41 34 51-12 25-11 52-2 72 27 10 62 10 84 0 9-21 9-49-2-72 22-16 35-35 34-59-2-39-27-67-83-67z" fill="#8b5cf6" fill-opacity=".45" stroke="#c4b5fd" stroke-width="3"/>
+          <circle cx="-24" cy="-33" r="5" fill="#eee"/><circle cx="25" cy="-33" r="5" fill="#eee"/>
+          <path d="M-18 3q18 13 36 0" fill="none" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>
+        </g>
+        <path d="M265 18v384M18 208h512" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="3 5"/>
+        <path d="M18 330h512" stroke="#4ade80" stroke-width="2" stroke-dasharray="5 5"/>
+        <path d="M18 105h512" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="3 5" opacity=".85"/>
+        <path d="M18 208h512" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="3 5" opacity=".65"/>
+        <path d="M18 18h512v384" fill="none" stroke="#ffffff" opacity=".08"/>
+      </svg>
+    </div>
+    <p class="hint">Top/left rulers. Drag from an edge to add a guide; pull a custom guide back to a ruler to remove it.</p>
+    <div class="panel"><strong>Guides</strong><div class="checks"><span class="check">Centre cross</span><span class="check">Ground line</span><span class="check">Head line</span><span class="check">480 × 360 stage</span><span class="check">Snap to guides</span><span class="check">Lock guides</span></div></div>
+  </article>
+  <article class="card">
+    <h2>Animation · Bone editor</h2>
+    <div class="art">
+      <svg viewBox="0 0 530 402" role="img" aria-label="Animation editor with same guide lines and bone joints">
+        <rect width="530" height="18" fill="#141425"/><rect y="18" width="18" height="384" fill="#141425"/>
+        <g stroke="#8b5cf6" stroke-width="1"><path d="M78 0v18M118 0v18M158 0v18M198 0v18M238 0v18M278 0v18M318 0v18M358 0v18M398 0v18M438 0v18M478 0v18"/><path d="M0 58h18M0 98h18M0 138h18M0 178h18M0 218h18M0 258h18M0 298h18M0 338h18M0 378h18"/></g>
+        <rect x="25" y="28" width="480" height="360" fill="none" stroke="#facc15" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <path d="M265 18v384M18 208h512" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="3 5"/>
+        <path d="M18 330h512M18 105h512" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <g transform="translate(265 207)" fill="none" stroke="#facc15" stroke-width="5" stroke-linecap="round">
+          <path d="M0-72L0-18L-36 25L-54 90M0-18L35 23L54 90M0-18L-45-56L-62-90M0-18L42-57L60-88"/>
+        </g>
+        <g fill="#4ade80" stroke="#172017" stroke-width="2"><circle cx="265" cy="135" r="7"/><circle cx="265" cy="189" r="7"/><circle cx="229" cy="232" r="7"/><circle cx="301" cy="230" r="7"/><circle cx="211" cy="297" r="7"/><circle cx="319" cy="297" r="7"/><circle cx="203" cy="117" r="7"/><circle cx="325" cy="119" r="7"/></g>
+      </svg>
+    </div>
+    <p class="hint">Same stage-pixel coordinates. Bone ends and roots use the same guide snap helper as Paint.</p>
+    <div class="panel"><strong>Shared rule</strong><div>Guide values are measured from the same rotation centre. Only the zoom/scale changes between editors.</div></div>
+  </article>
+  <article class="card">
+    <h2>Flipbook · Frame preview</h2>
+    <div class="art flip-art">
+      <svg viewBox="0 0 220 165" role="img" aria-label="Flipbook view with the same center and ground guide">
+        <rect x="0" y="0" width="220" height="165" fill="#fff"/>
+        <rect x="18" y="7" width="184" height="151" fill="none" stroke="#facc15" stroke-width="1.2" stroke-dasharray="4 4"/>
+        <path d="M110 7v151M18 82.5h184M18 129h184M18 39h184" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="4 4" opacity=".8"/>
+        <g class="sprite" transform="translate(110 82)">
+          <path d="M0-43c-24 0-35 17-33 37 1 12 8 20 17 26-6 12-6 23-1 32 14 5 31 5 42 0 5-9 5-21-1-32 11-8 18-18 17-31-1-20-15-32-41-32z"/>
+          <circle cx="-12" cy="-13" r="3" fill="#6d28d9" stroke="none"/><circle cx="13" cy="-13" r="3" fill="#6d28d9" stroke="none"/>
+          <path d="M-9 5q9 7 18 0" fill="none" stroke="#4ade80"/>
+        </g>
+      </svg>
+    </div>
+    <p class="hint">No rulers in the compact player; guides still line up on the frame.</p>
+    <div class="panel"><strong>Frame position</strong><div>Frame 1 · Same guide set · Same rotation-centre origin</div></div>
+  </article>
+</section>
+<div class="legend"><span><i class="dot violet"></i>Custom guides</span><span><i class="dot green"></i>Centre / head / ground</span><span><i class="dot yellow"></i>Stage boundary</span></div>
+<footer>Static visual concept only — not a browser capture of the G-Warp app. The working proposal is in <code>chatgpt/anim-guides.js</code>. Snap, persistence, alignment and 200-shape performance have not been tested.</footer>
+</main>
+</body>
+</html>
