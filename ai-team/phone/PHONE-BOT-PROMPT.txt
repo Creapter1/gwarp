@@ -10,3 +10,7 @@ Then type: continue   (each answer = one code block with 20 recipes + a line NEX
 New chat (after ~20 messages): paste the short message again, but change the number to the NEXT number from the last answer.
 Copy each code block into a note / file. Give them to Claude or ChatGPT: "add the phone recipes" (they check + fix + add them).
 The rules page is always the newest version on GitHub - you never need a new long prompt.
+
+DAILY LIMIT (found 2026-10-26): the phone app allows only about 10 Opus messages a day (then it says "choose a different model").
+So: make every Opus message count (20 recipes each). When the limit is hit, the SAME short starter works with any other model in
+the app; its recipes get checked + fixed the same way (validate_gwrap_pack + fix_phone_pack), so weaker models are fine too.
