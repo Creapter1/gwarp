@@ -618,3 +618,10 @@ USER REQUEST (summary, his words): "plus extensions for the customs and music ma
 DONE: ai-team/ideas/PLUS-EXTENSIONS-AND-3D-2026-10-26.md (Plus API needed first + safety; DRAFT any-AI prompt that asks the question first + no-extras / fix-only rules; 3D far future). TODO line. Idea only, no app change.
 EVIDENCE: NOT-TESTED (idea).
 --- END ENTRY ---
+
+--- ENTRY 23 ---
+UTC timestamp: 2026-10-26T15:58:55Z (owner 11:58 his time)   Who: Claude (configured claude-opus-5-5)   Task: LANES - several ChatGPT sessions in parallel, each separate
+Starting commit: 17f5f15
+USER REQUEST (summary, his words): ChatGPT keeps losing connection and reconnecting. "does ChatGPT have everything separately apart? Because I can use FreeBuff ... about 50 minutes ... for every ChatGPT Luna at an extreme level, to work on any other task" - "as long as it is separate, and they always know exactly what they are working on. Because even though it is the same model ... that does not mean that they will not get confused ... plan that a little bit more carefully."
+PLAN: lanes (one job area per session) with own folder + own log + own job file, ready-to-paste prompt per lane, 50-min timing, reconnect rule, no shared-file edits except own job file.
+--- (closeout follows) ---
