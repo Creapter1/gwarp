@@ -364,3 +364,5 @@ DONE | ChatGPT | C6 — AI chat-log coverage audit | chatgpt/REVIEW-AI-CHAT-LOG-
 
 2026-10-26T20:40:47Z | DONE | ChatGPT GPT-6 | IDEA-STRATEGY-1 — free/open G-Warp core and far-future separate 3D product boundary | ai-team/ideas/GWARP-FREE-OPEN-IDENTITY-AND-3D-BOUNDARY-2026-10-26.md, ai-team/ideas/PLUS-EXTENSIONS-AND-3D-2026-10-26.md, TODO.txt, chatgpt/AI-CHAT-LOG.txt | SOURCE-VERIFIED/OWNER-INTENT; docs read-back verified; NOT-TESTED runtime; no app or licence edits
 2026-10-26T22:47:58Z | RELEASED | Claude | Beta v15.57.0 same-frame threads + broadcast-and-wait (tick games ~3x faster, Scratch parity); remix v3 one-way platforms (owner only, not in repo) | app.html | TESTED in G-Warp + scratch-vm: regressions PASS, parity fixtures ALL PASS, platform test +51 px
+
+2026-10-27T00:22:00Z | CLAIMED | ChatGPT GPT-6 | USER-REQUEST-RESEARCH-PASS-4 — enemy AI, boss telegraphs, puzzles, quests/dialogue, accessibility | research-only; no app edits
