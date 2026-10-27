@@ -2279,12 +2279,24 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 </style>
 </head>
 <body class="h-screen w-screen flex flex-col bg-slate-950 text-slate-100 font-sans">
+<div id="gwStartLoad" role="status" style="position:fixed;inset:0;z-index:100004;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#05070f;color:#eef0fa;font:15px system-ui,sans-serif;transition:opacity .25s"><span class="gw8-g-dance" aria-hidden="true">G</span><b>Loading G-Warp…</b></div>
+<script id="gw-v1560-start-loading">/* v15.60.0 (Claude, owner: loading screen "for both fast PC and slow PC"): the dancing G while the app starts.
+   Fast PC: shows at least 1.2 s. Slow PC: stays until the whole page has loaded and drawn once. Opening a project link (#scratch=…)
+   hands over to the project loading screen, which waits for every costume (v15.59.0). Never longer than 30 s. */
+(() => { const el = document.getElementById('gwStartLoad'), t0 = performance.now();
+  const done = () => { if (!el.isConnected) return; el.style.opacity = '0'; setTimeout(() => el.remove(), 260); };
+  const after = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+    const wait = Math.max(0, 1200 - (performance.now() - t0));
+    setTimeout(() => { if (!/scratch=|project=|#open/.test(location.hash)) return done();
+      const t1 = performance.now(), look = () => (document.getElementById('gw8ImportBusy') || performance.now() - t1 > 3000) ? done() : setTimeout(look, 100); look(); }, wait); }));
+  if (document.readyState === 'complete') after(); else addEventListener('load', after);
+  setTimeout(done, 30000); })();</script>
 <!-- Clean G-Warp Top Header -->
 <header class="g-wrapper-header" id="gWrapperHeader">
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.59.0</span>
+<span class="app-version">Beta v15.60.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4660,7 +4672,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.59.0',label:'Beta v15.59.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.60.0',label:'Beta v15.60.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
