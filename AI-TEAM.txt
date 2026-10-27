@@ -126,6 +126,25 @@ TEAM RULES (to stop two AIs making the same thing)
    no Mario/Nintendo, Sonic, Pokemon, Minecraft, Disney, Scratch Cat...
    Use G-Spark or invented characters.
 
+
+ANIM-P1 COMPLETE HANDOFF — FIND THIS FIRST (2026-10-27)
+- Complete package: `ai-team/shared/2026-10-27-chatgpt-ANIM-P1/`
+  - `SPEC.md` — feature contract and acceptance requirements.
+  - `NOTES.md` — integration handoff, evidence, limits and required QA.
+  - `code/anim-motion.js` — isolated pure motion-data/math helper v2.
+  - `code/poses.json` — rig-independent angle-offset pose data only; no art, SVG, bitmap or rig IDs.
+  - `preview.html` — disconnected concept preview.
+  - `tests/anim-motion.test.js` — supplied Node/QA test file.
+- The older `ai-team/shared/2026-10-26-chatgpt-ANIM-P1/` note is archived/superseded; use the 2026-10-27 package above.
+- Evidence already verified: isolated helper assertions 23/23 PASS; pose JSON parse/required clip checks PASS; helper, test and preview-script compilation checks PASS. This is source/static evidence only: G-Warp browser/runtime, Animation UI, solver, playback, Make costumes, save/load, .sb3/Scratch VM, performance and the supplied Node test file remain NOT-TESTED.
+- Integration ownership: Claude Opus is the live integrator. Re-read the current `app.html` before using any older private function/anchor; the previous handoff could not re-verify current solver/playback/Make-costumes anchors because the large source read returned empty.
+- Preserve existing In-between, Smooth ×2 and Glide. Easing is an option; do not change the default selection without Creapter1's approval. Missing legacy easing metadata must fall back at read time, not be silently written into old frames.
+- The helper is not a complete feature: connect easing, hold timing and `clock.done` to the verified editor timer; reset playback on Play/scrub/frame/loop/Stop; test exact 1–4 tick holds and non-loop completion.
+- `makeCostumePlan()` is only a plan. Actual repeated costumes require stale-output cleanup, order/naming checks, 240-output confirmation, 960-output hard-limit handling, .sb3 save/reopen and Scratch compatibility tests.
+- Stretch values are only data (60–140%); solver integration must preserve local-axis scaling, joints, child offsets, attached artwork, siblings and rest lengths. Follow-through is optional/off by default and must resolve to a derived pose without mutating authored frames.
+- Mirror, copy/paste and library pose mapping use normalized unique bone names; missing/duplicate names skip safely, numeric ID 0 is valid, and each editor mutation needs one verified Animation undo snapshot. No stock character art.
+- Keep all package files disconnected from `app.html` and `index.html` until source re-check, isolated tests, browser/QA acceptance and owner approval.
+
 =====================================================================
  WORK LOG  (newest at the bottom - format: DATE | WHAT | WHO | JOB | FILES)
 =====================================================================
@@ -381,3 +400,4 @@ DONE | ChatGPT | C6 — AI chat-log coverage audit | chatgpt/REVIEW-AI-CHAT-LOG-
 2026-10-27T04:26:27Z | RELEASED | Claude | Beta v15.60.0 | app.html | start-up loading screen fast+slow PC; regressions as expected
 
 2026-10-27T06:33:48Z | CLAIMED | ChatGPT GPT-5 | ANIM-P1 handoff pointer verification and integration-caution summary | AI-TEAM.txt only; app.html/index.html untouched
+2026-10-27T06:34:31Z | DONE | ChatGPT GPT-5 | ANIM-P1 handoff pointer and integration-caution summary | AI-TEAM.txt; chatgpt/AI-CHAT-LOG.txt | SOURCE-VERIFIED; package pointer/cautions read back; app.html/index.html untouched; runtime NOT-TESTED
