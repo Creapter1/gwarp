@@ -24,3 +24,13 @@ Each file gives an overview, core mechanics, a first-version plan, pitfalls and 
 | Fruit Ninja | Swipe-to-slice arcade | [research-how-to-make-fruit-ninja.md](research-how-to-make-fruit-ninja.md) |
 | Maze game | Grid-based exploration and puzzle | [research-how-to-make-maze-game.md](research-how-to-make-maze-game.md) |
 | Fighting game | 2D one-on-one fighter | [research-how-to-make-fighting-game.md](research-how-to-make-fighting-game.md) |
+| Asteroids | Vector-style space shooter | [research-how-to-make-asteroids.md](research-how-to-make-asteroids.md) |
+| Frogger | Grid-based lane-crossing arcade | [research-how-to-make-frogger.md](research-how-to-make-frogger.md) |
+| Minesweeper | Grid-based logic puzzle | [research-how-to-make-minesweeper.md](research-how-to-make-minesweeper.md) |
+| 2048 | Grid-based sliding puzzle | [research-how-to-make-2048.md](research-how-to-make-2048.md) |
+| Memory match | Card-flipping memory puzzle | [research-how-to-make-memory-match.md](research-how-to-make-memory-match.md) |
+| Simon Says | Memory and pattern game | [research-how-to-make-simon-says.md](research-how-to-make-simon-says.md) |
+| Whack-a-Mole | Timed reaction arcade | [research-how-to-make-whack-a-mole.md](research-how-to-make-whack-a-mole.md) |
+| Connect Four | Two-player grid strategy | [research-how-to-make-connect-four.md](research-how-to-make-connect-four.md) |
+| Hangman | Word-guessing puzzle | [research-how-to-make-hangman.md](research-how-to-make-hangman.md) |
+| Battleship | Turn-based grid guessing game | [research-how-to-make-battleship.md](research-how-to-make-battleship.md) |
