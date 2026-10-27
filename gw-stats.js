@@ -3,7 +3,7 @@
 // Stores ONLY numbers and a random session code: no names, no IP address, no location, no cookies.
 // Uses a free Firebase Realtime Database (rules: ai-team/stats/database.rules.json). Numbers: stats.html
 (() => {
-  const DB = ''; // <- the owner's database link, e.g. 'https://gwarp-stats-default-rtdb.firebaseio.com' (empty = counter off)
+  const DB = 'https://gwarp-stats-16c00-default-rtdb.firebaseio.com'; // <- the owner's database link, e.g. 'https://gwarp-stats-default-rtdb.firebaseio.com' (empty = counter off)
   window.GW_STATS_DB = DB;
   if (!DB || !/(^|\.)github\.io$|(^|\.)gwarper\.com$/.test(location.hostname)) return; // only the real site: not tests, not downloaded copies
   if (/stats\.html$/.test(location.pathname)) return; // looking at the numbers is not a visit

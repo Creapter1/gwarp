@@ -880,3 +880,10 @@ DONE: Beta v15.60.0: #gwStartLoad dancing G "Loading G-Warp..." right after <bod
 TESTS: CPU x1 seen 236 ms, gone 1971 ms; CPU x6 seen 718 ms, page load 2733 ms, gone 8194 ms; app ready, 0 errors. Regressions as expected.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 45 ---
+UTC timestamp: 2026-10-27T04:38:22Z   Who: Claude   Task: STATS switched on
+USER REQUEST: sent his Firebase link https://gwarp-stats-16c00-default-rtdb.firebaseio.com
+DONE: gw-stats.js DB = that link (counter on for site + app). Not verifiable from Claude box (firebaseio.com not on allowlist): owner checks stats.html.
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
