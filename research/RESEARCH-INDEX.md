@@ -8,3 +8,4 @@ Each file gives an overview, core mechanics, a first-version plan, pitfalls and 
 | Geometry Dash | 2D auto-scrolling rhythm platformer | [research-how-to-make-geometry-dash.md](research-how-to-make-geometry-dash.md) |
 | Flappy Bird | One-button side-scrolling arcade | [research-how-to-make-flappy-bird.md](research-how-to-make-flappy-bird.md) |
 | Pac-Man | Grid-based maze chase | [research-how-to-make-pac-man.md](research-how-to-make-pac-man.md) |
+| Mario-style platformer | 2D side-scrolling platformer | [research-how-to-make-mario-style-platformer.md](research-how-to-make-mario-style-platformer.md) |
