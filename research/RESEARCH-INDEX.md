@@ -22,3 +22,5 @@ Each file gives an overview, core mechanics, a first-version plan, pitfalls and 
 | Racing game | Top-down or pseudo-3D driving | [research-how-to-make-racing-game.md](research-how-to-make-racing-game.md) |
 | Tower defense | Strategy, placing towers along a path | [research-how-to-make-tower-defense.md](research-how-to-make-tower-defense.md) |
 | Fruit Ninja | Swipe-to-slice arcade | [research-how-to-make-fruit-ninja.md](research-how-to-make-fruit-ninja.md) |
+| Maze game | Grid-based exploration and puzzle | [research-how-to-make-maze-game.md](research-how-to-make-maze-game.md) |
+| Fighting game | 2D one-on-one fighter | [research-how-to-make-fighting-game.md](research-how-to-make-fighting-game.md) |
