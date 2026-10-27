@@ -20,3 +20,5 @@ Each file gives an overview, core mechanics, a first-version plan, pitfalls and 
 | Breakout | Brick-breaking arcade | [research-how-to-make-breakout.md](research-how-to-make-breakout.md) |
 | Doodle Jump | Vertical endless platformer | [research-how-to-make-doodle-jump.md](research-how-to-make-doodle-jump.md) |
 | Racing game | Top-down or pseudo-3D driving | [research-how-to-make-racing-game.md](research-how-to-make-racing-game.md) |
+| Tower defense | Strategy, placing towers along a path | [research-how-to-make-tower-defense.md](research-how-to-make-tower-defense.md) |
+| Fruit Ninja | Swipe-to-slice arcade | [research-how-to-make-fruit-ninja.md](research-how-to-make-fruit-ninja.md) |
