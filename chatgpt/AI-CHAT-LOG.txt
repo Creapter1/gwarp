@@ -1671,3 +1671,64 @@ VERIFICATION:
 - The session-start entry has been committed and must be read back from GitHub before continuing.
 - No research has started yet.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+USER-REQUEST RESEARCH PASS 4 — CLOSEOUT
+UTC timestamp: 2026-10-27T00:26:22Z
+AI / agent / exact model identity: ChatGPT / GPT-6
+Task ID / title: USER-REQUEST-RESEARCH-PASS-4 — enemy AI, boss telegraphs, puzzles, quests/dialogue, accessibility
+Branch / baseline: main; recent baseline commit d8d68997a8a21d509781e8bcc166c6862d98b0ff
+
+USER REQUEST (verbatim):
+"Back to research pls let do some more"
+
+SCOPE COMPLETED:
+- Continued the previous research report's proposed next subjects: enemy AI state machines/pathfinding; boss attack readability; puzzle design and hinting; dialogue and quest architecture; accessibility.
+- Saved a standalone report in the existing AIM-K1 shared research folder.
+- Preserved the research-only scope. No new tutorial demos, project files, code proposals, mappings to current G-Warp blocks, or app/runtime edits.
+
+RESEARCH FINDINGS:
+- Enemy decision states and movement/pathfinding should be taught as separate systems: states explain why an enemy acts; navigation determines how it travels.
+- A small Patrol / Chase / Fight / Search state loop is a comprehensible starting point; later layers can add perception memory, alert decay, last-known position and debug visibility.
+- Boss attacks should communicate an attack tell, active threat, result and recovery window. Visual promise should match damage; do not rely on color alone.
+- Puzzle lessons should teach a rule, then vary one meaningful constraint; optional progressive hints can guide without solving the puzzle automatically.
+- Dialogue content, game state and presentation should be separate; quest/objective states should be explicit and saveable; branch paths should be testable.
+- Accessibility should be built into editor and game workflows: multiple forms of information, readable text, no color-only or sound-only essential cues, adjustable speed/audio and alternatives to rapid/repetitive inputs.
+- Report distinguishes page-inspected sources from abstract/index evidence and product-page descriptions. It explicitly says no G-Warp current capability mapping was performed.
+
+FILES CHANGED:
+- ai-team/shared/2026-10-26-chatgpt-AIM-K1/USER-REQUEST-RESEARCH-PASS-4-AI-PUZZLES-QUESTS-ACCESSIBILITY-2026-10-27.md — created; GitHub create-file commit 8b3984fbbf61f52e02150210a5ee7e25edd7599b; read-back blob 780b2750cade1b55b1095ad9e75e0e9bc65808ff; 18,342 characters; 9 main sections; key topic and limitations checks all present.
+- chatgpt/AI-CHAT-LOG.txt — appended session start, timestamp correction, and this closeout; append-only.
+- AI-TEAM.txt — session claim and timestamp correction already appended; completion line will be recorded after this closeout.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub API fetches: report read-back PASS; checked nine section headings plus the required five topic headings and explicit limitations section.
+- No local git pull or Freebuff operation.
+- No G-Warp smoke test, browser test, scratch-vm test, or external engine/addon execution; those are NOT-TESTED and outside this research scope.
+
+EVIDENCE CLASS:
+- WEB-RESEARCH: selected official engine docs, Yarn Spinner docs, Game Accessibility Guidelines, Microsoft guidance, design articles and creator material.
+- SOURCE-VERIFIED: prior task instructions and the saved report read-back.
+- NOT-TESTED: G-Warp runtime, external sample projects/plugins, and full videos. GDC puzzle talks were inspected by abstract/index only; GMTK video was reviewed through chapter metadata, not watched end-to-end.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- The report is research only. No app.html/index.html modifications.
+- No claim that G-Warp currently supports the researched mechanics.
+- No 3D future-product concept or private details included.
+- No outside creator code, art, levels, music or branding copied.
+- Previous research reports remain unchanged.
+- The animation TODO remains in the repository's listed order; this direct user request was handled as a bounded research continuation and did not rewrite the backlog.
+
+BLOCKERS / UNCERTAINTIES:
+- GDC Vault page did not provide full talk access; the report labels those sources abstract/index only.
+- The GMTK chapter index was a third-party index and its original video was not watched.
+- Godot asset pages are product descriptions, not independent addon tests.
+- No current G-Warp block catalog/runtime mapping performed.
+
+NEXT STEP / HANDOFF:
+- Research pass 4 is complete. Wait for the owner's next direction; future work may compare these concepts against the current block catalogue, but only as a separate explicitly scoped research task. No demos are authorized by this task.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records this request and repository work only.
+--- END ENTRY ---
