@@ -1603,3 +1603,53 @@ UTC timestamp: 2026-10-26T20:41:12Z
 - Main branch head at this verification: 43b6bbcfa7c85863a6722a2d85018e56c6b73e44.
 - Runtime status remains NOT-TESTED; documentation-only task.
 --- END VERIFICATION ADDENDUM ---
+
+
+--- ENTRY ---
+SESSION START — USER-REQUEST RESEARCH PASS 4
+UTC timestamp: TIME NOT AVAILABLE (system supplied 2026-10-26 20:22 America/New_York without seconds; no precise UTC seconds available)
+AI / agent / exact model identity: ChatGPT / GPT-6
+Task ID / title: USER-REQUEST-RESEARCH-PASS-4 — enemy AI, boss telegraphs, puzzles, quests/dialogue, accessibility
+Branch / starting commit: main (repository default branch; observed recent commit d8d68997a8a21d509781e8bcc166c6862d98b0ff)
+
+USER REQUEST (verbatim):
+"Back to research pls let do some more"
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- Continue the G-Warp creator/game-design research from the explicit next-step list in the previous pass-3 closeout.
+- Research primary/credible sources on enemy state machines and pathfinding, boss telegraphs, puzzle logic, dialogue/quests, and accessibility.
+- Produce a separate source-grounded report in the existing AIM-K1 research folder; preserve earlier reports.
+- Keep this research-only: no demos, app.html/index.html edits, live runtime integration, feature claims, or automatic G-Warp mappings.
+- Keep Griffpatch distinct from Griff; do not copy protected code, art, levels, characters, music, or branding; record source evidence level and uncertainties.
+
+PROGRESS / AI RESPONSE:
+- Read ai-team/README.md, AI-TEAM.txt (opening rules + last 30 lines), the shared log template, the complete ChatGPT context log, ChatGPT to-do, animation to-do, MERGE-QUEUE.txt, L2-AILAB session history, and previous creator research reports.
+- Chose this subject sequence because the pass-3 closeout explicitly named these next research areas. The separate animation TODO remains listed in repository planning; this request is being treated as a direct user-directed research continuation, not a change to that TODO.
+- Read-back verification of this session-start entry is required before web research begins.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Research only. No app/runtime files or private 3D concept detail.
+- Cite source URLs and access dates; separate source statements from transferable design synthesis.
+- Do not imply endorsement or copy source content. Attribution does not substitute for permission/licence.
+- No child should be directed to payment/support links without parent/guardian review; this pass will focus on accessibility and design, not promotional content.
+
+FILES CHANGED:
+- None yet; this is the session-start record.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub repository reads only; no local Git or Freebuff commands.
+- No app/browser tests; research scope only.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for repository instructions and prior report state; WEB-RESEARCH not yet started; app behavior NOT-TESTED.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The repository commit search identifies d8d68997a8a21d509781e8bcc166c6862d98b0ff as the latest recent commit; default branch is treated as main based on existing repository context.
+- No inference will be made that any researched mechanic exists in current G-Warp.
+
+NEXT STEP / HANDOFF:
+- Commit this start record, read it back from GitHub, then conduct research and save a separate pass-4 report in ai-team/shared/2026-10-26-chatgpt-AIM-K1/.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — records this user request and the immediate repository handoff only.
+--- END ENTRY ---
