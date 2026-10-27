@@ -1881,3 +1881,14 @@ GITHUB CLOSEOUT VERIFICATION:
 - Verified new entry is present at bottom: pending.
 - Task status: DONE for isolated code-material deliverable; G-Warp integration/runtime: NOT-TESTED.
 --- END ENTRY ---
+
+
+--- VERIFICATION ADDENDUM — ANIM-P1 CLOSEOUT
+UTC timestamp: 2026-10-27T00:39:44.450Z
+- Personal closeout commit: 313be4fdc153d62103ec9bb2e9acc90bf87ad8a0.
+- Shared AI-TEAM completion commit: 2822688a1247e89be1ee6f629a89713b7c92eb8c.
+- The shared package was read back from GitHub: SPEC, NOTES, helper module, pose JSON, preview and 23-test Node file are all present.
+- Helper copy matches chatgpt/anim-motion.js exactly; pose JSON copy matches chatgpt/poses.json exactly.
+- GitHub compare confirms app.html and index.html were not changed.
+- Runtime integration remains NOT-TESTED.
+--- END ENTRY ---
