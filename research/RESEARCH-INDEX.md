@@ -9,3 +9,5 @@ Each file gives an overview, core mechanics, a first-version plan, pitfalls and 
 | Flappy Bird | One-button side-scrolling arcade | [research-how-to-make-flappy-bird.md](research-how-to-make-flappy-bird.md) |
 | Pac-Man | Grid-based maze chase | [research-how-to-make-pac-man.md](research-how-to-make-pac-man.md) |
 | Mario-style platformer | 2D side-scrolling platformer | [research-how-to-make-mario-style-platformer.md](research-how-to-make-mario-style-platformer.md) |
+| Space Invaders | Fixed-screen shoot-'em-up | [research-how-to-make-space-invaders.md](research-how-to-make-space-invaders.md) |
+| Snake | Grid-based arcade | [research-how-to-make-snake.md](research-how-to-make-snake.md) |
