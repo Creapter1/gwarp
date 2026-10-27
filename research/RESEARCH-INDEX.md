@@ -34,3 +34,15 @@ Each file gives an overview, core mechanics, a first-version plan, pitfalls and 
 | Connect Four | Two-player grid strategy | [research-how-to-make-connect-four.md](research-how-to-make-connect-four.md) |
 | Hangman | Word-guessing puzzle | [research-how-to-make-hangman.md](research-how-to-make-hangman.md) |
 | Battleship | Turn-based grid guessing game | [research-how-to-make-battleship.md](research-how-to-make-battleship.md) |
+| Bomberman | Grid bomb-placing maze | [research-how-to-make-bomberman.md](research-how-to-make-bomberman.md) |
+| Lemmings | Puzzle with group-controlled walkers | [research-how-to-make-lemmings.md](research-how-to-make-lemmings.md) |
+| Bubble Shooter | Grid puzzle with matching bubbles | [research-how-to-make-bubble-shooter.md](research-how-to-make-bubble-shooter.md) |
+| Bloons Tower Defense | Tower defense with popping balloons | [research-how-to-make-bloons-tower-defense.md](research-how-to-make-bloons-tower-defense.md) |
+| Bejeweled | Swap-to-match gem puzzle | [research-how-to-make-bejeweled.md](research-how-to-make-bejeweled.md) |
+| Sonic-style platformer | Fast side-scrolling platformer | [research-how-to-make-sonic-style-platformer.md](research-how-to-make-sonic-style-platformer.md) |
+| Metroid-style explorer | Connected-room exploration with unlockable abilities | [research-how-to-make-metroid-style-explorer.md](research-how-to-make-metroid-style-explorer.md) |
+| Run-and-gun shooter | Side-scrolling shooter (Gunstar-style) | [research-how-to-make-gunstar-style-run-and-gun.md](research-how-to-make-gunstar-style-run-and-gun.md) |
+| Missile Command | Defence arcade protecting cities | [research-how-to-make-missile-command.md](research-how-to-make-missile-command.md) |
+| Galaga | Fixed-screen shooter with diving enemies | [research-how-to-make-galaga.md](research-how-to-make-galaga.md) |
+| Dig Dug | Tunnel-digging arcade | [research-how-to-make-dig-dug.md](research-how-to-make-dig-dug.md) |
+| Centipede | Fixed-shooter with a splitting chain | [research-how-to-make-centipede.md](research-how-to-make-centipede.md) |

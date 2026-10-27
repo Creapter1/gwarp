@@ -23,6 +23,31 @@ The player moves a cannon left and right along the bottom of the screen and fire
 - Enemy bullets with no cap make the game impossible. Limit shots on screen.
 - Hit detection that checks only the alien's centre misses bullets at the edges. Use the full box.
 
+## Characters and enemies
+- **Cannon**: the player's ship. Moves only left and right, and fires one shot at a time.
+- **Aliens**: a grid of rows. Each row is a different type, worth different points.
+- **Alien shots**: fired at random from the bottom alien in each column.
+- **Shields**: blocks the player can hide behind. They wear down when hit.
+- **UFO**: an optional bonus that crosses the top of the screen.
+
+## Step by step
+1. Draw a grid of aliens, for example 5 rows of 11.
+2. Move the whole grid one step per tick. When any alien touches an edge, reverse and drop a row.
+3. Add the cannon with left and right input, clamped to the screen.
+4. Add the player's shot. Allow one shot on screen at a time.
+5. Remove an alien when hit, and add points for its row.
+6. Shorten the tick interval as fewer aliens remain.
+7. Pick a random bottom alien in each column to fire.
+8. Lose a life when an alien shot or an alien reaches the cannon.
+9. Add shields, a wave counter, and a new wave when the grid is cleared.
+
+## What to add
+- Shields made of small blocks that break piece by piece.
+- A high score in localStorage.
+
+## What not to add
+- Moving shields or many weapon types in the first version.
+
 ## Suggested scope for a prototype
 One grid of aliens that moves and speeds up, the player cannon and single shot, enemy fire, lives and a score. Shields and bonus ships come later.
 

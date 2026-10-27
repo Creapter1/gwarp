@@ -22,6 +22,31 @@ The player steers Pac-Man through a maze, eating dots and power pellets. Four gh
 - Ghost AI that can reverse direction in place feels wrong. Forbid reversing except when a mode changes.
 - Pixel-based movement without tile snapping causes ghosts to jitter at junctions.
 
+## Characters and enemies
+- **Pac-Man**: the player. Moves on the tile grid and eats dots and pellets.
+- **Ghosts (Blinky, Pinky, Inky, Clyde)**: four enemies. Each has its own target rule, so they do not all chase the same tile.
+- **Frightened ghosts**: blue and edible for a short time after a power pellet.
+- **Eyes**: an eaten ghost that returns to the home box.
+
+## Step by step
+1. Draw the maze on a tile grid, with walls, dots and pellets.
+2. Move Pac-Man one tile at a time. Store a buffered turn and apply it at the next open tile centre.
+3. Add arrow-key input and stop at walls.
+4. Eat dots, add score, and show a level-complete screen when none are left.
+5. Add Blinky: at each junction, pick the open direction closest to Pac-Man's tile, with no reversing.
+6. Add Pinky, Inky and Clyde, each with its own target rule.
+7. Add power pellets. For a timer, ghosts turn blue and can be eaten for points.
+8. Send an eaten ghost back to the home box, then release it.
+9. Add lives, reset positions after a death, and a high score in localStorage.
+
+## What to add
+- Scatter and chase timers, which change ghost targets over time.
+- Tunnel wrap on the edges, with slower ghosts in tunnels.
+
+## What not to add
+- Smooth, pixel-based movement. Tile steps match the original and keep junctions clean.
+- Fruit bonuses until the ghosts work.
+
 ## Suggested scope for a prototype
 One small maze, Pac-Man with buffered turns, dots, one ghost with a chase rule, lives and a score. Add the other ghosts and power pellets after that works.
 

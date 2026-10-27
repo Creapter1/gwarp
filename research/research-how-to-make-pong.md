@@ -23,6 +23,27 @@ A ball bounces between two paddles, one on each side of the screen. Each player 
 - A purely reflected angle makes rallies repeat forever. The hit-point angle prevents this.
 - An AI that is perfect is unbeatable. Limit its speed.
 
+## Characters and enemies
+- **Paddles**: one per player. They move up and down only.
+- **Ball**: bounces off the top and bottom walls and the paddles.
+- **Computer opponent** (optional): a paddle that follows the ball, with a speed limit.
+
+## Step by step
+1. Draw the court: two paddles, a centre line and a ball.
+2. Move the left paddle with W and S, and the right with the arrow keys. Clamp both to the screen.
+3. Move the ball at a set speed and bounce it off the top and bottom walls.
+4. Bounce the ball off a paddle. Reverse its horizontal direction, and set its vertical speed by where it hits.
+5. When the ball passes a paddle, score a point for the other player and reset the ball to the centre.
+6. Add a win score and a winner screen.
+7. Add a computer paddle that follows the ball, with a maximum speed.
+
+## What to add
+- A short serve delay after each point.
+- A small speed increase per paddle hit, capped at a maximum.
+
+## What not to add
+- Spin or complex physics, or many modes in the first version.
+
 ## Suggested scope for a prototype
 Two paddles, one ball, bounces, scoring, serve and a local two-player mode. The AI opponent can follow.
 
