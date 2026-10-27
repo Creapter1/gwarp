@@ -15,3 +15,5 @@ Each file gives an overview, core mechanics, a first-version plan, pitfalls and 
 | Agar.io | Multiplayer cell-eating arena (io game) | [research-how-to-make-agar-io.md](research-how-to-make-agar-io.md) |
 | Cookie Clicker | Idle / incremental clicker | [research-how-to-make-cookie-clicker.md](research-how-to-make-cookie-clicker.md) |
 | Zombie shooter | Top-down wave shooter | [research-how-to-make-zombie-shooter.md](research-how-to-make-zombie-shooter.md) |
+| Endless runner | Auto-running obstacle game | [research-how-to-make-endless-runner.md](research-how-to-make-endless-runner.md) |
+| Pong | Two-paddle arcade sports | [research-how-to-make-pong.md](research-how-to-make-pong.md) |
