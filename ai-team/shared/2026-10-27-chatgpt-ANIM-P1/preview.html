@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G-Warp Animation Motion Tools — Proposal Preview</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0b14;--panel:#141425;--panel2:#1b1b31;--line:#34344e;--text:#ececf6;--muted:#aaaac2;--violet:#8b5cf6;--green:#4ade80;--yellow:#facc15}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,sans-serif;padding:24px}
+body[data-theme="light"]{color-scheme:light;--bg:#f4f4fa;--panel:#fff;--panel2:#e9e9f4;--line:#c9c9dc;--text:#191927;--muted:#606078;--violet:#7c3aed;--green:#16834a;--yellow:#956500}
+main{max-width:1080px;margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:22px;margin:0 0 4px}
+h2{font-size:15px;margin:0 0 12px}
+p{margin:0;color:var(--muted)}
+button,select{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:8px;padding:8px 10px;font:inherit}
+button.primary{background:var(--violet);border-color:var(--violet);color:white}
+.layout{display:grid;grid-template-columns:1.35fr 1fr;gap:14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px;min-width:0}
+.curves{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.curve{padding:9px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);text-align:center}
+.curve.selected{border:2px solid var(--violet);padding:8px}
+.curve svg{width:100%;height:64px;display:block;margin-bottom:4px}
+.curve strong{font-size:12px}
+.gridlines{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4;fill:none}
+.curveline{stroke:var(--green);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.strip{display:flex;gap:8px;overflow:auto;padding:4px 0}
+.frame{min-width:64px;height:88px;border:1px solid var(--line);background:repeating-conic-gradient(var(--panel2) 0 25%,var(--panel) 0 50%) 50% / 14px 14px;border-radius:9px;display:grid;place-items:center;position:relative}
+.frame.current{outline:2px solid var(--violet);outline-offset:2px}
+.figure{width:28px;height:46px;position:relative}
+.figure:before{content:"";position:absolute;left:8px;top:0;width:14px;height:14px;border-radius:50%;background:var(--yellow)}
+.figure:after{content:"";position:absolute;left:10px;top:14px;width:10px;height:24px;border-radius:8px;background:var(--violet);box-shadow:-10px 7px 0 -3px var(--green),10px 7px 0 -3px var(--green),-5px 34px 0 -3px var(--text),5px 34px 0 -3px var(--text)}
+.frame small{position:absolute;left:6px;bottom:4px;color:var(--muted)}
+.hold{position:absolute;right:5px;top:5px;border-radius:5px;background:var(--yellow);color:#151515;font-size:10px;padding:2px 4px;font-weight:700}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.control{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.control:first-of-type{border-top:0}
+.control label{font-weight:600}
+input[type=range]{accent-color:var(--violet);width:145px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{background:var(--panel2);border:1px solid var(--line);padding:5px 8px;border-radius:7px;color:var(--muted);font-size:12px}
+.note{border-left:3px solid var(--yellow);padding:9px 12px;background:var(--panel2);border-radius:0 8px 8px 0;color:var(--muted);margin-top:12px}
+@media(max-width:780px){body{padding:13px}.layout{grid-template-columns:1fr}.curves{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<main>
+<header>
+ <div><h1>Animation Motion Tools</h1><p>ANIM-P1 · isolated concept preview · not connected to G-Warp</p></div>
+ <button id="themeToggle" type="button">Switch light / dark preview</button>
+</header>
+<div class="layout">
+ <section class="panel">
+  <h2>1. Ease between poses</h2>
+  <p>Choose how a pose moves toward the next keyframe. Existing In-between, Smooth ×2 and Glide stay.</p>
+  <div class="curves" style="margin-top:12px">
+   <div class="curve"><svg viewBox="0 0 100 64"><path class="gridlines" d="M8 8V56H94"/><path class="curveline" d="M8 56L94 8"/></svg><strong>Linear</strong></div>
+   <div class="curve selected"><svg viewBox="0 0 100 64"><path class="gridlines" d="M8 8V56H94"/><path class="curveline" d="M8 56Q30 56 51 32T94 8"/></svg><strong>Ease</strong></div>
+   <div class="curve"><svg viewBox="0 0 100 64"><path class="gridlines" d="M8 8V56H94"/><path class="curveline" d="M8 56Q28 10 48 30T66 14T80 9T94 8"/></svg><strong>Bounce</strong></div>
+   <div class="curve"><svg viewBox="0 0 100 64"><path class="gridlines" d="M8 8V56H94"/><path class="curveline" d="M8 56C60 56 82 12 94 8"/></svg><strong>Snap</strong></div>
+  </div>
+  <h2 style="margin-top:22px">2. Frame strip and hold length</h2>
+  <p>Hold 1–4 ticks per pose. A badge shows the duration; the editor still has one pose per frame.</p>
+  <div class="strip" style="margin-top:12px">
+   <div class="frame current"><div class="figure"></div><small>1</small><span class="hold">2×</span></div>
+   <div class="frame"><div class="figure"></div><small>2</small></div>
+   <div class="frame"><div class="figure"></div><small>3</small><span class="hold">3×</span></div>
+   <div class="frame"><div class="figure"></div><small>4</small></div>
+   <div class="frame"><div class="figure"></div><small>5</small></div>
+  </div>
+  <div class="row" style="margin-top:10px"><label for="hold">Selected frame hold</label><select id="hold"><option>1 tick</option><option selected>2 ticks</option><option>3 ticks</option><option>4 ticks</option></select></div>
+  <div class="note">Make costumes repeats the generated costume for each hold tick. Animation block timing is not changed by this proposal.</div>
+ </section>
+ <section class="panel">
+  <h2>3. Bone motion controls</h2>
+  <p>Controls apply to the selected bone and current frame only.</p>
+  <div class="control"><label for="stretch">Squash / stretch</label><div class="row"><input id="stretch" type="range" min="60" max="140" value="100"><strong id="stretchValue">100%</strong></div></div>
+  <div class="control"><label for="follow">Follow-through</label><input id="follow" type="checkbox" checked></div>
+  <div class="control"><label for="delay">Delay</label><select id="delay"><option>1 frame</option><option>2 frames</option></select></div>
+  <div class="control"><label for="amount">Amount</label><input id="amount" type="range" min="15" max="75" value="35"></div>
+  <h2 style="margin-top:18px">4. Pose actions</h2>
+  <div class="row">
+   <button type="button">Mirror pose</button><button type="button">Copy pose</button><button type="button">Paste pose</button>
+  </div>
+  <div class="row" style="margin-top:10px"><label for="poseLibrary">Pose library</label>
+   <select id="poseLibrary"><option>Idle / breath</option><option>Walk</option><option>Run</option><option>Jump</option><option>Punch</option><option>Kick</option><option>Wave</option><option>Hurt</option><option>Win</option></select>
+   <button type="button" class="primary">Apply to my character</button>
+  </div>
+  <div class="note">Pose data contains bone-angle offsets only. It does not add a stock character or replace the user's artwork.</div>
+ </section>
+</div>
+<section class="panel" style="margin-top:14px">
+ <div class="row" style="justify-content:space-between"><div><h2>Safety and compatibility notes</h2><p>Proposal only; all changes must be undoable and remain inside the user's own rig.</p></div><div class="tags"><span class="tag">No external libraries</span><span class="tag">No network</span><span class="tag">No art assets</span><span class="tag">Not integrated</span></div></div>
+ <p style="margin-top:10px">Stretch changes need a verified edit to the current bone solver and artwork transform. Follow-through is derived at display/export time and must never overwrite authored key poses. Mirror and paste skip ambiguous bone names.</p>
+</section>
+</main>
+<script>
+const themeButton=document.getElementById('themeToggle');
+themeButton.addEventListener('click',()=>{document.body.dataset.theme=document.body.dataset.theme==='light'?'dark':'light';});
+const stretch=document.getElementById('stretch'),stretchValue=document.getElementById('stretchValue');
+stretch.addEventListener('input',()=>stretchValue.textContent=stretch.value+'%');
+</script>
+</body>
+</html>
