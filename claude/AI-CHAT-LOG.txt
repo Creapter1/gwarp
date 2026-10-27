@@ -835,3 +835,17 @@ TESTS: fake site + fake Firebase in Playwright: site visits 3, people 1, app ope
   Regressions: same as expected list (anim 16/18 = 2 old checks), smoke ALL PASS.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 40 ---
+UTC timestamp: 2026-10-27T03:48Z (owner 23:48)   Who: Claude (configured claude-opus-5-5)   Task: WEB home page redesign (ChatGPT is down)
+USER REQUEST (verbatim): "ok chat gpt is dow not good but can you worck on the web page psl and maket beter like a fan made web and not ai made pls so the it loock clean and some how if you can tell me all the step of how to get a easy first person the well chek my page and the some how the person well make it big or reconice"
+DONE: index.html rewritten as a hand-made indie/devlog style page (no gradient text, no glow cards, no emoji grid): yellow beta strip, plain nav,
+  hero "G-Warp" + animated zigzag wire + taped screenshot, "Why I'm making this" in the owner's voice (learned on Scratch, Smash-style game at ~10),
+  3-block first project, Song maker + Extensions (safety labels), "Also in the box" list, Devlog (v15.57/56/49), Rules I build by, FAQ (details),
+  footer by Creapter + not-affiliated line. Chakra Petch headings + system body. Screenshots moved out of the page into site/*.jpg (page was
+  565 KB of base64). Old page kept as site/old-home.html. Kept: SEO title/canonical, og tags (+og:image), gw-stats.js counter.
+  Facts only from the owner (MIT, no accounts, beta, desktop only, features already shipped). L9-WEB lane (ChatGPT) can build on this.
+TESTS: Playwright 1366 + 390 wide: no sideways scroll, no page errors; looked at both screenshots (fixed: stretched images on phone -> height:auto,
+  font fallbacks).
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---
