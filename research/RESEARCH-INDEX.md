@@ -17,3 +17,4 @@ Each file gives an overview, core mechanics, a first-version plan, pitfalls and 
 | Zombie shooter | Top-down wave shooter | [research-how-to-make-zombie-shooter.md](research-how-to-make-zombie-shooter.md) |
 | Endless runner | Auto-running obstacle game | [research-how-to-make-endless-runner.md](research-how-to-make-endless-runner.md) |
 | Pong | Two-paddle arcade sports | [research-how-to-make-pong.md](research-how-to-make-pong.md) |
+| Breakout | Brick-breaking arcade | [research-how-to-make-breakout.md](research-how-to-make-breakout.md) |
