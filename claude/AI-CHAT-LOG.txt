@@ -796,3 +796,24 @@ TESTS: scratch-vm play test: idle -> ME idle; walk cycles all 11 frames; z punch
 EVIDENCE: TESTED in scratch-vm. No app.html change.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 38 ---
+UTC timestamp: 2026-10-27T00:00Z (owner 19:52-20:15 his time)   Who: Claude (configured claude-opus-5-5)   Task: REMIX-5 owner's full fighter + lag
+USER REQUEST (short): v4 was too little effort. Play/read his "super scrash bros 0.02" first, bring ALL his animations, his moves/settings,
+  hitboxes for the hits, smash-style abilities; everything else in the game stays the same (gravity/physics too). Smooth animation; game lags,
+  make 20-30 fps feel like 60. Mid-task: delete the "hello" sound from the G-Warp intro, leave the intro alone; then "don't work on G-Warp
+  too much, make the TODO, save tokens".
+DONE: Remix v5 (scratchpad only, NOT in the repo - owner's private project + someone else's remix). Read all 732 blocks of his game:
+  sword fighter - J/L walk, I jump/double jump, X jab, Z low slash, C+dir roll, X+dir in air = forward/back air, X+I up air, X+K smash, 5 sounds.
+  Player 1 now has all 7 moves with HIS frame timing (his wait blocks at 30 fps), his 5 sounds, and a hitbox per frame measured from his
+  drawings (front/back/up parts that stick out past the standing pose; frame table lists "ME Frames", "ME X1/X2/Y1/Y2", 85 rows, 42 hit).
+  Keys: X jab, Z slash, X in air fair, X+back in air bair, X+up in air uair, X+K (or X+down) smash - hold to charge, C shield, C+left/right
+  roll (invincible, light hit). Like his game P1 only turns on the ground (back air works). Hits once per target per move, knockback away
+  from him. Gravity/physics/other fighters/stage unchanged. Intro: "hello" sound block + sound removed, rest untouched.
+TESTS: scratch-vm: every move plays all its frames; damage vs dummy jab 4, Z 5, fair 9, bair 11, uair 8, smash 15 (back slash 16,
+  charged 27), roll 2, miss = 0; rolling = no damage; CPU-only 25 s: all fighters take damage, KOs happen; 0 errors. check-sb3 ALL PASS.
+LAG (not fixed, owner said TODO only): measured - code area visible 20 ticks/s 21 fps, hidden 28-30 ticks/s 60 fps. Cause = running-script
+  glow filter re-rendered every frame (+ power-line sparks, undo snapshots). Fix plan + numbers + interpolation design: PLAN-NEXT section S.
+EVIDENCE: TESTED in scratch-vm; G-Warp measured (profiles). No app.html change.
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---

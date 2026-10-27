@@ -33,6 +33,28 @@ ChatGPT pushes a lot → push in a loop: `for i in 1 2 3 4 5; do git pull -q --r
 
 ## 2. The queue (in order)
 
+### S. SPEED: games lag while the code area is visible (owner 2026-10-26: "game is that slow", "30 FPS like it was 60") - DO FIRST
+Measured 2026-10-27 (Claude, remix v5 "Clone Multiplayer" in G-Warp v15.57.0, headless Chromium, tools in scratchpad w/gw_modes.js, w/gw_prof2.js):
+code area visible = 19-21 ticks/s, 20-22 fps. Code area hidden = 28-30 ticks/s (full game speed), 60 fps. So the GAME is fine; the EDITOR repaint is the lag.
+Cause chain: every running script has the yellow glow `filter: drop-shadow` (CSS rule with `.block-stack.gw4950-run`, grep `gw4950-run{filter`)
+on the WHOLE big stack. Anything inside that changes (the "switch costume to (expression)" menu: `applyMenuExpr` writes `sel.value` every tick,
+grep `function applyMenuExpr`) makes the browser re-render the filtered stack every frame. The power-line sparks (`GW_POWER_LINES`, cx/cy
+every frame) and rare 3.6 MB undo snapshots during play (`GW8.pushHistory` from the workspace MutationObserver) add more.
+Test results (each alone): `#workspaceCanvas > .block-stack{contain:layout paint}` = 28 ticks/s, 50 fps (best single fix, but paint
+containment clips the glow/overflow -> check visually); glow filter removed = 26 ticks/s, 38 fps; power lines off = 24/25;
+outline glow + contain:layout only = ~21 (no help).
+- [ ] **S1.** Glow: no filter on the whole stack - glow only the hat block (box-shadow, not filter), or paint containment with
+  padding so the glow isn't clipped. Screenshot before/after. Target: code area visible >= 28 ticks/s.
+- [ ] **S2.** Power lines: while a project runs, animate sparks max ~15 fps, or pause them when the stage frame rate drops.
+- [ ] **S3.** Undo: `GW8.pushHistory` while `Engine.isRunning` -> skip, push once when the project stops (no 3.6 MB snapshot hitches).
+- [ ] **S4.** "Smooth motion" (interpolation, like TurboWarp): renderLoop returns early on frames `GW.frameGate` skips (60 Hz screen, 30 fps
+  project = every other frame shows nothing new). Plan: before stepping threads save each sprite's x/y; on skipped frames redraw with x/y =
+  lerp(old, new, time since tick / tick length), restore real x/y right after drawing (so touching/clicks never see fake positions); skip
+  sprites that jumped > 80 px; only when there ARE skipped frames (no extra lag at 60 fps). Draw = same code path (temporarily swap x/y) so
+  camera / HQ / bubbles / pen composite loop keep working. Setting "Smooth motion" in Advanced settings, ON by default. 20-30 fps games then
+  look like 60.
+- [ ] **S5.** Re-measure with w/gw_modes.js (base) + regressions + Grok parity fixtures. Tip for owner until then: full-screen stage = 60 fps.
+
 ### A. Integrate ChatGPT's animation work (state on 2026-10-26 15:35Z)
 ChatGPT did: **I1** icon audit, **I2** 114 icons (A/B/C), **G1** guides code, **L1** layers code, **P1** motion spec + code.
 Not done yet by ChatGPT: **ANIM-0** check, **C1** centring, **T1** frames strip/preview, **B1** blocks readiness, **D1** help.
