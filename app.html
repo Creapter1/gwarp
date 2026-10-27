@@ -2284,7 +2284,7 @@ body.gw44-scratch-look .gw38-comment textarea{color:#422006}
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.58.0</span>
+<span class="app-version">Beta v15.59.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4660,7 +4660,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.58.0',label:'Beta v15.58.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.59.0',label:'Beta v15.59.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -12036,7 +12036,17 @@ nodes.push(el);cur=b.next;}return nodes;};
   function showBusy(on) {
     let el = by('gw8ImportBusy');
     if (on && !el) { el = h('div', { id: 'gw8ImportBusy', role: 'status' }, h('span', { class: 'gw8-g-dance', 'aria-hidden': 'true', text: 'G' }), h('b', { text: 'Opening Scratch project…' })); document.body.appendChild(el); }
-    if (!on) el?.remove();
+    if (!on && el) { // v15.59.0 (Claude, owner: "the loading screen ... make sure the whole project is 100% loaded before you do anything"):
+      // since v15.22.0 the rest of the costumes are drawn in the background, so on a slow computer the project opened half-loaded.
+      // Now the dancing G stays, with a count, until every costume is ready (a "Use it now" link appears after 8 s, just in case).
+      const st = window.GW_LAZY_COSTUMES, b = el.querySelector('b'), t0 = performance.now();
+      if (!st || st.ready || !st.total) { el.remove(); return; }
+      const tick = () => { const s2 = window.GW_LAZY_COSTUMES; if (!el.isConnected) return; if (!s2 || s2.ready || s2 !== st) { el.remove(); return; }
+        if (b) b.textContent = `Loading pictures… ${Math.min(100, Math.round(s2.done / s2.total * 100))}% (${s2.done}/${s2.total})`;
+        if (performance.now() - t0 > 8000 && !el.querySelector('.gw-busy-skip')) { const a = h('a', { href: '#', class: 'gw-busy-skip', text: 'Use it now', style: 'display:block;margin-top:10px;color:#a5b4fc;font-size:13px' }); a.onclick = e => { e.preventDefault(); el.remove(); }; el.appendChild(a); }
+        setTimeout(tick, 100); };
+      tick();
+    }
   }
   function showReport(r) {
     by('gw8ImportReport')?.remove();
