@@ -1892,3 +1892,53 @@ UTC timestamp: 2026-10-27T00:39:44.450Z
 - GitHub compare confirms app.html and index.html were not changed.
 - Runtime integration remains NOT-TESTED.
 --- END ENTRY ---
+
+
+--- SESSION START / HANDOFF MAINTENANCE ---
+UTC timestamp: 2026-10-27T06:33:48Z
+AI / agent / exact model identity: Codex / GPT-5
+Task ID / title: ANIM-P1 — verify and complete the shared AI handoff pointer
+Branch / starting commit: main / 77f749dd29c4a6f7dd025b530548a1e116322d2e
+
+USER REQUEST (verbatim):
+"Continuing from [Continue Gwarp AI Development](chatgpt-conversation://6adfa4ff-1c8c-83ea-bd2e-903176684370): Update the G-Warp AI handoff documentation so the other AI agents can find and understand the complete ANIM-P1 animation code package. First inspect the current AI-TEAM.txt and related AI log files on GitHub. The previous session already added a brief progress/DONE entry to AI-TEAM.txt and a detailed closeout to chatgpt/AI-CHAT-LOG.txt, but verify this. If the shared AI handoff file does not already contain the complete handoff pointer and key integration cautions, add them without duplicating entries. Do not edit app.html or index.html. Read back and verify all changes."
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- Verify the prior ANIM-P1 claim/progress/DONE entries in AI-TEAM.txt and the prior detailed closeout/addendum in this log.
+- Inspect the complete shared package and determine whether AI-TEAM.txt has a discoverable package pointer plus the essential integration cautions.
+- Add one non-duplicated shared handoff block and a distinct work-log entry if the pointer/cautions are missing.
+- Do not edit app.html or index.html.
+- Read back every changed GitHub file and verify the final content.
+
+PROGRESS / AI RESPONSE:
+- Read AI-TEAM.txt, ai-team/README.md, TODO.txt, the shared log template, this complete personal log, and the ANIM-P1 package/log references from GitHub.
+- Prior ANIM-P1 progress/DONE and closeout/addendum were found and are being preserved.
+- This session has not changed project files yet.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- ChatGPT hands off isolated proposals; Claude Opus is the only live app integrator.
+- Keep ANIM-P1 disconnected from app.html/index.html until current-source inspection, isolated tests, runtime QA, and owner approval.
+- Do not change the default easing selection; do not replace In-between, Smooth ×2, or Glide.
+- Treat helper math/data as incomplete integration: stretch, follow-through, playback, Make costumes, undo/history, save/load, export and solver/art transforms require verified integration work.
+- Pose data is angle data only; no stock character art.
+
+FILES CHANGED:
+- NONE at session start.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub source readback: PASS for the files listed above.
+- No new tests run at session start.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for repository state; integration/runtime NOT-TESTED.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The current app.html body was not needed for this documentation-only update and must remain untouched.
+- The prior package notes report that current private app.html animation anchors still require Claude's source re-check.
+
+NEXT STEP / HANDOFF:
+- Add the missing complete ANIM-P1 pointer/cautions to AI-TEAM.txt if absent, then read back AI-TEAM.txt and this log from GitHub.
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK'S REQUEST; referenced prior conversation was read back and contained only a bounded preview of the earlier discussion.
+--- END SESSION START ---
