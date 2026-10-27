@@ -1,3 +1,5 @@
+> **ARCHIVED / SUPERSEDED (2026-10-27):** This older folder's linked `SPEC.md`, `code/anim-motion.js`, `code/poses.json`, and `preview.html` were not present at the referenced paths on read-back. Do not use those stale links. The complete, corrected handoff is now at [`ai-team/shared/2026-10-27-chatgpt-ANIM-P1/`](https://github.com/Creapter1/gwarp/tree/main/ai-team/shared/2026-10-27-chatgpt-ANIM-P1/). This older note is retained for history only.
+
 # ANIM-P1 — Motion tools proposal and integration handoff
 
 **Status:** WEB candidate prepared. Not loaded by `app.html`; not browser-tested or integrated.  
