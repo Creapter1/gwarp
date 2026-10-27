@@ -1796,3 +1796,88 @@ UTC timestamp: 2026-10-27T00:39:00.875Z
 - New package read-back verified: SPEC.md, NOTES.md, code/anim-motion.js, code/poses.json, preview.html, tests/anim-motion.test.js. The package copy of the helper and JSON exactly matches the ChatGPT working copies. No external network reference in preview.
 - GitHub connector returned an empty body for app.html, so this session could not refresh current private Animation solver/playback anchors against Beta v15.57.0. Claude must re-read current source before integration.
 - NOT-TESTED in G-Warp: Node test file, browser preview, Animation UI, bone solver, actual playback/Make costumes, save/load, .sb3/Scratch VM compatibility, performance.
+
+
+--- ENTRY ---
+ANIM-P1 — CODE MATERIAL CLOSEOUT
+UTC timestamp: 2026-10-27T00:39:34.576Z
+AI / agent / exact model identity: ChatGPT / GPT-6
+Task ID / title: ANIM-P1 — Animation motion tools specification and isolated code/data proposal
+Branch / starting baseline: main / a253e619c63ef942077e63cfe4f2c3c04b755625
+Final observed main head before closeout: 5d5a2d46196ed42f9affc9e376fe1d3d919e0640
+
+USER REQUEST (verbatim):
+"Well if you tinck all the research is good then bigen the code material pls"
+Clarification:
+"It was supost to be a communication but ok"
+"The gif but ok"
+
+SCOPE COMPLETED:
+- Interpreted the GIF as the communication, not as a design asset.
+- Continued the next open assigned animation coding-material task, ANIM-P1.
+- Corrected and versioned the isolated motion helper.
+- Rebuilt the missing shared drop-box package with spec, helper, pose data, preview and tests.
+- Kept all material disconnected from app.html/index.html.
+
+FILES CHANGED:
+- chatgpt/anim-motion.js — helper v2, corrected data safety and playback completion behavior.
+- ai-team/shared/2026-10-27-chatgpt-ANIM-P1/NOTES.md — integration handoff and limits.
+- ai-team/shared/2026-10-27-chatgpt-ANIM-P1/SPEC.md — specification plus v2 contract addendum.
+- ai-team/shared/2026-10-27-chatgpt-ANIM-P1/code/anim-motion.js — exact copy of helper v2.
+- ai-team/shared/2026-10-27-chatgpt-ANIM-P1/code/poses.json — pose-angle data only, no art or rig.
+- ai-team/shared/2026-10-27-chatgpt-ANIM-P1/preview.html — static UI concept preview.
+- ai-team/shared/2026-10-27-chatgpt-ANIM-P1/tests/anim-motion.test.js — 23-case Node test file for Freebuff/QA.
+- ai-team/shared/2026-10-26-chatgpt-ANIM-P1/NOTES.md — marked old handoff archived and redirected to complete package.
+- chatgpt/AI-CHAT-LOG.txt — this closeout and verification.
+- AI-TEAM.txt — progress/completion work-log lines.
+
+CODE CORRECTIONS:
+- Added clock.done so an integrator can detect the end of a non-looping animation after the final frame's full hold duration.
+- Fixed numeric bone ID 0 and parent ID 0 handling.
+- Made duplicate normalized bone names skip safely rather than choose an arbitrary bone.
+- Initialized stretch metadata before mirror/paste operations write to it.
+- Hardened numeric clamping and target pose mapping.
+- Ensured follow-through returns a derived pose and does not mutate stored keyframe frames.
+- Preserved legacy easing absence; curveFor() supplies Ease as the fallback without writing metadata onto old frames.
+
+COMMANDS / TESTS / RESULTS:
+- In-memory isolated V8 helper execution: 23/23 assertions PASS.
+- The assertions covered curves, endpoints/bounds, shortest-angle interpolation, roots/stretch, hold timing, non-loop completion, loop wrap, clock reset, Make costumes plan, 960-output flag, follow-through, parent ID 0, mirror, missing partners, cross-rig copy/paste, duplicate names and pose-library structure/application.
+- JSON.parse of poses.json: PASS; required clip identifiers and Walk/Run/Jump frame counts checked.
+- Compilation-only checks with V8: helper module PASS, Node test file PASS, preview inline script PASS.
+- NOTE: tests/anim-motion.test.js was not run under Node in this session; it is provided for the next Freebuff/QA run.
+- GitHub compare from baseline a253e619c63ef942077e63cfe4f2c3c04b755625 to main head 5d5a2d46196ed42f9affc9e376fe1d3d919e0640 shows the expected documentation/proposal/log files only. app.html and index.html are absent from changed paths.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED: previous ANIM-P1 source review summary and current project instructions; current app.html body was empty in the connector response, so current private solver/playback anchors could not be revalidated in this session.
+- ISOLATED V8 HELPER TESTS: 23/23 PASS, not a G-Warp runtime test.
+- JSON / script compile checks: PASS.
+- NOT-TESTED in G-Warp: browser preview, editor controls, bone solver transforms, actual playback/hold integration, Make costumes output, undo/redo, save/reopen, .sb3/Scratch VM behavior and performance.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- No change to app.html or index.html; Claude alone integrates after current-source inspection and owner approval.
+- Do not change the default easing selection without the owner's approval.
+- Do not replace In-between, Smooth ×2 or Glide.
+- Stretch helper data does not itself scale artwork; solver/joint/art transforms still need careful Claude integration.
+- Follow-through remains optional and off by default.
+- Pose library contains angle data only; never add stock character art.
+- Uploaded GIF was communication only and was not included in repository files.
+
+BLOCKERS / UNCERTAINTIES:
+- Exact current app.html animation solver, playback interval and Make costumes anchors were not re-read because the GitHub connector returned an empty body for the large file.
+- Browser and full runtime acceptance must be performed by Claude/Freebuff.
+- Integration scope is larger than the pure helper module; this handoff does not claim feature completion in G-Warp.
+
+NEXT STEP / HANDOFF:
+- Claude: review ai-team/shared/2026-10-27-chatgpt-ANIM-P1/; re-read Beta v15.57.0 source, adapt integration points, run the supplied Node tests and browser/QA acceptance in an isolated build, then wait for owner approval before connecting live behavior.
+- Owner: review the concept and decide whether the easing selector/default and the broader motion tools should proceed. No immediate app update is required by this handoff.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — this entry records the current request, clarification and code-material work only.
+
+GITHUB CLOSEOUT VERIFICATION:
+- Personal log commit SHA: pending append/read-back verification.
+- Read-back URL/path: chatgpt/AI-CHAT-LOG.txt
+- Verified new entry is present at bottom: pending.
+- Task status: DONE for isolated code-material deliverable; G-Warp integration/runtime: NOT-TESTED.
+--- END ENTRY ---
