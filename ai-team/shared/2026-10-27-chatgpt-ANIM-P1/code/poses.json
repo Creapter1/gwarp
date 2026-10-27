@@ -1,0 +1,559 @@
+{
+  "schema": "gwarp.pose-library",
+  "version": 1,
+  "units": "degrees",
+  "semantics": "angle values are local offsets from each matching target bone's rest angle; no character art, SVG, bitmap, rig IDs, or root positions are included",
+  "standardBones": [
+    "body",
+    "head",
+    "left_arm",
+    "right_arm",
+    "left_leg",
+    "right_leg"
+  ],
+  "clips": [
+    {
+      "id": "idle-breath",
+      "name": "Idle / breath",
+      "category": "idle",
+      "loop": true,
+      "frames": [
+        {
+          "name": "settle",
+          "anglesByName": {
+            "body": 0,
+            "head": 0,
+            "left_arm": 0,
+            "right_arm": 0,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        },
+        {
+          "name": "inhale",
+          "anglesByName": {
+            "body": -2,
+            "head": 1,
+            "left_arm": -3,
+            "right_arm": 3,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        },
+        {
+          "name": "hold",
+          "anglesByName": {
+            "body": -1,
+            "head": 0,
+            "left_arm": -2,
+            "right_arm": 2,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        },
+        {
+          "name": "exhale",
+          "anglesByName": {
+            "body": 1,
+            "head": -1,
+            "left_arm": 2,
+            "right_arm": -2,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "walk-cycle",
+      "name": "Walk",
+      "category": "locomotion",
+      "loop": true,
+      "frames": [
+        {
+          "name": "contact-left",
+          "anglesByName": {
+            "body": 2,
+            "head": 0,
+            "left_arm": -30,
+            "right_arm": 30,
+            "left_leg": 32,
+            "right_leg": -28
+          }
+        },
+        {
+          "name": "down-left",
+          "anglesByName": {
+            "body": 3,
+            "head": 0,
+            "left_arm": -18,
+            "right_arm": 18,
+            "left_leg": 18,
+            "right_leg": -14
+          }
+        },
+        {
+          "name": "passing-left",
+          "anglesByName": {
+            "body": 0,
+            "head": 0,
+            "left_arm": 0,
+            "right_arm": 0,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        },
+        {
+          "name": "up-left",
+          "anglesByName": {
+            "body": -2,
+            "head": 0,
+            "left_arm": 18,
+            "right_arm": -18,
+            "left_leg": -14,
+            "right_leg": 18
+          }
+        },
+        {
+          "name": "contact-right",
+          "anglesByName": {
+            "body": 2,
+            "head": 0,
+            "left_arm": 30,
+            "right_arm": -30,
+            "left_leg": -28,
+            "right_leg": 32
+          }
+        },
+        {
+          "name": "down-right",
+          "anglesByName": {
+            "body": 3,
+            "head": 0,
+            "left_arm": 18,
+            "right_arm": -18,
+            "left_leg": -14,
+            "right_leg": 18
+          }
+        },
+        {
+          "name": "passing-right",
+          "anglesByName": {
+            "body": 0,
+            "head": 0,
+            "left_arm": 0,
+            "right_arm": 0,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        },
+        {
+          "name": "up-right",
+          "anglesByName": {
+            "body": -2,
+            "head": 0,
+            "left_arm": -18,
+            "right_arm": 18,
+            "left_leg": 18,
+            "right_leg": -14
+          }
+        }
+      ]
+    },
+    {
+      "id": "run-cycle",
+      "name": "Run",
+      "category": "locomotion",
+      "loop": true,
+      "frames": [
+        {
+          "name": "drive-left",
+          "anglesByName": {
+            "body": 9,
+            "head": -2,
+            "left_arm": -62,
+            "right_arm": 48,
+            "left_leg": 58,
+            "right_leg": -42
+          }
+        },
+        {
+          "name": "flight-left",
+          "anglesByName": {
+            "body": 7,
+            "head": -1,
+            "left_arm": -38,
+            "right_arm": 28,
+            "left_leg": 34,
+            "right_leg": -12
+          }
+        },
+        {
+          "name": "impact-left",
+          "anglesByName": {
+            "body": 10,
+            "head": -2,
+            "left_arm": -12,
+            "right_arm": 10,
+            "left_leg": 12,
+            "right_leg": -4
+          }
+        },
+        {
+          "name": "drive-right",
+          "anglesByName": {
+            "body": 9,
+            "head": -2,
+            "left_arm": 48,
+            "right_arm": -62,
+            "left_leg": -42,
+            "right_leg": 58
+          }
+        },
+        {
+          "name": "flight-right",
+          "anglesByName": {
+            "body": 7,
+            "head": -1,
+            "left_arm": 28,
+            "right_arm": -38,
+            "left_leg": -12,
+            "right_leg": 34
+          }
+        },
+        {
+          "name": "impact-right",
+          "anglesByName": {
+            "body": 10,
+            "head": -2,
+            "left_arm": 10,
+            "right_arm": -12,
+            "left_leg": -4,
+            "right_leg": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "jump",
+      "name": "Jump",
+      "category": "action",
+      "loop": false,
+      "frames": [
+        {
+          "name": "anticipation",
+          "anglesByName": {
+            "body": 12,
+            "head": 4,
+            "left_arm": -22,
+            "right_arm": -22,
+            "left_leg": 42,
+            "right_leg": 42
+          }
+        },
+        {
+          "name": "take-off",
+          "anglesByName": {
+            "body": -9,
+            "head": -2,
+            "left_arm": -48,
+            "right_arm": -48,
+            "left_leg": -28,
+            "right_leg": -28
+          }
+        },
+        {
+          "name": "up",
+          "anglesByName": {
+            "body": -5,
+            "head": 0,
+            "left_arm": -58,
+            "right_arm": -58,
+            "left_leg": -18,
+            "right_leg": -18
+          }
+        },
+        {
+          "name": "top",
+          "anglesByName": {
+            "body": 0,
+            "head": 0,
+            "left_arm": -28,
+            "right_arm": -28,
+            "left_leg": 18,
+            "right_leg": -18
+          }
+        },
+        {
+          "name": "fall",
+          "anglesByName": {
+            "body": 7,
+            "head": 2,
+            "left_arm": 25,
+            "right_arm": 25,
+            "left_leg": -22,
+            "right_leg": 24
+          }
+        },
+        {
+          "name": "land",
+          "anglesByName": {
+            "body": 18,
+            "head": 5,
+            "left_arm": 18,
+            "right_arm": 18,
+            "left_leg": 48,
+            "right_leg": 48
+          }
+        }
+      ]
+    },
+    {
+      "id": "punch",
+      "name": "Punch",
+      "category": "action",
+      "loop": false,
+      "frames": [
+        {
+          "name": "prepare",
+          "anglesByName": {
+            "body": -8,
+            "left_arm": 18,
+            "right_arm": -42,
+            "left_leg": -5,
+            "right_leg": 8
+          }
+        },
+        {
+          "name": "strike",
+          "anglesByName": {
+            "body": 7,
+            "left_arm": 8,
+            "right_arm": 72,
+            "left_leg": 2,
+            "right_leg": -4
+          }
+        },
+        {
+          "name": "follow-through",
+          "anglesByName": {
+            "body": 11,
+            "left_arm": 4,
+            "right_arm": 84,
+            "left_leg": 0,
+            "right_leg": -2
+          }
+        },
+        {
+          "name": "recover",
+          "anglesByName": {
+            "body": 0,
+            "left_arm": 0,
+            "right_arm": 0,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "kick",
+      "name": "Kick",
+      "category": "action",
+      "loop": false,
+      "frames": [
+        {
+          "name": "prepare",
+          "anglesByName": {
+            "body": -7,
+            "left_arm": -15,
+            "right_arm": 15,
+            "left_leg": -38,
+            "right_leg": 12
+          }
+        },
+        {
+          "name": "lift",
+          "anglesByName": {
+            "body": -4,
+            "left_arm": -18,
+            "right_arm": 18,
+            "left_leg": -18,
+            "right_leg": 22
+          }
+        },
+        {
+          "name": "strike",
+          "anglesByName": {
+            "body": 6,
+            "left_arm": -12,
+            "right_arm": 12,
+            "left_leg": 76,
+            "right_leg": -8
+          }
+        },
+        {
+          "name": "hold",
+          "anglesByName": {
+            "body": 5,
+            "left_arm": -8,
+            "right_arm": 8,
+            "left_leg": 70,
+            "right_leg": -6
+          }
+        },
+        {
+          "name": "recover",
+          "anglesByName": {
+            "body": 0,
+            "left_arm": 0,
+            "right_arm": 0,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "wave",
+      "name": "Wave",
+      "category": "gesture",
+      "loop": false,
+      "frames": [
+        {
+          "name": "raise",
+          "anglesByName": {
+            "body": -2,
+            "left_arm": -8,
+            "right_arm": -55
+          }
+        },
+        {
+          "name": "wave-left",
+          "anglesByName": {
+            "body": 0,
+            "left_arm": -8,
+            "right_arm": -78
+          }
+        },
+        {
+          "name": "wave-right",
+          "anglesByName": {
+            "body": 0,
+            "left_arm": -8,
+            "right_arm": -58
+          }
+        },
+        {
+          "name": "wave-left",
+          "anglesByName": {
+            "body": 0,
+            "left_arm": -8,
+            "right_arm": -78
+          }
+        },
+        {
+          "name": "lower",
+          "anglesByName": {
+            "body": 0,
+            "left_arm": 0,
+            "right_arm": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "hurt",
+      "name": "Hurt",
+      "category": "reaction",
+      "loop": false,
+      "frames": [
+        {
+          "name": "impact",
+          "anglesByName": {
+            "body": 18,
+            "head": 10,
+            "left_arm": 52,
+            "right_arm": -52,
+            "left_leg": 18,
+            "right_leg": -18
+          }
+        },
+        {
+          "name": "recoil",
+          "anglesByName": {
+            "body": 12,
+            "head": 6,
+            "left_arm": 38,
+            "right_arm": -38,
+            "left_leg": 10,
+            "right_leg": -10
+          }
+        },
+        {
+          "name": "recover",
+          "anglesByName": {
+            "body": 2,
+            "head": 0,
+            "left_arm": 8,
+            "right_arm": -8,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "win",
+      "name": "Win",
+      "category": "reaction",
+      "loop": false,
+      "frames": [
+        {
+          "name": "anticipate",
+          "anglesByName": {
+            "body": 5,
+            "head": -2,
+            "left_arm": 18,
+            "right_arm": -18,
+            "left_leg": -4,
+            "right_leg": 4
+          }
+        },
+        {
+          "name": "celebrate",
+          "anglesByName": {
+            "body": -8,
+            "head": -6,
+            "left_arm": -92,
+            "right_arm": 92,
+            "left_leg": -12,
+            "right_leg": 12
+          }
+        },
+        {
+          "name": "hold",
+          "anglesByName": {
+            "body": -5,
+            "head": -4,
+            "left_arm": -88,
+            "right_arm": 88,
+            "left_leg": -8,
+            "right_leg": 8
+          }
+        },
+        {
+          "name": "settle",
+          "anglesByName": {
+            "body": 0,
+            "head": 0,
+            "left_arm": 0,
+            "right_arm": 0,
+            "left_leg": 0,
+            "right_leg": 0
+          }
+        }
+      ]
+    }
+  ]
+}
