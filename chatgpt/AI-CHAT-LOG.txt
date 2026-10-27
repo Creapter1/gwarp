@@ -1942,3 +1942,65 @@ NEXT STEP / HANDOFF:
 CHAT HISTORY COMPLETENESS:
 COMPLETE FOR THIS TASK'S REQUEST; referenced prior conversation was read back and contained only a bounded preview of the earlier discussion.
 --- END SESSION START ---
+
+
+--- CLOSEOUT / HANDOFF MAINTENANCE ---
+UTC timestamp: 2026-10-27T06:35:03Z
+AI / agent / exact model identity: Codex / GPT-5
+Task ID / title: ANIM-P1 — verify and complete the shared AI handoff pointer
+Branch / starting commit: main / 77f749dd29c4a6f7dd025b530548a1e116322d2e
+
+USER REQUEST:
+The verbatim request is recorded in the session-start entry immediately above. In summary: inspect the live GitHub handoff/log state, verify the earlier ANIM-P1 progress and closeout, add a complete non-duplicated pointer and integration cautions to AI-TEAM.txt if missing, do not edit app.html or index.html, and read back the result.
+
+SCOPE COMPLETED:
+- Verified the prior ANIM-P1 CLAIMED/PROGRESS/DONE entries in AI-TEAM.txt.
+- Verified the prior detailed ANIM-P1 closeout and verification addendum in chatgpt/AI-CHAT-LOG.txt.
+- Verified the complete package at ai-team/shared/2026-10-27-chatgpt-ANIM-P1/ and its six files.
+- Added one discoverable "ANIM-P1 COMPLETE HANDOFF — FIND THIS FIRST" section before the AI-TEAM work log, covering package paths, evidence limits, integration ownership, easing/hold/playback cautions, Make costumes limits, stretch/follow-through constraints, name/ID safety, undo requirements and the no-live-app boundary.
+- Added one distinct DONE work-log line for this documentation-maintenance job. No duplicate prior ANIM-P1 completion line was added.
+- Kept app.html and index.html unchanged.
+
+FILES CHANGED:
+- AI-TEAM.txt — added the complete ANIM-P1 handoff pointer/cautions, plus this session's CLAIMED and DONE lines.
+- chatgpt/AI-CHAT-LOG.txt — appended this session's start and closeout records.
+- app.html — NOT CHANGED.
+- index.html — NOT CHANGED.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub readback of AI-TEAM.txt: PASS; handoff heading, package path, cautions, CLAIMED line and DONE line are present.
+- GitHub readback of chatgpt/AI-CHAT-LOG.txt: PASS; this session-start entry is present at the bottom before this closeout.
+- GitHub comparison main 77f749dd29c4a6f7dd025b530548a1e116322d2e -> handoff commit 8b2d6915fdc955be67dbd2959afe3121abda278e: exactly two changed paths, AI-TEAM.txt and chatgpt/AI-CHAT-LOG.txt; app.html/index.html absent.
+- Package readback: SPEC.md, NOTES.md, code/anim-motion.js, code/poses.json, preview.html and tests/anim-motion.test.js all present.
+- No new runtime or Node test was run because this was a documentation-only handoff update. Existing isolated evidence remains 23/23 helper assertions PASS; G-Warp runtime remains NOT-TESTED.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED / STATIC-ANALYSIS for documentation, package presence and changed-path verification.
+- NOT-TESTED for browser, Animation UI, solver, playback, Make costumes, save/load, .sb3/Scratch VM, performance and live integration.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Claude Opus is the only live app integrator; owner approval is required before live behavior/default changes.
+- Do not change the default easing selection or replace In-between, Smooth ×2 or Glide.
+- Re-read current app.html before using any older private animation anchor.
+- Helper math/data is not a complete feature; stretch/art transforms, playback, Make costumes, history, save/load and export require isolated QA.
+- Pose data contains angle offsets only; no stock character art.
+- Keep ANIM-P1 disconnected from app.html and index.html.
+
+BLOCKERS / UNCERTAINTIES:
+- Current private app.html animation solver/playback/Make-costumes anchors were not re-verified in the prior code-material session because the large source read returned empty.
+- Full G-Warp integration and runtime acceptance remain pending Claude/Freebuff and owner approval.
+
+NEXT STEP / HANDOFF:
+- Claude should review ai-team/shared/2026-10-27-chatgpt-ANIM-P1/, re-read the current app.html, run tests/anim-motion.test.js and isolated browser/QA acceptance, then decide integration scope with owner approval.
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS REQUEST; the referenced prior conversation was read back and contained only a bounded preview of the earlier discussion.
+
+GITHUB CLOSEOUT VERIFICATION:
+- Personal log session-start commit: 4e2b4787dfeb220c40515f86a81c4a2866134a78.
+- Handoff documentation commit: 8b2d6915fdc955be67dbd2959afe3121abda278e.
+- Personal log closeout commit SHA: to be recorded in the verification addendum after this append.
+- Read-back URL/path: chatgpt/AI-CHAT-LOG.txt
+- Verified current handoff and package readback before closeout: YES
+- Task status: DONE for documentation maintenance; G-Warp integration/runtime: NOT-TESTED.
+--- END CLOSEOUT ---
