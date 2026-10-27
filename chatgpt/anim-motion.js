@@ -64,6 +64,7 @@
     const f = frame && typeof frame === 'object' ? frame : { roots: {}, angles: {} };
     if (!f.roots || typeof f.roots !== 'object') f.roots = {};
     if (!f.angles || typeof f.angles !== 'object') f.angles = {};
+    if (!f.stretch || typeof f.stretch !== 'object') f.stretch = {};
     if (own(f, 'hold')) f.hold = holdTicks(f);
     if (own(f, 'easeToNext') && !CURVES.includes(f.easeToNext)) delete f.easeToNext;
     if (f.stretch && typeof f.stretch === 'object') {
