@@ -817,3 +817,21 @@ LAG (not fixed, owner said TODO only): measured - code area visible 20 ticks/s 2
 EVIDENCE: TESTED in scratch-vm; G-Warp measured (profiles). No app.html change.
 CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
 --- END ENTRY ---
+
+--- ENTRY 39 ---
+UTC timestamp: 2026-10-27T03:31Z (owner 23:31-23:35)   Who: Claude (configured claude-opus-5-5)   Task: VISITS counter + "people never find my site"
+USER REQUEST (verbatim): "emergency ting i have no clue how meny peaple visit my page so create a number to chec and see how meny peaple visit and active online ider the app or the web"
+  + "also the web colaps whit oder name the exist so peaple well never see me ho can i fix the up"
+DONE: gw-stats.js (shared, repo root): counts visits + people (one per browser) + online now (30 s heartbeat, tab visible) for the website
+  and the app, via a free Firebase Realtime Database over plain REST (no library). Numbers only: no names, IP, location, cookies. Only counts on
+  creapter1.github.io / gwarper.com (not tests, not downloaded copies). OFF until the owner pastes his database link (const DB in gw-stats.js).
+  stats.html = the numbers page (online now site/app, visits, people, refresh 10 s, tidies old sessions). ai-team/stats/database.rules.json =
+  rules (counters may only go +1, online entries only "now", nothing else writable). Script tag in index.html + 16 docs pages; app.html
+  Beta v15.58.0 adds <script id="gw-v1558-visits" src="gw-stats.js">.
+  Search: sitemap.xml (18 pages), index.html title "G-Warp - free block-coding game maker (Scratch-style...)" + canonical + og tags.
+  Web search "G-Warp" (2026-10-27): only other "warp" things, the site is not in Google yet -> owner steps: Google Search Console.
+TESTS: fake site + fake Firebase in Playwright: site visits 3, people 1, app opens 1, online site 3 / app 1 shown on stats.html, 0 errors.
+  Closing-tab DELETE not seen in the test browser (routing drops keepalive on close); sessions expire after 75 s anyway.
+  Regressions: same as expected list (anim 16/18 = 2 old checks), smoke ALL PASS.
+CHAT HISTORY COMPLETENESS: COMPLETE FOR THIS TASK
+--- END ENTRY ---

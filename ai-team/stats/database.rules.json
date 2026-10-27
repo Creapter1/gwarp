@@ -1,0 +1,21 @@
+{
+  "rules": {
+    "counts": {
+      ".read": true,
+      "$k": {
+        ".write": "$k === 'siteVisits' || $k === 'sitePeople' || $k === 'appVisits' || $k === 'appPeople'",
+        ".validate": "newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
+      }
+    },
+    "online": {
+      ".read": true,
+      "$where": {
+        ".indexOn": [".value"],
+        "$id": {
+          ".write": "($where === 'site' || $where === 'app') && $id.length <= 12",
+          ".validate": "newData.isNumber() && newData.val() === now"
+        }
+      }
+    }
+  }
+}

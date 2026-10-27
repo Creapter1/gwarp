@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>G-Warp Visitors</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<style>
+:root{color-scheme:dark;--bg:#0b0b14;--panel:#141425;--line:#2a2a48;--text:#ececf6;--muted:#a3a3c2;--violet:#8b5cf6;--wire:#4ade80}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;padding:32px 16px}
+.wrap{max-width:760px;margin:0 auto}
+h1{margin:0 0 4px;font-size:28px}
+p{color:var(--muted);margin:0 0 24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h2{margin:0 0 12px;font-size:15px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row b{font-size:30px;font-variant-numeric:tabular-nums}
+.live b{color:var(--wire)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--wire);margin-right:6px;box-shadow:0 0 8px var(--wire);animation:p 1.6s infinite}
+@keyframes p{50%{opacity:.35}}
+small{color:var(--muted)}
+.off{background:#2a1530;border:1px solid #7c3aed;border-radius:12px;padding:14px;margin-bottom:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>G-Warp visitors</h1>
+  <p>Updates every 10 seconds. Only numbers are stored - no names, no IP addresses, no locations.</p>
+  <div class="off" id="off" hidden>The counter is not switched on yet: the database link in <b>gw-stats.js</b> is empty.</div>
+  <div class="grid">
+    <div class="card live"><h2><span class="dot"></span>Online now</h2>
+      <div class="row"><span>Website</span><b id="onSite">-</b></div>
+      <div class="row"><span>App</span><b id="onApp">-</b></div></div>
+    <div class="card"><h2>Website</h2>
+      <div class="row"><span>Visits</span><b id="siteVisits">-</b></div>
+      <div class="row"><span>People</span><b id="sitePeople">-</b></div></div>
+    <div class="card"><h2>App</h2>
+      <div class="row"><span>Opens</span><b id="appVisits">-</b></div>
+      <div class="row"><span>People</span><b id="appPeople">-</b></div></div>
+  </div>
+  <p style="margin-top:18px"><small>Visits = every time a page opens. People = different browsers (one person on two computers counts twice).
+  Online now = a G-Warp tab open and on screen in the last minute. Last update: <span id="when">-</span></small></p>
+</div>
+<script src="gw-stats.js"></script>
+<script>
+const DB = window.GW_STATS_DB, $ = id => document.getElementById(id);
+const get = p => fetch(`${DB}/${p}.json`).then(r => r.json()).catch(() => null);
+async function online(where) {
+  const all = await get('online/' + where) || {}, now = Date.now(); let n = 0;
+  for (const [id, t] of Object.entries(all)) {
+    if (now - t < 75000) n++;
+    else if (now - t > 600000) fetch(`${DB}/online/${where}/${id}.json`, { method: 'DELETE' }).catch(() => {}); // tidy up old sessions
+  }
+  return n;
+}
+async function refresh() {
+  const c = await get('counts') || {};
+  for (const k of ['siteVisits', 'sitePeople', 'appVisits', 'appPeople']) $(k).textContent = (c[k] || 0).toLocaleString();
+  $('onSite').textContent = await online('site'); $('onApp').textContent = await online('app');
+  $('when').textContent = new Date().toLocaleTimeString();
+}
+if (!DB) $('off').hidden = false; else { refresh(); setInterval(refresh, 10000); }
+</script>
+</body>
+</html>
