@@ -1786,3 +1786,13 @@ NEXT STEP / HANDOFF:
 CHAT HISTORY COMPLETENESS:
 PARTIAL — includes the current request and clarification only.
 --- END ENTRY ---
+
+
+PROGRESS — ANIM-P1 CODE MATERIAL
+UTC timestamp: 2026-10-27T00:39:00.875Z
+- Confirmed the prior 2026-10-26 ANIM-P1 handoff was incomplete: its NOTES.md linked to SPEC/module/pose/preview paths that returned 404. Marked that old note archived and redirected it to the new complete package.
+- Updated chatgpt/anim-motion.js to helper v2. Corrected non-loop playback completion reporting (clock.done), numeric bone ID 0 / parent ID 0 handling, duplicate-name mapping, stretch map initialization, finite numeric clamping, and pose-application safety.
+- Isolated V8 execution of the helper and its 23 assertions: 23/23 PASS. JSON pose library parsed and required clip IDs/frame lengths checked. Also compiled helper/test/preview inline JavaScript without executing the preview in a browser.
+- New package read-back verified: SPEC.md, NOTES.md, code/anim-motion.js, code/poses.json, preview.html, tests/anim-motion.test.js. The package copy of the helper and JSON exactly matches the ChatGPT working copies. No external network reference in preview.
+- GitHub connector returned an empty body for app.html, so this session could not refresh current private Animation solver/playback anchors against Beta v15.57.0. Claude must re-read current source before integration.
+- NOT-TESTED in G-Warp: Node test file, browser preview, Animation UI, bone solver, actual playback/Make costumes, save/load, .sb3/Scratch VM compatibility, performance.
