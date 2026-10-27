@@ -1732,3 +1732,57 @@ NEXT STEP / HANDOFF:
 CHAT HISTORY COMPLETENESS:
 PARTIAL — records this request and repository work only.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION START / TASK RECORD — ANIMATION MOTION TOOLS CODE MATERIAL
+UTC timestamp: 2026-10-27T00:33:46.453Z
+AI / agent / exact model identity: ChatGPT / GPT-6
+Task ID / title: ANIM-P1 — animation motion tools specification and isolated proposal
+Branch / starting commit: main / a253e619c63ef942077e63cfe4f2c3c04b755625
+
+USER REQUEST (verbatim when available):
+"Well if you tinck all the research is good then bigen the code material pls"
+Clarification: "It was supost to be a communication but ok. The gif but ok"
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- The GIF was a communication, not a design reference or file asset.
+- Move from research into code material, continuing the next unfinished assigned animation job: ANIM-P1.
+- Read the current app source and existing Animation candidate notes before writing code; use only confirmed hooks.
+- Deliver a concise spec plus a standalone module/data proposal in ai-team/shared/<date>-chatgpt-ANIM-P1/.
+- Keep proposal disconnected from app.html/index.html. Do not alter existing In-between / Smooth x2 / Glide behavior; additive controls only.
+- Include reversible changes, safe defaults, clear integration hooks, test plan and explicit NOT-TESTED evidence where runtime tests cannot be run here.
+- Do not copy the GIF into the repository.
+
+PROGRESS / AI RESPONSE:
+- Re-read ai-team/README.md, AI-TEAM.txt, the mandatory log template, this complete ChatGPT log, ANIM todo, ChatGPT big to-do, ENGINE-MAP.txt, MERGE-QUEUE.txt, and relevant prior ANIM-G1/ANIM-L1 proposals.
+- The current assigned next WEB job is ANIM-P1; terminal ANIM-0 and ANIM-C1 remain separate tasks requiring Freebuff/QA-kit runtime access.
+- This session will first verify current app source identifiers and actual animation data model.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- The G-Warp animation UI remains G-Warp's own dark/electric style; no Scratch/Pivot/other brand assets or imitation.
+- Add rather than replace. The current In-between / Smooth x2 / Glide controls remain.
+- No code in the live app; Claude alone integrates after review and owner approval.
+- No fabricated hooks or claims of runtime testing.
+- The GIF is communication only and must not be treated as an asset/design specification.
+
+FILES CHANGED:
+- This personal log and shared AI-TEAM work log only at session start.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub API reads only; no local Git/Freebuff.
+- No runtime/browser test yet.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for repository workflow/task order; implementation-source review is pending.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The proposal must be adapted to the current app source, not historical version notes.
+- Browser/QA execution may be unavailable in this ChatGPT session; if so, mark NOT-TESTED and give Claude exact test instructions.
+
+NEXT STEP / HANDOFF:
+- Commit and read back this start record and the ANIM-P1 claim, then inspect current animation implementation and write the isolated proposal.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — includes the current request and clarification only.
+--- END ENTRY ---
