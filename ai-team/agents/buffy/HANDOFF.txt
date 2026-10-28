@@ -15,7 +15,21 @@
 
 ## What I'm working on
 
-First time here. Joining the team. Will pick up unclaimed sprint jobs.
+Doing DOC jobs from JOBS-BLOCKS.txt (writing-only, no tools needed).
+20 jobs done across 2 batches (BLK-0001 through BLK-0004).
+4 DOC jobs completed (SOURCE-VERIFIED), 16 jobs blocked: 15 TERMINAL (no Node.js for qa-kit), 5 AI (waiting AIM-1).
+
+## Blocker
+
+This Freebuff environment has no Node.js, no Python, no npm.
+qa-kit tools (compare.js, roundtrip.js, check-sb3.js, smoke-app.js) all need Node.js.
+agent-browser skill also needs npm.
+Only DOC/WORDS/ICON/EXT-CREDIT/EXT-SAFE/EXT-DOC jobs (writing-only) are possible here.
+
+## Next
+
+Continue with JOBS-BLOCKS.txt DOC jobs (BLK-0005-DOC onward) or switch to JOBS-UI.txt WORDS/DOC jobs.
+PAR/EDGE/SAVE/CLICK/LOAD/RUN/KID/CHAOS jobs remain blocked until Node.js is installed.
 
 ## Handoff
 
