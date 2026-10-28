@@ -46,16 +46,16 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [x] BLK-0008-SAVE [TERMINAL] "set x to (0)" (motion, stack, type set_x): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
 [>] BLK-0008-DOC [WEB] "set x to (0)" (motion, stack, type set_x): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [x] BLK-0008-AI [ANY] "set x to (0)" (motion, stack, type set_x): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
-[ ] BLK-0009-PAR [TERMINAL] "change y by (10)" (motion, stack, type change_y): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
-[ ] BLK-0009-EDGE [TERMINAL] "change y by (10)" (motion, stack, type change_y): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
-[ ] BLK-0009-SAVE [TERMINAL] "change y by (10)" (motion, stack, type change_y): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0009-DOC [WEB] "change y by (10)" (motion, stack, type change_y): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
-[ ] BLK-0009-AI [ANY] "change y by (10)" (motion, stack, type change_y): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
-[ ] BLK-0010-PAR [TERMINAL] "set y to (0)" (motion, stack, type set_y): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
-[ ] BLK-0010-EDGE [TERMINAL] "set y to (0)" (motion, stack, type set_y): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
-[ ] BLK-0010-SAVE [TERMINAL] "set y to (0)" (motion, stack, type set_y): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0010-DOC [WEB] "set y to (0)" (motion, stack, type set_y): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
-[ ] BLK-0010-AI [ANY] "set y to (0)" (motion, stack, type set_y): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
+[>] BLK-0009-PAR [TERMINAL] "change y by (10)" (motion, stack, type change_y): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
+[>] BLK-0009-EDGE [TERMINAL] "change y by (10)" (motion, stack, type change_y): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
+[>] BLK-0009-SAVE [TERMINAL] "change y by (10)" (motion, stack, type change_y): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
+[>] BLK-0009-DOC [WEB] "change y by (10)" (motion, stack, type change_y): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[>] BLK-0009-AI [ANY] "change y by (10)" (motion, stack, type change_y): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
+[>] BLK-0010-PAR [TERMINAL] "set y to (0)" (motion, stack, type set_y): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
+[>] BLK-0010-EDGE [TERMINAL] "set y to (0)" (motion, stack, type set_y): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
+[>] BLK-0010-SAVE [TERMINAL] "set y to (0)" (motion, stack, type set_y): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
+[>] BLK-0010-DOC [WEB] "set y to (0)" (motion, stack, type set_y): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[>] BLK-0010-AI [ANY] "set y to (0)" (motion, stack, type set_y): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0011-PAR [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0011-EDGE [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0011-SAVE [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
