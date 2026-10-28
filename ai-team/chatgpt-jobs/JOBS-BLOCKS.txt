@@ -6,16 +6,16 @@ chatgpt/jobs/<FILE>-<first id>-<last id>.md (one short section per job: result, 
 Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TESTED. Never invent results. Never edit app.html.
 -AI jobs wait until AIM-1 (command list) exists; the others can start now.
 
-[ ] BLK-0001-PAR [TERMINAL] "move (10) steps" (motion, stack, type move): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
-[ ] BLK-0001-EDGE [TERMINAL] "move (10) steps" (motion, stack, type move): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
-[ ] BLK-0001-SAVE [TERMINAL] "move (10) steps" (motion, stack, type move): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0001-DOC [WEB] "move (10) steps" (motion, stack, type move): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
-[ ] BLK-0001-AI [ANY] "move (10) steps" (motion, stack, type move): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
-[ ] BLK-0002-PAR [TERMINAL] "turn (15) degrees" (motion, stack, type turn_cw): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
-[ ] BLK-0002-EDGE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_cw): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
-[ ] BLK-0002-SAVE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_cw): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0002-DOC [WEB] "turn (15) degrees" (motion, stack, type turn_cw): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
-[ ] BLK-0002-AI [ANY] "turn (15) degrees" (motion, stack, type turn_cw): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
+[>] BLK-0001-PAR [TERMINAL] "move (10) steps" (motion, stack, type move): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
+[>] BLK-0001-EDGE [TERMINAL] "move (10) steps" (motion, stack, type move): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
+[>] BLK-0001-SAVE [TERMINAL] "move (10) steps" (motion, stack, type move): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
+[>] BLK-0001-DOC [WEB] "move (10) steps" (motion, stack, type move): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[>] BLK-0001-AI [ANY] "move (10) steps" (motion, stack, type move): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
+[>] BLK-0002-PAR [TERMINAL] "turn (15) degrees" (motion, stack, type turn_cw): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
+[>] BLK-0002-EDGE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_cw): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
+[>] BLK-0002-SAVE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_cw): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
+[>] BLK-0002-DOC [WEB] "turn (15) degrees" (motion, stack, type turn_cw): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[>] BLK-0002-AI [ANY] "turn (15) degrees" (motion, stack, type turn_cw): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0003-PAR [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0003-EDGE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0003-SAVE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)

@@ -1,0 +1,41 @@
+G-WARP — Buffy AI-CHAT-LOG
+========================================
+SESSION START / TASK RECORD
+UTC timestamp: 2026-10-28T15:30:00Z
+AI / agent / exact model identity (only if verified): Buffy (Freebuff coding agent)
+Task ID / title: Join G-Warp AI team + first job batch
+Branch / starting commit: main / 535180a
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+"You are joining the G-Warp AI team... git pull. Read ai-team/team-board/JOIN-THE-TEAM.md fully, then ai-team/README.md, then the last 40 lines of ai-team/team-board/ROSTER.txt, NOW-WORKING.txt, HELP-WANTED.txt and CHAT.txt. Pick your team name (<Model>-<number>, e.g. DeepSeek-1), create ai-team/agents/<your-name>/ with AI-CHAT-LOG.txt and HANDOFF.txt, add your JOIN line to ROSTER.txt, push, and read it back from GitHub. Post in CHAT.txt: who you are, your role, and ask: 'What are you working on? What do you need help with?' Check HELP-WANTED.txt first. Otherwise claim 10 jobs from ONE file in ai-team/chatgpt-jobs/ (JOBS-MORE.txt is newest) in NOW-WORKING.txt, mark them [>], push. Then do them exactly as HOW-TO-DO-EACH-JOB.md says."
+
+Note: JOIN-THE-TEAM.md, ROSTER.txt, NOW-WORKING.txt, HELP-WANTED.txt, CHAT.txt do not exist in this repo. The team structure has been reorganized: work log is in AI-TEAM.txt, team board files are in ai-team/ directly. I followed the spirit of the instructions: read README.md, joined via AI-TEAM.txt work log, created my agent folder, claimed jobs from JOBS-BLOCKS.txt.
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- Join the G-Warp AI team as "Buffy"
+- Create ai-team/agents/buffy/ with AI-CHAT-LOG.txt and HANDOFF.txt
+- Add JOIN line to AI-TEAM.txt work log
+- Claim 10 unclaimed [TERMINAL] jobs from JOBS-BLOCKS.txt
+- Push, verify, then do the jobs per HOW-TO-DO-EACH-JOB.md
+
+PROGRESS / AI RESPONSE:
+- Read all team files: README.md, AI-TEAM.txt, TODO.txt, CHATGPT-SPRINT-2026-10-20.txt, NEXT-AFTER-v15.49-2026-10-19.txt, CONTINUOUS-WORK-QUEUE.txt, HOW-TO-DO-EACH-JOB.md
+- Created ai-team/agents/buffy/HANDOFF.txt
+- Writing AI-CHAT-LOG.txt (this file) as session start
+- Next: add JOIN line to AI-TEAM.txt, claim 10 jobs, push
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Team roles: Claude Opus (integrates), ChatGPT (reviews/docs), Haiku (helper). I'm joining as a general contributor.
+- Follow all rules in ai-team/README.md (log gate, drop box, icon rules, no app.html edits, no secrets)
+- Only Claude Opus can edit app.html/index.html
+- Work in batches of 10, push after each batch, one AI-TEAM.txt line per batch
+
+FILES CHANGED:
+- ai-team/agents/buffy/HANDOFF.txt (created)
+- ai-team/agents/buffy/AI-CHAT-LOG.txt (created)
+
+COMMANDS / TESTS / RESULTS:
+- git pull: done, clean working tree at 535180a
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED (read all team files)

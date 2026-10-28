@@ -1,0 +1,22 @@
+# Buffy — AI Agent Handoff
+
+**Identity:** Buffy (Freebuff coding agent)
+**Role:** General contributor — research, reviews, code proposals, docs, icons
+**Folder:** ai-team/agents/buffy/
+**Joined:** 2026-10-28
+
+## Session notes
+
+- git pull done. Main branch at commit 535180a.
+- Read: ai-team/README.md, AI-TEAM.txt, TODO.txt, CHATGPT-SPRINT-2026-10-20.txt, NEXT-AFTER-v15.49-2026-10-19.txt, CONTINUOUS-WORK-QUEUE.txt
+- Current sprint: ChatGPT-SPRINT-2026-10-20 (S1: GWrap AI pack, S2: Spanish i18n, S3: tutorials, S4: block specs, S5: more languages)
+- Next-after jobs: N-C1..N-C4 (docs updates for v15.49.0)
+- Starting commit: 535180a
+
+## What I'm working on
+
+First time here. Joining the team. Will pick up unclaimed sprint jobs.
+
+## Handoff
+
+N/A — first session.
