@@ -56,16 +56,16 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [>] BLK-0010-SAVE [TERMINAL] "set y to (0)" (motion, stack, type set_y): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
 [x] BLK-0010-DOC [WEB] "set y to (0)" (motion, stack, type set_y): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [>] BLK-0010-AI [ANY] "set y to (0)" (motion, stack, type set_y): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
-[ ] BLK-0011-PAR [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
-[ ] BLK-0011-EDGE [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
-[ ] BLK-0011-SAVE [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0011-DOC [WEB] "if on edge, bounce" (motion, stack, type bounce): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
-[ ] BLK-0011-AI [ANY] "if on edge, bounce" (motion, stack, type bounce): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
-[ ] BLK-0012-PAR [TERMINAL] "set rotation style [left-right]" (motion, stack, type set_rotation_style): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
-[ ] BLK-0012-EDGE [TERMINAL] "set rotation style [left-right]" (motion, stack, type set_rotation_style): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
-[ ] BLK-0012-SAVE [TERMINAL] "set rotation style [left-right]" (motion, stack, type set_rotation_style): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0012-DOC [WEB] "set rotation style [left-right]" (motion, stack, type set_rotation_style): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
-[ ] BLK-0012-AI [ANY] "set rotation style [left-right]" (motion, stack, type set_rotation_style): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
+[>] BLK-0011-PAR [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
+[>] BLK-0011-EDGE [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
+[>] BLK-0011-SAVE [TERMINAL] "if on edge, bounce" (motion, stack, type bounce): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
+[>] BLK-0011-DOC [WEB] "if on edge, bounce" (motion, stack, type bounce): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[>] BLK-0011-AI [ANY] "if on edge, bounce" (motion, stack, type bounce): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
+[>] BLK-0012-PAR [TERMINAL] "set rotation style [left-right]" (motion, stack, type set_rotation_style): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
+[>] BLK-0012-EDGE [TERMINAL] "set rotation style [left-right]" (motion, stack, type set_rotation_style): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
+[>] BLK-0012-SAVE [TERMINAL] "set rotation style [left-right]" (motion, stack, type set_rotation_style): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
+[>] BLK-0012-DOC [WEB] "set rotation style [left-right]" (motion, stack, type set_rotation_style): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[>] BLK-0012-AI [ANY] "set rotation style [left-right]" (motion, stack, type set_rotation_style): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0013-PAR [TERMINAL] "glide (1) secs to x: (0) y: (0)" (motion, stack, type glide_xy): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0013-EDGE [TERMINAL] "glide (1) secs to x: (0) y: (0)" (motion, stack, type glide_xy): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0013-SAVE [TERMINAL] "glide (1) secs to x: (0) y: (0)" (motion, stack, type glide_xy): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
