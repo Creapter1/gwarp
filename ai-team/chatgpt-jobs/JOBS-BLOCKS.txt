@@ -16,16 +16,16 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [x] BLK-0002-SAVE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_cw): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
 [x] BLK-0002-DOC [WEB] "turn (15) degrees" (motion, stack, type turn_cw): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [x] BLK-0002-AI [ANY] "turn (15) degrees" (motion, stack, type turn_cw): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
-[ ] BLK-0003-PAR [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
-[ ] BLK-0003-EDGE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
-[ ] BLK-0003-SAVE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0003-DOC [WEB] "turn (15) degrees" (motion, stack, type turn_ccw): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
-[ ] BLK-0003-AI [ANY] "turn (15) degrees" (motion, stack, type turn_ccw): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
-[ ] BLK-0004-PAR [TERMINAL] "go to x: (0) y: (0)" (motion, stack, type goto_xy): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
-[ ] BLK-0004-EDGE [TERMINAL] "go to x: (0) y: (0)" (motion, stack, type goto_xy): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
-[ ] BLK-0004-SAVE [TERMINAL] "go to x: (0) y: (0)" (motion, stack, type goto_xy): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0004-DOC [WEB] "go to x: (0) y: (0)" (motion, stack, type goto_xy): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
-[ ] BLK-0004-AI [ANY] "go to x: (0) y: (0)" (motion, stack, type goto_xy): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
+[x] BLK-0003-PAR [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
+[x] BLK-0003-EDGE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
+[x] BLK-0003-SAVE [TERMINAL] "turn (15) degrees" (motion, stack, type turn_ccw): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
+[x] BLK-0003-DOC [WEB] "turn (15) degrees" (motion, stack, type turn_ccw): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0003-AI [ANY] "turn (15) degrees" (motion, stack, type turn_ccw): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
+[x] BLK-0004-PAR [TERMINAL] "go to x: (0) y: (0)" (motion, stack, type goto_xy): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
+[x] BLK-0004-EDGE [TERMINAL] "go to x: (0) y: (0)" (motion, stack, type goto_xy): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
+[x] BLK-0004-SAVE [TERMINAL] "go to x: (0) y: (0)" (motion, stack, type goto_xy): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
+[x] BLK-0004-DOC [WEB] "go to x: (0) y: (0)" (motion, stack, type goto_xy): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0004-AI [ANY] "go to x: (0) y: (0)" (motion, stack, type goto_xy): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0005-PAR [TERMINAL] "go to [random position]" (motion, stack, type goto_target): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0005-EDGE [TERMINAL] "go to [random position]" (motion, stack, type goto_target): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0005-SAVE [TERMINAL] "go to [random position]" (motion, stack, type goto_target): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
