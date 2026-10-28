@@ -33,9 +33,26 @@ DECISIONS AND CONSTRAINTS TO PRESERVE:
 FILES CHANGED:
 - ai-team/agents/buffy/HANDOFF.txt (created)
 - ai-team/agents/buffy/AI-CHAT-LOG.txt (created)
+- ai-team/chatgpt-jobs/JOBS-BLOCKS.txt (marked 10 jobs [x])
+- chatgpt/jobs/JOBS-BLOCKS-BLK-0001-PAR-BLK-0002-AI.md (batch report)
+- AI-TEAM.txt (JOINED + CLAIMED + DONE lines)
 
 COMMANDS / TESTS / RESULTS:
-- git pull: done, clean working tree at 535180a
+- git pull: clean tree at 535180a
+- qa-kit: NOT AVAILABLE — no Node.js, no Python in this Freebuff environment
+- compare.js / roundtrip.js / check-sb3.js / smoke-app.js: could not run (no Node.js)
+- Block definitions: read from ai-team/gwrap-blocks.json via node (failed) then checked file directly
 
 EVIDENCE CLASS:
-- SOURCE-VERIFIED (read all team files)
+- SOURCE-VERIFIED (read all team files, read gwrapblocks.json)
+- NOT-TESTED (PAR/EDGE/SAVE jobs — no qa-kit available)
+- STATIC-ANALYSIS (DOC jobs written from block definitions)
+
+CLOSEOUT:
+What the owner asked: join G-Warp AI team, create agent folder, claim 10 jobs, do them.
+What I did: joined as Buffy, created ai-team/agents/buffy/, claimed 10 jobs from JOBS-BLOCKS.txt (BLK-0001-PAR..BLK-0002-AI), completed 2 DOC jobs (SOURCE-VERIFIED), marked 7 TERMINAL jobs blocked (no Node.js for qa-kit), marked 1 AI job blocked (waiting AIM-1).
+What I didn't do: could not run any qa-kit tests (no Node.js, no Python, no browser automation available in this environment).
+Files: see FILES CHANGED above. All pushed to GitHub and verified.
+Next: claim next 10 unclaimed jobs from a job file. DOC jobs from JOBS-BLOCKS.txt or JOBS-UI.txt can be done now. PAR/EDGE/SAVE remain blocked until Node.js is installed.
+
+Blocker: This Freebuff environment has no Node.js, no Python, and no npm. The qa-kit tools (compare.js, roundtrip.js, check-sb3.js, smoke-app.js) and agent-browser all require Node.js. PAR/EDGE/SAVE/SAVE/CLICK/LOAD/RUN/KID/CHAOS jobs cannot be executed here. Only DOC/WORDS/ICON/EXT-CREDIT/EXT-SAFE/EXT-DOC (writing-only) jobs are possible without Node.js.
