@@ -1,0 +1,268 @@
+=====================================================================
+ G-WARP AI TEAM  -  WHO IS WHO + WORK LOG
+ EVERY AI MUST READ THIS FILE FIRST, BEFORE STARTING ANY WORK.
+=====================================================================
+
+>>> 2026-10-26: ALL RULES ARE NOW IN ONE FILE: ai-team/README.md  (read it first; it wins if something below is older).
+    Team now: Claude Opus (claude/, integrates) + ChatGPT (chatgpt/) + Claude Haiku helper (claude/haiku/).
+    Gemini, Grok, DeepSeek are retired: their folders moved to ai-team/archive/ (nothing deleted). team/ is now ai-team/.
+    Finished art/code for the app goes in the drop box ai-team/shared/. The WORK LOG below is still where every AI adds one line per job.
+
+AI CHAT-CONTEXT PRESERVATION RULE (2026-10-17) — REQUIRED FOR EVERY AI
+- Every active AI must keep a chronological conversation/context log inside its OWN folder named <ai-folder>/AI-CHAT-LOG.txt (for example, chatgpt/AI-CHAT-LOG.txt, gemini/AI-CHAT-LOG.txt, grok/AI-CHAT-LOG.txt). The former deepseek/AI-CHAT-LOG.txt path is historical only; DeepSeek is no longer an active role.
+- For each task/session, append the user's request accurately and the AI's response/handoff. Include date, task, files changed, evidence/test status, unresolved questions, and exact next step.
+- Preserve decisions, constraints, corrections, and explicit prohibitions. Keep direct user wording separate from AI summaries. Never invent missing chat history or claim an incomplete transcript is complete.
+- If the platform may truncate/delete history, update the log before ending the session. Read your own log before continuing an existing task.
+- Never log passwords, API keys, tokens, private keys, personal secrets, or unnecessary sensitive data. Redact secrets. Keep logs focused on project work.
+- If original chat is unavailable, write ORIGINAL CHAT NOT AVAILABLE and only summarize supported facts; ask the owner rather than guessing.
+- Use team/AI-CHAT-LOG-TEMPLATE.txt. This rule does not grant cross-folder editing, live integration, testing authority, or release permission.
+
+ZERO-EXCEPTION AI SESSION LOGGING GATE — OWNER-MANDATED, CRITICAL
+Effective: 2026-10-24T15:15:03Z
+THIS RULE OVERRIDES ANY CONVENIENCE, TIME LIMIT, TASK PRIORITY, OR AI ROLE.
+- EVERY AI/agent/model that reads, plans, reviews, researches, edits, tests, commits, or hands off ANY G-Warp work MUST maintain its own <ai-folder>/AI-CHAT-LOG.txt. This includes Claude, ChatGPT, Grok, Gemini, replacement/future AIs, temporary agents and delegated subagents. No exceptions for short sessions, reviews, "small" changes, failed attempts, or work with no files changed.
+- Before doing ANY project work: read AI-TEAM.txt, the shared template, and your OWN complete current log. If your own log is missing, create it from the template BEFORE doing the task. Never start unlogged.
+- At session start, append an entry recording the actual owner request (verbatim when available), task ID, your verified identity/model, and the starting commit/branch. Claim the task in the shared WORK LOG as separately required.
+- During work, append progress when scope/decisions change, files are changed, tests run/fail, blockers appear, or a handoff/context switch is about to happen. Do not wait until the end of a long session.
+- BEFORE ending, pausing, switching models/agents, handing off, or declaring any task status, append a complete closeout: what the owner asked; what you actually did and did not do; decisions/prohibitions; every changed path; commands/tests and exact results; evidence class; blockers/unknowns; exact next action; and completeness status. Record NONE where applicable. PARTIAL is not DONE.
+- Timestamp standard: UTC ISO-8601 with seconds and Z, e.g. 2026-10-24T15:15:03Z. Use the actual current time; never guess or backdate. If exact time is unavailable, write TIME NOT AVAILABLE and explain. Optional local time may be added separately with an explicit IANA timezone. Do not mix date-only, local-naive, and UTC timestamps in new entries.
+- Preserve original historical timestamps exactly. Never silently normalize, invent, or backfill unknown times. Mark TIME NOT RECORDED / ORIGINAL CHAT NOT AVAILABLE where appropriate. Clearly label reconstructed summaries and their supporting source; never fabricate user quotes, AI replies, tests, or completed work.
+- Before saying the log is updated, read the committed file back from GitHub and verify the new entry is present, complete, and at the bottom. Record the resulting commit SHA in the closeout when available. A local edit or attempted upload is NOT proof of a saved log.
+- HARD STOP: If you cannot read or write your own log, cannot verify the upload, or cannot establish the required context, STOP all G-Warp work. Do not edit code, test, commit, integrate, or hand off as if work can continue. Tell the owner exactly what failed and what is needed. Resume only after logging is restored.
+- Never overwrite prior entries, delete history, or edit another AI's personal log. Append only to your own log. Keep secrets redacted. The shared template is mandatory; extra fields are allowed, required fields may not be omitted.
+- A task is NOT DONE until its own log closeout is committed and read-back verified. The shared AI-TEAM WORK LOG does not replace the personal conversation log; both must be maintained.
+
+THE TEAM
+- Owner: Creapter1 (the boss - decides priorities, design picks, merges and releases).
+- ChatGPT  | Independent reviewer / planner / test designer / evidence reconciler | folder: chatgpt/ | list: team/TODO-CHATGPT.txt | queue: team/CONTINUOUS-WORK-QUEUE.txt
+- Grok     | Scratch behavior specifications, expected-result tests and extension audit | folder: grok/ | list: team/TODO-GROK.txt
+- Gemini 2 (FreeBuff/Argon access path) | Combined role: original G-Warp visuals + browser extension + lab research, A/B/C candidates, test harnesses and reports formerly assigned to DeepSeek | one active folder: gemini/ | list: team/TODO-GEMINI.txt
+- DeepSeek | RETIRED from active work on 2026-10-18. Its old outputs are preserved as legacy material under gemini/lab/; old work-log entries are historical, not current assignments.
+- Claude Opus 5.5 | Integration lead + official runtime/visual evidence owner. Reviews all AI work, assigns bounded revisions/assets, integrates approved candidates, captures screenshots, and prepares releases. Must verify active model identity and follow owner approval gates.
+
+START HERE: team/WORKFLOW-START-HERE.txt, then TODO.txt and team/CONTINUOUS-WORK-QUEUE.txt. Read ENGINE-MAP.txt before code proposals and check MERGE-QUEUE.txt before duplicating work. Contributor task lists and handoff notes are stored under team/.
+
+NEW AI JOINING? Do this:
+1. Read AI-TEAM.txt, then TODO.txt (rules!), then your own list if you have one.
+2. Add yourself under THE TEAM: name | role | folder | list.
+   Pick a NEW folder with your name. Current active contributors must use their designated folder; Gemini now owns the consolidated gemini/ workspace.
+3. Write a "JOINED" line in the WORK LOG below.
+4. Only take jobs nobody has CLAIMED (see rules).
+
+THE MAGIC WORD: "continue"
+When the owner just says "continue" (and nothing else), it means:
+  1. Re-read AI-TEAM.txt (work log), TODO.txt and your own list on GitHub.
+  2. See what you last CLAIMED. If it isn't DONE, keep working on it.
+     If it is DONE, CLAIM the next free job and start it.
+  3. Reply first with one short line, e.g. "Got it, checking the to-do
+     list... continuing with <job>." Then do the work.
+  4. Don't ask the owner what to do, the files tell you. Only ask if
+     something is truly unclear or would break a rule.
+  5. If time remains after your task, claim the next suitable unclaimed task
+     from team/CONTINUOUS-WORK-QUEUE.txt. Never invent busywork.
+
+WHEN YOUR ASSIGNED LIST IS EMPTY
+Do not stop just because your first task is done if session time remains. Check team/CONTINUOUS-WORK-QUEUE.txt and team/FUTURE-IDEAS.txt, then claim the next unclaimed, in-scope task matching your role. Review other AI work when assigned, but report findings instead of editing their folders. Make A/B/C variants only when explicitly requested. Claude Opus 5.5 alone handles official connected-runtime comparison/integration after model verification and owner authorization.
+TOPICS (most important first; 60 FPS is an aspiration, not a guarantee):
+  1. Scratch 3 behavior parity, including procedures/custom blocks, argument,
+     recursion, variable scope, waits/yields, clones, events and save/load.
+  2. Performance: target 60 FPS or better on representative projects and
+     hardware when feasible; benchmark before/after instead of promising every
+     heavy project will reach 60 FPS. Focus on script throughput, rendering,
+     clones, collision, pen, lists, sounds and large costumes.
+  3. A clean, simple primary UI; fix usability/blocking issues before adding clutter.
+  4. Costumes / paint editor and costume animation.
+  5. Original G-Warp visuals, icons, music and learning ideas.
+  6. GWrap AI knowledge and safe in-app assistance.
+The owner tests everything with screenshots, slowly, one by one.
+If it works and runs properly, that's what matters.
+
+GWRAP AI (the built-in assistant) - knowledge it needs
+GWrap AI is an ASSISTANT inside the app, NOT a free-roaming autonomous AI.
+It only helps with G-Warp: understanding the user's project, blocks,
+sprites, costumes, sounds, extensions, fixing bugs, explaining ideas, and
+doing what the user asks inside the app. Nothing beyond that.
+Any AI can research and write its knowledge: how to read a project
+(project.json), recognise every block and what it does, common bugs and
+fixes, game recipes (platformer, shooter, clicker...), and safe answers
+for kids. Put it in <your folder>/AI-KNOWLEDGE-<topic>.txt.
+Never let it: send data without permission, run JavaScript blocks, act
+outside G-Warp, or pretend to be a person.
+
+CROSS-REVIEW RULE
+Every AI may inspect and review any other AI's submitted work for bugs, missing requirements, unsafe assumptions, incomplete testing, and improvement ideas. Do not edit another AI's folder or silently rewrite their files. Submit a review with severity, exact file/function, evidence class, minimum correction, and acceptance test. The original author revises their own proposal; ChatGPT maintains the independent review ledger; Claude owns official integration evidence after model verification. A review is not permission to activate code.
+
+TEAM RULES (to stop two AIs making the same thing)
+1. CLAIM BEFORE YOU START: before working on a job, add a line to the
+   WORK LOG:   CLAIMED | <your name> | <job>
+   If someone already CLAIMED that job and it isn't DONE, pick another one.
+2. When finished, add:  DONE | <your name> | <job> | <files you made>
+3. If you find another AI already made the same thing, DON'T redo it.
+   Write: REVIEWED | <your name> | <job> | <what could be better>
+4. Only ever ADD lines at the bottom of the WORK LOG. Never delete or
+   change another AI's lines.
+5. Keep proposals in your own folder by default. If explicitly assigned to place code in app.html/index.html, add only a uniquely marked, inert, non-executing proposal block; never connect it to live behavior. If safe inert placement is uncertain, keep the full candidate in your own folder. Never touch another AI's folder.
+6. All rules in TODO.txt still apply (same same but different, theirs is
+   theirs, safety first, no cats).
+7. READ ENGINE-MAP.txt BEFORE WRITING CODE. G-Warp is NOT scratch-vm:
+   no window.vm, no runtime.sequencer. Code must use window.Engine and
+   the GW_ names in ENGINE-MAP.txt, or say "UNSURE:".
+8. NO PLACEHOLDERS: don't hand in empty/placeholder files or tiny stubs
+   and call them DONE. If something is missing, log it as PARTIAL, not DONE.
+9. GIT COMMIT MESSAGES must start with your name: "Grok: ...", "ChatGPT: ...". When preserving inherited lab work, say so explicitly, e.g. "Gemini (inherited lab): ..."; do not imply the original author committed it.
+10. WORK LOG lines go at the very BOTTOM, in time order. Use only:
+   JOINED, CLAIMED, PROGRESS, PARTIAL, DONE, REVIEWED, UNCLAIMED, NEW ROLE.
+11. Don't commit junk files (.claude/, node_modules/, .DS_Store,
+   scratch files). Only your folder + the shared .txt files.
+12. Every code file needs a matching NOTES-<name>.txt or LAB-<name>.txt
+   saying: what it does, where it plugs in, how to test it.
+13. FOLLOW STYLE-GUIDE.txt: work goes INTO G-Warp's existing screens -
+   never build a separate app/editor with its own name. Use G-Warp's
+   dark electric colours.
+14. NO OTHER PEOPLE'S CHARACTERS OR BRANDS - not even for testing:
+   no Mario/Nintendo, Sonic, Pokemon, Minecraft, Disney, Scratch Cat...
+   Use G-Spark or invented characters.
+
+ANIM-P1 COMPLETE HANDOFF — FIND THIS FIRST (2026-10-27)
+- Complete package: `ai-team/shared/2026-10-27-chatgpt-ANIM-P1/`
+  - `SPEC.md` — feature contract and acceptance requirements.
+  - `NOTES.md` — integration handoff, evidence, limits and required QA.
+  - `code/anim-motion.js` — isolated pure motion-data/math helper v2.
+  - `code/poses.json` — rig-independent angle-offset pose data only; no art, SVG, bitmap or rig IDs.
+  - `preview.html` — disconnected concept preview.
+  - `tests/anim-motion.test.js` — supplied Node/QA test file.
+- The older `ai-team/shared/2026-10-26-chatgpt-ANIM-P1/` note is archived/superseded; use the 2026-10-27 package above.
+- Evidence already verified: isolated helper assertions 23/23 PASS; pose JSON parse/required clip checks PASS; helper, test and preview-script compilation checks PASS. This is source/static evidence only: G-Warp browser/runtime, Animation UI, solver, playback, Make costumes, save/load, .sb3/Scratch VM, performance and the supplied Node test file remain NOT-TESTED.
+- Integration ownership: Claude Opus is the live integrator. Re-read the current `app.html` before using any older private function/anchor; the previous handoff could not re-verify current solver/playback/Make-costumes anchors because the large source read returned empty.
+- Preserve existing In-between, Smooth ×2 and Glide. Easing is an option; do not change the default selection without Creapter1's approval. Missing legacy easing metadata must fall back at read time, not be silently written into old frames.
+- The helper is not a complete feature: connect easing, hold timing and `clock.done` to the verified editor timer; reset playback on Play/scrub/frame/loop/Stop; test exact 1–4 tick holds and non-loop completion.
+- `makeCostumePlan()` is only a plan. Actual repeated costumes require stale-output cleanup, order/naming checks, 240-output confirmation, 960-output hard-limit handling, .sb3 save/reopen and Scratch compatibility tests.
+- Stretch values are only data (60–140%); solver integration must preserve local-axis scaling, joints, child offsets, attached artwork, siblings and rest lengths. Follow-through is optional/off by default and must resolve to a derived pose without mutating authored frames.
+- Mirror, copy/paste and library pose mapping use normalized unique bone names; missing/duplicate names skip safely, numeric ID 0 is valid, and each editor mutation needs one verified Animation undo snapshot. No stock character art.
+- Keep all package files disconnected from `app.html` and `index.html` until source re-check, isolated tests, browser/QA acceptance and owner approval.
+
+=====================================================================
+ WORK LOG  (newest at the bottom - format: DATE | WHAT | WHO | JOB | FILES)
+=====================================================================
+2026-10-13 | DONE    | Claude  | website + Beta (v15.45.0) | index.html, app.html
+2026-10-13 | DONE    | Claude  | team setup | TODO.txt, TODO-GROK.txt, AI-TEAM.txt
+2026-10-13 | CLAIMED | ChatGPT | TODO.txt NOW 1 (freeze fixes) + NOW 2 (#scratch link)
+2026-10-13 | CLAIMED | Grok    | TODO-GROK.txt G1-G5 (Scratch spec, tests, formats, extension check)
+2026-10-13 | CLAIMED | Claude  | final merge of v15.46 + browser extension (after the others hand in)
+2026-10-13 | PROGRESS| Grok    | G1 Scratch specs | SPEC-motion, SPEC-operators, SPEC-variables-lists, SPEC-control, SPEC-looks, SPEC-events, SPEC-sensing (still need sound, myblocks, pen, music)
+2026-10-13 | DONE    | Grok    | G1 Scratch behaviour specs (all 11 categories) | grok/SPEC-motion.txt, SPEC-looks.txt, SPEC-sound.txt, SPEC-events.txt, SPEC-control.txt, SPEC-sensing.txt, SPEC-operators.txt, SPEC-variables-lists.txt, SPEC-myblocks.txt, SPEC-pen.txt, SPEC-music.txt
+2026-10-13 | JOINED  | DeepSeek | researcher, no GitHub (owner hands work over)
+2026-10-13 | CLAIMED | DeepSeek | TODO.txt NOW 5 (.pmp files open)
+2026-10-13 | JOINED  | Gemini   | researcher, no GitHub (owner hands work over)
+2026-10-13 | DONE    | Gemini   | first draft of the browser extension (saved by Claude; needs fixes)
+2026-10-13 | CLAIMED | Gemini   | TODO.txt NOW 3 (browser extension, fixed version)
+2026-10-13 | DONE    | Gemini   | TODO.txt NOW 3 (browser extension, fixed) | gemini/extension/ (files saved to GitHub by Grok on owner handoff; Claude still needs to test + merge; PNG icons via make-icons.js; gspark.svg is a placeholder bolt)
+2026-10-13 | DONE    | DeepSeek | TODO.txt NOW 5 research (partial) | deepseek/NOTES-pmp.txt, deepseek/test-pmp-loader.js (pmp-loader.js MISSING from paste — see deepseek/MISSING-pmp-loader.txt; Claude does not merge until loader arrives)
+2026-10-13 | UNCLAIMED| Gemini  | TODO.txt NOW 3 (browser extension) - free for another AI; Claude will finish it if nobody takes it
+2026-10-13 | NEW ROLE | Gemini  | icons + pictures (3 SVG options each) -> TODO-GEMINI.txt
+2026-10-13 | NEW ROLE | DeepSeek | lab scientist: 3+ versions (A/B/C) per job -> TODO-DEEPSEEK.txt
+2026-10-13 | CLAIMED | Grok    | TODO-GROK.txt G2 (TESTS.txt 60+ Scratch edge-case scripts)
+2026-10-13 | DONE    | Grok    | TODO-GROK.txt G2 | grok/TESTS.txt (75 cases T001-T075)
+2026-10-13 | DONE    | Grok    | TODO-GROK.txt G3 | grok/SPEC-engine.txt
+2026-10-13 | DONE    | DeepSeek | 3-code tester: SPEED (60 FPS) | deepseek/speed-collision-A/B/C.js, speed-clones-A/B/C.js, speed-pen-A/B/C.js, LAB-speed.txt (saved by Grok; Claude must test before merge; recommended combo collision-B + clones-C + pen-A)
+2026-10-13 | REVIEWED | Claude  | team check: app.html/index.html untouched (good); folders respected (good); Grok's specs+tests good. Problems: DeepSeek speed code targets window.vm/runtime.sequencer which G-Warp doesn't have (won't run) -> added ENGINE-MAP.txt + rule 7; pmp-loader.js still missing; Gemini gspark.svg is a placeholder; ChatGPT nothing handed in yet. New rules 7-12 + .gitignore.
+2026-10-13 | UNCLAIMED| DeepSeek | speed A/B/C must be REDONE against window.Engine (see ENGINE-MAP.txt) - DeepSeek's job
+2026-10-13 | DONE    | DeepSeek | speed A/B/C REDONE for window.Engine + pmp-loader.js | deepseek/speed-*-[ABC].js, pmp-loader.js, LAB-speed.txt (saved by Claude; MISSING-pmp-loader.txt removed)
+2026-10-13 | REVIEWED | Claude  | v3: collision A/B/C now hook the REAL function -> usable, B is the pick. Clones A/B/C: ScriptThread.blocks is the whole script (never empty) so "empty stack" never happens -> they skip nothing; also invisible clones still have to run their scripts. Better idea: skip threads that are waiting (waitUntil). Real ScriptThread fields added to ENGINE-MAP.txt.
+2026-10-13 | DONE    | Grok    | TODO-GROK.txt G4 | grok/SPEC-files.txt
+2026-10-13 | DONE    | DeepSeek | speed v3 (real names: GW.spritesTouch, ScriptThread.step) + protobuf-only pmp-loader | deepseek/speed-collision-[ABC].js, speed-clones-[ABC].js, pmp-loader.js, LAB-speed.txt (pen files removed: no pen API) - saved by Claude
+2026-10-13 | REVIEWED | Claude  | v3: collision A/B/C now hook the REAL function -> usable, B is the pick. Clones A/B/C: ScriptThread.blocks is the whole script (never empty) so "empty stack" never happens -> they skip nothing; also invisible clones still have to run their scripts. Better idea: skip threads that are waiting (waitUntil). Real ScriptThread fields added to ENGINE-MAP.txt.
+2026-10-13 | CLAIMED | ChatGPT | URGENT U1 (UI 1-to-1 research) - assigned by owner
+2026-10-13 | CLAIMED | DeepSeek | URGENT U2 (costume / paint editor fixes) - assigned by owner
+2026-10-13 | CLAIMED | Claude  | URGENT U3 (bug hunt, clean-up, merge, next Beta)
+2026-10-13 | DONE    | DeepSeek | URGENT U2 costume editor A/B/C (select, fill, text, eraser, undo) + checklist | deepseek/costume-*-[ABC].js, LAB-costumes.txt, CHECKLIST-costumes.txt (saved by Claude)
+2026-10-13 | REVIEWED | Claude  | U2: big, careful work; all 15 files pass a syntax check; research + 40-point checklist are useful. But it guesses state.mode / fillColor / eraserSize / font - real fields are costumeMode, svgTool, bitmapTool, selectedSvg (added to ENGINE-MAP.txt). Claude will adapt the picks (select-C, fill-C, text-B, eraser-C, undo-C) when merging.
+2026-10-13 | DONE    | ChatGPT | URGENT U1 UI behavior audit (static source audit; browser verification left for U3) | chatgpt/UI-AUDIT.txt
+2026-10-13 | REVIEWED | Claude  | tidy-up: ChatGPT's clone-safety.js + scratch-link.js pass syntax check and use real names (good); UI-AUDIT is thorough. Added MERGE-QUEUE.txt (what's ready / reference / superseded), [~] status in TODO.txt, marked U2 done.
+2026-10-13 | DONE    | Claude  | docs: README.md expanded (features, files, team, roadmap, bug reports, credits) + STYLE-GUIDE.txt + rules 13-14 (no separate apps; no Mario/Nintendo or other brands/characters, even for tests)
+2026-10-13 | DONE    | ChatGPT | Screenshot/UI behavior documentation + complete user guide + two schematic diagrams + docs index (not browser screenshots) | chatgpt/SCREENSHOT-UI-DOCUMENTATION.md, chatgpt/USER-GUIDE.txt, chatgpt/images/*.svg, chatgpt/README.md
+2026-10-13 | DONE    | Claude  | ChatGPT's request: live UI verification - 11 real screenshots (docs/screens/), 10 live tests all PASS, report docs/LIVE-UI-VERIFICATION.txt, real screenshots added to chatgpt/SCREENSHOT-UI-DOCUMENTATION.md. UI-AUDIT #1 (category single click) NOT confirmed - it works live.
+2026-10-13 | DONE    | ChatGPT | organized docs: central index, reconciled live evidence, fixed stale category audit, user guide/navigation cleanup; Cloud AI note marked superseded | docs/README.md, README.md, chatgpt/README.md, chatgpt/README.txt, chatgpt/SCREENSHOT-UI-DOCUMENTATION.md, chatgpt/USER-GUIDE.txt, chatgpt/UI-AUDIT.txt, chatgpt/CLOUD-AI-LIVE-VERIFICATION-NOTE.txt
+2026-10-13 | DONE    | ChatGPT | rechecked documentation goal; added beginner learn-by-doing guide and deep Scratch/G-Warp engineering reference, reorganized central index, linked detailed guides to both paths; Scratch architecture references checked | docs/LEARNING-GUIDE.md, docs/ENGINEERING-REFERENCE.md, docs/README.md, chatgpt/USER-GUIDE.txt, chatgpt/SCREENSHOT-UI-DOCUMENTATION.md
+2026-10-13 | DONE    | ChatGPT | added three explanatory SVG diagrams and embedded them in beginner guide, engineering reference, and docs index | docs/images/gwarp-editor-map.svg, docs/images/gwarp-blocks-explained.svg, docs/images/gwarp-scratch-architecture.svg
+2026-10-13 | DONE    | ChatGPT | embedded SVG illustrations inline inside the learning guide, engineering reference, central index, detailed user manual, and UI documentation (not merely linked as separate files) | docs/LEARNING-GUIDE.md, docs/ENGINEERING-REFERENCE.md, docs/README.md, chatgpt/USER-GUIDE.txt, chatgpt/SCREENSHOT-UI-DOCUMENTATION.md
+2026-10-13 | CLAIMED | ChatGPT | documentation gap audit: expand research and engineering library | docs/RESEARCH-LIBRARY.md, docs/RUNTIME-SEMANTICS-AND-PARITY.md, docs/PROJECT-FORMATS-AND-ROUNDTRIP.md, docs/EXTENSIONS-SECURITY-MODEL.md, docs/COMPATIBILITY-TEST-MATRIX.md, docs/EDITOR-ENGINEERING-PLAYBOOK.md
+2026-10-13 | DONE | ChatGPT | documentation gap audit: expanded source-linked research, runtime semantics, file formats, extension security, editor design and compatibility verification; added embedded diagrams and updated main documentation navigation | docs/README.md, README.md, chatgpt/README.md, docs/*.md, docs/images/compatibility-test-pipeline.svg, docs/images/extension-risk-boundaries.svg
+2026-10-13 | REVIEWED | ChatGPT | corrected documentation direction: removed generic research/checklist documents and replaced the main reference with a source-grounded G-Warp implementation map and application diagrams | docs/ENGINEERING-REFERENCE.md, docs/README.md, README.md, chatgpt/README.md, docs/images/gwarp-app-internals.svg, docs/images/scratch-to-gwarp-map.svg
+2026-10-14 | DONE | ChatGPT | master AI workflow plan, clarified roles/model gate, and moved task/handoff files under team/; app.html/index.html untouched | team/AI-WORK-PLAN.txt, team/README.txt, team/TODO-GROK.txt, team/TODO-GEMINI.txt, team/TODO-DEEPSEEK.txt, team/CLOUD-AI-OPUS-5.5-HANDOFF.txt
+2026-10-14 | DONE | ChatGPT | added universal dormant-code proposal rule, Claude-only connection/visual comparison workflow, and owner-controlled future ideas parking lot | team/AI-WORK-PLAN.txt, team/CLOUD-AI-OPUS-5.5-HANDOFF.txt, team/FUTURE-IDEAS.txt
+2026-10-15 | NEW ROLE | ChatGPT | standing independent reviewer of every AI's deliverables; maintain review ledger and issue bounded fixes/tests | team/TODO-CHATGPT.txt, team/CROSS-AI-REVIEW-2026-10-15.txt
+2026-10-15 | DONE | ChatGPT | first-pass static cross-AI audit; identified costume API/canvas risks, clone-safety validation needs, incomplete PMP assets/fixtures, Grok semantic uncertainty and Gemini packaging/browser gaps | team/CROSS-AI-REVIEW-2026-10-15.txt
+2026-10-15 | DONE | ChatGPT | created continuous bounded task queue, added cross-review duties to all contributor task lists, and defined Claude integration/evidence-owner mode | team/CONTINUOUS-WORK-QUEUE.txt, team/AI-WORK-PLAN.txt, team/TODO-GROK.txt, team/TODO-DEEPSEEK.txt, team/TODO-GEMINI.txt
+2026-10-15 | PARTIAL | ChatGPT | security-pattern scan + consistency audit; no matching hard-coded patterns found in current scanned files; history not scanned; canonical website URL awaiting owner | team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt, team/CROSS-AI-REVIEW-2026-10-15.txt, team/FUTURE-IDEAS.txt, TODO.txt, README.md
+2026-10-16 | REVIEWED | ChatGPT | main-branch integration/status audit: app.html/index.html blob SHAs unchanged from prior baseline; no new app integration detected; clone/scratch-link candidates remain disconnected; Gemini extension is separate prototype with packaging/browser-test blockers; old candidate branches are diverged | team/INTEGRATION-STATUS-AUDIT-2026-10-16.txt
+2026-10-16 | REVIEWED | ChatGPT | Gemini-only static review: current main has no newer Gemini branch/commit; extension is separate from G-Warp runtime; PNG icons missing; SPA wrapper, privacy copy, storage errors, URL confirmation and browser/end-to-end tests remain | team/GEMINI-ONLY-REVIEW-2026-10-16.txt
+2026-10-17 | RULE ADDED | ChatGPT | Added mandatory per-AI AI-CHAT-LOG.txt request/response preservation rule; transcript must not fabricate missing history or store secrets | team/AI-CHAT-LOG-TEMPLATE.txt
+2026-10-17 | RULE ADDED | ChatGPT | Required per-AI AI-CHAT-LOG.txt to preserve user requests and AI responses when chat history is truncated; template created | team/AI-CHAT-LOG-TEMPLATE.txt
+2026-10-17 | PLAN    | Claude  | read-only check: app.html/index.html unchanged since Beta v15.45.0; plan written -> team/CLAUDE-PLAN-2026-10-17.txt (waiting for owner's go)
+2026-10-18 | DONE | ChatGPT | Simplified repository workflow routing; restored/verified AI-TEAM log, created single entry-point guide, superseded prior Claude plan, and started duplicate-document cleanup | team/WORKFLOW-START-HERE.txt
+2026-10-18 | DONE | ChatGPT | Completed workflow cleanup: canonical workflow/status/checkpoint, shorter roadmap/queue, archived duplicate snapshots and old Claude instructions, removed duplicate ChatGPT README; app.html/index.html unchanged and no runtime tests | team/WORKFLOW-START-HERE.txt; team/AI-STATUS.txt
+2026-10-18 | PROGRESS | Claude | P0 clone freeze reproduced + fixed in a v15.46.0 candidate (not uploaded); zombie.sb3 tested; report team/P0-CLONE-FREEZE-REPORT.txt; checkpoint updated
+2026-10-18 | DONE    | Claude | v15.46.0 candidate: chaos test ALL PASS, regression 432/438 (6 = title-only checks) | claude/app-v15.46.0-candidate.html (waiting for owner OK before replacing app.html)
+2026-10-18 | RELEASED | Claude | Beta v15.46.0 -> app.html (owner said push): freeze fixes (O(1) clone count, 5000 ceiling for infinite clones, frame budget, watchdog with 6 s start grace, text/list caps, crash recovery), faster sound restarts + computed menus, new More -> Report a bug (opens a pre-filled GitHub issue the user sends; errors kept locally only). Tests: chaos ALL PASS, bug report ALL PASS, regression 432/438 (6 title-only)
+2026-10-18 | RELEASED | Claude | Beta v15.46.1: faster "item # of" (2x, same answers in 13,200 random checks); key tests pass; speed plan team/SPEED-PLAN.txt (statement cache -> compiler next)
+2026-10-18 | MERGED  | Claude | chatgpt/scratch-link.js into app.html (Beta v15.46.1): #scratch=<id> asks, then loads; Cancel/bad id do nothing (test_4611 ALL PASS). Gemini's extension link target now works.
+2026-10-18 | ASSIGNED | Claude | jobs for every AI -> team/ASSIGNMENTS-2026-10-19.txt (Grok GR1-2, DeepSeek DS6-7, Gemini GM7-8, ChatGPT CG1-3, Claude CL1-3)
+2026-10-18 | RELEASED | Claude | Beta v15.46.2: skip inaudible sound restarts (<30 ms); key tests pass. Found zombie game runs 3.2M if/else + 3.2M start sound in 15 s -> compiler (CL1) is the real fix, see team/SPEED-PLAN.txt
+2026-10-18 | RELEASED | Claude | Beta v15.46.3 COSTUMES: Paint new makes a vector costume (was bitmap, Scratch makes vector); vector RESHAPE + ERASER work (were 'coming soon') - claude/vectools4630.js, built on DeepSeek's checklist/lab. Costume checklist test claude/tests/test_cos.js 20/20 PASS + old costume tests 3300/3700/3900/4000/2400 PASS
+2026-10-18 | RELEASED | Claude | Beta v15.46.4 POWER LINES (owner's animation idea): while a project runs, ghosted electric wires show broadcast -> when I receive (green) and My Block -> define (violet), sparks travel on each message, start blocks get a sparking pole, broadcasts heard by other sprites name them; switch in More -> Settings. Drawn outside the code canvas (no cache churn), clicks pass through, Stop clears it. claude/powerlines4640.js; test claude/tests/test_4640.js ALL PASS; cos/4600/4601/4611/4700 still ALL PASS; zombie FPS unchanged (layout cost ~0.6 ms per half second)
+2026-10-18 | PROGRESS | ChatGPT | CG2 initial static review of Claude's speed/compiler plan; confirmed clone-safety candidate already marked SUPERSEDED; statement-cache/compiler code not yet present in inspected history | chatgpt/COMPILER-REVIEW-2026-10-18.txt
+2026-10-18 | RELEASED | Claude | Beta v15.47.0 COSTUME ANIMATION (owner's focus): Flipbook in the Costumes tab (Onion skin: costume before violet / after green behind the drawing, lined up by rotation centre, vector+bitmap, never saved; Play: flips the costumes, FPS/loop/range). Animation tab (bones) + Animation blocks out of Developer-mode preview, for everyone; G-Spark opens with ready-made bones + walk/wave; costumes made from an animation follow its changes (rev stamp), rename renames costumes + block menus, <- -> and Space keys. claude/flipbook4700.js; test claude/tests/test_cosanim.js 27/27 PASS; cos/4600/4601/4611/4700/4640 still ALL PASS; old anim tests only differ where the button/blocks are now shown to everyone (intended)
+2026-10-18 | ASSIGNED | Claude | costume-animation jobs -> team/ASSIGNMENTS-ANIMATION-2026-10-18.txt (Grok GA1-2, DeepSeek DA1-3, Gemini GA-M1-2, ChatGPT CA1-3, Claude CL4-6); TODO-<AI>.txt headers point there first
+2026-10-18 | SETUP | Claude | owner's 5 test projects packed for the team (each with SUMMARY.txt, SCRIPTS.txt = every script as text, v15.47.0 baseline) for the PRIVATE repo Creapter1/gwarp-test-projects (owner creates it, Claude uploads). Rule 7 in TODO.txt: never copy them into public places. Baselines: grass 60 FPS, space game 60 FPS, plaing game 51 FPS, zombie 2 FPS (speed target), The worst day 23 FPS / 10 s load; found: 'item # of' and '<' marked unsupported in The worst day (to fix). claude/tests/smoke.js = the baseline runner
+2026-10-18 | NEW ROLE | Gemini 2 (FreeBuff/Argon) | inherits all active DeepSeek lab/research/A-B-C/test-harness duties; one unified workspace gemini/; DeepSeek role retired by owner | team/TODO-GEMINI.txt; gemini/lab/
+2026-10-18 | DONE | ChatGPT | owner-directed Gemini/DeepSeek role consolidation; migrated 28 legacy lab files to gemini/lab/, retired active DeepSeek routing, preserved owner wording + clone provenance review, added performance benchmark protocol; app.html/index.html untouched, no runtime tests | team/TEAM-REASSIGNMENT-2026-10-18.txt; team/TODO-GEMINI.txt; team/PERFORMANCE-BENCHMARK-PLAN.txt; chatgpt/MERGE-QUEUE-NOTES.txt; gemini/lab/
+2026-10-19 | REVIEWED | Claude | Grok GA1 (20/20 PASS in G-Warp), GA2 (accepted), GR1/GR2 (26/30 first run: 3 real G-Warp bugs fixed, T043 is wrong - repeat uses Math.round, see claude/REVIEW-GROK-2026-10-19.txt). Runners: claude/tests/test_grok_anim.js, test_grok_fixtures.js (CL3 done)
+2026-10-19 | RELEASED | Claude | Beta v15.48.0 COSTUME EDITOR EMERGENCY FIX (owner: letters and shapes jump; no Scratch handles): new Select tool with 8 handles + rotate (claude/transform4800.js), nothing jumps (text, shapes, brush, imported costumes, after flip/rotate), multi-select, group/ungroup, Paint new fits the stage-size area and its drawing, costumes grow instead of cutting drawings off, Convert to Bitmap keeps size, Bitmap Select moves/resizes pixels (no dashed lines saved), circle reshape no longer tears, brush/eraser never drag shapes. Found by a QA agent run (report: scratchpad costume-qa/REPORT.txt), verified by claude/tests/test_select.js (all pass) + old costume tests. Also speed: zombie test game 2 -> 58 FPS (is-sound-playing with a joined name was lost on import -> endless loop), The worst day 23 -> 37 FPS; set drag mode + Clones+ touching-clone-with-var blocks; Scratch parity fixes for letter of / list positions / number display
+2026-10-19 | UPDATED | Claude | Beta v15.48.0 (same version): a shape just drawn with Rectangle/Circle/Line keeps its handles like Scratch (resize it right away). Owner out of usage -> other AIs: check team/NEXT-FOR-THE-TEAM-2026-10-19.txt
+2026-10-19 | TESTED | Claude | full regression of Beta v15.48.0: 429 PASS, 9 FAIL - all expected (old version-number checks, Animation now shown to everyone, Reshape/Eraser now enabled). No new problems.
+2026-10-19 | ASSIGNED | Claude | Gemini 3 (Argon) big list: 7 picture jobs, 8 lab jobs (3 versions each), 3 writing jobs -> team/GEMINI-BIG-LIST-2026-10-19.txt
+2026-10-19 | REVIEWED | ChatGPT | repository-wide source/tree verification: role migration and 28-file move confirmed (25 blobs unchanged, 3 docs intentionally updated); current Beta v15.48.0 regression is Claude-reported 429 PASS / 9 expected FAIL; Grok corrected T043 in fixtures.json but source map and 60+10 runner integration remain open; Gemini 2/3 Argon label mismatch logged; no runtime test by ChatGPT | chatgpt/VERIFICATION-2026-10-19.txt; chatgpt/MERGE-QUEUE-NOTES.txt; team/AI-STATUS.txt
+2026-10-19 | REVIEWED | ChatGPT | follow-up verification: Grok corrected T043 in fixtures.json (60 base cases), but source map still says 2 iterations and current 60+10 list runner is not wired; Claude logs full v15.48.0 regression 429 PASS / 9 expected FAIL; reconciled Gemini Big List vs older animation tasks to prevent duplicates; flagged Gemini 2/3 name and canonical URL conflicts; no runtime test by ChatGPT | chatgpt/VERIFICATION-2026-10-19.txt; team/TODO-GEMINI.txt; team/AI-STATUS.txt
+2026-10-19 | REVIEWED | ChatGPT | final consistency pass: current app/index hashes unchanged by ChatGPT; 28 legacy DeepSeek files preserved under gemini/lab/ (25 byte-identical, 3 documented edits); Grok T043 corrected in 60-case JSON but source map stale and T130-T139 not wired into current runner; Gemini Big List mapped to older overlapping assignments; name/URL conflicts documented; runtime tests not run by ChatGPT | chatgpt/VERIFICATION-2026-10-19.txt; team/TODO-GEMINI.txt; team/AI-STATUS.txt
+2026-10-19 | ASSIGNED | Claude | ChatGPT: website update + full documentation (14 docs pages) -> team/CHATGPT-WEBSITE-DOCS-2026-10-19.txt
+2026-10-19 | ChatGPT WEBSITE/DOCS PASS 1
+- Added 14 responsive documentation pages under docs/ and linked the docs home from index.html. Homepage now has a Beta v15.48.0 highlights section and 10 FAQ cards.
+- Added chatgpt/WEBSITE-OPEN-QUESTIONS.txt to keep unverified current-app behavior, canonical URL, offline/privacy claims, shortcut details and credits scope explicit.
+- Files: index.html; docs/index.html, start.html, blocks.html, costumes.html, animation.html, sounds.html, extensions.html, safety.html, credits.html, scratch.html, troubleshoot.html, shortcuts.html, changelog.html, team.html; chatgpt/WEBSITE-OPEN-QUESTIONS.txt; chatgpt/AI-CHAT-LOG.txt.
+- Evidence: static GitHub file/link check only. No browser/runtime/published-site test. app.html untouched. Do not mark the full website assignment complete until link check and live-site review are done.
+2026-10-19 | ASSIGNED | Claude -> Grok | big job list team/GROK-BIG-LIST-2026-10-19.txt (R0-R8 fixtures, S1-S4 specs, V1-V2 reviews)
+2026-10-18 | PARTIAL | ChatGPT | website/docs pass 2: filled seven missing feature cards, removed stale fixed extension count, improved Stage/backdrop, comments/Bug Hunter, clone-safety/recovery and Look-like-Scratch docs; current-main static link check 0 missing local targets; confirmed root MIT LICENSE. No app.html edit and no browser/published-site test; extension count/native catalog and four Animation block names remain unverified | index.html; docs/start.html; docs/blocks.html; docs/troubleshoot.html; docs/scratch.html; chatgpt/WEBSITE-OPEN-QUESTIONS.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-19 | ASSIGNED | Claude -> ChatGPT round 2 (tutorials, glossary, parents, blocks upgrade, README, a11y) + Grok extra (review tutorials)
+2026-10-18 | PARTIAL | ChatGPT | website/docs pass 3 continued: added three start actions and five missing v15.46–v15.48 highlight cards; removed stale extension-count infographic, softened unverified parity/safety claims, expanded Power lines/Paint new docs, split changelog by release, and added AI-tool/MIT credits. Rechecked all 15 public HTML pages: 339 local href/src references, zero missing file targets; all eight new card target anchors exist. No browser/live-site/mobile verification; count, screenshot freshness and four Animation block names remain pending | index.html; docs/blocks.html; docs/costumes.html; docs/changelog.html; docs/credits.html; chatgpt/WEBSITE-OPEN-QUESTIONS.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-19 | ASSIGNED | Claude -> Gemini | MELODY job M1-M2 (top priority), owner says all modes sound the same
+2026-10-18 | PARTIAL CONTENT / STATIC CHECKS | ChatGPT | Round 2 D1–D6: added eight tutorials plus hub, 65-term glossary, parent/teacher privacy/classroom guide, 100+ block-reference examples, concise README, and visible keyboard-focus styling across 25 documentation pages. Static scan found 0 missing local href/src targets, duplicate IDs, heading-level skips, or missing image alt attributes (no inline images). Browser, screen-reader, runtime, exact palette-label, extension inventory and published-site claims remain unverified; Claude owns the browser/mobile pass. app.html unchanged | docs/tutorials/*.html; docs/glossary.html; docs/parents.html; docs/blocks.html; docs/index.html; README.md; remaining docs HTML; chatgpt/WEBSITE-OPEN-QUESTIONS.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-18 | PARTIAL / STATIC REVIEW | ChatGPT | Completed costume-animation review tasks CA1–CA3: added “Animate your costumes” to chatgpt/USER-GUIDE.txt; created chatgpt/REVIEW-costume-animation.txt with 14 untested coverage cases based on claude/tests/test_cosanim.js; created chatgpt/UX-costume-animation.txt with 10 ranked UX recommendations and source links. No Playwright run, no app execution, and no edits to app.html or Claude's test file | chatgpt/USER-GUIDE.txt; chatgpt/REVIEW-costume-animation.txt; chatgpt/UX-costume-animation.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-19 | PARTIAL REVIEW / DOCS | ChatGPT | CG1–CG3: updated chatgpt/USER-GUIDE.txt with bug-report, clone-cap, stuck-project and #scratch= steps; created chatgpt/COMPILER-REVIEW-2026-10-19.txt identifying no new statement-cache/compiler implementation and the GW.__wsEpoch + fixture coverage acceptance risks; appended queue refresh recommendations to chatgpt/MERGE-QUEUE-NOTES.txt without editing Claude-owned MERGE-QUEUE.txt. Static only; no app/test code edits or browser run. Next C1 Gemini costume-candidate review | chatgpt/USER-GUIDE.txt; chatgpt/COMPILER-REVIEW-2026-10-19.txt; chatgpt/MERGE-QUEUE-NOTES.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-19 | PARTIAL / STATIC REVIEW | ChatGPT | C1: created chatgpt/REVIEW-GEMINI-COSTUME-CANDIDATES-2026-10-19.txt; all five inherited costume candidates blocked/high risk pending corrected v15.48 API mapping, canvas-scoped events, model persistence and undo tests. Did not edit gemini/lab/ or app.html. Next C2 clone-safety static review | chatgpt/REVIEW-GEMINI-COSTUME-CANDIDATES-2026-10-19.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-19 | PARTIAL / STATIC REVIEW | ChatGPT | C2: created chatgpt/REVIEW-clone-safety-2026-10-19.txt with side-effect analysis and P0/P1 regression checklist. Candidate chatgpt/clone-safety.js remains SUPERSEDED per current queue; no revival, no code/app edits, no tests run. Findings include absent 5,000 ceiling in Infinite Clones, Stop-thread ordering risk, native counter-cache bookkeeping divergence, and project clone-limit compatibility risk | chatgpt/REVIEW-clone-safety-2026-10-19.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-19 | PARTIAL / STATIC REVIEW | ChatGPT | C3: created chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt. App hash handler already integrated; extension still has package icon, preference sync, SPA/history cleanup, origin-validation, privacy wording and browser matrix open. No app/Gemini edits and no tests run. Next C4 Grok test expected-result evidence review | chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-19 | CLAIMED | ChatGPT | C4 review Grok TESTS.txt expected results and primary-source requirements
+2026-10-19 | DONE | ChatGPT | C4 static review -> chatgpt/REVIEW-GROK-EXPECTED-RESULTS-2026-10-19.txt (commit dc28e2df1b18927d1c1d2a9c448a98ff6f9b0ad9); Scratch editor VM source cross-checked at scratchfoundation/scratch-editor commit 585b1c3877943b31ac273b3d056ccb79db13aa41; T043 is still wrong in Grok TESTS.txt, T017 has invalid random-test logic, and UI/G-Warp-only cases need evidence/scope cleanup; no runtime test performed
+2026-10-19 | CLAIMED | ChatGPT | C5 review gemini/lab/pmp-loader.js and test-pmp-loader.js (read-only; verify parser API, legal real fixture/assets, and test limits)
+2026-10-19 | CLAIMED | ChatGPT | C5 review inherited protobuf .pmp loader/test harness (read-only)
+2026-10-19 | DONE | ChatGPT | C5 static review -> chatgpt/REVIEW-PMP-PROTOBUF-LOADER-2026-10-19.txt (commit 61011ebf5ff473c23d0c1f8e6cd582c5b3f19094); current upstream pmp-protobuf API cross-checked at commit 84176d56c2b5bdebce8150a6bf9fefcac59fc1af; real protobuf fixture/assets and browser import remain untested, empty assets Map blocks full media load; Gemini files/app untouched
+2026-10-19 | CLAIMED | ChatGPT | C7 concise owner report for C1-C5 review cycle; keep all runtime/integration work out of scope
+2026-10-19 | CLAIMED | ChatGPT | C7 concise owner handoff report for the C1-C5 review cycle
+2026-10-19 | DONE | ChatGPT | C7 owner report -> chatgpt/OWNER-REVIEW-STATUS-2026-10-19.txt (commit 6bf076af44099ec43579e191831a46c1e8c310a8); summarizes blocked/superseded candidate status, required Grok/Gemini/Claude actions and owner website-URL decision; no runtime test or integration
+2026-10-19 | CLAIMED | ChatGPT | C8 audit user-owned AI key handling / exact project context and reconcile stale TODO statuses
+2026-10-19 | DONE | ChatGPT | C8 static security audit -> chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt (commit f1265a8582f51a6049a323614f2ab9b7166b6a87); existing security audit addendum commit cd95b4b41563f3ecab1ec199f83663047daa4a21; root TODO updated to distinguish feature source presence from privacy/model acceptance and historical 59 case results from current 60+10; no browser/API/history scan or app edit
+2026-10-19 | DONE | ChatGPT | C8 follow-up consistency check: corrected stale task routing in team/TODO-CHATGPT.txt (commit cc01d8d15b27053569219478f071ce1bec7a20f4); website/docs, CA1-CA3, and CG1-CG3 are prior delivered outputs, not current work; C6 ledger duty continues | team/TODO-CHATGPT.txt; chatgpt/AI-CHAT-LOG.txt
+2026-10-19 | ASSIGNED | Claude -> Grok | BIG LIST 2 team/GROK-BIG-LIST-2-2026-10-19.txt (K0 fix TESTS T043/T017, K1-K4 cast+compiler+runner+design, K5 app bug hunt, K6-K7 coverage, K8-K10 music data + reviews, K11-K12 extension specs)
+2026-10-19 | ASSIGNED | Claude -> Gemini | 35-min SPRINT team/GEMINI-SPRINT-2026-10-19.txt (melody engine first, then rig characters, flipbook sprites, easing, backdrops, empty states, touching bench)
+2026-10-19 | DONE | ChatGPT | C9 static review of Gemini animation/lab batch b05973868839921586c844a93c4e1546c75c1c5c -> chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt; current M1 paths/pivots.json absent, generic-root self-parent risk and incomplete assertions identified; no Node/browser test or app edit; C6 ledger updated.
+2026-10-28 | JOINED  | Buffy   | general contributor (ai-team/agents/buffy/) | ai-team/agents/buffy/HANDOFF.txt, AI-CHAT-LOG.txt
+2026-10-28 | CLAIMED | Buffy   | BLK-0001-PAR..BLK-0002-AI (10 jobs from JOBS-BLOCKS.txt) | ai-team/chatgpt-jobs/JOBS-BLOCKS.txt
+2026-10-28 | DONE    | Buffy   | BLK-0001-PAR..BLK-0002-AI (10 jobs) | chatgpt/jobs/JOBS-BLOCKS-BLK-0001-PAR-BLK-0002-AI.md | 2 DOC done (SOURCE-VERIFIED), 7 TERMINAL blocked (no Node.js), 1 AI blocked (waiting AIM-1); NOT-TESTED for PAR/EDGE/SAVE
+2026-10-28 | DONE    | Buffy   | BLK-0003-PAR..BLK-0004-AI (10 jobs) | chatgpt/jobs/JOBS-BLOCKS-BLK-0003-PAR-BLK-0004-AI.md | 2 DOC done (SOURCE-VERIFIED), 7 TERMINAL blocked (no Node.js), 1 AI blocked (waiting AIM-1); NOT-TESTED for PAR/EDGE/SAVE
+2026-10-28 | CLAIMED | Buffy   | BLK-0005-PAR..BLK-0006-AI (10 jobs from JOBS-BLOCKS.txt) | ai-team/chatgpt-jobs/JOBS-BLOCKS.txt
+2026-10-28 | DONE    | Buffy   | BLK-0005-PAR..BLK-0006-AI (10 jobs) | chatgpt/jobs/JOBS-BLOCKS-BLK-0005-PAR-BLK-0006-AI.md | 1 DOC done (SOURCE-VERIFIED), 1 TERMINAL blocked (no Node.js), 1 AI blocked (waiting AIM-1); NOT-TESTED for PAR/EDGE/SAVE
+2026-10-28 | CLAIMED | Buffy   | BLK-0007-PAR..BLK-0008-AI (10 jobs from JOBS-BLOCKS.txt) | ai-team/chatgpt-jobs/JOBS-BLOCKS.txt
+2026-10-28 | DONE    | Buffy   | BLK-0007-PAR..BLK-0008-AI (10 jobs) | chatgpt/jobs/JOBS-BLOCKS-BLK-0007-PAR-BLK-0008-AI.md | 2 DOC done (SOURCE-VERIFIED), 7 TERMINAL blocked (no Node.js), 1 AI blocked (waiting AIM-1); NOT-TESTED for PAR/EDGE/SAVE
+2026-10-19 | RELEASED | Claude | Beta v15.49.0 COSTUME TABS + TEAM MERGE
+=====================================================================

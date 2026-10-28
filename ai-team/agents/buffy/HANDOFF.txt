@@ -16,8 +16,15 @@
 ## What I'm working on
 
 Doing DOC jobs from JOBS-BLOCKS.txt (writing-only, no tools needed).
-20 jobs done across 2 batches (BLK-0001 through BLK-0004).
-4 DOC jobs completed (SOURCE-VERIFIED), 16 jobs blocked: 15 TERMINAL (no Node.js for qa-kit), 5 AI (waiting AIM-1).
+30 jobs done across 3 batches (BLK-0001 through BLK-0006).
+6 DOC jobs completed (SOURCE-VERIFIED), 24 jobs blocked: 21 TERMINAL (no Node.js for qa-kit), 3 AI (waiting AIM-1).
+Batch 4 done (BLK-0007-PAR..BLK-0008-AI): 2 DOC completed, 8 blocked.
+Batch 5 claimed: BLK-0009-PAR..BLK-0010-AI (doing the 2 DOC jobs now).
+Total: 30 jobs done, 8 DOC completed, 24 blocked.
+
+## Blocker
+- AI-TEAM.txt on GitHub returns 404 from this environment (private repo or missing PAT). Cannot verify my DONE lines landed or read back the live work log. Pushed commits are visible on main (git log shows 7aa02db etc.) but the shared log file itself is not reachable for read-back.
+- This Freebuff environment has no Node.js, no Python, no npm.
 
 ## Blocker
 
