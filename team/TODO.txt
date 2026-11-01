@@ -1,0 +1,5 @@
+G-WARP TO-DO - MOVED (2026-11-01)
+The one and only to-do list is now: AI-TEAM-TODO.md (repo root).
+All rules: team/ai-team/README.md. Work log: AI-TEAM.txt.
+The old long version of this file is kept in team/ai-team/archive/old-plans/TODO-root-2026-10-27.txt.
+This short file stays only so old links to TODO.txt still work.

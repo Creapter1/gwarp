@@ -1,0 +1,75 @@
+>>> RETIRED 2026-10-26 (owner: can no longer run this AI - not because of bad work). Every open job moved to ChatGPT: team/CHATGPT-TODO-2026-10-26.txt. Team: team/TEAM-2026-10-26.md <<<
+>>> NEW 2026-10-20: team/GEMINI-WEBSITE-2026-10-20.txt (website makeover) - after the click modules G-C1..G-C5 <<<
+>>> NOW 2026-10-20: team/GEMINI-SPRINT-2026-10-20.txt (click modules first, then block switching, costume library, tutorial covers, themes) <<<
+>>> FIRST 2026-10-19: team/GEMINI-CLICKS-2026-10-19.txt (12 missing click/right-click features as modules), THEN the GWrap AI 300 job <<<
+>>> MOVED 2026-10-19 evening: the GWrap AI 300 job went to ChatGPT (team/CHATGPT-HEAVY-2026-10-19.txt). Gemini: do the click modules (GEMINI-CLICKS) <<<
+>>> NEXT 2026-10-19 (after v15.49.0): team/NEXT-AFTER-v15.49-2026-10-19.txt - Gemini section <<<
+>>> SPRINT 2026-10-19 (35 min): team/GEMINI-SPRINT-2026-10-19.txt - melody engine first <<<
+>>> TOP PRIORITY 2026-10-19: team/GEMINI-MELODY-2026-10-19.txt (melody engine) <<<
+BIG LIST (2026-10-19, owner: "give Gemini 3 Argon stuff to work on, don't hold back"): do team/GEMINI-BIG-LIST-2026-10-19.txt top to bottom (priority line at the end).
+
+G-WARP GEMINI 2 — COMBINED TEAM TASKS
+Owner: Creapter1
+Active role confirmed: 2026-10-18. Gemini inherits all active work formerly assigned to DeepSeek.
+One active work folder: gemini/. Put all new Gemini deliverables, lab candidates, harnesses and notes there.
+Read first: ../team/AI-TEAM.txt, ../team/TODO.txt, AI-WORK-PLAN.txt, CONTINUOUS-WORK-QUEUE.txt, ENGINE-MAP.txt as relevant, and the assignment document for your active task.
+
+ROLE
+- Original G-Warp visuals/icons and character art (old Gemini role).
+- Browser extension prototype packaging and compatibility (old Gemini role).
+- Research, A/B/C implementation candidates, lab reports, test harnesses and project-format research formerly assigned to DeepSeek.
+- Cross-review work when explicitly assigned; report findings without editing other contributor folders.
+- Never edit app.html/index.html unless Claude has verified the allowed integration role and the owner explicitly authorizes the exact change. Keep candidates disconnected from live runtime.
+
+PRIOR ASSIGNMENT IDS — CROSS-REFERENCES, NOT A SECOND WORK QUEUE
+The current priority order is in team/GEMINI-BIG-LIST-2026-10-19.txt. Follow that file from top to bottom and its explicit PRIORITY line. The earlier assignment sheets below remain useful for technical details, but overlapping jobs are absorbed by the Big List. Do not create duplicate outputs for the same deliverable.
+The Big List's website header repeats the previously documented GitHub Pages URL. TODO.txt still marks the canonical URL as pending owner confirmation. Do not treat that heading as approval to replace links or extension targets; use an owner-confirmed URL before changing targets.
+
+OVERLAP MAP (make one combined deliverable, not duplicate variants):
+- Big List G1 absorbs GA-M1 and expands it to include select handles, group/ungroup, flip horizontal/vertical and bitmap-select icons.
+- Big List G3 absorbs GA-M2 (Volt robot, lightning bug and battery buddy, each with separate riggable parts and pivot points).
+- Big List L1 absorbs GL1 / old DA1 (easing options + visual lab).
+- Big List L2 absorbs GL2 / old DA2 (auto-rig options tested on the G3 characters).
+- Big List L3 absorbs GL3 / old DA3 (Make Costumes speed options and measured timing).
+IDs DA1–DA3 and DS6–DS7 are historical identifiers only; DeepSeek is not an active role.
+
+AFTER THE BIG LIST:
+- Old GM7/GM8 remain outstanding extension tasks: required PNG icons, exact approved target, SPA lifecycle/repeated injection behavior, packaging and browser test steps. Follow the current list's dependencies and do not guess the canonical website URL.
+- GL4 (former DS6) is clone thread/cleanup performance research; prior clone variants are SUPERSEDED unless Claude explicitly reauthorizes the work after current-source review.
+- GL5 (former DS7) is costume-tool candidate work with the exact editor API and costume-canvas-only event scope. Keep it blocked until source/API mapping and the isolated stage-vs-costume canvas harness prove safety.
+- Read the merge notes/status before reviving any legacy candidate. Do not duplicate Claude's active compiler/custom-block implementation stream.
+
+LAB RULES
+- For a lab task requesting A/B/C, give three meaningfully different, self-contained candidates plus one lab report and a test harness when specified. Compare expected behavior, performance, safety, size and risks. Do not generate A/B/C if the assignment doesn't ask for them.
+- Verify every G-Warp API against current source/ENGINE-MAP; write UNSURE when unknown. Never target Scratch's window.vm/runtime.sequencer.
+- Keep project tests and owner files private. Do not copy private test-project art, sounds, scripts or assets into this public repository; report by project name only.
+- Do not claim execution from static inspection. Label evidence SOURCE-VERIFIED, STATIC-ANALYSIS, REPORTED TEST, BROWSER-VERIFIED or NOT TESTED.
+- All SVG assets must be original, self-contained, script-free, with no remote fonts/images, and follow STYLE-GUIDE.txt. No Scratch artwork/logos/cat or other protected characters.
+- Do not change another AI's folder. The previous DeepSeek artifacts have been migrated to gemini/lab/ as legacy inputs; inspect and test before reuse. Their location or prior "PICK" does not prove correctness or integration.
+- Before ending, update gemini/AI-CHAT-LOG.txt with task, exact files, evidence, blockers and next step. Never log secrets or unnecessary private data.
+
+PRODUCT PRIORITIES
+1. Exact Scratch-compatible behavior, especially custom blocks/procedures and their arguments, recursion, yielding, event order, clones and save/load. Claude currently owns the implementation/integration stream; Gemini should provide bounded research/candidates when assigned, not race it.
+2. Performance target: 60 FPS+ on representative projects/hardware when feasible; an aspiration, not a universal guarantee. Benchmark and report before/after values.
+3. Keep the primary UI clean and understandable. Tilemap and extensions beyond the current browser extension assignment remain deferred unless the owner reprioritizes them.
+4. GWrap AI block/script reconstruction animation: proposed behavior should animate newly reconstructed blocks into place by default, offer Skip/instant, and expose More -> Settings with default On. It must never block execution or leave partial scripts when skipped. This is a backlog design/research item until separately assigned.
+
+
+PRESERVED GEMINI BACKLOG — AFTER THE ASSIGNED JOBS ABOVE
+These items carry forward Gemini's prior work instead of dropping it during the team consolidation. Do not interrupt the assigned animation/lab tasks to start these. Claim one only when the higher-priority assignments and dependencies allow.
+
+VISUAL ASSETS
+- GV1. Finish the original G-Spark extension icon artwork and supply reproducible exports for 16/32/48/128 PNG sizes. The extension manifest has historically referenced PNGs that were absent; verify current package paths before calling this complete.
+- GV2. Create 3 original SVG favicon options for the website/app; no outside links, fonts, images or scripts.
+- GV3. Create original category icons for Motion, Looks, Sound, Events, Control, Sensing, Operators, Variables and My Blocks; keep the dark electric/violet/green G-Warp style.
+- GV4. Create 4 original achievement badge ideas including Bug Hunter.
+- GV5. Create original G-Spark poses: waving, running, celebrating and thinking.
+- GV6. Create wide original website hero art with G-Spark and an electric-wire background.
+
+EXTENSION VERIFICATION / HARDENING
+- GE1. Test the extension on the intended Chromium MV3 target and Firefox if still in scope. Record exact browser/version, manifest and permissions. Check chrome/browser namespace differences, context-menu behavior, popup on/off, hide/re-enable and storage errors.
+- GE2. Test Scratch single-page-app navigation and repeated injection. Confirm any history.pushState/replaceState wrappers are restored when disabled and do not break normal navigation.
+- GE3. Run the end-to-end flow from a Scratch project page to the G-Warp hash prompt and load: valid ID, invalid ID, user cancel, no network, unsupported/missing project, repeated click and reload. Use the exact owner-approved target URL in the current assignment; do not guess a replacement domain.
+- GE4. Cross-check packaging, privacy notice, icon paths and install/permissions behavior. Do not label it release-ready based on static inspection alone.
+- When reviewing inherited lab items, use gemini/lab/README.txt for current blockers. Do not resurrect superseded clone candidates, do not treat old PICK labels as acceptance, and do not claim old candidates were written/tested by Gemini.
+

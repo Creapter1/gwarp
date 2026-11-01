@@ -11,7 +11,7 @@
 </defs>
 <rect class="bg" width="1240" height="560" rx="18"/>
 <text class="head" x="28" y="36" style="font-size:23px">G-Warp: how the running app is connected</text>
-<text class="small" x="28" y="59">Mapped to the inspected app.html source and the real function/module names in ENGINE-MAP.txt</text>
+<text class="small" x="28" y="59">Mapped to the inspected app.html source and the real function/module names in team/ENGINE-MAP.txt</text>
 
 <rect class="panel" x="28" y="92" width="230" height="116" rx="12"/>
 <text class="label" x="143" y="119" text-anchor="middle">1 · Main interface</text>

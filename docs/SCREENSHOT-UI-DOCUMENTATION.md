@@ -1,0 +1,124 @@
+# G-Warp Screenshot and UI Behavior Documentation
+
+**Version inspected:** G-Warp Desktop Beta v15.45.0  
+**Source:** [app.html](https://github.com/Creapter1/gwarp/blob/main/app.html)  
+**Live app:** https://creapter1.github.io/gwarp/  
+**Audit companion:** [UI-AUDIT.txt](../team/chatgpt/CHATGPT-NOTES.md)  
+**Start learning:** [../docs/LEARNING-GUIDE.md](../docs/LEARNING-GUIDE.md)  
+**Deep technical reference:** [../docs/ENGINEERING-REFERENCE.md](../docs/ENGINEERING-REFERENCE.md)  
+**User guide:** [USER-GUIDE.txt](./USER-GUIDE.txt)
+
+## Visual overview
+
+![G-Warp editor map](../docs/images/gwarp-editor-map.svg)
+
+This is an explanatory map. Real captured screenshots and the interactions they verify are documented below.
+
+**Screenshot status:** The diagrams below are schematics. **Real screenshots are at the end of this page** (live-verified by Claude, 2026-10-13).
+
+## 1. Main UI map
+
+![Schematic map of G-Warp's major editor areas](../team/chatgpt/images/gwarp-ui-map.svg)
+
+| Area | Purpose | Main interaction |
+|---|---|---|
+| Project/menu controls | New/open/save/export/restore and tools/settings | Select a menu item and follow its dialog/download |
+| Category rail | Block families and Extensions | Choose a category; single-click navigation is a known audit item |
+| Block palette | Find blocks and drag them into scripts | Drag by block body to a valid connection |
+| Script workspace | Assemble, arrange, comment, and inspect scripts | Drag, snap, pan/zoom, right-click |
+| Stage | Preview project behavior | Green Flag, Stop, G-Warp Pause, stage-size controls |
+| Sprite list | Select and manage sprites | Click a tile; right-click for available actions |
+| Main tabs | Code, Costumes, Sounds | Click a tab; verify the active sprite first |
+| Asset tools | Draw, upload, edit and audition media | Select an asset, edit/test, then save/apply |
+
+## 2. Common interaction flow
+
+![Schematic diagram of common G-Warp interactions](../team/chatgpt/images/gwarp-interactions-map.svg)
+
+## 3. Main editor: how controls work
+
+### Project controls and More menu
+File/edit/tools/settings actions are grouped in the menu system. Prefer the explicit Save action until Ctrl/Cmd+S is verified: the inspected source contains overlapping global save handlers.
+
+### Category rail and palette
+The rail represents block categories and Extensions. **Live browser test T1 passed:** one click on Looks scrolled the palette to the Looks blocks. The earlier static audit finding that single-click navigation was broken is not confirmed and should be treated as fixed/not a bug unless a reproducible failing case is found. See the live verification report.
+
+### Workspace
+Drag palette blocks into the workspace. Statement blocks connect vertically, C-blocks contain nested sequences, and reporter/Boolean blocks fit matching inputs. Right-click a block for block actions; right-click empty workspace for workspace actions. The audit flags long-stack detachment and nested snapping risks, so test small scripts before rearranging long stacks.
+
+### Stage and run controls
+Green Flag starts Green Flag scripts. Stop ends execution. Pause is an extra G-Warp control, but the inspected handler may not pause active audio. The stage click handler also needs browser verification because the source audit found a possible issue with sprite-specific click scripts.
+
+### Sprite list
+Click a tile to select the sprite that owns the Code/Costumes/Sounds context. Available tile actions include duplicate, find on Stage, and delete. An Export Sprite action was not found in the inspected menu. The inspected source did not reveal editor-mode drag-to-reposition on the Stage.
+
+### Code, Costumes, Sounds
+Code is for scripts, Costumes for the selected sprite's visuals, and Sounds for audio assets/music tools. Confirm the active sprite and asset before editing. Switch away and back to check persistence, then save/reload a copy.
+
+### Costumes
+The costume list supports click/keyboard selection. Paint new, Upload, and duplicate/export/delete operations are available in the inspected UI. Drawing controls depend on vector/bitmap mode. Costume list drag-reordering was not found in the inspected source.
+
+### Sounds and instruments
+Sound rows support selection; Upload and Record controls are present. Recording requires microphone permission. Instrument Playground provides instrument groups and shaping controls. Sound-row right-click and drag-reordering handlers were not found in the inspected source.
+
+### Variables, comments, monitors
+Use the Variables/data category for variables and lists. Empty-workspace right-click includes Add Comment, but the inspected comment system creates workspace comments rather than fully block-attached Scratch comments. Monitor dragging and monitor-specific context menus appear incomplete.
+
+### Extensions and advanced tools
+Extensions are accessible from the category rail. Source-present tools include GWrap AI/search/debugging, tilemap, Behavior Designer, LAN collaboration, project health/restore, and advanced settings. Availability may depend on build, developer mode, or browser capabilities.
+
+## 4. Context-menu reference
+
+| Target | Behavior found in source | Notes |
+|---|---|---|
+| Block | Duplicate, Delete Block, Delete Full Stack | Selected-block versus whole-stack semantics need verification |
+| Empty workspace | Undo, Redo, Clean up Blocks, Add Comment, Delete Blocks, block search | Search shows at most eight matches |
+| Sprite tile | Duplicate, find on Stage, delete | Export Sprite not found |
+| Costume row | Duplicate, export, delete | Context actions exist |
+| Sound row | No matching sound context handler found | Use visible controls |
+| Variable/list monitor | No monitor-specific context menu found | Use visibility controls |
+
+## 5. Tabs and asset selection
+1. Select the intended sprite.
+2. Choose Code, Costumes, or Sounds.
+3. Confirm the sprite/asset name.
+4. Make a small change.
+5. Switch away and back to check it persists.
+6. Save/export and reload a copy to verify.
+
+The source calls a costume-loading routine on every main-tab change. This is a risk to test with unsaved drawing work, not a claim that data loss was reproduced.
+
+## 6. Pointer and keyboard notes
+- Use visible menu actions if a shortcut has uncertain behavior.
+- Ctrl/Cmd+S is a high-priority verification item.
+- Right-click blocks and empty workspace separately; their menus differ.
+- Drag from the block body, not from an input field.
+- In Pan mode, start on empty workspace until the possible pan/drag conflict is verified.
+- Context menus may need viewport-edge and keyboard focus improvements.
+- Some shortcuts documented by TurboWarp/PenguinMod are addon-dependent and are not necessarily Scratch-core behavior.
+
+## 7. Live screenshot set
+Claude captured real screenshots from the running app on 2026-10-13. They are stored in `docs/screens/`, not in the schematic folder. See the [live verification report](../docs/LIVE-UI-VERIFICATION.txt) for environment, test results, and what remains untested. The two SVGs above remain clearly labelled schematics.
+
+## 8. Verification note
+This document combines static source inspection with a limited live-browser test run against Beta v15.45.0 in Chromium at 1440×900 and 1024×700. Ten interaction/layout checks passed. Nested C-block snapping, save shortcuts, SB3 round-trip, Pause/audio, Stage click routing, paint tools, advanced dialogs, and Firefox/Safari remain NOT TESTED. For detailed source findings see [UI-AUDIT.txt](../team/chatgpt/CHATGPT-NOTES.md); for live evidence see [LIVE-UI-VERIFICATION.txt](../docs/LIVE-UI-VERIFICATION.txt).
+
+---
+
+## REAL SCREENSHOTS (added by Claude, live-verified 2026-10-13)
+
+These are real captures from the running app (Beta v15.45.0, Chromium, 1440x900). Full results: [docs/LIVE-UI-VERIFICATION.txt](../docs/LIVE-UI-VERIFICATION.txt). The SVG diagrams above stay as **schematics**.
+
+| View | Screenshot | Live result |
+|---|---|---|
+| Default editor | ![](../docs/screens/01-editor.png) | PASS |
+| One click on "Looks" | ![](../docs/screens/02-category-click-looks.png) | PASS: the palette jumps to Looks (audit #1 not confirmed) |
+| Block dragged into code area | ![](../docs/screens/03-drag-block.png) | PASS |
+| Right-click empty code area | ![](../docs/screens/04-rightclick-workspace.png) | PASS |
+| Right-click a block | ![](../docs/screens/05-rightclick-block.png) | PASS |
+| More menu | ![](../docs/screens/06-more-menu.png) | PASS |
+| Right-click a sprite | ![](../docs/screens/07-sprite-menu.png) | PASS |
+| Costumes tab | ![](../docs/screens/08-tab-costumes.png) | PASS |
+| Sounds tab | ![](../docs/screens/08-tab-sounds.png) | PASS |
+| Extensions library | ![](../docs/screens/09-extensions.png) | PASS |
+| Narrow window 1024x700 | ![](../docs/screens/10-narrow-1024.png) | PASS (no sideways scroll) |

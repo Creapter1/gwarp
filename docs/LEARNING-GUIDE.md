@@ -11,7 +11,7 @@ Start with this guide.
 ![G-Warp editor map](./images/gwarp-editor-map.svg)
 
 This labeled map shows the main work areas and how a beginner moves from choosing blocks to running a project.
- For a complete control-by-control reference, continue to [the UI guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md). For deep technical research, use [the engineering reference](./ENGINEERING-REFERENCE.md).
+ For a complete control-by-control reference, continue to [the UI guide](../docs/SCREENSHOT-UI-DOCUMENTATION.md). For deep technical research, use [the engineering reference](./ENGINEERING-REFERENCE.md).
 
 ## The big idea
 
@@ -142,7 +142,7 @@ The everyday mental model is deliberately similar: select a sprite, choose block
 
 They are **not the same codebase**. Scratch 3 is built from cooperating parts including its editor UI, block system, virtual machine/runtime, renderer, audio, paint, and storage components. G-Warp is a single-file HTML app with its own JavaScript engine, custom block UI, canvas renderer, costume editor, audio tools, and project handling. This means a Scratch concept is a useful guide, but a Scratch internal function name cannot be assumed to exist in G-Warp.
 
-For example, G-Warp's engine map says the main runtime object is `window.Engine`; it explicitly warns that `window.vm`, `runtime.sequencer`, and `scratch-render` are not G-Warp APIs. The deeper explanation is in [ENGINE-MAP.txt](../ENGINE-MAP.txt) and [ENGINEERING-REFERENCE.md](./ENGINEERING-REFERENCE.md).
+For example, G-Warp's engine map says the main runtime object is `window.Engine`; it explicitly warns that `window.vm`, `runtime.sequencer`, and `scratch-render` are not G-Warp APIs. The deeper explanation is in [team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt) and [ENGINEERING-REFERENCE.md](./ENGINEERING-REFERENCE.md).
 
 ## 11. What has actually been tested?
 
@@ -152,8 +152,8 @@ That is not proof that every editor operation is perfect. Nested C-block draggin
 
 ## Continue learning
 
-- [Complete UI reference](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)
-- [Full user guide and troubleshooting](../chatgpt/USER-GUIDE.txt)
-- [UI behavior audit](../chatgpt/UI-AUDIT.txt)
-- [G-Warp engine map](../ENGINE-MAP.txt)
+- [Complete UI reference](../docs/SCREENSHOT-UI-DOCUMENTATION.md)
+- [Full user guide and troubleshooting](../docs/USER-GUIDE.txt)
+- [UI behavior audit](../team/chatgpt/CHATGPT-NOTES.md)
+- [G-Warp engine map](../team/ENGINE-MAP.txt)
 - [Deep engineering reference](./ENGINEERING-REFERENCE.md)

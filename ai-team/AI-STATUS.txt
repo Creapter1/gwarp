@@ -1,4 +1,0 @@
-G-WARP TEAM STATUS (2026-11-01)
-App: Beta v15.60.0 (see the last RELEASED lines in AI-TEAM.txt).
-What is open, what is done, who does what: AI-TEAM-TODO.md (repo root) - the one to-do list.
-Rules: ai-team/README.md. Old status snapshot (2026-10-19): ai-team/archive/old-plans/AI-STATUS-2026-10-19.txt.
