@@ -1,0 +1,49 @@
+G-WARP — MASTER ROADMAP
+Version 2.0 | Updated 2026-10-19
+Owner: Creapter1 | Repository: https://github.com/Creapter1/gwarp
+
+PURPOSE
+This file is only the high-level product roadmap. To avoid conflicting copies, use:
+- team/WORKFLOW-START-HERE.txt: entry point, reading order and rules routing.
+- ../team/AI-TEAM.txt: contributor roles, governance and chronological work log.
+- ../team/TODO.txt: owner-defined product requirements and urgency.
+- CONTINUOUS-WORK-QUEUE.txt: the next bounded task and task claims.
+- ../team/ENGINE-MAP.txt: source hook map; verify exact APIs in current source.
+- ../team/MERGE-QUEUE.txt: candidate dispositions, not integration approval.
+- CLAUDE-EXECUTION-PLAN-2026-10-18.txt: current Claude low-token/long-session procedure.
+- CLAUDE-CHECKPOINT.txt: resumable current state, initialized/reverified by Claude.
+- AI-STATUS.txt: concise current team state and unresolved owner decisions.
+Detailed dated reports remain evidence/history; they are not independent rulebooks.
+
+NON-NEGOTIABLE GATES
+Creapter1 owns priorities and final approval. Only Claude whose active interface label is exactly “Claude Opus 5.5” may perform official integration, connected runtime/visual comparison, and release preparation; the owner must authorize each live integration/release. If model identity is unclear or different, stop integration and work read-only.
+Never rewrite app.html/index.html wholesale. Do not touch them without explicit authorization for the exact change. Use the authorized working copy/branch, record the baseline first, make localized edits, preserve rollback, and never claim tests that did not run. No cross-editing contributor-owned folders. Never treat syntax checks, a “PICK” label, or a file's existence as behavioral proof. Preserve existing features; do not run arbitrary JavaScript blocks or silently transmit personal/project data. Read STYLE-GUIDE and SECURITY-AND-CONSISTENCY-AUDIT before relevant design, network, or key-handling changes.
+
+ROADMAP — ORDERED BY RISK AND DEPENDENCIES
+
+P0 — FREEZE / STOP RELIABILITY (MITIGATION SHIPPED; REGRESSION GATE REMAINS)
+Claude's team/P0-CLONE-FREEZE-REPORT.txt records that the 81,000-clone freeze was reproduced in headless Chromium and mitigated in v15.46.0; the mitigation remains in Beta v15.48.0. The current verification cycle is regression, not first reproduction. Re-fetch actual main/working-copy hashes and rerun clone boundaries 299/300/301, rapid creation, Stop during load, clone hats, broadcasts, Pause/Stop, turbo, reload/duplicate load, large text/lists, feature-off and ordinary scripts. A later same-version shape-handle patch added three Select assertions without a recorded subsequent test result. team/chatgpt/clone-safety.js is SUPERSEDED; gemini/lab/speed-collision-B.js remains a legacy candidate requiring rotation/scale proof. Do not bundle unrelated fixes.
+
+P1 — COSTUME EDITOR
+First verify the actual editor root, state fields, canvas ownership, SVG attributes, coordinate conversion, history/undo APIs and listener scope. Gemini's inherited select-C, fill-C, text-B, eraser-C and undo-C are candidates, not integrated fixes. Use a disconnected harness with stage canvas plus bitmap/vector costume canvases; test zoom/pan, pointer cancel/lost capture, multi-object selection, resize, rotation center, undo/redo, sprite/costume switch, repeated load, feature-off and save/reopen. No tool may alter a non-costume canvas.
+
+P2 — PROJECT FILES / OPEN-IN-G-WARP
+Preserve existing .sb3 and ZIP-based .pmp support. The newer protobuf .pmp path needs the confirmed parser API, a real legal fixture, asset fidelity and malformed/oversized-file tests. Test load/save/reload and safe failure. For team/chatgpt/scratch-link.js and Gemini's extension, test valid/invalid IDs, user consent and cancel, network/load failures, hash clearing, popup, Scratch SPA navigation, repeat injection, permissions, packaging and target URL. Do not assume the old GitHub Pages URL changed until the owner confirms the canonical destination.
+
+P3 — SCRATCH BEHAVIOR / REGRESSION TESTS
+Claude's work log now records a full v15.48.0 regression of 429 PASS / 9 FAIL, with the failures described as expected legacy/feature-status checks. Claude earlier reported 20/20 animation cases and 39/39 on the older 30+9 parity set. Grok has since corrected T043 and expanded grok/fixtures.json to 60 cases; grok/FIXTURE-SOURCES.txt is still stale, and the separate 10-case grok/fixtures-extra-list.json is not yet loaded by the parity runner. The intended current 60+10 suite still needs a fresh run and reconciled source map. The 75 older written cases are not all one passing automated suite. Prioritize negative modulo/rounding, text-number comparison, case behavior, list index 0, clone limits, hats/broadcast order, pen hue wrap, procedures and project round-trip. Convert a small verified subset to deterministic executable fixtures where practical; record expected/actual, browser/version, date and evidence.
+
+P4 — EXTENSIONS / SAFETY
+Grok's static gallery audit is delivered at grok/EXTENSIONS-check.txt. Still verify published-site loading and actual behavior, permission/data access, Dangerous warnings, failure isolation and credits/licences; static URL resolution alone is not end-to-end acceptance. Review Gemini packaging, required PNGs, permissions, Chromium/Firefox behavior, storage failures and end-to-end project opening. Static URL inspection is not a load test.
+
+P5 — ORIGINAL VISUAL ASSETS
+Gemini prepares original, distinct SVG options for the extension icon, favicon, block categories, achievement badges, G-Spark poses and hero art. Owner selects before integration. Keep G-Warp's electric dark/violet/green style, no Scratch art/logos/cat, no scripts or external assets in SVG, and verify legibility at target sizes.
+
+LATER / OWNER-PRIORITIZED
+GWrap AI, defined 60-FPS benchmarking, Song Maker redesign, extra developer/education features and domain work remain backlog unless the owner reprioritizes. Do not create activity merely to fill time.
+
+DONE MEANS
+A task is only complete for its declared scope when the changed files, baseline, exact checks, actual results, untested areas, risks and next step are recorded. Keep the report concise; link detailed evidence rather than copying it into several files. Update the queue/merge state truthfully and checkpoint before switching tasks or ending a long session.
+
+
+TEAM ROLE CHANGE (2026-10-18): Gemini now owns all active former DeepSeek lab/research/A-B/C/test-harness tasks. Use team/TODO-GEMINI.txt and gemini/lab/ as the single current route. Historical records may retain old names; they are not active assignments.

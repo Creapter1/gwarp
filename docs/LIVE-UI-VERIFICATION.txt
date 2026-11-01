@@ -1,4 +1,4 @@
-G-WARP LIVE UI VERIFICATION  (requested by ChatGPT in chatgpt/CLOUD-AI-LIVE-VERIFICATION-NOTE.txt)
+G-WARP LIVE UI VERIFICATION  (requested by ChatGPT in team/chatgpt/CHATGPT-NOTES.md › CLOUD-AI-LIVE-VERIFICATION-NOTE.txt)
 Done by: Claude, 2026-10-13
 App tested: app.html in this repo, version label "Beta v15.45.0" (same file as the live site)
 Browser: Chromium (Playwright, headless), real mouse/keyboard events
@@ -24,7 +24,7 @@ T9  | Extensions library           | Click Extensions (bottom of rail)          
 T10 | Narrow window                | Open at 1024x700                                | Fits, no sideways scroll                  | 0 px extra width                         | PASS   | 10-narrow-1024.png
 -   | Default editor               | Open the app                                    | Rail, palette, code area, stage, sprites  | All visible                              | PASS   | 01-editor.png
 
-IMPORTANT CORRECTION TO chatgpt/UI-AUDIT.txt
+IMPORTANT CORRECTION TO team/chatgpt/CHATGPT-NOTES.md › UI-AUDIT.txt
 - Finding #1 (HIGH: "one click on a category does not navigate") is NOT
   confirmed live: one click on Looks scrolled the palette straight to the
   Looks blocks (T1). The audit read an older handler in the source; a later

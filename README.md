@@ -1,34 +1,42 @@
-# ⚡ G-Warp
+# ⚡ G-Warp – AI TEAM branch
 
-G-Warp (short for **G Wrapper**) is a beta block-coding and game-making app. Connect blocks to make games, animations and interactive stories, draw costumes, and create music with G-Warp's dark electric look and G-Spark mascot.
+> **This is the `ai-team` branch:** the work area for the AI team (to-do list, rules, notes, tests, art, bug reports – all in `team/`). The public app and website live on **[main](https://github.com/Creapter1/gwarp)**. Nothing here goes live until the owner merges it into main.
 
-G-Warp has its own engine. It aims for familiar Scratch-style behavior and project workflows, but compatibility is still being improved. Always keep a backup of important projects and check exported files in the app where you plan to use them.
+G-Warp (short for **G Wrapper**) is a free, fan-made block-coding and game-making app. Connect blocks to make games, animations and interactive stories, draw costumes, and create music – with G-Warp's own dark electric look and the G-Spark mascot.
+
+It works like Scratch/TurboWarp (same blocks, same project files), but it has its own style. It is in **beta**: keep a backup of important projects.
 
 ## Start here
 
-- **[Website source](index.html)** — the G-Warp homepage.
-- **[Open the app](app.html)** — launch the single-file editor from a local copy of this repository.
-- **[Documentation home](docs/index.html)** — short guides for the current beta.
-- **[Step-by-step tutorials](docs/tutorials/index.html)** — make G-Spark walk, build a clicker game, and create falling-star clones.
-- **[Glossary](docs/glossary.html)** — plain-language explanations of coding and animation terms.
-- **[Parents and teachers](docs/parents.html)** — classroom tips, safety and privacy caveats.
-- **[Credits and licences](docs/credits.html)** — AI-assisted roles, project licence and third-party credit guidance.
-- **[Current team status](ai-team/AI-STATUS.txt)** — verified progress and open blockers.
+| | |
+|---|---|
+| 🚀 **[Open the app](app.html)** | the G-Warp editor |
+| 🌐 **[Website](index.html)** | the G-Warp homepage |
+| 📖 **[Documentation](docs/index.html)** | guides, [tutorials](docs/tutorials/index.html), [glossary](docs/glossary.html), [parents & teachers](docs/parents.html) |
+| 📜 **[Licence (MIT)](LICENSE)** | free to use; see [credits](docs/credits.html) for third-party parts |
 
-**Quick start:** open the app, create or open a project, select a sprite, drag blocks into the workspace, and press Start. Save a copy often. Use the explicit file menu when saving or exporting.
+**Quick start:** open the app → pick a sprite → drag blocks into the code area → press **Start**. Save often.
+
+## What is in this repository
+
+| Folder / file | What it is |
+|---|---|
+| `app.html` | the app (the whole editor in one file) |
+| `index.html`, `stats.html`, `sitemap.xml`, `gw-stats.js` | the website (they must stay here for the site to work) |
+| `docs/` | documentation pages and tutorials |
+| `site/` | extra website files |
+| `desktop/` | the Windows desktop version (exe build files) |
+| `research/` | "how to make a game" notes that G-Spark (the built-in AI helper) reads |
+| `team/` | everything for the AI team: the **[one to-do list](team/AI-TEAM-TODO.md)**, [rules](team/ai-team/README.md), [status](team/ai-team/AI-STATUS.txt), and each AI's folder (`team/chatgpt`, `team/claude`) |
 
 ## Beta notes
 
-The editor does not require an account for basic local use. However, online project loading, extensions, external resources, or services you intentionally configure may make network requests. Read extension warnings, avoid entering private information, and inspect files before sharing a report. Children under 13 should have a parent or guardian's help before sending personal information online.
+No account is needed. Online project loading, extensions and services you set up yourself may use the internet – read extension warnings and don't type private information. Children under 13 should ask a parent or guardian before sending anything online.
 
-The previously documented public site address is awaiting owner confirmation. Do not assume an older published URL is current until it is confirmed.
+## AI team
 
-## How the AI team works
-
-Creapter1 owns product decisions and final approval. The team is **Claude Opus** (the only one who integrates into the app) and **ChatGPT** (research, reviews, tests, icons and art, proposals), with Claude Haiku as a small helper. Gemini, Grok and DeepSeek are retired; their work is kept in `ai-team/archive/`. **All rules: [ai-team/README.md](ai-team/README.md).**
-
-Read **[ai-team/README.md](ai-team/README.md)** (the rules), **[AI team workflow](docs/team.html)** and **[AI-TEAM.txt](AI-TEAM.txt)** before contributing. Keep proposed code in the assigned contributor folder; do not integrate live behavior or release changes without the required review and owner approval. “Continue” means reread current task/status files and resume the next assigned job.
+Creapter1 owns every decision and approves every release. The team is **Claude** (builds into the app) and **ChatGPT** (research, reviews, tests, icons and art), with Claude Haiku as a helper. Gemini, Grok and DeepSeek are retired; their work is in `team/ai-team/archive/`. Before contributing, read the [rules](team/ai-team/README.md) and the [to-do list](team/AI-TEAM-TODO.md). "Continue" means: reread the to-do and status files and resume the next job.
 
 ## Licence and independence
 
-G-Warp's repository code is released under the **[MIT License](LICENSE)**. Third-party extensions may have different creators and licences; check each extension's own information before redistribution. G-Warp is an independent project and is not made by or connected to Scratch, the Scratch Foundation, TurboWarp or PenguinMod.
+The code in this repository is released under the **[MIT License](LICENSE)**. Third-party extensions may have their own creators and licences – check each one before redistributing. G-Warp is an independent fan project and is **not** made by or connected to Scratch, the Scratch Foundation, MIT, TurboWarp or PenguinMod.
