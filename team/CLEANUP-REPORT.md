@@ -82,3 +82,21 @@ bottom) · `MERGE-QUEUE.txt` (one path note) · `team/ai-team/README.md`, `CHATG
   `team/ai-team/gwrap-blocks.json`, `team/ai-team/ui-strings-en.json`, `team/ai-team/stats/`, all drop-box packages in `team/ai-team/shared/` (except the superseded one above).
 - **Archive:** `team/ai-team/archive/gemini|grok|deepseek|old-plans` (app.html and `docs/blocks.html` point into it).
 - **ChatGPT's reviews** in `team/chatgpt/` (evidence) and `team/claude/` reviews (sources for the missing list).
+
+
+## Pass 2 (1 Nov 2026, Claude) – fewer files, clean front page
+| What | Why |
+|---|---|
+| 31 ChatGPT notes/reviews/logs (chatgpt/*.txt, *.md, jobs/*.md) → `team/chatgpt/CHATGPT-NOTES.md` | one file per AI (owner request); every old file is a section |
+| 14 ChatGPT job files (ai-team/CHATGPT-*.txt + chatgpt-jobs/) → `team/ai-team/CHATGPT-JOBS.md` | same; generator moved to `team/ai-team/tools/make_jobs.py` |
+| 8 Claude notes (PLAN-NEXT.md first, *.txt, haiku/README.txt) → `team/claude/CLAUDE-NOTES.md` | same; code (.js), tests/, experiments/ unchanged |
+| chatgpt/USER-GUIDE.txt, chatgpt/SCREENSHOT-UI-DOCUMENTATION.md → `docs/` | they are user documentation |
+| undefined-edit/inst/song.png (root, deleted in pass 1) → `docs/images/sounds-edit-sound.png`, `sounds-instruments.png`, `sounds-song-maker.png`, shown on docs/sounds.html | real Sounds-tab screenshots, now used in the docs |
+| AI-TEAM*.txt/md, CLEANUP-REPORT, ENGINE-MAP, MERGE-QUEUE, STYLE-GUIDE, TODO.txt, ai-team/, chatgpt/, claude/ → `team/` | clean front page; links updated in 98 files, 0 new broken links |
+
+## Pass 3 (1 Nov 2026, Claude) – only two branches: main + ai-team
+| Old branch | What was kept (in this ai-team branch) | Archive tag (full history kept) |
+|---|---|---|
+| chatgpt/clone-limit-warning, chatgpt/clone-limit-warning-v2 | notes appended to team/chatgpt/CHATGPT-NOTES.md; 8 proposal modules → team/chatgpt/*.js (clone-limit, frame-budget, crash-recovery-offer, stop-clone-cleanup, stuck-script-choice, open-scratch-link, text-list-limits). Their old copies of app.html/index.html/README were NOT taken (outdated). | archive/chatgpt-clone-limit-warning, archive/chatgpt-clone-limit-warning-v2 |
+| chatgpt/l8-art-art-001 | ART-001 hero kid options A/B/C + preview → team/ai-team/shared/2026-10-26-chatgpt-ART-001/, lane log → team/chatgpt/lanes/L8-ART/ | archive/chatgpt-l8-art-art-001 |
+| ollama-work | bug report → team/bugs/BUG-20261027-1349-background-music-does-not-play.md | archive/ollama-work |

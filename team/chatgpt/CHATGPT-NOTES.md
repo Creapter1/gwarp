@@ -4796,3 +4796,633 @@ Summary:
   2 DOC done (SOURCE-VERIFIED), 8 jobs blocked:
   7 TERMINAL (no Node.js for qa-kit), 1 AI (waiting AIM-1).
   Not tested: all PAR/EDGE/SAVE.
+
+
+---
+## NOTES-clone-limit.txt (from old branch chatgpt/clone-limit-warning-v2)
+
+G-WARP CLONE LIMIT — NOTES FOR CLAUDE
+=======================================
+
+Files
+-----
+- chatgpt/clone-limit.js
+
+Task addressed
+--------------
+First unfinished NOW sub-item: clone limit 300 like Scratch, optional
+Infinite clones setting, and an appropriate warning.
+
+Research findings from the current main/app.html
+------------------------------------------------
+I inspected the actual repository source (blob SHA 7ce527ca2908c63bbdfe642856ca29fd82178648; file app.html).
+
+The existing app already has these pieces:
+- Engine.cloneLimit = 300 near line 4171.
+- GW.createClone enforces the configured limit near line 10991 and only creates
+  a clone while the count is below that limit.
+- GW.deleteClone and GW.removeAllClones exist near lines 11005-11011.
+- More -> App -> Advanced settings exposes “Infinite clones” near line 13744.
+- GW_SETTINGS.setInfiniteClones sets Engine.cloneLimit to Infinity or 300 near
+  line 13708.
+- A current wrapper reports the normal limit being reached near lines 15481-15489.
+- A clone counter/report exists near line 17785.
+
+The missing behavior addressed here is a runtime warning when the project
+actually exceeds 300 clones because a higher/infinite limit is active. The
+current limit-reached wrapper does not fire when createClone succeeds, so it
+does not warn in this case. The current settings help text warns generally,
+but not at the moment a project crosses the Scratch-sized boundary.
+
+What the code does
+------------------
+- Wraps the existing GW.createClone and GW.deleteClone APIs without replacing
+  their underlying clone behavior.
+- Tracks the current clone count incrementally for normal create/delete paths.
+- Warns once when count rises above 300, including the active limit in the
+  message; resets the warning after the count drops to 300 or fewer.
+- Uses the existing GW.toast and GW_HEALTH.note APIs where available. A small
+  accessible dark fallback banner is used if GW.toast is unavailable.
+- Handles GW.removeAllClones and notices a replaced Engine.sprites array or
+  changed sprite-array length. It also listens for the cleanup event emitted by
+  stop-clone-cleanup.js, so the count and over-300 warning reset immediately.
+- Does not change the configured clone limit, block execution, or project data.
+- Does not modify app.html. It is a supplemental file for Claude to review and
+  integrate at the appropriate location.
+
+Integration
+-----------
+Load this script after app.html has initialized window.GW, window.Engine,
+GW.createClone, and GW.deleteClone. The app's source currently exposes
+window.Engine and window.GW through the global-alias block, so placing the
+script after the existing app scripts should satisfy this requirement.
+
+Disable key (must be set before this script loads):
+  window.GW_DISABLE_CHATGPT_CLONE_LIMIT = true;
+
+Idempotence
+-----------
+The module uses window.__GW_CHATGPT_CLONE_LIMIT_WARNING_V1__ as an installation
+key. Loading it twice should not wrap the functions twice. It also returns
+without altering app behavior if the disable key is true.
+
+Scope / not claimed complete
+----------------------------
+This closes the runtime-warning part of the first clone-limit sub-task, but
+it does NOT complete the full NOW item “FREEZE FIXES (v15.46)”. Remaining
+subtasks include fast Stop/clone cleanup (<100 ms), a frame budget so scripts
+yield after about 250 ms, a stuck-script UI, text/list limits, and crash
+recovery using IndexedDB. Those must remain unchecked until separately
+implemented and tested.
+
+Testing status
+--------------
+- Static/manual source review: PASS for expected app API names, based on the
+  current main branch source cited above.
+- JavaScript syntax: PASS (parsed with the JavaScript Function constructor).
+- Mock-runtime simulation: PASS for 301 clones (one warning), deleting back to
+  299 (warning state resets), crossing 300 again (warning appears again), and
+  removeAllClones (count resets to zero). Duplicate loading preserved the same
+  create/delete/remove wrappers without stacking another wrapper.
+- Combined mock test with stop-clone-cleanup.js: PASS — 301 clones raised one warning; fast in-place cleanup reduced count to 0 and immediately cleared warning state without a second toast.
+- Browser verification in G-Warp: NOT RUN here. This file is not active until
+  Claude integrates it into app.html. Do not mark the runtime warning as
+  browser-verified until tested with Infinite clones enabled, more than 300
+  successful clone creations, deletion below 300, and clone creation again.
+- Regression checks should also test default (limit 300) mode to ensure the
+  existing cap and existing limit toast remain unchanged.
+
+Research references
+-------------------
+- Official Scratch Foundation education resource: says a project can create
+  at most 300 clones at a time, and explains the limit avoids lag:
+  https://resources.scratch.mit.edu/www/cards/en/advancedtopicsclones-cards.pdf
+- TurboWarp's official Infinite Clones documentation: the option disables
+  Scratch's 300-clone limit and may break projects that assume cloning will
+  stop at the limit:
+  https://docs.turbowarp.org/infinite-clones
+- Scratch VM source repository (the standalone repository is now archived
+  following the mono-repo migration):
+  https://github.com/scratchfoundation/scratch-vm
+- G-Warp implementation references are in the current app.html locations above.
+
+
+---
+## NOTES-crash-recovery-offer.txt (from old branch chatgpt/clone-limit-warning-v2)
+
+G-WARP CRASH RECOVERY OFFER — NOTES FOR CLAUDE
+===============================================
+
+File
+----
+- chatgpt/crash-recovery-offer.js
+
+TODO item
+---------
+NOW 1: "Crash recovery: after a freeze, offer to restore the last autosave
+(use IndexedDB, localStorage is too small for big projects)."
+
+What the app already has
+------------------------
+Current app.html already contains IndexedDB restore points:
+- The restore database is named "gwarp-restore"; it has points and assets stores.
+- Restore points are created when a project changes, normally about once a
+  minute, with the last 10 kept.
+- window.GW_RESTORE exposes list/load/point.
+- window.GW_FILES.restoreTo(id) saves a point before restoring and loads the
+  chosen point.
+- More -> File already has "Restore a previous version…".
+This draft reuses those APIs. It does not duplicate project data into localStorage.
+
+What this module adds
+---------------------
+- Uses sessionStorage only to assign a per-tab random ID.
+- Uses localStorage only for a tiny flag that says whether this tab had a
+  running project when it last updated the marker; no project title, content,
+  or personal information is written there.
+- Starts a marker while Engine.isRunning is true, removes it when the runtime
+  stops and on normal pagehide.
+- If the app loads and the previous marker remains, it treats that as a possible
+  unclean end and asks whether to restore the newest existing IndexedDB point.
+- Reuses GW_CONFIRM and GW_FILES.restoreTo; a restore point is saved before
+  restore by the existing app path. IMPORTANT: current restoreTo() reports
+  success/failure with its own toast and returns undefined, so this module
+  records 'restore-invoked' rather than falsely claiming the project restored.
+- Handles missing IndexedDB/API/list, no recovery points, cancellation and
+  restore errors with status/toast feedback.
+- Switch-off key:
+    window.GW_DISABLE_CHATGPT_CRASH_RECOVERY = true
+- Idempotence key:
+    window.__GW_CHATGPT_CRASH_RECOVERY_V1__
+
+Important limitations
+---------------------
+- Browser APIs don't provide a perfect universal "the page froze/crashed"
+  signal. If a browser dispatches pagehide during a forced reload, this draft
+  clears the marker and may not prompt. If localStorage/sessionStorage is
+  unavailable, it deliberately doesn't install a broken crash detector.
+- Background timer throttling and unusual lifecycle behavior can cause false
+  positives or missed detections. Claude must test target browsers and decide
+  whether/how to refine this approach.
+- The user may only have a restore point up to about a minute old, or no point
+  at all if the freeze occurred early. It must never promise zero data loss.
+- A stop-all block clears the marker on the next poll (usually within 1.5 s);
+  a hard crash during that short window could produce a harmless prompt.
+- This module must be loaded after existing app.html scripts define Engine,
+  GW_CONFIRM, GW_RESTORE, and GW_FILES.
+
+Testing status
+--------------
+- API/source review: PASS for existing restore point and restoreTo APIs.
+- JavaScript syntax: PASS after drafting.
+- Mock lifecycle/recovery tests: PASS. Unclean marker detected and cleared; accept invoked the existing restoreTo helper with the newest point ID; cancel did not call restore; clean state did not prompt; active runtime wrote a marker and stopped runtime cleared it. Actual restore success is not observable from restoreTo because its current implementation handles errors with its own toast and returns undefined.
+- Browser test on a real crashed/frozen tab: NOT RUN.
+Required tests:
+1. Start project, verify small marker is created; click Stop and verify marker clears.
+2. Navigate/close normally; confirm marker clears and no recovery prompt appears
+   when reopening the app.
+3. Simulate an unclean previous marker; confirm the latest restore point dialog
+   appears and states the real title/time.
+4. Cancel; no project data is overwritten, and the prompt does not repeat.
+5. Accept; verify latest restore point is loaded and previous current state is
+   copied first.
+6. No restore points, IndexedDB disabled, storage blocked, or restore failure
+   must show a useful message without crashing startup.
+7. Test crash/reload behavior in Chrome/Edge/Firefox and background-tab throttling.
+8. Multiple app tabs, pagehide, BFCache/pageshow, and Stop/Start cycles.
+9. Module loaded twice and switch-off/dispose behavior.
+
+No app.html or index.html was changed.
+
+
+---
+## NOTES-frame-budget.txt (from old branch chatgpt/clone-limit-warning-v2)
+
+G-WARP FRAME BUDGET — NOTES FOR CLAUDE
+======================================
+
+File
+----
+- chatgpt/frame-budget.js
+
+TODO item
+---------
+NOW 1: "Frame budget: never run scripts for more than ~250 ms without letting
+the page breathe (turbo mode too)."
+
+Existing runtime facts from current app.html
+--------------------------------------------
+- The render loop runs Engine.threads and in Turbo mode repeats for at most
+  about 12 ms per render pass (around line 3710).
+- The v15.8 runner uses LIMIT_OPS = 5000, FRAME_MS = 10, WARP_MS = 500
+  (around line 10700).
+- Non-warp scripts yield at FRAME_MS after enough operations (around lines
+  10897-10901).
+- A warp custom procedure can otherwise run inside ScriptThread.step until the
+  500 ms WARP_MS safety limit is reached.
+- GW.RETRY_BLOCK is an existing sentinel at about line 14385. When the runner
+  catches it, it rewinds the current block and returns so it can retry next
+  frame (around lines 10893-10896). This is safer than adding synthetic frames
+  or toggling the user's custom-block warp flags.
+
+What this module attempts
+------------------------
+- Uses BUDGET_MS = 200 as a soft block-boundary target.
+- Starts a shared frame clock via the existing GW.frameGate hook, and tracks
+  each ScriptThread.step call as a backup timer.
+- Checks before GW.extraBlock, GW8.resolveInput, GW9.evalNode and the legacy
+  ScriptThread.executeBlock paths, but only while that thread is inside the
+  wrapped ScriptThread.step() call (where the interpreter catches RETRY_BLOCK).
+  When a warp custom frame has exceeded the budget, it throws the existing
+  GW.RETRY_BLOCK sentinel before the next operation can take effect. Calls from
+  editor/debugger helpers outside ScriptThread.step are never given the sentinel. The runner catches it, rewinds the current block,
+  and returns to the browser event loop.
+- It does not toggle warp flags, insert synthetic call-stack frames, modify
+  the script itself, or execute a block before deciding to yield.
+- Includes a disable key, an installation key, statistics, and dispose().
+
+Limits and risk cases — do not claim a hard wall-clock guarantee
+----------------------------------------------------------------
+JavaScript cannot interrupt a single synchronous block while that call is
+running. This module only checks at the next one of its instrumented hooks.
+
+A warp procedure made exclusively from control operations that do not call
+GW8.resolveInput, GW9.evalNode, GW.extraBlock, or executeBlock can still run
+until the existing WARP_MS/operation safeguards. The runner handles control
+blocks inside private runOne(), so an extension file cannot hook that function
+directly. Empty FOREVER loops and other pathological control-only scripts need
+real browser verification or a small explicit runner hook approved by Claude.
+
+Also verify:
+- the current final GW.frameGate wrapper and extension VM frame hook still work;
+- global frameStart timing behaves as expected with pause, target FPS and Turbo;
+- multiple warp threads yield cleanly and don't starve ordinary threads;
+- if a block is rewound, input evaluation has no side effects that would repeat;
+- normal/non-warp scripts remain unchanged.
+
+Integration
+-----------
+Load after every current inline app.html script so the final runtime wrappers
+already exist. Only Claude or the owner should add the include in app.html.
+This module should not be marked as fulfilling the full frame-budget TODO until
+the required browser tests pass.
+
+Testing status
+--------------
+- Static source inspection: PASS for the source APIs described above.
+- JavaScript syntax: to be checked before merge.
+- Mock tests: PASS for the retry sentinel at all four instrumented hooks (GW.extraBlock, GW8.resolveInput, GW9.evalNode, ScriptThread.executeBlock): the sentinel was thrown before the original hook, so its mock side effect did not run. Calls outside ScriptThread.step did not receive the sentinel. A fresh frame allowed execution; duplicate loading was idempotent; dispose restored all patched functions. Warp flags are not changed.
+- Browser verification: NOT RUN.
+
+Required tests
+--------------
+1. A fast repeat/forever warp block should yield on the next hook after about
+   200 ms while leaving position/variable changes already completed intact.
+2. The current block that was refused should run once on the next frame, not
+   twice, and loops should eventually complete if their condition changes.
+3. Nested warp custom procedures and mixed warp/non-warp frames.
+4. Multiple concurrent warp threads and Turbo on/off.
+5. Empty FOREVER / control-only stress case; document any remaining WARP_MS path.
+6. Deliberately slow single synchronous block: it cannot be preempted mid-call.
+7. Pause, resume, Stop, green flag, stop-all block, and repeated cycles.
+8. Module loaded twice; switch-off and dispose must restore original functions.
+
+No app.html or index.html was changed.
+
+
+---
+## NOTES-open-scratch-link.txt (from old branch chatgpt/clone-limit-warning-v2)
+
+G-WARP OPEN SCRATCH LINK — NOTES FOR CLAUDE
+============================================
+
+File
+----
+- chatgpt/open-scratch-link.js
+
+TODO item
+---------
+NOW item 2:
+app.html#scratch=<number> should ask "Open Scratch project #<number>?"
+and then load it. This is needed by the browser extension.
+
+Verified existing APIs (current main/app.html)
+----------------------------------------------
+- window.GW_CONFIRM is assigned near line 11920 and opens G-Warp's styled
+  confirmation dialog. Signature:
+  GW_CONFIRM(title, text, okText = 'OK', cancelText = 'Cancel').
+- window.GW_WEB = { parse, open, load } is assigned near line 15457.
+- GW_WEB.load accepts a Scratch project number string. It uses the normal
+  web loader, import path, source credit/reporting, and error feedback.
+
+Behavior
+--------
+- Accepts only exact #scratch=<positive decimal number>, 1-12 digits.
+- Asks for confirmation before any project download.
+- Cancel clears the handled hash so refreshing doesn't prompt again.
+- Accept calls window.GW_WEB.load(id) with the numeric string.
+- Does not create a second importer/downloader.
+- Uses the existing G-Warp confirmation dialog, with native confirm fallback
+  only if the dialog API is unavailable.
+- Switch-off key, set before load:
+    window.GW_DISABLE_SCRATCH_HASH_OPEN = true
+- Idempotence key prevents duplicate prompt/loader installs.
+- Does not modify app.html or index.html.
+
+Integration
+-----------
+Claude or the owner should add this as a separate script include after all
+existing app.html scripts, before </body>, so GW_CONFIRM and GW_WEB.load exist.
+The current project team rules reserve app.html/index.html changes for Claude
+or the owner, not ChatGPT.
+
+Testing status
+--------------
+- Source/API inspection: PASS.
+- JavaScript syntax: PASS.
+- Mock tests: PASS for accepted link (confirmation once, then loader gets ID),
+  cancelled link (no loader call), invalid #scratch=0 (no prompt), and loading
+  the module twice (same installation state/no duplicate flow).
+- Browser verification on a real shared Scratch project: NOT RUN here.
+- Required browser tests:
+  1. #scratch=<valid shared project ID>: exact confirmation title; no request
+     before accept; then the existing loader opens the real project.
+  2. Cancel: no fetch/import, URL hash cleared, editor remains unchanged.
+  3. Accept: verify assets, source credit and the existing progress/error UI.
+  4. Invalid IDs (0, non-digits, >12 digits, empty) do not prompt.
+  5. Ordinary app.html loads/non-scratch hashes are unchanged.
+  6. If GW_WEB.load is unavailable, warn and leave the hash intact.
+  7. The current path and query string survive clearing the hash.
+  8. Offline/removed/unshared project errors are shown by the existing loader.
+
+No app.html or index.html was changed.
+
+
+---
+## NOTES-stop-clone-cleanup.txt (from old branch chatgpt/clone-limit-warning-v2)
+
+G-WARP FAST CLONE CLEANUP — NOTES FOR CLAUDE
+=============================================
+
+Files
+-----
+- chatgpt/stop-clone-cleanup.js
+
+Task
+----
+TODO.txt NOW 1, sub-item:
+"Stop must clear all clones in one fast pass (< 100 ms)."
+
+Why this supplement exists
+--------------------------
+The current app.html has several Stop/start paths. Inspection of main/app.html
+found:
+- GW.removeAllClones at about line 11011 reassigns Engine.sprites using
+  Engine.sprites.filter(...) and Engine.threads using .filter(...).
+- A document listener at about line 15716 traverses ALL sprites on Start/Stop
+  with (E.sprites || []).forEach(stop).
+- The Stop button has several other listeners, including cleanup that is
+  deferred with setTimeout(..., 0).
+- stopAllLikeScratch at about line 17937 finishes threads, calls
+  GW.removeAllClones, stops sounds, and clears speech bubbles.
+- A later wrapper around createClone/deleteClone/removeAllClones bumps
+  GW.__sprEpoch for the spritesNamed cache (about line 14252).
+
+The main performance risk is that the Start/Stop event reaches handlers that
+walk the entire 81,000-clone list before the deferred clone cleanup runs.
+Even a single filter can allocate a large second array. This module therefore
+compacts clones out of the existing sprites array at the window capture
+phase, before target/document handlers and later document listeners run.
+
+What this module does
+---------------------
+1. Adds a self-contained IIFE module in chatgpt/; it does not modify app.html.
+2. Requires the inspected existing globals: window.GW, window.Engine,
+   Engine.sprites, Engine.threads, and GW.removeAllClones.
+3. Replaces GW.removeAllClones with an in-place stable compaction:
+   - one pass over Engine.sprites,
+   - one pass over Engine.threads to remove threads owned by clones when clones
+     were found (the public GW.removeAllClones API always checks for orphans),
+   - no new filtered arrays and no per-clone UI/render calls,
+   - preserves the sprite and thread array object identities,
+   - repairs activeSpriteIndex after removing clones,
+   - increments GW.__sprEpoch when that existing cache epoch exists.
+- Dispatches the small `gwarp-clones-cleaned` event so the optional clone-limit
+  warning module refreshes its count/state without polling.
+4. Adds a window capture listener for #stopBtn and #greenFlagBtn. It removes
+   clones before existing button handlers run, so existing listeners such as
+   the animation stop listener do not walk tens of thousands of clone objects.
+5. Keeps normal Stop/audio/animation handlers in app.html intact. It does not
+   replace the whole Stop workflow or clear ordinary/root sprites.
+6. Has a switch-off key:
+   window.GW_DISABLE_CHATGPT_FAST_CLONE_CLEANUP = true
+   must be set before this module loads.
+7. Has an idempotence key and a dispose() helper for QA/manual rollback:
+   window.__GW_CHATGPT_FAST_CLONE_CLEANUP_V1__.dispose()
+
+Integration
+-----------
+Load after app.html's scripts have initialized window.GW and window.Engine,
+ideally in a dedicated script include after the app's final existing script.
+Do not paste/inline the entire app.html to integrate it. Claude may adjust the
+placement or approach after reviewing order dependencies.
+
+Important: app.html also has GW.removeAllClones wrapped to bump GW.__sprEpoch.
+This file uses the inspected behavior and bumps that epoch itself. If the
+current branch changes those APIs before integration, Claude must re-check
+the current implementation and preserve any extra side effects.
+
+Testing status
+--------------
+- Static source inspection: PASS for the existing names and paths listed above
+  at the time of research on main/app.html.
+- JavaScript syntax: PASS (parsed with the JavaScript Function constructor).
+- Mock 81,000-clone stress test: PASS on both Stop-button capture and the
+  stop-all block path; both removed 81,000 clone sprites and clone-owned threads
+  in about 5–6 ms in the mock, preserved array identities, emitted the
+  `gwarp-clones-cleaned` event, and disposed cleanly.
+- No-clone optimization test: PASS — button Stop did not inspect the thread
+  array when no clones remained; the explicit public GW.removeAllClones API
+  still scanned it for orphaned clone-owned threads.
+- Important event-order detail: uses window capture, not document capture. On the event path, the window capture listener runs before document-level capture listeners already registered by app.html.
+- Browser stress test in real G-Warp: NOT RUN here; Claude must integrate and
+  verify it before marking this item done.
+- Required browser tests:
+  1. Make 81,000 clones or use a deterministic fixture of that size.
+  2. Click Stop. Confirm the visible Stop handler works and clone cleanup is
+     under 100 ms on a documented target device/browser.
+  3. Confirm Engine.sprites and Engine.threads array references stay stable.
+  4. Confirm ordinary sprites remain, activeSpriteIndex is valid, no stale
+     clone scripts remain, and no console errors occur.
+  5. Test green flag/start after cleanup.
+  6. Test the normal 300 cap and Infinite clones mode.
+  7. Test the stop-all block, not just the top bar button.
+  8. Toggle the module off and confirm the original app behavior returns.
+  9. Run multiple Stop/Start cycles to detect stale state or listener leaks.
+
+Not claimed fixed
+-----------------
+This only addresses the fast clone-removal portion of the freeze-fix work.
+It does not implement the 250 ms frame budget, stuck-script dialog, text/list
+limits, or IndexedDB crash recovery. Keep the main TODO item unchecked until
+the integration and timing requirements have been met.
+
+No app.html or index.html was changed.
+
+
+---
+## NOTES-stuck-script-choice.txt (from old branch chatgpt/clone-limit-warning-v2)
+
+G-WARP STUCK-SCRIPT COPY — NOTES FOR CLAUDE
+============================================
+
+File
+----
+- chatgpt/stuck-script-choice.js
+
+TODO item
+---------
+NOW 1: stuck-script box — "A script is taking too long - Stop / Keep waiting"
+in G-Warp's dark style.
+
+Research finding from app.html
+------------------------------
+The dark alert already exists around line 12248:
+- It is created by showStuck(info).
+- Its heading is initially "GWrap AI: a block looks stuck".
+- It has a Stop button (gw8WarpStop) and a Resume button (gw8WarpResume).
+- The alert is assigned through GW_WARP_GUARD.onStuck.
+Therefore a new dialog is not needed. The minimal gap is the wording requested
+by TODO. This add-on reuses the existing dialog, its styles, Stop handler and
+resume behavior; it changes only the heading and the Resume label.
+
+Behavior
+--------
+- Wraps the existing window.GW_WARP_GUARD.onStuck.
+- Calls the original handler first, then updates the generated alert title to
+  "A script is taking too long" and button label to "Keep waiting".
+- Preserves the existing Stop button, Show me, Turn off warp, layout and event
+  handlers.
+- Switch-off key:
+    window.GW_DISABLE_CHATGPT_STUCK_SCRIPT_COPY = true
+- Idempotence key and dispose() are included.
+
+Integration
+-----------
+Load after all app.html scripts, after the existing onStuck handler is assigned.
+Only Claude or the owner should add the script include to app.html.
+
+Testing
+-------
+- Static source inspection: PASS; the existing alert/API is present in main.
+- JavaScript syntax: PASS after drafting.
+- Mock wording test: PASS. The original handler still ran and returned its original value; heading and button wording updated; ARIA/title set; duplicate loading did not double-wrap; dispose restored the original handler.
+- Real G-Warp browser test: NOT RUN.
+Required tests:
+1. Run a deliberately slow warp My Block until the current guard opens its alert.
+2. Confirm heading and Keep waiting label are exact.
+3. Confirm Stop stops the project, Keep waiting resumes, Show me scrolls to the
+   block, and Turn off warp still works.
+4. Confirm G-Warp dark styling and keyboard focus/ARIA role remain intact.
+5. Check no alert is created when a script is not stuck.
+6. Test switch-off and dispose behavior.
+
+No app.html or index.html was changed.
+
+
+---
+## NOTES-text-list-limits.txt (from old branch chatgpt/clone-limit-warning-v2)
+
+G-WARP TEXT + LIST LIMITS — NOTES FOR CLAUDE
+=============================================
+
+File
+----
+- chatgpt/text-list-limits.js
+
+TODO item
+---------
+NOW 1 sub-item:
+"Text limit (join can't grow forever) and list limit 200,000 items."
+
+Research in current app.html
+----------------------------
+I inspected current main/app.html:
+- Shared and sprite-local list resolution uses Engine.lists / the GW_VARS API
+  around lines 13092-13126.
+- GW.list(name) returns Engine.lists[name] and creates a list if missing
+  around line 4197; older core list operations use push/splice and item
+  replacement around lines 4272-4275.
+- The current fast reporter registry assigns op_join through GW9.fastFN around
+  line 13652; GW9.evalNode dispatches reporter nodes through that registry.
+- The runner also uses GW9.evalNode for nested reporter expressions.
+- Existing Bug Hunter notes mention a 200,000-item list scenario, but the
+  source scan did not find a hard 200,000-item mutation cap.
+- The source does not define a maximum join length. This supplement chooses
+  1,000,000 characters as a reviewable starting ceiling, matching the scale
+  of the existing million-character stress scenario.
+
+What this module attempts
+-------------------------
+- Caps join output at 1,000,000 characters and caps the right operand before
+  concatenation on the current fast reporter path, avoiding arbitrarily large
+  output on normal nested-expression joins.
+- Adds a result-level join guard for fallback evaluators and old direct
+  executeBlock reporter paths.
+- Wraps the current Engine.lists accessor with a dictionary proxy that returns
+  protected list arrays while preserving the underlying app-owned getter/setter
+  (shared and active-sprite-local list resolution).
+- Protects push, unshift, splice, direct length growth, and new indexed writes
+  beyond 200,000. String list items are also clipped to the text ceiling.
+- Wraps existing GW.list, GW.createList, GW_VARS global/local list accessors,
+  GW.loadProject and GW8.importSB3 when those APIs exist.
+- Existing over-limit lists are not silently trimmed on install; new growth is
+  blocked until the list is reduced below 200,000. This avoids silent data loss.
+- Provides a switch-off key:
+    window.GW_DISABLE_CHATGPT_TEXT_LIST_LIMITS = true
+  plus an installation key and dispose() rollback helper.
+
+Review cautions — Claude must test
+----------------------------------
+This is a standalone supplement, not integrated into app.html.
+- Extension code that retained raw list arrays before the module loaded, or
+  mutates raw sprite.localLists arrays using direct index/length writes, may
+  bypass a wrapper proxy. Standard G-Warp list blocks should use GW.list.
+- Lists already above 200,000 on import are kept intact to avoid silent loss;
+  decide whether import should instead warn or reject transactionally.
+- Text limit is a 1,000,000-character choice for review, not a documented
+  Scratch/TurboWarp standard. Confirm the product limit desired before merge.
+- The current fast join hook caches the right operand result in a local
+  variable, so it does not deliberately evaluate that expression twice.
+- Do not globally monkeypatch Array.prototype; that could break unrelated UI,
+  project history, asset arrays, extension lists, or rendering systems.
+- Review unload/dispose, undo/redo, list-scope preservation, VM-bridge sync,
+  import semantics and JSON serialization.
+
+Testing status
+--------------
+- Static API source review: PASS for the existing names in current main.
+- JavaScript syntax: PASS.
+- Mock tests: PASS: push at 199,999 caps at 200,000; splice insertion and indexed writes do not grow beyond cap; length=300,000 clamps to 200,000; deletion works; simple/nested joins both return at most 1,000,000 characters; an already-oversized imported list is preserved rather than truncated; global and sprite-local list caps work; underlying project dictionaries retain raw array values; idempotence and dispose/rollback pass.
+- Real browser integration tests: NOT RUN.
+Required tests:
+1. At length 199,999, push two values -> length 200,000 and warning.
+2. Splice insert at the cap -> length remains capped; deletions still work.
+3. Attempt length=300,000 and list[250000]='x' -> no growth above 200,000.
+4. Push / insert / replace / delete / clear work normally under the limit.
+5. Empty text, Unicode and nested joins never produce a result above
+   1,000,000 characters.
+6. Global lists, local lists, load, undo/redo, and save/load preserve scope/data.
+7. SB3 import with over-limit list does not silently corrupt or discard data.
+8. A repeated huge join does not freeze the browser.
+9. Test extension APIs that may hold raw list references.
+10. Verify module loaded twice and switch-off/dispose behavior.
+
+No app.html or index.html was changed.
+
+
+---
+## README.txt (from old branch chatgpt/clone-limit-warning-v2)
+
+ChatGPT puts new code here: one feature per .js file, plus a NOTES-<name>.txt.
+Read ../TODO.txt first. Never rewrite app.html.
