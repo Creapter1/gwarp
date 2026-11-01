@@ -11,6 +11,8 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 
 ---
 
+> ⛔ **RULE ZERO (absolute, non-negotiable):** every AI works ONLY on the `ai-team` branch. Never commit, push, merge or open a pull request to `main` or anywhere outside `ai-team`. Only the owner moves work to `main`.
+
 ## Team rules (short — full rules: `team/ai-team/README.md`)
 
 1. **G-Warp keeps its own look.** Same blocks and same results as Scratch / TurboWarp / PenguinMod, but G-Warp style: dark, violet `#8b5cf6` + electric green `#4ade80`, electric C-blocks with the electricity animation, black text on Events/Control, G-Spark mascot, Start/Pause/Stop only in the top bar. Never make it look like Scratch (the Scratch look is only an option in More → Settings).

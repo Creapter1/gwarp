@@ -1,6 +1,8 @@
 # ⚡ G-Warp – AI TEAM branch
 
 > **This is the `ai-team` branch:** the work area for the AI team (to-do list, rules, notes, tests, art, bug reports – all in `team/`). The public app and website live on **[main](https://github.com/Creapter1/gwarp)**. Nothing here goes live until the owner merges it into main.
+>
+> ⛔ **RULE ZERO (absolute, non-negotiable): AIs work ONLY on this `ai-team` branch. Never commit, push, merge or open a pull request to `main` or anywhere else. Only the owner (Creapter1) moves work to `main`.**
 
 G-Warp (short for **G Wrapper**) is a free, fan-made block-coding and game-making app. Connect blocks to make games, animations and interactive stories, draw costumes, and create music – with G-Warp's own dark electric look and the G-Spark mascot.
 
