@@ -2,18 +2,18 @@
 
 This is the main technical guide to **the application in this repository**. It describes the real screens, the real runtime, the actual tool modules, how data moves through G-Warp, and how that compares with Scratch 3's implementation. It is not a generic programming tutorial or an AI-agent guide.
 
-**Source baseline used:** `app.html` from the repository's main branch, titled “G-Warp Beta”; the companion [ENGINE-MAP.txt](../ENGINE-MAP.txt) records Beta v15.45.0 and the inspected source SHA `7ce527ca2908c63bbdfe642856ca29fd82178648`. The source includes later feature modules whose internal IDs keep older version numbers. Re-check the live file before relying on any implementation detail.
+**Source baseline used:** `app.html` from the repository's main branch, titled “G-Warp Beta”; the companion [ai-team branch: team/ENGINE-MAP.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/ENGINE-MAP.txt) records Beta v15.45.0 and the inspected source SHA `7ce527ca2908c63bbdfe642856ca29fd82178648`. The source includes later feature modules whose internal IDs keep older version numbers. Re-check the live file before relying on any implementation detail.
 
 ## Start here: which file explains what?
 
 - **[app.html](../app.html)** is the actual application: the interface, the custom engine, the Stage, block editing, media tools and later features are packaged inside this large HTML file.
 - **[index.html](../index.html)** is the website entry page. It is not the project runtime.
-- **[ENGINE-MAP.txt](../ENGINE-MAP.txt)** is the short, critical list of real G-Warp globals and hooks.
-- **[Complete user guide](../chatgpt/USER-GUIDE.txt)** tells you how to operate the current app.
-- **[UI/screenshots guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** names visible controls and contains real browser captures.
+- **[ai-team branch: team/ENGINE-MAP.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/ENGINE-MAP.txt)** is the short, critical list of real G-Warp globals and hooks.
+- **[Complete user guide](../docs/USER-GUIDE.txt)** tells you how to operate the current app.
+- **[UI/screenshots guide](../docs/SCREENSHOT-UI-DOCUMENTATION.md)** names visible controls and contains real browser captures.
 - **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** records the actions that were actually tested and the remaining gaps.
-- **[UI audit](../chatgpt/UI-AUDIT.txt)** is a detailed source inspection. A static concern in that file is not automatically a reproduced bug.
-- **[TODO](../TODO.txt)** and **[MERGE-QUEUE](../MERGE-QUEUE.txt)** show what is current work and what is only a candidate patch.
+- **[UI audit](https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/CHATGPT-NOTES.md)** is a detailed source inspection. A static concern in that file is not automatically a reproduced bug.
+- **[TODO](https://github.com/Creapter1/gwarp/blob/ai-team/team/TODO.txt)** and **[MERGE-QUEUE](https://github.com/Creapter1/gwarp/blob/ai-team/team/MERGE-QUEUE.txt)** show what is current work and what is only a candidate patch.
 
 ## How it is packaged
 
@@ -63,7 +63,7 @@ After a drag is finished, the stack must be either attached to a valid place or 
 
 G-Warp's runtime defines a `ScriptThread` class. In the inspected source, each thread carries the target/sprite, a block sequence, a program counter (`pc`), a call stack, a wait deadline (`waitUntil`) and a finished flag. Its `step()` method advances execution when the thread is not finished, the project is running and any wait deadline has passed.
 
-The initial `startGreenFlagExecution()` scans top-level `.block-stack` elements for a `when_flag` hat and creates threads. Later modules add or refine live editing, clone behavior, nested control blocks and My Blocks; the source explicitly says the runner reads blocks from the workspace while they run. Because those later modules patch the original runtime, use the current whole file and [ENGINE-MAP.txt](../ENGINE-MAP.txt) before editing execution code.
+The initial `startGreenFlagExecution()` scans top-level `.block-stack` elements for a `when_flag` hat and creates threads. Later modules add or refine live editing, clone behavior, nested control blocks and My Blocks; the source explicitly says the runner reads blocks from the workspace while they run. Because those later modules patch the original runtime, use the current whole file and [ai-team branch: team/ENGINE-MAP.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/ENGINE-MAP.txt) before editing execution code.
 
 **Do not use Scratch VM names as though they were G-Warp hooks.** G-Warp does not expose `window.vm` or `runtime.sequencer`. The recorded main runtime object is `window.Engine`; the real thread step is `ScriptThread.step()`. The engine map says `ScriptThread` itself is not exported globally, though its instances are reachable through `Engine.threads`.
 
@@ -89,7 +89,7 @@ G-Warp also has shared helper/feature objects: `GW` for engine and rendering hel
 
 The primary paint system is exposed as `window.GW_V15_COSTUME_EDITOR`. Its documented methods include save, bitmap/vector load, list refresh, mode switch and SVG cleaning. The companion `window.GW_VECTOR_EDITOR` handles vector mode and shared costume-coordinate mapping.
 
-The vector editor introduced by `gw-v1700-vector-editor` keeps vectors as SVG geometry instead of flattening the drawing to an 80×80 image. It preserves costume proportions and rotation centre and can keep an imported vector costume's shapes editable. The `gw-v17010-bitmap` module keeps bitmap costumes at their proper dimensions rather than squeezing everything into a fixed 80×80 result. Bitmap tools operate on a canvas; vector tools transform/select SVG elements. The active tool and selection are different state in each mode, and the real field names are in [ENGINE-MAP.txt](../ENGINE-MAP.txt).
+The vector editor introduced by `gw-v1700-vector-editor` keeps vectors as SVG geometry instead of flattening the drawing to an 80×80 image. It preserves costume proportions and rotation centre and can keep an imported vector costume's shapes editable. The `gw-v17010-bitmap` module keeps bitmap costumes at their proper dimensions rather than squeezing everything into a fixed 80×80 result. Bitmap tools operate on a canvas; vector tools transform/select SVG elements. The active tool and selection are different state in each mode, and the real field names are in [ai-team branch: team/ENGINE-MAP.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/ENGINE-MAP.txt).
 
 When diagnosing paint problems, trace this path in order: selected sprite → active costume → editor mode → canvas/SVG load → pointer coordinate conversion → edit operation → save back to costume → refresh thumbnail and Stage. A canvas changing on screen is not enough: verify that the underlying costume and its rotation centre survive a save and fresh reload.
 
@@ -192,7 +192,7 @@ That is also how to understand the current G-Warp source: follow each feature th
 
 G-Warp has accumulated multiple inline modules and patches. A later script can replace an earlier event handler or add behavior to an earlier object. **Order matters.** Search for the module ID and function name, read the earlier definition it relies on, and inspect the later patches before drawing conclusions.
 
-For code work, follow the repo's workflow: read [AI-TEAM.txt](../AI-TEAM.txt), [TODO.txt](../TODO.txt), [ENGINE-MAP.txt](../ENGINE-MAP.txt) and [MERGE-QUEUE.txt](../MERGE-QUEUE.txt) first. The repository rule is that ChatGPT's feature work goes into small files under `chatgpt/` with a matching notes file; only the owner or Claude changes `app.html` and `index.html`. Don't replace the large app with a rewritten copy.
+For code work, follow the repo's workflow: read [ai-team branch: team/AI-TEAM.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/AI-TEAM.txt), [ai-team branch: team/TODO.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/TODO.txt), [ai-team branch: team/ENGINE-MAP.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/ENGINE-MAP.txt) and [ai-team branch: team/MERGE-QUEUE.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/MERGE-QUEUE.txt) first. The repository rule is that ChatGPT's feature work goes into small files under `ai-team branch: team/chatgpt/` with a matching notes file; only the owner or Claude changes `app.html` and `index.html`. Don't replace the large app with a rewritten copy.
 
 For every feature, verify the whole path:
 **visible control → event handler → model/state change → runtime/drawing/audio effect → save/load path.**
@@ -206,4 +206,4 @@ Those are real results, but **they do not demonstrate full Scratch parity**. The
 
 ## Next step
 
-Use this page as the technical map, the [user guide](../chatgpt/USER-GUIDE.txt) for what to click, and the [screenshot/UI guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md) to find each control. When working on a specific bug, start from its actual screen and trace into the named code module instead of reading the entire HTML file from beginning to end.
+Use this page as the technical map, the [user guide](../docs/USER-GUIDE.txt) for what to click, and the [screenshot/UI guide](../docs/SCREENSHOT-UI-DOCUMENTATION.md) to find each control. When working on a specific bug, start from its actual screen and trace into the named code module instead of reading the entire HTML file from beginning to end.

@@ -13,24 +13,24 @@ This folder explains **the actual G-Warp application**: what you see on screen, 
 ## 2. How to use the app
 
 - **[Learn G-Warp](./LEARNING-GUIDE.md)** — first project and basic block-coding concepts.
-- **[Complete user guide](../chatgpt/USER-GUIDE.txt)** — how to use the existing controls and tools.
-- **[Screenshots and UI guide](../chatgpt/SCREENSHOT-UI-DOCUMENTATION.md)** — visual location of the controls, menus, tabs and right-click actions.
+- **[Complete user guide](../docs/USER-GUIDE.txt)** — how to use the existing controls and tools.
+- **[Screenshots and UI guide](../docs/SCREENSHOT-UI-DOCUMENTATION.md)** — visual location of the controls, menus, tabs and right-click actions.
 - **[Editor-area map](./images/gwarp-editor-map.svg)** and [block shapes](./images/gwarp-blocks-explained.svg) — quick visual explanations.
 
 ## 3. What has actually been checked
 
 - **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** — tests actually run in Chromium, with screenshots and the items that remain untested.
-- **[UI behavior audit](../chatgpt/UI-AUDIT.txt)** — source-level findings and likely issues. Read it together with the live report.
+- **[UI behavior audit](https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/CHATGPT-NOTES.md)** — source-level findings and likely issues. Read it together with the live report.
 - **[Real screenshots](./screens/)** — pictures captured from the running app, not drawings.
 
 A test report does not prove every app feature is working. The source map, browser results and untested items are kept separate.
 
 ## 4. If you're changing G-Warp
 
-Read [ENGINE-MAP.txt](../ENGINE-MAP.txt) before writing code. It lists the actual engine object and hooks and warns against assuming that Scratch VM internals exist in G-Warp. Then check [TODO.txt](../TODO.txt) and [MERGE-QUEUE.txt](../MERGE-QUEUE.txt) to see the current priority and whether a patch is only a candidate.
+Read [ai-team branch: team/ENGINE-MAP.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/ENGINE-MAP.txt) before writing code. It lists the actual engine object and hooks and warns against assuming that Scratch VM internals exist in G-Warp. Then check [ai-team branch: team/TODO.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/TODO.txt) and [ai-team branch: team/MERGE-QUEUE.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/MERGE-QUEUE.txt) to see the current priority and whether a patch is only a candidate.
 
 ## Where Scratch's own code lives
 
-The implementation guide links directly to the official [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor) and the actual `scratch-gui`, `scratch-blocks`, `scratch-vm`, renderer, paint and storage components. Use those sources to understand Scratch's implementation; use G-Warp's own `app.html` and [engine map](../ENGINE-MAP.txt) to understand this app.
+The implementation guide links directly to the official [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor) and the actual `scratch-gui`, `scratch-blocks`, `scratch-vm`, renderer, paint and storage components. Use those sources to understand Scratch's implementation; use G-Warp's own `app.html` and [engine map](https://github.com/Creapter1/gwarp/blob/ai-team/team/ENGINE-MAP.txt) to understand this app.
 
 **Important:** G-Warp is an independent implementation. It aims to provide Scratch-style behavior and project workflows, but it is not Scratch VM and compatibility must be checked feature by feature.
