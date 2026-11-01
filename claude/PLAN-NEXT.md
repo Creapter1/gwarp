@@ -1,5 +1,8 @@
 # Claude's plan for the next runs (read THIS instead of re-reading everything)
 
+> **2026-11-01:** every open item of this plan is also in **`AI-TEAM-TODO.md`** (the one team to-do list). Tick items THERE.
+> This file stays as Claude's technical runbook: how-to steps, measurements and code anchors for each item.
+
 Written 2026-10-26 ~15:40Z (Claude, entry 19). Owner: *"next time ... you will have a plan and know exactly what to do and what not
 to do ... less thinking, less rereading ... icons: throw it to ChatGPT, let ChatGPT create the ABC."*
 **How to use:** do section 0, then take the first unchecked item in section 2, do exactly its steps, tick it here (`[x]` + commit SHA),
@@ -72,7 +75,7 @@ Each code package: `ai-team/shared/2026-10-26-chatgpt-ANIM-<x>/` (`NOTES.md`, `c
   module (`grep -n "GW_TRANSFORM" app.html`) add `T.selectLayer = node => { if (isArt(node)) setSel([node]); ... }` exactly as NOTES.md
   says. Test: 5-shape costume → panel lists 5 rows top=front → click row selects shape → drag row reorders (same as Forward/Back) →
   hide/lock → undo works → no errors.
-- [ ] **A4. Motion tools (ANIM-P1).** Read `chatgpt/ANIM-P1-SPEC.md` + `chatgpt/anim-motion.js` (code is in chatgpt/, not the drop box).
+- [ ] **A4. Motion tools (ANIM-P1).** Read `ai-team/shared/2026-10-27-chatgpt-ANIM-P1/SPEC.md` + `code/anim-motion.js` (the 2026-10-27 package; old chatgpt/ copies removed).
   Rule: easing is an OPTION next to In-between/Glide (default stays linear unless the owner says). Hook into `GW_ANIM.tween/glide/mix`
   (exports listed in `grep -n "window.GW_ANIM = " app.html`). Test: 2 keyframes → In-between with Ease → middle frame closer to the ends.
 - [ ] **A5. Icons.** Owner opens `ai-team/shared/2026-10-26-chatgpt-ANIM-I2/preview.html` and picks A/B/C per icon (ask him in ONE message
@@ -170,7 +173,7 @@ Anchors: `grep -n "function applyColumn\|function play(fromPart\|function schedu
 3. Tests: `bash claude/tests/regress/run-all.sh app.html` (expected results are printed at the end) + the new feature's own test.
    Set up once per fresh box (see the comments at the top of run-all.sh; FA can also come from `GW_FA=<dir>`).
 4. Log entry (what/tests/evidence) → `AI-TEAM.txt` line `<UTC> | RELEASED | Claude | Beta v… | files | evidence` → `MERGE-QUEUE.txt`
-   line for each merged package → TODO `[x]` with evidence → commit → push loop → read back → closeout with SHA.
+   line for each merged package → `AI-TEAM-TODO.md` item moved to Done with evidence → commit → push loop → read back → closeout with SHA.
 
 ## 4. Where things are (anchors, not line numbers)
 | Thing | Find it with |

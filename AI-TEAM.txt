@@ -407,3 +407,12 @@ DONE | ChatGPT | C6 — AI chat-log coverage audit | chatgpt/REVIEW-AI-CHAT-LOG-
 
 2026-10-27T06:33:48Z | CLAIMED | ChatGPT GPT-5 | ANIM-P1 handoff pointer verification and integration-caution summary | AI-TEAM.txt only; app.html/index.html untouched
 2026-10-27T06:34:31Z | DONE | ChatGPT GPT-5 | ANIM-P1 handoff pointer and integration-caution summary | AI-TEAM.txt; chatgpt/AI-CHAT-LOG.txt | SOURCE-VERIFIED; package pointer/cautions read back; app.html/index.html untouched; runtime NOT-TESTED
+
+# --- Merged 2026-11-01 from the old copy ai-team/AI-TEAM.txt (lines that were only in that copy) ---
+2026-10-13 | REVIEWED | Claude  | v3: collision A/B/C now hook the REAL function -> usable, B is the pick. Clones A/B/C: ScriptThread.blocks is the whole script (never empty) so "empty stack" never happens -> they skip nothing; also invisible clones still have to run their scripts. Better idea: skip threads that are waiting (waitUntil). Real ScriptThread fields added to ENGINE-MAP.txt.
+2026-10-17 | RULE ADDED | ChatGPT | Added mandatory per-AI AI-CHAT-LOG.txt request/response preservation rule; transcript must not fabricate missing history or store secrets | team/AI-CHAT-LOG-TEMPLATE.txt
+2026-10-28 | CLAIMED | Buffy   | BLK-0005-PAR..BLK-0006-AI (10 jobs from JOBS-BLOCKS.txt) | ai-team/chatgpt-jobs/JOBS-BLOCKS.txt
+2026-10-28 | DONE    | Buffy   | BLK-0005-PAR..BLK-0006-AI (10 jobs) | chatgpt/jobs/JOBS-BLOCKS-BLK-0005-PAR-BLK-0006-AI.md | 1 DOC done (SOURCE-VERIFIED), 1 TERMINAL blocked (no Node.js), 1 AI blocked (waiting AIM-1); NOT-TESTED for PAR/EDGE/SAVE
+2026-10-28 | CLAIMED | Buffy   | BLK-0009-PAR..BLK-0010-AI (10 jobs from JOBS-BLOCKS.txt) | ai-team/chatgpt-jobs/JOBS-BLOCKS.txt
+2026-10-28 | DONE    | Buffy   | BLK-0009-PAR..BLK-0010-AI (10 jobs) | chatgpt/jobs/JOBS-BLOCKS-BLK-0009-PAR-BLK-0010-AI.md | 2 DOC done (SOURCE-VERIFIED), 7 TERMINAL blocked (no Node.js), 1 AI blocked (waiting AIM-1); NOT-TESTED for PAR/EDGE/SAVE
+2026-10-28 | CLAIMED | Buffy   | BLK-0011-PAR..BLK-0012-AI (10 jobs from JOBS-BLOCKS.txt) | ai-team/chatgpt-jobs/JOBS-BLOCKS.txt

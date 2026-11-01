@@ -18,7 +18,7 @@ STEP 1 - SETUP (only if not done before on this computer):
   npm install
   npx playwright install chromium
   cd ../../..
-STEP 2 - READ (every session): ai-team/README.md (all the rules), ai-team/tools/qa-kit/README.md, ai-team/HAIKU-TODO.txt (if it exists),
+STEP 2 - READ (every session): ai-team/README.md (all the rules), ai-team/tools/qa-kit/README.md, AI-TEAM-TODO.md (your jobs are the HK items),
   the last 20 lines of AI-TEAM.txt, claude/haiku/AI-CHAT-LOG.txt (if it exists).
 STEP 3 - LOG (every session, no exceptions): add an entry at the END of claude/haiku/AI-CHAT-LOG.txt (create the file if missing):
   --- ENTRY <n> ---
@@ -28,7 +28,7 @@ STEP 4 - CHECK THE APP:
   node ai-team/tools/qa-kit/smoke-app.js
   If it does not say ALL PASS, that is your first bug report (see STEP 5).
 
-STEP 5 - YOUR JOBS (in this order; if ai-team/HAIKU-TODO.txt exists, its jobs come first)
+STEP 5 - YOUR JOBS (in this order; the HK items in AI-TEAM-TODO.md come first)
   J1 BUG HUNT. Make small test projects with the builder (README section 3), then run:
        node ai-team/tools/qa-kit/roundtrip.js claude/haiku/out/<name>.sb3
        node ai-team/tools/qa-kit/run-in-scratch.js claude/haiku/out/<name>.sb3 5

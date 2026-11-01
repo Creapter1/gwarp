@@ -92,7 +92,7 @@ CLAUDE (v15.49.0, this night)
                                                      the A/B page stays in claude/experiments/music-compare/ for listening.
   ai-team/archive/gemini/music-engine-A/B/C.js                       NEVER REACHED GITHUB - only described in LAB-music.txt (ChatGPT job M2: ask owner)
   ai-team/archive/gemini/GM2/3/4/6/11/13/17/18 icon sheets            WAITING - ChatGPT job ICONS makes the placement plan + mocks, owner picks
-  Gemini / Grok / DeepSeek retired; their open jobs moved to ai-team/CHATGPT-TODO-2026-10-26.txt
+  Gemini / Grok / DeepSeek retired; their open jobs moved to ai-team/CHATGPT-TODO-2026-10-26.txt (2026-11-01: now in AI-TEAM-TODO.md; old list in ai-team/archive/old-plans/)
 
 =====================================================================
  WAITING FOR CLAUDE (drop box ai-team/shared/) - added 2026-10-26

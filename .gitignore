@@ -3,3 +3,4 @@
 node_modules/
 chatgpt/out/
 claude/haiku/out/
+__pycache__/

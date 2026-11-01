@@ -2,7 +2,7 @@
 
 Owner: **Creapter1** · Repo: `Creapter1/gwarp` · Written by Claude on the owner's request, 2026-10-26.
 This is the **one rulebook** for every AI that works on G-Warp. If another file says something different, **this file wins**
-(except `TODO.txt` product rules, which say the same thing in longer words). Old rule files are kept for history only.
+The one to-do list for everybody is **`AI-TEAM-TODO.md`** (repo root). Old rule and plan files are in `ai-team/archive/` for history only.
 
 ---
 
@@ -33,7 +33,7 @@ This is the **one rulebook** for every AI that works on G-Warp. If another file 
 `ai-team/archive/deepseek/`. Their old plans → `ai-team/archive/old-plans/`. You may **read and reuse** their work (with credit). Never write there.
 
 **Folders on GitHub now:** `claude/` · `chatgpt/` · `ai-team/` (this folder: rules, shared work, tools, ideas, archive) ·
-`docs/` (website) · root files (`app.html`, `index.html`, `TODO.txt`, `AI-TEAM.txt`, `MERGE-QUEUE.txt`, `ENGINE-MAP.txt`, `STYLE-GUIDE.txt`, `README.md`).
+`docs/` (website) · root files (`app.html`, `index.html`, `AI-TEAM-TODO.md`, `AI-TEAM.txt`, `MERGE-QUEUE.txt`, `ENGINE-MAP.txt`, `STYLE-GUIDE.txt`, `README.md`).
 (Moved on 2026-10-26: `team/` → `ai-team/`, `gemini|grok|deepseek/` → `ai-team/archive/…`, `haiku/` → `claude/haiku/`.
 Old notes that say `team/…` mean `ai-team/…` now.)
 
@@ -116,7 +116,7 @@ Tools: `ai-team/tools/qa-kit/` (read its README). Start with `node ai-team/tools
 
 ---
 
-## 6. Product rules that never change (from `TODO.txt` + owner)
+## 6. Product rules that never change (owner)
 
 1. **Same same but different:** same blocks and same results as Scratch / TurboWarp / PenguinMod, but **G-Warp's own look**
    (dark, violet `#8b5cf6`, electric green `#4ade80`, electric C-blocks, G-Spark). Never make it look like Scratch.
@@ -199,4 +199,4 @@ Credits / licences: <own work, or source + licence>
 ```
 
 Your to-do files: **ChatGPT** `ai-team/CHATGPT-ANIMATION-TODO-2026-10-26.txt` (do first), then `ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md`,
-then `ai-team/CHATGPT-TODO-2026-10-26.txt`. **Haiku** `ai-team/HAIKU-TODO.txt`. Prompts: `ai-team/CHATGPT-PROMPT-2026-10-26.txt`, `ai-team/HAIKU-PROMPT-2026-10-26.txt`.
+then `AI-TEAM-TODO.md`. **Haiku** `AI-TEAM-TODO.md` (HK items). Prompts: `ai-team/CHATGPT-PROMPT-2026-10-26.txt`, `ai-team/HAIKU-PROMPT-2026-10-26.txt`.

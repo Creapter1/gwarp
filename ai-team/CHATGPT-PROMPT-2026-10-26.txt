@@ -12,11 +12,11 @@ FIRST (no exceptions, before any other work):
 1. Check you can READ and WRITE the repo Creapter1/gwarp. If you can't write, say so in one line and hand in every file as a code
    block with its full path on top.
 2. Read, in this order: ai-team/README.md (ALL the rules), AI-TEAM.txt (last 30 lines), chatgpt/AI-CHAT-LOG.txt (last entry),
-   ai-team/CHATGPT-TODO-2026-10-26.txt, ai-team/tools/qa-kit/README.md.
+   AI-TEAM-TODO.md, ai-team/tools/qa-kit/README.md.
 3. Log gate: add a session-start entry to chatgpt/AI-CHAT-LOG.txt (template: ai-team/AI-CHAT-LOG-TEMPLATE.txt), commit, read it back.
 
 THEN work down, in this order: ai-team/CHATGPT-ANIMATION-TODO-2026-10-26.txt (FIRST - owner's focus), then the small job ai-team/CHATGPT-MUSIC-ICONS-2026-10-26.txt, ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md
-(jobs AIM-1..7), then ai-team/CHATGPT-TODO-2026-10-26.txt, then the JOB BANK ai-team/chatgpt-jobs/README.md (2,474 jobs -
+(jobs AIM-1..7), then AI-TEAM-TODO.md, then the JOB BANK ai-team/chatgpt-jobs/README.md (2,474 jobs -
 you will never run out of work). Finished art/code goes in the drop box ai-team/shared/ (README.md section 7). On chatgpt.com you can't run the QA kit (no terminal), so do the jobs marked
 [WEB] or [ANY] first: research, reviews, specs, test plans, docs, SVG art, proposals. Jobs marked [TERMINAL] wait for Freebuff.
 
@@ -49,7 +49,7 @@ SETUP (first session on this computer only - skip the parts already done):
   node ai-team/tools/qa-kit/smoke-app.js          -> must say ALL PASS. If not: that IS your first bug report.
 
 FIRST every session: read ai-team/README.md (all rules), AI-TEAM.txt (last 30 lines), chatgpt/AI-CHAT-LOG.txt (last entry),
-ai-team/CHATGPT-TODO-2026-10-26.txt, ai-team/tools/qa-kit/README.md. Then the log gate (session-start entry, commit, push, read back).
+AI-TEAM-TODO.md, ai-team/tools/qa-kit/README.md. Then the log gate (session-start entry, commit, push, read back).
 
 THEN the same lists in the same order (animation first). Inside a list do [TERMINAL] jobs first (they need the QA kit), then [ANY]/[WEB]. Paste the kit's real output into every report.
 

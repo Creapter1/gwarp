@@ -1,0 +1,102 @@
+G-WARP — CURRENT TEAM STATUS
+Updated: 2026-10-19 | Owner: Creapter1
+Evidence boundary: GitHub source/diff and document review by ChatGPT. ChatGPT did NOT run a browser/runtime test. Claude's current work log records a full v15.48.0 regression of 429 PASS / 9 FAIL, described as expected legacy/feature-status checks; this is reported evidence, not an independent ChatGPT rerun.
+
+SOURCE REFERENCE
+At main commit e00ce5c052051d4b7156173b036a326d5a682a83, app.html blob is 5ca624a515b9fc1310814c4740608c1cf3071028 (2,440,120 bytes; Beta v15.48.0) and index.html blob is 88b8d46aeaa2056828a0d445b82649a0c5ed986f (586,667 bytes). Claude's v15.48.0 release and same-version shape-handle patch changed app.html after the role-migration baseline; those are separate Claude commits, not part of ChatGPT's migration. Re-fetch hashes in the authorized working copy before further source changes.
+
+WEBSITE / DOCUMENTATION STATUS — 2026-10-18 (ChatGPT; PARTIAL)
+- Current homepage index.html blob: 2e8fade3859da61aca40ac6489139d475d2abbd1 (595,148 bytes at this pass). app.html remains at blob 5ca624a515b9fc1310814c4740608c1cf3071028; ChatGPT did not edit it.
+- Expanded the homepage with three start actions and 18 “What's new” cards; removed stale fixed extension counts from the page's text/stat cards; qualified Scratch-style compatibility and extension-safety wording. Expanded docs for Power lines, Paint new, individual release milestones, and AI-assisted/MIT credits. Detailed history is in chatgpt/AI-CHAT-LOG.txt; questions/blockers are in chatgpt/WEBSITE-OPEN-QUESTIONS.txt.
+- Static verification re-fetched all 15 public HTML pages. Across the two checks, 339 local href/src references had 0 missing local targets; direct checks confirmed the eight new card-anchor targets exist. This is STATIC source/tree evidence, not browser verification.
+- Still blocked on live published-site and phone-width checks, embedded screenshot freshness, current extension count/native-gallery inventory (old copy said 191; Grok's 184-count report used a different-size baseline), and the exact four visible Animation block names. GitHub Pages was inaccessible to the available browser tool. Do not call the website assignment fully complete until Claude/owner verifies those points in a real browser/build.
+
+CLEANUP COMPLETED
+- Restored AI-TEAM.txt from its referenced good blob; fixed malformed log text and recorded Grok G5 report delivery.
+- Added WORKFLOW-START-HERE.txt and AI-STATUS.txt; reduced AI-WORK-PLAN from ~29 KB to ~5.9 KB.
+- Claude plan v2.1 now routes through current status/checkpoint; 2026-10-17 plan and 2026-10-14 handoff are archived pointers.
+- Consolidated unique notes into chatgpt/README.md, deleted duplicate chatgpt/README.txt, and converted overlapping progress/inventory snapshots to pointers. Former text is retained in Git history.
+- Updated TODO.txt and continuous queue to separate delivered static review from pending runtime acceptance; simplified root README links.
+- The role migration itself did not edit app.html/index.html and did not run runtime tests. Subsequent Claude commits independently changed app.html for Beta v15.48.0; main now contains those source changes. Current app/index blob IDs remain recorded in this status snapshot.
+
+CURRENT PRIORITIES (SOURCE/REPORT REVIEW)
+- Current main source: Beta v15.48.0. Claude's release log reports the costume editor Select/transform changes, Scratch behavior fixes, and game speed improvements (zombie project reported 2 -> 58 FPS; The worst day 23 -> 37 FPS). These are Claude-reported test results, not independently reproduced by ChatGPT. The performance benchmark plan exists; a full new controlled benchmark cycle has not been recorded.
+- Latest shape-handle patch: the later same-version commit adds three assertions to claude/tests/test_select.js (newly drawn rectangle keeps handles, immediate resize works, clicking elsewhere draws a new shape). The prior "ALL PASS" report predates these assertions; no subsequent run result is recorded. RE-RUN REQUIRED.
+- Clone freeze/Stop: team/P0-CLONE-FREEZE-REPORT.txt records BROWSER-VERIFIED reproduction and v15.46.0 mitigation, retained in v15.48.0. Re-run targeted stress/Stop checks after runtime changes. chatgpt/clone-safety.js remains SUPERSEDED and disconnected.
+- Scratch parity: Grok has corrected T043 in grok/fixtures.json (repeat 2.7 -> 3 runs) and expanded the base fixtures to 60. grok/FIXTURE-SOURCES.txt still incorrectly says 2 runs. A separate grok/fixtures-extra-list.json contains T130-T139 (10 cases), but the current Claude runner reads the base file plus claude/tests/extra-fixtures.json (9 cases), not the separate list. Claude's 39/39 result is from the earlier 30+9 set; rerunning the intended 60+10 set and correcting the source map remain open.
+- Costume editor: Claude reports the initial Select test passed and logs a later full v15.48.0 regression (429 PASS / 9 FAIL, all described as expected legacy/feature-status checks) after the same-version shape-handle update. ChatGPT did not rerun it or inspect per-test console output. Remaining work reported in team/NEXT-FOR-THE-TEAM-2026-10-19.txt includes Bitmap Select copy/paste, text font sizing, and higher-resolution bitmap editing. Former DeepSeek candidates under gemini/lab/ remain blocked until current-source/canvas isolation evidence exists.
+- Browser extension: gemini/extension/ remains WAITING for actual packaging, icons, permission/privacy review, Chromium/Firefox checks, Scratch SPA/repeated injection, and end-to-end project loading. The old URL is not confirmed as the canonical site URL.
+- Protobuf .pmp: gemini/lab/pmp-loader.js and its harness remain incomplete until the parser API and a real legal fixture/assets are verified. Preserve .sb3 and ZIP .pmp.
+- Merge queue: root MERGE-QUEUE.txt is still Claude-maintained and contains stale deepseek/ paths and old task/status entries. ChatGPT has provided exact update recommendations in chatgpt/MERGE-QUEUE-NOTES.txt; do not edit the queue outside Claude's ownership rule.
+- Role migration: verified 28 former deepseek/ files have corresponding Gemini-lab destinations and deepseek/ now contains only README-ARCHIVE.txt. Of the original files, 25 retain identical blob content; three lab reports/notes were intentionally edited only to add provenance headers and update stale paths. Existing candidate code remains unaccepted.
+- Performance plan: team/PERFORMANCE-BENCHMARK-PLAN.txt defines the process; it is a plan, not proof that the whole suite has been remeasured.
+
+GATES / OWNER DECISIONS
+1. Claude must confirm active model label is exactly “Claude Opus 5.5”.
+2. Owner must authorize each live integration/release; this cleanup did not authorize app code changes.
+3. Owner must supply the exact canonical website URL before anyone replaces legacy URL references.
+4. team/CLAUDE-CHECKPOINT.txt is only a preliminary metadata handoff; Claude must verify the actual working copy, then overwrite it with real task/test evidence.
+5. The private user-project suite must stay private; don't copy projects/assets/scripts into this public repo. Current source edits require a fresh full regression run before claiming all v15.48.0 work verified.
+
+CURRENT DOCUMENT ROUTING
+- Start/gates: team/WORKFLOW-START-HERE.txt
+- Product priorities: ../TODO.txt
+- Current task: team/CONTINUOUS-WORK-QUEUE.txt
+- Roadmap: team/AI-WORK-PLAN.txt
+- Candidate status: ../MERGE-QUEUE.txt (Claude-maintained)
+- Claude procedure/checkpoint: team/CLAUDE-EXECUTION-PLAN-2026-10-18.txt and team/CLAUDE-CHECKPOINT.txt
+- Detailed evidence: team/CROSS-AI-REVIEW-2026-10-15.txt, team/INTEGRATION-STATUS-AUDIT-2026-10-16.txt, team/GEMINI-ONLY-REVIEW-2026-10-16.txt, team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt, team/P0-CLONE-FREEZE-REPORT.txt, claude/REVIEW-GROK-2026-10-19.txt, chatgpt/VERIFICATION-2026-10-19.txt, chatgpt/MERGE-QUEUE-NOTES.txt, team/PERFORMANCE-BENCHMARK-PLAN.txt.
+
+NOT TO EDIT FROM CHATGPT
+- grok/AI-TEAM-RESTORE-BACKUP.txt is a 47-byte “See /tmp…” placeholder; leave for Grok/owner to remove/archive.
+- gemini/lab/BUFFY-ADDONS-SETTINGS-REVIEW.txt is a misrouted handoff copy now preserved in the unified lab folder; authorship remains unverified, so do not attribute it to any model.
+
+
+TEAM ROLE MIGRATION — 2026-10-18
+Owner retired the active DeepSeek role and assigned all lab/research/A-B/C/test-harness work to Gemini 2 (FreeBuff/Argon access path). The former 28 files now live in gemini/lab/; deepseek/ contains only README-ARCHIVE.txt. The active task list is team/TODO-GEMINI.txt. This was a documentation/artifact move only: no app.html/index.html edits and no browser/runtime tests were performed as part of this migration. Existing blocked/superseded dispositions still apply.
+
+
+LATEST AUDIT ADDENDUM — 2026-10-19
+- Claude's AI-TEAM work log records a full Beta v15.48.0 regression of 429 PASS / 9 FAIL, with all nine described as expected legacy/feature-status checks. This is REPORTED TEST evidence; ChatGPT did not run the suite. Confirm whether the aggregate run explicitly included the three fresh-shape assertions in claude/tests/test_select.js.
+- Grok fixed T043 in grok/fixtures.json and expanded it to 60 cases. grok/FIXTURE-SOURCES.txt still says two repeats and a 30-case set. grok/fixtures-extra-list.json contains 10 additional cases; Claude's runner currently does not load that file. The intended current 60+10 parity run remains pending.
+- team/TODO-GEMINI.txt now points first to team/GEMINI-BIG-LIST-2026-10-19.txt, labeled “Gemini 3 (Argon)”; the roster above says “Gemini 2 (FreeBuff/Argon)”. This is a naming mismatch, not a separate workspace. Owner should confirm the canonical label; keep all active work under gemini/.
+
+- The current task naming remains inconsistent: AI-TEAM's roster says “Gemini 2 (FreeBuff/Argon)”; team/GEMINI-BIG-LIST-2026-10-19.txt says “Gemini 3 (Argon)”. This is a naming mismatch, not a separate workspace. Owner should confirm the canonical label; keep all active work under gemini/.
+- URL consistency: the new Gemini Big List header repeats the previously documented GitHub Pages URL, while TODO.txt still says the canonical website URL is pending owner confirmation. Do not switch extension targets or documentation links based only on that header.
+ROUND 2 DOCS PASS — 2026-10-18 (ChatGPT; CONTENT + STATIC AUDIT COMPLETE, RUNTIME PENDING)
+- Created all 8 tutorial lessons under docs/tutorials/ plus the hub; added Tutorials navigation across all 25 documentation HTML pages.
+- Created docs/glossary.html (65 terms) and docs/parents.html; linked both from navigation/footer on all docs pages. Reworked README.md into a shorter entry point with direct links and the AI workflow.
+- Expanded docs/blocks.html with 100+ core block examples across Motion, Looks, Events, Control, Sensing, Operators, Variables and Lists; notes a source-fixture disagreement for repeat (2.7) (JSON fixture says 3; older prose test says 2), without claiming live verification.
+- Accessibility static pass: all 25 docs HTML pages have visible :focus-visible styling; heading levels are sequential; IDs are unique; no inline image lacks alt text (there are no inline <img> elements); Tutorials/Glossary/Parents links are present in sidebars and footers.
+- Static source/tree checks across the 25 docs HTML pages: 0 missing local href/src targets. Batched same/cross-page fragment checks and new heading anchors found no broken fragments. These are static checks only; no browser, runtime, mobile, keyboard interaction, screen-reader or measured contrast test was performed. Claude owns the browser/mobile pass per team/CHATGPT-ROUND2-2026-10-19.txt.
+- app.html not edited. Remaining: validate exact current palette labels and tutorial scripts, confirm extension count/gallery provenance and four Animation block labels, inspect embedded homepage screenshot freshness, and finish published-site/mobile testing before calling the full web task closed.
+COSTUME ANIMATION REVIEW — 2026-10-18 (ChatGPT CA1–CA3; STATIC / RESEARCH ONLY)
+- CA1: chatgpt/USER-GUIDE.txt now contains a kid-friendly “Animate your costumes” walkthrough for Flipbook, onion skin, Rig/Animate, Make costumes and the documented Animation blocks.
+- CA2: chatgpt/REVIEW-costume-animation.txt names 14 untested test cases from a static review of claude/tests/test_cosanim.js; 27/27 PASS is only the assignment's reported result, not independently rerun here.
+- CA3: chatgpt/UX-costume-animation.txt ranks 10 UX improvements with acceptance criteria, citing Pivot Animator's official help and Scratch Paint source.
+- No Playwright/browser/app run. app.html and claude/tests/test_cosanim.js untouched. Continue with the next assigned task; review findings are reports, not implementation approval.
+CHATGPT CG1–CG3 — 2026-10-19 (DOC / STATIC REVIEW COMPLETE)
+- CG1: chatgpt/USER-GUIDE.txt now covers More → File → Report a bug, optional recent-error inclusion and manual GitHub submission, the “Your project is stuck” choice, 300 default/5,000 Infinite Clones safety ceiling, and #scratch= prompt/cancel behavior. Current app source checked; app.html unchanged.
+- CG2: chatgpt/COMPILER-REVIEW-2026-10-19.txt says no new full statement-cache/core JS compiler is present in app blob 5ca624a515b9fc1310814c4740608c1cf3071028. The existing DOM-part/child-child and typed-slot AST caches are narrower; cache invalidation and full Grok fixture-family coverage must be addressed before compiler acceptance. Static review only; no benchmark/test run.
+- CG3: chatgpt/MERGE-QUEUE-NOTES.txt section 6 suggests refreshing stale statuses/path references. Authoritative MERGE-QUEUE.txt was not edited.
+- Next ChatGPT reviewer task: C1, read-only review of Gemini-inherited costume proposals under gemini/lab/.
+CHATGPT C2 — 2026-10-19 (STATIC REVIEW COMPLETE; CANDIDATE REMAINS SUPERSEDED)
+- Created chatgpt/REVIEW-clone-safety-2026-10-19.txt. It reviews chatgpt/clone-safety.js against current app v15.48.0 source, the handoff notes and ENGINE-MAP, and includes an unchecked P0/P1 clone/Stop/settings/cache regression list.
+- Key issues: candidate bypasses the current 5,000 safety ceiling when Infinite Clones is on; document-capture Stop handler empties threads before native Stop marks them finished; it reimplements the native clone function without maintaining native clone-count cache fields; and it truncates loaded project clone limits above 300.
+- Current queue explicitly marks this module SUPERSEDED. No code was changed and no tests were run. Do not revive. Next assignment follows team/TODO-CHATGPT.txt.
+CHATGPT C3 — 2026-10-19 (STATIC REVIEW COMPLETE; EXTENSION TESTS NOT RUN)
+- Created chatgpt/REVIEW-SCRATCH-LINK-EXTENSION-2026-10-19.txt. Current app hash handler already exists in the reviewed v15.48.0 blob; do not duplicate chatgpt/scratch-link.js.
+- Extension issues for follow-up: referenced PNG icons absent from current tree, popup setting changes do not update existing tabs immediately, history wrappers remain installed when toggled off, no explicit hashchange observer, context-menu project parser should validate origin, privacy wording should distinguish browser sync preference storage from later G-Warp fetch.
+- Chrome/Firefox, prompt/cancel, failure, popup and package tests were NOT RUN. Next: C4 Grok expected-result/source evidence review.
+
+
+2026-10-19 SECURITY / AI-CONTEXT ADDENDUM (ChatGPT, static only)
+- Current app source blob 5ca624a515b9fc1310814c4740608c1cf3071028 has a user-owned Anthropic key flow: sessionStorage by default, localStorage only when Remember is checked, Remove key clears both; no hard-coded credential-pattern hits in the inspected app blob. A same-origin script could read either store.
+- A user click on Ask the connected AI sends the question plus non-clone sprite names, selected sprite, variable names and bounded selected-sprite block text to api.anthropic.com. The current UI lacks exact context preview and a context-off choice. Source default claude-sonnet-5-5 conflicts with the official docs' current active model ID claude-sonnet-5; actual API behavior is NOT TESTED.
+- Detailed report: chatgpt/REVIEW-AI-KEY-CONTEXT-SECURITY-2026-10-19.txt; maintained review: team/SECURITY-AND-CONSISTENCY-AUDIT-2026-10-15.txt. app.html/index.html were not edited. Browser/API, exports, full Git history and repository secret settings remain untested.
+
+
+LATEST GEMINI ANIMATION/LAB REVIEW — 2026-10-19 (ChatGPT C9, STATIC)
+- Reviewed commit b05973868839921586c844a93c4e1546c75c1c5c (37 new Gemini files); app.html/index.html were untouched in that commit and remain outside this review's edit scope.
+- Animation-lab acceptance is not complete: required current melody paths and pivots.json are absent; auto-rig-C's generic root fallback can create a self-parent cycle; pivot values in the existing harness are printed, not asserted; A/B/C variants conflict with the current sprint rule; flipbook file paths differ from the assignment.
+- Gemini's prior XML/Node test notes are reported evidence only. ChatGPT did not independently execute Node or browser tests. Full review: chatgpt/REVIEW-GEMINI-ANIMATION-LAB-2026-10-19.txt.

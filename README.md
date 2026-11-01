@@ -14,6 +14,7 @@ G-Warp has its own engine. It aims for familiar Scratch-style behavior and proje
 - **[Parents and teachers](docs/parents.html)** — classroom tips, safety and privacy caveats.
 - **[Credits and licences](docs/credits.html)** — AI-assisted roles, project licence and third-party credit guidance.
 - **[Current team status](ai-team/AI-STATUS.txt)** — verified progress and open blockers.
+- **[AI team to-do list](AI-TEAM-TODO.md)** — the one list of everything open and done.
 
 **Quick start:** open the app, create or open a project, select a sprite, drag blocks into the workspace, and press Start. Save a copy often. Use the explicit file menu when saving or exporting.
 

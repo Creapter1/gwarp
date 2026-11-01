@@ -42,7 +42,7 @@ YOUR LANE
     tests/            your test files (e.g. compare.js JSON files)
   Finished code/art/icons for the app: the drop box ai-team/shared/<date>-chatgpt-<job id>/ (rules: ai-team/README.md section 7).
 - Files you may change outside your folder: ONLY your own job file above (to mark [x] / [~]) and new drop-box folders.
-  Do NOT write AI-TEAM.txt, TODO.txt, MERGE-QUEUE.txt or anything else - Claude collects your results from your folder.
+  Do NOT write AI-TEAM.txt, AI-TEAM-TODO.md, MERGE-QUEUE.txt or anything else - Claude collects your results from your folder.
 {notes}
 HOW TO DO EACH JOB: ai-team/chatgpt-jobs/HOW-TO-DO-EACH-JOB.md (where it says chatgpt/jobs/ or chatgpt/bugs/, use YOUR folder
   chatgpt/lanes/{id}/reports/ and .../bugs/ instead). All rules: ai-team/README.md. You NEVER edit app.html or index.html.
@@ -78,7 +78,11 @@ IF git pull --rebase SHOWS A CONFLICT
 ALWAYS: real proof only (TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TESTED). Small, finished, pushed > big, half done.
 -----------------------------------------------------------------------------------------------
 """
-for lid, name, jobs, where, notes in LANES:
-    with open(os.path.join(HERE, f'LANE-{lid}.txt'), 'w', encoding='utf-8') as f:
+# 2026-11-01: all lane prompts go into ONE file, LANES.txt (copy only the part of your lane).
+with open(os.path.join(HERE, 'LANES.txt'), 'w', encoding='utf-8') as f:
+    f.write('ALL CHATGPT LANE PROMPTS IN ONE FILE. One session = one lane: copy ONLY the part of your lane (between its lines).\n')
+    f.write('Lanes: ' + ', '.join(l[0] for l in LANES) + '. The one to-do list for the whole team: AI-TEAM-TODO.md.\n\n')
+    for lid, name, jobs, where, notes in LANES:
         f.write(T.format(id=lid, name=name, jobs=jobs, where=where, notes=('- Note: ' + notes + '\n') if notes else ''))
-print(len(LANES), 'lane prompts written')
+        f.write('\n\n')
+print(len(LANES), 'lane prompts written to LANES.txt')
