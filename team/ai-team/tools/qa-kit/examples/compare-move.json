@@ -1,1 +1,0 @@
-{"name":"BLK-0001-PAR move","vars":["result"],"script":"return [B.C(\"move\", [10]), B.SET(\"result\", B.X)];"}

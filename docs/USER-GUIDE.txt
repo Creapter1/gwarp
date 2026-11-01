@@ -17,8 +17,8 @@ Beginner learning path: ../docs/LEARNING-GUIDE.md
 Deep engineering research: ../docs/ENGINEERING-REFERENCE.md
 Master index: ../docs/README.md
 UI reference: docs/SCREENSHOT-UI-DOCUMENTATION.md
-Visual maps: team/chatgpt/images/gwarp-ui-map.svg and team/chatgpt/images/gwarp-interactions-map.svg
-Behavior audit: team/chatgpt/CHATGPT-NOTES.md › UI-AUDIT.txt
+Visual maps: ai-team branch: team/chatgpt/images/gwarp-ui-map.svg and ai-team branch: team/chatgpt/images/gwarp-interactions-map.svg
+Behavior audit: ai-team branch: team/chatgpt/CHATGPT-NOTES.md › UI-AUDIT.txt
 Source: app.html
 
 CONTENTS
@@ -273,6 +273,6 @@ This guide is updated against the GitHub v15.48.0 source and recent commit diffs
 
 IMPORTANT: after that reported Select-tool PASS, a later same-version commit added three assertions for a freshly drawn rectangle retaining its handles, resizing it immediately, and clicking elsewhere to draw a new shape. The repository has no test-run result recorded after that latest addition; those three behaviors are NOT YET VERIFIED for the newest commit. The full v15.48.0 regression was also reported as still running, with two failures described as expected legacy title/version and old Developer-mode-animation checks; those have not been independently confirmed here.
 
-ChatGPT's verification for this update was a static GitHub source/diff and documentation audit. No browser/runtime execution was possible in this review environment. Do not treat code presence, a test file, or a prior PASS as proof that the newest commit passed. Re-run `team/claude/tests/test_select.js` against the current `app.html`; then run the relevant costume regression tests and complete the full suite before claiming the current Beta is fully verified. The user guide and current task list should be updated with the exact results and environment.
+ChatGPT's verification for this update was a static GitHub source/diff and documentation audit. No browser/runtime execution was possible in this review environment. Do not treat code presence, a test file, or a prior PASS as proof that the newest commit passed. Re-run `ai-team branch: team/claude/tests/test_select.js` against the current `app.html`; then run the relevant costume regression tests and complete the full suite before claiming the current Beta is fully verified. The user guide and current task list should be updated with the exact results and environment.
 
 Still unverified in the reported runs: all browsers beyond Chromium, all interactions at small window sizes, project save/reopen after every transform type, accessibility/reduced motion, and full public-site loading. Live-verified items listed in the older 2026-10-13 report remain evidence only for that older build.

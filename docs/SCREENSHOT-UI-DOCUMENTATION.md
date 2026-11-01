@@ -3,7 +3,7 @@
 **Version inspected:** G-Warp Desktop Beta v15.45.0  
 **Source:** [app.html](https://github.com/Creapter1/gwarp/blob/main/app.html)  
 **Live app:** https://creapter1.github.io/gwarp/  
-**Audit companion:** [UI-AUDIT.txt](../team/chatgpt/CHATGPT-NOTES.md)  
+**Audit companion:** [UI-AUDIT.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/CHATGPT-NOTES.md)  
 **Start learning:** [../docs/LEARNING-GUIDE.md](../docs/LEARNING-GUIDE.md)  
 **Deep technical reference:** [../docs/ENGINEERING-REFERENCE.md](../docs/ENGINEERING-REFERENCE.md)  
 **User guide:** [USER-GUIDE.txt](./USER-GUIDE.txt)
@@ -18,7 +18,7 @@ This is an explanatory map. Real captured screenshots and the interactions they 
 
 ## 1. Main UI map
 
-![Schematic map of G-Warp's major editor areas](../team/chatgpt/images/gwarp-ui-map.svg)
+![Schematic map of G-Warp's major editor areas](https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/images/gwarp-ui-map.svg)
 
 | Area | Purpose | Main interaction |
 |---|---|---|
@@ -33,7 +33,7 @@ This is an explanatory map. Real captured screenshots and the interactions they 
 
 ## 2. Common interaction flow
 
-![Schematic diagram of common G-Warp interactions](../team/chatgpt/images/gwarp-interactions-map.svg)
+![Schematic diagram of common G-Warp interactions](https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/images/gwarp-interactions-map.svg)
 
 ## 3. Main editor: how controls work
 
@@ -101,7 +101,7 @@ The source calls a costume-loading routine on every main-tab change. This is a r
 Claude captured real screenshots from the running app on 2026-10-13. They are stored in `docs/screens/`, not in the schematic folder. See the [live verification report](../docs/LIVE-UI-VERIFICATION.txt) for environment, test results, and what remains untested. The two SVGs above remain clearly labelled schematics.
 
 ## 8. Verification note
-This document combines static source inspection with a limited live-browser test run against Beta v15.45.0 in Chromium at 1440×900 and 1024×700. Ten interaction/layout checks passed. Nested C-block snapping, save shortcuts, SB3 round-trip, Pause/audio, Stage click routing, paint tools, advanced dialogs, and Firefox/Safari remain NOT TESTED. For detailed source findings see [UI-AUDIT.txt](../team/chatgpt/CHATGPT-NOTES.md); for live evidence see [LIVE-UI-VERIFICATION.txt](../docs/LIVE-UI-VERIFICATION.txt).
+This document combines static source inspection with a limited live-browser test run against Beta v15.45.0 in Chromium at 1440×900 and 1024×700. Ten interaction/layout checks passed. Nested C-block snapping, save shortcuts, SB3 round-trip, Pause/audio, Stage click routing, paint tools, advanced dialogs, and Firefox/Safari remain NOT TESTED. For detailed source findings see [UI-AUDIT.txt](https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/CHATGPT-NOTES.md); for live evidence see [LIVE-UI-VERIFICATION.txt](../docs/LIVE-UI-VERIFICATION.txt).
 
 ---
 

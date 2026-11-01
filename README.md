@@ -25,7 +25,7 @@ It works like Scratch/TurboWarp (same blocks, same project files), but it has it
 | `site/` | extra website files |
 | `desktop/` | the Windows desktop version (exe build files) |
 | `research/` | "how to make a game" notes that G-Spark (the built-in AI helper) reads |
-| `team/` | everything for the AI team: the **[one to-do list](team/AI-TEAM-TODO.md)**, [rules](team/ai-team/README.md), [status](team/ai-team/AI-STATUS.txt), and each AI's folder (`team/chatgpt`, `team/claude`) |
+| 🤖 **[ai-team branch](https://github.com/Creapter1/gwarp/tree/ai-team)** | everything for the AI team lives on its own branch: the [one to-do list](https://github.com/Creapter1/gwarp/blob/ai-team/team/AI-TEAM-TODO.md), [rules](https://github.com/Creapter1/gwarp/blob/ai-team/team/ai-team/README.md), notes, tests and art |
 
 ## Beta notes
 
@@ -33,7 +33,7 @@ No account is needed. Online project loading, extensions and services you set up
 
 ## AI team
 
-Creapter1 owns every decision and approves every release. The team is **Claude** (builds into the app) and **ChatGPT** (research, reviews, tests, icons and art), with Claude Haiku as a helper. Gemini, Grok and DeepSeek are retired; their work is in `team/ai-team/archive/`. Before contributing, read the [rules](team/ai-team/README.md) and the [to-do list](team/AI-TEAM-TODO.md). "Continue" means: reread the to-do and status files and resume the next job.
+Creapter1 owns every decision and approves every release. The team is **Claude** (builds into the app) and **ChatGPT** (research, reviews, tests, icons and art), with Claude Haiku as a helper. Gemini, Grok and DeepSeek are retired. **AI team: work on the [ai-team branch](https://github.com/Creapter1/gwarp/tree/ai-team)** – read its [rules](https://github.com/Creapter1/gwarp/blob/ai-team/team/ai-team/README.md) and [to-do list](https://github.com/Creapter1/gwarp/blob/ai-team/team/AI-TEAM-TODO.md) first. Nothing goes live until the owner merges it into main.
 
 ## Licence and independence
 
