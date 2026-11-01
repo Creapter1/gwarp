@@ -95,8 +95,8 @@ bottom) · `MERGE-QUEUE.txt` (one path note) · `team/ai-team/README.md`, `CHATG
 | AI-TEAM*.txt/md, CLEANUP-REPORT, ENGINE-MAP, MERGE-QUEUE, STYLE-GUIDE, TODO.txt, ai-team/, chatgpt/, claude/ → `team/` | clean front page; links updated in 98 files, 0 new broken links |
 
 ## Pass 3 (1 Nov 2026, Claude) – only two branches: main + ai-team
-| Old branch | What was kept (in this ai-team branch) | Archive tag (full history kept) |
+| Old branch | What was kept (in this ai-team branch) | History kept |
 |---|---|---|
-| chatgpt/clone-limit-warning, chatgpt/clone-limit-warning-v2 | notes appended to team/chatgpt/CHATGPT-NOTES.md; 8 proposal modules → team/chatgpt/*.js (clone-limit, frame-budget, crash-recovery-offer, stop-clone-cleanup, stuck-script-choice, open-scratch-link, text-list-limits). Their old copies of app.html/index.html/README were NOT taken (outdated). | archive/chatgpt-clone-limit-warning, archive/chatgpt-clone-limit-warning-v2 |
-| chatgpt/l8-art-art-001 | ART-001 hero kid options A/B/C + preview → team/ai-team/shared/2026-10-26-chatgpt-ART-001/, lane log → team/chatgpt/lanes/L8-ART/ | archive/chatgpt-l8-art-art-001 |
-| ollama-work | bug report → team/bugs/BUG-20261027-1349-background-music-does-not-play.md | archive/ollama-work |
+| chatgpt/clone-limit-warning, chatgpt/clone-limit-warning-v2 | notes appended to team/chatgpt/CHATGPT-NOTES.md; 8 proposal modules → team/chatgpt/*.js (clone-limit, frame-budget, crash-recovery-offer, stop-clone-cleanup, stuck-script-choice, open-scratch-link, text-list-limits). Their old copies of app.html/index.html/README were NOT taken (outdated). | merged into ai-team (keep-ours merge) |
+| chatgpt/l8-art-art-001 | ART-001 hero kid options A/B/C + preview → team/ai-team/shared/2026-10-26-chatgpt-ART-001/, lane log → team/chatgpt/lanes/L8-ART/ | merged into ai-team (keep-ours merge) |
+| ollama-work | bug report → team/bugs/BUG-20261027-1349-background-music-does-not-play.md | merged into ai-team (keep-ours merge) |
