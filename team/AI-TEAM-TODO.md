@@ -66,7 +66,7 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 - [open] E2.4 TurboWarp blocks: while, is online?, last key pressed, mouse button down? [MISSING-LIST.txt]
 - [open] E2.9 PenguinMod core blocks: if/else if, switch/case, power, true/false, >= <= !=, break/continue, return (spec + expected results first) [MISSING-LIST.txt]
 - [open] E2.7 Translate extension doesn't translate [MISSING-LIST.txt]
-- [open] My Blocks editing: add number/text/boolean inputs, labels, "run without screen refresh" like Scratch; keep G-Warp style (colour change) or Scratch define-hat style — owner picks [owner notes 2026-10-28; MISSING-LIST B6]
+- [open] My Blocks: TurboWarp-style define hat + colour picker DONE (Claude 2 Nov); check inputs/labels/run-without-refresh still work
 - [open] .pmp protobuf loader: needs a real legal test file + verified parser; keep .sb3 and ZIP .pmp working [TODO.txt item 5, team/chatgpt/REVIEW-PMP-PROTOBUF-LOADER]
 - [open] P3: builder `set_effect` with a menu value is dropped on .sb3 export [team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md]
 - [open] Known P3: a number added to a list is stored as text "3" (Scratch: 3) [team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md]
@@ -101,7 +101,6 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 
 ## 5. Costumes / Animation / Tiles
 
-- [open] A1 Animation frame thumbnails have a WHITE background → dark checker; paint editor still says "Reshape/Eraser – coming soon" although they work → check + fix titles [team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md, CHATGPT-ANIMATION-TODO]
 - [open] A2 Integrate guide lines "liner" (ANIM-G1, `team/ai-team/shared/2026-10-26-chatgpt-ANIM-G1/`) + test [team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md]
 - [open] A3 Integrate layers panel (ANIM-L1) — needs `T.selectLayer` hook first [team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md]
 - [open] A4 Integrate motion tools (ANIM-P1, `team/ai-team/shared/2026-10-27-chatgpt-ANIM-P1/`): easing as an OPTION, default stays linear [team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md]
@@ -111,9 +110,7 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 - [open] ANIM-T1 Frames strip + preview on stage (real size), keyboard , and . , onion settings [CHATGPT-ANIMATION-TODO]
 - [open] ANIM-D1 Kid guide "Make your first animation" + 3 sample projects (own art) [CHATGPT-ANIMATION-TODO]
 - [open] Icons must match everywhere (Code, Costumes, Sounds, Animation, Song maker, menus) — app-wide audit after ANIM-I1 [TODO.txt]
-- [open] Animation tools belong inside the Costumes tab (not a pop-up) and must be simple enough for a kid [owner notes 2026-10-28]
 - [open] Tiles: work like a stencil directly in the costume editor; each tile sprite its own tile map; tile editor inside the Tiles tab; "Add Sprite" makes a blank sprite; save tile sprites in .sb3 [owner notes, FUTURE-IDEAS OI-2]
-- [open] OI-4 Ground line in the Animation editor (2-bone leg IK, feet never go below the line) — owner approved, not built [FUTURE-IDEAS.txt, NEXT-AFTER-v15.49]
 - [open] OI-3 Glide: choose number of steps + ease; mark glide frames in the strip [FUTURE-IDEAS.txt]
 - [open] OI-5 Drag a costume into / out of a folder [FUTURE-IDEAS.txt]
 - [open] Paint editor leftovers: Bitmap Select copy/paste/flip/delete (L5), text font size in the box, sharper full-stage bitmaps (L6), on-canvas text typing (L4), faster Make costumes (L3) [NEXT-FOR-THE-TEAM-2026-10-19, CHATGPT-TODO-2026-10-26]
@@ -124,12 +121,7 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 
 ## 6. Sound / Music
 
-- [open] M3 BUG first: squares changed AHEAD while the song plays are not heard → schedule per bar, re-schedule on change [TODO.txt, team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md]
-- [open] M1 Each square has its own level: off → light → medium → hard → extreme (brighter each step) [TODO.txt]
 - [open] M1b A level makes the user's own part richer (harmony, 2nd instrument, fills), user can change what each level adds [TODO.txt]
-- [open] M2 "Clear all" + start from an empty song + Undo [TODO.txt]
-- [open] M4 Spark Studio: Create Bass, Create Beat, Create Chords next to Create Melody [TODO.txt]
-- [open] M5 Rename the Create zone title to "Spark Studio" (tabs Melody / Bass / Beat / Chords; ids stay) [TODO.txt, team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md]
 - [open] MUS-I1 ChatGPT: music icons A/B/C (clear-all, empty-song, level 1-4, create-bass/beat/chords, my-part) → owner picks [team/ai-team/CHATGPT-JOBS.md › CHATGPT-MUSIC-ICONS-2026-10-26.txt]
 - [open] B3 Owner listens: Tune Mix / Classic / Fresh / My melody + Create Melody — enough? [TODO.txt, team/claude/CLAUDE-NOTES.md › PLAN-NEXT.md]
 - [open] Bass / drum / fill PATTERN choices (partly covered by M4) [TODO.txt]
@@ -144,7 +136,7 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 
 - [open] B1 Broadcast "New message…" / "Rename message…" [MISSING-LIST.txt, ChatGPT G-C1]
 - [open] B2 Rename / delete a variable or list [MISSING-LIST.txt, G-C2]
-- [open] B3 Stage monitors: checkboxes (x, y, direction…), modes (normal/large/slider), list import/export, drag [MISSING-LIST.txt, G-C3]
+- [open] B3 Stage monitors: checkboxes DONE for reporters (Claude 2 Nov); still open: modes (normal/large/slider), list import/export, drag
 - [open] B4 Click a reporter → value bubble [MISSING-LIST.txt, G-C4]
 - [open] B5 Drag sprites around the stage in the editor [MISSING-LIST.txt]
 - [open] B7 "Add Comment" attached to a block [MISSING-LIST.txt, G-C6]
@@ -158,7 +150,7 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 - [open] E2.5 Interpolation + custom stage size setting · E2.6 Language menu (use `team/ai-team/ui-strings-en.json`) · E2.8 kid add-ons (debugger, variable manager…) [MISSING-LIST.txt]
 - [open] Translations: Spanish, then pt-BR, fr, de, ja from `team/ai-team/ui-strings-en.json` (never delivered) [archive CHATGPT-SPRINT-2026-10-20 S2/S5/S6]
 - [open] X2 Add every on-screen English text missing from `ui-strings-en.json` [CHATGPT-TODO-2026-10-26]
-- [open] Stage pane clean-up: hide size text + X/Y, small/normal/large icons, HQ on by default; colourful G add-buttons with icon menus; double-click a sprite to show it on the stage; sprite pane fits a small exe window [owner notes 2026-10-28]
+- [open] Stage pane clean-up: G add-buttons + double-click a sprite DONE (Claude 1-2 Nov); still check: size text/X-Y hidden, HQ default, small exe window
 - [open] "Behaviors" blocks move into the Extensions gallery as G-Warp's own extension [owner notes 2026-10-28]
 - [open] Developer mode vs normal mode [TODO.txt LATER]
 - [open] Job bank JOBS-UI: 354 button/icon/words jobs; JOBS-TESTING: 80 kid-critic + chaos jobs [team/ai-team/chatgpt-jobs/]
@@ -172,7 +164,7 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 - [open] Job bank JOBS-EXTENSIONS: 920 jobs (-LOAD, -RUN, -CREDIT, -SAFE, -DOC) [team/ai-team/CHATGPT-JOBS.md › JOBS-EXTENSIONS.txt]
 - [open] K11/K12 Specs for the 6 most used TurboWarp extensions + Clones+, Looks+, Camera [CHATGPT-TODO-2026-10-26]
 - [open] Browser extension "Open in G-Warp": PNG icons, permission + privacy review, Chrome/Firefox tests, restore history wrappers when off [TODO.txt item 3, MERGE-QUEUE.txt, team/chatgpt/REVIEW-SCRATCH-LINK-EXTENSION]
-- [open] Credit check: every extension's creator + licence on the credits page [team/chatgpt/CHATGPT-NOTES.md › WEBSITE-OPEN-QUESTIONS.txt]
+- [open] Credit check: libraries + fonts DONE in docs/credits.html + THIRD-PARTY-NOTICES.md (ai-team, 2 Nov); still: every extension creator on the credits page
 - [later] "Plus" extensions for Costumes + Song maker (needs a safe Plus API) + the "any AI" prompt that first asks "What are you trying to make?" [ideas/PLUS-EXTENSIONS-AND-3D-2026-10-26.md]
 
 ## 9. Website
@@ -223,6 +215,19 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 - [open] Creator / game-design research packs (AIM-K1 folder) → turn into recipes and tips [team/ai-team/shared/2026-10-26-chatgpt-AIM-K1/GAPS.md]
 - [open] "Game Scenario Creator" research prompt (any tutorial or game described in full for G-Spark) [owner notes]
 
+## 15. Safety / license / protection (owner 2 Nov: "just in case")
+
+- [open] Owner: move the license fixes to main: docs/credits.html, THIRD-PARTY-NOTICES.md, app.html labels, README line (docs/audits/README-LICENSE-LINE.txt) [docs/audits/LICENSE-AUDIT-REPORT.md]
+- [open] Owner: GitHub → Settings → Branches → protect `main` (require a pull request) + two-step login on the account
+- [open] Owner: Firebase console: rules match team/ai-team/stats/database.rules.json; set a budget alert
+- [open] Owner: answer L-08: were any G-Warp pictures traced/copied, or all own / AI-made? Then one line per art pack (tool + date)
+- [open] Kid safety for the AIs (Griffy / Graffy / local AI): word filter on what they say + draw, "Report" button [Helken job]
+- [open] Before a public .exe: check private lib/ (no AGPL music samples), code signing later, updater only downloads from Creapter1/gwarp
+- [open] Name: "G-Warp" may be confused with an app called "Wrapper G"; trademark not registered — owner keeps the name for now, may rename later
+- [open] Later (if sharing projects ever comes): report button, moderation, copyright take-down contact
+- [open] Live website vs main commit compare (license audit L-12); desktop lib/ check (L-11)
+- [open] OI-4b Animation floor: leg IK so feet never go below the floor line
+
 ## 14. Later ideas (owner decides; don't build yet)
 
 - [later] Free/open core forever; a far-future paid 3D product only as a separate thing after a licence review [ideas/GWARP-FREE-OPEN-IDENTITY-AND-3D-BOUNDARY-2026-10-26.md]
@@ -233,6 +238,15 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 ---
 
 ## Done (for reference)
+- [done] Privacy line (visit counter) on docs/safety.html · owner user name removed from 3 ai-team files · CONTRIBUTING.md [Claude 2026-11-02]
+- [done] A1 dark checker frame thumbnails + tool titles [Claude, night update 2026-11-02]
+- [done] Animation docked inside the Costumes tab [Claude, night update 2026-11-02]
+- [done] OI-4 Floor line on/off in Animation (no leg IK yet - see new item) [Claude, night update 2026-11-02]
+- [done] M3 squares changed while the song plays are heard (live re-schedule) [Claude, night update 2026-11-02]
+- [done] M1 each square has its own level (off/light/medium/hard/extreme) [Claude, night update 2026-11-02]
+- [done] M2 Clear all + Undo in the Song maker [Claude, night update 2026-11-02]
+- [done] M4 Spark Studio: Backing / Bass / Drums / Fills studios + Melody chords (4 notes) [Claude, night update 2026-11-02]
+- [done] M5 'Spark Studio' name (red) [Claude, night update 2026-11-02]
 
 - [done] Clone freeze fix: O(1) clone count, 300 default, 5000 ceiling, frame budget, watchdog (v15.46.0) [TODO.txt, P0-CLONE-FREEZE-REPORT]
 - [done] "Open in G-Warp" `#scratch=` link handler (v15.46.1) [TODO.txt]

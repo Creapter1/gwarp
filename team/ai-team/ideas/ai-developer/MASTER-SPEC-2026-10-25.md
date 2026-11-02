@@ -121,7 +121,7 @@ Use the following as the initial development machine:
 
 Preferred development location:
 
-`C:\Users\mario\OneDrive\Documents\ai`
+`C:\Users\<you>\OneDrive\Documents\ai`
 
 All examples and commands should use the actual project location.
 

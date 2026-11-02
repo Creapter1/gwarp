@@ -35,7 +35,7 @@ Checked in `app.html` Beta v15.50.7 on 2026-10-25 by reading the source (SOURCE-
  Ollama (127.0.0.1:11434)   <-- local model: Gemma 3 12B / Qwen 3 (owner's PC, UNVERIFIED)
         ^
         | HTTP (localhost only)
- Companion service (Node.js, in C:\Users\mario\OneDrive\Documents\ai, UNVERIFIED path)
+ Companion service (Node.js, in C:\Users\<you>\OneDrive\Documents\ai, UNVERIFIED path)
    - task list + JSONL event log + checkpoints (files in the AI-Workspace folder)
    - tool registry: each tool has an input schema, permission level and a check of its result
    - Playwright drives a Chromium window running G-Warp  (screenshots + clicks + DOM)

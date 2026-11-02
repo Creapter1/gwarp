@@ -16,7 +16,7 @@ a Qwen 3 model - all UNVERIFIED until you check) act as G-Warp's AI: it operates
 (Army Men RTS-inspired, regular Scratch 3 .sb3), tests it, fixes it, while he watches.
 
 Step 1 (T0): confirm the PC for real with tools - Windows version, Ollama running? (GET http://127.0.0.1:11434/api/tags),
-  installed models, Node.js, Git, the folder C:\Users\mario\OneDrive\Documents\ai. Do NOT install or download anything
+  installed models, Node.js, Git, the folder C:\Users\<you>\OneDrive\Documents\ai. Do NOT install or download anything
   without asking. Report what you found.
 Step 2: wait for the owner's OK, then build T1 -> T3 from the plan (companion service + Playwright + bridge v0) in a
   separate ai-developer/ folder on a test branch. Never edit app.html for this test without the owner's OK.
