@@ -154,6 +154,5 @@ That is not proof that every editor operation is perfect. Nested C-block draggin
 
 - [Complete UI reference](../docs/SCREENSHOT-UI-DOCUMENTATION.md)
 - [Full user guide and troubleshooting](../docs/USER-GUIDE.txt)
-- [UI behavior audit](../team/chatgpt/CHATGPT-NOTES.md)
 - [G-Warp engine map](../team/ENGINE-MAP.txt)
 - [Deep engineering reference](./ENGINEERING-REFERENCE.md)
