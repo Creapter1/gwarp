@@ -2,16 +2,18 @@
 
 This is the main technical guide to **the application in this repository**. It describes the real screens, the real runtime, the actual tool modules, how data moves through G-Warp, and how that compares with Scratch 3's implementation. It is not a generic programming tutorial or an AI-agent guide.
 
-**Source baseline used:** `app.html` from the repository's main branch, titled “G-Warp Beta”; the companion [team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt) records Beta v15.45.0 and the inspected source SHA `7ce527ca2908c63bbdfe642856ca29fd82178648`. The source includes later feature modules whose internal IDs keep older version numbers. Re-check the live file before relying on any implementation detail.
+**Source baseline inspected for this update:** the checked-in `ai-team/app.html` blob SHA `16b7942c0caa6cf9e20ed9067e53a6e486588fbe`, whose `window.GW_BUILD` stamp is Beta v15.60.0. This is an ai-team source reference, not a claim that the public main branch has the same file. The older [team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt) records v15.45.0 and is historical until rechecked. Module IDs keep older version numbers. A screenshot batch uses a separate local snapshot without an exact source commit SHA; a shared v15.60.0 label does not prove identical source. See [AI Reference](./AI-REFERENCE.md) and the [delivery review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md).
 
 ## Start here: which file explains what?
 
 - **[app.html](../app.html)** is the actual application: the interface, the custom engine, the Stage, block editing, media tools and later features are packaged inside this large HTML file.
 - **[index.html](../index.html)** is the website entry page. It is not the project runtime.
-- **[team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt)** is the short, critical list of real G-Warp globals and hooks.
+- **[Source module index](./SOURCE-MODULE-INDEX.md)** maps current inline script IDs and global entry points. **[team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt)** is an older v15.45 quick map and must be rechecked before use.
 - **[Complete user guide](../docs/USER-GUIDE.txt)** tells you how to operate the current app.
 - **[UI/screenshots guide](../docs/SCREENSHOT-UI-DOCUMENTATION.md)** names visible controls and contains real browser captures.
 - **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** records the actions that were actually tested and the remaining gaps.
+- **[AI Reference](./AI-REFERENCE.md)** is the AI-first repository map, current source caveats and official upstream paths.
+- **[Build your own block-coding editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)** explains the architecture and build sequence for a new Scratch-style app.
 - **[UI audit](../team/chatgpt/CHATGPT-NOTES.md)** is a detailed source inspection. A static concern in that file is not automatically a reproduced bug.
 - **[TODO](../team/TODO.txt)** and **[MERGE-QUEUE](../team/MERGE-QUEUE.txt)** show what is current work and what is only a candidate patch.
 
@@ -129,21 +131,34 @@ The Live LAN module `gw-v13-live-lan` maintains peers, cursors, locks, change qu
 
 The cloud-variable module `gw-v1519-cloud` connects to TurboWarp's cloud service for numeric cloud data with a user consent step, as described in its source comments. Other feature layers include physics, animation/bone tooling, Stage fullscreen and high-quality display, sprite/backdrop libraries, Bug Hunter, project diagnostics, updater/settings and GWrap AI assistance. Treat each as its own feature: its UI, stored data, runtime behavior and cleanup may live in more than one script module.
 
+## 5.1. G-Warp AI, offline helper and external-provider path
+
+Do not describe every G-Warp helper as a cloud AI model. The checked-in v15.60.0 source has separate paths:
+
+- **G-Spark bar** (`gw-v1555-gspark-bar`) calls the local `GW_V1571.match(q)` recipe/tip lookup and then adds a matching recipe to the current workspace. This is local matching and block construction, not a provider request.
+- **Bug questionnaire / AI Report** (`gw-v1580-aihelp`) saves bug-report entries and report notes in browser storage. This does not itself send a prompt to a server.
+- **Developer-only real AI connection** in `gw-v1580-aihelp` sends the user question plus a project summary directly to Anthropic's Messages API. The summary contains non-clone sprite names, selected sprite, variable names and short block text from up to 12 top-level scripts on the selected sprite. The API key is read from browser session/local storage. Never use a real key in test captures or repository artifacts.
+- **Local model support:** the inspected blob does not establish an Ollama, llama-server, LM Studio, localhost:11434, WebGPU inference or in-app local-model download path. The November `/models` screenshot is not corroborated by this source blob; its capture snapshot needs a source SHA before it can be used as implementation evidence.
+
+See [AI Reference](./AI-REFERENCE.md), [Source Module Index](./SOURCE-MODULE-INDEX.md), and the [November screenshot review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md). The visible button, source path, data sent and live test result are four separate evidence questions.
+
 ## 6. Why Scratch is built differently
 
 ![Scratch components mapped to G-Warp](./images/scratch-to-gwarp-map.svg)
 
-Scratch 3 is built from cooperating packages in the official [scratchfoundation/scratch-editor monorepo](https://github.com/scratchfoundation/scratch-editor):
+Scratch 3 is built from cooperating packages and repositories. The current [scratchfoundation/scratch-editor monorepo](https://github.com/scratchfoundation/scratch-editor) is migrating packages in stages. Its current README lists:
 
-- **scratch-gui** builds the React-based editor interface and connects the other systems.
-- **scratch-blocks** provides the block workspace, fields, shapes and connections.
-- **scratch-vm** keeps project state and runs the Scratch program. Its README explains how workspace events update an abstract syntax tree (AST) for each target and shows the serialized/in-memory block shape.
-- **scratch-render** draws the Stage with WebGL.
-- **scratch-paint** edits vector and bitmap costumes.
-- **scratch-storage** loads/stores project assets; **scratch-svg-renderer** processes vector artwork.
-- **scratch-audio** implements sound behavior; scheduling/helper packages manage background work.
+- **scratch-gui** — React-based editor UI and integration/glue.
+- **scratch-vm** — project state and program execution.
+- **scratch-render** — Stage rendering.
+- **scratch-paint** — vector and bitmap costume editing.
+- **scratch-storage** — asset loading/storage.
+- **scratch-svg-renderer** — SVG asset processing.
+- **scratch-media-lib-scripts** and **task-herder** — media library generation and asynchronous task scheduling.
 
-Useful primary sources are the [official monorepo](https://github.com/scratchfoundation/scratch-editor), [GUI package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui), [VM package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-vm), [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks), [render package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-render), and [storage package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-storage). The Scratch team has moved code from some older standalone repositories into the monorepo, so use the current package paths rather than old tutorials alone.
+[Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks) and [scratch-audio](https://github.com/scratchfoundation/scratch-audio) are separate repositories, not entries in the current monorepo package list. The package layout may change as migration continues. Always check the current README/package README rather than copying old paths blindly.
+
+Useful primary sources are the [official monorepo](https://github.com/scratchfoundation/scratch-editor), [GUI package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui), [VM package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-vm), [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks), [render package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-render), [paint package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-paint), [storage package](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-storage), and [audio repository](https://github.com/scratchfoundation/scratch-audio).
 
 ### The important difference
 
@@ -174,6 +189,8 @@ A practical source-reading route is:
 The official VM README explains the key dataflow: the visual workspace emits block-change events, a listener keeps the VM's AST/block representation up to date, and the VM runs scripts. This is a useful contrast with G-Warp: G-Warp's core workspace elements are DOM stacks and its runtime's live runner reads from that workspace. Similar visible behavior does not mean the data model or scheduler is the same.
 
 ## 7. If you were building the same kind of app from zero
+
+For a longer staged tutorial with data-model examples, workspace connections, runtime pseudocode, project-format design, testing and upstream references, continue to [Build Your Own Block-Coding Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md).
 
 This is the order that prevents a good-looking editor from becoming a picture of an editor that cannot run projects:
 
