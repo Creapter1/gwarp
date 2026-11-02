@@ -25,6 +25,10 @@ The documentation is written against evidence. A picture can prove a control is 
 
 G-Warp's main editor is packaged in root app.html with many inline modules. It does not import Scratch VM as its runtime. The version label is not enough to identify a build; use the branch, source commit/blob and actual screenshot provenance.
 
+## 2.1. Research library for AI authors and game designers
+
+The root [research index](../research/RESEARCH-INDEX.md) links to dozens of game-design notes. Each note covers the game's core mechanics, a practical first-version plan, common pitfalls and a prototype scope. These pages are repository knowledge for human and AI contributors. The checked-in G-Warp app does **not** automatically load this Markdown folder into G-Spark; its active recipe/tip knowledge is embedded in app.html modules. See the [AI Reference](./AI-REFERENCE.md) and [Source Module Index](./SOURCE-MODULE-INDEX.md) for the exact difference.
+
 ## 3. Learn to use G-Warp
 
 - [Learning Guide](./LEARNING-GUIDE.md) — first project, block shapes, events, variables, costumes, music and testing.
