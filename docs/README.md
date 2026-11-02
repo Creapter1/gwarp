@@ -7,9 +7,9 @@ This documentation has two jobs:
 
 The documentation is written against evidence. A picture can prove a control is visible; source inspection can prove code exists; only a real test can prove the interaction worked.
 
-## 1. Start with the AI reference
+## 1. Start with the developer reference
 
-**[AI Reference — read this first](./AI-REFERENCE.md)** is the front door for Gemini, ChatGPT, Claude and other research/development agents. It explains repository branches, source identity, evidence labels, project boundaries, upstream links and the order to inspect G-Warp.
+**[Developer Reference](./AI-REFERENCE.md)** is the front door for Gemini, ChatGPT, Claude and other research/development agents. It explains repository branches, source identity, evidence labels, project boundaries, upstream links and the order to inspect G-Warp.
 
 ## 2. Understand how G-Warp is built
 
@@ -69,7 +69,7 @@ Before editing the app:
 4. Follow Rule Zero: AI work only on ai-team; only the owner moves approved work to main.
 5. Only Claude Opus integrates changes into app.html and root index.html. Other contributors submit isolated proposals and documentation in their own authorized areas.
 6. Trace each feature through visible control → handler → model/state → runtime/render/audio → save/load → test.
-7. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
+6. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
 
 ## 7. Where to study the upstream projects
 
