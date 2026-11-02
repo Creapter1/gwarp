@@ -26,7 +26,7 @@ The repository packages the main app in a large root app.html containing the edi
 | How do I create a Scratch-like app myself? | [Build your own block-coding editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md) |
 | What is tested, source-verified or still unknown? | [Live UI verification](./LIVE-UI-VERIFICATION.txt), [November screenshot report](../team/screens-2026-11-02/REPORT.md), [screenshot review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md) |
 | What is planned or currently broken? | [AI team to-do](../team/AI-TEAM-TODO.md), [bug reports](../team/bugs/) |
-| How does G-Warp compare with Scratch, TurboWarp and PenguinMod? | Engineering reference §6 and the official upstream links in §7 below |
+| How does G-Warp compare with Scratch, TurboWarp and PenguinMod? | [Upstream architecture reference](./UPSTREAM-ARCHITECTURE-REFERENCE.md), then Engineering reference §6 |
 
 Do not read all of app.html from top to bottom as your first action. Start with the module index, find the relevant script ID, then inspect the exact source section and any later patch that may override it.
 
@@ -133,6 +133,8 @@ A feature can be SOURCE-VERIFIED and NOT-TESTED at the same time. A screenshot c
 These are primary sources. Read them to understand upstream implementation and behavior, not to assume that G-Warp uses the same internal code.
 
 ### Scratch
+
+For a component-by-component package map and block-to-VM data flow, see the [Upstream Architecture Reference](./UPSTREAM-ARCHITECTURE-REFERENCE.md).
 
 - [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor) — current home for the editor's migrated packages.
 - [scratch-gui](https://github.com/scratchfoundation/scratch-editor/tree/develop/packages/scratch-gui) — React interface and integration/glue.
