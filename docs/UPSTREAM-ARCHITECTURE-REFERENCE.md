@@ -8,7 +8,7 @@ This is the companion research map for an AI or developer who needs to understan
 
 Scratch is not one giant file or one package. It is a set of cooperating pieces. The current editor development home is the [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor), and the team is migrating older repositories into it.
 
-~~~mermaid
+```mermaid
 flowchart TD
   A[User] --> B[scratch-gui]
   B --> C[Scratch Blocks workspace]
@@ -23,7 +23,7 @@ flowchart TD
   B --> L[scratch-storage]
   L --> M[Project media and assets]
   B --> N[scratch-audio]
-~~~
+```
 
 The arrows are a conceptual data-flow map. The exact function names and integration points should be checked in the version being studied.
 
