@@ -21,7 +21,7 @@ G-Warp has its own engine. Do not assume that Scratch VM objects or methods exis
 | Runtime thread | ScriptThread instances inside Engine.threads | The class is defined in app scope; inspect the current implementation |
 | Costume editor | window.GW_V15_COSTUME_EDITOR | Vector/bitmap costume editing |
 | Vector editor | window.GW_VECTOR_EDITOR | SVG editing/selection tools |
-| AI recipe engine | window.GW_V1571 | Keyword match and recipe addition used by G-Spark |
+| AI recipe engine | window.GW_V1571 | Defined in gw-v1571-blocks; owns local recipe/tip matching, block builders and project checks |
 | G-Spark bar | window.GW_SPARK_BAR | UI actions: ask, toggle, undo, mount |
 | AI helper extension | window.GW_V1580_AIHELP | Bug reports, developer AI request path and anti-freeze helpers |
 | SB3 import/export | window.GW_V1580_SB3, window.GW_V1580_SB3_EXPORT | Import/export entry points; inspect returned methods |
@@ -53,7 +53,10 @@ G-Warp has its own engine. Do not assume that Scratch VM objects or methods exis
 | gw-v1700-anim-blocks | Animation blocks | Runtime-facing animation block integration |
 | gw-v1580-tiles | Tilemap / Behavior Designer UI | Tilemap and behavior editor dialogs and controls |
 | gw-v13-live-lan | Live LAN collaboration | WebSocket, peers, rooms, local profile and project sync |
-| gw-v1555-gspark-bar | G-Spark UI | Small G button, prompt bar and recipe build/undo |
+| gw-v1571-blocks | Local GWrap AI recipe engine and block slots | GW_V1571.match, built-in recipes/tips, blk/cblk builders, typed slots and project checks |
+| gw-v4900-gwrap-pack | Embedded recipe/tip knowledge pack | JSON PACKS converted into G-Warp blocks and installed into GW_V1571 |
+| gw-v4960-chatgpt-gwrap-pack | Additional GWrap AI pack and slash commands | Adds recipes/tips and safe commands; uses the existing local block builder |
+| gw-v1555-gspark-bar | G-Spark UI | Small G button, prompt bar and local recipe build/undo |
 | gw-v1580-aihelp | GWrap AI helper | Bug questionnaire, AI Report, developer-mode API key path and stuck-script prompt |
 | gw-v1519-cloud | Cloud variables | Separate cloud-variable service path; do not confuse with AI connectivity |
 | gw-v1555-stage-hit-shield | Stage interaction/hit shielding | Stage target interaction protection |
@@ -79,6 +82,12 @@ Do not assume the DOM is merely a disposable view: the inspected G-Warp runtime 
 ## 4. G-Warp AI source flow
 
 The current checked-in build has several distinct flows:
+
+### Embedded recipe/tip packs and repository research notes
+
+gw-v1571-blocks defines the helper's built-in local recipes, tips and the GW_V1571 matching/block-building interface. gw-v4900-gwrap-pack and gw-v4960-chatgpt-gwrap-pack provide later embedded pack data. They install records into that helper at app startup.
+
+The separate root research/ folder is a repository library of game mechanics and prototype plans. No direct runtime loader path from the checked-in app blob to those Markdown files was found. They are useful material for AIs and recipe authors, but adding a Markdown note does not automatically make it a G-Spark answer.
 
 ### G-Spark quick bar — local
 
