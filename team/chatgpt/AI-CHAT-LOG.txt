@@ -25,3 +25,15 @@
 - NOT TESTED: public browser rendering of the revised documentation; live app runtime tests; audible playback in a non-headless browser; a real Anthropic request; an Ollama/local-model connection; capture snapshot source commit match; cross-editor SB3 round-trip; actual LAN two-client collaboration.
 - Scope protections: no app.html edits; no root index.html edits; no main writes; no PR or merge; no assistant-merging/MCP/GraphQL/Freebuff project feature recreated. docs/index.html is the documentation landing page and was updated only on ai-team.
 - Next: the owner can review the ai-team documentation set; resolve the four remaining screenshot/evidence items; provide the exact snapshot source SHA before promoting screenshots. Only the owner moves approved work to main.
+
+
+## Continuation addendum — upstream and research-library mapping
+
+- UTC time: 2026-11-02T16:07:10.703Z
+- Continuation of DOC-KNOWLEDGE-BASE-2026-11-02 after the first closeout entry; no historical log text was changed.
+- Added docs/UPSTREAM-ARCHITECTURE-REFERENCE.md with the current Scratch monorepo/package architecture, Scratch Blocks and Scratch Audio as separate repos, VM block/AST data flow, TurboWarp interpreter/compiler contrast, PenguinMod's PMP/protobuf route, and a source comparison table.
+- Refined G-Warp knowledge-pack documentation after inspecting the exact source: gw-v1571-blocks owns local matching/builders; gw-v4900-gwrap-pack and gw-v4960-chatgpt-gwrap-pack install embedded recipe/tip data. The app does not auto-load the repository's research/ Markdown folder in the inspected source.
+- Corrected the root README's research/ description, added research/RESEARCH-INDEX.md as an AI/research author resource, linked it from the docs index and central nav, and documented relative navigation for the nested tutorials page.
+- Updated docs/AI-REFERENCE.md, docs/SOURCE-MODULE-INDEX.md, docs/AI-DATA-FLOW.md, docs/README.md, docs/assets/docs-nav.js, README.md and docs/UPSTREAM-ARCHITECTURE-REFERENCE.md accordingly.
+- All additions remain on ai-team. app.html, root index.html and main were not modified.
+- NOT-TESTED remains unchanged: browser render of docs, live app behavior, actual upstream project builds, live AI request, local model link, cross-editor round-trip, LAN session. Only repository source inspection and GitHub readback were performed.
