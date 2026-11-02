@@ -14,7 +14,6 @@ This is the main technical guide to **the application in this repository**. It d
 - **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** records the actions that were actually tested and the remaining gaps.
 - **[Developer Reference](./DEVELOPER-REFERENCE.md)** summarizes the app architecture, source caveats and official upstream paths.
 - **[Build your own block-coding editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)** explains the architecture and build sequence for a new Scratch-style app.
-- **[UI audit](../team/chatgpt/CHATGPT-NOTES.md)** is a detailed source inspection. A static concern in that file is not automatically a reproduced bug.
 - **[TODO](../team/TODO.txt)** and **[MERGE-QUEUE](../team/MERGE-QUEUE.txt)** show what is current work and what is only a candidate patch.
 
 ## How it is packaged
