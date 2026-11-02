@@ -14,7 +14,7 @@ It follows a Scratch-style block workflow and supports Scratch-oriented project 
 |---|---|
 | 🚀 **[Open the app](app.html)** | the G-Warp editor |
 | 🌐 **[Website](index.html)** | the G-Warp homepage |
-| 🧠 **[AI Reference](docs/AI-REFERENCE.md)** | the technical map for AI assistants and developers: architecture, source navigation, evidence and upstream links |
+| 🧠 **[Developer Reference](docs/DEVELOPER-REFERENCE.md)** | the technical guide for developers: architecture, source navigation, evidence and upstream links |
 | 📖 **[Documentation](docs/index.html)** | guides, [tutorials](docs/tutorials/index.html), [glossary](docs/glossary.html), [parents & teachers](docs/parents.html) |
 | 🛠️ **[Build your own editor](docs/BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)** | a step-by-step architecture guide for creating a Scratch-style block editor |
 | 🧩 **[Scratch / TurboWarp / PenguinMod architecture](docs/UPSTREAM-ARCHITECTURE-REFERENCE.md)** | how the upstream projects' editor, block, VM, renderer and project-format systems fit together |
@@ -28,10 +28,10 @@ It follows a Scratch-style block workflow and supports Scratch-oriented project 
 |---|---|
 | `app.html` | the app (the whole editor in one file) |
 | `index.html`, `stats.html`, `sitemap.xml`, `gw-stats.js` | the website (they must stay here for the site to work) |
-| `docs/` | user guides, AI-first technical reference, source map, architecture tutorial and feature guides |
+| `docs/` | user guides, developer reference, source map, architecture tutorial and feature guides |
 | `site/` | extra website files |
 | `desktop/` | the Windows desktop version (exe build files) |
-| `research/` | human/AI game-design reference notes and the [research index](research/RESEARCH-INDEX.md); the checked-in app does not automatically load these Markdown files into G-Spark |
+| `research/` | game-design reference notes and the [research index](research/RESEARCH-INDEX.md); the checked-in app does not automatically load these Markdown files into G-Spark |
 | `team/` | everything for the AI team: the **[one to-do list](team/AI-TEAM-TODO.md)**, [rules](team/ai-team/README.md), [status](team/ai-team/AI-STATUS.txt), and each AI's folder (`team/chatgpt`, `team/claude`) |
 
 ## Beta notes
