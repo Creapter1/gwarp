@@ -31,7 +31,7 @@ It follows a Scratch-style block workflow and supports Scratch-oriented project 
 | `docs/` | user guides, AI-first technical reference, source map, architecture tutorial and feature guides |
 | `site/` | extra website files |
 | `desktop/` | the Windows desktop version (exe build files) |
-| `research/` | "how to make a game" notes that G-Spark (the built-in AI helper) reads |
+| `research/` | human/AI game-design reference notes and the [research index](research/RESEARCH-INDEX.md); the checked-in app does not automatically load these Markdown files into G-Spark |
 | `team/` | everything for the AI team: the **[one to-do list](team/AI-TEAM-TODO.md)**, [rules](team/ai-team/README.md), [status](team/ai-team/AI-STATUS.txt), and each AI's folder (`team/chatgpt`, `team/claude`) |
 
 ## Beta notes
