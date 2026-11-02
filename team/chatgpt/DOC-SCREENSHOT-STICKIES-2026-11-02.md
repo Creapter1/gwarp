@@ -6,7 +6,9 @@
 **Target public pages:** `docs/index.html`, `docs/start.html`, `docs/ai.html`, `docs/SCREENSHOT-UI-DOCUMENTATION.md`, and later the relevant feature guides.  
 **Current public branch:** `main`  
 **Internal handoff branch:** `ai-team`  
-**Important:** this file is a screenshot request list. None of the requested captures are claimed to exist or have been tested.
+**Delivery method:** screenshots may arrive **one sticky at a time**. Do not wait for all 14 or bundle every feature into one giant handoff. Capture, send, and close out each sticky independently; the documentation reviewer will process each delivered item immediately and keep the remaining requests open.
+
+**Important:** this file is a screenshot request list. None of the requested captures are claimed to exist or have been tested. For live progress, see `DOC-SCREENSHOT-STATUS-2026-11-02.md`.
 
 ## Capture rules for every sticky
 
@@ -240,3 +242,17 @@ Privacy review: PASS / BLOCKED
 ```
 
 **Do not modify `app.html`, `index.html`, or any runtime source while doing this screenshot assignment.** This is a visual evidence and documentation task. Route code defects to the normal AI-team task queue instead of silently fixing them during capture.
+
+
+## Incremental delivery — required workflow
+
+The owner confirmed that Claude will provide screenshots little by little. The job is deliberately asynchronous in delivery order, but each delivered image must be reviewed when it arrives; do not wait for the full 14-image set.
+
+1. Claude captures one sticky ID at a time (one sticky may contain several related screenshots, such as clean + annotated versions).
+2. Claude sends the screenshot file(s) with the sticky ID and close-out metadata from the template below.
+3. The receiving reviewer checks: correct target screen, current app commit/version, full readable labels, arrows not covering controls, no secrets/personal data, and matching test result.
+4. Update the status tracker immediately: mark **RECEIVED** when the files arrive, then **REVIEWED** only after the checks pass. Use **NEEDS-RECAPTURE** for stale, unclear, cropped, private or mismatched evidence.
+5. Prepare/update only the matching documentation page or page proposal. Do not hold up unrelated docs while another screenshot is pending.
+6. Keep the remaining sticky IDs open. Owner approval is still required before any screenshot or docs are moved to the public site.
+
+**One-image rule:** never claim that all screenshots are finished because one screenshot arrived. The status tracker is the authoritative per-sticky state.
