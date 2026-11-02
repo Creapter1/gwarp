@@ -2,7 +2,7 @@
 
 **Audience:** someone opening G-Warp for the first time  
 **Goal:** learn the ideas behind G-Warp and Scratch by doing, not by reading a wall of technical words  
-**App version covered:** Beta v15.45.0, unless the live app says otherwise
+**Original interface baseline:** Beta v15.45.0. This is a legacy learning guide, not a statement of the latest app version; check the current build for changed labels and tools.
 
 Start with this guide.
 
