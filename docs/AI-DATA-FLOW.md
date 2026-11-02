@@ -8,7 +8,7 @@ This page exists to prevent three different features from being described as tho
 
 ## 1. G-Spark quick helper: local recipe and tip lookup
 
-~~~mermaid
+```mermaid
 flowchart TD
   A[User types a request] --> B[G-Spark bar]
   B --> C[GW_SPARK_BAR.ask]
@@ -20,7 +20,7 @@ flowchart TD
   E -->|Tip| I[Show local tip]
   E -->|No match| J[Show example recipes]
   K[No provider request in this path]
-~~~
+```
 
 The source module gw-v1555-gspark-bar calls the local matching API. The match is drawn from built-in recipe and tip records, and a matching recipe adds blocks to the currently selected sprite's workspace. The helper then shows the selected recipe name and offers Undo.
 
@@ -29,7 +29,7 @@ The source module gw-v1555-gspark-bar calls the local matching API. The match is
 
 ## 2. Bug questionnaire and AI Report: browser-local storage
 
-~~~mermaid
+```mermaid
 flowchart TD
   A[User opens Report a problem] --> B[Select issue and describe steps]
   B --> C[GW_BUG_REPORTS.add]
@@ -38,13 +38,13 @@ flowchart TD
   F[User saves an AI Report note] --> G[Browser-local notes store]
   G --> E
   E --> H[User may copy/export the report]
-~~~
+```
 
 The checked-in gw-v1580-aihelp module stores bug report entries under the browser storage key gwarp-bug-reports. AI Report notes are stored in the browser as well. Saving a bug report is not itself a network request.
 
 ## 3. Developer-only real-AI route: Anthropic Messages API
 
-~~~mermaid
+```mermaid
 flowchart TD
   A[Developer mode enabled] --> B[Connect a real AI panel]
   B --> C[User enters provider key and model]
@@ -64,7 +64,7 @@ flowchart TD
   L --> M
   M --> N[Anthropic response text]
   N --> O[Display answer in G-Warp helper]
-~~~
+```
 
 ### Exact source behavior
 
