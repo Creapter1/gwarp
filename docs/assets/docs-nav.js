@@ -12,7 +12,7 @@ window.GW_DOCS_NAV = [
   { group: 'Help', items: [
     ['troubleshoot.html', 'Troubleshooting'], ['shortcuts.html', 'Keyboard shortcuts'], ['safety.html', 'Safety + privacy'], ['parents.html', 'Parents & teachers'] ] },
   { group: 'Build and inspect', items: [
-    ['AI-REFERENCE.md', 'AI Reference'], ['ENGINEERING-REFERENCE.md', 'Engineering Reference'],
+    ['AI-REFERENCE.md', 'AI Reference'], ['AI-DATA-FLOW.md', 'AI Data Flow'], ['ENGINEERING-REFERENCE.md', 'Engineering Reference'],
     ['SOURCE-MODULE-INDEX.md', 'Source Module Map'], ['BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md', 'Build Your Own Editor'] ] },
   { group: 'About', items: [
     ['changelog.html', 'Changelog'], ['credits.html', 'Credits'], ['team.html', 'AI team'] ] }
@@ -20,8 +20,9 @@ window.GW_DOCS_NAV = [
 (() => {
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const here = location.pathname.split('/').pop() || 'index.html';
+  const base = location.pathname.includes('/docs/tutorials/') ? '../' : '';
   const html = (cls) => window.GW_DOCS_NAV.map(g => `<div class="${cls}"><div class="dn-head">${esc(g.group)}</div>` +
-    g.items.map(([href, label]) => `<a href="${href}"${href === here ? ' aria-current="page"' : ''}>${esc(label)}</a>`).join('') + '</div>').join('');
+    g.items.map(([href, label]) => `<a href="${base}${href}"${href === here ? ' aria-current="page"' : ''}>${esc(label)}</a>`).join('') + '</div>').join('');
   function run() {
     const nav = document.querySelector('aside nav'); if (nav) { nav.innerHTML = html('dn-group'); nav.classList.add('dn'); }
     const cards = document.getElementById('docsCards'); if (cards) cards.innerHTML = html('dn-card');
