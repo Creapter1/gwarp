@@ -53,20 +53,19 @@ These guides should be read alongside the engineering reference when you need to
 
 ## 5. What was actually checked
 
-- [Live UI Verification](./LIVE-UI-VERIFICATION.txt) — Claude's 2026-10-13 Chromium run against Beta v15.45.0, including its environment and NOT-TESTED cases.
-- [November 2 screenshot report](../team/screens-2026-11-02/REPORT.md) — internal screenshots from a later local capture snapshot. The exact source commit was not provided; do not treat the pictures as exact evidence of the checked-in app until that snapshot is matched.
-- [Screenshot delivery review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md) — reviewer corrections, especially Tilemap/Behavior full-window captures and the AI-10/LAN-13 evidence gaps.
-- [Screenshot intake tracker](../team/chatgpt/DOC-SCREENSHOT-STATUS-2026-11-02.md) — status for every one of the 14 screenshot stickies.
+- [Live UI Verification](./LIVE-UI-VERIFICATION.txt) records a Chromium run against Beta v15.45.0, including the environment, passed interactions and NOT-TESTED cases.
+- The screenshots under [docs/screens/](./screens/) are a historical v15.45.0 set. Check the source version and test report before treating them as evidence for a newer build.
 
-The screenshots under docs/screens/ are a historical v15.45.0 set. Check the source version and test report before treating them as evidence for a newer build.
+A visible control is not proof of working behavior. Keep source inspection, screenshot evidence and live interaction tests distinct.
 
 ## 6. How to change G-Warp safely
 
-Before editing the app:
-1. Read [Developer Reference](./DEVELOPER-REFERENCE.md), the exact source module index and the relevant section of app.html.
-2. Check the current branch, commit and blob SHA. Do not assume an old script ID indicates the current release.
-6. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
-6. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
+Before changing the application:
+
+1. Read the [Developer Reference](./DEVELOPER-REFERENCE.md), [Source Module Index](./SOURCE-MODULE-INDEX.md) and relevant section of `app.html`.
+2. Check the current branch, commit and source blob SHA. Do not assume an old script ID or version label identifies the current release.
+3. Trace the feature through visible control → handler → model/state → runtime/render/audio → save/load → test.
+4. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
 
 ## 7. Where to study the upstream projects
 
