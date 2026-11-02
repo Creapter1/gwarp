@@ -16,8 +16,8 @@ The documentation is written against evidence. A picture can prove a control is 
 | Document | What it explains |
 |---|---|
 | [Engineering Reference](./ENGINEERING-REFERENCE.md) | Actual G-Warp UI, DOM workspace, Engine/ScriptThread runtime, Stage renderer, costumes, music, Tilemap, Behaviors, extensions, files, LAN, Scratch architecture comparison and build-from-zero order |
-| [Source Module Index](./SOURCE-MODULE-INDEX.md) | Inline script IDs, real globals, source entry points, AI data paths, SB3/PenguinMod boundaries and module-order warnings |
-| [AI Data Flow](./AI-DATA-FLOW.md) | What G-Spark does locally, what the bug report stores in the browser, and what the developer-only Anthropic path sends |
+| [Source Module Index](./SOURCE-MODULE-INDEX.md) | Inline script IDs, real globals, source entry points, helper data paths, SB3/PenguinMod boundaries and module-order warnings |
+| [Helper Data Flow](./HELPER-DATA-FLOW.md) | What G-Spark does locally, what the bug report stores in the browser, and what the developer-only Anthropic path sends |
 | [Upstream Architecture Reference](./UPSTREAM-ARCHITECTURE-REFERENCE.md) | How Scratch's GUI/Blocks/VM/rendering work together, how TurboWarp compiles scripts, and where PenguinMod's PMP/protobuf tools fit |
 | [Build Your Own Block-Coding Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md) | A staged guide to project data, blocks, connections, runtime, scheduling, rendering, media, files, extensions and tests |
 | [App internals diagram](./images/gwarp-app-internals.svg) | Visual map of main implementation layers |
@@ -25,9 +25,9 @@ The documentation is written against evidence. A picture can prove a control is 
 
 G-Warp's main editor is packaged in root app.html with many inline modules. It does not import Scratch VM as its runtime. The version label is not enough to identify a build; use the branch, source commit/blob and actual screenshot provenance.
 
-## 2.1. Research library for AI authors and game designers
+## 2.1. Game-design research library
 
-The root [research index](../research/RESEARCH-INDEX.md) links to dozens of game-design notes. Each note covers the game's core mechanics, a practical first-version plan, common pitfalls and a prototype scope. These pages are repository knowledge for human and AI contributors. The checked-in G-Warp app does **not** automatically load this Markdown folder into G-Spark; its active recipe/tip knowledge is embedded in app.html modules. See the [AI Reference](./AI-REFERENCE.md) and [Source Module Index](./SOURCE-MODULE-INDEX.md) for the exact difference.
+The root [research index](../research/RESEARCH-INDEX.md) links to dozens of game-design notes. Each note covers the game's core mechanics, a practical first-version plan, common pitfalls and a prototype scope. These pages are a human-readable game-design reference. The checked-in G-Warp app does **not** automatically load this Markdown folder into G-Spark; its active recipe/tip knowledge is embedded in app.html modules. See the [Developer Reference](./DEVELOPER-REFERENCE.md) and [Source Module Index](./SOURCE-MODULE-INDEX.md) for the distinction.
 
 ## 3. Learn to use G-Warp
 
@@ -63,7 +63,7 @@ The October 13 screenshots under docs/screens/ are a historical v15.45.0 set. Th
 ## 6. How to change G-Warp safely
 
 Before editing the app:
-1. Read [AI Reference](./AI-REFERENCE.md), the exact source module index and the relevant section of app.html.
+1. Read [Developer Reference](./DEVELOPER-REFERENCE.md), the exact source module index and the relevant section of app.html.
 2. Check the current branch, commit and blob SHA. Do not assume an old script ID indicates the current release.
 3. Read [team/AI-TEAM-TODO.md](../team/AI-TEAM-TODO.md) and the [AI team rules](../team/ai-team/README.md).
 4. Follow Rule Zero: AI work only on ai-team; only the owner moves approved work to main.
