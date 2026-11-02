@@ -18,6 +18,7 @@ The documentation is written against evidence. A picture can prove a control is 
 | [Engineering Reference](./ENGINEERING-REFERENCE.md) | Actual G-Warp UI, DOM workspace, Engine/ScriptThread runtime, Stage renderer, costumes, music, Tilemap, Behaviors, extensions, files, LAN, Scratch architecture comparison and build-from-zero order |
 | [Source Module Index](./SOURCE-MODULE-INDEX.md) | Inline script IDs, real globals, source entry points, AI data paths, SB3/PenguinMod boundaries and module-order warnings |
 | [AI Data Flow](./AI-DATA-FLOW.md) | What G-Spark does locally, what the bug report stores in the browser, and what the developer-only Anthropic path sends |
+| [Upstream Architecture Reference](./UPSTREAM-ARCHITECTURE-REFERENCE.md) | How Scratch's GUI/Blocks/VM/rendering work together, how TurboWarp compiles scripts, and where PenguinMod's PMP/protobuf tools fit |
 | [Build Your Own Block-Coding Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md) | A staged guide to project data, blocks, connections, runtime, scheduling, rendering, media, files, extensions and tests |
 | [App internals diagram](./images/gwarp-app-internals.svg) | Visual map of main implementation layers |
 | [Scratch-to-G-Warp map](./images/scratch-to-gwarp-map.svg) | Conceptual mapping between upstream systems and G-Warp's custom implementation |
