@@ -202,6 +202,8 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 - [open] W3 Kid test script (10 things a new user does in 5 minutes) [CHATGPT-TODO-2026-10-26]
 - [open] D2 README: mention the QA kit (README may only get small edits) [CHATGPT-TODO-2026-10-26]
 
+- [open] Cloud: capture current-build documentation screenshots using the 14 sticky IDs in team/chatgpt/DOC-SCREENSHOT-STICKIES-2026-11-02.md; record version, commit, browser, viewport, click steps and evidence; do not edit app code during capture [ChatGPT docs pass 2026-11-02]
+
 ## 12. Testing / QA kit / helpers
 
 - [open] Q1/Q2 ChatGPT: first run of every QA-kit tool, write kit problems down [CHATGPT-TODO-2026-10-26]
