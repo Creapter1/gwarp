@@ -9,3 +9,19 @@
 - Scope: read the newly delivered screenshot batch and capture report; check screenshots against checked-in source; improve AI-first technical documentation; record evidence gaps and source citations.
 - Safety/scope: work on ai-team only; do not edit app.html or index.html; do not write to main; do not revive the cancelled assistant-merging idea.
 - Initial findings before edits: Claude delivered the 2026-11-02 screenshot package under team/screens-2026-11-02; the report declares Beta v15.60.0; checked-in app.html declares window.GW_BUILD v15.60.0; AI-09 has no screenshot and AI-11 is marked not done. Tilemap and Behavior Designer full-window screenshots are present despite the close-out text saying only palette sections were captured.
+
+
+## Session closeout — DOC-KNOWLEDGE-BASE-2026-11-02
+
+- UTC time: 2026-11-02T16:01:46.976Z
+- Starting commit: 04426255c8517acc73e2b3c7cd2801da199f5933
+- Owner goal: create the clearest possible G-Warp repository documentation so AI systems can understand upstream Scratch/TurboWarp/PenguinMod architecture, G-Warp's own implementation, and how to build a similar application.
+- Screenshot review: inspected Claude's November 2 batch and representative annotated captures across all delivered subjects; read REPORT.md and capture-log.json; confirmed 10 rows REVIEWED with explicit limits, 2 NEEDS-RECAPTURE (AI-10, LAN-13), and 2 PENDING (AI-09, AI-11). The Tool-12 image filenames/report understate the actual full Tilemap and Behavior Designer UI shown.
+- Source review: checked ai-team/app.html blob 16b7942c0caa6cf9e20ed9067e53a6e486588fbe and traced G-Spark, GWrap AI, developer Anthropic request, file import/export, Tilemap/Behaviors and other inline modules. Confirmed local Ollama/LM Studio/llama-server/WebGPU connector is not present in this checked-in blob. The screenshot snapshot has no source commit SHA and is not assumed to be identical merely because the label is also v15.60.0.
+- Created on ai-team: docs/AI-REFERENCE.md; docs/AI-DATA-FLOW.md; docs/SOURCE-MODULE-INDEX.md; docs/BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md; team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md.
+- Updated on ai-team: README.md; docs/README.md; docs/ENGINEERING-REFERENCE.md; docs/LEARNING-GUIDE.md; docs/USER-GUIDE.txt; docs/SCREENSHOT-UI-DOCUMENTATION.md; docs/index.html; docs/assets/docs-nav.js; docs/sounds.html; docs/animation.html; docs/costumes.html; team/chatgpt/DOC-SCREENSHOT-STATUS-2026-11-02.md; team/AI-TEAM-TODO.md.
+- Upstream verification: reviewed current official Scratch editor monorepo/package listing, separate Scratch Blocks and scratch-audio repositories, TurboWarp's modding/compiler documentation and PenguinMod's own description. References are linked in docs/AI-REFERENCE.md and docs/BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md.
+- Verification performed: GitHub writes/readbacks succeeded for the changed files at the time of their writes. Source and screenshot findings are documented with evidence limitations.
+- NOT TESTED: public browser rendering of the revised documentation; live app runtime tests; audible playback in a non-headless browser; a real Anthropic request; an Ollama/local-model connection; capture snapshot source commit match; cross-editor SB3 round-trip; actual LAN two-client collaboration.
+- Scope protections: no app.html edits; no root index.html edits; no main writes; no PR or merge; no assistant-merging/MCP/GraphQL/Freebuff project feature recreated. docs/index.html is the documentation landing page and was updated only on ai-team.
+- Next: the owner can review the ai-team documentation set; resolve the four remaining screenshot/evidence items; provide the exact snapshot source SHA before promoting screenshots. Only the owner moves approved work to main.
