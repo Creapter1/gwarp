@@ -23,10 +23,10 @@
 | GW-DOC-MUSIC-05 | Instruments/Create Melody/Song Maker | REVIEWED | docs/sounds.html | Instruments, Spark Studio, Song Maker, 1.5 s playback and save-to-sprite 0→1; no sound heard headless; save/reopen NOT TESTED |
 | GW-DOC-EXT-06 | Extensions library | REVIEWED | docs/extensions.html | Tabs G-Warp (8), TurboWarp (104), PenguinMod (79), safety labels visible; no extension added |
 | GW-DOC-IMPORT-07 | Open/save/export/restore | REVIEWED | user guide; docs/scratch.html | G-logo file menu + restore UI captured; menus only; native pickers and SB3 round-trip NOT TESTED |
-| GW-DOC-AI-08 | GWrap AI chat | REVIEWED | docs/ai.html | G-Spark bar + local recipe result captured; no local model/provider connected in test; 13 blocks shown after response |
-| GW-DOC-AI-09 | AI key/privacy settings | PENDING | docs/ai.html; docs/safety.html | No screenshots; hidden developer-only key panel SOURCE-VERIFIED; remember/remove behavior NOT TESTED |
-| GW-DOC-AI-10 | Local-model status | NEEDS-RECAPTURE | docs/ai.html | Screenshot shows `/models` + “0 models found”, but checked-in v15.60 app.html has no `/models`, Ollama, llama-server, LM Studio or WebGPU path; exact capture source commit missing |
-| GW-DOC-AI-11 | AI data-flow | PENDING | docs/ai.html | No diagram delivered; can prepare source-only data-flow separately, clearly marked SOURCE-VERIFIED / NOT LIVE-TESTED |
+| GW-DOC-AI-08 | GWrap AI chat | REVIEWED | docs/AI-REFERENCE.md | G-Spark bar + local recipe result captured; no local model/provider connected in test; 13 blocks shown after response |
+| GW-DOC-AI-09 | AI key/privacy settings | PENDING | docs/AI-REFERENCE.md; docs/safety.html | No screenshots; hidden developer-only key panel SOURCE-VERIFIED; remember/remove behavior NOT TESTED |
+| GW-DOC-AI-10 | Local-model status | NEEDS-RECAPTURE | docs/AI-REFERENCE.md; docs/AI-DATA-FLOW.md | Screenshot shows `/models` + “0 models found”, but checked-in v15.60 app.html has no `/models`, Ollama, llama-server, LM Studio or WebGPU path; exact capture source commit missing |
+| GW-DOC-AI-11 | AI data-flow | PENDING | docs/AI-DATA-FLOW.md | Source-only Mermaid diagrams now exist (SOURCE-VERIFIED); no controlled live request capture/provider test delivered, so the sticky remains open |
 | GW-DOC-TOOLS-12 | Tilemap/Behavior Designer | REVIEWED | user guide; extra tool docs | Full Tilemap and Behavior Designer windows are present (report understates capture); blank tilemap/no map paint; empty behavior response; operations, collisions, attach/save NOT TESTED |
 | GW-DOC-LAN-13 | LAN collaboration | NEEDS-RECAPTURE | user guide; future LAN guide | Menu captured; claimed Wi-Fi dialog not visible in `...13-1-wifi-clean.png`; no server/two-client session; no connection proof |
 | GW-DOC-CREDITS-14 | Credits/project identity | REVIEWED | docs/credits.html | About modal and credits page captured; project identity/licence disclaimer visible |
