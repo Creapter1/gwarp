@@ -1,0 +1,11 @@
+# ChatGPT session log
+
+## Session start — DOC-KNOWLEDGE-BASE-2026-11-02
+
+- UTC time: 2026-11-02T15:50:55.555Z
+- AI: ChatGPT GPT-6
+- Starting ai-team commit: 04426255c8517acc73e2b3c7cd2801da199f5933
+- Owner request: “make our documentation the best documentation ever, and the most understandable ever” so an AI can use the G-Warp GitHub repository as a complete source for understanding how Scratch/TurboWarp/PenguinMod-style apps are built, how G-Warp was made, and how to build a similar app.
+- Scope: read the newly delivered screenshot batch and capture report; check screenshots against checked-in source; improve AI-first technical documentation; record evidence gaps and source citations.
+- Safety/scope: work on ai-team only; do not edit app.html or index.html; do not write to main; do not revive the cancelled assistant-merging idea.
+- Initial findings before edits: Claude delivered the 2026-11-02 screenshot package under team/screens-2026-11-02; the report declares Beta v15.60.0; checked-in app.html declares window.GW_BUILD v15.60.0; AI-09 has no screenshot and AI-11 is marked not done. Tilemap and Behavior Designer full-window screenshots are present despite the close-out text saying only palette sections were captured.
