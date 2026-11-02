@@ -228,6 +228,25 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 - [open] Live website vs main commit compare (license audit L-12); desktop lib/ check (L-11)
 - [open] OI-4b Animation floor: leg IK so feet never go below the floor line
 
+## 16. Owner's video, 2 Nov 13:15 (G-Warp vs TurboWarp; full notes: owner's `video-full-handoff.md`)
+
+DONE by Claude the same day: extra G-Warp blocks (Pen, Music, TTS, HTTP, Animation, Camera, Box2D) only via Extensions → Add blocks; Camera Controls + Box2D reachable (were "Built in" and hidden); empty space at the bottom of the palette removed; blocks inside a define hat keep their colour; My Block inputs take the block's colour.
+
+- [open] V1 Paint editor SNAPPING like Scratch/TurboWarp: snap to the centre, to midpoints, edges and corners of other shapes; show the snap point; works at any size
+- [open] V2 Animation FLOOR: the rig cannot go below the floor; dragging the body down bends the legs (2-bone IK, "boneless" squash), back up = back to the pose
+- [open] V3 Animation: grouped shapes always move together with their bone; moving the MAIN bone moves everything
+- [open] V4 Animation: pick which costume the animation uses; editing that costume updates every frame automatically
+- [open] V5 Animation: bone names readable (list is squished), bigger rows
+- [open] V6 Sprite + costume FOLDERS like TurboWarp: right-click → Duplicate, Export, Move to top / bottom, Delete, Create folder, Add to folder; a folder shows its items when clicked; names readable (tiles not squished); size shown under each costume
+- [open] V7 Sprite info panel like TurboWarp: Sprite name, X / Y with small icons, Show as two eye icons, Size, Direction with a popup (dial + all-around / left-right / don't rotate)
+- [open] V8 Costume list "+" in the right spot (like the Sounds list), not in the corner
+- [open] V9 Paint: FILL options like Scratch (solid, gradient left-right / top-bottom / circle, two colours); Ctrl+C / Ctrl+V / Ctrl+Z everywhere in the paint editor
+- [open] V10 Stage: same paint tools as sprites; Camera Controls blocks tested on the Stage
+- [open] V11 Lists: "New List" dialog like TurboWarp (name + for all sprites / this sprite only)
+- [open] V12 Custom block "define": dropping a block under the hat must always snap (owner saw it not connect at 145% zoom with inputs); re-test at different zooms
+- [open] V13 The forever C-block mouth looks broken when zoomed in (top and bottom arms do not line up) — check all C-blocks at 50-400% zoom
+- [open] V14 Bug hunt the whole Code tab after these (owner: "lots of things to fix")
+
 ## 14. Later ideas (owner decides; don't build yet)
 
 - [later] Free/open core forever; a far-future paid 3D product only as a separate thing after a licence review [ideas/GWARP-FREE-OPEN-IDENTITY-AND-3D-BOUNDARY-2026-10-26.md]
