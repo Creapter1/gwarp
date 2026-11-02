@@ -1,6 +1,6 @@
 G-WARP USER GUIDE
-Complete practical guide for G-Warp Desktop v15.48.0
-Last updated: 2026-10-19
+Complete practical guide for the checked-in G-Warp Beta v15.60.0 source baseline
+Last updated: 2026-11-02
 
 START HERE
 
@@ -15,10 +15,15 @@ G-Warp is a Scratch-style block-programming environment with additional creative
 Previously documented app URL: https://creapter1.github.io/gwarp/ (canonical URL has not been reconfirmed by the owner)
 Beginner learning path: ../docs/LEARNING-GUIDE.md
 Deep engineering research: ../docs/ENGINEERING-REFERENCE.md
+AI-first repository entry: ../docs/AI-REFERENCE.md
+Source module locator: ../docs/SOURCE-MODULE-INDEX.md
+Build a similar editor: ../docs/BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md
 Master index: ../docs/README.md
 UI reference: docs/SCREENSHOT-UI-DOCUMENTATION.md
 Visual maps: team/chatgpt/images/gwarp-ui-map.svg and team/chatgpt/images/gwarp-interactions-map.svg
 Behavior audit: team/chatgpt/CHATGPT-NOTES.md › UI-AUDIT.txt
+Source: ai-team/app.html, blob SHA 16b7942c0caa6cf9e20ed9067e53a6e486588fbe
+Important: the 2 Nov screenshot batch was captured from a separate local snapshot without a supplied source commit SHA. Some menu controls in those pictures may differ from this checked-in source. Verify your own build before following a screenshot literally.
 Source: app.html
 
 CONTENTS
@@ -51,7 +56,7 @@ CONTENTS
 2. MAKE YOUR FIRST PROJECT
 1. Open G-Warp and select a sprite.
 2. Choose Code.
-3. Find an Events Green Flag hat block.
+3. Find an Events Green Flag hat block. If the palette/workspace is blank, click a category first to reveal the coding area.
 4. Drag it onto an empty part of the workspace.
 5. Find Motion and drag a move block underneath until it snaps.
 6. Optionally add a Looks say/think block or another Motion block.
