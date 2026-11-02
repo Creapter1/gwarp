@@ -50,3 +50,7 @@ The individual GitHub commit history on main is authoritative; this summary does
 4. Ask Cloud to capture the 14 screenshot stickies after pulling the approved current app build.
 
 This note is an audit/owner handoff only. It requests no new main-branch change.
+
+
+## Scope correction — 2026-11-02
+The owner clarified that the possible assistant-connection/merging idea was personal curiosity outside G-Warp, not an authorized G-Warp feature or roadmap item. The separate research file `team/chatgpt/AI-COMMUNICATION-MCP-GRAPHQL-FREEBUFF-RESEARCH-2026-11-02.md` has been deleted at the owner's request (commit `792ef2e3b1124e7fc0bf56be827897a9766efc37`). Its previous mention in task logs is historical only. Do not recreate or schedule it without an explicit new owner request.
