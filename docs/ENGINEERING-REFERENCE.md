@@ -2,7 +2,7 @@
 
 This is the main technical guide to **the application in this repository**. It describes the real screens, the real runtime, the actual tool modules, how data moves through G-Warp, and how that compares with Scratch 3's implementation. It is not a generic programming tutorial or an AI-agent guide.
 
-**Source baseline inspected for this update:** the checked-in `ai-team/app.html` blob SHA `16b7942c0caa6cf9e20ed9067e53a6e486588fbe`, whose `window.GW_BUILD` stamp is Beta v15.60.0. This is an ai-team source reference, not a claim that the public main branch has the same file. The older [team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt) records v15.45.0 and is historical until rechecked. Module IDs keep older version numbers. A screenshot batch uses a separate local snapshot without an exact source commit SHA; a shared v15.60.0 label does not prove identical source. See [AI Reference](./AI-REFERENCE.md) and the [delivery review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md).
+**Source baseline inspected for this update:** the checked-in `ai-team/app.html` blob SHA `16b7942c0caa6cf9e20ed9067e53a6e486588fbe`, whose `window.GW_BUILD` stamp is Beta v15.60.0. This is an ai-team source reference, not a claim that the public main branch has the same file. The older [team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt) records v15.45.0 and is historical until rechecked. Module IDs keep older version numbers. A screenshot batch uses a separate local snapshot without an exact source commit SHA; a shared v15.60.0 label does not prove identical source. See [Developer Reference](./DEVELOPER-REFERENCE.md) and the [delivery review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md).
 
 ## Start here: which file explains what?
 
@@ -131,7 +131,7 @@ The Live LAN module `gw-v13-live-lan` maintains peers, cursors, locks, change qu
 
 The cloud-variable module `gw-v1519-cloud` connects to TurboWarp's cloud service for numeric cloud data with a user consent step, as described in its source comments. Other feature layers include physics, animation/bone tooling, Stage fullscreen and high-quality display, sprite/backdrop libraries, Bug Hunter, project diagnostics, updater/settings and GWrap AI assistance. Treat each as its own feature: its UI, stored data, runtime behavior and cleanup may live in more than one script module.
 
-## 5.1. G-Warp AI, offline helper and external-provider path
+## 5.1. Built-in helper and external-provider path
 
 Do not describe every G-Warp helper as a cloud AI model. The checked-in v15.60.0 source has separate paths:
 
@@ -140,7 +140,7 @@ Do not describe every G-Warp helper as a cloud AI model. The checked-in v15.60.0
 - **Developer-only real AI connection** in `gw-v1580-aihelp` sends the user question plus a project summary directly to Anthropic's Messages API. The summary contains non-clone sprite names, selected sprite, variable names and short block text from up to 12 top-level scripts on the selected sprite. The API key is read from browser session/local storage. Never use a real key in test captures or repository artifacts.
 - **Local model support:** the inspected blob does not establish an Ollama, llama-server, LM Studio, localhost:11434, WebGPU inference or in-app local-model download path. The November `/models` screenshot is not corroborated by this source blob; its capture snapshot needs a source SHA before it can be used as implementation evidence.
 
-See [AI Reference](./AI-REFERENCE.md), [Source Module Index](./SOURCE-MODULE-INDEX.md), and the [November screenshot review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md). The visible button, source path, data sent and live test result are four separate evidence questions.
+See [Developer Reference](./DEVELOPER-REFERENCE.md), [Source Module Index](./SOURCE-MODULE-INDEX.md), and the [November screenshot review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md). The visible button, source path, data sent and live test result are four separate evidence questions.
 
 ## 6. Why Scratch is built differently
 
