@@ -26,6 +26,7 @@ The repository packages the main app in a large root app.html containing the edi
 | How do I create a Scratch-like app myself? | [Build your own block-coding editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md) |
 | What is tested, source-verified or still unknown? | [Live UI verification](./LIVE-UI-VERIFICATION.txt), [November screenshot report](../team/screens-2026-11-02/REPORT.md), [screenshot review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md) |
 | What is planned or currently broken? | [AI team to-do](../team/AI-TEAM-TODO.md), [bug reports](../team/bugs/) |
+| What game-design knowledge already exists? | [Research index](../research/RESEARCH-INDEX.md) and its linked game-design reference notes |
 | How does G-Warp compare with Scratch, TurboWarp and PenguinMod? | [Upstream architecture reference](./UPSTREAM-ARCHITECTURE-REFERENCE.md), then Engineering reference §6 |
 
 Do not read all of app.html from top to bottom as your first action. Start with the module index, find the relevant script ID, then inspect the exact source section and any later patch that may override it.
@@ -80,6 +81,18 @@ The phrase “G-Warp AI” can refer to more than one feature. Keep them separat
 ### G-Spark quick helper — local recipe/tip matching
 
 The checked-in source's G-Spark bar calls the local GW_V1571.match(q) lookup and addRecipe builder. It matches the user's words against built-in recipe and tip packs. A matching recipe can create block stacks in the selected sprite's workspace. The default G-Spark bar is **not evidence of a connected cloud LLM**.
+
+### Embedded knowledge packs and the research library
+
+The checked-in app includes G-Warp's own recipe/tip matcher in `gw-v1571-blocks`. The local `GW_V1571.match(q)` function compares words in the user's prompt against recipe/tip records and matching recipes are turned into block stacks using the app's builders.
+
+Two later inline pack modules are important:
+- `gw-v4900-gwrap-pack` contains embedded JSON `PACKS` data. Its installer converts recipe script descriptions to actual blocks using `GW_V1571.blk`, `cblk` and `nestInto`, then adds recipes and tips to the helper.
+- `gw-v4960-chatgpt-gwrap-pack` adds another small set of recipes, tips and safe slash commands on top of the same helper.
+
+The repository's `research/` folder is a separate human-readable library of game-design notes. Its `RESEARCH-INDEX.md` links to roughly forty game concepts and each note outlines mechanics, a first-version plan, pitfalls and prototype scope. These notes are useful for AI research, G-Spark recipe authors and contributors designing better tutorials.
+
+**Important source distinction:** no path from the checked-in app blob inspected for this guide to `research/`, `research/RESEARCH-INDEX.md` or `research-how-to-make-*.md` was found. Do not tell users that G-Spark automatically reads that folder. To change the running helper, relevant knowledge must be translated into one of its embedded recipe/tip packs and integrated into `app.html` by the authorized integrator, or a future loader must be added and source-verified. Merely adding a Markdown research note to the repository does not prove the app loads it.
 
 ### Bug questionnaire and AI Report — browser-local data
 
