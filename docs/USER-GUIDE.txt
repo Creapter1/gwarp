@@ -46,7 +46,7 @@ CONTENTS
 - Sprite list: select the sprite whose code, costumes, and sounds you want to edit.
 - Main tabs: Code, Costumes, Sounds.
 - More menu: project/file, edit/history, tools, and settings actions.
-- Extra tools in the source include Extensions, GWrap AI/search/debugging, music/instrument creation, tilemap, behavior design, LAN collaboration, diagnostics, restore points, and advanced settings. Some may be experimental or dependent on browser/build.
+- Extra tools documented in the source include Extensions, GWrap AI/search/debugging, music/instrument creation, tilemap, behavior design, LAN collaboration, diagnostics, restore points, and advanced settings. Some may be experimental or dependent on browser/build. See [the AI guide](./ai.html) for the difference between the existing GWrap AI helper and the planned local-model feature; do not assume Ollama/Llama is already connected.
 
 2. MAKE YOUR FIRST PROJECT
 1. Open G-Warp and select a sprite.
