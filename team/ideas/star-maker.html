@@ -1,0 +1,11 @@
+<!doctype html><html><head><title>Star maker</title>
+<meta name="gw-area" content="costumes"><meta name="gw-icon" content="⭐">
+<style>body{margin:0;padding:20px;background:#0b0f1d;color:#e5e7eb;font:600 14px system-ui}button{padding:8px 14px;border-radius:10px;border:0;background:#4ade80;font-weight:800;cursor:pointer}input{vertical-align:middle}</style></head>
+<body><h3>⭐ Star maker (sample idea)</h3>
+<p>Points <input id="n" type="range" min="3" max="12" value="5"> <span id="v">5</span> · Colour <input id="c" type="color" value="#facc15"></p>
+<svg id="prev" width="160" height="160" viewBox="0 0 100 100"></svg><br><button id="add">Add as a costume</button>
+<script>
+const star=(n,c)=>{let d='';for(let i=0;i<n*2;i++){const r=i%2?20:45,a=Math.PI*i/n-Math.PI/2;d+=(i?'L':'M')+(50+r*Math.cos(a)).toFixed(1)+' '+(50+r*Math.sin(a)).toFixed(1);}return `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="${d}Z" fill="${c}" stroke="#14170f" stroke-width="3" stroke-linejoin="round"/></svg>`;};
+const upd=()=>{v.textContent=n.value;prev.innerHTML=star(+n.value,c.value).replace(/^<svg[^>]*>|<\/svg>$/g,'');};n.oninput=c.oninput=upd;upd();
+add.onclick=()=>{GW.addCostumeSVG(star(+n.value,c.value),'star'+n.value);GW.toast('Added a star costume!');};
+</script></body></html>

@@ -24,7 +24,7 @@ Write and keep up to date the documentation in the `docs/` folder of the repo: w
    - What it can use: `window.GW` → `sprite()`, `engine()`, `project()`, `addCostumeSVG(svg, name)`, `playNote(midi, seconds, volume)`, `song()`, `anim()`, `toast(text)`.
    - Rules: only ADD, never delete the user's things; works offline; dark look.
    - Load / remove it in the app.
-   - The full spec is `IDEA-ADDON-GUIDE.md` (in the owner's `g-warp-ideas` folder; ask nothing, copy what it says). Include the Star maker example.
+   - The full spec is `team/ideas/IDEA-ADDON-GUIDE.md`; the example is `team/ideas/star-maker.html`. Include the Star maker example.
    - Languages: add-ons are **JavaScript** (HTML + JS). Python is **not supported** yet; say "maybe later" and do not promise it.
 2. Update `costumes.html`: Graffy (green octopus G button at the bottom of the costume list: hover = Paint / Upload / Play, click = drawing chat), zoom and centre, per-costume undo, Convert to Bitmap/Vector.
 3. Update `animation.html`: the centre marker, the Floor line on/off, onion skin (the faint last frame).
