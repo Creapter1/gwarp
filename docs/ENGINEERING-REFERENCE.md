@@ -12,7 +12,7 @@ This is the main technical guide to **the application in this repository**. It d
 - **[Complete user guide](../docs/USER-GUIDE.txt)** tells you how to operate the current app.
 - **[UI/screenshots guide](../docs/SCREENSHOT-UI-DOCUMENTATION.md)** names visible controls and contains real browser captures.
 - **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** records the actions that were actually tested and the remaining gaps.
-- **[AI Reference](./AI-REFERENCE.md)** is the AI-first repository map, current source caveats and official upstream paths.
+- **[Developer Reference](./DEVELOPER-REFERENCE.md)** summarizes the app architecture, source caveats and official upstream paths.
 - **[Build your own block-coding editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)** explains the architecture and build sequence for a new Scratch-style app.
 - **[UI audit](../team/chatgpt/CHATGPT-NOTES.md)** is a detailed source inspection. A static concern in that file is not automatically a reproduced bug.
 - **[TODO](../team/TODO.txt)** and **[MERGE-QUEUE](../team/MERGE-QUEUE.txt)** show what is current work and what is only a candidate patch.
@@ -209,7 +209,7 @@ That is also how to understand the current G-Warp source: follow each feature th
 
 G-Warp has accumulated multiple inline modules and patches. A later script can replace an earlier event handler or add behavior to an earlier object. **Order matters.** Search for the module ID and function name, read the earlier definition it relies on, and inspect the later patches before drawing conclusions.
 
-For code work, follow the repo's workflow: read [team/AI-TEAM.txt](../team/AI-TEAM.txt), [team/TODO.txt](../team/TODO.txt), [team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt) and [team/MERGE-QUEUE.txt](../team/MERGE-QUEUE.txt) first. The repository rule is that ChatGPT's feature work goes into small files under `team/chatgpt/` with a matching notes file; only the owner or Claude changes `app.html` and `index.html`. Don't replace the large app with a rewritten copy.
+Before changing the application, understand the relevant modules and their dependencies. Preserve existing behavior, make focused changes, and validate the full feature path. Avoid replacing the large single-file application with an unreviewed rewrite.
 
 For every feature, verify the whole path:
 **visible control → event handler → model/state change → runtime/drawing/audio effect → save/load path.**
