@@ -129,4 +129,4 @@ When a release or source change alters the app:
 - mark untested behavior explicitly;
 - do not infer the current app version from an old script ID or the last comment at end-of-file.
 
-**Related:** [AI Reference](./AI-REFERENCE.md) · [Engineering Reference](./ENGINEERING-REFERENCE.md) · [Build Your Own](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)
+**Related:** [AI Reference](./AI-REFERENCE.md) · [AI Data Flow](./AI-DATA-FLOW.md) · [Engineering Reference](./ENGINEERING-REFERENCE.md) · [Build Your Own](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)
