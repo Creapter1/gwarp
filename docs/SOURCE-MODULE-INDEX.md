@@ -87,7 +87,7 @@ The current checked-in build has several distinct flows:
 
 gw-v1571-blocks defines the helper's built-in local recipes, tips and the GW_V1571 matching/block-building interface. gw-v4900-gwrap-pack and gw-v4960-chatgpt-gwrap-pack provide later embedded pack data. They install records into that helper at app startup.
 
-The separate root research/ folder is a repository library of game mechanics and prototype plans. No direct runtime loader path from the checked-in app blob to those Markdown files was found. They are useful material for AIs and recipe authors, but adding a Markdown note does not automatically make it a G-Spark answer.
+The separate root research/ folder is a repository library of game mechanics and prototype plans. No direct runtime loader path from the checked-in app blob to those Markdown files was found. They are useful background material for developers and recipe authors, but adding a Markdown note does not automatically make it a G-Spark answer.
 
 ### G-Spark quick bar — local
 
@@ -138,4 +138,4 @@ When a release or source change alters the app:
 - mark untested behavior explicitly;
 - do not infer the current app version from an old script ID or the last comment at end-of-file.
 
-**Related:** [Developer Reference](./AI-REFERENCE.md) · [Helper Data Flow](./AI-DATA-FLOW.md) · [Engineering Reference](./ENGINEERING-REFERENCE.md) · [Upstream Architecture](./UPSTREAM-ARCHITECTURE-REFERENCE.md) · [Build Your Own](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)
+**Related:** [Developer Reference](./DEVELOPER-REFERENCE.md) · [Helper Data Flow](./HELPER-DATA-FLOW.md) · [Engineering Reference](./ENGINEERING-REFERENCE.md) · [Upstream Architecture](./UPSTREAM-ARCHITECTURE-REFERENCE.md) · [Build Your Own](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)
