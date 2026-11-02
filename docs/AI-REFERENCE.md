@@ -22,6 +22,7 @@ The repository packages the main app in a large root app.html containing the edi
 | What is G-Warp and where is everything? | [Repository README](../README.md), then this page |
 | How do I use G-Warp? | [Learning guide](./LEARNING-GUIDE.md), [User guide](./USER-GUIDE.txt), [UI/screenshot guide](./SCREENSHOT-UI-DOCUMENTATION.md) |
 | How is the current G-Warp app implemented? | [Engineering reference](./ENGINEERING-REFERENCE.md), then [Source module index](./SOURCE-MODULE-INDEX.md) |
+| What does G-Warp AI actually send or store? | [AI data-flow map](./AI-DATA-FLOW.md) |
 | How do I create a Scratch-like app myself? | [Build your own block-coding editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md) |
 | What is tested, source-verified or still unknown? | [Live UI verification](./LIVE-UI-VERIFICATION.txt), [November screenshot report](../team/screens-2026-11-02/REPORT.md), [screenshot review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md) |
 | What is planned or currently broken? | [AI team to-do](../team/AI-TEAM-TODO.md), [bug reports](../team/bugs/) |
@@ -94,7 +95,7 @@ The inspected gw-v1580-aihelp module includes a developer-mode-only connection p
 
 The question and that summary are put into the provider request. The response text is displayed in the helper. A remembered key is stored in localStorage; with “Remember” unchecked, the key is kept in sessionStorage. The default model string in this source is claude-sonnet-5-5, unless a user changes the model field.
 
-This is a real external-provider path and should be described with a privacy/cost warning. Never put a real key in a screenshot, project, commit or log.
+This is a real external-provider path and should be described with a privacy/cost warning. See the [AI Data Flow map](./AI-DATA-FLOW.md) for separate diagrams of the local recipe, browser-storage and Anthropic request paths. Never put a real key in a screenshot, project, commit or log.
 
 ### Local models: do not assume an Ollama connector
 
