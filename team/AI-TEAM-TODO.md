@@ -202,7 +202,9 @@ The name in `[brackets]` at the end = the old file the item came from (old files
 - [open] W3 Kid test script (10 things a new user does in 5 minutes) [CHATGPT-TODO-2026-10-26]
 - [open] D2 README: mention the QA kit (README may only get small edits) [CHATGPT-TODO-2026-10-26]
 
-- [open] Cloud: deliver documentation screenshots one sticky at a time using team/chatgpt/DOC-SCREENSHOT-STICKIES-2026-11-02.md; update team/chatgpt/DOC-SCREENSHOT-STATUS-2026-11-02.md after each delivery; record app version/commit/browser/viewport and actual test evidence; do not edit app code during capture [owner clarification 2026-11-02]
+- [done] Cloud: delivered the November 2 documentation screenshot batch and close-out report under team/screens-2026-11-02/; ChatGPT reviewed the delivery by sticky and recorded limits in team/chatgpt/DOC-SCREENSHOT-STATUS-2026-11-02.md and DOC-DELIVERY-REVIEW-2026-11-02.md [owner clarification 2026-11-02]
+- [open] Documentation evidence follow-up: identify the exact source commit for capture snapshot 2026-11-02_1010_ideas-plus-tab before publishing screenshots as current-build evidence; the screenshot report does not include that SHA [DOC-KNOWLEDGE-BASE-2026-11-02]
+- [open] Documentation evidence follow-up: resolve AI-09 safe blank-key/absence evidence, AI-10 local-model source mismatch, AI-11 controlled request/data-flow test, and LAN-13 host-dialog/two-client evidence; see team/chatgpt/DOC-SCREENSHOT-STATUS-2026-11-02.md [DOC-KNOWLEDGE-BASE-2026-11-02]
 
 ## 12. Testing / QA kit / helpers
 
