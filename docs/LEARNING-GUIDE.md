@@ -4,7 +4,7 @@
 **Goal:** learn the ideas behind G-Warp and Scratch by doing, not by reading a wall of technical words  
 **Source baseline:** checked-in ai-team/app.html is stamped Beta v15.60.0. Some screenshots in the repository are older or from a separate local capture snapshot; check the screenshot guide before treating a picture as exact evidence of your build.
 
-Start with this guide. For the implementation behind the buttons, see the [AI Reference](./AI-REFERENCE.md), [Engineering Reference](./ENGINEERING-REFERENCE.md) and [Build Your Own Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md).
+Start with this guide. For the implementation behind the buttons, see the [Developer Reference](./DEVELOPER-REFERENCE.md), [Engineering Reference](./ENGINEERING-REFERENCE.md) and [Build Your Own Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md).
 
 ## Visual map of the editor
 
