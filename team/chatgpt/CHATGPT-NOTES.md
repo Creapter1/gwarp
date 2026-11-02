@@ -5426,3 +5426,68 @@ No app.html or index.html was changed.
 
 ChatGPT puts new code here: one feature per .js file, plus a NOTES-<name>.txt.
 Read ../TODO.txt first. Never rewrite app.html.
+
+
+--- ENTRY ---
+Date: 2026-11-02 (America/New_York)
+AI: ChatGPT GPT-6
+Task: Inspect the reorganized G-Warp repository, organize public documentation by category, explain existing/planned AI capabilities, prepare Cloud screenshot requests, and research shared context/communication options.
+
+USER REQUEST (summary):
+The owner authorized a thorough repository-first documentation pass, category-based public docs, practical descriptions of creating/testing app features and AI helpers, specific screenshot sticky notes for Cloud, and research into ChatGPT ↔ Claude/Cloud chat connectivity, T-Link, GraphQL and Freebuff to reduce repeated repository reads and token use.
+
+REPOSITORY REVIEW:
+- Confirmed that `main` is the public app/website/docs branch and `ai-team` is the separated AI-workflow branch, following the 1 Nov cleanup commits.
+- Reviewed README, docs index, start guide, block reference, learning guide, detailed user guide, screenshot/UI guide, live UI verification report, engineering reference, animation guide/tutorial hub, AI-team plan and contributor notes.
+- Current repo review exposed a crucial distinction: GWrap AI's historical API-backed helper/knowledge-pack work is not the same as the planned in-browser local-model feature. The 2026-10-26 GWrap AI Local plan explicitly says the local model was not built yet and that the preferred design was browser/WebGPU, with Ollama only an optional possible mode.
+- Prior AI-team source review (19 Oct) documented an Anthropic API-key flow and bounded project-context summary; that is historical static evidence, not a fresh confirmation of the current provider, model ID, UI, storage behavior or payload. No live AI API request was made in this pass.
+
+PUBLIC MAIN BRANCH CHANGES:
+- `docs/index.html` — replaced the flat document list with categories: start learning; create/code; art/animation/music; game tools/project files; AI/safety; technical/release references. Added AI page navigation and responsive guide cards.
+- `docs/ai.html` — new dedicated GWrap AI guide: names clarified (GWrap AI, G-Spark, Llama/Gemma/Qwen, Ollama); beginner workflow and example prompt; knowledge-pack explanation; online/API privacy cautions; local-model status clearly marked as not shipped; AI helper vs coding-agent distinction; troubleshooting and contributor evidence labels.
+- `docs/start.html` — added repeatable Plan → Build small → Run → Change one thing → Expand → Save/reopen workflow, plus guidance for AI-assisted questions.
+- `docs/README.md` — replaced the loose list with a categorized documentation map and documented main/ai-team branch boundary.
+- `docs/USER-GUIDE.txt` — linked the new AI guide and clarified that installing Ollama does not automatically connect a model to G-Warp.
+- `docs/changelog.html` — added a documentation-only update entry; corrected and re-read the heading markup.
+
+INTERNAL AI-TEAM BRANCH CHANGES:
+- Created `team/chatgpt/DOC-SCREENSHOT-STICKIES-2026-11-02.md` with 14 named capture requests: editor map; first working script; costumes/vector selection; animation rig/timeline; instruments/Create Melody/Song Maker; Extensions; import/export/restore; GWrap AI UI; API key/privacy controls; local model status; AI data-flow diagram; Tilemap/Behavior Designer; LAN collaboration; credits/licence. Includes capture resolution, annotation directions, privacy requirements and Cloud close-out format.
+- Created `team/chatgpt/AI-COMMUNICATION-MCP-GRAPHQL-FREEBUFF-RESEARCH-2026-11-02.md` with protocol explanation, availability/limitations, proposed G-Warp Context MCP resources/tools, token-reduction plan, Freebuff integration options, rollout phases and security notes.
+- No other AI contributor folder was edited.
+
+RESEARCH FINDINGS:
+- MCP is the right protocol for exposing a shared project context/tool service to multiple assistant clients; it does not make separate chats directly converse or share entire histories. A shared append-only handoff store is a separate feature.
+- Claude remote custom MCP connectors are currently documented for Free/Pro/Max/Ultra/Team/Enterprise, with one connector limit on Free. Claude cloud connectors call the MCP server from Anthropic's cloud, so the remote endpoint must be reachable over the internet.
+- OpenAI's current MCP Help Center says custom MCP server connections are supported on Business and Enterprise/Edu; Pro can connect read/fetch-only servers; full write MCP is limited to Business/Enterprise/Edu. The current ChatGPT session account is Free, so this account should not be assumed to support a custom MCP URL.
+- GraphQL is an API query language/runtime, not an AI chat connector. Use it only if a context service needs selective GitHub queries; returned payload size controls tokens.
+- Freebuff's public agent schema contains `mcpServers`, tool allowlisting, `windowedFileReads` (offset/limit and search-first read behavior), and compaction controls. This proves support in its custom-agent definition/runtime, but not that every Freebuff Chat UI supports arbitrary MCP config. Test via Desktop/CLI custom agent first.
+- “T-Link” was not identified conclusively. “The Links MCP” found in search is a finance/operational data platform and not evidently a general G-Warp shared memory tool. No installation or permission grant performed.
+- Repo metadata reports the GitHub repository is PUBLIC. The ai-team branch is an organizational separation, not private storage. Do not store credentials or sensitive transcripts there; use a private repo/storage if material must genuinely be private.
+
+EVIDENCE / VERIFICATION:
+- GitHub write operations returned commit SHAs; changed public pages were fetched back from main and the key content/link/status checks passed.
+- Public HTML content read-back checks: PASS for categorized cards, AI page nav, AI/local-model status, screenshot sticky references, first-project workflow, user-guide AI link, changelog heading and README categories.
+- No browser rendering, accessibility interaction, published-site visual check, screenshot capture, current app runtime test or AI-provider API test was performed. Cloud still needs to perform the requested visual captures and live UI verification.
+- The app source file `app.html` could not be fetched through the GitHub file reader in this session (connector returned an empty content body), so this pass did not inspect its current complete contents.
+
+FILES / COMMITS:
+- main `docs/ai.html`: 85a4a76668ee1515a6e1ef3068095ad7a9b8304e
+- main `docs/index.html` (categorized + CSS): c691eda220c9619dc4ab2a864a838ecedf0b3de8
+- main `docs/README.md`: 06fdc067a1d7f41f19e67c9a97042a2ddd4f5384
+- main `docs/start.html` (workflow + note CSS): 59caf34795ded52c61b1e20a9702bdce4724a70e
+- main `docs/USER-GUIDE.txt`: be98f7bd6d9e3afcce38e9e793f2a33da09c3875
+- main `docs/changelog.html` (final corrected version): 3bcb30a3d531a9fd787be6eb681362a3a86ff0bb
+- ai-team `team/chatgpt/DOC-SCREENSHOT-STICKIES-2026-11-02.md`: caad658585dafeca1ed4a2ef22e4c42ad65af52b
+- ai-team `team/chatgpt/AI-COMMUNICATION-MCP-GRAPHQL-FREEBUFF-RESEARCH-2026-11-02.md`: 89d820acfb2f469a398503ce36f3ac600da34b6b
+- This append-only log entry is being added to `team/chatgpt/CHATGPT-NOTES.md`.
+
+NEXT STEPS / HANDOFF:
+1. Cloud: use the 14 sticky IDs in the screenshot handoff, pull the latest main commit, run the app, capture actual current UI, and record build/environment/evidence status. Do not edit app source during the capture task.
+2. Owner/Cloud: confirm the exact “T-Link” product/link if it is a different service than The Links result.
+3. Before any MCP build, decide whether internal information should be moved to a private repo; the current repository is public.
+4. Prototype a local read-only G-Warp Context MCP service first. Only later add append-only handoffs and any approved write tools. Test Freebuff Desktop/CLI custom-agent config independently.
+5. Keep provider/model/key and current API payload details marked NOT-TESTED until Cloud verifies the latest app build.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — captures this repository task and current handoff, not unrelated earlier conversations.
+--- END ENTRY ---
