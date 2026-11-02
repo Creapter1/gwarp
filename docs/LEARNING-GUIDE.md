@@ -2,9 +2,9 @@
 
 **Audience:** someone opening G-Warp for the first time  
 **Goal:** learn the ideas behind G-Warp and Scratch by doing, not by reading a wall of technical words  
-**App version covered:** Beta v15.45.0, unless the live app says otherwise
+**Source baseline:** checked-in ai-team/app.html is stamped Beta v15.60.0. Some screenshots in the repository are older or from a separate local capture snapshot; check the screenshot guide before treating a picture as exact evidence of your build.
 
-Start with this guide.
+Start with this guide. For the implementation behind the buttons, see the [AI Reference](./AI-REFERENCE.md), [Engineering Reference](./ENGINEERING-REFERENCE.md) and [Build Your Own Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md).
 
 ## Visual map of the editor
 
@@ -49,7 +49,7 @@ Try this in a new or disposable project:
 
 1. Select a sprite in the sprite list.
 2. Open **Code**.
-3. Click **Events** in the category rail.
+3. Click **Events** in the category rail. If the coding area or palette is blank on a new project, click a block category first to reveal it.
 4. Drag the **when Green Flag clicked** hat block into the workspace.
 5. Open **Motion** and drag **move 10 steps** beneath the hat until the blocks connect.
 6. Open **Looks** and attach a **say** block beneath the move block if one is available.
