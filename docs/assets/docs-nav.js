@@ -4,7 +4,7 @@
 window.GW_DOCS_NAV = [
   { group: 'Get started', items: [
     ['index.html', 'Docs home'], ['start.html', 'Start here'], ['tutorials/index.html', 'Tutorials'],
-    ['scratch.html', 'From Scratch'], ['glossary.html', 'Glossary'] ] },
+    ['scratch.html', 'From Scratch'], ['glossary.html', 'Glossary'], ['../research/RESEARCH-INDEX.md', 'Game Research Library'] ] },
   { group: 'Make things', items: [
     ['blocks.html', 'Blocks'], ['costumes.html', 'Costumes'], ['animation.html', 'Animation'], ['sounds.html', 'Sounds + Song maker'] ] },
   { group: 'Add to G-Warp', items: [
@@ -23,7 +23,7 @@ window.GW_DOCS_NAV = [
   const here = location.pathname.split('/').pop() || 'index.html';
   const base = location.pathname.includes('/docs/tutorials/') ? '../' : '';
   const html = (cls) => window.GW_DOCS_NAV.map(g => `<div class="${cls}"><div class="dn-head">${esc(g.group)}</div>` +
-    g.items.map(([href, label]) => `<a href="${base}${href}"${href === here ? ' aria-current="page"' : ''}>${esc(label)}</a>`).join('') + '</div>').join('');
+    g.items.map(([href, label]) => `<a href="${href.startsWith('../') ? href : base + href}"${href === here ? ' aria-current="page"' : ''}>${esc(label)}</a>`).join('') + '</div>').join('');
   function run() {
     const nav = document.querySelector('aside nav'); if (nav) { nav.innerHTML = html('dn-group'); nav.classList.add('dn'); }
     const cards = document.getElementById('docsCards'); if (cards) cards.innerHTML = html('dn-card');
