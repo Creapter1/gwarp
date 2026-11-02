@@ -17,6 +17,7 @@ It follows a Scratch-style block workflow and supports Scratch-oriented project 
 | 🧠 **[AI Reference](docs/AI-REFERENCE.md)** | the technical map for AI assistants and developers: architecture, source navigation, evidence and upstream links |
 | 📖 **[Documentation](docs/index.html)** | guides, [tutorials](docs/tutorials/index.html), [glossary](docs/glossary.html), [parents & teachers](docs/parents.html) |
 | 🛠️ **[Build your own editor](docs/BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)** | a step-by-step architecture guide for creating a Scratch-style block editor |
+| 🧩 **[Scratch / TurboWarp / PenguinMod architecture](docs/UPSTREAM-ARCHITECTURE-REFERENCE.md)** | how the upstream projects' editor, block, VM, renderer and project-format systems fit together |
 | 📜 **[Licence (MIT)](LICENSE)** | free to use; see [credits](docs/credits.html) for third-party parts |
 
 **Quick start:** open the app → pick a sprite → click a block category if the palette/workspace is hidden → drag compatible blocks into a script → press **Start**. Save often.
