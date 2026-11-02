@@ -22,7 +22,9 @@ flowchart TD
   K[No provider request in this path]
 ```
 
-The source module gw-v1555-gspark-bar calls the local matching API. The match is drawn from built-in recipe and tip records, and a matching recipe adds blocks to the currently selected sprite's workspace. The helper then shows the selected recipe name and offers Undo.
+The source module gw-v1555-gspark-bar calls the local matching API. The match is drawn from built-in recipe and tip records defined in gw-v1571-blocks and supplemented by embedded JSON installed through gw-v4900-gwrap-pack and gw-v4960-chatgpt-gwrap-pack. The pack loader converts recipe descriptions into G-Warp blocks using the local builders, then adds the entries to GW_V1571. A matching recipe adds blocks to the currently selected sprite's workspace. The helper then shows the selected recipe name and offers Undo.
+
+The separate root research/ folder is not automatically loaded by the checked-in app source. Its game-design notes are a research library for humans, AIs and recipe authors. To affect the running helper, a note must be translated into an embedded recipe/tip pack and integrated, or a future source-verified research loader must be built.
 
 **What this proves:** the checked-in G-Spark bar has an offline recipe/tip and block-building path.  
 **What this does not prove:** that a generative model, Ollama, Anthropic or another external provider was connected.
