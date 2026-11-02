@@ -1,6 +1,6 @@
 # Upstream Architecture Reference: Scratch, TurboWarp and PenguinMod
 
-This is the companion research map for an AI or developer who needs to understand the original Scratch-style ecosystem before comparing it with G-Warp or designing a new block editor.
+This is a technical reference for understanding the original Scratch-style ecosystem, comparing it with G-Warp and designing a new block editor.
 
 **Checked:** 2026-11-02. Upstream projects change; verify each current README, branch and licence before copying commands or code.
 
@@ -201,4 +201,4 @@ The goal is to learn the original architecture and design choices. G-Warp's own 
 - [PenguinMod documentation](https://docs.penguinmod.com/)
 - [PenguinMod PMP protobuf](https://github.com/PenguinMod/pmp-protobuf)
 
-**Related G-Warp documents:** [AI Reference](./AI-REFERENCE.md) · [G-Warp Engineering Reference](./ENGINEERING-REFERENCE.md) · [Source Module Index](./SOURCE-MODULE-INDEX.md) · [Build Your Own Block-Coding Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md).
+**Related G-Warp documents:** [Developer Reference](./DEVELOPER-REFERENCE.md) · [G-Warp Engineering Reference](./ENGINEERING-REFERENCE.md) · [Source Module Index](./SOURCE-MODULE-INDEX.md) · [Build Your Own Block-Coding Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md).
