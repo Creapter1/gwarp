@@ -1,6 +1,6 @@
 # G-Warp Screenshot and UI Behavior Documentation
 
-**Version inspected:** G-Warp Desktop Beta v15.45.0  
+**Historical capture baseline:** G-Warp Desktop Beta v15.45.0, captured 2026-10-13. This page documents that historical run; see the v15.60.0 source reference and November local-snapshot caveat below.  
 **Source:** [app.html](https://github.com/Creapter1/gwarp/blob/main/app.html)  
 **Live app:** https://creapter1.github.io/gwarp/  
 **Audit companion:** [UI-AUDIT.txt](../team/chatgpt/CHATGPT-NOTES.md)  
@@ -14,7 +14,7 @@
 
 This is an explanatory map. Real captured screenshots and the interactions they verify are documented below.
 
-**Screenshot status:** The diagrams below are schematics. **Real screenshots are at the end of this page** (live-verified by Claude, 2026-10-13).
+**Screenshot status:** The diagrams below are schematics. The real screenshots at the end of this page belong to Claude's 2026-10-13 v15.45.0 run. A newer internal set from 2026-11-02 is tracked separately below; it is not assumed to represent the checked-in source.
 
 ## 1. Main UI map
 
@@ -122,3 +122,14 @@ These are real captures from the running app (Beta v15.45.0, Chromium, 1440x900)
 | Sounds tab | ![](../docs/screens/08-tab-sounds.png) | PASS |
 | Extensions library | ![](../docs/screens/09-extensions.png) | PASS |
 | Narrow window 1024x700 | ![](../docs/screens/10-narrow-1024.png) | PASS (no sideways scroll) |
+
+
+---
+
+## 9. Newer internal screenshot delivery — 2026-11-02
+
+Claude delivered a second set in [team/screens-2026-11-02/](../team/screens-2026-11-02/), with clean and annotated images for the 14 sticky topics. Read the [capture report](../team/screens-2026-11-02/REPORT.md), [reviewer audit](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md), and [per-sticky tracker](../team/chatgpt/DOC-SCREENSHOT-STATUS-2026-11-02.md).
+
+**Build identity warning:** the report says this was captured from local snapshot 2026-11-02_1010_ideas-plus-tab. It shows Beta v15.60.0, but its exact source commit SHA was not supplied and the report says the snapshot contains controls absent from the checked-in source. The checked-in ai-team/app.html also carries a v15.60.0 label; identical labels do not prove identical files. Treat the November images as internal evidence for that local snapshot until the source is matched. Do not replace the October screenshots with these images in the public site without owner approval.
+
+The delivered images add useful visual evidence for the editor overview, first script, costume selection, animation rig/timeline, music tools, extensions, file menu, G-Spark bar, Tilemap, Behavior Designer and About/Credits. The screenshot review explains which interactions were not tested. In particular, a visible Tilemap or Behavior Designer window is not proof that painting, collisions, behavior execution or save/reopen works. The /models response and Wi-Fi dialog also need clarification/recapture before the related integrations can be described as working.
