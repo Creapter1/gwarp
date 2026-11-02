@@ -13,7 +13,8 @@ window.GW_DOCS_NAV = [
     ['troubleshoot.html', 'Troubleshooting'], ['shortcuts.html', 'Keyboard shortcuts'], ['safety.html', 'Safety + privacy'], ['parents.html', 'Parents & teachers'] ] },
   { group: 'Build and inspect', items: [
     ['AI-REFERENCE.md', 'AI Reference'], ['AI-DATA-FLOW.md', 'AI Data Flow'], ['ENGINEERING-REFERENCE.md', 'Engineering Reference'],
-    ['SOURCE-MODULE-INDEX.md', 'Source Module Map'], ['BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md', 'Build Your Own Editor'] ] },
+    ['SOURCE-MODULE-INDEX.md', 'Source Module Map'], ['UPSTREAM-ARCHITECTURE-REFERENCE.md', 'Scratch/TurboWarp/PenguinMod Architecture'],
+    ['BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md', 'Build Your Own Editor'] ] },
   { group: 'About', items: [
     ['changelog.html', 'Changelog'], ['credits.html', 'Credits'], ['team.html', 'AI team'] ] }
 ];
