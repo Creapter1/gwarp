@@ -5527,3 +5527,8 @@ Rules re-read: team/ai-team/README.md Rule Zero — only ai-team branch; only ow
 Planned work: update screenshot handoff for incremental delivery, create an explicit status tracker/intake protocol, and prepare safe documentation deployment notes without further main-branch writes.
 Evidence at start: previous documentation content passed GitHub read-back checks; browser rendering/screenshots/runtime remain NOT-TESTED.
 --- END SESSION START ---
+
+
+--- OWNER CLARIFICATION / SCOPE CORRECTION — 2026-11-02 (America/New_York) ---
+The owner clarified that the idea of connecting/combining separate assistants (including possible MCP/GraphQL/Freebuff/T-Link exploration) was only a personal curiosity outside G-Warp, not a G-Warp feature, project, roadmap item or authorized infrastructure task. The standalone research document team/chatgpt/AI-COMMUNICATION-MCP-GRAPHQL-FREEBUFF-RESEARCH-2026-11-02.md was deleted at the owner's request (deletion commit 792ef2e3b1124e7fc0bf56be827897a9766efc37). Do not recreate it, add it to the G-Warp TODO, or build this system as part of G-Warp unless the owner explicitly reopens the idea. The prior log entries remain as historical records of what was briefly researched; this correction supersedes their future-work suggestions. This does not cancel the actual G-Warp documentation or the incremental Cloud screenshot workflow.
+--- END SCOPE CORRECTION ---
