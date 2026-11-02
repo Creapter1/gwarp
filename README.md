@@ -38,3 +38,4 @@ Creapter1 owns every decision and approves every release. The team is **Claude**
 ## Licence and independence
 
 The code in this repository is released under the **[MIT License](LICENSE)**. Third-party extensions may have their own creators and licences – check each one before redistributing. G-Warp is an independent fan project and is **not** made by or connected to Scratch, the Scratch Foundation, MIT, TurboWarp or PenguinMod.
+G-Warp's own code is MIT licensed (see LICENSE). Libraries, fonts and extensions made by others keep their own licenses: see THIRD-PARTY-NOTICES.md.
