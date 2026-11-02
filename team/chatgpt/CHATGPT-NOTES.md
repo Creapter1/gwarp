@@ -5513,3 +5513,17 @@ NEW AI-TEAM COMMITS:
 
 Evidence remains GitHub content read-back only. No live browser/app render, current provider request, model connection, or screenshot capture occurred. Original chat is partially summarized; no false claim of complete transcript.
 --- END ADDENDUM ---
+
+
+--- SESSION START ---
+Date: 2026-11-02 (America/New_York)
+AI: ChatGPT GPT-6
+Task: Continue documentation preparation while Claude supplies screenshots incrementally; prepare an owner-controlled documentation handoff on ai-team and process each screenshot as it arrives.
+Starting branch: ai-team
+Starting file: team/chatgpt/CHATGPT-NOTES.md
+Starting blob SHA: 9f211b9bae3e733af3c97ba3504ee21970b84885
+Owner clarification: Claude will provide the documentation screenshots little by little. Do not wait for all 14; process one sticky at a time as evidence arrives.
+Rules re-read: team/ai-team/README.md Rule Zero — only ai-team branch; only owner moves work to main. No app.html/index.html changes. Keep screenshots authentic and secrets redacted.
+Planned work: update screenshot handoff for incremental delivery, create an explicit status tracker/intake protocol, and prepare safe documentation deployment notes without further main-branch writes.
+Evidence at start: previous documentation content passed GitHub read-back checks; browser rendering/screenshots/runtime remain NOT-TESTED.
+--- END SESSION START ---
