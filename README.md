@@ -6,7 +6,7 @@
 
 G-Warp (short for **G Wrapper**) is a free, fan-made block-coding and game-making app. Connect blocks to make games, animations and interactive stories, draw costumes, and create music – with G-Warp's own dark electric look and the G-Spark mascot.
 
-It works like Scratch/TurboWarp (same blocks, same project files), but it has its own style. It is in **beta**: keep a backup of important projects.
+It follows a Scratch-style block workflow and supports Scratch-oriented project import/export paths, but it is an independent implementation. Exact block behavior and file compatibility vary by feature and must be tested; do not assume every G-Warp-only feature round-trips to Scratch, TurboWarp or PenguinMod. It is in **beta**: keep a backup of important projects.
 
 ## Start here
 
@@ -14,10 +14,12 @@ It works like Scratch/TurboWarp (same blocks, same project files), but it has it
 |---|---|
 | 🚀 **[Open the app](app.html)** | the G-Warp editor |
 | 🌐 **[Website](index.html)** | the G-Warp homepage |
+| 🧠 **[AI Reference](docs/AI-REFERENCE.md)** | the technical map for AI assistants and developers: architecture, source navigation, evidence and upstream links |
 | 📖 **[Documentation](docs/index.html)** | guides, [tutorials](docs/tutorials/index.html), [glossary](docs/glossary.html), [parents & teachers](docs/parents.html) |
+| 🛠️ **[Build your own editor](docs/BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md)** | a step-by-step architecture guide for creating a Scratch-style block editor |
 | 📜 **[Licence (MIT)](LICENSE)** | free to use; see [credits](docs/credits.html) for third-party parts |
 
-**Quick start:** open the app → pick a sprite → drag blocks into the code area → press **Start**. Save often.
+**Quick start:** open the app → pick a sprite → click a block category if the palette/workspace is hidden → drag compatible blocks into a script → press **Start**. Save often.
 
 ## What is in this repository
 
@@ -25,7 +27,7 @@ It works like Scratch/TurboWarp (same blocks, same project files), but it has it
 |---|---|
 | `app.html` | the app (the whole editor in one file) |
 | `index.html`, `stats.html`, `sitemap.xml`, `gw-stats.js` | the website (they must stay here for the site to work) |
-| `docs/` | documentation pages and tutorials |
+| `docs/` | user guides, AI-first technical reference, source map, architecture tutorial and feature guides |
 | `site/` | extra website files |
 | `desktop/` | the Windows desktop version (exe build files) |
 | `research/` | "how to make a game" notes that G-Spark (the built-in AI helper) reads |
