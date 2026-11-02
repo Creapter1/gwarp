@@ -1,36 +1,77 @@
-# G-Warp Documentation
+# G-Warp Documentation — complete map
 
-This folder explains **the actual G-Warp application**: what you see on screen, how its real code runs, how its tools save their work, and how its implementation relates to Scratch 3. Start with the app map, then follow the guide for the task you are doing.
+This documentation has two jobs:
 
-## 1. The app, explained
+1. Help a person use G-Warp, from their first block stack to animation, music, extensions and project files.
+2. Help an AI or developer understand how G-Warp is implemented, how it differs from Scratch/TurboWarp/PenguinMod, and how to build a similar block-coding app.
 
-**[G-Warp implementation map](./ENGINEERING-REFERENCE.md)** is the main technical guide. It follows the real implementation from block workspace to `ScriptThread`, `Engine`, Stage drawing, costumes, sound/music, Tilemap, Behaviors, extensions and file import/export. It also explains how Scratch itself is organized and maps each Scratch subsystem to the closest G-Warp equivalent.
+The documentation is written against evidence. A picture can prove a control is visible; source inspection can prove code exists; only a real test can prove the interaction worked.
 
-![Actual G-Warp application internals](./images/gwarp-app-internals.svg)
+## 1. Start with the AI reference
 
-![Scratch package architecture compared with G-Warp](./images/scratch-to-gwarp-map.svg)
+**[AI Reference — read this first](./AI-REFERENCE.md)** is the front door for Gemini, ChatGPT, Claude and other research/development agents. It explains repository branches, source identity, evidence labels, project boundaries, upstream links and the order to inspect G-Warp.
 
-## 2. How to use the app
+## 2. Understand how G-Warp is built
 
-- **[Learn G-Warp](./LEARNING-GUIDE.md)** — first project and basic block-coding concepts.
-- **[Complete user guide](../docs/USER-GUIDE.txt)** — how to use the existing controls and tools.
-- **[Screenshots and UI guide](../docs/SCREENSHOT-UI-DOCUMENTATION.md)** — visual location of the controls, menus, tabs and right-click actions.
-- **[Editor-area map](./images/gwarp-editor-map.svg)** and [block shapes](./images/gwarp-blocks-explained.svg) — quick visual explanations.
+| Document | What it explains |
+|---|---|
+| [Engineering Reference](./ENGINEERING-REFERENCE.md) | Actual G-Warp UI, DOM workspace, Engine/ScriptThread runtime, Stage renderer, costumes, music, Tilemap, Behaviors, extensions, files, LAN, Scratch architecture comparison and build-from-zero order |
+| [Source Module Index](./SOURCE-MODULE-INDEX.md) | Inline script IDs, real globals, source entry points, AI data paths, SB3/PenguinMod boundaries and module-order warnings |
+| [Build Your Own Block-Coding Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md) | A staged guide to project data, blocks, connections, runtime, scheduling, rendering, media, files, extensions and tests |
+| [App internals diagram](./images/gwarp-app-internals.svg) | Visual map of main implementation layers |
+| [Scratch-to-G-Warp map](./images/scratch-to-gwarp-map.svg) | Conceptual mapping between upstream systems and G-Warp's custom implementation |
 
-## 3. What has actually been checked
+G-Warp's main editor is packaged in root app.html with many inline modules. It does not import Scratch VM as its runtime. The version label is not enough to identify a build; use the branch, source commit/blob and actual screenshot provenance.
 
-- **[Live UI verification](./LIVE-UI-VERIFICATION.txt)** — tests actually run in Chromium, with screenshots and the items that remain untested.
-- **[UI behavior audit](../team/chatgpt/CHATGPT-NOTES.md)** — source-level findings and likely issues. Read it together with the live report.
-- **[Real screenshots](./screens/)** — pictures captured from the running app, not drawings.
+## 3. Learn to use G-Warp
 
-A test report does not prove every app feature is working. The source map, browser results and untested items are kept separate.
+- [Learning Guide](./LEARNING-GUIDE.md) — first project, block shapes, events, variables, costumes, music and testing.
+- [Complete User Guide](./USER-GUIDE.txt) — practical control-by-control instructions for the inspected app source.
+- [Screenshot and UI Behavior Guide](./SCREENSHOT-UI-DOCUMENTATION.md) — controls, menus, tabs, context menus and screenshot evidence.
+- [Tutorials](./tutorials/index.html) — small projects built one step at a time.
+- [Glossary](./glossary.html) — plain-language meanings of editor and coding terms.
+- [Parents and Teachers](./parents.html) — orientation and safety reminders.
 
-## 4. If you're changing G-Warp
+## 4. Feature guides
 
-Read [team/ENGINE-MAP.txt](../team/ENGINE-MAP.txt) before writing code. It lists the actual engine object and hooks and warns against assuming that Scratch VM internals exist in G-Warp. Then check [team/TODO.txt](../team/TODO.txt) and [team/MERGE-QUEUE.txt](../team/MERGE-QUEUE.txt) to see the current priority and whether a patch is only a candidate.
+- [Blocks](./blocks.html)
+- [Costumes](./costumes.html)
+- [Animation](./animation.html)
+- [Sounds and Song Maker](./sounds.html)
+- [Extensions](./extensions.html)
+- [Scratch project compatibility](./scratch.html)
+- [Safety and Privacy](./safety.html)
+- [Credits and Licences](./credits.html)
 
-## Where Scratch's own code lives
+These guides should be read alongside the engineering reference when you need to know not only where a control is, but how it works and what is saved.
 
-The implementation guide links directly to the official [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor) and the actual `scratch-gui`, `scratch-blocks`, `scratch-vm`, renderer, paint and storage components. Use those sources to understand Scratch's implementation; use G-Warp's own `app.html` and [engine map](../team/ENGINE-MAP.txt) to understand this app.
+## 5. What was actually checked
 
-**Important:** G-Warp is an independent implementation. It aims to provide Scratch-style behavior and project workflows, but it is not Scratch VM and compatibility must be checked feature by feature.
+- [Live UI Verification](./LIVE-UI-VERIFICATION.txt) — Claude's 2026-10-13 Chromium run against Beta v15.45.0, including its environment and NOT-TESTED cases.
+- [November 2 screenshot report](../team/screens-2026-11-02/REPORT.md) — internal screenshots from a later local capture snapshot. The exact source commit was not provided; do not treat the pictures as exact evidence of the checked-in app until that snapshot is matched.
+- [Screenshot delivery review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md) — reviewer corrections, especially Tilemap/Behavior full-window captures and the AI-10/LAN-13 evidence gaps.
+- [Screenshot intake tracker](../team/chatgpt/DOC-SCREENSHOT-STATUS-2026-11-02.md) — status for every one of the 14 screenshot stickies.
+
+The October 13 screenshots under docs/screens/ are a historical v15.45.0 set. The November 2 screenshots under team/screens-2026-11-02/ are internal evidence from a separate local snapshot; owner approval is required before publishing them.
+
+## 6. How to change G-Warp safely
+
+Before editing the app:
+1. Read [AI Reference](./AI-REFERENCE.md), the exact source module index and the relevant section of app.html.
+2. Check the current branch, commit and blob SHA. Do not assume an old script ID indicates the current release.
+3. Read [team/AI-TEAM-TODO.md](../team/AI-TEAM-TODO.md) and the [AI team rules](../team/ai-team/README.md).
+4. Follow Rule Zero: AI work only on ai-team; only the owner moves approved work to main.
+5. Only Claude Opus integrates changes into app.html and root index.html. Other contributors submit isolated proposals and documentation in their own authorized areas.
+6. Trace each feature through visible control → handler → model/state → runtime/render/audio → save/load → test.
+7. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
+
+## 7. Where to study the upstream projects
+
+- [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor)
+- [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks)
+- [Scratch audio engine](https://github.com/scratchfoundation/scratch-audio)
+- [TurboWarp development docs](https://docs.turbowarp.org/development/getting-started)
+- [TurboWarp interpreter/compiler overview](https://docs.turbowarp.org/how)
+- [PenguinMod documentation](https://docs.penguinmod.com/)
+
+The upstream package layout and setup instructions change. Read each project's current README and licence before copying a command, module or code.
