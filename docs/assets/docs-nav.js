@@ -21,9 +21,11 @@ window.GW_DOCS_NAV = [
 (() => {
   const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const here = location.pathname.split('/').pop() || 'index.html';
-  const base = location.pathname.includes('/docs/tutorials/') ? '../' : '';
+  const nested = location.pathname.includes('/docs/tutorials/');
+  const base = nested ? '../' : '';
+  const rootResearch = nested ? '../../research/RESEARCH-INDEX.md' : '../research/RESEARCH-INDEX.md';
   const html = (cls) => window.GW_DOCS_NAV.map(g => `<div class="${cls}"><div class="dn-head">${esc(g.group)}</div>` +
-    g.items.map(([href, label]) => `<a href="${href.startsWith('../') ? href : base + href}"${href === here ? ' aria-current="page"' : ''}>${esc(label)}</a>`).join('') + '</div>').join('');
+    g.items.map(([href, label]) => `<a href="${href === '../research/RESEARCH-INDEX.md' ? rootResearch : base + href}"${href === here ? ' aria-current="page"' : ''}>${esc(label)}</a>`).join('') + '</div>').join('');
   function run() {
     const nav = document.querySelector('aside nav'); if (nav) { nav.innerHTML = html('dn-group'); nav.classList.add('dn'); }
     const cards = document.getElementById('docsCards'); if (cards) cards.innerHTML = html('dn-card');
