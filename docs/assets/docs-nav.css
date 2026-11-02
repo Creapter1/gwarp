@@ -1,0 +1,9 @@
+/* grouped docs menu + home cards (used by every docs page) */
+nav.dn{display:flex;flex-direction:column;gap:12px}
+nav.dn .dn-group{display:flex;flex-direction:column;gap:2px}
+.dn-head{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#a3a3c2;margin:2px 0 4px}
+nav.dn a[aria-current="page"]{color:#4ade80;font-weight:800}
+#docsCards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:12px 0 20px}
+.dn-card{border:1px solid #2a2a48;border-radius:12px;padding:12px 14px;background:#141425;display:flex;flex-direction:column;gap:4px}
+.dn-card .dn-head{color:#c4b5fd}
+.dn-card a{text-decoration:none}.dn-card a:hover{text-decoration:underline}
