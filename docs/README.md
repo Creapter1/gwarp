@@ -58,7 +58,7 @@ These guides should be read alongside the engineering reference when you need to
 - [Screenshot delivery review](../team/chatgpt/DOC-DELIVERY-REVIEW-2026-11-02.md) — reviewer corrections, especially Tilemap/Behavior full-window captures and the AI-10/LAN-13 evidence gaps.
 - [Screenshot intake tracker](../team/chatgpt/DOC-SCREENSHOT-STATUS-2026-11-02.md) — status for every one of the 14 screenshot stickies.
 
-The October 13 screenshots under docs/screens/ are a historical v15.45.0 set. The November 2 screenshots under team/screens-2026-11-02/ are internal evidence from a separate local snapshot; owner approval is required before publishing them.
+The screenshots under docs/screens/ are a historical v15.45.0 set. Check the source version and test report before treating them as evidence for a newer build.
 
 ## 6. How to change G-Warp safely
 
