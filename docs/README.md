@@ -1,33 +1,31 @@
-# G-Warp Documentation — complete map
+# G-Warp Documentation
 
-This documentation has two jobs:
+This documentation has two purposes:
 
-1. Help a person use G-Warp, from their first block stack to animation, music, extensions and project files.
-2. Help an AI or developer understand how G-Warp is implemented, how it differs from Scratch/TurboWarp/PenguinMod, and how to build a similar block-coding app.
+1. Help people learn block-based programming and use G-Warp to make games, animations, interactive stories and music.
+2. Explain how block-coding editors are designed, how Scratch/TurboWarp/PenguinMod fit together, and how to build an independent editor.
 
-The documentation is written against evidence. A picture can prove a control is visible; source inspection can prove code exists; only a real test can prove the interaction worked.
+The general learning guides are useful even if a reader has never used G-Warp. Project-specific pages are clearly identified as implementation references. Technical claims should be tied to source inspection or actual tests; a visible control alone does not prove that every interaction works.
 
-## 1. Start with the developer reference
+## 1. Learn the concepts
 
-**[Developer Reference](./DEVELOPER-REFERENCE.md)** is the technical starting point for understanding G-Warp's architecture, source identity, built-in helper, external-provider path and upstream references.
-
-## 2. Understand how G-Warp is built
-
-| Document | What it explains |
+| Guide | What it explains |
 |---|---|
-| [Engineering Reference](./ENGINEERING-REFERENCE.md) | Actual G-Warp UI, DOM workspace, Engine/ScriptThread runtime, Stage renderer, costumes, music, Tilemap, Behaviors, extensions, files, LAN, Scratch architecture comparison and build-from-zero order |
-| [Source Module Index](./SOURCE-MODULE-INDEX.md) | Inline script IDs, real globals, source entry points, helper data paths, SB3/PenguinMod boundaries and module-order warnings |
-| [Helper Data Flow](./HELPER-DATA-FLOW.md) | What G-Spark does locally, what the bug report stores in the browser, and what the developer-only Anthropic path sends |
-| [Upstream Architecture Reference](./UPSTREAM-ARCHITECTURE-REFERENCE.md) | How Scratch's GUI/Blocks/VM/rendering work together, how TurboWarp compiles scripts, and where PenguinMod's PMP/protobuf tools fit |
-| [Build Your Own Block-Coding Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md) | A staged guide to project data, blocks, connections, runtime, scheduling, rendering, media, files, extensions and tests |
-| [App internals diagram](./images/gwarp-app-internals.svg) | Visual map of main implementation layers |
-| [Scratch-to-G-Warp map](./images/scratch-to-gwarp-map.svg) | Conceptual mapping between upstream systems and G-Warp's custom implementation |
+| [How Block-Based Programming Editors Work](./BLOCK-BASED-PROGRAMMING-ARCHITECTURE.md) | Block shapes, workspace editing, project models, runtimes, rendering and files |
+| [Scratch VM Explained](./SCRATCH-VM-EXPLAINED.md) | How Scratch block data becomes running scripts |
+| [Scratch, TurboWarp, PenguinMod and Independent Editors](./SCRATCH-STYLE-EDITORS-COMPARISON.md) | Neutral overview of different approaches and compatibility |
+| [Build Your Own Block-Coding Editor](./BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md) | A staged guide to designing and implementing an editor |
+| [Upstream Architecture Reference](./UPSTREAM-ARCHITECTURE-REFERENCE.md) | Scratch GUI/Blocks/VM/rendering, TurboWarp compilation and PenguinMod |
 
-G-Warp's main editor is packaged in root app.html with many inline modules. It does not import Scratch VM as its runtime. The version label is not enough to identify a build; use the branch, source commit/blob and actual screenshot provenance.
+## 2. Understand G-Warp's implementation
 
-## 2.1. Game-design research library
+- [Engineering Reference](./ENGINEERING-REFERENCE.md) — the actual G-Warp UI, custom workspace, Engine/ScriptThread runtime, Stage renderer, costumes, music, Tilemap, Behaviors, extensions and project files.
+- [Source Module Index](./SOURCE-MODULE-INDEX.md) — inline script IDs, globals, source entry points and module-order notes.
+- [Developer Reference](./DEVELOPER-REFERENCE.md) — source identity, architecture overview, implementation caveats and upstream references.
+- [App internals diagram](./images/gwarp-app-internals.svg) — visual map of main implementation layers.
+- [Scratch-to-G-Warp map](./images/scratch-to-gwarp-map.svg) — conceptual mapping between upstream systems and G-Warp's custom implementation.
 
-The root [research index](../research/RESEARCH-INDEX.md) links to dozens of game-design notes. Each note covers the game's core mechanics, a practical first-version plan, common pitfalls and a prototype scope. These pages are a human-readable game-design reference. The checked-in G-Warp app does **not** automatically load this Markdown folder into G-Spark; its active recipe/tip knowledge is embedded in app.html modules. See the [Developer Reference](./DEVELOPER-REFERENCE.md) and [Source Module Index](./SOURCE-MODULE-INDEX.md) for the distinction.
+G-Warp's main editor is packaged in root `app.html` with many inline modules. It does not import Scratch VM as its runtime. The version label is not enough to identify a build; use the branch, source commit/blob and actual test evidence.
 
 ## 3. Learn to use G-Warp
 
@@ -49,8 +47,6 @@ The root [research index](../research/RESEARCH-INDEX.md) links to dozens of game
 - [Safety and Privacy](./safety.html)
 - [Credits and Licences](./credits.html)
 
-These guides should be read alongside the engineering reference when you need to know not only where a control is, but how it works and what is saved.
-
 ## 5. What was actually checked
 
 - [Live UI Verification](./LIVE-UI-VERIFICATION.txt) records a Chromium run against Beta v15.45.0, including the environment, passed interactions and NOT-TESTED cases.
@@ -58,16 +54,14 @@ These guides should be read alongside the engineering reference when you need to
 
 A visible control is not proof of working behavior. Keep source inspection, screenshot evidence and live interaction tests distinct.
 
-## 6. How to change G-Warp safely
+## 6. How to study or change G-Warp safely
 
-Before changing the application:
-
-1. Read the [Developer Reference](./DEVELOPER-REFERENCE.md), [Source Module Index](./SOURCE-MODULE-INDEX.md) and relevant section of `app.html`.
+1. Read the [Engineering Reference](./ENGINEERING-REFERENCE.md), [Source Module Index](./SOURCE-MODULE-INDEX.md) and relevant section of `app.html`.
 2. Check the current branch, commit and source blob SHA. Do not assume an old script ID or version label identifies the current release.
 3. Trace the feature through visible control → handler → model/state → runtime/render/audio → save/load → test.
 4. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
 
-## 7. Where to study the upstream projects
+## 7. Upstream projects
 
 - [Scratch editor monorepo](https://github.com/scratchfoundation/scratch-editor)
 - [Scratch Blocks](https://github.com/scratchfoundation/scratch-blocks)
