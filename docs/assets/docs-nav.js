@@ -11,6 +11,9 @@ window.GW_DOCS_NAV = [
     ['extensions.html', 'Extensions'], ['ideas-addons.html', 'Ideas (+ tab) add-ons'] ] },
   { group: 'Help', items: [
     ['troubleshoot.html', 'Troubleshooting'], ['shortcuts.html', 'Keyboard shortcuts'], ['safety.html', 'Safety + privacy'], ['parents.html', 'Parents & teachers'] ] },
+  { group: 'Build and inspect', items: [
+    ['AI-REFERENCE.md', 'AI Reference'], ['ENGINEERING-REFERENCE.md', 'Engineering Reference'],
+    ['SOURCE-MODULE-INDEX.md', 'Source Module Map'], ['BUILD-YOUR-OWN-BLOCK-CODING-EDITOR.md', 'Build Your Own Editor'] ] },
   { group: 'About', items: [
     ['changelog.html', 'Changelog'], ['credits.html', 'Credits'], ['team.html', 'AI team'] ] }
 ];
