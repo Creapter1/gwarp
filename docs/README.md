@@ -9,7 +9,7 @@ The documentation is written against evidence. A picture can prove a control is 
 
 ## 1. Start with the developer reference
 
-**[Developer Reference](./AI-REFERENCE.md)** is the front door for Gemini, ChatGPT, Claude and other research/development agents. It explains repository branches, source identity, evidence labels, project boundaries, upstream links and the order to inspect G-Warp.
+**[Developer Reference](./DEVELOPER-REFERENCE.md)** is the technical starting point for understanding G-Warp's architecture, source identity, built-in helper, external-provider path and upstream references.
 
 ## 2. Understand how G-Warp is built
 
