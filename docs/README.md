@@ -65,10 +65,7 @@ The screenshots under docs/screens/ are a historical v15.45.0 set. Check the sou
 Before editing the app:
 1. Read [Developer Reference](./DEVELOPER-REFERENCE.md), the exact source module index and the relevant section of app.html.
 2. Check the current branch, commit and blob SHA. Do not assume an old script ID indicates the current release.
-3. Read [team/AI-TEAM-TODO.md](../team/AI-TEAM-TODO.md) and the [AI team rules](../team/ai-team/README.md).
-4. Follow Rule Zero: AI work only on ai-team; only the owner moves approved work to main.
-5. Only Claude Opus integrates changes into app.html and root index.html. Other contributors submit isolated proposals and documentation in their own authorized areas.
-6. Trace each feature through visible control → handler → model/state → runtime/render/audio → save/load → test.
+6. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
 6. Record exact test results and anything NOT-TESTED. Never claim cross-editor compatibility without a real round-trip test.
 
 ## 7. Where to study the upstream projects
