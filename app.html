@@ -12235,6 +12235,7 @@ nodes.push(el);cur=b.next;}return nodes;};
       if (op === 'motion_goto' || op === 'motion_glideto') {
         const to = menuVal(b, 'TO'), secs = op === 'motion_glideto' ? [input(b, 'SECS')] : [];
         if (op === 'motion_goto') { const gt = blk('goto_target'); if (gt) { setSelect(gt.querySelector('.block-select'), to || 'random position'); return { el: gt }; } }
+        if (op === 'motion_glideto') { const gg = blk('glide_target'); if (gg) { setSelect(gg.querySelector('.block-select'), to || 'random position'); fillInputs(gg, secs); return { el: gg }; } } // Claude 2 Nov: its own block now
         if (to === 'random position' && op === 'motion_goto') return { el: blk('goto_random') };
         const xy = to === 'random position' ? [{ node: { type: 'op_random', args: [lit(-240), lit(240)] } }, { node: { type: 'op_random', args: [lit(-180), lit(180)] } }]
           : to === 'mouse-pointer' ? [{ node: { type: 'mouse_x' } }, { node: { type: 'mouse_y' } }]
@@ -13385,6 +13386,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       const menuIn = (opcode, field, value) => { const sh = menuShadow(opcode, field, value, k); let mx = null; try { mx = JSON.parse(b.dataset.gw9MenuExpr || 'null'); } catch {} const e = Array.isArray(mx) ? mx.find(x => x && x.i === 0 && x.node) : null; if (!e) return sh; const v = inputFromNode(e.node, field, k, false); return v && v[0] === 3 ? [3, v[1], sh[1]] : sh; };
       if (t === 'point_towards') return done('motion_pointtowards', { TOWARDS: menuIn('motion_pointtowards_menu', 'TOWARDS', MAP_SPRITE(sel(b) || 'mouse-pointer')) });
       if (t === 'goto_random') return done('motion_goto', { TO: menuShadow('motion_goto_menu', 'TO', '_random_', k) });
+      if (t === 'glide_target') { const v = sel(b) || 'random position'; return done('motion_glideto', { ...valueInputs(b, ['SECS'], k), TO: menuShadow('motion_glideto_menu', 'TO', v === 'random position' ? '_random_' : MAP_SPRITE(v), k) }); } // Claude 2 Nov
       if (t === 'switch_costume') return done('looks_switchcostumeto', { COSTUME: menuIn('looks_costume', 'COSTUME', sel(b)) });
       if (t === 'set_backdrop') return done('looks_switchbackdropto', { BACKDROP: menuIn('looks_backdrops', 'BACKDROP', sel(b)) });
       if (t === 'play_sound' || t === 'start_sound') return done(t === 'play_sound' ? 'sound_playuntildone' : 'sound_play', { SOUND_MENU: menuIn('sound_sounds_menu', 'SOUND_MENU', sel(b)) });
@@ -13853,6 +13855,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
   /* ================= command blocks ================= */
   const VIS = [ // shown in the palette
+    ['sec-motion', 'glide_xy', '<div class="scratch-block bg-motion gw-stack-block" data-type="glide_target">glide <input class="block-input" type="text" value="1"/> secs to <select class="block-select" data-gw9-menu="goto"><option value="random position">random position</option><option value="mouse-pointer">mouse-pointer</option></select></div>'], // Claude 2 Nov: like Scratch (E1.6)
     ['sec-motion', 'goto_xy', '<div class="scratch-block bg-motion gw-stack-block" data-type="goto_target">go to <select class="block-select" data-gw9-menu="goto"><option value="random position">random position</option><option value="mouse-pointer">mouse-pointer</option></select></div>'],
     ['sec-looks', 'clear_effects', `<div class="scratch-block bg-looks gw-stack-block" data-type="change_effect">change <select class="block-select">${EFFECTS.map(e => `<option value="${e}">${e}</option>`).join('')}</select> effect by <input class="block-input" type="text" value="25"/></div>`],
     ['sec-looks', 'clear_effects', `<div class="scratch-block bg-looks gw-stack-block" data-type="set_effect">set <select class="block-select">${EFFECTS.map(e => `<option value="${e}">${e}</option>`).join('')}</select> effect to <input class="block-input" type="text" value="0"/></div>`],
@@ -13908,6 +13911,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       case 'set_drag_mode': s.draggable = String(sels(b)[0] || '').toLowerCase() === 'draggable'; return true; // v15.47.1
       case 'snd_set_effect': case 'snd_change_effect': { const k = String(sels(b)[0] || 'pitch').toLowerCase().startsWith('pan') ? 'pan' : 'pitch'; s.soundFx = s.soundFx || {}; let v = (t === 'snd_change_effect' ? (Number(s.soundFx[k]) || 0) : 0) + num(b, 0); if (k === 'pan') v = Math.max(-100, Math.min(100, v)); else v = Math.max(-360, Math.min(360, v)); s.soundFx[k] = v; playing.forEach(p => { if (p.sprite === s && p.src) { try { p.src.playbackRate.value = rateOf(s); } catch {} } }); return true; }
       case 'snd_clear_effects': s.soundFx = {}; return true;
+      case 'glide_target': { const to = sels(b)[0] || 'random position', secs = Math.max(0.01, num(b, 0)); let tx = s.x, ty = s.y; if (to === 'random position') { tx = Math.round(Math.random() * 480 - 240); ty = Math.round(Math.random() * 360 - 180); } else if (to === 'mouse-pointer') { tx = Math.round(E.mouse?.x || 0); ty = Math.round(E.mouse?.y || 0); } else { const o = findSprite(to, s); if (o) { tx = o.x; ty = o.y; } } th.motionTween = { start: performance.now(), dur: secs * 1000, sx: s.x, sy: s.y, tx, ty }; th.waitUntil = performance.now() + secs * 1000; return true; }
       case 'goto_target': { const to = sels(b)[0] || 'random position'; if (to === 'random position') { s.x = Math.round(Math.random() * 480 - 240); s.y = Math.round(Math.random() * 360 - 180); } else if (to === 'mouse-pointer') { s.x = Math.round(E.mouse?.x || 0); s.y = Math.round(E.mouse?.y || 0); } else { const o = findSprite(to, s); if (o) { s.x = o.x; s.y = o.y; } } return true; }
       case 'cam_set_xy': c.x = num(b, 0); c.y = num(b, 1); return true;
       case 'cam_set_x': c.x = num(b, 0); return true; case 'cam_set_y': c.y = num(b, 0); return true;
@@ -16850,8 +16854,41 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     } else if (st.drag.type === 'root') {
       const r = { x: Math.round(p.x * 10) / 10, y: Math.round(p.y * 10) / 10 };
       if (pose) pose.roots[b.id] = r; else { b.x = r.x; b.y = r.y; }
+      if (pose) floorPose(pose, st.drag);
     }
     showPose();
+  }
+  /* Claude (2 Nov, owner video): the FLOOR is solid. While you drag the body down in Animate mode, nothing goes below the
+     floor line: a foot that would go through it slides along the floor (the leg bends out, like a squash), a 2-bone leg
+     bends its knee, and if a joint itself would go under, the body stops at the floor. Drag back up = the legs come back. */
+  function floorPose(pose, d) {
+    let on = true; try { on = localStorage.getItem('gw-anim-floor') !== 'off'; } catch (e) {}
+    const sv = by('gw18Svg'); if (!on || !sv) return;
+    const vb = (sv.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number); if (vb.length < 4 || !vb[3]) return;
+    const FY = vb[1] + vb[3] - 0.6 * Math.max(vb[2], vb[3]) / 100;
+    if (!d.base) d.base = JSON.parse(JSON.stringify(pose.angles || {}));
+    pose.angles = Object.assign(pose.angles || {}, JSON.parse(JSON.stringify(d.base)));
+    const A = st.anim, kids = id => A.bones.filter(x => x.parent === id);
+    { // first: no JOINT may go under the floor - stop the body there
+      const S0 = solve(A, pose); let low = -Infinity; S0.forEach(q => { low = Math.max(low, q.jy); });
+      if (low > FY && pose.roots[d.id]) pose.roots[d.id] = { x: pose.roots[d.id].x, y: Math.floor((pose.roots[d.id].y - (low - FY)) * 10) / 10 }; }
+    for (let pass = 0; pass < 3; pass++) {
+      let S = solve(A, pose);
+      for (const bn of A.bones) {
+        if (kids(bn.id).length) continue; const q = S.get(bn.id); if (!q || q.ey <= FY + 0.01) continue;
+        const par = bn.parent && A.bones.find(x => x.id === bn.parent), pq = par && S.get(par.id);
+        if (par && pq && par.parent && kids(par.id).length === 1) { // 2-bone leg: bend the knee (keep the foot's x, put it on the floor)
+          const hx = pq.jx, hy = pq.jy, L1 = par.len, L2 = bn.len, tx = q.ex, ty = FY, D = Math.min(L1 + L2 - 0.01, Math.max(Math.abs(L1 - L2) + 0.01, Math.hypot(tx - hx, ty - hy)));
+          const base = Math.atan2(ty - hy, tx - hx), k = Math.acos(Math.max(-1, Math.min(1, (L1 * L1 + D * D - L2 * L2) / (2 * L1 * D)))), side = Math.sign(Math.sin((pq.ang - base / DEG) * DEG)) || 1;
+          const w1 = base / DEG + side * k / DEG, gp = S.get(par.parent), grand = gp ? gp.ang : 0;
+          pose.angles[par.id] = norm(w1 - grand); S = solve(A, pose); const q2 = S.get(par.id);
+          pose.angles[bn.id] = norm(Math.atan2(ty - q2.ey, tx - q2.ex) / DEG - q2.ang); S = solve(A, pose); continue;
+        }
+        if (q.jy >= FY) continue; // the joint itself is under: handled by stopping the body below
+        const v = (FY - q.jy) / bn.len, c = Math.cos(q.ang * DEG), w = c >= 0 ? Math.asin(Math.min(1, v)) : Math.PI - Math.asin(Math.min(1, v));
+        const parentAng = q.ang - (pose.angles[bn.id] ?? bn.angle); pose.angles[bn.id] = norm(w / DEG - parentAng); S = solve(A, pose);
+      }
+    }
   }
   function up(e) {
     const d = st.drag; st.drag = null; ghost(true); if (!d || !st.anim) return;
@@ -23224,14 +23261,29 @@ body.gw-calm .gw-pl-w .core{animation:none}
     if (T.marquee) { T.marquee.b = pt(e); draw(); return; }
     if (!d) return; e.preventDefault();
     const p = pt(e), D = deltaFor(d.kind, d.p0, p, d.box, e);
-    apply(D, d.items); d.moved = true; T.stats.moves++; draw();
+    apply(D, d.items); d.moved = true; T.stats.moves++; draw(); guides();
   }
+  /* the pink snap lines while moving (removed on release; never saved: class gw-svg-handle) */
+  function guides(off) { const sv = svgEl(); if (!sv) return; let g = sv.querySelector('#gwSnapGuides'); const G = !off && T.drag && T.guides;
+    if (!G || (G.x == null && G.y == null)) { g?.remove(); return; }
+    if (!g) { g = document.createElementNS('http://www.w3.org/2000/svg', 'g'); g.id = 'gwSnapGuides'; g.setAttribute('class', 'gw-svg-handle'); g.setAttribute('pointer-events', 'none'); sv.appendChild(g); }
+    const vb = sv.viewBox.baseVal, ln = (x1, y1, x2, y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ff4fd8" stroke-width="1.5" vector-effect="non-scaling-stroke" stroke-dasharray="4 3"/>`;
+    g.innerHTML = (G.x != null ? ln(G.x, vb.y, G.x, vb.y + vb.height) : '') + (G.y != null ? ln(vb.x, G.y, vb.x + vb.width, G.y) : ''); }
   function deltaFor(kind, p0, p, b, e) {
     let D = new DOMMatrix(); const d = { kind, p0 };
     if (d.kind === 'move') {
       let dx = p.x - d.p0.x, dy = p.y - d.p0.y;
       if (e.shiftKey) { if (Math.abs(dx) > Math.abs(dy)) dy = 0; else dx = 0; }
       if (window.GW_V153_VECTOR?.snap) { dx = Math.round((b.x0 + dx) / 8) * 8 - b.x0; dy = Math.round((b.y0 + dy) / 8) * 8 - b.y0; }
+      else if (!e.altKey) { /* Claude (2 Nov, owner video): smart snapping like Scratch / TurboWarp - the moved shape's left / centre /
+        right (and top / middle / bottom) snap to the canvas centre and to other shapes' edges and centres. Hold Alt = no snapping. */
+        const sv = svgEl(), vb = sv?.viewBox?.baseVal, m = sv?.getScreenCTM?.(), TH = 7 / ((m && m.a) || 1);
+        const xs = [], ys = []; if (vb && vb.width) { xs.push(vb.x + vb.width / 2); ys.push(vb.y + vb.height / 2); }
+        [...(sv?.children || [])].filter(isArt).filter(n => !T.sel.includes(n)).forEach(n => { const q = boxOf(n); if (!q) return; xs.push(q.x0, (q.x0 + q.x1) / 2, q.x1); ys.push(q.y0, (q.y0 + q.y1) / 2, q.y1); });
+        const best = (lines, edges, d0) => { let bd = TH, out = null; for (const L of lines) for (const E0 of edges) { const g = L - (E0 + d0); if (Math.abs(g) < bd) { bd = Math.abs(g); out = { g, L }; } } return out; };
+        const sx = best(xs, [b.x0, (b.x0 + b.x1) / 2, b.x1], dx), sy = best(ys, [b.y0, (b.y0 + b.y1) / 2, b.y1], dy);
+        if (sx) dx += sx.g; if (sy) dy += sy.g; T.guides = { x: sx ? sx.L : null, y: sy ? sy.L : null };
+      }
       D = new DOMMatrix().translate(dx, dy);
     } else if (d.kind === 'rot') {
       const cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2;
@@ -23256,7 +23308,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
       else draw();
       return;
     }
-    const d = T.drag; T.drag = null; if (!d) return;
+    const d = T.drag; T.drag = null; T.guides = null; guides(true); if (!d) return;
     if (d.moved) { d.items.forEach(({ el }) => tidy(el)); save(); }
     draw();
   }
@@ -25971,5 +26023,135 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
   if(!Number.isFinite(s.x))s.x=0;if(!Number.isFinite(s.y))s.y=0;if(Math.abs(s.x)>1e6)s.x=Math.sign(s.x)*1e6;if(Math.abs(s.y)>1e6)s.y=Math.sign(s.y)*1e6;const off=window.GW_SETTINGS?.get?.().noFence||window.GW?.__projectFence===false;if(!off)try{window.GW?.fenceSprite?.(s);}catch(err){}
   try{window.updatePropertyInputs?.();}catch(err){}try{window.GW?.refreshStage?.();}catch(err){}},0);};
  document.addEventListener('change',fix,false);document.addEventListener('keydown',e=>{if(e.key==='Enter')fix(e);},false);})();</script>
+<style id="gw-claude-bone-names">/* Claude (2 Nov, owner video: "we need this to be readable"): bone rows on two lines - the name gets the whole width,
+   MAIN / shape count / rename go on the second line; long names wrap instead of "bon…" */
+#gw18Anim .gw18-bone-row{flex-wrap:wrap;row-gap:2px;padding:6px 8px}
+#gw18Anim .gw18-bone-row .gw18-bone-name{flex:1 1 calc(100% - 22px);min-width:0;white-space:normal;overflow-wrap:anywhere;font-weight:700;font-size:13px;line-height:1.25}
+#gw18Anim .gw18-bone-row small{margin-left:20px !important;font-size:11px}
+#gw18Anim .gw18-side{min-width:200px}</style>
+<script id="gw-claude-costume-menu-plus">/* Claude (2 Nov, owner video, like TurboWarp): right-click a costume → also "move to top", "move to bottom",
+   "add to folder…" and "remove from folder". Folders are G-Warp's "Folder//name" costume names (same as TurboWarp). */
+(()=>{const by=id=>document.getElementById(id);let idx=-1;
+ document.addEventListener('contextmenu',e=>{const it=e.target.closest&&e.target.closest('#costumesSidebar .gw7-cos-item');idx=it?+it.dataset.index:-1;},true);
+ const spr=()=>{const E=window.Engine;return E?.sprites?.[E.activeSpriteIndex||0];};
+ const redraw=()=>{try{window.GW_V1570_STUDIO?.renderCostumeList?.(true);window.GW_V1570_STUDIO?.refreshCostumeMenus?.();}catch(e){}try{window.renderSpritesGrid?.();}catch(e){}try{window.GW8?.pushHistory?.('costume menu');}catch(e){}};
+ const move=(i,to)=>{const s=spr();if(!s||!s.costumes[i])return;const act=s.costumes[s.activeCostume],c=s.costumes.splice(i,1)[0];to==='top'?s.costumes.unshift(c):s.costumes.push(c);s.activeCostume=Math.max(0,s.costumes.indexOf(act));redraw();};
+ const base=n=>{const k=String(n).indexOf('//');return k>0?String(n).slice(k+2):String(n);};
+ const unique=(s,n,c)=>{let m=n,k=2;while(s.costumes.some(x=>x!==c&&x.name===m))m=n+' '+k++;return m;};
+ async function toFolder(i){const s=spr(),c=s?.costumes?.[i];if(!c)return;const k=String(c.name).indexOf('//');const f=await (window.GW_ASK?window.GW_ASK('Folder name',k>0?String(c.name).slice(0,k):'folder'):Promise.resolve('folder'));
+  if(f==null||!String(f).trim())return;c.name=unique(s,String(f).trim().replace(/\/+/g,'-')+'//'+base(c.name),c);redraw();}
+ const unFolder=i=>{const s=spr(),c=s?.costumes?.[i];if(!c)return;c.name=unique(s,base(c.name),c);redraw();};
+ new MutationObserver(()=>{const m=by('gw37Menu');if(!m||m.dataset.plus||idx<0)return;m.dataset.plus='1';const i=idx,s=spr(),c=s?.costumes?.[i],ref=m.querySelector('button');if(!c||!ref)return;
+  const add=(t,fn,dis)=>{const b=ref.cloneNode(false);b.className='';b.textContent=t;b.disabled=!!dis;b.onclick=ev=>{ev.stopPropagation();m.remove();fn();};const del=m.querySelector('.gw37-danger');del?m.insertBefore(b,del):m.appendChild(b);};
+  add('move to top',()=>move(i,'top'),i===0);add('move to bottom',()=>move(i,'bottom'),i===s.costumes.length-1);
+  add('add to folder…',()=>toFolder(i));if(String(c.name).includes('//'))add('remove from folder',()=>unFolder(i));}).observe(document.body,{childList:true});})();</script>
+<style id="gw-claude-sprite-info-css">.gwsi-eyes{display:inline-flex;border:1px solid #334155;border-radius:9px;overflow:hidden}
+.gwsi-eyes button{width:36px;height:30px;border:0;background:#0f172a;color:#94a3b8;cursor:pointer;font-size:14px}
+.gwsi-eyes button[aria-pressed="true"]{background:#7c3aed;color:#fff}
+.gwsi-showlbl{font:700 12px system-ui;color:#94a3b8;margin-right:6px}
+#gwsiDir{position:fixed;z-index:10050;width:200px;padding:12px;border-radius:14px;background:#141a30;border:1px solid #475569;box-shadow:0 14px 34px #000b;color:#e5e7eb;font:700 12px system-ui}
+#gwsiDir svg{display:block;margin:0 auto 10px;cursor:pointer;touch-action:none}
+#gwsiDir .rs{display:flex;gap:6px;justify-content:center}
+#gwsiDir .rs button{flex:1;padding:6px 0;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#cbd5e1;cursor:pointer;font-size:14px}
+#gwsiDir .rs button[aria-pressed="true"]{background:#7c3aed;color:#fff;border-color:#a78bfa}</style>
+<script id="gw-claude-sprite-info">/* Claude (2 Nov, owner video, like TurboWarp): sprite info panel - "↔ x" and "↕ y" labels, Show as two eye buttons
+   (shown / hidden), and clicking Direction opens a dial with the rotation style (all around / left-right / don't rotate). */
+(()=>{const by=id=>document.getElementById(id),spr=()=>{const E=window.Engine;return E?.sprites?.[E.activeSpriteIndex||0];};
+ const refresh=()=>{try{window.updatePropertyInputs?.();}catch(e){}try{window.GW?.refreshStage?.();}catch(e){}};
+ function labels(){[['propX','↔ x'],['propY','↕ y']].forEach(([id,t])=>{const l=by(id)?.parentElement?.querySelector('label');if(l&&l.textContent!==t){l.textContent=t;l.title=id==='propX'?'x position (left - right)':'y position (down - up)';}});}
+ function eyes(){const cb=document.querySelector('#panelSprites .gw154-check input[type=checkbox]');if(!cb)return;const lab=cb.closest('label');let box=by('gwsiEyes');
+  if(!box){box=document.createElement('span');box.id='gwsiEyes';box.innerHTML='<span class="gwsi-showlbl">Show</span><span class="gwsi-eyes"><button type="button" data-v="1" title="Show the sprite" aria-label="Show"><i class="fa-solid fa-eye"></i></button><button type="button" data-v="0" title="Hide the sprite" aria-label="Hide"><i class="fa-solid fa-eye-slash"></i></button></span>';
+   lab.style.setProperty('display','none','important');box.style.cssText='display:inline-flex;align-items:center';lab.after(box);box.addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(!b)return;const want=b.dataset.v==='1';if(cb.checked!==want)cb.click();paint();});}
+  paint();function paint(){box.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.v==='1')===cb.checked)));}}
+ /* direction dial */
+ function dial(){let d=by('gwsiDir');if(d)return d;d=document.createElement('div');d.id='gwsiDir';d.hidden=true;d.setAttribute('role','dialog');d.setAttribute('aria-label','Direction');
+  d.innerHTML='<svg width="150" height="150" viewBox="-75 -75 150 150"><circle r="66" fill="#0b0f1d" stroke="#475569" stroke-width="2"/><circle r="4" fill="#94a3b8"/><line id="gwsiLine" x1="0" y1="0" x2="0" y2="-56" stroke="#a78bfa" stroke-width="4" stroke-linecap="round"/><circle id="gwsiKnob" cx="0" cy="-56" r="9" fill="#7c3aed" stroke="#fff" stroke-width="2"/></svg>'+
+   '<div class="rs"><button type="button" data-r="all around" title="All around">⟳</button><button type="button" data-r="left-right" title="Left / right">⇆</button><button type="button" data-r="don\'t rotate" title="Don\'t rotate">⊘</button></div>';
+  document.body.appendChild(d);const svg=d.querySelector('svg');
+  const show=()=>{const s=spr();if(!s)return;const a=(s.direction-0)*Math.PI/180,x=Math.sin(a)*56,y=-Math.cos(a)*56;d.querySelector('#gwsiLine').setAttribute('x2',x.toFixed(1));d.querySelector('#gwsiLine').setAttribute('y2',y.toFixed(1));const k=d.querySelector('#gwsiKnob');k.setAttribute('cx',x.toFixed(1));k.setAttribute('cy',y.toFixed(1));
+   d.querySelectorAll('.rs button').forEach(b=>b.setAttribute('aria-pressed',String((s.rotationStyle||'all around')===b.dataset.r)));};d.show=show;
+  const setFrom=e=>{const r=svg.getBoundingClientRect(),x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2);let a=Math.round(Math.atan2(x,-y)*180/Math.PI);if(a<=-180)a+=360;const s=spr();if(!s)return;s.direction=a;const inp=by('propDirection');if(inp){inp.value=String(a);}refresh();show();};
+  let drag=false;svg.addEventListener('pointerdown',e=>{drag=true;svg.setPointerCapture(e.pointerId);setFrom(e);});svg.addEventListener('pointermove',e=>{if(drag)setFrom(e);});svg.addEventListener('pointerup',()=>{drag=false;try{window.GW8?.pushHistory?.('direction');}catch(e){}});
+  d.querySelector('.rs').addEventListener('click',e=>{const b=e.target.closest('button[data-r]');if(!b)return;const s=spr();if(s){s.rotationStyle=b.dataset.r;refresh();show();}});
+  document.addEventListener('pointerdown',e=>{if(!d.hidden&&!d.contains(e.target)&&e.target.id!=='propDirection')d.hidden=true;},true);
+  return d;}
+ document.addEventListener('focusin',e=>{if(e.target.id!=='propDirection')return;const d=dial(),r=e.target.getBoundingClientRect();d.hidden=false;d.style.left=Math.max(8,Math.min(innerWidth-216,r.left+r.width/2-100))+'px';d.style.top=Math.max(8,r.top-250)+'px';d.show();});
+ document.addEventListener('input',e=>{if(e.target.id==='propDirection')by('gwsiDir')?.show?.();});
+ setInterval(()=>{labels();eyes();},800);})();</script>
+<style id="gw-claude-gradient-css">#gwpePop .gwgr{display:flex;gap:6px;align-items:center;margin-bottom:12px}
+#gwpePop .gwgr button{width:36px;height:30px;border-radius:8px;border:1px solid #34344a;background:#1a2038;cursor:pointer;padding:3px}
+#gwpePop .gwgr button span{display:block;width:100%;height:100%;border-radius:4px}
+#gwpePop .gwgr button[aria-pressed="true"]{border-color:#a78bfa;box-shadow:0 0 0 2px #7c3aed}
+#gwpePop .gwgr input[type=color]{width:34px;height:30px;border:1px solid #34344a;border-radius:8px;background:#0b0e1a;padding:2px;cursor:pointer}
+#gwpePop .gwgr .sw2{font:700 11px system-ui;color:#94a3b8;margin-left:auto}</style>
+<script id="gw-claude-gradient">/* Claude (2 Nov, owner video, like Scratch): FILL can be a gradient - solid, left→right, top→bottom or circle, with a
+   second colour. Pick a shape, open Fill, choose the kind; both colours can be changed. Saved inside the costume. */
+(()=>{const by=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';let mode='solid',c2='#ffffff';
+ const svg=()=>by('gwVectorCanvasV15');
+ const sel=()=>{const T=window.GW_TRANSFORM;const a=(T&&T.sel&&T.sel.length)?T.sel:[window.GW_V15_COSTUME_EDITOR?.state?.selectedSvg].filter(Boolean);return a.filter(n=>n&&n.isConnected&&n.localName!=='image');};
+ const save=()=>{try{window.GW_COSTUME_UNDO?.push?.();}catch(e){}try{window.GW_V15_COSTUME_EDITOR?.save?.(true);}catch(e){}};
+ function defs(){const s=svg();let d=[...s.children].find(n=>n.localName==='defs');if(!d){d=document.createElementNS(NS,'defs');s.insertBefore(d,s.firstChild);}return d;}
+ function apply(){const c1=by('gwVectorFillV15')?.value||'#9966ff',els=sel();if(!els.length)return false;
+  els.forEach(n=>{const old=/url\(#(gwg[^)]+)\)/.exec(n.getAttribute('fill')||'');if(old)svg().querySelector('#'+old[1])?.remove();
+   if(mode==='solid'){n.setAttribute('fill',c1);return;}
+   const id='gwg'+Math.random().toString(36).slice(2,9),g=document.createElementNS(NS,mode==='radial'?'radialGradient':'linearGradient');g.id=id;
+   if(mode==='h'){g.setAttribute('x1','0');g.setAttribute('y1','0');g.setAttribute('x2','1');g.setAttribute('y2','0');}else if(mode==='v'){g.setAttribute('x1','0');g.setAttribute('y1','0');g.setAttribute('x2','0');g.setAttribute('y2','1');}
+   [[0,c1],[1,c2]].forEach(([o,c])=>{const st=document.createElementNS(NS,'stop');st.setAttribute('offset',String(o));st.setAttribute('stop-color',c);g.appendChild(st);});defs().appendChild(g);n.setAttribute('fill','url(#'+id+')');});
+  save();return true;}
+ const sw=(m,a,b)=>m==='solid'?a:m==='h'?`linear-gradient(90deg,${a},${b})`:m==='v'?`linear-gradient(180deg,${a},${b})`:`radial-gradient(circle,${a},${b})`;
+ function build(pop){if(pop.querySelector('.gwgr')||!/^Fill/.test(pop.getAttribute('aria-label')||''))return;const row=document.createElement('div');row.className='gwgr';
+  const c1=by('gwVectorFillV15')?.value||'#9966ff';const cur=sel()[0],f=cur?.getAttribute('fill')||'';const m0=/url\(#(gwg[^)]+)\)/.exec(f);if(m0){const g=svg().querySelector('#'+m0[1]);if(g){mode=g.localName==='radialGradient'?'radial':g.getAttribute('y2')==='1'?'v':'h';c2=g.querySelectorAll('stop')[1]?.getAttribute('stop-color')||c2;}}else mode='solid';
+  row.innerHTML=[['solid','Solid'],['h','Left to right'],['v','Top to bottom'],['radial','Circle']].map(([m,t])=>`<button type="button" data-m="${m}" title="${t}" aria-label="${t}" aria-pressed="${m===mode}"><span style="background:${sw(m,c1,c2)}"></span></button>`).join('')+`<span class="sw2">2nd</span><input type="color" value="${c2}" title="Second colour of the gradient" aria-label="Second colour">`;
+  pop.insertBefore(row,pop.firstChild);
+  const paint=()=>{const a=by('gwVectorFillV15')?.value||'#9966ff';row.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.m===mode));b.firstChild.style.background=sw(b.dataset.m,a,c2);});row.querySelector('input').style.opacity=mode==='solid'?.4:1;};paint();
+  row.addEventListener('click',e=>{const b=e.target.closest('button[data-m]');if(!b)return;mode=b.dataset.m;if(!apply())window.GW?.toast?.('Pick a shape first, then choose its fill.');paint();});
+  row.querySelector('input').addEventListener('input',e=>{c2=e.target.value;if(mode!=='solid')apply();paint();});
+  by('gwVectorFillV15')?.addEventListener('input',()=>{if(!pop.isConnected)return;paint();if(mode!=='solid')setTimeout(apply,0);});}
+ new MutationObserver(()=>{const p=by('gwpePop');if(p)build(p);}).observe(document.body,{childList:true});})();</script>
+<script id="gw-claude-number-inputs">/* Claude (2 Nov, to-do A10): number boxes take only numbers, like Scratch ("abc" can't go into "move ( ) steps").
+   Which boxes: the number inputs of motion, looks size/effects, sound volume, wait / repeat, timers, math operators.
+   Text boxes (say, think, join, ask, =, <, >, variables, lists) still take anything. */
+(()=>{const NUM={move:[0],turn_cw:[0],turn_ccw:[0],goto_xy:[0,1],glide_xy:[0,1,2],glide_target:[0],point_direction:[0],change_x:[0],set_x:[0],change_y:[0],set_y:[0],
+  change_size:[0],set_size:[0],change_effect:[0],set_effect:[0],change_ghost:[0],set_ghost:[0],change_volume:[0],set_volume:[0],snd_change_effect:[0],snd_set_effect:[0],
+  wait:[0],repeat:[0],say_secs:[1],think_secs:[1],go_layers:[0],op_add:[0,1],op_sub:[0,1],op_mul:[0,1],op_div:[0,1],op_mod:[0,1],op_round:[0],op_mathop:[0],op_random:[0,1],
+  cam_set_xy:[0,1],cam_set_x:[0],cam_set_y:[0],cam_change_x:[0],cam_change_y:[0],cam_set_zoom:[0],cam_change_zoom:[0],cam_move:[0],cam_set_dir:[0],cam_turn_cw:[0],cam_turn_ccw:[0]};
+ const isNum=inp=>{const b=inp.closest&&inp.closest('.scratch-block[data-type]');if(!b)return false;const want=NUM[b.dataset.type];if(!want)return false;
+  const own=(window.GW?.ownParts?GW.ownParts(b).inputs:[...b.querySelectorAll('.block-input')].filter(x=>x.closest('.scratch-block')===b));return want.includes(own.indexOf(inp));};
+ const clean=v=>{let t=String(v).replace(/[^0-9.eE+\-]/g,'');return t;};
+ document.addEventListener('beforeinput',e=>{const t=e.target;if(!t||!t.classList||!t.classList.contains('block-input')||!e.data)return;if(!isNum(t))return;if(/[^0-9.eE+\-]/.test(e.data)){e.preventDefault();t.classList.add('gwn-bad');setTimeout(()=>t.classList.remove('gwn-bad'),250);}},true);
+ document.addEventListener('input',e=>{const t=e.target;if(t&&t.classList&&t.classList.contains('block-input')&&isNum(t)){const c=clean(t.value);if(c!==t.value)t.value=c;}},true);
+ const st=document.createElement('style');st.textContent='.block-input.gwn-bad{box-shadow:0 0 0 2px #ef4444 !important}';document.head.appendChild(st);})();</script>
+<script id="gw-claude-history-running">/* Claude (to-do S3): while a project runs, G-Warp no longer takes a full undo snapshot every few hundred ms (the
+   running project changes sprites all the time - big snapshots made it stutter). It takes ONE snapshot when it stops.
+   Things YOU change while it runs (typing, dragging) are still saved. */
+(()=>{const G=window.GW8;if(!G||!G.pushHistory)return;let user=0,owed=null;['pointerdown','keydown','input','change'].forEach(t=>document.addEventListener(t,e=>{if(e.isTrusted)user=performance.now();},true));
+ const base=G.pushHistory;G.pushHistory=function(reason){const E=window.Engine;if(E&&E.isRunning&&performance.now()-user>1500){owed=reason||'while running';return;}return base.apply(this,arguments);};
+ setInterval(()=>{const E=window.Engine;if(owed&&E&&!E.isRunning){const r=owed;owed=null;try{base.call(G,'after run ('+r+')');}catch(e){}}},400);})();</script>
+<style id="gw-claude-moves-css">#gwcMoves{display:inline-flex;align-items:center;gap:6px;margin-left:6px}#gwcMoves select{background:#1b1b31;color:#e5e7eb;border:1px solid #4ade80;border-radius:8px;padding:5px 8px;font:700 12.5px system-ui;cursor:pointer}</style>
+<script id="gw-claude-moves">/* Claude (2 Nov, to-do "ready-made moves"): Animation → "Ready-made move" makes a new animation for the rig you have
+   (walk, wave, jump, breathe), ready to tweak. Moves are OFFSETS from your rest pose, matched to bones by name
+   (body / left arm / right arm / left leg / right leg, or armL, armR, legL, legR). Helken can send better moves as
+   JSON ({ "walk": [ { "angles": { "left leg": 20, … }, "rootDy": -2 }, … ], … }) - GW_MOVES.load(json) puts them in. */
+(()=>{const by=id=>document.getElementById(id),r2=v=>Math.round(v*100)/100;
+ const sinF=(n,f)=>Array.from({length:n},(_,i)=>f(Math.sin(i/n*Math.PI*2),i,n));
+ let MOVES={
+  walk:sinF(8,s=>({angles:{body:3*s,'left leg':22*s,'right leg':-22*s,'left arm':-25*s,'right arm':25*s},rootDy:-2.5*Math.abs(s)})),
+  wave:sinF(6,s=>({angles:{'right arm':-95+25*s,body:-2*s},rootDy:-1*Math.abs(s)})),
+  jump:[{rootDy:0,angles:{}},{rootDy:5,angles:{'left leg':18,'right leg':-18,'left arm':15,'right arm':-15}},{rootDy:-6,angles:{'left arm':-40,'right arm':40}},{rootDy:-22,angles:{'left arm':-70,'right arm':70,'left leg':-10,'right leg':10}},{rootDy:-26,angles:{'left arm':-75,'right arm':75}},{rootDy:-14,angles:{'left arm':-40,'right arm':40}},{rootDy:4,angles:{'left leg':18,'right leg':-18,'left arm':15,'right arm':-15}},{rootDy:0,angles:{}}],
+  breathe:sinF(6,s=>({angles:{body:1.5*s,'left arm':-4*s,'right arm':4*s},rootDy:-1.2*(s+1)/2}))};
+ const role=b=>{const n=(b.name+' '+b.id).toLowerCase(),L=/\bleft\b|l\b|armL|legL/i.test(b.id)||/left/.test(n),R=/\bright\b|armR|legR/i.test(b.id)||/right/.test(n);
+  if(/arm|hand/.test(n))return L?'left arm':R?'right arm':null;if(/leg|foot/.test(n))return L?'left leg':R?'right leg':null;if(/body|main|torso|chest/.test(n)||!b.parent)return 'body';return null;};
+ function make(kind){const A=window.GW_ANIM,st=A&&A.state,cur=st&&st.anim,s=st&&st.s;if(!cur||!s)return;if(!cur.bones.length){window.GW?.toast?.('Add bones first (Rig → Add bones), then pick a move.');return;}
+  const rest0=cur.frames[0]||{roots:{},angles:{}},root=cur.bones.find(b=>!b.parent),rr=(rest0.roots||{})[root.id]||{x:root.x,y:root.y};
+  const frames=(MOVES[kind]||[]).map(f=>{const angles={};cur.bones.forEach(b=>{const base=(rest0.angles||{})[b.id]??b.angle,k=role(b),d=k&&f.angles?(f.angles[k]??f.angles[b.id]??0):0;angles[b.id]=r2(base+d);});return{roots:{[root.id]:{x:rr.x,y:r2(rr.y+(+f.rootDy||0))}},angles};});
+  if(!frames.length)return;const list=s.gwAnimations||(s.gwAnimations=[]);let name=kind,k=2;while(list.some(a=>a.name===name))name=kind+' '+k++;
+  const a=JSON.parse(JSON.stringify({...cur,frames,name,fps:kind==='breathe'?6:kind==='jump'?12:8}));a.id='a'+Math.random().toString(36).slice(2,8);delete a.rev;list.push(a);
+  const sel=by('gw18AnimSel');if(sel){if(![...sel.options].some(o=>o.value===a.id)){const o=document.createElement('option');o.value=a.id;o.textContent=a.name;sel.appendChild(o);}sel.value=a.id;sel.dispatchEvent(new Event('change',{bubbles:true}));}
+  window.GW?.toast?.('Made “'+name+'” ('+frames.length+' frames). Press Play, then change any pose to make it yours.');}
+ function ui(){const top=by('gw18AnimSel')?.parentElement;if(!top||by('gwcMoves'))return;const w=document.createElement('label');w.id='gwcMoves';w.title='Make a new animation from a ready-made move, for the bones you have';
+  w.innerHTML='<select aria-label="Ready-made move"><option value="">✨ Ready-made move…</option><option value="walk">🚶 Walk</option><option value="wave">👋 Wave</option><option value="jump">🦘 Jump</option><option value="breathe">💤 Breathe</option></select>';
+  w.querySelector('select').onchange=e=>{const v=e.target.value;e.target.value='';if(v)make(v);};top.appendChild(w);}
+ setInterval(()=>{if(by('gw18Anim'))ui();},800);
+ window.GW_MOVES={get moves(){return MOVES;},load(j){try{const o=typeof j==='string'?JSON.parse(j):j;Object.entries(o).forEach(([k,v])=>{if(Array.isArray(v)&&v.length)MOVES[k]=v;});return Object.keys(o);}catch(e){return null;}},make};})();</script>
 </body>
 </html>
