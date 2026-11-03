@@ -257,6 +257,7 @@ DONE by Claude the same day: extra G-Warp blocks (Pen, Music, TTS, HTTP, Animati
 ---
 
 ## Done (for reference)
+- [done] SECURITY (Helken bug hunt): opening a project file, LAN-live stacks and SVG costumes could run hidden code (script / onerror / javascript:) → cleaned by GW_SAFE before use; giant X/Y (1e308) now fenced like Scratch [Claude 2026-11-02]
 - [done] Privacy line (visit counter) on docs/safety.html · owner user name removed from 3 ai-team files · CONTRIBUTING.md [Claude 2026-11-02]
 - [done] A1 dark checker frame thumbnails + tool titles [Claude, night update 2026-11-02]
 - [done] Animation docked inside the Costumes tab [Claude, night update 2026-11-02]

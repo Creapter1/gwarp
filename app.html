@@ -2,6 +2,19 @@
 
 <html lang="en">
 <head>
+<script id="gw-claude-safe-html">/* Claude (2 Nov, Helken's bug hunt): a project file could carry hidden code (a <script> or onload=... inside its saved
+   scripts or inside an SVG costume) that ran when the project was opened. GW_SAFE cleans every loaded piece first:
+   no script/iframe/object/embed/link/meta/base/form/foreignObject, no on... attributes, no javascript: links. */
+window.GW_SAFE=(()=>{const BAD=new Set(['script','iframe','object','embed','link','meta','base','form','foreignobject','frame','frameset','applet','portal','noscript','template']);
+ const URLATTR=/^(href|xlink:href|src|action|formaction|data|poster|srcdoc)$/i,BADURL=/^\s*(javascript|vbscript|data:text\/html|data:application)/i;
+ function clean(root){if(!root)return root;const all=[root,...(root.querySelectorAll?root.querySelectorAll('*'):[])];
+  for(const el of all){if(el!==root&&BAD.has(String(el.localName||el.nodeName).toLowerCase())){el.remove();continue;}
+   if(!el.attributes)continue;for(const a of [...el.attributes]){const n=a.name.toLowerCase();
+    if(n.startsWith('on')||(URLATTR.test(n)&&BADURL.test(a.value))||(n==='style'&&/expression\(|javascript:/i.test(a.value)))el.removeAttribute(a.name);}}
+  return root;}
+ function html(str){const t=document.createElement('template');t.innerHTML=String(str??'');clean(t.content);return t.innerHTML;}
+ return{clean,html};})();</script>
+
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>G-Warp Beta</title>
@@ -4132,7 +4145,7 @@ IMPORTANT:
                     (data.stacks || []).forEach(s => {
                         const stack = document.createElement('div');
                         stack.className='block-stack'; stack.style.left=s.left||'50px'; stack.style.top=s.top||'50px';
-                        stack.innerHTML=s.html;
+                        stack.innerHTML=window.GW_SAFE?GW_SAFE.html(s.html):'';
                         wc.appendChild(stack);
                     });
                     renderSpritesGrid(); updatePropertyInputs(); GW.refreshVariableMonitors();
@@ -6764,7 +6777,7 @@ nodes.push(el);cur=b.next;}return nodes;};
   }
   async function applySpritesCore(list){if(!Array.isArray(list))return;for(let i=0;i<list.length;i++){const d=list[i];let s=Engine.sprites[i];if(!s){if(typeof createDefaultSprite==='function')s=createDefaultSprite(d.name||`Sprite ${i+1}`,'#8A2BE2');else continue;Engine.sprites.push(s);}Object.assign(s,{name:d.name,x:Number(d.x)||0,y:Number(d.y)||0,size:Number(d.size)||100,direction:Number(d.direction)||90,visible:d.visible!==false,activeCostume:Number(d.activeCostume)||0,volume:d.volume??100,collisionGroup:d.collisionGroup||'Actors',behaviors:d.behaviors||[]});}if(Engine.sprites.length>list.length)Engine.sprites.length=list.length;try{window.renderSpritesGrid?.();window.updatePropertyInputs?.();}catch{}}
   async function applySpritesAssets(list){if(!Array.isArray(list))return;for(let i=0;i<list.length;i++){const s=Engine.sprites[i];if(!s)continue;const d=list[i];if(Array.isArray(d.costumes)&&d.costumes.length){const cs=[];for(const c of d.costumes){const cv=document.createElement('canvas');cv.width=80;cv.height=80;if(c.data){await new Promise(res=>{const img=new Image();img.onload=()=>{cv.getContext('2d').drawImage(img,0,0,80,80);res();};img.onerror=()=>res();img.src=c.data;});}cs.push({name:c.name||'costume',canvas:cv});}s.costumes=cs;}s.sounds=d.sounds||[];}try{window.renderSpritesGrid?.();window.updatePropertyInputs?.();}catch{}}
-  function applyStacks(stacks){const wc=e('workspaceCanvas');if(!wc)return;L.applyingRemote=true;try{ensureStackIds();const existing=new Map([...wc.querySelectorAll(':scope > .block-stack')].map(st=>[st.dataset.gwStackId,st]));for(const [id,v] of Object.entries(stacks||{})){let st=existing.get(id);if(!st){st=document.createElement('div');st.className='block-stack';st.dataset.gwStackId=id;wc.appendChild(st);}st.style.left=v.left||'0px';st.style.top=v.top||'0px';if(v.owner!==undefined&&v.owner!==null)st.dataset.owner=v.owner;st.innerHTML=v.html||'';}for(const [id,st] of existing)if(!(id in (stacks||{})))st.remove();}finally{L.applyingRemote=false;}try{window.GW9?.refreshAST?.();window.GW8?.decorate?.();window.GW?.refreshBlockMenus?.();}catch{}}
+  function applyStacks(stacks){const wc=e('workspaceCanvas');if(!wc)return;L.applyingRemote=true;try{ensureStackIds();const existing=new Map([...wc.querySelectorAll(':scope > .block-stack')].map(st=>[st.dataset.gwStackId,st]));for(const [id,v] of Object.entries(stacks||{})){let st=existing.get(id);if(!st){st=document.createElement('div');st.className='block-stack';st.dataset.gwStackId=id;wc.appendChild(st);}st.style.left=v.left||'0px';st.style.top=v.top||'0px';if(v.owner!==undefined&&v.owner!==null)st.dataset.owner=v.owner;st.innerHTML=window.GW_SAFE?GW_SAFE.html(v.html||''):'';}for(const [id,st] of existing)if(!(id in (stacks||{})))st.remove();}finally{L.applyingRemote=false;}try{window.GW9?.refreshAST?.();window.GW8?.decorate?.();window.GW?.refreshBlockMenus?.();}catch{}}
   async function applySlices(slices){if(!slices)return;L.applyingRemote=true;try{if(e('projectTitle')&&slices.title!==undefined)e('projectTitle').value=slices.title;Engine.variables=slices.variables||{};Engine.variableVisible=slices.variableVisible||{};Engine.lists=slices.lists||{};Engine.listVisible=slices.listVisible||{};Engine.backdrops=slices.backdrops||Engine.backdrops||[];Engine.activeBackdrop=slices.activeBackdrop||0;await applySpritesCore(slices.spritesCore||[]);await applySpritesAssets(slices.spritesAssets||[]);if(slices.tilemap!==undefined)Engine.tilemap=slices.tilemap;if(slices.behaviorSystem!==undefined)Engine.behaviorSystem=Object.assign({definitions:{},sceneAttachments:[],runId:0},slices.behaviorSystem,{active:new Map(),collisionPairs:new Set()});try{window.GW12?.ensureTilemap?.();window.GW12?.rebuildTileImageCache?.();window.GW12?.renderTilemapStage?.();window.GW12?.renderBehaviorDesigner?.();window.renderStage?.();window.renderSpritesGrid?.();window.updatePropertyInputs?.();window.GW?.refreshVariableMonitors?.();window.GW?.refreshListMonitors?.();}catch{}}finally{L.applyingRemote=false;}}
   async function applyRemoteSnapshot(s){L.applyingRemote=true;try{await applySlices(s?.slices||{});applyStacks(s?.stacks||{});refreshBaseline();}finally{L.applyingRemote=false;}}
   async function applyRemoteOp(path,value){L.applyingRemote=true;try{if(path.startsWith('stack:')){ensureStackIds();const stacks=serializeStacks();const sid=path.slice(6);if(value==null){delete stacks[sid];delete L.lastStacks[sid];}else{stacks[sid]=value;L.lastStacks[sid]=hash(JSON.stringify(value));}applyStacks(stacks);}else{const one={[path]:value};await applySlices(one);const s=localSnapshot();L.lastSlices[path]=hash(JSON.stringify(s.slices[path]));}}finally{L.applyingRemote=false;}}
@@ -16238,7 +16251,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     if (t && t.includes('data-gw-editor="1"')) { const g = n => { const x = new RegExp('data-gw-' + n + '="([-0-9.e+]+)"').exec(t); return x ? +x[1] : NaN; }; const k = g('k'), ox = g('ox'), oy = g('oy'); if (k > 0 && Number.isFinite(ox) && Number.isFinite(oy)) return { w, h, k, ox, oy }; }
     const k = Math.min(AREA.w / w, AREA.h / h); return { w, h, k, ox: AREA.x + (AREA.w - w * k) / 2, oy: AREA.y + (AREA.h - h * k) / 2 };
   }
-  function parse(text) { try { const d = new DOMParser().parseFromString(String(text || ''), 'image/svg+xml'); const r = d.documentElement; return r && r.localName === 'svg' && !d.getElementsByTagName('parsererror').length ? r : null; } catch { return null; } }
+  function parse(text) { try { const d = new DOMParser().parseFromString(String(text || ''), 'image/svg+xml'); const r = d.documentElement; return r && r.localName === 'svg' && !d.getElementsByTagName('parsererror').length ? (window.GW_SAFE ? GW_SAFE.clean(r) : r) : null; } catch { return null; } }
   const ser = n => new XMLSerializer().serializeToString(n);
   const inner = root => [...root.childNodes].map(n => (n.nodeType === 1 ? ser(n) : (n.nodeType === 3 ? n.textContent.replace(/[<&]/g, ch => (ch === '<' ? '&lt;' : '&amp;')) : ''))).join('');
 
@@ -16637,7 +16650,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
 
   /* ================= 1. the costume's shapes ("parts") ================= */
   function parseSvg(text) {
-    try { const doc = new DOMParser().parseFromString(String(text || ''), 'image/svg+xml'); const root = doc.documentElement; if (!root || root.localName !== 'svg' || doc.getElementsByTagName('parsererror').length) return null; return root; } catch { return null; }
+    try { const doc = new DOMParser().parseFromString(String(text || ''), 'image/svg+xml'); const root = window.GW_SAFE ? GW_SAFE.clean(doc.documentElement) : doc.documentElement; if (!root || root.localName !== 'svg' || doc.getElementsByTagName('parsererror').length) return null; return root; } catch { return null; }
   }
   const DRAWABLE = new Set(['path', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'text', 'image', 'use', 'g']);
   // go down through wrapper groups that hold only one drawable thing (Scratch costumes are usually <g><g>shapes</g></g>)
@@ -25951,5 +25964,12 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
  /* My Blocks colour also for the palette group (the block + its input chips) */
  setInterval(()=>{const m=window.Engine?.gwBlockColors||{};document.querySelectorAll('#sec-myblocks .scratch-block[data-type="call_custom"][data-proc]').forEach(b=>{const g=b.parentElement,c=m[b.dataset.proc];if(!g||g.id==='sec-myblocks')return;if(c){g.classList.add('gwmb-group');g.style.setProperty('--gwmb',c);}else g.classList.remove('gwmb-group');});},900);
  window.GW_EXT_ON={on,set};})();</script>
+<script id="gw-claude-prop-fence">/* Claude (2 Nov, Helken's bug hunt): typing a giant X / Y (like 1e308) in the sprite panel threw the sprite far off the
+   stage and broke running. Now, like Scratch, the sprite is fenced back so a bit of it stays on the stage (unless the
+   project turned fencing off), and a value that is not a number becomes 0. */
+(()=>{const fix=e=>{const id=e.target&&e.target.id;if(id!=='propX'&&id!=='propY')return;setTimeout(()=>{const E=window.Engine,s=E?.sprites?.[E.activeSpriteIndex||0];if(!s)return;
+  if(!Number.isFinite(s.x))s.x=0;if(!Number.isFinite(s.y))s.y=0;if(Math.abs(s.x)>1e6)s.x=Math.sign(s.x)*1e6;if(Math.abs(s.y)>1e6)s.y=Math.sign(s.y)*1e6;const off=window.GW_SETTINGS?.get?.().noFence||window.GW?.__projectFence===false;if(!off)try{window.GW?.fenceSprite?.(s);}catch(err){}
+  try{window.updatePropertyInputs?.();}catch(err){}try{window.GW?.refreshStage?.();}catch(err){}},0);};
+ document.addEventListener('change',fix,false);document.addEventListener('keydown',e=>{if(e.key==='Enter')fix(e);},false);})();</script>
 </body>
 </html>
