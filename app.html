@@ -26153,5 +26153,68 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
   w.querySelector('select').onchange=e=>{const v=e.target.value;e.target.value='';if(v)make(v);};top.appendChild(w);}
  setInterval(()=>{if(by('gw18Anim'))ui();},800);
  window.GW_MOVES={get moves(){return MOVES;},load(j){try{const o=typeof j==='string'?JSON.parse(j):j;Object.entries(o).forEach(([k,v])=>{if(Array.isArray(v)&&v.length)MOVES[k]=v;});return Object.keys(o);}catch(e){return null;}},make};})();</script>
+<script id="gw-claude-rename">/* Claude (2 Nov, to-do B1 + B2, like Scratch): right-click a variable or list in the palette → "rename" / "delete";
+   broadcast menus get "New message…" and "Rename message…". Renaming changes every block that uses it; deleting a
+   variable/list also removes the blocks that use it (Ctrl+Z brings everything back). */
+(()=>{const by=id=>document.getElementById(id),E=()=>window.Engine||{};
+ const ask=(l,v)=>window.GW_ASK?window.GW_ASK(l,v):Promise.resolve(null);
+ const hist=r=>{try{window.GW8?.pushHistory?.(r);}catch(e){}};
+ const redraw=()=>{try{window.GW?.refreshBlockMenus?.();}catch(e){}try{window.GW?.refreshVariableMonitors?.();window.GW?.refreshListMonitors?.();}catch(e){}};
+ const isList=b=>/^list_/.test(b?.dataset?.type||'');
+ const usesName=(b,name,list)=>{const t=b.dataset.type||'';if(list?!/^list_/.test(t):!/^(get_var|set_var|change_var|show_var|hide_var)$/.test(t))return false;const own=window.GW?.ownParts?GW.ownParts(b).selects:[...b.querySelectorAll('.block-select')].filter(x=>x.closest('.scratch-block')===b);return own.some(x=>x.value===name);};
+ function rename(old,nu,list){const e=E(),bag=list?'lists':'variables',vis=list?'listVisible':'variableVisible',loc=list?'localLists':'localVars';
+  if(e[bag]&&old in e[bag]){e[bag][nu]=e[bag][old];delete e[bag][old];if(e[vis]&&old in e[vis]){e[vis][nu]=e[vis][old];delete e[vis][old];}}
+  (e.sprites||[]).forEach(s=>{const L=s[loc];if(L&&old in L){L[nu]=L[old];delete L[old];}});
+  document.querySelectorAll('.scratch-block').forEach(b=>{if(!usesName(b,old,list))return;(window.GW?.ownParts?GW.ownParts(b).selects:[...b.querySelectorAll('.block-select')]).forEach(x=>{if(x.value!==old)return;let o=[...x.options].find(o=>o.value===old);if(o){o.value=nu;o.textContent=nu;}x.value=nu;});});
+  document.querySelectorAll('[data-expr]').forEach(sl=>{try{const j=JSON.parse(sl.dataset.expr);const walk=n=>{if(!n||typeof n!=='object')return;if(n.name===old&&(list?/^list_/.test(n.type):n.type==='get_var'))n.name=nu;Object.values(n).forEach(walk);};walk(j);sl.dataset.expr=JSON.stringify(j);}catch(err){}});
+  document.querySelectorAll(list?'[data-list-monitor]':'[data-var-monitor]').forEach(m=>{const a=list?'data-list-monitor':'data-var-monitor';if(m.getAttribute(a)===old)m.setAttribute(a,nu);});
+  redraw();}
+ function del(name,list){const e=E(),bag=list?'lists':'variables',vis=list?'listVisible':'variableVisible',loc=list?'localLists':'localVars';
+  const used=[...document.querySelectorAll('#workspaceCanvas .scratch-block')].filter(b=>usesName(b,name,list));
+  delete e[bag]?.[name];delete e[vis]?.[name];(e.sprites||[]).forEach(s=>{if(s[loc])delete s[loc][name];});
+  used.forEach(b=>{const st=b.parentElement?.closest?.('.block-stack');b.remove();if(st&&!st.querySelector('.scratch-block'))st.remove();});
+  document.querySelectorAll(list?'[data-list-monitor]':'[data-var-monitor]').forEach(m=>{if(m.getAttribute(list?'data-list-monitor':'data-var-monitor')===name)m.remove();});
+  redraw();window.GW?.toast?.(`Deleted “${name}”`+(used.length?` and ${used.length} block${used.length>1?'s':''} that used it (Ctrl+Z brings them back)`:''));}
+ function menu(e,items){by('gwcRenMenu')?.remove();const m=document.createElement('div');m.id='gwcRenMenu';m.setAttribute('role','menu');m.style.cssText='position:fixed;z-index:10000;min-width:170px;background:#1e293b;border:1px solid #475569;border-radius:9px;padding:4px;box-shadow:0 12px 30px #0008';
+  items.forEach(([t,fn,danger])=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.style.cssText='display:block;width:100%;text-align:left;padding:8px 12px;font:600 13px system-ui;color:'+(danger?'#fca5a5':'#e2e8f0')+';background:none;border:0;border-radius:6px;cursor:pointer';b.onmouseenter=()=>b.style.background=danger?'#b91c1c':'#7c3aed';b.onmouseleave=()=>b.style.background='none';b.onclick=ev=>{ev.stopPropagation();m.remove();fn();};m.appendChild(b);});
+  document.body.appendChild(m);m.style.left=Math.min(e.clientX,innerWidth-190)+'px';m.style.top=Math.min(e.clientY,innerHeight-m.offsetHeight-6)+'px';
+  setTimeout(()=>addEventListener('pointerdown',function out(ev){if(!ev.target.closest('#gwcRenMenu')){m.remove();removeEventListener('pointerdown',out,true);}},true),0);}
+ document.addEventListener('contextmenu',e=>{const b=e.target.closest&&e.target.closest('#paletteBlocks .scratch-block[data-type="get_var"], #paletteBlocks .scratch-block[data-type="list_contents"]');if(!b)return;
+  const name=b.querySelector('.block-select')?.value;if(!name)return;e.preventDefault();e.stopPropagation();const list=isList(b),what=list?'list':'variable';
+  menu(e,[[`rename ${what}`,async()=>{const n=await ask(`Rename the “${name}” ${what} to:`,name);const nu=String(n??'').trim();if(!nu||nu===name)return;const e2=E(),bag=list?'lists':'variables';
+     if((e2[bag]&&nu in e2[bag])||(e2.sprites||[]).some(s=>(s[list?'localLists':'localVars']||{})[nu]!==undefined)){window.GW?.toast?.(`There is already a ${what} called “${nu}”.`);return;}hist('before rename');rename(name,nu,list);hist('rename '+what);}],
+   [`delete the “${name}” ${what}`,()=>{hist('before delete');del(name,list);hist('delete '+what);},true]]);},true);
+ /* broadcasts: New message… / Rename message… */
+ const BSEL='.scratch-block[data-type="broadcast"] .block-select, .scratch-block[data-type="broadcast_wait"] .block-select, .scratch-block[data-type="when_broadcast"] .block-select';
+ const addOpts=sel=>{if(sel.querySelector('option[value="__gwnew"]'))return;const n=document.createElement('option');n.value='__gwnew';n.textContent='New message…';const r=document.createElement('option');r.value='__gwren';r.textContent='Rename message…';sel.append(n,r);};
+ const allNames=()=>{const set=new Set();document.querySelectorAll(BSEL).forEach(s=>[...s.options].forEach(o=>{if(!/^__gw/.test(o.value))set.add(o.value);}));return [...set];};
+ document.addEventListener('pointerdown',e=>{const s=e.target.closest&&e.target.closest('select');if(s&&s.matches(BSEL)){addOpts(s);s.dataset.gwPrev=s.value;}},true);
+ document.addEventListener('focusin',e=>{const s=e.target;if(s&&s.matches&&s.matches(BSEL)){addOpts(s);s.dataset.gwPrev=s.value;}},true);
+ document.addEventListener('change',async e=>{const s=e.target;if(!s||!s.matches||!s.matches(BSEL)||!/^__gw/.test(s.value))return;e.stopImmediatePropagation();const prev=s.dataset.gwPrev||allNames()[0]||'message1';
+  if(s.value==='__gwnew'){s.value=prev;const n=String((await ask('New message name:',''))??'').trim();if(!n)return;
+   document.querySelectorAll(BSEL).forEach(x=>{if(![...x.options].some(o=>o.value===n)){const o=document.createElement('option');o.value=n;o.textContent=n;x.insertBefore(o,x.querySelector('option[value="__gwnew"]'));}});s.value=n;hist('new message');}
+  else{s.value=prev;const n=String((await ask(`Rename the “${prev}” message to:`,prev))??'').trim();if(!n||n===prev)return;hist('before rename message');
+   document.querySelectorAll(BSEL).forEach(x=>{[...x.options].forEach(o=>{if(o.value===prev){o.value=n;o.textContent=n;}});});hist('rename message');}
+  s.dispatchEvent(new Event('change',{bubbles:true}));},true);
+ window.GW_RENAME={rename,del};})();</script>
+<style id="gw-claude-value-bubble-css">.gwcVal{position:fixed;z-index:10020;padding:6px 12px;border-radius:12px;background:#fff;color:#111;font:700 13px system-ui;box-shadow:0 4px 14px #0007;pointer-events:none;max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;animation:gwcValIn .12s ease-out}
+.gwcVal::after{content:"";position:absolute;left:16px;bottom:-7px;border:7px solid transparent;border-bottom:0;border-top-color:#fff}
+@keyframes gwcValIn{from{transform:translateY(4px);opacity:0}}</style>
+<script id="gw-claude-value-bubble">/* Claude (2 Nov, to-do B4, like Scratch): click a reporter (round or pointy block) - in the palette, on its own in
+   the code area, or inside another block's slot - and a bubble shows its value right now. */
+(()=>{let down=null;document.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY,t:e.target,at:performance.now()};},true);
+ const E=()=>window.Engine||{};
+ const owner=el=>{const st=el.closest('.block-stack'),i=st?.dataset.owner;const e=E();return e.sprites?.[i!=null&&i!==''?+i:e.activeSpriteIndex||0];};
+ function nodeOf(b){const t=b.dataset.type,sel=[...b.querySelectorAll('.block-select')].filter(x=>x.closest('.scratch-block')===b).map(x=>x.value);
+  if(t==='get_var')return{type:t,name:sel[0]};if(/^list_/.test(t))return{type:t,name:sel[0]};if(t==='current_time')return{type:t,unit:sel[0],menu:sel[0]};const ins=[...b.querySelectorAll('.block-input')].filter(x=>x.closest('.scratch-block')===b).map(x=>({type:'literal',value:x.value}));return ins.length?{type:t,args:ins}:{type:t};}
+ function show(el,v){document.querySelectorAll('.gwcVal').forEach(x=>x.remove());const r=el.getBoundingClientRect(),d=document.createElement('div');d.className='gwcVal';
+  if(typeof v==='number'&&!Number.isInteger(v))v=Math.round(v*1e6)/1e6;d.textContent=v===''||v==null?'(empty)':String(v);document.body.appendChild(d);d.style.left=Math.max(6,Math.min(innerWidth-d.offsetWidth-6,r.left))+'px';d.style.top=Math.max(6,r.top-d.offsetHeight-10)+'px';
+  setTimeout(()=>d.remove(),2500);}
+ document.addEventListener('pointerup',e=>{if(!down||e.button!==0||Math.hypot(e.clientX-down.x,e.clientY-down.y)>4||performance.now()-down.at>600)return;const tg=down.t;down=null;if(!tg||!tg.closest||tg.closest('input,select,button,textarea'))return;e={target:tg};const G=window.GW9;if(!G?.evalNode)return;
+  const chip=e.target.closest('.gw7-chip');let v,el;
+  try{if(chip){const slot=chip.closest('.gw-input-slot,[data-expr]');const node=slot&&G.slotNode(slot);if(!node)return;el=chip;v=G.evalNode({sprite:owner(chip)},node,'value',chip.closest('.scratch-block'));}
+   else{const b=e.target.closest('.scratch-block.gw-reporter-block, .scratch-block.gw-bool-block, .scratch-block[data-shape="bool"]');if(!b||!b.closest('#paletteBlocks, #workspaceCanvas'))return;
+    if(b.parentElement?.closest('.scratch-block'))return;el=b;v=G.evalNode({sprite:owner(b)},nodeOf(b),'value',b);}}catch(err){return;}
+  if(v===undefined)return;show(el,typeof v==='boolean'?String(v):v);},true);})();</script>
 </body>
 </html>
