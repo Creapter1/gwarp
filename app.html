@@ -12019,7 +12019,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     motion_pointtowards: ['point_towards', [], ['TOWARDS']], motion_changexby: ['change_x', ['DX']], motion_setx: ['set_x', ['X']], motion_changeyby: ['change_y', ['DY']], motion_sety: ['set_y', ['Y']],
     motion_ifonedgebounce: ['bounce'], motion_setrotationstyle: ['set_rotation_style', [], ['STYLE']],
     looks_sayforsecs: ['say', ['MESSAGE', 'SECS']], looks_say: ['say_only', ['MESSAGE']], looks_thinkforsecs: ['think_secs', ['MESSAGE', 'SECS']], looks_think: ['think', ['MESSAGE']],
-    looks_switchcostumeto: ['switch_costume', [], ['COSTUME']], looks_nextcostume: ['next_costume'], looks_switchbackdropto: ['set_backdrop', [], ['BACKDROP']], looks_switchbackdroptoandwait: ['set_backdrop', [], ['BACKDROP']], looks_nextbackdrop: ['next_backdrop'],
+    looks_switchcostumeto: ['switch_costume', [], ['COSTUME']], looks_nextcostume: ['next_costume'], looks_switchbackdropto: ['set_backdrop', [], ['BACKDROP']], looks_switchbackdroptoandwait: ['set_backdrop_wait', [], ['BACKDROP']], looks_nextbackdrop: ['next_backdrop'],
     looks_changesizeby: ['change_size', ['CHANGE']], looks_setsizeto: ['set_size', ['SIZE']], looks_cleargraphiceffects: ['clear_effects'], looks_show: ['show'], looks_hide: ['hide'],
     looks_gotofrontback: ['go_front_back', [], ['FRONT_BACK']], looks_goforwardbackwardlayers: ['go_layers', ['NUM'], ['FORWARD_BACKWARD']],
     sound_playuntildone: ['play_sound', [], ['SOUND_MENU']], sound_play: ['start_sound', [], ['SOUND_MENU']], sound_stopallsounds: ['stop_all_sounds'], sound_changevolumeby: ['change_volume', ['VOLUME']], sound_setvolumeto: ['set_volume', ['VOLUME']],
@@ -13389,6 +13389,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       if (t === 'glide_target') { const v = sel(b) || 'random position'; return done('motion_glideto', { ...valueInputs(b, ['SECS'], k), TO: menuShadow('motion_glideto_menu', 'TO', v === 'random position' ? '_random_' : MAP_SPRITE(v), k) }); } // Claude 2 Nov
       if (t === 'switch_costume') return done('looks_switchcostumeto', { COSTUME: menuIn('looks_costume', 'COSTUME', sel(b)) });
       if (t === 'set_backdrop') return done('looks_switchbackdropto', { BACKDROP: menuIn('looks_backdrops', 'BACKDROP', sel(b)) });
+      if (t === 'set_backdrop_wait') return done('looks_switchbackdroptoandwait', { BACKDROP: menuIn('looks_backdrops', 'BACKDROP', sel(b)) });
       if (t === 'play_sound' || t === 'start_sound') return done(t === 'play_sound' ? 'sound_playuntildone' : 'sound_play', { SOUND_MENU: menuIn('sound_sounds_menu', 'SOUND_MENU', sel(b)) });
       if (t === 'create_clone') return done('control_create_clone_of', { CLONE_OPTION: menuIn('control_create_clone_of_menu', 'CLONE_OPTION', MAP_SPRITE(sel(b) || 'myself')) });
       const map = CMD[t];
@@ -13855,6 +13856,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
   /* ================= command blocks ================= */
   const VIS = [ // shown in the palette
+    ['sec-stage', 'set_backdrop', '<div class="scratch-block bg-indigo-600 gw-stack-block" data-type="set_backdrop_wait">switch backdrop to <select class="block-select"><option value="stage1">stage1</option></select> and wait</div>'], // Claude 2 Nov (E2.1)
     ['sec-motion', 'glide_xy', '<div class="scratch-block bg-motion gw-stack-block" data-type="glide_target">glide <input class="block-input" type="text" value="1"/> secs to <select class="block-select" data-gw9-menu="goto"><option value="random position">random position</option><option value="mouse-pointer">mouse-pointer</option></select></div>'], // Claude 2 Nov: like Scratch (E1.6)
     ['sec-motion', 'goto_xy', '<div class="scratch-block bg-motion gw-stack-block" data-type="goto_target">go to <select class="block-select" data-gw9-menu="goto"><option value="random position">random position</option><option value="mouse-pointer">mouse-pointer</option></select></div>'],
     ['sec-looks', 'clear_effects', `<div class="scratch-block bg-looks gw-stack-block" data-type="change_effect">change <select class="block-select">${EFFECTS.map(e => `<option value="${e}">${e}</option>`).join('')}</select> effect by <input class="block-input" type="text" value="25"/></div>`],
@@ -13911,6 +13913,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       case 'set_drag_mode': s.draggable = String(sels(b)[0] || '').toLowerCase() === 'draggable'; return true; // v15.47.1
       case 'snd_set_effect': case 'snd_change_effect': { const k = String(sels(b)[0] || 'pitch').toLowerCase().startsWith('pan') ? 'pan' : 'pitch'; s.soundFx = s.soundFx || {}; let v = (t === 'snd_change_effect' ? (Number(s.soundFx[k]) || 0) : 0) + num(b, 0); if (k === 'pan') v = Math.max(-100, Math.min(100, v)); else v = Math.max(-360, Math.min(360, v)); s.soundFx[k] = v; playing.forEach(p => { if (p.sprite === s && p.src) { try { p.src.playbackRate.value = rateOf(s); } catch {} } }); return true; }
       case 'snd_clear_effects': s.soundFx = {}; return true;
+      case 'set_backdrop_wait': { const name = sels(b)[0], i = (E.backdrops || []).findIndex(x => x.name === name); if (i < 0) return true; const before = E.threads.length; E.activeBackdrop = i; try { GW.triggerBackdrop(E.backdrops[i].name); } catch (err) {} const mine = E.threads.slice(before); th.waitBroadcast = () => mine.every(t => t.finished); try { GW.refreshStage?.(); } catch (err) {} return true; } // Claude 2 Nov: waits for the 'when backdrop switches to' scripts
       case 'glide_target': { const to = sels(b)[0] || 'random position', secs = Math.max(0.01, num(b, 0)); let tx = s.x, ty = s.y; if (to === 'random position') { tx = Math.round(Math.random() * 480 - 240); ty = Math.round(Math.random() * 360 - 180); } else if (to === 'mouse-pointer') { tx = Math.round(E.mouse?.x || 0); ty = Math.round(E.mouse?.y || 0); } else { const o = findSprite(to, s); if (o) { tx = o.x; ty = o.y; } } th.motionTween = { start: performance.now(), dur: secs * 1000, sx: s.x, sy: s.y, tx, ty }; th.waitUntil = performance.now() + secs * 1000; return true; }
       case 'goto_target': { const to = sels(b)[0] || 'random position'; if (to === 'random position') { s.x = Math.round(Math.random() * 480 - 240); s.y = Math.round(Math.random() * 360 - 180); } else if (to === 'mouse-pointer') { s.x = Math.round(E.mouse?.x || 0); s.y = Math.round(E.mouse?.y || 0); } else { const o = findSprite(to, s); if (o) { s.x = o.x; s.y = o.y; } } return true; }
       case 'cam_set_xy': c.x = num(b, 0); c.y = num(b, 1); return true;
@@ -14151,7 +14154,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     const ownerOfSel = sel => { const st = sel.closest('#workspaceCanvas > .block-stack'); return st ? E.sprites[ownerIdx(st)] : E.sprites[E.activeSpriteIndex]; };
     document.querySelectorAll(VAR_SEL).forEach(sel => { const o = ownerOfSel(sel); fillSel(sel, [...Object.keys(GV), ...Object.keys(o?.localVars || {})]); });
     document.querySelectorAll(LIST_SEL).forEach(sel => { const o = ownerOfSel(sel); fillSel(sel, [...Object.keys(GL), ...Object.keys(o?.localLists || {})]); });
-    const bds = (E.backdrops || []).map(b => b.name); document.querySelectorAll('[data-type="set_backdrop"] .block-select').forEach(sel => fillSel(sel, bds));
+    const bds = (E.backdrops || []).map(b => b.name); document.querySelectorAll('[data-type="set_backdrop"] .block-select, [data-type="set_backdrop_wait"] .block-select').forEach(sel => fillSel(sel, bds));
   };
 
   /* ================= 10. Scratch fencing: sprites always keep a little of themselves on the stage ================= */
