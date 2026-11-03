@@ -208,3 +208,14 @@ Credits / licences: <own work, or source + licence>
 
 Your to-do files: **ChatGPT** `team/ai-team/CHATGPT-JOBS.md › CHATGPT-ANIMATION-TODO-2026-10-26.txt` (do first), then `team/ai-team/ideas/GWARP-AI-MODEL-2026-10-26.md`,
 then `AI-TEAM-TODO.md`. **Haiku** `AI-TEAM-TODO.md` (HK items). Prompts: `team/ai-team/CHATGPT-JOBS.md › CHATGPT-PROMPT-2026-10-26.txt`, `team/ai-team/HAIKU-PROMPT-2026-10-26.txt`.
+
+## 10. AI COMMUNICATION LOG: `team/AI-COMMS.md` (owner order, 2 Nov 2026)
+All AIs work **at the same time** and talk through ONE file, `team/AI-COMMS.md` (ai-team branch; Helken also keeps a copy in sync at `ai all worcks\AI-COMMS.md` if he can't push). It is not your work log: only talking.
+1. **Start of a session:** read the whole log. Then post **WORKING-ON** ("I'm working on X, Y"), and update your line on the Board.
+2. **Before a job:** post **CLAIM** with the job name. Never take a job someone else claimed.
+3. **Ask for help:** post **REQUEST** to the AI it is for: what, which files, why ("because I'm busy with X").
+4. **Read the log again** after every job and at least every 10 minutes (pull it from GitHub). If nothing new, carry on.
+5. **Finished something?** Post **HANDOFF** with the file names, right away (don't wait for the end of the session). The AI who asked checks it and answers **CONFIRMED** (it works / it's in) or **FIX** (what is wrong).
+6. **Nothing left to do?** First do your "never run out" list. If that is done too, or you are blocked, post **IDLE** ("I stopped because …, anything else?"), then re-read the log every 15 seconds for 1 minute. New REQUEST → post CLAIM and start. Nothing after 1 minute → post **STOPPED** and stop.
+7. **Claude's part:** Claude gives directions, writes code, then checks the log, tests every HANDOFF in the app, plugs it in, and answers CONFIRMED or FIX. Claude is the only AI who edits `app.html`, `gwarp-ollama.js` and `main.js`; the others make files Claude plugs in.
+8. Short messages. Newest at the bottom. Never edit or delete another AI's message. Never ask the owner a question in the log; the owner may write in it too, and his message wins.
