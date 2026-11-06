@@ -1,1 +1,70 @@
-PLACEHOLDER
+G-WARP APP-CHECK + RULES SYNC
+Date: 2026-11-05 · By: Grok (owner asked while ChatGPT unavailable)
+App checked: main branch app.html · GW_BUILD Beta v15.60.0 (~3.0 MB)
+
+====================================================================
+1. WHERE EVERYONE WORKS (one truth)
+====================================================================
+- Rules:        team/ai-team/README.md          (Rule Zero: ONLY ai-team branch)
+- One to-do:    team/AI-TEAM-TODO.md
+- Talk board:   team/AI-COMMS.md
+- Work log:     team/AI-TEAM.txt
+- main branch:  shipping app + docs only (no team folders)
+- Owner alone merges ai-team → main
+
+Active AIs (from AI-COMMS + README on main):
+  Claude  = only one who edits app.html / index.html / gwarp-ollama.js / main.js
+  ChatGPT = research, docs, tests, icons (handoffs only)
+  Helken  = helper (HANDOFF jobs from Claude)
+  Haiku   = helper on HK items
+
+Retired on main README: Gemini, Grok, DeepSeek (archive under team/ai-team/archive/).
+If the owner asks Grok for a one-off check (this file), do the check, update the
+to-do if something is already in the app, do NOT start new builds or duplicate jobs.
+
+====================================================================
+2. APP-CHECK: already in main app → do NOT rebuild
+====================================================================
+Marked [done] in AI-TEAM-TODO.md on 2026-11-05:
+
+  B1  Broadcast "New message…" / "Rename message…"
+      Proof: app.html has __gwnew / __gwren options + ask() rename flow
+  B2  Rename / delete variable or list (palette right-click)
+      Proof: IIFE after "right-click a variable or list in the palette"
+      rename() / del() update Engine.variables/lists + blocks + monitors
+  B4  Click a reporter → value bubble
+      Proof: .gwcVal bubble, evalNode on reporter/bool blocks
+
+Also present (already [done] earlier or partial — do not re-implement):
+  Power lines, onion skin, Flipbook, Spark Studio, Song maker, exportSB3
+  Stage Code/Costumes/Sounds regions, clone limit 300 + ceiling 5000
+  infiniteClones / fencing / HQ pen / framerate settings hooks
+  G-Spark AI bar, loading screens, stats/visit, when stage clicked
+  days since 2000, item # of list, pen_clear, music_playNote
+  toListIndex + LIST_INVALID path (still dual path risk — see old V1 review)
+
+Still OPEN for real (app check did NOT clear these):
+  S1–S5 performance (glow lag, power-line fps, undo while run, smooth motion)
+  S4 / E2.5  setInterpolation is still a STUB `{}` — not TurboWarp-smooth yet
+  B3  monitor modes + list import/export still incomplete
+  B5–B12, C* UI helpers, extensions live-load tests, AIM-*, music icons, etc.
+  list_item Math.max(1,floor) path may still bypass toListIndex in one interpreter
+
+====================================================================
+3. DO NOT MAKE COPIES
+====================================================================
+- Do not re-create B1/B2/B4, clone safety, power lines, song maker, or docs
+  that already exist under docs/ on main.
+- Fixtures / SPECs that used to live in grok/ on main were cleaned; research
+  notes now live under research/ and team archives on ai-team only.
+- One job → one handoff folder. Claude plugs in. Owner releases to main.
+
+====================================================================
+4. AGENTS: START HERE EVERY SESSION
+====================================================================
+1. Read team/ai-team/README.md (Rule Zero)
+2. Read team/AI-TEAM-TODO.md — only [open] lines
+3. Read bottom of team/AI-COMMS.md (who is working on what)
+4. Log start in your AI-CHAT-LOG / HELKEN-LOG
+5. Claim the job on AI-COMMS before coding
+6. Never edit app.html unless you are Claude Opus
