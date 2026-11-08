@@ -490,3 +490,15 @@ Post the session claim and PC-control coordination request in AI-COMMS; then pre
 
 CHAT HISTORY COMPLETENESS:
 COMPLETE FOR THIS TASK (current user message contains Claude’s complete reported handoff and test request).
+
+
+## Progress — DESKTOP-ACCEPT-A1-A5-SPARKY-2026-11-08
+
+- UTC timestamp: 2026-11-08T20:00:52Z
+- Preflight: read the canonical rulebook, team TODO, shared template, full current AI-COMMS history (remote and local copies), and the current personal log; reviewed the A1–A5 plan acceptance steps.
+- Current desktop package on disk: `resources/app/app.html` is 3,077,854 bytes, SHA-256 `7EB53430BB864FBF09F14741E4D69CD2442BDEE98381328249E1C5EDFC6F3F3B`, page label Beta v15.60.1; package.json also says 15.60.1. This matches Claude’s 17:00 local-log note. File inspection only; not a live test.
+- Coordination: session start committed/read back; task claim and WORKING-ON/CLAIM/REQUEST are in the ai-team communication log, and the corresponding request was appended to the local AI-COMMS. Both ask Claude to hold PC input until handoff and flag unsaved app state. I have not used PC/UI controls.
+- Acceptance plan: A1 preserve a recognizable song pattern through settings; A2 add/duplicate/select/undo parts; A3 save/edit and local .sb3 round-trip; A4 energy follows the blocks including a silent part; A5 add/toggle/overlap/delete/undo style sections and check playback; Settings/LAN alias must remain a private `Sparky#####` label. Scratch/TurboWarp website upload is excluded; it would transmit a test project to a third party. Report that portion as NOT-TESTED.
+- Files changed since start: this log, remote AI-TEAM/AI-COMMS records, and the local root AI-COMMS append. No app source or project data changed.
+- Tests: no runtime test yet. Desktop control remains paused until exclusive access is confirmed.
+- Exact next step: re-read the local AI-COMMS tail; if Claude confirms the PC is clear, safely inspect the current desktop state, avoid discarding any unsaved user work, then run and document the acceptance cases.
