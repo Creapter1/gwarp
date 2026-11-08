@@ -26,7 +26,7 @@ The alpha-box helper scans every canvas pixel (25280–25283); badges call it wh
 - code/anim-centre.js provides pure geometry and adapter helpers. It does not touch the DOM or the app.
 - tests/anim-centre.test.js covers eight focused helper cases.
 - Generated frame selection uses existing metadata gwAnimFrame.anim and .frame, not costume names. Pass anim.frames.length so missing, duplicate, or out-of-range frame indices fail before alignment.
-- sharedCentreAssignments returns one exact centre from frame 1's root for every selected frame; it never changes SVG/art or pose objects.
+- rotationCentreFromPoint validates/clones the mapped click point; sharedCentreAssignments returns one exact centre from frame 1's root for every selected frame. Neither function changes SVG/art or pose objects.
 - translationToCentre returns a translation for the adapter to apply to all artwork layers while keeping the existing pivot fixed. With a finite numeric feetLineY, it centers horizontally and aligns the bottom to the chosen baseline; malformed supplied values throw.
 - detectBodyDrift measures the body-bounds midpoint relative to the supplied root point, warns strictly above 2 px, and suppresses warnings when the root moved more than 0.5 px.
 - validateMadeFrames requires positive, exact canvas width/height and keeps the rotation centres within 1 px Euclidean distance.
@@ -37,7 +37,7 @@ The alpha-box helper scans every canvas pixel (25280–25283); badges call it wh
 
 1. Load the file as a separate helper (window.GW_ANIM_CENTRE_TOOLS); do not overwrite window.GW_CENTRE.
 2. Pass the correct orange-base bone ID and the solved joint from GW_ANIM.solve(anim, anim.frames[0]) into rootPointFromSolved. Use selectGeneratedFrames(sprite.costumes, anim.id) and sort via metadata; never treat all ordinary costumes as one animation.
-3. Make the paint click tool convert the pointer through the existing editor screen-to-costume mapping, normalize into the module's costume-local units, snapshot the costume centre, set c.rc, and refresh the mark. Extend the normal costume Undo snapshot/restore to include c.rc; the present snapshot at app.html 9246–9265 stores bitmap pixels or SVG markup, not the rotation centre.
+3. Make the paint click tool convert the pointer through the existing editor screen-to-costume mapping, normalize into the module's costume-local units, validate the mapped coordinates with rotationCentreFromPoint(), snapshot the costume centre, set c.rc, and refresh the mark. Extend the normal costume Undo snapshot/restore to include c.rc; the present snapshot at app.html 9246–9265 stores bitmap pixels or SVG markup, not the rotation centre.
 4. For Centre this costume, apply the returned translation to the SVG art layer(s) as one shared transform. Keep c.rc fixed and use the undo snapshot. When the feet option is selected, use the first frame's ground line as feetLineY.
 5. For Line up, assign the same frame-one root to every selected frame's c.rc. Do not translate frame art.
 6. Run drift analysis after Make costumes or after an edit invalidates cached bounds, not every second. A one-click “Use frame 1 centre” action can normalize pivot metadata without changing pose/art. It must not claim to repair actual pose drift: changing the pose separately per frame would conflict with the no-per-frame-art-movement requirement.
