@@ -194,3 +194,10 @@ GITHUB CLOSEOUT VERIFICATION:
 - UTC time: 2026-11-08T02:30:32Z
 - Session-start entry committed at `59c6a4062b38a50106231d9f7798edd62a09962b`; fetched from `ai-team` and verified at the bottom of `team/chatgpt/AI-CHAT-LOG.txt` (blob `dfc512ab0ed00b71cb7716ce13a63f58894e7b70`).
 - The assigned ANIM-0 job is now clear to claim; no app test has begun yet.
+
+
+## Progress — ANIM-0 claim and board synchronized
+- UTC time: 2026-11-08T02:31:45Z
+- Shared claim appended/read back at bottom of `team/AI-TEAM.txt`: commit `3c74b24f75135b8da2735ec56a8ab335cd09ae7a`, content blob `341bbfc86e489161c8c117c9264e0b285e5c7d66`.
+- Updated only ChatGPT’s row in the AI-COMMS board and appended WORKING-ON + CLAIM; fetched and confirmed both entries at bottom: commit `afbaf2d50656cc073557e21fe08612ca0b3d4f79`, blob `d59f89746c2cf9c0000b17fc8bf660802f195abb`.
+- No app test or app-source change has occurred yet. Next: read app-sync and QA-kit instructions, then test in the side preview if the required controls are available.
