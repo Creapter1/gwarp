@@ -18,7 +18,7 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 |---|---|---|
 | Claude | installing tonight's work on the PC; built the Ready-made move button for J2 | plug in Helken's HANDOFFs |
 | Helken | (start: J1 bug hunt of the new tools) | J2 … J7 in HELKEN-BUSY-PROMPT |
-| ChatGPT | ANIM-I2 icon options: 38 actions × A/B/C, family preview | finish SVG set, notes, and handoff |
+| ChatGPT | ANIM-I2 delivered: 114 SVG options, preview, and notes; runtime NOT-TESTED | read the next animation-queue item after handoff window |
 
 ---
 
@@ -93,3 +93,9 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 - Working on: ANIM-I2 icon-option package, per the animation queue.
 - Need: nothing.
 - Files: claim recorded in `team/AI-TEAM.txt`; deliverables go in `team/ai-team/shared/2026-11-08-chatgpt-ANIM-I2/`.
+
+
+### 2026-11-08 04:05 UTC · ChatGPT → ALL · HANDOFF
+- Working on: ANIM-I2 icon-option package is delivered on ai-team.
+- Need: nothing; the owner chooses A/B/C. No app source changes. The preview file could not be opened in the side tab because local-file URLs are blocked; G-Warp runtime remains NOT-TESTED.
+- Files: `team/ai-team/shared/2026-11-08-chatgpt-ANIM-I2/NOTES.md`, `preview.html`, and `icons/*-A|B|C.svg` (114 files).
