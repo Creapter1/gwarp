@@ -1600,52 +1600,52 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [ ] BLK-0163-PAR [TERMINAL] "⚛ spin with force (500)" (gw9-ext, stack, type phys_spin): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0163-EDGE [TERMINAL] "⚛ spin with force (500)" (gw9-ext, stack, type phys_spin): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0163-SAVE [TERMINAL] "⚛ spin with force (500)" (gw9-ext, stack, type phys_spin): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0163-DOC [WEB] "⚛ spin with force (500)" (gw9-ext, stack, type phys_spin): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0163-DOC [WEB] "⚛ spin with force (500)" (gw9-ext, stack, type phys_spin): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0163-AI [ANY] "⚛ spin with force (500)" (gw9-ext, stack, type phys_spin): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0164-PAR [TERMINAL] "⚛ set angular velocity to (30)" (gw9-ext, stack, type phys_set_spin): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0164-EDGE [TERMINAL] "⚛ set angular velocity to (30)" (gw9-ext, stack, type phys_set_spin): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0164-SAVE [TERMINAL] "⚛ set angular velocity to (30)" (gw9-ext, stack, type phys_set_spin): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0164-DOC [WEB] "⚛ set angular velocity to (30)" (gw9-ext, stack, type phys_set_spin): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0164-DOC [WEB] "⚛ set angular velocity to (30)" (gw9-ext, stack, type phys_set_spin): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0164-AI [ANY] "⚛ set angular velocity to (30)" (gw9-ext, stack, type phys_set_spin): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0165-PAR [TERMINAL] "⚛ set fixed [dynamic]" (gw9-ext, stack, type phys_set_fixed): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0165-EDGE [TERMINAL] "⚛ set fixed [dynamic]" (gw9-ext, stack, type phys_set_fixed): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0165-SAVE [TERMINAL] "⚛ set fixed [dynamic]" (gw9-ext, stack, type phys_set_fixed): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0165-DOC [WEB] "⚛ set fixed [dynamic]" (gw9-ext, stack, type phys_set_fixed): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0165-DOC [WEB] "⚛ set fixed [dynamic]" (gw9-ext, stack, type phys_set_fixed): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0165-AI [ANY] "⚛ set fixed [dynamic]" (gw9-ext, stack, type phys_set_fixed): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0166-PAR [TERMINAL] "⚛ set density [25]" (gw9-ext, stack, type phys_density): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0166-EDGE [TERMINAL] "⚛ set density [25]" (gw9-ext, stack, type phys_density): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0166-SAVE [TERMINAL] "⚛ set density [25]" (gw9-ext, stack, type phys_density): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0166-DOC [WEB] "⚛ set density [25]" (gw9-ext, stack, type phys_density): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0166-DOC [WEB] "⚛ set density [25]" (gw9-ext, stack, type phys_density): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0166-AI [ANY] "⚛ set density [25]" (gw9-ext, stack, type phys_density): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0167-PAR [TERMINAL] "⚛ set density to (100)" (gw9-ext, stack, type phys_density_n): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0167-EDGE [TERMINAL] "⚛ set density to (100)" (gw9-ext, stack, type phys_density_n): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0167-SAVE [TERMINAL] "⚛ set density to (100)" (gw9-ext, stack, type phys_density_n): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0167-DOC [WEB] "⚛ set density to (100)" (gw9-ext, stack, type phys_density_n): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0167-DOC [WEB] "⚛ set density to (100)" (gw9-ext, stack, type phys_density_n): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0167-AI [ANY] "⚛ set density to (100)" (gw9-ext, stack, type phys_density_n): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0168-PAR [TERMINAL] "⚛ set friction [0]" (gw9-ext, stack, type phys_friction): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0168-EDGE [TERMINAL] "⚛ set friction [0]" (gw9-ext, stack, type phys_friction): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0168-SAVE [TERMINAL] "⚛ set friction [0]" (gw9-ext, stack, type phys_friction): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0168-DOC [WEB] "⚛ set friction [0]" (gw9-ext, stack, type phys_friction): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0168-DOC [WEB] "⚛ set friction [0]" (gw9-ext, stack, type phys_friction): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0168-AI [ANY] "⚛ set friction [0]" (gw9-ext, stack, type phys_friction): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0169-PAR [TERMINAL] "⚛ set friction to (50)" (gw9-ext, stack, type phys_friction_n): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0169-EDGE [TERMINAL] "⚛ set friction to (50)" (gw9-ext, stack, type phys_friction_n): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0169-SAVE [TERMINAL] "⚛ set friction to (50)" (gw9-ext, stack, type phys_friction_n): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0169-DOC [WEB] "⚛ set friction to (50)" (gw9-ext, stack, type phys_friction_n): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0169-DOC [WEB] "⚛ set friction to (50)" (gw9-ext, stack, type phys_friction_n): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0169-AI [ANY] "⚛ set friction to (50)" (gw9-ext, stack, type phys_friction_n): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0170-PAR [TERMINAL] "⚛ set bounce [0]" (gw9-ext, stack, type phys_bounce): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0170-EDGE [TERMINAL] "⚛ set bounce [0]" (gw9-ext, stack, type phys_bounce): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0170-SAVE [TERMINAL] "⚛ set bounce [0]" (gw9-ext, stack, type phys_bounce): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0170-DOC [WEB] "⚛ set bounce [0]" (gw9-ext, stack, type phys_bounce): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0170-DOC [WEB] "⚛ set bounce [0]" (gw9-ext, stack, type phys_bounce): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0170-AI [ANY] "⚛ set bounce [0]" (gw9-ext, stack, type phys_bounce): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0171-PAR [TERMINAL] "⚛ set bounce to (20)" (gw9-ext, stack, type phys_bounce_n): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0171-EDGE [TERMINAL] "⚛ set bounce to (20)" (gw9-ext, stack, type phys_bounce_n): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0171-SAVE [TERMINAL] "⚛ set bounce to (20)" (gw9-ext, stack, type phys_bounce_n): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0171-DOC [WEB] "⚛ set bounce to (20)" (gw9-ext, stack, type phys_bounce_n): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0171-DOC [WEB] "⚛ set bounce to (20)" (gw9-ext, stack, type phys_bounce_n): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0171-AI [ANY] "⚛ set bounce to (20)" (gw9-ext, stack, type phys_bounce_n): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0172-PAR [TERMINAL] "⚛ set density [25] roughness [0] bounce [0]" (gw9-ext, stack, type phys_props): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0172-EDGE [TERMINAL] "⚛ set density [25] roughness [0] bounce [0]" (gw9-ext, stack, type phys_props): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0172-SAVE [TERMINAL] "⚛ set density [25] roughness [0] bounce [0]" (gw9-ext, stack, type phys_props): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0172-DOC [WEB] "⚛ set density [25] roughness [0] bounce [0]" (gw9-ext, stack, type phys_props): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0172-DOC [WEB] "⚛ set density [25] roughness [0] bounce [0]" (gw9-ext, stack, type phys_props): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0172-AI [ANY] "⚛ set density [25] roughness [0] bounce [0]" (gw9-ext, stack, type phys_props): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0173-PAR [TERMINAL] "⚛ set scroll x: (0) y: (0)" (gw9-ext, stack, type phys_set_scroll): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0173-EDGE [TERMINAL] "⚛ set scroll x: (0) y: (0)" (gw9-ext, stack, type phys_set_scroll): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
