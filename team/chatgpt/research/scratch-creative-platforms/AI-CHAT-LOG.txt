@@ -63,3 +63,67 @@
 - Read-back URL/path: pending
 - Verified new entry is present at bottom: NO
 - Task status: PARTIAL
+
+
+## SESSION CLOSEOUT / RESEARCH COMPLETE
+
+- UTC timestamp: 2026-11-08T02:15:12 UTC:00Z
+- AI / agent / exact model identity: ChatGPT research subagent; exact model identifier not exposed
+- Task ID / title: SCRATCH-CREATIVE-RESEARCH-2026-11-08 — Scratch-style platforms and creative communities
+- Branch / closeout starting state: ai-team; personal log blob 83a257c666831fd42dcf85f1a2345152c772a5cc
+
+### USER REQUEST / SCOPE
+
+- Original user request and the selected “Existing sites + local report” scope are preserved in the session-start record above.
+- Parent clarified the intended subject is original Scratch, fan-made Scratch-like projects/platforms, and other Scratch-style communities.
+- Parent authorized a source-backed research brief and explicitly prohibited a remote report or app-source changes.
+
+### PROGRESS / AI RESPONSE
+
+- Completed a source review of Scratch, TurboWarp, PenguinMod, Gandi/COCREA, CodeTorch, Snap!, Scratch Addons, Pocket Code, and MakeCode Arcade; noted smaller forks as lower-confidence examples.
+- Compared creator features, collaboration, extension ecosystems, portability, community-interest evidence, privacy/safety operations, compatibility, and licensing constraints.
+- Separated official documentation facts from vendor claims, anecdotal community posts, and product inferences. Suggested a local reusable asset shelf, curated show-and-tell prompts, opt-in enhancements, portable exports, an optional advanced data path, and carefully scoped collaboration for parent reconciliation against the G-Warp feature map.
+- Delivered the structured findings directly to the parent agent. This subagent did not create the local report file; the parent owns that deliverable.
+
+### DECISIONS AND CONSTRAINTS TO PRESERVE
+
+- Existing platforms + local report; no new website.
+- Research does not authorize feature adoption or implementation.
+- Work/logging only on the existing ai-team branch; no main changes.
+- Do not assume qualitative posts prove broad popularity; public UGC and collaboration require moderation, privacy, child-safety, and licensing planning.
+
+### FILES CHANGED
+
+- team/chatgpt/research/scratch-creative-platforms/AI-CHAT-LOG.txt — append-only session closeout.
+- team/AI-TEAM.txt — matching append-only DONE row (to be committed and verified after this personal log closeout).
+- NONE — app source or public content.
+
+### COMMANDS / TESTS / RESULTS
+
+- NONE — no application tests or runtime checks were requested or performed; this was web-source research only.
+
+### EVIDENCE CLASS
+
+- SOURCE-VERIFIED — reviewed primary platform documentation and policies, including https://scratch.mit.edu/help/about/, https://docs.turbowarp.org/, https://docs.penguinmod.com/, https://getgandi.com/features/how-to-setup-realtime-online-collaboration-with-friends, https://help.codetorch.net/articles/first-project, and https://docs.snap.berkeley.edu/first-class-lists/.
+- Community-interest observations from Reddit/forum discussions are anecdotal and not representative usage evidence.
+- NOT-TESTED in G-Warp; no feature compatibility or adoption was verified in the app.
+
+### BLOCKERS / UNCERTAINTIES / ASSUMPTIONS
+
+- NONE blocking this research handoff.
+- Platform feature status and community scale should be rechecked before implementation; some COCREA docs are older/inconsistent, and small-fork status may be stale.
+
+### NEXT STEP / HANDOFF
+
+- Parent agent incorporates these findings into the requested local report, checks them against G-Warp’s current app map, and decides which ideas merit follow-up.
+
+### CHAT HISTORY COMPLETENESS
+
+- COMPLETE FOR THIS SUBTASK — original request, output selection, scope correction, research instructions, and handoff are represented; this does not reproduce unrelated earlier app-review conversation.
+
+### GITHUB CLOSEOUT VERIFICATION
+
+- Personal log commit SHA: recorded in the follow-up verification entry after GitHub read-back.
+- Read-back URL/path: https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/research/scratch-creative-platforms/AI-CHAT-LOG.txt
+- Verified new entry is present at bottom: pending
+- Task status: PARTIAL until this entry and the matching AI-TEAM DONE row are committed and read-back verified.
