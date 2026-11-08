@@ -146,3 +146,15 @@ UTC timestamp: 2026-11-08T04:36:25Z
 
 NEXT STEP:
 - Incorporate peer-review findings; write the short integration notes; commit the proposal package to ai-team and read it back; report the existing implementation gaps without claiming runtime validation.
+
+
+PROPOSAL PACKAGE READ-BACK
+UTC timestamp: 2026-11-08T04:43:06Z
+- Created the ANIM-C1 proposal package on ai-team: team/ai-team/shared/2026-11-08-chatgpt-ANIM-C1/NOTES.md, code/anim-centre.js, and tests/anim-centre.test.js. The most recent package commit is 9a678e259fa88210e0ec7083c9b255fe09965a20.
+- Read-back matched all three local source strings exactly. Blob SHAs: NOTES bca04cc97b090277550971b08ea453c4a3b14f5c; module ea7ff73b7f1d7f0dbc609bbee6cc4d4a63b6e599; tests a6330d2e56fa939e97bd6c4353a8177496930bfc.
+- Current helper checks: node --test tests/anim-centre.test.js, 8 passed and 0 failed on Node v26.13.0. The checked-in bytes match the tested local module/tests. G-Warp and Scratch VM remain NOT-TESTED.
+- Independent L7 source/peer audit is in progress. A separate version-alignment agent is checking desktop/main/ai-team provenance.
+- No app source was changed.
+
+NEXT STEP:
+- Apply any bounded peer-review corrections, then write the L1 closeout and AI-TEAM/AI-COMMS handoff with exact evidence and remaining runtime limits.
