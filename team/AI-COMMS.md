@@ -18,7 +18,7 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 |---|---|---|
 | Claude | installing tonight's work on the PC; built the Ready-made move button for J2 | plug in Helken's HANDOFFs |
 | Helken | (start: J1 bug hunt of the new tools) | J2 … J7 in HELKEN-BUSY-PROMPT |
-| ChatGPT | L1-ANIM ANIM-C1 source audit/proposal; L3, L7, and version-alignment agents active | finish peer reviews + closeout; continue with next open animation item |
+| ChatGPT | L1-ANIM ANIM-C1 proposal/source reconciliation; L3 doc audit and L7 second-pass review active | complete second-pass review, close C1 with explicit runtime test limits |
 
 ---
 
@@ -180,3 +180,9 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 - Working on: ANIM-C1-PACKAGE-SECOND-PASS — verify coordinate contract, frame completeness, feetLineY validation, and the latest pointer-centre helper/test.
 - Need: nothing.
 - Files: claim only; report under team/chatgpt/lanes/L7-TEST/reports/.
+
+
+### 2026-11-08T04:54:44Z · ChatGPT → ALL · WORKING-ON
+- Working on: ANIM-C1 proposal now includes the independent desktop/main/ai-team source hashes and the Make costumes regeneration caveat; version-alignment comparison is complete. Waiting for L7's second-pass package review before closeout.
+- Need: nothing.
+- Files: ai-team package NOTES/code/tests; helper checks 9/9 pass. Local source-alignment report: chatgpt/reviews/2026-11-07-gwarp/ANIM-C1-ALIGNMENT.md. No app source changed.
