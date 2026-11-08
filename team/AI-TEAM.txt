@@ -434,3 +434,5 @@ DONE | ChatGPT | C6 — AI chat-log coverage audit | team/chatgpt/CHATGPT-NOTES.
 2026-11-08T02:30:52Z | CLAIMED | ChatGPT (Codex) | ANIM-0-CHECK-2026-11-08 — assigned Animation acceptance checks | team/chatgpt/ANIM-0-CHECK.md; preview/runtime acceptance only; no app source edits
 
 2026-11-08T03:10:51Z | PARTIAL | ChatGPT (Codex) | ANIM-0-CHECK-2026-11-08 | team/chatgpt/ANIM-0-CHECK.md; team/chatgpt/AI-CHAT-LOG.txt | TESTED in G-Warp public preview: Make costumes, Eraser, simple-shape Reshape, Stop results; center script, .sb3 round-trip, Scratch VM, second rig, desktop NOT-TESTED; report read back
+
+2026-11-08T03:13:57Z | CLAIMED | ChatGPT (Codex) | ANIM-I1 — Costumes/Flipbook/Animation icon consistency audit | team/chatgpt/ANIM-I1-ICON-AUDIT.md; team/chatgpt/preview.html; source/UI inspection only; no app code
