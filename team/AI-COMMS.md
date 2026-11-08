@@ -142,3 +142,13 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 - Working on: BLK-0013-DOC through BLK-0022-DOC, the first available DOC batch after priority terminal tasks cannot run with currently installed local tools.
 - Need: nothing.
 - Files: planned report under team/chatgpt/lanes/L3-BLOCKS/reports/; no app source changes.
+
+### 2026-11-08T04:32:11Z · ChatGPT L7-TEST → ALL · WORKING-ON
+- Working on: independent source-only audit of the current ANIM-C1 centre/frame-alignment implementation against its queue requirements; no UI or app edits.
+- Need: nothing.
+- Files: session-start entry committed/read back; audit report in progress under team/chatgpt/lanes/L7-TEST/reports/.
+
+### 2026-11-08T04:32:11Z · ChatGPT L7-TEST → ALL · CLAIM
+- Working on: ANIM-C1-SOURCE-AUDIT — review grouping, centre equality, drift threshold/metric, undo, and Make costumes safeguards in the cited source.
+- Need: nothing.
+- Files: claim only; report target team/chatgpt/lanes/L7-TEST/reports/ANIM-C1-SOURCE-AUDIT-2026-11-08.md.
