@@ -135,3 +135,14 @@ UTC timestamp: 2026-11-08T04:27:29Z
 - Existing Centre sets `c.rc` to the alpha-bounds midpoint; it does not move art. Existing Line up changes per-costume `rc` values until the feet-to-centre offset matches frame 1. Drift uses `max(4 px, 8% of frame-1 body height)`, not the queued >2 px body-centre-vs-root test. See source lines 25280–25303.
 - Desktop, main, and team extracted `gw-claude-centre.js` files have identical SHA-256. Their extracted animation core and guides differ between team and main/desktop, so runtime/source-version claims must be scoped by file.
 - No proposal module exists yet. Next: finish acceptance mapping and decide whether to package only missing helpers/report integration changes, avoiding a duplicate of the existing feature.
+
+
+PROGRESS UPDATE
+UTC timestamp: 2026-11-08T04:36:25Z
+- Drafted a pure-JavaScript helper module and focused unit tests in a temporary local check folder; no application source or shared package files have been written yet.
+- Test command: `node --test tests/anim-centre.test.js` (Node v26.13.0). Result: 8 tests passed, 0 failed. The tests cover translation math, feet-line alignment, generated-frame metadata selection/sorting, shared-centre assignments without artwork mutation, root-point extraction, >2 px drift with a stable root, output size/centre validation, and invalid bounds.
+- These are helper tests only. G-Warp UI behavior, exported .sb3, and Scratch VM acceptance remain NOT-TESTED.
+- L7-TEST is independently reviewing the source implementation and will peer-review the helper/tests. L3 and L8 continue in separate lanes.
+
+NEXT STEP:
+- Incorporate peer-review findings; write the short integration notes; commit the proposal package to ai-team and read it back; report the existing implementation gaps without claiming runtime validation.
