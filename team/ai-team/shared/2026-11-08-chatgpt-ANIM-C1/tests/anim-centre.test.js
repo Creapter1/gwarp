@@ -22,14 +22,30 @@ test("feet-line option keeps horizontal centering and aligns the bottom", functi
   assert.deepEqual({ x: result.dx, y: result.dy }, { x: 0, y: 40 });
   assert.equal(result.after.bottom, 100);
   assert.equal(result.mode, "feet-line");
+  assert.throws(function () {
+    tools.translationToCentre(
+      { left: 0, top: 0, right: 10, bottom: 10 },
+      { x: 5, y: 5 },
+      { feetLineY: "10" }
+    );
+  }, TypeError);
 });
 
 test("generated frames are selected by metadata and sorted by frame index", function () {
   const frame2 = { name: "walk//frame 2", gwAnimFrame: { anim: "a1", frame: 1 } };
   const other = { name: "walk//frame 1", gwAnimFrame: { anim: "other", frame: 0 } };
   const frame1 = { name: "renamed", gwAnimFrame: { anim: "a1", frame: 0 } };
-  assert.deepEqual(tools.selectGeneratedFrames([frame2, other, frame1], "a1"), [frame1, frame2]);
+  assert.deepEqual(tools.selectGeneratedFrames([frame2, other, frame1], "a1", 2), [frame1, frame2]);
   assert.deepEqual(tools.selectGeneratedFrames([frame1], "missing"), []);
+  assert.throws(function () {
+    tools.selectGeneratedFrames([frame1, frame2], "a1", 3);
+  }, RangeError);
+  assert.throws(function () {
+    tools.selectGeneratedFrames([
+      frame1,
+      { name: "duplicate", gwAnimFrame: { anim: "a1", frame: 0 } }
+    ], "a1", 2);
+  }, RangeError);
 });
 
 test("all frame-centre assignments use frame one's root without mutating frames", function () {
