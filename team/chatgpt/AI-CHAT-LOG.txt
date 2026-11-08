@@ -432,3 +432,61 @@ GITHUB CLOSEOUT VERIFICATION:
 - Shared AI-TEAM timestamp-correction commit: df96da6ada45e0c9d49919fb26ad43328c552609; read-back blob: 53ceca314282097d687223add74739d06c830fa2.
 - Shared AI-COMMS HANDOFF commit: cd48ba191a53272fda638ac09aedde9e8b48c347; read-back blob: ab7498dc31a52d2e430445d5faae4082418a11d2.
 - Status remains PARTIAL while Claude's response is pending. Codex has left PC preview control released.
+
+
+## Session start — DESKTOP-ACCEPT-A1-A5-SPARKY-2026-11-08
+
+- UTC timestamp: 2026-11-08T19:50:51Z
+- AI / exact model identity: Codex, GPT-6-based; exact runtime variant unavailable.
+- Task ID / title: DESKTOP-ACCEPT-A1-A5-SPARKY-2026-11-08 — run requested acceptance on the installed G-Warp desktop app and report only.
+- Branch / starting commit: ai-team / 451ba69decf026937f14ffebd0d752108d9b320f.
+
+USER REQUEST (verbatim):
+“Claude here (app integrator) - reply to your handoff. Full log entry: AI-COMMS.md \"2026-11-08 16:05 · Claude\".
+
+DONE + INSTALLED in resources\\app\\app.html (version still 15.60.1, nothing published, main untouched):
+- All 5 animation findings confirmed in source and fixed (backup: backup\\app.before-claude-anim-nov8.html). Lines in new app.html:
+  1) 16663 frameIdx: only frame costumes tagged with this animation's id; empty frame list = invalid
+  2) 16872 makeMascot: null results collected, toast names the failed animations
+  3) 26689-26690 auto-update: new drawing must parse as SVG before use; shape check compares kind+order, not count (same-kind swap in same spot still not detectable)
+  4) 17008-17009 makeCostumes wraps everything, returns null instead of throwing
+  5) 17039 snap(true) = no rev bump, used for FPS (17378, box now shows clamped value), floor reset (25964) and floor drag
+- Headless before -> after: untagged look-alike frames accepted true->false; empty frames true->false; rev after snap(true)+snap() 2->1; FPS box after 999 \"999\"->\"30\"; broken art -> null no throw (both). 0 page errors with Buffy’s gw-*.js loaded.
+- Also installed today (each has an app.before-claude-*.html backup): Buffy bug-hunt fixes S1/V1/C1-C3/U1/W1, Song maker A1, A2, A4, A3 \"Edit in Song maker\" button, A5 style-change timeline.
+- Sparky alias + your save/load repairs SURVIVED: a diff of your 15.60.1 build vs now removes only lines from my listed patches. main.js / preload.js / lan-share.js not touched today. Source-verified only, not run live.
+
+NOT tested: Electron app, real LAN, mascot failure toast live, Scratch round-trip in the real editor.
+REQUEST (report only, please): on the real desktop app (close + reopen G-Warp) run acceptance for A1-A5 + the Sparky alias in Settings/LAN, write chatgpt/ACCEPT-2026-11-08.md and post in AI-COMMS. I’m doing A6 (hold-drag parts) next. Let’s not both drive the PC at once - talk through AI-COMMS.”
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Run A1-A5 plus the Sparky##### alias checks in Settings/LAN on the installed desktop app after a safe close and reopen; record exact steps and observed results in team/chatgpt/ACCEPT-2026-11-08.md and AI-COMMS. This is report-only: do not edit app source, publish, or touch main. Coordinate through AI-COMMS before using the shared PC. If the app shows unsaved work or another blocking prompt, do not discard it.
+
+PROGRESS / AI RESPONSE:
+Preflight read the current team rulebook, AI-TEAM work log, shared logging template, AI-team TODO, AI-COMMS history, and current ChatGPT log. The existing local review and bug-hunt reports were also inspected to establish context before the session-start record was posted; no desktop app interaction, application test, or source edit has occurred. Earlier review context establishes the current local desktop build label as 15.60.1 and says the user’s live app was not tested after those repairs. Exact A1-A5 steps still need to be matched to the local report/job notes before exercising them.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Claude is the only app integrator. This task is testing/reporting only.
+- Work only on ai-team; do not publish, merge, or write to main.
+- The user supplied Claude’s report/request; distinguish its reported headless results from our own desktop test evidence.
+- Avoid simultaneous control with Claude. Do not close an app with unsaved user work; if a discard/save decision is required, stop at that point.
+- Preserve the Sparky##### privacy requirement and the 15.60.1 version label.
+
+FILES CHANGED:
+- This personal log only (session-start entry).
+
+COMMANDS / TESTS / RESULTS:
+- Read-only repository/documentation fetches and local report reads; no application tests run yet.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED / REPORTED TEST for the facts in Claude’s pasted message only; NOT-TESTED by Codex for live desktop A1-A5 or Settings/LAN.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- PC access must be coordinated with Claude via AI-COMMS before any desktop input.
+- A1-A5 acceptance criteria require local/committed definition lookup before testing.
+- It is not yet known whether the running desktop has unsaved work or what project is open.
+
+NEXT STEP / HANDOFF:
+Post the session claim and PC-control coordination request in AI-COMMS; then prepare a test matrix while waiting for a safe exclusive PC window.
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK (current user message contains Claude’s complete reported handoff and test request).
