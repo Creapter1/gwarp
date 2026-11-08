@@ -102,3 +102,60 @@ GITHUB CLOSEOUT VERIFICATION (fill after upload/read-back):
 - Verified new entry is present at bottom: PENDING
 - Task status: PARTIAL until upload/read-back is confirmed.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-11-08T04:17:06Z
+AI / agent / exact model identity (only if verified): ChatGPT subagent in lane L8-ART; exact model identifier not exposed
+Task ID / title: L8-ART / ART-002 — make three original G-Warp-style robot library options and a preview
+Branch / starting commit: ai-team; exact branch HEAD SHA not exposed by repository file-read tool. Initial branch reads verified using GitHub blob SHAs: lane prompt 11dadcd5902f969b2968c1d10ed6144e4c603aef, JOBS bundle 6dcbd29ef81d23fb3d362a8373aa64bcd007d644, AI-TEAM log e2ce61424c3361812cd189f4844e9262c03f1430, and this lane log 5389aa3c7ce2feb1ed0b0c792150c7fb8fee6021.
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+
+> Parent-relayed task instruction (not a direct user quote): “New user instruction: use all available agents continuously to lighten the work. Please reactivate in the distinct L8-ART lane from team/ai-team/lanes/LANES.txt. Read its own lane log and the first eligible open task in JOBS-ART.txt; follow all start-log/claim/read-back rules before drawing. Complete one focused art job or small first batch using only original G-Warp-looking art (no Scratch assets, copyrighted characters, or other app icons); create any deliverable in your own L8-ART folder/new drop-box and commit/read back on ai-team. Never edit app source or another lane’s files. Send me task status and evidence. Do not edit the root ChatGPT log.”
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- Lane instructions and the full L8-ART log have been read. The first job ART-001 is unchecked in the task list, but its complete existing hero-kid package is already present on ai-team and the prior L8-ART log records it. To avoid repeating existing work, select ART-002 as the first open job not already represented by a deliverable.
+- Create a new, original robot library-art proposal with three distinct G-Warp-style options, a four-frame walk or idle animation as extra costumes, torso-centered rotation point, and a preview.html. Use only original art and G-Warp's palette. Keep work in the L8-ART folder and/or a new shared drop-box.
+- Do not edit app source, root ChatGPT log, another lane's folder/log, or public content. Commit only to ai-team and read back deliverables.
+
+PROGRESS / AI RESPONSE:
+- Read the team rules, mandatory log template, L8-ART prompt, AI-COMMS log, current L8-ART log, and ART job definitions. ART-001 package files are present on ai-team; ART-002 is the first not-yet-delivered task. No artwork has been created yet.
+- Updated the parent that ART-001 already has assets and ART-002 will be used to avoid duplication.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Existing ART-001 work is not to be overwritten or redone.
+- Honor the L8-ART boundary; no app code edits or root ChatGPT log edits.
+- Communicate the session and claim through append-only AI-COMMS messages; preserve the root ChatGPT board row.
+- Current branch-head SHA could not be obtained: GitHub file reads expose blob SHAs only, and a read-only local ls-remote attempt failed because GitHub hostname lookup was unavailable. Do not invent the head SHA.
+
+FILES CHANGED:
+- team/chatgpt/lanes/L8-ART/AI-CHAT-LOG.txt — this session-start entry only.
+- NONE — art, app source, and other lanes' files remain unchanged.
+
+COMMANDS / TESTS / RESULTS:
+- Read-only source fetches on ai-team: L8-ART prompt, team rules/template, AI-TEAM log, AI-COMMS log, embedded JOBS-ART task list, prior L8-ART log, and ART-001 asset package.
+- Read-only branch probe: git ls-remote https://github.com/Creapter1/gwarp.git refs/heads/ai-team — FAILED once: “Could not resolve host: github.com”; branch HEAD SHA remains unavailable through this local route.
+- No art/browser/G-Warp tests run yet.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for lane/task instructions and existing ART-001 assets.
+- NOT-TESTED for new art and application behavior.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- NONE blocking use of the GitHub connector for append-only branch work.
+- The task list is bundled inside team/ai-team/CHATGPT-JOBS.md rather than exposed at the standalone JOBS-ART.txt path referenced in older lane text. Use the embedded task section; do not fabricate a missing path.
+
+NEXT STEP / HANDOFF:
+- Commit and read back this session start. Then append/read back my L8-ART WORKING-ON and CLAIM messages in team/AI-COMMS.md, respecting the latest root board row. Only then create ART-002 files.
+
+CHAT HISTORY COMPLETENESS:
+- PARTIAL — exact instruction from parent is preserved; direct original user message for this lane activation was not provided.
+
+GITHUB CLOSEOUT VERIFICATION:
+- Personal log commit SHA: PENDING
+- Read-back URL/path: PENDING
+- Verified new entry is present at bottom: PENDING
+- Task status: PARTIAL until the start log and claim are committed and read back.
+--- END ENTRY ---
