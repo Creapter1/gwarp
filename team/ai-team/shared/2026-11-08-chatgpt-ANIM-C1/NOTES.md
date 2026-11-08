@@ -7,7 +7,7 @@ Branch: ai-team
 
 ## What exists now
 
-The current app source already includes a centre feature. The gw-claude-centre script adds a Centre button, a Line up button, a one-action custom Undo button, and orange drift badges in the Costume list (app.html in the reviewed snapshot, lines 25270–25306). The extracted desktop, main, and ai-team gw-claude-centre.js fragments have the same SHA-256.
+The current app source already includes a centre feature. The gw-claude-centre script adds a Centre button, a Line up button, a one-action custom Undo button, and orange drift badges in the Costume list (app.html in the reviewed snapshot, lines 25270–25306). The extracted gw-claude-centre fragment is 5,238 bytes and SHA-256 4a9fab7dea63a071a740432bd7f1ff01cbf60833dd242fdd2a8bd74d3ee34842 across desktop, main, and ai-team. The makeCostumes function is also byte-identical across all three (1,896 bytes; SHA-256 ca8de059bf7b161aa5cd706b33f14fbf5ad3239de34b1ec8c14af73098412b90). The broader ai-team animation script differs outside makeCostumes: it has an older floor formula and omits the snap export.
 
 The current controls do not yet meet all of the queued ANIM-C1 behavior:
 
@@ -19,7 +19,7 @@ The current controls do not yet meet all of the queued ANIM-C1 behavior:
 | Warn when body centre shifts over 2 px while the root stays put | The badge compares the rendered alpha-box centre/bottom relative to c.rc; its limit is max(4 px, 8% of frame-one body height) (25286–25298). | It does not compare body midpoint to the orange root using the requested 2 px threshold. |
 | Identical output canvas and rotation centre | makeCostumes copies the source costume's rc to each frame and normally renders the same SVG root dimensions (app.html 16742–16760). | No explicit output invariant. An SVG decode error silently creates a 1×1 canvas (16747–16751). |
 
-The alpha-box helper scans every canvas pixel (25280–25283); badges call it while the costume list is visible (25297–25305). This is an O(pixel-count × frame-count) path. Cache bounds or compute them after a frame changes before expanding this to more animations.
+Regenerating costumes overwrites any per-frame centres written by Line up, because makeCostumes recreates each output with the source costume's centre. The alpha-box helper scans every canvas pixel (25280–25283); badges call it while the costume list is visible (25297–25305). This is an O(pixel-count × frame-count) path. Cache bounds or compute them after a frame changes before expanding this to more animations.
 
 ## Proposal files
 
