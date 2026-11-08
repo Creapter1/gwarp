@@ -241,3 +241,11 @@ GITHUB CLOSEOUT VERIFICATION (required before DONE):
 - Verified new entry is present at bottom: NO (pending).
 - Task status: DONE for the requested source-only audit; runtime remains NOT-TESTED.
 --- END CLOSEOUT ---
+
+READ-BACK VERIFICATION / COMMAND DETAIL
+UTC timestamp: 2026-11-08T04:45:25Z
+- Closeout commit SHA: 1a984cdb4adffe162b6e022d46113d31d01f1745
+- Read-back URL: https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/lanes/L7-TEST/AI-CHAT-LOG.txt
+- Verified the ANIM-C1 closeout is present in the fetched file: YES.
+- Exact source-hash command used: git -C 'C:\\Users\\mario\\OneDrive\\Documents\\ai all worcks\\gwarp-src' hash-object --no-filters 'C:\\Users\\mario\\OneDrive\\Documents\\ai all worcks\\chatgpt\\reviews\\2026-11-07-gwarp\\source\\ai-team\\gwarp-5cbb4b94bae809cc45cad7546df69d2380ee9531\\app.html' → 0ef15201760bec948368096f5d9fa270af37fb70.
+- Task status: DONE for the requested source-only audit. Runtime remains NOT-TESTED; helper tests were not run by this agent.
