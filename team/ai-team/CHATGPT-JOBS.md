@@ -1200,52 +1200,52 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [ ] BLK-0083-PAR [TERMINAL] "() + ()" (operators, reporter, type op_add): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0083-EDGE [TERMINAL] "() + ()" (operators, reporter, type op_add): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0083-SAVE [TERMINAL] "() + ()" (operators, reporter, type op_add): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0083-DOC [WEB] "() + ()" (operators, reporter, type op_add): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0083-DOC [WEB] "() + ()" (operators, reporter, type op_add): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0083-AI [ANY] "() + ()" (operators, reporter, type op_add): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0084-PAR [TERMINAL] "() > 50(50)" (operators, boolean, type op_gt): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0084-EDGE [TERMINAL] "() > 50(50)" (operators, boolean, type op_gt): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0084-SAVE [TERMINAL] "() > 50(50)" (operators, boolean, type op_gt): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0084-DOC [WEB] "() > 50(50)" (operators, boolean, type op_gt): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[~] BLK-0084-DOC [WEB] "() > 50(50)" (operators, boolean, type op_gt): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0084-AI [ANY] "() > 50(50)" (operators, boolean, type op_gt): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0085-PAR [TERMINAL] "() < (50)" (operators, boolean, type op_lt): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0085-EDGE [TERMINAL] "() < (50)" (operators, boolean, type op_lt): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0085-SAVE [TERMINAL] "() < (50)" (operators, boolean, type op_lt): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0085-DOC [WEB] "() < (50)" (operators, boolean, type op_lt): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0085-DOC [WEB] "() < (50)" (operators, boolean, type op_lt): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0085-AI [ANY] "() < (50)" (operators, boolean, type op_lt): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0086-PAR [TERMINAL] "() − ()" (operators, reporter, type op_sub): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0086-EDGE [TERMINAL] "() − ()" (operators, reporter, type op_sub): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0086-SAVE [TERMINAL] "() − ()" (operators, reporter, type op_sub): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0086-DOC [WEB] "() − ()" (operators, reporter, type op_sub): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0086-DOC [WEB] "() − ()" (operators, reporter, type op_sub): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0086-AI [ANY] "() − ()" (operators, reporter, type op_sub): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0087-PAR [TERMINAL] "() × ()" (operators, reporter, type op_mul): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0087-EDGE [TERMINAL] "() × ()" (operators, reporter, type op_mul): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0087-SAVE [TERMINAL] "() × ()" (operators, reporter, type op_mul): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0087-DOC [WEB] "() × ()" (operators, reporter, type op_mul): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0087-DOC [WEB] "() × ()" (operators, reporter, type op_mul): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0087-AI [ANY] "() × ()" (operators, reporter, type op_mul): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0088-PAR [TERMINAL] "() ÷ 1(1)" (operators, reporter, type op_div): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0088-EDGE [TERMINAL] "() ÷ 1(1)" (operators, reporter, type op_div): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0088-SAVE [TERMINAL] "() ÷ 1(1)" (operators, reporter, type op_div): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0088-DOC [WEB] "() ÷ 1(1)" (operators, reporter, type op_div): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[~] BLK-0088-DOC [WEB] "() ÷ 1(1)" (operators, reporter, type op_div): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0088-AI [ANY] "() ÷ 1(1)" (operators, reporter, type op_div): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0089-PAR [TERMINAL] "() = ()" (operators, boolean, type op_eq): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0089-EDGE [TERMINAL] "() = ()" (operators, boolean, type op_eq): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0089-SAVE [TERMINAL] "() = ()" (operators, boolean, type op_eq): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0089-DOC [WEB] "() = ()" (operators, boolean, type op_eq): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0089-DOC [WEB] "() = ()" (operators, boolean, type op_eq): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0089-AI [ANY] "() = ()" (operators, boolean, type op_eq): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0090-PAR [TERMINAL] "and" (operators, boolean, type op_and): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0090-EDGE [TERMINAL] "and" (operators, boolean, type op_and): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0090-SAVE [TERMINAL] "and" (operators, boolean, type op_and): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0090-DOC [WEB] "and" (operators, boolean, type op_and): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0090-DOC [WEB] "and" (operators, boolean, type op_and): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0090-AI [ANY] "and" (operators, boolean, type op_and): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0091-PAR [TERMINAL] "or" (operators, boolean, type op_or): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0091-EDGE [TERMINAL] "or" (operators, boolean, type op_or): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0091-SAVE [TERMINAL] "or" (operators, boolean, type op_or): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0091-DOC [WEB] "or" (operators, boolean, type op_or): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0091-DOC [WEB] "or" (operators, boolean, type op_or): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0091-AI [ANY] "or" (operators, boolean, type op_or): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0092-PAR [TERMINAL] "not" (operators, boolean, type op_not): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0092-EDGE [TERMINAL] "not" (operators, boolean, type op_not): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0092-SAVE [TERMINAL] "not" (operators, boolean, type op_not): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0092-DOC [WEB] "not" (operators, boolean, type op_not): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0092-DOC [WEB] "not" (operators, boolean, type op_not): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0092-AI [ANY] "not" (operators, boolean, type op_not): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0093-PAR [TERMINAL] "10(10) mod 3(3)" (operators, reporter, type op_mod): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0093-EDGE [TERMINAL] "10(10) mod 3(3)" (operators, reporter, type op_mod): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
