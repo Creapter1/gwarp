@@ -298,3 +298,15 @@ GITHUB CLOSEOUT VERIFICATION:
 - Files changed before this entry: none for ANIM-I2. No SVG design has started.
 - Evidence class: SOURCE-VERIFIED for queue, branch rules, and icon specs; NOT-TESTED for the new visuals.
 - Next: commit and read back this session entry, then post shared CLAIM/WORKING-ON messages before creating the option set.
+
+
+
+## Progress — ANIM-I2 icon package prepared
+
+- UTC time: 2026-11-08 04:03:30 UTC
+- Added `team/ai-team/shared/2026-11-08-chatgpt-ANIM-I2/`: 114 SVGs (38 names × A/B/C), `preview.html`, and `NOTES.md`. Initial package commit: `f2e0f4b2dde22182e067df994c01fe73986b561a`.
+- Reviewed the rules against the files and corrected the pose limb strokes to 2 px (within the 1.75–2 px family range); updated the embedded preview too. Correction commit: `615dc8e2a07c46bb1be84810988e216cf3227cec`.
+- Read-back: GitHub lists exactly the 114 expected icon filenames; `NOTES.md`, `preview.html`, and representative centre, walk, hurt, and export SVGs were fetched from `ai-team`. Local SVG source inventory: all 114 are below 4 KB; no A/B/C triples are byte-identical; no icon contains more than one explicit accent color. This is a source/file review, not a rendered visual test.
+- Preview contains four existing Gemini animation SVGs (Onion, Flipbook Play, Bones, In-between) for comparison at 16/24/32 px and a dark/light toggle. A local copy was staged at the preview workspace for inspection.
+- CUA refused opening the local `file:` preview protocol. I did not try to bypass that browser restriction. As a result, the visual preview and G-Warp runtime are NOT-TESTED; the HTML preview is still delivered.
+- Application source remains untouched. Next: append the closeout, update the shared DONE row and handoff, then read back each entry.
