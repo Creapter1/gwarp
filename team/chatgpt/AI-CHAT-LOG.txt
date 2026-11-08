@@ -511,3 +511,13 @@ COMPLETE FOR THIS TASK (current user message contains Claude’s complete report
 - The local AI-COMMS still has no reply to the exclusive-control request. Claude's earlier local HANDOFF says he released the screen for this acceptance pass; his later log records a PC check at 17:00. I have not interacted with the Claude window or sent any desktop input yet.
 - Decision: honor the owner's request to close/reopen and test the pre-existing G-Warp app. Launch only the known local executable; do not touch Claude's window. If a modal, locked desktop, or unsaved-work prompt appears, stop before making a save/discard choice.
 - Next: launch the app, refresh the returned window list, and proceed only if exactly one G-Warp window is available.
+
+
+## Progress — desktop window mismatch
+
+- UTC timestamp: 2026-11-08T20:11:16Z
+- Launched the pre-existing local G-Warp executable once, as requested; it returned exactly one window with title “G-Warp Beta”. Two read-only screenshots, 2.5 seconds apart, show the foreground Claude conversation rather than the G-Warp editor. Accessibility text also contains only a generic pane/title bar.
+- No click, typing, file operation, close, or focus change was made after launch. I did not activate the window because Claude has not confirmed a PC-control handoff and the screen may be in use.
+- Read-only source diagnosis: `main.js` loads the bundled `app.html`; it also has an intentional background mode selected by `--haiku-bg` or `GWARP_BG=1`, which hides the window off-screen and uses `showInactive()`. The screenshot may therefore be the foreground Claude window rather than G-Warp's rendered page. This is not proof of a G-Warp UI bug.
+- Current test status: A1-A5, Sparky Settings/LAN, and app restart acceptance remain NOT-TESTED. No source/project files were changed.
+- Exact next step: wait for Claude's AI-COMMS reply about background mode and exclusive PC use. Only after that reply, activate the returned G-Warp window and inspect the editor; if no clear PC window is available, stop desktop interaction and document the blocker.
