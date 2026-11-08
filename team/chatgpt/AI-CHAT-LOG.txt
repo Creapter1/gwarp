@@ -86,3 +86,11 @@ GITHUB CLOSEOUT VERIFICATION (required before DONE):
 - Read-back URL/path: pending
 - Verified new entry is present at bottom: NO
 - Task status: PARTIAL
+
+
+## Progress — Scratch research log gate verified
+
+- UTC time: 2026-11-08T02:05:22Z
+- Personal session-start entry committed in `team/chatgpt/AI-CHAT-LOG.txt` at `5af2771016befb80a584062b6e6f9e316925dcb8`; fetched again and confirmed it is at the bottom.
+- The research agent's dedicated start log and claim were separately verified by the agent. Parent synthesis claim appended as the final current `team/AI-TEAM.txt` row in commit `be4abc56c73b60d067607157c9f099ef21361674`; fetch/read-back confirmed the line.
+- Research may now begin. The agent will return findings to this session; the deliverable stays local per the owner's choice.
