@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G-Warp ANIM-I1 Icon Consistency Preview</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0b14;--panel:#141425;--panel2:#1b1b31;--line:#30304c;--text:#ececf6;--muted:#a8a8c2;--violet:#a78bfa;--green:#4ade80;--yellow:#facc15;--red:#fb7185;--chip:#24243c}
+:root[data-theme="light"]{color-scheme:light;--bg:#f7f7fc;--panel:#fff;--panel2:#f0effa;--line:#d9d6e8;--text:#171528;--muted:#625f76;--violet:#7c3aed;--green:#168846;--yellow:#9a6b00;--red:#c43b59;--chip:#f4f1ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,Segoe UI,sans-serif}
+main{max-width:1180px;margin:auto;padding:28px 22px 48px}
+header{display:flex;gap:18px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+h1{margin:0;font-size:clamp(25px,4vw,38px);line-height:1.1;letter-spacing:-.03em}
+h2{margin:0 0 14px;font-size:21px}
+h3{margin:0 0 10px;font-size:17px}
+p{margin:8px 0;color:var(--muted)}
+.kicker{color:var(--green);font-weight:750;letter-spacing:.1em;text-transform:uppercase;font-size:12px}
+.meta{margin-top:10px}
+button{font:inherit}
+#themeToggle{border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:var(--panel2);color:var(--text);cursor:pointer}
+#themeToggle:hover{border-color:var(--violet)}
+section{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.note{border-left:3px solid var(--yellow);padding:9px 12px;background:var(--panel2);border-radius:0 8px 8px 0}
+.match-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.match{border:1px solid var(--line);border-radius:12px;padding:15px;background:var(--panel2)}
+.samples{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:9px;margin-top:12px}
+.sample{display:flex;gap:9px;align-items:center;min-width:0;padding:9px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.sample .glyph{width:32px;height:32px;flex:0 0 32px;color:var(--violet)}
+.sample:nth-child(2n) .glyph{color:var(--green)}
+.glyph svg{width:24px;height:24px;display:block;margin:4px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sample-label{min-width:0}
+.sample-label b{display:block;font-size:12px}
+code,.tag{font:12px/1.35 ui-monospace,Consolas,monospace;color:var(--violet)}
+code{overflow-wrap:anywhere}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 8px;margin:3px;background:var(--chip)}
+.callout{padding:10px 12px;border-radius:9px;background:var(--chip);margin-top:11px}
+.callout strong{color:var(--green)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 9px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+td:first-child{font-weight:700}
+.inventory{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.inventory article{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}
+.small{font-size:12px;color:var(--muted)}
+footer{margin-top:20px;color:var(--muted);font-size:12px}
+svg.defs{position:absolute;width:0;height:0;overflow:hidden}
+@media(max-width:700px){main{padding:18px 12px 30px}section{padding:15px}table{font-size:13px}th,td{padding:8px 5px}}
+</style>
+</head>
+<body>
+<svg class="defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<symbol id="paint-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+<symbol id="paint-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></symbol>
+<symbol id="rotate-left" viewBox="0 0 24 24"><path d="M4 8V3L1 6"/><path d="M4 7a9 9 0 1 1-1 9"/></symbol>
+<symbol id="rotate-right" viewBox="0 0 24 24"><path d="M20 8V3l3 3"/><path d="M20 7a9 9 0 1 0 1 9"/></symbol>
+<symbol id="play" viewBox="0 0 24 24"><path d="M7 4v16l13-8z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="stop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="flipbook-play" viewBox="0 0 24 24"><rect x="3" y="4" width="13" height="16" rx="2"/><path d="M6 7h7M6 11h3M6 16h3"/><path d="m12 11 6-4v10l-6-4z" fill="currentColor" stroke="none"/><path d="M18 4h3M21 4v3M6 20H3v-3" stroke="var(--green)"/></symbol>
+<symbol id="trash-outline" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7"/><path d="M10 11v5M14 11v5"/></symbol>
+<symbol id="trash-solid" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7z" fill="currentColor" stroke="none"/><path d="M10 10v6M14 10v6" stroke="var(--bg)"/></symbol>
+<symbol id="onion-paint" viewBox="0 0 24 24"><rect x="2.5" y="6.5" width="11" height="11" rx="2.5" stroke="#8b5cf6" opacity=".75"/><rect x="10.5" y="6.5" width="11" height="11" rx="2.5" stroke="#4ade80" opacity=".8"/></symbol>
+<symbol id="onion-gemini" viewBox="0 0 24 24"><rect x="2" y="7" width="12" height="12" rx="2" stroke="#8b5cf6" stroke-dasharray="2 2" opacity=".75"/><rect x="10" y="5" width="12" height="12" rx="2" stroke="#4ade80" stroke-dasharray="2 2" opacity=".8"/><rect x="6" y="6" width="12" height="12" rx="2" fill="var(--panel)" stroke="currentColor"/></symbol>
+<symbol id="prev" viewBox="0 0 24 24"><path d="M5 5v14M20 5 9 12l11 7z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="next" viewBox="0 0 24 24"><path d="M19 5v14M4 5l11 7-11 7z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="flip-h" viewBox="0 0 24 24"><path d="M12 3v18M4 7h5v10H4zM15 7h5v10h-5zM8 12H5m11 0h3"/></symbol>
+<symbol id="flip-v" viewBox="0 0 24 24"><path d="M3 12h18M7 4h10v5H7zM7 15h10v5H7zM12 8V5m0 11v3"/></symbol>
+<symbol id="bone" viewBox="0 0 24 24"><path d="M7 7 17 17"/><path d="M5 4a3 3 0 0 1 4 4l7 7a3 3 0 0 1 4 4 3 3 0 0 1-4-1l-8-8a3 3 0 0 1-4-4 3 3 0 0 1 1-2z"/></symbol>
+<symbol id="bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 10-13h-7z" fill="currentColor" stroke="none"/></symbol>
+</svg>
+<main>
+<header>
+<div>
+<div class="kicker">G-Warp · ANIM-I1</div>
+<h1>Icon consistency preview</h1>
+<p class="meta">Browser UI observed at Beta v15.60.0 · source inventory from ai-team snapshot <code>5cbb4b9</code>.</p>
+</div>
+<button id="themeToggle" type="button" aria-label="Switch to light theme">Switch to light theme</button>
+</header>
+
+<section>
+<h2>Same action, compared across editors</h2>
+<p class="note">The short code labels are the exact source icon names. The inline drawings are offline comparison sketches, so this page has no font or network dependency.</p>
+<div class="match-grid">
+<article class="match">
+<h3>Undo and redo</h3>
+<div class="samples">
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#paint-undo"/></svg></span><span class="sample-label"><b>Costume paint</b><code>GW_PAINT_ICONS.undo</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#rotate-left"/></svg></span><span class="sample-label"><b>Code / Animation / Song</b><code>fa-rotate-left</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#paint-redo"/></svg></span><span class="sample-label"><b>Costume paint</b><code>GW_PAINT_ICONS.redo</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#rotate-right"/></svg></span><span class="sample-label"><b>Code / Animation</b><code>fa-rotate-right</code></span></div>
+</div>
+<div class="callout"><strong>Match:</strong> keep one left-arrow and one right-arrow design across Code, Costumes, Animation, and Song Maker.</div>
+</article>
+
+<article class="match">
+<h3>Play and stop</h3>
+<div class="samples">
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#play"/></svg></span><span class="sample-label"><b>Costume Play button</b><code>fa-play</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#play"/></svg></span><span class="sample-label"><b>Flipbook</b><code>fa-play / fa-stop</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#flipbook-play"/></svg></span><span class="sample-label"><b>Animation</b><code>Gemini flipbook-play</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#play"/></svg></span><span class="sample-label"><b>Song Maker</b><code>fa-play / fa-stop</code></span></div>
+</div>
+<div class="callout"><strong>Match:</strong> choose one start icon and the same stop-state icon for every preview player.</div>
+</article>
+
+<article class="match">
+<h3>Delete</h3>
+<div class="samples">
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#trash-outline"/></svg></span><span class="sample-label"><b>Costume list</b><code>fa-regular fa-trash-can</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#trash-solid"/></svg></span><span class="sample-label"><b>Animation frame / bone</b><code>fa-solid fa-trash</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#trash-outline"/></svg></span><span class="sample-label"><b>Costume paint</b><code>GW_PAINT_ICONS.delete</code></span></div>
+<div class="sample"><span class="glyph">×</span><span class="sample-label"><b>Delete animation / sprite</b><code>text / fa-xmark</code></span></div>
+</div>
+<div class="callout"><strong>Match:</strong> use one trash-can icon for delete actions; keep close separate from delete.</div>
+</article>
+
+<article class="match">
+<h3>Onion skin</h3>
+<div class="samples">
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#onion-paint"/></svg></span><span class="sample-label"><b>Costume paint</b><code>inline ONION_ICON</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#onion-gemini"/></svg></span><span class="sample-label"><b>Animation / costume list</b><code>Gemini onion</code></span></div>
+</div>
+<div class="callout"><strong>Match:</strong> use the same overlap-frame glyph in Costume paint and Animation.</div>
+</article>
+
+<article class="match">
+<h3>Flip and pose mirror</h3>
+<div class="samples">
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#flip-h"/></svg></span><span class="sample-label"><b>Costume paint</b><code>GW_PAINT_ICONS.flipH</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#flip-v"/></svg></span><span class="sample-label"><b>Costume paint</b><code>GW_PAINT_ICONS.flipV</code></span></div>
+<div class="sample"><span class="glyph">↔</span><span class="sample-label"><b>Animation pose mirror</b><code>text glyph</code></span></div>
+</div>
+<div class="callout"><strong>Keep distinct:</strong> paint Flip reflects selected art; Animation Mirror swaps left and right pose values.</div>
+</article>
+
+<article class="match">
+<h3>Frame navigation</h3>
+<div class="samples">
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#prev"/></svg></span><span class="sample-label"><b>Flipbook previous</b><code>fa-backward-step</code></span></div>
+<div class="sample"><span class="glyph"><svg aria-hidden="true"><use href="#next"/></svg></span><span class="sample-label"><b>Flipbook next</b><code>fa-forward-step</code></span></div>
+<div class="sample"><span class="glyph">‹ ›</span><span class="sample-label"><b>Reorder frame</b><code>fa-chevron-left / right</code></span></div>
+</div>
+<div class="callout">Preview navigation and changing a frame’s order have different jobs.</div>
+</article>
+</div>
+</section>
+
+<section>
+<h2>Surface inventory</h2>
+<div class="inventory">
+<article><h3>Costumes</h3><p class="small">Costume list, paint toolbar, and add controls.</p>
+<span class="tag">folders: fa-folder / fa-folder-open</span><span class="tag">duplicate: fa-regular fa-copy</span><span class="tag">delete: fa-regular fa-trash-can</span><span class="tag">Paint / Upload / Play: fa-paintbrush / fa-upload / fa-play</span><span class="tag">Graffy: custom G-Spark-style SVG + fa-bolt</span><span class="tag">paint tools: GW_PAINT_ICONS select, reshape, brush, eraser, fill, text, line, circle, rect</span><span class="tag">paint actions: undo, redo, group, ungroup, forward, backward, front, back, copy, paste, delete, flipH, flipV</span><span class="tag">paint view: zoomIn, zoomOut, zoomReset, eyedropper, noColor, toBitmap, toVector</span><span class="tag">grid / snap: fa-border-all / fa-magnet</span><span class="tag">Centre / Line up / local undo: ⊕ / ⇅ / ↶ text glyphs</span><span class="tag">paint onion: separate inline ONION_ICON</span></article>
+<article><h3>Flipbook</h3><p class="small">Floating costume player; source and live accessibility labels agree.</p>
+<span class="tag">header: fa-bolt</span><span class="tag">close: fa-xmark</span><span class="tag">previous: fa-backward-step</span><span class="tag">play / stop: fa-play / fa-stop</span><span class="tag">next: fa-forward-step</span><span class="tag">FPS / Loop: text controls</span></article>
+<article><h3>Animation</h3><p class="small">Bone rig, frame strip, and preview.</p>
+<span class="tag">header: fa-bone</span><span class="tag">undo / redo: fa-rotate-left / fa-rotate-right</span><span class="tag">Rig tools: fa-bone, fa-paperclip, fa-arrow-pointer, fa-wand-magic-sparkles, fa-trash</span><span class="tag">frame order: fa-plus, fa-chevron-left / right, fa-trash</span><span class="tag">Gemini SVGs: bones, in-between, smooth-x2, flipbook-play, make-costumes, onion</span><span class="tag">Copy / Paste pose and Mirror: 📋 / 📌 / ↔ text glyphs</span><span class="tag">New / Rename / Delete, FPS / Loop: text controls</span></article>
+<article><h3>Related editor</h3><p class="small">Song Maker and sound editor help establish the common action icons.</p>
+<span class="tag">Song Maker Play / Stop: fa-play / fa-stop</span><span class="tag">Song Maker Undo: fa-rotate-left</span><span class="tag">Sound-edit Undo / Delete: fa-rotate-left / fa-regular fa-trash-can</span></article>
+</div>
+</section>
+<footer>Read-only audit preview. G-Warp UI tested in the side preview; source names checked in the ai-team v15.60.0 snapshot. No application source was modified.</footer>
+</main>
+<script>
+const root=document.documentElement,button=document.getElementById('themeToggle');
+button.addEventListener('click',()=>{const light=root.dataset.theme!=='light';root.dataset.theme=light?'light':'dark';button.textContent=light?'Switch to dark theme':'Switch to light theme';button.setAttribute('aria-label',button.textContent);});
+</script>
+</body>
+</html>
