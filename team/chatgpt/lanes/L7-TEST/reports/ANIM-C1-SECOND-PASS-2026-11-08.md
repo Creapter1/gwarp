@@ -27,3 +27,14 @@ Scope: read-only review of the proposal notes, helper, and tests on `ai-team`. N
 ## Boundary
 
 This review establishes helper/docs source behavior only. G-Warp integration, UI behavior, undo wiring, and runtime output remain untested; no app/source change is represented by this report.
+
+
+## Final correction check
+
+Date: 2026-11-08 04:57:58 UTC
+Checked package commit: `66205eb534602abed152c55ed41237c2cc6db904`.
+
+- **PASS:** `selectGeneratedFrames()` now validates each same-animation frame index before sorting/filtering; negative and fractional index cases throw (helper lines 86–93; tests lines 59–70).
+- **PASS:** `validateMadeFrames()` rejects `tolerancePx > 1` (helper lines 162–167); the test rejects 1.01 (tests lines 129–134).
+- **PASS:** NOTES now reports nine helper cases and 9 passed / 0 failed (lines 27 and 56), matching the nine top-level tests.
+- No new concern found in these corrections. This was still source-only: I did not run tests or exercise the app; 9/9 is the checked-in notes/parent-reported result.
