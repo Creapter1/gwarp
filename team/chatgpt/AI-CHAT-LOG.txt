@@ -255,3 +255,18 @@ GITHUB CLOSEOUT VERIFICATION:
 - Main and desktop source map the additional costume actions to `fa-magnifying-glass`, `fa-wand-magic-sparkles`, and `fa-camera`. The inspected ai-team snapshot lacks those entries. The audit report and offline icon wall now record the difference.
 - Updated on ai-team: `team/chatgpt/preview.html` (commit `60fba1129ed181b1482e3dbb825e40da6b244eee`) and `team/chatgpt/ANIM-I1-ICON-AUDIT.md` (commit `8d2a5659e4731ff92abe5a8555d05965225b3519`).
 - Desktop source inspection only; no native desktop window was opened and no application code was changed. Next: verify both report artifacts, then synchronize the ANIM-I1 closeout.
+
+
+## Session closeout — ANIM-I1-ICON-AUDIT-2026-11-08
+
+- UTC time: 2026-11-08 03:39:13 UTC
+- Owner request: “continue”; next available animation queue item was ANIM-I1.
+- Reviewed Costumes, Flipbook, and Animation in the public side preview (G-Warp Beta v15.60.0). Compared source from main commit `51d6518cd8a5f41b944282c537a29dfc5cd4dca4`, ai-team commit `5cbb4b94bae809cc45cad7546df69d2380ee9531`, and bundled desktop `resources/app/app.html` in the local review workspace.
+- Created `team/chatgpt/ANIM-I1-ICON-AUDIT.md` (latest report commit `8d2a5659e4731ff92abe5a8555d05965225b3519`) and expanded `team/chatgpt/preview.html` to a 58-item offline icon wall plus cross-editor comparisons (latest preview commit `60fba1129ed181b1482e3dbb825e40da6b244eee`). Both were fetched from ai-team and their final content read back.
+- Findings: Undo/Redo differ between the Costume paint SVG set and the Font Awesome used by Code/Animation/Song; Play uses the Gemini frame-play SVG only in Animation while other players use Font Awesome; Delete varies between outline/solid/custom/text; Onion skin uses separate SVGs. Paint Flip and Animation pose Mirror are different actions and should stay distinct.
+- Build-sync difference: main and bundled desktop source include Choose, Surprise, Camera in the costume add fan; the inspected ai-team source snapshot includes Paint, Upload, Play only. All report v15.60.0; the main and desktop app.html SHA-256 hashes differ. Desktop was source-inspected only; no native desktop app was opened.
+- Evidence: TESTED in G-Warp for side-preview UI presence/labels. SOURCE-VERIFIED for icon identifiers, main/ai-team/desktop source comparisons. No application source changes and no additional runtime tests.
+- Files: added/updated only the audit, preview, this log, and shared AI-TEAM/AI-COMMS records on ai-team.
+- Task status: DONE for the requested icon inventory and preview. Desktop runtime and pixel-exact icon appearance remain NOT-TESTED; the preview labels exact source IDs and uses offline source-family sketches.
+- Shared handoff: AI-TEAM DONE row and AI-COMMS HANDOFF are written; read-back verification follows.
+- Next: ANIM-I2 icon option package is listed next in the animation queue, after the handoff response window.
