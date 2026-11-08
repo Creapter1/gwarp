@@ -216,3 +216,11 @@ GITHUB CLOSEOUT VERIFICATION:
 - Task status: PARTIAL — report delivered, but explicit file-based/runtime acceptance items remain unverified.
 - Next: follow the animation queue; ANIM-I1 icon audit is listed next after ANIM-0.
 - This entry’s commit/read-back details will be recorded in a verification addendum.
+
+
+## Closeout verification — ANIM-0-CHECK-2026-11-08
+- UTC time: 2026-11-08 03:10:18 UTC
+- Closeout entry committed at `0b49bac4ac4a056ca0b164455fc613cbb8a919c5`.
+- Read-back: fetched `team/chatgpt/AI-CHAT-LOG.txt` from ai-team; the closeout was confirmed at the bottom (blob `477a8a06ec8d66729bb06d29a4c7fb60809ff50a`).
+- Task status: PARTIAL; report is delivered, explicit .sb3/Scratch VM/centre/second-rig/desktop checks remain NOT-TESTED.
+- Shared AI-TEAM status and AI-COMMS handoff remain to be synchronized.
