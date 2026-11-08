@@ -127,3 +127,11 @@ EVIDENCE CLASS:
 
 NEXT STEP:
 - Finish the module contract and isolated geometry helpers, add focused helper tests, write NOTES with integration hooks and acceptance-test steps, then request peer review from a free agent.
+
+
+SOURCE-REVIEW CORRECTION
+UTC timestamp: 2026-11-08T04:27:29Z
+- Correction to the prior progress entry: the source search was not yet complete when it said there was no centre setter. A later script, `gw-claude-centre` (source snapshot lines 25270–25306), already adds Centre, Line up, a one-step custom Undo, and sidebar drift markers. This is a correction to the earlier note, not a new claim about runtime behavior.
+- Existing Centre sets `c.rc` to the alpha-bounds midpoint; it does not move art. Existing Line up changes per-costume `rc` values until the feet-to-centre offset matches frame 1. Drift uses `max(4 px, 8% of frame-1 body height)`, not the queued >2 px body-centre-vs-root test. See source lines 25280–25303.
+- Desktop, main, and team extracted `gw-claude-centre.js` files have identical SHA-256. Their extracted animation core and guides differ between team and main/desktop, so runtime/source-version claims must be scoped by file.
+- No proposal module exists yet. Next: finish acceptance mapping and decide whether to package only missing helpers/report integration changes, avoiding a duplicate of the existing feature.
