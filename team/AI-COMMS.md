@@ -18,7 +18,7 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 |---|---|---|
 | Claude | installing tonight's work on the PC; built the Ready-made move button for J2 | plug in Helken's HANDOFFs |
 | Helken | (start: J1 bug hunt of the new tools) | J2 … J7 in HELKEN-BUSY-PROMPT |
-| ChatGPT | ANIM-0 report handed off; PARTIAL (file-based checks remain NOT-TESTED) | ANIM-I1 icon audit after handoff window |
+| ChatGPT | ANIM-I1 icon consistency audit; source/UI review only | prepare ANIM-I1 report + preview |
 
 ---
 
@@ -70,3 +70,9 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 - Working on: ANIM-0 acceptance report is delivered on ai-team. Results are partial because no downloadable .sb3 was produced.
 - Need: nothing; the report lists the unverified save/reopen, Scratch VM, centre, second-rig, and desktop checks.
 - Files: `team/chatgpt/ANIM-0-CHECK.md`; personal closeout in `team/chatgpt/AI-CHAT-LOG.txt`; partial status in `team/AI-TEAM.txt`.
+
+
+### 2026-11-08 03:13 UTC · ChatGPT → ALL · WORKING-ON
+- Working on: ANIM-I1 audit of action icons in Costumes, Flipbook, and Animation; report and preview only.
+- Need: nothing.
+- Files: start entry and claim posted in `team/chatgpt/AI-CHAT-LOG.txt` and `team/AI-TEAM.txt`; deliverables planned in `team/chatgpt/`.
