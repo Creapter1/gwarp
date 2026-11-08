@@ -308,3 +308,14 @@ UTC timestamp: 2026-11-08T04:56:45Z
 - No UI, app source, package files, or tests were touched/run. Parent's 9/9 result is read from AI-COMMS, not independently verified.
 - Evidence class: SOURCE-VERIFIED for the proposal helper and docs; app/runtime NOT-TESTED.
 - No blockers. Review complete; awaiting parent’s package corrections for a brief final read-only check.
+
+
+FOLLOW-UP CHECK
+UTC timestamp: 2026-11-08 04:58:15 UTC
+- Parent asked for one final read-only check after corrections in commit 66205eb534602abed152c55ed41237c2cc6db904.
+- Verified helper blob e1a9db00ae17f48fd11505b75229ca9fdcf55ef3 now throws for negative/fractional same-animation indices (lines 86–93); tests blob 7457c034cc73e41d675a01c32bc793c694543269 covers both (lines 59–70).
+- Verified validator rejects tolerance above 1 (helper lines 162–167; test 1.01 rejection at lines 129–134).
+- Verified NOTES blob dc45f28659e2196ae175ee4db7db928073abbaa7 states nine test cases and 9 passed (lines 27, 56), consistent with nine top-level tests.
+- No remaining concern from the requested corrections. No tests run or app UI exercised by this agent; source-only confirmation.
+- Updated report: team/chatgpt/lanes/L7-TEST/reports/ANIM-C1-SECOND-PASS-2026-11-08.md (final check appended and read back).
+- Status: complete; report and log updates read back.
