@@ -127,3 +127,14 @@
 - Read-back URL/path: https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/research/scratch-creative-platforms/AI-CHAT-LOG.txt
 - Verified new entry is present at bottom: pending
 - Task status: PARTIAL until this entry and the matching AI-TEAM DONE row are committed and read-back verified.
+
+
+## APPEND-ONLY TIMESTAMP CORRECTION / FIRST READBACK
+
+- UTC timestamp: 2026-11-08T02:15:49Z
+- Correction: the preceding closeout entry contains a malformed timestamp string due to formatting. Its exact timestamp from the clock read at that write was 2026-11-08T02:15:12Z. The original line is preserved; this correction is authoritative.
+- Personal log closeout commit SHA: f2fa880ddf50678ee264b6049308a2c746aa883f
+- Personal log closeout blob SHA: 6d48d697cb7a6cb62c059a726e9d8ca87d221fc7
+- Read-back URL: https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/research/scratch-creative-platforms/AI-CHAT-LOG.txt
+- Verification: fetched committed log from ai-team; closeout entry appeared at bottom. This appended correction supplies the verified commit/blob identifiers.
+- Task status: PARTIAL until the shared AI-TEAM DONE row is committed and read-back verified.
