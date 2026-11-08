@@ -1,0 +1,67 @@
+G-WARP — MANDATORY AI CHAT LOG TEMPLATE
+Purpose: prevent context loss, false assumptions, duplicated work, and unsafe/incomplete handoffs.
+
+ZERO-EXCEPTION RULE
+- Every AI/agent/model working on G-Warp must keep this file at <ai-folder>/AI-CHAT-LOG.txt. No exceptions for short sessions, reviews, failed attempts, temporary agents, or sessions with no file changes.
+- Read AI-TEAM.txt, this template, and your own existing log BEFORE any work. If the log does not exist, create it from this template before proceeding.
+- Append a session-start entry before work; append progress at meaningful milestones; append closeout before stopping, switching context/model, handing off, or claiming completion.
+- If you cannot update and verify your own log, HARD STOP all project work and notify the owner. Do not continue unlogged.
+- A task is NOT DONE until its personal log closeout is committed AND read back from GitHub. The shared AI-TEAM work log is also required and does not replace this file.
+- New timestamps must be UTC ISO-8601 with seconds and Z (example: 2026-10-24T15:15:03Z). Never guess or backdate. If unavailable, say TIME NOT AVAILABLE. Optional local time must include an IANA timezone.
+- Never alter historical timestamps, invent missing conversation text, claim unrun tests, or mark partial work DONE. Label reconstructed summaries and cite their supporting repo evidence.
+- Append only. Never overwrite or delete prior entries. Never edit another AI's personal log. Redact secrets.
+
+--- ENTRY TEMPLATE (copy for each task/session; start and closeout can be separate appended entries) ---
+SESSION START / TASK RECORD
+UTC timestamp: 2026-11-08T04:16:43Z
+AI / agent / exact model identity (only if verified): ChatGPT Codex subagent / exact model identity not verified
+Task ID / title: L7-TEST KID-001 — kid critic: plane game UI walkthrough
+Branch / starting commit: ai-team / 3edb5aadb22d4dc1cfa9ed463fab58687c19d77a
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+"New user instruction: use all available agents continuously to lighten the work. Please reactivate in the distinct L7-TEST lane from team/ai-team/lanes/LANES.txt. Read its own lane log and first eligible open task in JOBS-TESTING.txt; follow the log/claim/start/read-back rules before work. Complete the next small batch with your Josh-style edge-case mindset, using the side preview if the task calls for runtime UI. Never edit app.html/index.html or another lane’s files. Work only on ai-team and your L7-TEST folder/new drop-box; report evidence honestly, commit/read back, and send me the task status and any urgent bugs. Do not edit the root ChatGPT log."
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- Follow lane L7-TEST in team/ai-team/lanes/LANES.txt; run the first eligible open task from the testing job section embedded in team/ai-team/CHATGPT-JOBS.md.
+- The first eligible item is KID-001 (plane game), marked [ ] on the current ai-team branch; the standalone JOBS-TESTING.txt is represented as a section of CHATGPT-JOBS.md in this branch.
+- Use Josh-style adversarial curiosity; observe UI behavior only if a runtime preview is available. Never edit app.html/index.html, another lane's files, or the root ChatGPT log.
+- Keep work confined to team/chatgpt/lanes/L7-TEST/ and explicitly permitted task/coordination files. Capture only verified evidence; report unknowns as NOT-TESTED.
+- Earlier task constraint retained: in-memory UI exploration only; do not save/export project artifacts.
+
+PROGRESS / AI RESPONSE:
+- Read team/AI-TEAM.txt (opening rules and last 30 lines), team/ai-team/README.md section 0, the lane definition, job section, and shared log template.
+- Confirmed the L7-TEST personal log is absent, so this file is being created as the required start gate. No KID-001 runtime work has started.
+- Read the KID-001 task and job procedure. The task asks for UI-only plane-game construction, realistic mistakes/fixes, screenshots per step, and a concise fix/improve/keep report.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- ai-team branch only. No app/index edits and no changes to other AI lanes.
+- No save/export; any runtime work must be disposable and in-memory.
+- The current job list is embedded in CHATGPT-JOBS.md; there is no separate standalone JOBS-TESTING.txt at the checked path.
+- The lane's report and screenshot requirements may be constrained by availability of the local QA kit or visible preview.
+
+FILES CHANGED:
+- team/chatgpt/lanes/L7-TEST/AI-CHAT-LOG.txt — created from the shared template with this start entry.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub connector read-back of template, lane prompt, job section, and prior log path — complete; prior L7-TEST log returned 404.
+- No app runtime checks yet.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for the current job mark and lane instructions; runtime NOT-TESTED.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- Standalone JOBS-TESTING.txt and prior L7-TEST log do not exist at their documented paths; task content is embedded in CHATGPT-JOBS.md.
+- Visible browser inventory currently has no browser tab; assess a preview before runtime actions.
+
+NEXT STEP / HANDOFF:
+- Read this new log back from GitHub, then publish the L7-TEST WORKING-ON and CLAIM messages after fetching the latest AI-COMMS SHA; proceed with the bounded KID-001 UI-only task if preview access permits.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — this entry records the exact parent delegation provided to this agent; earlier user context is summarized, not a verbatim full transcript.
+
+GITHUB CLOSEOUT VERIFICATION (required before DONE):
+- Personal log commit SHA: PENDING
+- Read-back URL/path: PENDING
+- Verified new entry is present at bottom: NO
+- Task status: PARTIAL
+--- END ENTRY ---
