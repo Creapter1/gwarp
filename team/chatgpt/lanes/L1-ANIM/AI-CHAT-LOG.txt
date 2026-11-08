@@ -158,3 +158,12 @@ UTC timestamp: 2026-11-08T04:43:06Z
 
 NEXT STEP:
 - Apply any bounded peer-review corrections, then write the L1 closeout and AI-TEAM/AI-COMMS handoff with exact evidence and remaining runtime limits.
+
+
+PEER-REVIEW REVISION
+UTC timestamp: 2026-11-08T04:51:05Z
+- Incorporated the L7 helper-review findings: coordinate inputs now explicitly require one G-Warp costume-local unit/origin system; generated frame selection can require the expected count and rejects duplicate, missing, or out-of-range indices; malformed supplied feetLineY values throw; and rotationCentreFromPoint validates/clones mapped click coordinates.
+- Expanded the tests; latest local command node --test tests/anim-centre.test.js reports 9 passed, 0 failed (Node v26.13.0).
+- Re-read the ai-team package after these changes. NOTES.md, code/anim-centre.js, and tests/anim-centre.test.js match the tested local content exactly. Blobs: c49899169d1dd98128a34c2aa98931adb3714752, 204f91e4618c114b482a3e0a3f09366673efe596, 17827621ac36021299ce1be7cf228f047503d30d. Package update commit: 9251f37549789378c16eed2282ea67267b223fc4.
+- Second-pass review by L7-TEST is in progress. Desktop/main/ai-team comparison is also in progress.
+- App controls, generated costumes, .sb3, Scratch VM, and native desktop runtime remain NOT-TESTED. No app source changed.
