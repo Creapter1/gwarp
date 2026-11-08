@@ -1050,52 +1050,52 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [ ] BLK-0053-PAR [TERMINAL] "when I receive [message1]" (events, hat, type when_broadcast): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0053-EDGE [TERMINAL] "when I receive [message1]" (events, hat, type when_broadcast): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0053-SAVE [TERMINAL] "when I receive [message1]" (events, hat, type when_broadcast): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0053-DOC [WEB] "when I receive [message1]" (events, hat, type when_broadcast): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0053-DOC [WEB] "when I receive [message1]" (events, hat, type when_broadcast): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0053-AI [ANY] "when I receive [message1]" (events, hat, type when_broadcast): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0054-PAR [TERMINAL] "when I start as a clone" (events, hat, type when_clone): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0054-EDGE [TERMINAL] "when I start as a clone" (events, hat, type when_clone): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0054-SAVE [TERMINAL] "when I start as a clone" (events, hat, type when_clone): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0054-DOC [WEB] "when I start as a clone" (events, hat, type when_clone): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0054-DOC [WEB] "when I start as a clone" (events, hat, type when_clone): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0054-AI [ANY] "when I start as a clone" (events, hat, type when_clone): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0055-PAR [TERMINAL] "when backdrop switches to [stage1]" (events, hat, type when_backdrop): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0055-EDGE [TERMINAL] "when backdrop switches to [stage1]" (events, hat, type when_backdrop): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0055-SAVE [TERMINAL] "when backdrop switches to [stage1]" (events, hat, type when_backdrop): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0055-DOC [WEB] "when backdrop switches to [stage1]" (events, hat, type when_backdrop): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0055-DOC [WEB] "when backdrop switches to [stage1]" (events, hat, type when_backdrop): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0055-AI [ANY] "when backdrop switches to [stage1]" (events, hat, type when_backdrop): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0056-PAR [TERMINAL] "wait (1) seconds" (control, stack, type wait): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0056-EDGE [TERMINAL] "wait (1) seconds" (control, stack, type wait): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0056-SAVE [TERMINAL] "wait (1) seconds" (control, stack, type wait): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0056-DOC [WEB] "wait (1) seconds" (control, stack, type wait): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0056-DOC [WEB] "wait (1) seconds" (control, stack, type wait): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0056-AI [ANY] "wait (1) seconds" (control, stack, type wait): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0057-PAR [TERMINAL] "repeat (10)" (control, C, type repeat): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0057-EDGE [TERMINAL] "repeat (10)" (control, C, type repeat): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0057-SAVE [TERMINAL] "repeat (10)" (control, C, type repeat): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0057-DOC [WEB] "repeat (10)" (control, C, type repeat): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0057-DOC [WEB] "repeat (10)" (control, C, type repeat): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0057-AI [ANY] "repeat (10)" (control, C, type repeat): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0058-PAR [TERMINAL] "forever" (control, C, type forever): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0058-EDGE [TERMINAL] "forever" (control, C, type forever): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0058-SAVE [TERMINAL] "forever" (control, C, type forever): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0058-DOC [WEB] "forever" (control, C, type forever): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0058-DOC [WEB] "forever" (control, C, type forever): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0058-AI [ANY] "forever" (control, C, type forever): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0059-PAR [TERMINAL] "if then" (control, C, type if): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0059-EDGE [TERMINAL] "if then" (control, C, type if): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0059-SAVE [TERMINAL] "if then" (control, C, type if): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0059-DOC [WEB] "if then" (control, C, type if): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0059-DOC [WEB] "if then" (control, C, type if): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0059-AI [ANY] "if then" (control, C, type if): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0060-PAR [TERMINAL] "if then else" (control, C, type if_else): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0060-EDGE [TERMINAL] "if then else" (control, C, type if_else): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0060-SAVE [TERMINAL] "if then else" (control, C, type if_else): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0060-DOC [WEB] "if then else" (control, C, type if_else): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0060-DOC [WEB] "if then else" (control, C, type if_else): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0060-AI [ANY] "if then else" (control, C, type if_else): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0061-PAR [TERMINAL] "wait until" (control, stack, type wait_until): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0061-EDGE [TERMINAL] "wait until" (control, stack, type wait_until): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0061-SAVE [TERMINAL] "wait until" (control, stack, type wait_until): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0061-DOC [WEB] "wait until" (control, stack, type wait_until): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0061-DOC [WEB] "wait until" (control, stack, type wait_until): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0061-AI [ANY] "wait until" (control, stack, type wait_until): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0062-PAR [TERMINAL] "repeat until" (control, C, type repeat_until): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0062-EDGE [TERMINAL] "repeat until" (control, C, type repeat_until): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0062-SAVE [TERMINAL] "repeat until" (control, C, type repeat_until): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0062-DOC [WEB] "repeat until" (control, C, type repeat_until): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0062-DOC [WEB] "repeat until" (control, C, type repeat_until): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0062-AI [ANY] "repeat until" (control, C, type repeat_until): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0063-PAR [TERMINAL] "stop [all]" (control, stack, type stop): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0063-EDGE [TERMINAL] "stop [all]" (control, stack, type stop): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
