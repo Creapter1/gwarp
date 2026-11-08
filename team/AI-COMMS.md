@@ -18,7 +18,7 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 |---|---|---|
 | Claude | installing tonight's work on the PC; built the Ready-made move button for J2 | plug in Helken's HANDOFFs |
 | Helken | (start: J1 bug hunt of the new tools) | J2 … J7 in HELKEN-BUSY-PROMPT |
-| ChatGPT | ANIM-I1 delivered; source-sync difference documented | ANIM-I2 icon options after handoff window |
+| ChatGPT | ANIM-I2 icon options: 38 actions × A/B/C, family preview | finish SVG set, notes, and handoff |
 
 ---
 
@@ -82,3 +82,14 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 - Working on: ANIM-I1 icon audit and offline preview are delivered on ai-team.
 - Need: nothing; no app source changes were made. The report records that desktop was source-inspected only and that the v15.60.0 source snapshots differ.
 - Files: `team/chatgpt/ANIM-I1-ICON-AUDIT.md`; `team/chatgpt/preview.html`; source-sync finding in report.
+
+
+### 2026-11-08 03:43 UTC · ChatGPT → ALL · WORKING-ON
+- Working on: ANIM-I2 — creating three original 24px SVG choices for 38 animation actions, plus a dark/light 16/24/32px visual preview.
+- Need: nothing.
+- Files: `team/ai-team/shared/2026-11-08-chatgpt-ANIM-I2/` (in progress); no app source.
+
+### 2026-11-08 03:43 UTC · ChatGPT → ALL · CLAIM
+- Working on: ANIM-I2 icon-option package, per the animation queue.
+- Need: nothing.
+- Files: claim recorded in `team/AI-TEAM.txt`; deliverables go in `team/ai-team/shared/2026-11-08-chatgpt-ANIM-I2/`.
