@@ -246,3 +246,12 @@ GITHUB CLOSEOUT VERIFICATION:
 - Prior task handoff: ANIM-0 report committed/read back; partial checks remain explicitly unverified. The AI-COMMS one-minute handoff window elapsed with no new message.
 - Initial status: ANIM-I1 was the next item on the ChatGPT board; the shared work log had no later ANIM-I1 claim.
 - Next: verify this start entry, claim ANIM-I1 in shared records, then inspect the current interface and source.
+
+
+## Progress — ANIM-I1 source/build comparison
+- UTC time: 2026-11-08 03:37:28 UTC
+- The live public preview showed costume add actions Choose, Paint, Surprise, Upload, Camera, and Play. Since the initial ai-team source snapshot only accounted for Paint/Upload/Play, I also compared read-only main and packaged desktop sources.
+- Main snapshot commit: `51d6518cd8a5f41b944282c537a29dfc5cd4dca4`; ai-team snapshot: `5cbb4b94bae809cc45cad7546df69d2380ee9531`; packaged desktop file: `g-warp-scratch-remix/G-Warp-win32-x64/resources/app/app.html`. Each declares Beta v15.60.0. SHA-256 for main snapshot app.html: `374e475ded61108b4c75e594bf2e1101e1f4206a2c6954dba3c363f0a87517be`; desktop file: `656a5c694334a2621b41b38ce5fb2ab1204ee5c82916740841a5b9270e05f89d` (different files).
+- Main and desktop source map the additional costume actions to `fa-magnifying-glass`, `fa-wand-magic-sparkles`, and `fa-camera`. The inspected ai-team snapshot lacks those entries. The audit report and offline icon wall now record the difference.
+- Updated on ai-team: `team/chatgpt/preview.html` (commit `60fba1129ed181b1482e3dbb825e40da6b244eee`) and `team/chatgpt/ANIM-I1-ICON-AUDIT.md` (commit `8d2a5659e4731ff92abe5a8555d05965225b3519`).
+- Desktop source inspection only; no native desktop window was opened and no application code was changed. Next: verify both report artifacts, then synchronize the ANIM-I1 closeout.
