@@ -140,3 +140,51 @@ GITHUB CLOSEOUT VERIFICATION (required before DONE):
 - The final verification entry was committed at `3d2049d6ca85f6233900dfe9465e15c1aa9a6a2d` and fetched back as bottom-of-file content blob `6144d6832add7d9528c259762085e4c752994d82`.
 - Shared AI-TEAM DONE row is verified at bottom of `team/AI-TEAM.txt`, commit `1a4497d608fc91591173215d82a3765378b3544e`.
 - Task status: DONE; no remaining research or team closeout work.
+
+
+## Session start — ANIM-0-CHECK-2026-11-08
+
+- UTC time: 2026-11-08T02:29:39Z
+- AI / exact model identity: Codex, GPT-6-based; exact runtime variant unavailable.
+- Task ID / title: ANIM-0-CHECK-2026-11-08 — run the assigned Animation baseline acceptance checks and report verified results.
+- Branch / starting commit: `ai-team` / `ea8614ebbbddc15b049c6306ff4952eb48f1e846` (last verified branch update from the previous session).
+
+USER REQUEST (verbatim):
+“continue”
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+The current G-Warp ChatGPT list says ANIM-0 is first: run the QA smoke check; inspect Animation with the G mascot and a rig character; create an 8-frame walk; make costumes; save and reopen an .sb3; run in scratch-vm; report whether centres stay aligned, Reshape/Eraser work despite their labels, global Stop stops all three players, and save/reopen preserves animation data. Deliver one report at `team/chatgpt/ANIM-0-CHECK.md`.
+This task was open and unclaimed in the freshly read AI-TEAM work log; no existing ANIM-0 report was found at the expected path. The two documented guesses for `MERGE-QUEUE.txt` returned 404 on ai-team.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Work and any remote log/report writes on `ai-team` only; never main.
+- ChatGPT does not edit `app.html`, `index.html`, `main.js`, or `gwarp-ollama.js`; report/proposal only.
+- Follow the owner’s preview-tab preference; do not open or manipulate the native desktop window.
+- Do not use private owner test projects; create a disposable test project with the app’s own G-Warp assets; no Scratch Cat or other third-party character/art.
+- Keep every result scoped to the exact app build actually tested; the public preview is a main-branch build, not proof about ai-team.
+- No G-Warp test has started yet in this session.
+
+FILES CHANGED:
+- NONE at session start; this entry records the next task.
+
+COMMANDS / TESTS / RESULTS:
+- Read current AI-TEAM work log, ai-team README, mandatory template, complete personal log, AI-COMMS, shared TODO, and the ANIM task list. No app test run yet.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for the current branch instructions and assigned task; runtime evidence NOT-TESTED.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The documented merge-queue paths were not found. The QA kit and current build identity still need to be checked before runtime steps.
+- The connected local workspace is not the ai-team checkout; any preview/runtime result must be clearly attributed to the tested build.
+
+NEXT STEP / HANDOFF:
+- Commit and read back this session-start entry; then claim ANIM-0 in the shared work log and AI-COMMS. Read the app-check sync note and QA-kit instructions before testing.
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK (owner’s exact request was “continue”; task mapping is from the freshly read ai-team job list).
+
+GITHUB CLOSEOUT VERIFICATION:
+- Personal log commit SHA: pending
+- Read-back URL/path: pending
+- Verified new entry is present at bottom: NO
+- Task status: PARTIAL until start entry is committed and read back.
