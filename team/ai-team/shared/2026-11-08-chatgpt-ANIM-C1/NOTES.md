@@ -24,7 +24,7 @@ Regenerating costumes overwrites any per-frame centres written by Line up, becau
 ## Proposal files
 
 - code/anim-centre.js provides pure geometry and adapter helpers. It does not touch the DOM or the app.
-- tests/anim-centre.test.js covers eight focused helper cases.
+- tests/anim-centre.test.js covers nine focused helper cases.
 - Generated frame selection uses existing metadata gwAnimFrame.anim and .frame, not costume names. Pass anim.frames.length so missing, duplicate, or out-of-range frame indices fail before alignment.
 - rotationCentreFromPoint validates/clones the mapped click point; sharedCentreAssignments returns one exact centre from frame 1's root for every selected frame. Neither function changes SVG/art or pose objects.
 - translationToCentre returns a translation for the adapter to apply to all artwork layers while keeping the existing pivot fixed. With a finite numeric feetLineY, it centers horizontally and aligns the bottom to the chosen baseline; malformed supplied values throw.
@@ -53,7 +53,7 @@ Regenerating costumes overwrites any per-frame centres written by Line up, becau
 ## Evidence
 
 - SOURCE-VERIFIED: current checked-in ai-team snapshot at commit 5cbb4b94bae809cc45cad7546df69d2380ee9531; the same centre fragment hash was found in desktop and main extracted sources.
-- Local Node helper-check output only: node --test tests/anim-centre.test.js reported 8 passed, 0 failed (Node v26.13.0). Checks include incomplete/duplicate frame groups and invalid feet-line inputs. This does not establish app behavior.
+- Local Node helper-check output only: node --test tests/anim-centre.test.js reported 9 passed, 0 failed (Node v26.13.0). Checks include incomplete/duplicate frame groups and invalid feet-line inputs. This does not establish app behavior.
 - BROWSER-OBSERVED: existing side preview showed Beta v15.60.0 / runtime value 15.5.2, G-Spark's walk animation with 8 frames, 5 bones, and 5/5 shapes attached. The “Made 8 costumes” toast was already visible. No input was sent.
 - NOT-TESTED in G-Warp: the existing controls, output validation, and proposed integration.
 - NOT-TESTED in scratch-vm: .sb3 export/save and costume switching.
