@@ -344,3 +344,61 @@ GITHUB CLOSEOUT VERIFICATION:
 - Deliverables: `team/ai-team/shared/2026-11-08-chatgpt-ANIM-I2/`; 114 SVG filenames match the expected 38×3 list; `NOTES.md` and `preview.html` are present.
 - Status: DONE for the icon proposal and shared closeout. Visual browser inspection and G-Warp/desktop runtime remain NOT-TESTED.
 - Handoff response window began at 2026-11-08 04:05 UTC; waiting until 04:06 UTC before reading the next animation item.
+
+
+## Session start — GWARP-APP-REVIEW-HANDOFF-2026-11-08
+
+- UTC timestamp: 2026-11-08T19:35:49Z
+- AI / exact model identity: Codex, GPT-6-based; exact runtime variant unavailable.
+- Task ID / title: GWARP-APP-REVIEW-HANDOFF-2026-11-08 — continue the G-Warp review, coordinate with Claude, and hand off the remaining static findings.
+- Branch / starting commit: ai-team / d7a6b74261351db7ddcc8c6d3ced8875100cf811.
+
+USER REQUEST (verbatim):
+“ok so use the ai communication and contine”
+“you ca use the pc to give claude your pront to so ask for the permision so the i dont have to aprove all the time claude is open so give hem a esclusive pront and tell hem to responde back”
+“i send it for yu keep in mid the if you give claude a pront you must not take log to send it so pols be fast so type the pront and send so it can worck on it i dirit for you but you know know”
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Continue the review and communicate the concrete findings to Claude through the open Claude chat. Keep online app integration on the ai-team branch; do not publish or merge to main. Keep future source review findings separate from actual runtime tests. Honor the owner’s version rule (small fixes +0.0.1; noticeable feature changes +0.1.0) and private Sparky##### Settings/LAN alias requirement.
+
+PROGRESS / AI RESPONSE:
+Read the AI-team rules, shared to-do, communication board, required template, and the complete existing ChatGPT session log. Confirmed ai-team branch head d7a6b74261351db7ddcc8c6d3ced8875100cf811. The user asked that the Claude prompt be sent promptly, so I sent a focused handoff through the already-open Claude chat before this session-start record was committed. Claude began checking the findings; the screen later showed his response had stopped and the composer contained an unsent “soory”. I left the chat untouched afterward.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- This is a review/handoff task; ChatGPT does not edit online app source. Claude is the integrator under the repo rules.
+- No online source change, publish, or merge was made by this agent.
+- Do not infer who stopped Claude’s response or send the unsent composer text.
+- User-project file remains untouched.
+- The local review report and prior local files were created in earlier turns; none were edited in this resumed phase before logging.
+
+FILES CHANGED:
+- NONE before this session record.
+
+COMMANDS / TESTS / RESULTS:
+- Read-only GitHub fetches of team rules, shared TODO, communication board, template, and personal log; latest ai-team commit read as d7a6b74261351db7ddcc8c6d3ced8875100cf811.
+- Sent the user-requested prompt to Claude; Claude began source review, but no final answer or test result was observed in this phase.
+- No application test was run by this agent in this phase.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for repository rules and current team board/log.
+- BROWSER/APP-OBSERVED for the prompt appearing in Claude’s chat and the interrupted response state.
+- NOT-TESTED for current desktop/runtime status and any Claude changes beyond what the UI showed.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The current screen had an unsent “soory” in Claude’s composer; it was left unchanged.
+- Whether Claude’s stopped response is resumed or replaced is unknown.
+- Existing review findings need confirmation against the latest desktop source before being called current.
+
+NEXT STEP / HANDOFF:
+- Verify this start record by reading it back, then append the owner-directed claim and WORKING-ON entry to team/AI-TEAM.txt and team/AI-COMMS.md.
+- Continue a read-only review of current online source on ai-team and update the local/ai-team review report with findings for Claude.
+- If another Claude reply arrives, separate its source checks, tests, and proposed fixes explicitly.
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK (the quoted user instructions are present in the current conversation).
+
+GITHUB CLOSEOUT VERIFICATION:
+- Personal log commit SHA: pending
+- Read-back URL/path: pending
+- Verified new entry is present at bottom: NO
+- Task status: PARTIAL
