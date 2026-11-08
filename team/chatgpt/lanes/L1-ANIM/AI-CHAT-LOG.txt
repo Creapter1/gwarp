@@ -1,0 +1,104 @@
+G-WARP — MANDATORY AI CHAT LOG TEMPLATE
+Purpose: prevent context loss, false assumptions, duplicated work, and unsafe/incomplete handoffs.
+
+ZERO-EXCEPTION RULE
+- Every AI/agent/model working on G-Warp must keep this file at <ai-folder>/AI-CHAT-LOG.txt. No exceptions for short sessions, reviews, failed attempts, temporary agents, or sessions with no file changes.
+- Read AI-TEAM.txt, this template, and your own existing log BEFORE any work. If the log does not exist, create it from this template before proceeding.
+- Append a session-start entry before work; append progress at meaningful milestones; append closeout before stopping, switching context/model, handing off, or claiming completion.
+- If you cannot update and verify your own log, HARD STOP all project work and notify the owner. Do not continue unlogged.
+- A task is NOT DONE until its personal log closeout is committed AND read back from GitHub. The shared AI-TEAM work log is also required and does not replace this file.
+- New timestamps must be UTC ISO-8601 with seconds and Z (example: 2026-10-24T15:15:03Z). Never guess or backdate. If unavailable, say TIME NOT AVAILABLE. Optional local time must include an IANA timezone.
+- Never alter historical timestamps, invent missing conversation text, claim unrun tests, or mark partial work DONE. Label reconstructed summaries and cite their supporting repo evidence.
+- Append only. Never overwrite or delete prior entries. Never edit another AI's personal log. Redact secrets.
+
+--- ENTRY TEMPLATE (copy for each task/session; start and closeout can be separate appended entries) ---
+SESSION START / TASK RECORD
+UTC timestamp:
+AI / agent / exact model identity (only if verified):
+Task ID / title:
+Branch / starting commit:
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+[Paste exact request. If unavailable: ORIGINAL CHAT NOT AVAILABLE. Never invent a quote.]
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+[What must be done; explicit constraints and prohibitions.]
+
+PROGRESS / AI RESPONSE:
+[What was actually done. Separate facts, plans, and proposals. Append progress updates as needed.]
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- [Owner decisions, corrections, prohibitions, unresolved choices]
+
+FILES CHANGED:
+- [Exact path — exact change; or NONE]
+
+COMMANDS / TESTS / RESULTS:
+- [Exact command or procedure, result, and what was not tested; or NONE]
+
+EVIDENCE CLASS:
+- [SOURCE-VERIFIED / STATIC-ANALYSIS / BROWSER-VERIFIED / REPORTED TEST / NOT-TESTED; explain scope]
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- [Unknowns and what must not be guessed; or NONE]
+
+NEXT STEP / HANDOFF:
+- [One exact next action, owner/AI responsible, required inputs]
+
+CHAT HISTORY COMPLETENESS:
+[COMPLETE FOR THIS TASK / PARTIAL / ORIGINAL CHAT NOT AVAILABLE]
+
+GITHUB CLOSEOUT VERIFICATION (required before DONE):
+- Personal log commit SHA:
+- Read-back URL/path:
+- Verified new entry is present at bottom: YES / NO
+- Task status: DONE / PARTIAL / BLOCKED / ABORTED (never call PARTIAL or BLOCKED DONE)
+--- END ENTRY ---
+
+
+SESSION START / TASK RECORD
+UTC timestamp: 2026-11-08T04:13:08Z
+AI / agent / exact model identity (only if verified): Codex, GPT-6-based; exact runtime variant unavailable
+Task ID / title: ANIM-C1 — always-centred animation costume rotation centre
+Branch / starting commit: ai-team / b58b684555cab7082bab5f12da40a40b868e9c5d
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+“continue”
+“use all the agent to hellp you all the time so is easy for you and is not so havy”
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Create the ANIM-C1 code proposal (drop-box module + NOTES.md) from the current animation queue: undoable set-centre paint tool; centre-one-costume; align all animation frames to the first root; warn on >2 px body drift; and ensure Make costumes preserves identical canvas size/rotation centre. Read the current source and prior ANIM-0 evidence before designing; make no app.html/index.html/main.js edits. Specify the requested QA cases and honestly distinguish plans from tests.
+
+PROGRESS / AI RESPONSE:
+Only the job, rules, lane instructions, and existing ANIM-I2 handoff were read so far. No source inspection or module writing has begun.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Work only on ai-team; owner alone merges.
+- L1-ANIM work; never edit app source. New code is a proposal Claude can integrate.
+- Use current public/ai-team build identity carefully; do not imply an untested build matches desktop.
+- Owner has requested agents be used to reduce workload; other lanes are being reactivated separately.
+- No private owner test projects. No Scratch Cat or external art.
+
+FILES CHANGED:
+- Created this L1-ANIM lane log from the required template. No proposal files yet.
+
+COMMANDS / TESTS / RESULTS:
+- NONE. No app tests run.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for queue and rules only; module behavior NOT-TESTED.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- Whether the current paint editor exposes an undoable rotation-centre setter and whether Make costumes currently preserves centres need source inspection. Do not assume either.
+
+NEXT STEP / HANDOFF:
+- Commit/read back this log, post the L1-ANIM claim, then inspect only the source and acceptance materials needed for ANIM-C1.
+
+CHAT HISTORY COMPLETENESS:
+COMPLETE FOR THIS TASK (the request is “continue”; exact current steering is also recorded above).
+
+GITHUB CLOSEOUT VERIFICATION (required before DONE):
+- Personal log commit SHA: pending
+- Read-back URL/path: pending
+- Verified new entry is present at bottom: NO
+- Task status: PARTIAL until session start is committed and read back.
