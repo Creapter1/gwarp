@@ -186,3 +186,74 @@ Task mark: Still [ ] in the bundled team/ai-team/CHATGPT-JOBS.md. Auto-review re
 Files changed: team/ai-team/shared/2026-11-08-chatgpt-ART-002/*; team/chatgpt/lanes/L8-ART/reports/JOBS-ART-002.md; this lane log. No app source, AI-TEAM.txt, AI-COMMS root board row, or root ChatGPT log changes.
 Next step: Append/read back L8-ART HANDOFF in AI-COMMS, then append and read back this lane's session closeout. Parent decides whether to request the protected large job-list mark separately.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+SESSION CLOSEOUT
+UTC timestamp: 2026-11-08T04:41:35Z
+AI / agent / exact model identity (only if verified): ChatGPT subagent, lane L8-ART; exact model identifier not exposed
+Task ID / title: L8-ART / ART-002 — original robot library art and walk cycles
+Branch / closeout state: ai-team; exact branch HEAD SHA unavailable from GitHub file reads. Personal log updates were committed and read back.
+
+USER REQUEST / SCOPE:
+- Parent-relayed instruction from this session start: reactivate in L8-ART, read the lane log and first eligible art job, complete one focused original G-Warp art job, commit/read back on ai-team, avoid app source/other lanes/root ChatGPT log, and report status/evidence.
+- ART-001 was not redone: its full hero-kid package already exists on ai-team and the previous L8-ART log records that work. ART-002 was selected as the first un-delivered job.
+
+PROGRESS / AI RESPONSE:
+- Committed and read back three original robot variants, each with a four-frame walk sequence (12 SVG costume files total), a 480 × 360 dark/light preview with frame controls and pivot toggle, NOTES.md, and the lane report.
+- Read back all 15 deliverable files and confirmed they match the prepared source. Static inspection confirmed the shared 240 × 300 viewBox, origin-centered torso pivot, scoped title IDs, G-Warp palette, no SVG scripts or external links, and sprite source well below the 30 KB limit. Antenna tips for options A and C were adjusted to fit inside the viewBox.
+- Posted and read back L8-ART WORKING-ON, CLAIM, and HANDOFF in team/AI-COMMS.md. The parent's ChatGPT board row remains intact.
+- Attempted to mark ART-002 [x] in the bundled team/ai-team/CHATGPT-JOBS.md. Automatic approval review rejected the full-file update, citing risk from replacing the large shared file and possible loss of concurrent job-state edits. It explicitly prohibited alternate/bypass writes. The checkbox remains [ ]; no workaround was attempted. Parent was notified.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- Proposal only; no app integration, app-source edit, or release.
+- No Scratch assets, other brands/characters, other-lane files, root ChatGPT log, or public content were touched.
+- The job deliverable is present and read back, but the job list mark is incomplete due to the automatic review rejection. Keep overall task status PARTIAL.
+
+FILES CHANGED:
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-A-walk-1.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-A-walk-2.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-A-walk-3.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-A-walk-4.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-B-walk-1.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-B-walk-2.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-B-walk-3.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-B-walk-4.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-C-walk-1.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-C-walk-2.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-C-walk-3.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/robot-C-walk-4.svg
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/preview.html
+- team/ai-team/shared/2026-11-08-chatgpt-ART-002/NOTES.md
+- team/chatgpt/lanes/L8-ART/reports/JOBS-ART-002.md
+- team/chatgpt/lanes/L8-ART/AI-CHAT-LOG.txt
+- team/AI-COMMS.md — appended this lane's WORKING-ON, CLAIM, and HANDOFF entries only.
+- team/ai-team/CHATGPT-JOBS.md — NOT changed; its job-mark update was rejected by automatic review.
+- NONE — app source, other lane folders/logs, AI-TEAM.txt, and root ChatGPT log.
+
+COMMANDS / TESTS / RESULTS:
+- GitHub source/readback check: all 15 files fetched from ai-team and matched the prepared content; PASS.
+- Static SVG/preview checks: 12 files share the expected viewBox and allowed palette, have prefixed IDs, no SVG script/external link, and remain under 30 KB; preview source includes dark/light controls, each four-frame selector, and the center toggle. PASS by source inspection; no XML parser or browser execution was run.
+- Browser preview, G-Warp import/rotation, and Scratch/TurboWarp saved-project checks: NOT-TESTED.
+- Job-mark update: automatic review rejected replacing the large bundled file; no retry or workaround.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED / static source inspection for the delivered files and rules.
+- NOT-TESTED for visual browser rendering and all G-Warp/runtime compatibility.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- ART-002 checkbox remains [ ] because the automatic review rejected the full-file update and prohibited an alternate route. Exact G-Warp import behavior is not verified.
+- None blocking artifact handoff.
+
+NEXT STEP / HANDOFF:
+- Parent reviews team/ai-team/shared/2026-11-08-chatgpt-ART-002/preview.html, decides whether to request a safe job-mark update, and arranges runtime/import acceptance if desired. This subagent stops after this one focused job.
+
+CHAT HISTORY COMPLETENESS:
+- PARTIAL — parent-relayed instruction and project constraints are recorded; direct original user wording was not supplied in this subtask.
+
+GITHUB CLOSEOUT VERIFICATION:
+- Personal log commit SHA: PENDING
+- Read-back URL/path: PENDING
+- Verified new entry is present at bottom: PENDING
+- Task status: PARTIAL — artwork delivered and read back; job mark and runtime validation remain incomplete.
+--- END ENTRY ---
