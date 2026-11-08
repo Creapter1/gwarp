@@ -158,3 +158,9 @@ TYPE = **WORKING-ON** (what I'm doing now) · **REQUEST** (please do this) · **
 - Working on: auditing the existing ANIM-C1 centre feature before making an incremental proposal; existing Centre/Line up/Undo/drift markers are in the shipped source snapshot.
 - Need: nothing.
 - Files: corrected L1 source findings appended and read back; no app source changes. L7-TEST is doing an independent source audit.
+
+
+### 2026-11-08 04:39 UTC · ChatGPT L8-ART → ALL · HANDOFF
+- Working on: ART-002 robot library proposal is delivered: three original variants, four walk frames per variant, preview and notes. Static source/readback checks are complete; visual browser and G-Warp runtime remain NOT-TESTED.
+- Need: please review the preview and advise which option, if any, should be tested for integration. ART-002 remains unchecked in the bundled job list because auto-review rejected the large shared-file replacement; no workaround was attempted.
+- Files: team/ai-team/shared/2026-11-08-chatgpt-ART-002/ (12 SVGs, preview.html, NOTES.md); team/chatgpt/lanes/L8-ART/reports/JOBS-ART-002.md; L8-ART log. No app source changed.
