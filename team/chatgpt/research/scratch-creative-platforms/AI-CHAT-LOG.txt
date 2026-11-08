@@ -1,0 +1,65 @@
+# ChatGPT Research Agent Session Log
+
+## SESSION START / TASK RECORD
+
+- UTC timestamp: 2026-11-08T02:04:02Z
+- AI / agent / exact model identity: ChatGPT subagent; exact model identifier not exposed
+- Task ID / title: SCRATCH-CREATIVE-RESEARCH-2026-11-08 — Scratch-like creative platforms and communities
+- Branch / starting commit: ai-team / 5af2771016befb80a584062b6e6f9e316925dcb8
+
+### USER REQUEST (verbatim when available; keep distinct from interpretation)
+
+> I just noticed something interesting. So can you go ahead and set up a site and agent? This agent is gonna do research. Because apparently there is more Scratch creative fans out there. Just like Flash Scratch, but different names. So go ahead and do some research. Do an intense research when it comes to that. Because some of the things that they have, we might be able to use it in ours. If the idea is awesome, and people love it, or it looks just new, we're definitely gonna add it to our project, because why not? So yeah, do some intense research on that one. So set up the other agent so I can do some intense research.
+
+- Output clarification received: “Existing sites + local report.”
+- Scope correction relayed by the parent agent: investigate original Scratch, fan-made Scratch-like projects/platforms, and Scratch-style creative communities; the earlier “Flash Scratch” wording was autocorrected and should not narrow the research.
+
+### UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS
+
+- Research existing platforms and communities; do not create or publish a website.
+- Produce an evidence-based local report with direct source links; distinguish verified features, popularity signals, inference, and open questions.
+- Assess distinctive ideas that could fit G-Warp, including compatibility, safety, privacy, and licensing considerations.
+- Do not alter G-Warp application source, publish content, or transmit private project data.
+
+### PROGRESS / AI RESPONSE
+
+- Session log created before research. Awaiting parent agent’s verification and go-ahead before beginning research.
+
+### DECISIONS AND CONSTRAINTS TO PRESERVE
+
+- Work only on the existing ai-team branch for repository logging.
+- This is a research task; no implementation or feature adoption is authorized by the report itself.
+- No new research website is requested; report locally.
+
+### FILES CHANGED
+
+- team/chatgpt/research/scratch-creative-platforms/AI-CHAT-LOG.txt — new dedicated subtask session log.
+
+### COMMANDS / TESTS / RESULTS
+
+- NONE — research has not started.
+
+### EVIDENCE CLASS
+
+- NOT-TESTED — this is a session-start record only; no product or research claims made.
+
+### BLOCKERS / UNCERTAINTIES / ASSUMPTIONS
+
+- Awaiting parent agent’s verification and go-ahead before actual research.
+
+### NEXT STEP / HANDOFF
+
+- Parent agent verifies this start-log entry from GitHub.
+- Then append and verify the shared CLAIM line on AI-TEAM.txt.
+- Begin web research only after the parent agent’s explicit go-ahead.
+
+### CHAT HISTORY COMPLETENESS
+
+- COMPLETE FOR THIS TASK — includes the current request, selected output scope, and parent relayed scope correction; does not reproduce the broader G-Warp review transcript.
+
+### GITHUB CLOSEOUT VERIFICATION
+
+- Personal log commit SHA: pending
+- Read-back URL/path: pending
+- Verified new entry is present at bottom: NO
+- Task status: PARTIAL
