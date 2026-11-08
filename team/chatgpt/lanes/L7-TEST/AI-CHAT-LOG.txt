@@ -177,3 +177,9 @@ UTC timestamp: 2026-11-08T04:36:18Z
 - Read the current ANIM-C1 queue in team/ai-team/CHATGPT-JOBS.md lines 119–135 and the app’s gw-claude-centre source at lines 25270–25306. The local snapshot’s Git blob SHA matches the current ai-team app.html blob (0ef15201760bec948368096f5d9fa270af37fb70).
 - Also read the existing GW_ANIM.makeCostumes implementation at lines 16742–16760; detailed comparison is in progress.
 - Parent added a read-only peer review of a local ANIM-C1 helper and test file under the visualization workspace; include it in this audit. No source or app files edited; no UI action.
+
+PROGRESS UPDATE
+UTC timestamp: 2026-11-08T04:39:33Z
+- Re-read the current visualization-workspace helper and test files after the parent reported an update. Current helper lines 158–159 require exact canvas width/height; current tests lines 64–82 cover exact-size rejection and <=1 px centre tolerance. I did not run the tests; 8/8 is parent-reported only.
+- The peer review remains read-only. I am checking API/adapter edge cases (coordinate units, frame metadata/order, boundary tolerances, transactional integration and undo coverage) for the report.
+- No visualization, app, root, or other-lane files were changed.
