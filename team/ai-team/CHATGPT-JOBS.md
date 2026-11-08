@@ -950,52 +950,52 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [ ] BLK-0033-PAR [TERMINAL] "change [color] effect by (25)" (looks, stack, type change_effect): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0033-EDGE [TERMINAL] "change [color] effect by (25)" (looks, stack, type change_effect): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0033-SAVE [TERMINAL] "change [color] effect by (25)" (looks, stack, type change_effect): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0033-DOC [WEB] "change [color] effect by (25)" (looks, stack, type change_effect): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0033-DOC [WEB] "change [color] effect by (25)" (looks, stack, type change_effect): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0033-AI [ANY] "change [color] effect by (25)" (looks, stack, type change_effect): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0034-PAR [TERMINAL] "go to [front] layer" (looks, stack, type go_front_back): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0034-EDGE [TERMINAL] "go to [front] layer" (looks, stack, type go_front_back): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0034-SAVE [TERMINAL] "go to [front] layer" (looks, stack, type go_front_back): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0034-DOC [WEB] "go to [front] layer" (looks, stack, type go_front_back): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0034-DOC [WEB] "go to [front] layer" (looks, stack, type go_front_back): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0034-AI [ANY] "go to [front] layer" (looks, stack, type go_front_back): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0035-PAR [TERMINAL] "go [forward] (1) layers" (looks, stack, type go_layers): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0035-EDGE [TERMINAL] "go [forward] (1) layers" (looks, stack, type go_layers): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0035-SAVE [TERMINAL] "go [forward] (1) layers" (looks, stack, type go_layers): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0035-DOC [WEB] "go [forward] (1) layers" (looks, stack, type go_layers): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0035-DOC [WEB] "go [forward] (1) layers" (looks, stack, type go_layers): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0035-AI [ANY] "go [forward] (1) layers" (looks, stack, type go_layers): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0036-PAR [TERMINAL] "costume #" (looks, reporter, type costume_number): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0036-EDGE [TERMINAL] "costume #" (looks, reporter, type costume_number): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0036-SAVE [TERMINAL] "costume #" (looks, reporter, type costume_number): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0036-DOC [WEB] "costume #" (looks, reporter, type costume_number): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0036-DOC [WEB] "costume #" (looks, reporter, type costume_number): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0036-AI [ANY] "costume #" (looks, reporter, type costume_number): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0037-PAR [TERMINAL] "costume name" (looks, reporter, type costume_name): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0037-EDGE [TERMINAL] "costume name" (looks, reporter, type costume_name): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0037-SAVE [TERMINAL] "costume name" (looks, reporter, type costume_name): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0037-DOC [WEB] "costume name" (looks, reporter, type costume_name): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0037-DOC [WEB] "costume name" (looks, reporter, type costume_name): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0037-AI [ANY] "costume name" (looks, reporter, type costume_name): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0038-PAR [TERMINAL] "size" (looks, reporter, type size_reporter): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0038-EDGE [TERMINAL] "size" (looks, reporter, type size_reporter): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0038-SAVE [TERMINAL] "size" (looks, reporter, type size_reporter): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0038-DOC [WEB] "size" (looks, reporter, type size_reporter): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0038-DOC [WEB] "size" (looks, reporter, type size_reporter): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0038-AI [ANY] "size" (looks, reporter, type size_reporter): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0039-PAR [TERMINAL] "play sound [Zap] until done" (sound, stack, type play_sound): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0039-EDGE [TERMINAL] "play sound [Zap] until done" (sound, stack, type play_sound): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0039-SAVE [TERMINAL] "play sound [Zap] until done" (sound, stack, type play_sound): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0039-DOC [WEB] "play sound [Zap] until done" (sound, stack, type play_sound): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0039-DOC [WEB] "play sound [Zap] until done" (sound, stack, type play_sound): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0039-AI [ANY] "play sound [Zap] until done" (sound, stack, type play_sound): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0040-PAR [TERMINAL] "start sound [Zap]" (sound, stack, type start_sound): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0040-EDGE [TERMINAL] "start sound [Zap]" (sound, stack, type start_sound): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0040-SAVE [TERMINAL] "start sound [Zap]" (sound, stack, type start_sound): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0040-DOC [WEB] "start sound [Zap]" (sound, stack, type start_sound): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0040-DOC [WEB] "start sound [Zap]" (sound, stack, type start_sound): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0040-AI [ANY] "start sound [Zap]" (sound, stack, type start_sound): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0041-PAR [TERMINAL] "stop all sounds" (sound, stack, type stop_all_sounds): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0041-EDGE [TERMINAL] "stop all sounds" (sound, stack, type stop_all_sounds): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0041-SAVE [TERMINAL] "stop all sounds" (sound, stack, type stop_all_sounds): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0041-DOC [WEB] "stop all sounds" (sound, stack, type stop_all_sounds): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0041-DOC [WEB] "stop all sounds" (sound, stack, type stop_all_sounds): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0041-AI [ANY] "stop all sounds" (sound, stack, type stop_all_sounds): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0042-PAR [TERMINAL] "set [pitch] effect to (100)" (sound, stack, type snd_set_effect): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0042-EDGE [TERMINAL] "set [pitch] effect to (100)" (sound, stack, type snd_set_effect): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0042-SAVE [TERMINAL] "set [pitch] effect to (100)" (sound, stack, type snd_set_effect): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0042-DOC [WEB] "set [pitch] effect to (100)" (sound, stack, type snd_set_effect): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0042-DOC [WEB] "set [pitch] effect to (100)" (sound, stack, type snd_set_effect): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0042-AI [ANY] "set [pitch] effect to (100)" (sound, stack, type snd_set_effect): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0043-PAR [TERMINAL] "change [pitch] effect by (10)" (sound, stack, type snd_change_effect): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0043-EDGE [TERMINAL] "change [pitch] effect by (10)" (sound, stack, type snd_change_effect): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
