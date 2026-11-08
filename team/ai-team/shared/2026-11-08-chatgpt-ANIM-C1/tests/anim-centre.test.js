@@ -13,6 +13,16 @@ test("centre translation moves bounds to the fixed rotation centre", function ()
   assert.equal(result.mode, "bounds-centre");
 });
 
+test("click centre coordinates are cloned and validated in costume-local units", function () {
+  const click = { x: 12.5, y: 6 };
+  const centre = tools.rotationCentreFromPoint(click);
+  click.x = 99;
+  assert.deepEqual(centre, { x: 12.5, y: 6 });
+  assert.throws(function () {
+    tools.rotationCentreFromPoint({ x: NaN, y: 0 });
+  }, TypeError);
+});
+
 test("feet-line option keeps horizontal centering and aligns the bottom", function () {
   const result = tools.translationToCentre(
     { x: 10, y: 20, width: 20, height: 40 },
