@@ -201,3 +201,18 @@ GITHUB CLOSEOUT VERIFICATION:
 - Shared claim appended/read back at bottom of `team/AI-TEAM.txt`: commit `3c74b24f75135b8da2735ec56a8ab335cd09ae7a`, content blob `341bbfc86e489161c8c117c9264e0b285e5c7d66`.
 - Updated only ChatGPT’s row in the AI-COMMS board and appended WORKING-ON + CLAIM; fetched and confirmed both entries at bottom: commit `afbaf2d50656cc073557e21fe08612ca0b3d4f79`, blob `d59f89746c2cf9c0000b17fc8bf660802f195abb`.
 - No app test or app-source change has occurred yet. Next: read app-sync and QA-kit instructions, then test in the side preview if the required controls are available.
+
+
+## Session closeout — ANIM-0-CHECK-2026-11-08
+
+- UTC time: 2026-11-08 03:10:00 UTC
+- Owner request: “continue”; current queue item: ANIM-0 Animation acceptance checks.
+- Tested the public side preview at https://creapter1.github.io/gwarp/app.html. Visible build label Beta v15.60.0; internal diagnostic text 15.5.2. This does not establish results for ai-team or desktop.
+- Created `team/chatgpt/ANIM-0-CHECK.md` on ai-team, commit `15d9d0d3e84eb7131b8ced610f37939e6e2c7fb5`; fetched the file back and confirmed the full report (content blob `5026c1848d4a09ee8eb3893babf0d8368b4dae46`).
+- Runtime results recorded: G-Spark baseline showed 5 bones/5 attachments, walk with 8 frames, 8 FPS, loop on; Make costumes generated eight 120 × 110 frame costumes and the fresh-tab session retained those settings. Eraser visibly removed art and Undo restored it. Reshape changed a simple circle using its nodes but warned that grouped G-Spark art must be ungrouped. Global Stop stopped the Animation extension script but not Animation editor Play or Flipbook Play. Developer mode appeared inert in this public preview.
+- NOT-TESTED: exact center drift via `costume-bounds.js`; saved `.sb3` reopen/persistence; real Scratch VM; a second rig character; desktop build. Save/Save as attempts produced no accessible new download. QA-kit browser dependencies could not be installed in the network-restricted workspace; its smoke script targets a local `file://` app, not this hosted preview.
+- Files: added only the report on ai-team; no app source, desktop state, or owner project changed.
+- Evidence class: TESTED in G-Warp for the observed browser interactions above; NOT-TESTED for the file-based, Scratch VM, second-rig and desktop checks.
+- Task status: PARTIAL — report delivered, but explicit file-based/runtime acceptance items remain unverified.
+- Next: follow the animation queue; ANIM-I1 icon audit is listed next after ANIM-0.
+- This entry’s commit/read-back details will be recorded in a verification addendum.
