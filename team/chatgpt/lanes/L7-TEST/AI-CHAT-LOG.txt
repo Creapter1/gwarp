@@ -293,3 +293,8 @@ NEXT STEP / HANDOFF:
 CHAT HISTORY COMPLETENESS:
 COMPLETE FOR THIS TASK — parent request is recorded verbatim in this entry.
 --- END ENTRY ---
+
+PROGRESS UPDATE
+UTC timestamp: 2026-11-08T04:50:48Z
+- Parent added a final package change after the start entry: current immutable review target is now ai-team commit 9251f37549789378c16eed2282ea67267b223fc4, which adds rotationCentreFromPoint() validation/cloning and a unit test.
+- Review scope is updated from the initially supplied d8897ea11b1cba25495b79e70a1a059e91b293ef package to the complete 9251f37549789378c16eed2282ea67267b223fc4 package. No files under review have been changed or executed.
