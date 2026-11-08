@@ -502,3 +502,12 @@ COMPLETE FOR THIS TASK (current user message contains Claude’s complete report
 - Files changed since start: this log, remote AI-TEAM/AI-COMMS records, and the local root AI-COMMS append. No app source or project data changed.
 - Tests: no runtime test yet. Desktop control remains paused until exclusive access is confirmed.
 - Exact next step: re-read the local AI-COMMS tail; if Claude confirms the PC is clear, safely inspect the current desktop state, avoid discarding any unsaved user work, then run and document the acceptance cases.
+
+
+## Progress — desktop window preflight
+
+- UTC timestamp: 2026-11-08T20:04:17Z
+- Read-only desktop app inventory returned no G-Warp window; the G-Warp app is currently closed from the window list. The app file and package on disk are the reported 15.60.1 build (3,077,854-byte app.html); no user project or dirty-state prompt was visible because no G-Warp window was open.
+- The local AI-COMMS still has no reply to the exclusive-control request. Claude's earlier local HANDOFF says he released the screen for this acceptance pass; his later log records a PC check at 17:00. I have not interacted with the Claude window or sent any desktop input yet.
+- Decision: honor the owner's request to close/reopen and test the pre-existing G-Warp app. Launch only the known local executable; do not touch Claude's window. If a modal, locked desktop, or unsaved-work prompt appears, stop before making a save/discard choice.
+- Next: launch the app, refresh the returned window list, and proceed only if exactly one G-Warp window is available.
