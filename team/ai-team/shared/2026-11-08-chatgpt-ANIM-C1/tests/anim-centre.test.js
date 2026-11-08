@@ -56,6 +56,18 @@ test("generated frames are selected by metadata and sorted by frame index", func
       { name: "duplicate", gwAnimFrame: { anim: "a1", frame: 0 } }
     ], "a1", 2);
   }, RangeError);
+  assert.throws(function () {
+    tools.selectGeneratedFrames([
+      frame1,
+      { name: "fractional", gwAnimFrame: { anim: "a1", frame: 1.5 } }
+    ], "a1", 2);
+  }, RangeError);
+  assert.throws(function () {
+    tools.selectGeneratedFrames([
+      frame1,
+      { name: "negative", gwAnimFrame: { anim: "a1", frame: -1 } }
+    ], "a1", 2);
+  }, RangeError);
 });
 
 test("all frame-centre assignments use frame one's root without mutating frames", function () {
@@ -113,6 +125,12 @@ test("made-frame invariant requires exact canvas size and centre tolerance <=1 p
   assert.deepEqual(diagonal.violations.map(function (v) { return v.kind; }), ["rotation-centre"]);
   assert.throws(function () {
     tools.validateMadeFrames([{ width: 0, height: 0, rc: { x: 0, y: 0 } }]);
+  }, RangeError);
+  assert.throws(function () {
+    tools.validateMadeFrames([
+      { width: 40, height: 50, rc: { x: 10, y: 20 } },
+      { width: 40, height: 50, rc: { x: 10.5, y: 20 } }
+    ], 1.01);
   }, RangeError);
 });
 
