@@ -84,8 +84,14 @@
       var meta = costume && costume.gwAnimFrame;
       return { costume: costume, order: order, frame: meta && meta.frame, anim: meta && meta.anim };
     }).filter(function (entry) {
-      return entry.anim === animationId && Number.isInteger(entry.frame) && entry.frame >= 0;
-    }).sort(function (a, b) {
+      return entry.anim === animationId;
+    });
+    selected.forEach(function (entry) {
+      if (!Number.isInteger(entry.frame) || entry.frame < 0) {
+        throw new RangeError("generated frame metadata contains an invalid index");
+      }
+    });
+    selected.sort(function (a, b) {
       return a.frame - b.frame || a.order - b.order;
     });
     var seen = new Set();
@@ -158,7 +164,7 @@
       return { ok: false, reference: null, violations: ["no generated frames"] };
     }
     var tolerance = tolerancePx === undefined ? 1 : number(tolerancePx, "tolerancePx");
-    if (tolerance < 0) throw new RangeError("tolerancePx must be non-negative");
+    if (tolerance < 0 || tolerance > 1) throw new RangeError("tolerancePx must be between 0 and 1");
     function dimensions(item, index) {
       var width = item && (item.canvasWidth !== undefined ? item.canvasWidth : item.width);
       var height = item && (item.canvasHeight !== undefined ? item.canvasHeight : item.height);
