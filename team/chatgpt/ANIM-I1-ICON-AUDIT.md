@@ -6,9 +6,13 @@
 
 ## Scope
 
-The side preview showed **G-Warp Beta v15.60.0**. I reviewed the Costumes and Animation accessibility trees and opened the Flipbook controls, then inspected the corresponding v15.60.0 source snapshot at commit `5cbb4b94bae809cc45cad7546df69d2380ee9531`. The snapshot declares `GW_BUILD.version = 15.60.0`, matching the preview’s version label. This is not a test of the desktop build.
+The side preview showed **G-Warp Beta v15.60.0**. I reviewed the Costumes and Animation accessibility trees and opened the Flipbook controls. I compared the public-main source snapshot at commit `51d6518cd8a5f41b944282c537a29dfc5cd4dca4`, the ai-team snapshot at `5cbb4b94bae809cc45cad7546df69d2380ee9531`, and the bundled desktop `resources/app/app.html` file in the review workspace. All declare Beta v15.60.0. The main snapshot and desktop file have different SHA-256 hashes (`374e475ded61108b4c75e594bf2e1101e1f4206a2c6954dba3c363f0a87517be` vs `656a5c694334a2621b41b38ce5fb2ab1204ee5c82916740841a5b9270e05f89d`), so the matching labels do not prove identical files. Desktop was inspected from source only; its native UI was not opened.
 
-Source links: [costume controls and list](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L9122), [paint-editor SVG set and controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L19950), [Animation controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L17081), [Flipbook controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L23119), [merged animation icon pack](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L24322), and [Song Maker controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L10317).
+Source links: [public-main costume add fan](https://github.com/Creapter1/gwarp/blob/51d6518cd8a5f41b944282c537a29dfc5cd4dca4/app.html#L25847), [ai-team costume controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L9122), [paint-editor SVG set and controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L19950), [Animation controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L17081), [Flipbook controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L23119), [merged animation icon pack](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L24322), and [Song Maker controls](https://github.com/Creapter1/gwarp/blob/5cbb4b94bae809cc45cad7546df69d2380ee9531/app.html#L10317).
+
+### Build-sync difference found
+
+The live public preview exposes costume add actions **Choose a costume**, **Paint new costume**, **Surprise**, **Upload costume**, **Camera**, and **Play the costumes**. Public-main and bundled desktop source map them to `fa-magnifying-glass`, `fa-paintbrush`, `fa-wand-magic-sparkles`, `fa-upload`, `fa-camera`, and `fa-play`. The ai-team source snapshot has only Paint, Upload, and Play in this add fan. This is a source-sync difference despite all three labels saying Beta v15.60.0; the native desktop UI was not runtime-tested.
 
 ## Same action, different icon
 
@@ -55,4 +59,4 @@ Source links: [costume controls and list](https://github.com/Creapter1/gwarp/blo
 2. Preserve the different paint Flip and Animation Mirror meanings.
 3. Before Claude changes anything, inspect Animation while it is playing to confirm whether the custom play glyph remains beside the “Stop” label.
 
-The accompanying `preview.html` shows an offline visual comparison in dark and light themes. Its drawings are source-family sketches; the icon identifiers in this report are the source-of-truth labels.
+The accompanying `preview.html` shows an offline visual comparison in dark and light themes, including the full control inventory and the main/desktop-only costume add actions. Its drawings are source-family sketches; the icon identifiers in this report are the source-of-truth labels.
