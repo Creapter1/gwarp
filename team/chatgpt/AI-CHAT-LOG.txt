@@ -233,3 +233,16 @@ GITHUB CLOSEOUT VERIFICATION:
 - `team/AI-COMMS.md` ChatGPT board update and HANDOFF committed at `3fbc67be4f1f1673b717662acb439accdaec3c78`; fetched from ai-team and confirmed (blob `822e6c3ca588b4351a0b7b1e6671a5559dc16d90`).
 - Report `team/chatgpt/ANIM-0-CHECK.md` remains present and read-back confirmed (blob `5026c1848d4a09ee8eb3893babf0d8368b4dae46`).
 - Status: ANIM-0 is handed off as PARTIAL; required export-based checks remain unresolved.
+
+
+## Session start — ANIM-I1-ICON-AUDIT-2026-11-08
+- UTC time: 2026-11-08 03:13:37 UTC
+- AI / exact model identity: Codex, GPT-6-based; exact runtime variant unavailable.
+- Task ID / title: ANIM-I1 — audit whether the same action uses matching icons across Costumes, Flipbook, Animation, and the named related controls; deliver an icon inventory and visual preview.
+- Branch / starting commit: ai-team / 3581db0eb4a75f191ef17bbe3974a25ce41fa8a4.
+- Owner request (verbatim): “continue”.
+- Queue source: `team/ai-team/CHATGPT-JOBS.md`, embedded `CHATGPT-ANIMATION-TODO-2026-10-26.txt`, ANIM-I1 item.
+- Scope: inspect current G-Warp UI/source without changing app code; write `team/chatgpt/ANIM-I1-ICON-AUDIT.md` and a `preview.html` illustrating findings. Compare Undo, Play, Delete, Onion skin and Flip when present. Use only ai-team for writes.
+- Prior task handoff: ANIM-0 report committed/read back; partial checks remain explicitly unverified. The AI-COMMS one-minute handoff window elapsed with no new message.
+- Initial status: ANIM-I1 was the next item on the ChatGPT board; the shared work log had no later ANIM-I1 claim.
+- Next: verify this start entry, claim ANIM-I1 in shared records, then inspect the current interface and source.
