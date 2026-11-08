@@ -6,6 +6,9 @@
 })(typeof globalThis === "object" ? globalThis : this, function () {
   "use strict";
 
+  // Normalize viewBox origin and raster resolution before calling: every point and bound
+  // must share G-Warp costume-local logical units. Do not add Scratch SVG-origin offsets;
+  // the existing SB3 serializer owns that conversion.
   function number(value, label) {
     if (typeof value !== "number" || !Number.isFinite(value)) {
       throw new TypeError(label + " must be a finite number");
@@ -48,8 +51,8 @@
     var b = bounds(value);
     var target = point(rotationCentre, "rotationCentre");
     var centre = centreOfBounds(b);
-    var feetLineY = options && options.feetLineY;
-    var alignFeet = typeof feetLineY === "number" && Number.isFinite(feetLineY);
+    var alignFeet = !!options && Object.prototype.hasOwnProperty.call(options, "feetLineY");
+    var feetLineY = alignFeet ? number(options.feetLineY, "feetLineY") : null;
     var dx = target.x - centre.x;
     var dy = alignFeet ? feetLineY - b.bottom : target.y - centre.y;
     return {
@@ -66,18 +69,35 @@
     };
   }
 
-  function selectGeneratedFrames(costumes, animationId) {
-    if (!Array.isArray(costumes) || animationId == null || animationId === "") return [];
-    return costumes.map(function (costume, order) {
+  function selectGeneratedFrames(costumes, animationId, expectedFrameCount) {
+    if (!Array.isArray(costumes)) throw new TypeError("costumes must be an array");
+    if (animationId == null || animationId === "") throw new TypeError("animationId is required");
+    if (expectedFrameCount !== undefined &&
+        (!Number.isInteger(expectedFrameCount) || expectedFrameCount < 1)) {
+      throw new RangeError("expectedFrameCount must be a positive integer");
+    }
+    var selected = costumes.map(function (costume, order) {
       var meta = costume && costume.gwAnimFrame;
       return { costume: costume, order: order, frame: meta && meta.frame, anim: meta && meta.anim };
     }).filter(function (entry) {
       return entry.anim === animationId && Number.isInteger(entry.frame) && entry.frame >= 0;
     }).sort(function (a, b) {
       return a.frame - b.frame || a.order - b.order;
-    }).map(function (entry) {
-      return entry.costume;
     });
+    var seen = new Set();
+    selected.forEach(function (entry) {
+      if (seen.has(entry.frame)) throw new RangeError("generated frame metadata contains a duplicate index");
+      seen.add(entry.frame);
+    });
+    if (expectedFrameCount !== undefined) {
+      for (var i = 0; i < expectedFrameCount; i++) {
+        if (!seen.has(i)) throw new RangeError("generated frame group is incomplete");
+      }
+      if (selected.some(function (entry) { return entry.frame >= expectedFrameCount; })) {
+        throw new RangeError("generated frame group contains an out-of-range index");
+      }
+    }
+    return selected.map(function (entry) { return entry.costume; });
   }
 
   function rootPointFromSolved(solved, rootBoneId) {
