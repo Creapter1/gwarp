@@ -37,3 +37,52 @@
 - Updated docs/AI-REFERENCE.md, docs/SOURCE-MODULE-INDEX.md, docs/AI-DATA-FLOW.md, docs/README.md, docs/assets/docs-nav.js, README.md and docs/UPSTREAM-ARCHITECTURE-REFERENCE.md accordingly.
 - All additions remain on ai-team. app.html, root index.html and main were not modified.
 - NOT-TESTED remains unchanged: browser render of docs, live app behavior, actual upstream project builds, live AI request, local model link, cross-editor round-trip, LAN session. Only repository source inspection and GitHub readback were performed.
+
+
+## Session start — SCRATCH-CREATIVE-ECOSYSTEM-RESEARCH-2026-11-08
+
+- UTC timestamp: 2026-11-08T02:03:02Z
+- AI / exact model identity: Codex, GPT-6-based; exact runtime variant unavailable.
+- Task ID / title: SCRATCH-CREATIVE-ECOSYSTEM-RESEARCH-2026-11-08 — research Scratch and fan-made Scratch-style creative platforms and communities for distinctive feature ideas G-Warp could evaluate.
+- Branch / starting commit: ai-team / 5cbb4b94bae809cc45cad7546df69d2380ee9531.
+
+USER REQUEST (verbatim when available):
+“Just so you know, some of the to-do list and some of the rules and stuff like that aren't on sync. So you might want to read through all those things first too, because the apps have some stuff that they do already confirmed that they have already asked. So yeah, you might want to check everything first before anything, because the app itself already has some stuff and the other one might have, might not. Check first, please.”
+“By the way, the name is wrong. It is not Flash Crash. It is the original Scratch, or fan-made, or other style just like Scratch. The Korean... sorry for that, it's just the autocorrection. It's very annoying.”
+The owner clarified in the follow-up answer that the desired output is “Existing sites + local report.”
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+Research current official Scratch, Scratch-derived/fan-made creative coding platforms, and their creator communities. Surface distinctive, loved or novel features that might translate to G-Warp; separate confirmed facts from inference; cite direct sources and note licensing, privacy, safety, and Scratch-compatibility constraints. Produce a local, source-linked report. Do not publish a new website, post to communities, or modify app source.
+
+PROGRESS / AI RESPONSE:
+Read the ai-team branch rules, TODO, status, comms, and this account’s full prior log. Confirmed the current ai-team starting commit. A research subagent was created and paused after one broad exploratory search until its own required session log/claim is verified. No research conclusions are carried forward yet.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- The autocorrected target is Scratch and fan-made/other Scratch-style creative platforms, not “Flash Crash.”
+- Research existing sites and deliver a local report; no new website.
+- Keep G-Warp app files and user projects untouched; facts and proposals must remain distinct.
+- Use only ai-team for any remote team log/claim; owner controls main.
+
+FILES CHANGED:
+- NONE at session start.
+
+COMMANDS / TESTS / RESULTS:
+- NONE.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for read-only GitHub workflow files and branch head; web research NOT YET STARTED.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- The short label the owner initially used was corrected to original Scratch/fan-made Scratch-style experiences; exact target examples are to be discovered from sources.
+
+NEXT STEP / HANDOFF:
+- Append and verify the root AI-TEAM claim, then authorize the subagent to begin its own logged pass; conduct primary-source web research and create the local report.
+
+CHAT HISTORY COMPLETENESS:
+- COMPLETE FOR THIS TASK.
+
+GITHUB CLOSEOUT VERIFICATION (required before DONE):
+- Personal log commit SHA: pending
+- Read-back URL/path: pending
+- Verified new entry is present at bottom: NO
+- Task status: PARTIAL
