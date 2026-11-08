@@ -172,3 +172,17 @@ AI-COMMS claim commit SHA: 6526037c73c7e92ab927f499305bfa75482d83b0
 AI-COMMS blob SHA on read-back: ae77dd2e91a89017fba14e989096d3c335bd9930
 Work status: No artwork was created before the session and claim read-backs. Beginning ART-002 now.
 --- END ENTRY ---
+
+
+--- ENTRY ---
+PROGRESS / ARTWORK HANDOFF PREP
+UTC timestamp: 2026-11-08T04:38:31Z
+Task ID / title: L8-ART / ART-002 — three robot variants and walk cycles
+Progress: Created and read back the ART-002 drop-box package: 12 SVG costumes (A/B/C, four frames each), preview.html, NOTES.md, plus the lane report. Corrected the A and C antenna tips to fit within the declared viewBox. The exact committed content of all 15 files was fetched and matched the prepared source.
+Evidence: Static source check confirmed shared 240 × 300 viewBoxes, prefix-scoped SVG IDs, only G-Warp palette colors, no SVG scripts/external hrefs, each SVG under 4.4 KB, and preview controls for dark/light stage, 12 frames and pivot crosshair. Browser preview, G-Warp import/rotation, and Scratch/TurboWarp project tests remain NOT-TESTED.
+Recent artifact commit: ba9c67026977b5e90b479c48a88d27a30fdcfc9f (last antenna-source update before report note).
+Report blocker-note commit: 4b2bc67c20ce2d4b751522afad7e441beb328717.
+Task mark: Still [ ] in the bundled team/ai-team/CHATGPT-JOBS.md. Auto-review rejected replacing this large shared file, citing risk of concurrent job-state loss and prohibiting bypass. No alternate write path was attempted. Root was notified.
+Files changed: team/ai-team/shared/2026-11-08-chatgpt-ART-002/*; team/chatgpt/lanes/L8-ART/reports/JOBS-ART-002.md; this lane log. No app source, AI-TEAM.txt, AI-COMMS root board row, or root ChatGPT log changes.
+Next step: Append/read back L8-ART HANDOFF in AI-COMMS, then append and read back this lane's session closeout. Parent decides whether to request the protected large job-list mark separately.
+--- END ENTRY ---
