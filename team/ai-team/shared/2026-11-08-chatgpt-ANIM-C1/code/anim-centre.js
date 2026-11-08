@@ -45,6 +45,10 @@
     return { x: (b.left + b.right) / 2, y: (b.top + b.bottom) / 2 };
   }
 
+  function rotationCentreFromPoint(value) {
+    return point(value, "rotationCentre");
+  }
+
   // Return a geometry change for the adapter to apply to every art layer.
   // The current rotation centre stays fixed; this function never edits a costume.
   function translationToCentre(value, rotationCentre, options) {
@@ -192,6 +196,7 @@
   return {
     bounds: bounds,
     centreOfBounds: centreOfBounds,
+    rotationCentreFromPoint: rotationCentreFromPoint,
     translationToCentre: translationToCentre,
     selectGeneratedFrames: selectGeneratedFrames,
     rootPointFromSolved: rootPointFromSolved,
