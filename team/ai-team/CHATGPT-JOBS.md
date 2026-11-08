@@ -1300,52 +1300,52 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [ ] BLK-0103-PAR [TERMINAL] "next backdrop" (stage, stack, type next_backdrop): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0103-EDGE [TERMINAL] "next backdrop" (stage, stack, type next_backdrop): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0103-SAVE [TERMINAL] "next backdrop" (stage, stack, type next_backdrop): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0103-DOC [WEB] "next backdrop" (stage, stack, type next_backdrop): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0103-DOC [WEB] "next backdrop" (stage, stack, type next_backdrop): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0103-AI [ANY] "next backdrop" (stage, stack, type next_backdrop): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0104-PAR [TERMINAL] "backdrop #" (stage, reporter, type backdrop_number): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0104-EDGE [TERMINAL] "backdrop #" (stage, reporter, type backdrop_number): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0104-SAVE [TERMINAL] "backdrop #" (stage, reporter, type backdrop_number): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0104-DOC [WEB] "backdrop #" (stage, reporter, type backdrop_number): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0104-DOC [WEB] "backdrop #" (stage, reporter, type backdrop_number): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0104-AI [ANY] "backdrop #" (stage, reporter, type backdrop_number): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0105-PAR [TERMINAL] "backdrop name" (stage, reporter, type backdrop_name): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0105-EDGE [TERMINAL] "backdrop name" (stage, reporter, type backdrop_name): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0105-SAVE [TERMINAL] "backdrop name" (stage, reporter, type backdrop_name): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0105-DOC [WEB] "backdrop name" (stage, reporter, type backdrop_name): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0105-DOC [WEB] "backdrop name" (stage, reporter, type backdrop_name): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0105-AI [ANY] "backdrop name" (stage, reporter, type backdrop_name): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0106-PAR [TERMINAL] "set backdrop color to (#ffffff)" (stage, stack, type change_backdrop_color): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0106-EDGE [TERMINAL] "set backdrop color to (#ffffff)" (stage, stack, type change_backdrop_color): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0106-SAVE [TERMINAL] "set backdrop color to (#ffffff)" (stage, stack, type change_backdrop_color): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0106-DOC [WEB] "set backdrop color to (#ffffff)" (stage, stack, type change_backdrop_color): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0106-DOC [WEB] "set backdrop color to (#ffffff)" (stage, stack, type change_backdrop_color): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0106-AI [ANY] "set backdrop color to (#ffffff)" (stage, stack, type change_backdrop_color): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0107-PAR [TERMINAL] "add (item) to [my list]" (lists, stack, type list_add): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0107-EDGE [TERMINAL] "add (item) to [my list]" (lists, stack, type list_add): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0107-SAVE [TERMINAL] "add (item) to [my list]" (lists, stack, type list_add): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0107-DOC [WEB] "add (item) to [my list]" (lists, stack, type list_add): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0107-DOC [WEB] "add (item) to [my list]" (lists, stack, type list_add): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0107-AI [ANY] "add (item) to [my list]" (lists, stack, type list_add): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0108-PAR [TERMINAL] "delete item (1) of [my list]" (lists, stack, type list_delete): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0108-EDGE [TERMINAL] "delete item (1) of [my list]" (lists, stack, type list_delete): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0108-SAVE [TERMINAL] "delete item (1) of [my list]" (lists, stack, type list_delete): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0108-DOC [WEB] "delete item (1) of [my list]" (lists, stack, type list_delete): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0108-DOC [WEB] "delete item (1) of [my list]" (lists, stack, type list_delete): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0108-AI [ANY] "delete item (1) of [my list]" (lists, stack, type list_delete): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0109-PAR [TERMINAL] "insert (item) at (1) of [my list]" (lists, stack, type list_insert): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0109-EDGE [TERMINAL] "insert (item) at (1) of [my list]" (lists, stack, type list_insert): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0109-SAVE [TERMINAL] "insert (item) at (1) of [my list]" (lists, stack, type list_insert): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0109-DOC [WEB] "insert (item) at (1) of [my list]" (lists, stack, type list_insert): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0109-DOC [WEB] "insert (item) at (1) of [my list]" (lists, stack, type list_insert): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0109-AI [ANY] "insert (item) at (1) of [my list]" (lists, stack, type list_insert): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0110-PAR [TERMINAL] "replace item (1) of [my list] with (item)" (lists, stack, type list_replace): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0110-EDGE [TERMINAL] "replace item (1) of [my list] with (item)" (lists, stack, type list_replace): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0110-SAVE [TERMINAL] "replace item (1) of [my list] with (item)" (lists, stack, type list_replace): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0110-DOC [WEB] "replace item (1) of [my list] with (item)" (lists, stack, type list_replace): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0110-DOC [WEB] "replace item (1) of [my list] with (item)" (lists, stack, type list_replace): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0110-AI [ANY] "replace item (1) of [my list] with (item)" (lists, stack, type list_replace): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0111-PAR [TERMINAL] "delete all of [my list]" (lists, stack, type list_clear): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0111-EDGE [TERMINAL] "delete all of [my list]" (lists, stack, type list_clear): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0111-SAVE [TERMINAL] "delete all of [my list]" (lists, stack, type list_clear): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0111-DOC [WEB] "delete all of [my list]" (lists, stack, type list_clear): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0111-DOC [WEB] "delete all of [my list]" (lists, stack, type list_clear): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0111-AI [ANY] "delete all of [my list]" (lists, stack, type list_clear): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0112-PAR [TERMINAL] "show list [my list]" (lists, stack, type list_show): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0112-EDGE [TERMINAL] "show list [my list]" (lists, stack, type list_show): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0112-SAVE [TERMINAL] "show list [my list]" (lists, stack, type list_show): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0112-DOC [WEB] "show list [my list]" (lists, stack, type list_show): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0112-DOC [WEB] "show list [my list]" (lists, stack, type list_show): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0112-AI [ANY] "show list [my list]" (lists, stack, type list_show): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0113-PAR [TERMINAL] "hide list [my list]" (lists, stack, type list_hide): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0113-EDGE [TERMINAL] "hide list [my list]" (lists, stack, type list_hide): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
