@@ -224,3 +224,12 @@ GITHUB CLOSEOUT VERIFICATION:
 - Read-back: fetched `team/chatgpt/AI-CHAT-LOG.txt` from ai-team; the closeout was confirmed at the bottom (blob `477a8a06ec8d66729bb06d29a4c7fb60809ff50a`).
 - Task status: PARTIAL; report is delivered, explicit .sb3/Scratch VM/centre/second-rig/desktop checks remain NOT-TESTED.
 - Shared AI-TEAM status and AI-COMMS handoff remain to be synchronized.
+
+
+## Shared handoff verification — ANIM-0-CHECK-2026-11-08
+- UTC time: 2026-11-08 03:11:35 UTC
+- Correction to the prior closeout verification’s “remain to be synchronized” line: shared synchronization is now complete.
+- `team/AI-TEAM.txt` partial row committed at `d8c876b7e56368534413d47e2fd4623d0c08739e`; fetched from ai-team and confirmed at the bottom (blob `f5cd2f4ff1cd6b9eebc2b746167b20d10034115c`).
+- `team/AI-COMMS.md` ChatGPT board update and HANDOFF committed at `3fbc67be4f1f1673b717662acb439accdaec3c78`; fetched from ai-team and confirmed (blob `822e6c3ca588b4351a0b7b1e6671a5559dc16d90`).
+- Report `team/chatgpt/ANIM-0-CHECK.md` remains present and read-back confirmed (blob `5026c1848d4a09ee8eb3893babf0d8368b4dae46`).
+- Status: ANIM-0 is handed off as PARTIAL; required export-based checks remain unresolved.
