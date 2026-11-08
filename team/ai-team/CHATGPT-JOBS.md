@@ -1100,52 +1100,52 @@ Proof words: TESTED in G-Warp / TESTED in scratch-vm / SOURCE-VERIFIED / NOT-TES
 [ ] BLK-0063-PAR [TERMINAL] "stop [all]" (control, stack, type stop): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0063-EDGE [TERMINAL] "stop [all]" (control, stack, type stop): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0063-SAVE [TERMINAL] "stop [all]" (control, stack, type stop): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0063-DOC [WEB] "stop [all]" (control, stack, type stop): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0063-DOC [WEB] "stop [all]" (control, stack, type stop): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0063-AI [ANY] "stop [all]" (control, stack, type stop): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0064-PAR [TERMINAL] "create clone of [myself]" (control, stack, type create_clone): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0064-EDGE [TERMINAL] "create clone of [myself]" (control, stack, type create_clone): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0064-SAVE [TERMINAL] "create clone of [myself]" (control, stack, type create_clone): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0064-DOC [WEB] "create clone of [myself]" (control, stack, type create_clone): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0064-DOC [WEB] "create clone of [myself]" (control, stack, type create_clone): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0064-AI [ANY] "create clone of [myself]" (control, stack, type create_clone): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0065-PAR [TERMINAL] "delete this clone" (control, stack, type delete_clone): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0065-EDGE [TERMINAL] "delete this clone" (control, stack, type delete_clone): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0065-SAVE [TERMINAL] "delete this clone" (control, stack, type delete_clone): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0065-DOC [WEB] "delete this clone" (control, stack, type delete_clone): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0065-DOC [WEB] "delete this clone" (control, stack, type delete_clone): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0065-AI [ANY] "delete this clone" (control, stack, type delete_clone): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0066-PAR [TERMINAL] "touching [mouse-pointer]?" (sensing, boolean, type touching_pointer): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0066-EDGE [TERMINAL] "touching [mouse-pointer]?" (sensing, boolean, type touching_pointer): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0066-SAVE [TERMINAL] "touching [mouse-pointer]?" (sensing, boolean, type touching_pointer): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0066-DOC [WEB] "touching [mouse-pointer]?" (sensing, boolean, type touching_pointer): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0066-DOC [WEB] "touching [mouse-pointer]?" (sensing, boolean, type touching_pointer): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0066-AI [ANY] "touching [mouse-pointer]?" (sensing, boolean, type touching_pointer): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0067-PAR [TERMINAL] "key [space] pressed?" (sensing, boolean, type key_pressed): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0067-EDGE [TERMINAL] "key [space] pressed?" (sensing, boolean, type key_pressed): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0067-SAVE [TERMINAL] "key [space] pressed?" (sensing, boolean, type key_pressed): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0067-DOC [WEB] "key [space] pressed?" (sensing, boolean, type key_pressed): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0067-DOC [WEB] "key [space] pressed?" (sensing, boolean, type key_pressed): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0067-AI [ANY] "key [space] pressed?" (sensing, boolean, type key_pressed): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0068-PAR [TERMINAL] "mouse down?" (sensing, boolean, type mouse_down): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0068-EDGE [TERMINAL] "mouse down?" (sensing, boolean, type mouse_down): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0068-SAVE [TERMINAL] "mouse down?" (sensing, boolean, type mouse_down): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0068-DOC [WEB] "mouse down?" (sensing, boolean, type mouse_down): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0068-DOC [WEB] "mouse down?" (sensing, boolean, type mouse_down): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0068-AI [ANY] "mouse down?" (sensing, boolean, type mouse_down): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0069-PAR [TERMINAL] "mouse x" (sensing, reporter, type mouse_x): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0069-EDGE [TERMINAL] "mouse x" (sensing, reporter, type mouse_x): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0069-SAVE [TERMINAL] "mouse x" (sensing, reporter, type mouse_x): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0069-DOC [WEB] "mouse x" (sensing, reporter, type mouse_x): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0069-DOC [WEB] "mouse x" (sensing, reporter, type mouse_x): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0069-AI [ANY] "mouse x" (sensing, reporter, type mouse_x): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0070-PAR [TERMINAL] "mouse y" (sensing, reporter, type mouse_y): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0070-EDGE [TERMINAL] "mouse y" (sensing, reporter, type mouse_y): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0070-SAVE [TERMINAL] "mouse y" (sensing, reporter, type mouse_y): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0070-DOC [WEB] "mouse y" (sensing, reporter, type mouse_y): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0070-DOC [WEB] "mouse y" (sensing, reporter, type mouse_y): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0070-AI [ANY] "mouse y" (sensing, reporter, type mouse_y): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0071-PAR [TERMINAL] "touching sprite [mouse-pointer]?" (sensing, boolean, type touching_sprite): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0071-EDGE [TERMINAL] "touching sprite [mouse-pointer]?" (sensing, boolean, type touching_sprite): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0071-SAVE [TERMINAL] "touching sprite [mouse-pointer]?" (sensing, boolean, type touching_sprite): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0071-DOC [WEB] "touching sprite [mouse-pointer]?" (sensing, boolean, type touching_sprite): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0071-DOC [WEB] "touching sprite [mouse-pointer]?" (sensing, boolean, type touching_sprite): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0071-AI [ANY] "touching sprite [mouse-pointer]?" (sensing, boolean, type touching_sprite): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0072-PAR [TERMINAL] "distance to [mouse-pointer]" (sensing, reporter, type distance_to): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0072-EDGE [TERMINAL] "distance to [mouse-pointer]" (sensing, reporter, type distance_to): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
 [ ] BLK-0072-SAVE [TERMINAL] "distance to [mouse-pointer]" (sensing, reporter, type distance_to): save .sb3 -> roundtrip.js -> opens in scratch-vm with the same block + inputs? (no DIFF lines)
-[ ] BLK-0072-DOC [WEB] "distance to [mouse-pointer]" (sensing, reporter, type distance_to): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
+[x] BLK-0072-DOC [WEB] "distance to [mouse-pointer]" (sensing, reporter, type distance_to): write the kid-friendly help card: what it does (1 line), tiny example script, common mistake. (docs-ready markdown)
 [ ] BLK-0072-AI [ANY] "distance to [mouse-pointer]" (sensing, reporter, type distance_to): 10 teaching examples for the G-Warp AI (request -> commands using this block), format from AIM-1 (AI Lab).
 [ ] BLK-0073-PAR [TERMINAL] "[x position] of [_stage_]" (sensing, reporter, type sprite_prop): same result as Scratch? Build a tiny test in G-Warp (qa-kit builder) AND run it in scratch-vm; compare values/positions.
 [ ] BLK-0073-EDGE [TERMINAL] "[x position] of [_stage_]" (sensing, reporter, type sprite_prop): edge inputs - empty, text "abc", "10" vs 10, -1, 0, 1e9, NaN, decimals, very long text; G-Warp vs Scratch.
