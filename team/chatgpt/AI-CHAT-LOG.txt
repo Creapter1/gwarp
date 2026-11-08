@@ -94,3 +94,25 @@ GITHUB CLOSEOUT VERIFICATION (required before DONE):
 - Personal session-start entry committed in `team/chatgpt/AI-CHAT-LOG.txt` at `5af2771016befb80a584062b6e6f9e316925dcb8`; fetched again and confirmed it is at the bottom.
 - The research agent's dedicated start log and claim were separately verified by the agent. Parent synthesis claim appended as the final current `team/AI-TEAM.txt` row in commit `be4abc56c73b60d067607157c9f099ef21361674`; fetch/read-back confirmed the line.
 - Research may now begin. The agent will return findings to this session; the deliverable stays local per the owner's choice.
+
+
+## Session closeout — SCRATCH-CREATIVE-RESEARCH-SYNTHESIS-2026-11-08
+
+- UTC time: 2026-11-08T02:17:36Z
+- Owner request: Research original Scratch, fan-made Scratch-style platforms, and their creative communities; find ideas G-Warp might borrow; use existing sites and deliver a local report. The owner corrected “Flash Crash” as autocorrect and selected “Existing sites + local report.”
+- What I did: reconciled the existing local APP-MAP, PROJECT-STATUS, and G-Warp review; ran primary-source web research across Scratch, TurboWarp, PenguinMod, Gandi, CodeTorch, Snap!, Scratch Addons, Adacraft, MakeCode Arcade, mBlock, PictoBlox, and Pocket Code/Catrobat; reviewed a small anecdotal community sample; wrote a detailed, source-linked local opportunity report.
+- Decisions/prohibitions: the report uses Scratch-style wording; no website was published; no competitor project/account was changed; no G-Warp application source or user project was edited. Candidate ideas are explicitly not approved roadmap work. Any remote team activity stayed on ai-team; main was not touched.
+- Local files changed: `chatgpt/research/2026-11-07-scratch-style-ecosystem/RESEARCH.md`; added a research pointer to `PROJECT-STATUS.md`; appended a dated handoff to `AI-COMMS.md`.
+- Remote team work: own start/progress log and parent claim were already committed/read back. Research agent closeout was separately verified: personal log commit `dc6ecbb7008cd9eddf4504a5845ce462224a5fb8`; shared AI-TEAM DONE commit `f73b5f9cde6c20e1105fbc7869439ed278d6b7bb`. Root closeout and DONE remain to be verified.
+- Evidence/results: official docs support the described platform features; Scratch Foundation’s 2024 report provides organization-reported well-being figures. G-Warp opportunities (starter kits, personal cross-project shelf, clearer compatibility, safeguarded LAN co-editing) are research inferences and need owner/user validation. Save/restore, scope, diagnostics, and sanitizer defects remain the higher-priority acceptance gate from the prior app review.
+- Commands/tests: no application tests were requested or run. No G-Warp runtime test was performed during the research pass. Web sources and local feature/status documents were read; GitHub team files are being read back.
+- Evidence class: SOURCE-VERIFIED for official platform documentation and local app-map entries; INFERRED for product gaps/opportunities; community posts are ANECDOTAL; G-Warp runtime behavior NOT-TESTED in this pass.
+- Unknowns: feature documentation can be incomplete or stale; competitor claims are not independent evaluations; demand for the proposed G-Warp features is not validated by representative user research.
+- Next step: review the local report, select a candidate for creator validation, and keep the documented reliability fixes ahead of new public sharing/collaboration work.
+- Completeness: DONE for the requested research-and-local-report task; no build/product implementation included.
+
+GITHUB CLOSEOUT VERIFICATION (required before DONE):
+- Personal log update commit SHA: pending
+- Read-back URL/path: pending
+- Verified new entry is present at bottom: NO
+- Task status: PARTIAL until verification addendum is appended.
