@@ -71,3 +71,8 @@ PROGRESS UPDATE — 2026-11-08T04:30:33Z
 - Finished and read back BLK-0023-DOC through BLK-0032-DOC; all ten rows are [x] and report is in the L3-BLOCKS reports folder.
 - Completed the next source-verified DOC batch, BLK-0033-DOC through BLK-0042-DOC; report target is team/chatgpt/lanes/L3-BLOCKS/reports/BLK-0033-DOC-to-BLK-0042-DOC.md.
 - Terminal PAR/EDGE/SAVE remain NOT-TESTED and unmarked because the local qa-kit dependencies are absent; no network installs or runtime tests.
+
+
+PROGRESS UPDATE — 2026-11-08T04:35:50Z
+- The first attempt to publish BLK-0043-DOC through BLK-0052-DOC using a compare-and-swap ref update was overtaken by concurrent ai-team commits three times; no files from those attempts were published. I stopped retrying that update path and used sequential GitHub Contents API writes with current file SHAs.
+- Published and marked BLK-0043-DOC through BLK-0052-DOC [x]. Report: team/chatgpt/lanes/L3-BLOCKS/reports/BLK-0043-DOC-to-BLK-0052-DOC.md. No runtime tests or app source changes.
