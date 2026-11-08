@@ -25,18 +25,19 @@ The alpha-box helper scans every canvas pixel (25280–25283); badges call it wh
 
 - code/anim-centre.js provides pure geometry and adapter helpers. It does not touch the DOM or the app.
 - tests/anim-centre.test.js covers eight focused helper cases.
-- Generated frame selection uses existing metadata gwAnimFrame.anim and .frame, not costume names.
+- Generated frame selection uses existing metadata gwAnimFrame.anim and .frame, not costume names. Pass anim.frames.length so missing, duplicate, or out-of-range frame indices fail before alignment.
 - sharedCentreAssignments returns one exact centre from frame 1's root for every selected frame; it never changes SVG/art or pose objects.
-- translationToCentre returns a translation for the adapter to apply to all artwork layers while keeping the existing pivot fixed. With feetLineY, it centers horizontally and aligns the bottom to the chosen baseline.
+- translationToCentre returns a translation for the adapter to apply to all artwork layers while keeping the existing pivot fixed. With a finite numeric feetLineY, it centers horizontally and aligns the bottom to the chosen baseline; malformed supplied values throw.
 - detectBodyDrift measures the body-bounds midpoint relative to the supplied root point, warns strictly above 2 px, and suppresses warnings when the root moved more than 0.5 px.
 - validateMadeFrames requires positive, exact canvas width/height and keeps the rotation centres within 1 px Euclidean distance.
+- Coordinate contract: bounds, solved root points, and rotation centres must first be normalized to the same G-Warp costume-local logical units. The adapter must account for SVG viewBox origin and raster resolution; do not add the Scratch SVG-origin offset here because the existing SB3 serializer owns that conversion.
 - Missing/invalid geometry throws instead of silently producing a plausible measurement.
 
 ## Integration notes for Claude
 
 1. Load the file as a separate helper (window.GW_ANIM_CENTRE_TOOLS); do not overwrite window.GW_CENTRE.
 2. Pass the correct orange-base bone ID and the solved joint from GW_ANIM.solve(anim, anim.frames[0]) into rootPointFromSolved. Use selectGeneratedFrames(sprite.costumes, anim.id) and sort via metadata; never treat all ordinary costumes as one animation.
-3. Make the paint click tool convert the pointer through the existing editor screen-to-costume mapping, snapshot the costume centre, set c.rc, and refresh the mark. Extend the normal costume Undo snapshot/restore to include c.rc; the present snapshot at app.html 9246–9265 stores bitmap pixels or SVG markup, not the rotation centre.
+3. Make the paint click tool convert the pointer through the existing editor screen-to-costume mapping, normalize into the module's costume-local units, snapshot the costume centre, set c.rc, and refresh the mark. Extend the normal costume Undo snapshot/restore to include c.rc; the present snapshot at app.html 9246–9265 stores bitmap pixels or SVG markup, not the rotation centre.
 4. For Centre this costume, apply the returned translation to the SVG art layer(s) as one shared transform. Keep c.rc fixed and use the undo snapshot. When the feet option is selected, use the first frame's ground line as feetLineY.
 5. For Line up, assign the same frame-one root to every selected frame's c.rc. Do not translate frame art.
 6. Run drift analysis after Make costumes or after an edit invalidates cached bounds, not every second. A one-click “Use frame 1 centre” action can normalize pivot metadata without changing pose/art. It must not claim to repair actual pose drift: changing the pose separately per frame would conflict with the no-per-frame-art-movement requirement.
@@ -52,7 +53,7 @@ The alpha-box helper scans every canvas pixel (25280–25283); badges call it wh
 ## Evidence
 
 - SOURCE-VERIFIED: current checked-in ai-team snapshot at commit 5cbb4b94bae809cc45cad7546df69d2380ee9531; the same centre fragment hash was found in desktop and main extracted sources.
-- Local Node helper-check output only: node --test tests/anim-centre.test.js reported 8 passed, 0 failed (Node v26.13.0). This does not establish app behavior.
+- Local Node helper-check output only: node --test tests/anim-centre.test.js reported 8 passed, 0 failed (Node v26.13.0). Checks include incomplete/duplicate frame groups and invalid feet-line inputs. This does not establish app behavior.
 - BROWSER-OBSERVED: existing side preview showed Beta v15.60.0 / runtime value 15.5.2, G-Spark's walk animation with 8 frames, 5 bones, and 5/5 shapes attached. The “Made 8 costumes” toast was already visible. No input was sent.
 - NOT-TESTED in G-Warp: the existing controls, output validation, and proposed integration.
 - NOT-TESTED in scratch-vm: .sb3 export/save and costume switching.
