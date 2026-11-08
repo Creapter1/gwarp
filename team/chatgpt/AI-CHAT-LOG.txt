@@ -188,3 +188,9 @@ GITHUB CLOSEOUT VERIFICATION:
 - Read-back URL/path: pending
 - Verified new entry is present at bottom: NO
 - Task status: PARTIAL until start entry is committed and read back.
+
+
+## Start-log verification — ANIM-0-CHECK-2026-11-08
+- UTC time: 2026-11-08T02:30:32Z
+- Session-start entry committed at `59c6a4062b38a50106231d9f7798edd62a09962b`; fetched from `ai-team` and verified at the bottom of `team/chatgpt/AI-CHAT-LOG.txt` (blob `dfc512ab0ed00b71cb7716ce13a63f58894e7b70`).
+- The assigned ANIM-0 job is now clear to claim; no app test has begun yet.
