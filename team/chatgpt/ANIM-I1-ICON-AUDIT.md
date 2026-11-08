@@ -25,11 +25,11 @@ Source links: [costume controls and list](https://github.com/Creapter1/gwarp/blo
 
 **Costumes**
 
-- Costume list: folder/open-folder `fa-folder/fa-folder-open`; duplicate `fa-regular fa-copy`; delete `fa-regular fa-trash-can`.
+- Main Costumes tab: `fa-paintbrush`. Costume list: folder/open-folder `fa-folder/fa-folder-open`; duplicate `fa-regular fa-copy`; delete `fa-regular fa-trash-can`.
 - Add/play fan: `fa-paintbrush`, `fa-upload`, `fa-play`; Graffy has a custom G-Spark-style SVG with `fa-bolt`.
 - Paint tool set: G-Warp’s `GW_PAINT_ICONS` SVGs — Select, Reshape, Brush, Eraser, Fill, Text, Line, Circle, Rectangle.
 - Paint actions: custom SVG Undo, Redo, Group, Ungroup, Forward, Backward, Front, Back, Copy, Paste, Delete, Flip Horizontal, Flip Vertical, zoom in/out/reset, eyedropper, no-colour, bitmap/vector conversion.
-- Paint grid/snap: `fa-border-all` and `fa-magnet`. Centre and Line up use `⊕` and `⇅`; the local undo uses `↶`. The paint onion icon is its own inline SVG.
+- Paint grid/snap: `fa-border-all` and `fa-magnet`. Centre and Line up use `⊕` and `⇅`; the local undo uses `↶`. The paint onion icon is its own inline SVG; its overlay Close control is `fa-xmark`. The Centre and Line up controls use `⊕` and `⇅` text glyphs.
 - The Gemini icon script also targets “Play” and “Onion” buttons inside the costume list. Those targets were not separately present in the live accessibility tree used for this pass.
 
 **Flipbook**
@@ -39,7 +39,7 @@ Source links: [costume controls and list](https://github.com/Creapter1/gwarp/blo
 
 **Animation**
 
-- Header `fa-bone`; Undo/Redo `fa-rotate-left/right`; New, Rename, Delete, Rig, Animate, FPS, Loop, and Delete animation are text controls.
+- Header `fa-bone`; Close `fa-xmark`; Undo/Redo `fa-rotate-left/right`; New, Rename, Delete, Rig, Animate, FPS, Loop, and Delete animation are text controls.
 - Rig tools: `fa-bone`, `fa-paperclip`, `fa-arrow-pointer`, `fa-wand-magic-sparkles`, `fa-trash`.
 - Frame tools: `fa-plus`, `fa-chevron-left/right`, `fa-trash`.
 - The merged Gemini SVG pack is applied to the Animation tab, In-between, Smooth ×2, Play, Make costumes, and Onion skin: `bones`, `in-between`, `smooth-x2`, `flipbook-play`, `make-costumes`, `onion`.
