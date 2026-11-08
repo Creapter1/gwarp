@@ -109,3 +109,21 @@ UTC timestamp: 2026-11-08T04:13:24Z
 - Session-start file was created at commit `31b7d91e2c349f367469d23c9ce9e37c8fe7c9e1`.
 - Fetched again from `ai-team`; session-start entry is present at the bottom, content blob `67db46d1d29a76e3f87800d2c52580846f8e2417`.
 - Status: the start-log gate is clear; no source review or code proposal has begun.
+
+
+PROGRESS UPDATE
+UTC timestamp: 2026-11-08T04:23:27Z
+- Read the ANIM-C1 queue entry and embedded HOW-TO PART A, team rules, L1 lane context, and inspected the source snapshot at `gwarp-5cbb4b94bae809cc45cad7546df69d2380ee9531`.
+- Source findings: the paint editor currently displays `#gwpeCentre` but has no centre setter; costume undo snapshots contain only bitmap pixels or vector markup and do not save `c.rc`; `makeCostumes` copies one rotation centre to each frame but derives canvas size from decoded images and silently emits 1×1 on image decode failure.
+- The existing vector save path shifts the stored centre when the costume bounds grow; proposal must keep costume-space centre values and leave SVG-origin conversion to the existing SB3 serializer.
+- Read-only side-preview observation: Beta v15.60.0 / runtime value 15.5.2; Animation tab shows G-Spark, walk, 8 frames, 5 bones and 5/5 shapes attached. A “Made 8 costumes” toast was already visible. No UI input was sent. The page emitted a diagnostic object with `pass:false`; this observation is not being reported as a test or as proof of an animation-centre defect.
+- No app source was modified; no proposal files or tests have been created yet.
+
+COMMANDS / TESTS / RESULTS:
+- Source inspection and read-only preview observation only. No tests run.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for the named source snapshot; BROWSER-OBSERVED for visible tab state; current desktop runtime and requested Scratch VM acceptance checks remain NOT-TESTED.
+
+NEXT STEP:
+- Finish the module contract and isolated geometry helpers, add focused helper tests, write NOTES with integration hooks and acceptance-test steps, then request peer review from a free agent.
