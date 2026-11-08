@@ -183,3 +183,61 @@ UTC timestamp: 2026-11-08T04:39:33Z
 - Re-read the current visualization-workspace helper and test files after the parent reported an update. Current helper lines 158–159 require exact canvas width/height; current tests lines 64–82 cover exact-size rejection and <=1 px centre tolerance. I did not run the tests; 8/8 is parent-reported only.
 - The peer review remains read-only. I am checking API/adapter edge cases (coordinate units, frame metadata/order, boundary tolerances, transactional integration and undo coverage) for the report.
 - No visualization, app, root, or other-lane files were changed.
+
+---
+CLOSEOUT / TASK RECORD
+UTC timestamp: 2026-11-08T04:44:50Z
+AI / agent / exact model identity (only if verified): ChatGPT Codex subagent / exact model identity not verified
+Task ID / title: ANIM-C1-SOURCE-AUDIT-2026-11-08 — source and helper/test peer review
+Branch / starting commit: ai-team / 45872a13f0b3750a4fb116dab75eb22d3cf7375e
+
+USER REQUEST (verbatim when available; keep distinct from interpretation):
+"Your KID-001 report is received. Please append a new source-only audit in your existing L7 lane of the current ANIM-C1 implementation (gw-claude-centre around app.html lines 25270–25306) against the queue requirements, with concrete line evidence for existing behavior and gaps. No UI action, app edits, or changes to root’s files. Follow your lane log and AI-COMMS gate; report the main actionable risks, especially grouping, centre equality, drift threshold/metric, undo, and Make costumes safeguards. You may use the code already inspected, but distinguish source evidence from runtime testing."
+Additional parent instruction: "After the source audit report, please also read the draft helper and tests in C:\Users\mario\.codex\visualizations\2026\11\07\01a1b4db-1eee-74d1-8eb9-b30021a83231\ANIM-C1-check-2026-11-08\code\anim-centre.js and ...\tests\anim-centre.test.js. Give a short read-only peer review of edge cases/API clarity; do not edit those files. Include findings in your own log/report and tell me before you claim done."
+
+UNDERSTOOD SCOPE / ACCEPTANCE CONDITIONS:
+- Compare current ANIM-C1 queue requirements with current inline source; give concrete line evidence and actionable risks.
+- Peer-review the current local helper and test files read-only, distinguish parent-reported test results from our own (none run).
+- No UI, app edits, or root-owned source/report changes. Keep new audit report in L7-TEST.
+
+PROGRESS / AI RESPONSE:
+- Re-read the complete L7 log, template, README rules, L7 lane, AI-TEAM opening/last 30 lines, and current AI-COMMS. Appended and read back L7 WORKING-ON and CLAIM after the log gate; preserved the root board row.
+- Verified current queue blob f539a4b903bb76d1104d14f9fc8c4a59860d0628 and current app blob 0ef15201760bec948368096f5d9fa270af37fb70. The local source snapshot hash matched the app blob. At the last branch check, ai-team HEAD was 0b4e6dae8b702dea5b9bafe27e500aaf4c80dda5.
+- Reviewed app.html lines 25270–25306, 16731, 16742–16760, 17092, 16704–16715; identified grouping fallback, per-frame centre assignment, threshold/metric mismatch, limited local undo, and non-transactional generation failure paths.
+- Re-read current helper/test files after the parent reported an update. The helper now enforces exact canvas dimensions; tests have 8 cases. Parent reported 8/8 passing; I did not execute them.
+- Created and read back the L7 audit report. Main findings and concrete anchors are in that report.
+
+DECISIONS AND CONSTRAINTS TO PRESERVE:
+- ai-team only; no UI or app source edits; no root/other-lane file edits except the shared AI-COMMS start/claim messages authorized by the lane gate.
+- Source evidence is not a runtime result. No test was run by this agent.
+
+FILES CHANGED:
+- team/chatgpt/lanes/L7-TEST/AI-CHAT-LOG.txt — appended start, progress and this closeout.
+- team/chatgpt/lanes/L7-TEST/reports/ANIM-C1-SOURCE-AUDIT-2026-11-08.md — source-only audit and helper/test peer review.
+- team/AI-COMMS.md — appended L7-TEST WORKING-ON and CLAIM after start-log read-back; root board row preserved.
+- No app/index, visualization helper/test, root review, or other-lane file changed.
+
+COMMANDS / TESTS / RESULTS:
+- Read-only GitHub fetches for queue, current app blob, lane rules/log, and AI-COMMS; read-only local Get-Content of the exact app snapshot and current helper/tests.
+- `git -C C:\\Users\\mario\\OneDrive\\Documents\\ai all worcks\\gwarp-src hash-object --no-filters <current-source-snapshot app.html>` → `0ef15201760bec948368096f5d9fa270af37fb70`, matching GitHub app blob.
+- Helper tests: NOT RUN by this agent. Parent-reported: 8/8 pass after exact-size invariant update.
+- G-Warp UI/runtime, Make costumes, .sb3 export, and Scratch VM: NOT-TESTED.
+
+EVIDENCE CLASS:
+- SOURCE-VERIFIED for queue/source and helper/test contents. Runtime NOT-TESTED; test result 8/8 is parent-reported only.
+
+BLOCKERS / UNCERTAINTIES / ASSUMPTIONS:
+- No runtime claims. Coordinate-unit translation and transactional helper integration remain open design checks noted in the report.
+
+NEXT STEP / HANDOFF:
+- Root/implementation owner should review the L7 audit before integrating the helper; make an adapter transaction with exact-size validation and preserve generated frames on render failures.
+
+CHAT HISTORY COMPLETENESS:
+PARTIAL — current parent requests are quoted; earlier conversation is represented by prior L7 log entries.
+
+GITHUB CLOSEOUT VERIFICATION (required before DONE):
+- Personal log commit SHA: PENDING until closeout commit/read-back.
+- Read-back URL/path: https://github.com/Creapter1/gwarp/blob/ai-team/team/chatgpt/lanes/L7-TEST/AI-CHAT-LOG.txt
+- Verified new entry is present at bottom: NO (pending).
+- Task status: DONE for the requested source-only audit; runtime remains NOT-TESTED.
+--- END CLOSEOUT ---
