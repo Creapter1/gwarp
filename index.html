@@ -116,6 +116,7 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 footer a{color:var(--muted)}
 @media (prefers-reduced-motion:reduce){.zig path{animation:none}html{scroll-behavior:auto}}
 </style>
+<link rel="stylesheet" href="site/footer.css">
 </head>
 <body>
 <div class="beta">G-Warp is in beta. Some things will break, and if you find something, <a href="docs/troubleshoot.html">tell me</a>.</div>
@@ -258,12 +259,16 @@ footer a{color:var(--muted)}
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <span>G-Warp by <a href="stats.html" style="color:inherit;text-decoration:none;cursor:text">Creapter</a>. Not affiliated with Scratch, the Scratch Foundation, TurboWarp or PenguinMod.</span>
-    <span><a href="docs/index.html">Docs</a> · <a href="docs/credits.html">Credits</a> · <a href="docs/safety.html">Safety</a> · <a href="https://github.com/Creapter1/gwarp">GitHub</a></span>
-  </div>
-</footer>
+<footer class="gwf" role="contentinfo"><div class="gwf-in">
+<div class="gwf-cols">
+<div><div class="gwf-brand"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="#facc15"/></svg>G-Warp</div><p style="margin:0">A free block-coding editor that runs Scratch projects, with a song maker, costumes, animation and AI helpers.</p></div>
+<nav aria-label="G-Warp"><h2>G-Warp</h2><ul><li><a href="app.html">Open the editor</a></li><li><a href="docs/index.html">Documentation</a></li><li><a href="docs/start.html">Start here</a></li><li><a href="docs/tutorials/index.html">Tutorials</a></li><li><a href="docs/changelog.html">Changelog</a></li></ul></nav>
+<nav aria-label="Community"><h2>Community</h2><ul><li><a href="https://github.com/Creapter1/gwarp/issues/new">Report a bug</a></li><li><a href="https://github.com/Creapter1/gwarp">Source code</a></li><li><a href="docs/team.html">Meet the AI team</a></li><li><a href="docs/troubleshoot.html">Troubleshooting</a></li></ul></nav>
+<nav aria-label="Info"><h2>Info</h2><ul><li><a href="docs/terms.html">Terms of Service</a></li><li><a href="docs/safety.html">Safety + privacy</a></li><li><a href="docs/parents.html">Parents &amp; teachers</a></li><li><a href="docs/credits.html">Credits</a></li><li><a href="https://github.com/Creapter1/gwarp/blob/main/LICENSE">Licence (MIT)</a></li></ul></nav>
+<nav aria-label="Thanks to"><h2>Thanks to</h2><ul><li><a href="https://scratch.mit.edu/">Scratch</a></li><li><a href="https://turbowarp.org/">TurboWarp</a></li><li><a href="https://penguinmod.com/">PenguinMod</a></li></ul></nav>
+</div>
+<div class="gwf-low"><p>G-Warp is not affiliated with Scratch, the Scratch Team, the Scratch Foundation, TurboWarp or PenguinMod. Scratch is a project of the Scratch Foundation.</p><p>Made by <a href="stats.html" style="color:inherit;text-decoration:none;cursor:text">Creapter</a> · Beta · 2026</p></div>
+</div></footer>
 <script src="gw-stats.js" defer></script>
 </body>
 </html>
