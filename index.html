@@ -116,6 +116,81 @@ footer .wrap{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between}
 footer a{color:var(--muted)}
 @media (prefers-reduced-motion:reduce){.zig path{animation:none}html{scroll-behavior:auto}}
 </style>
+<style id="gw-fun">
+/* 9 Nov 2026 (Claude, owner: "more fun, kid friendly and high tech, like our app"): electric grid, neon glow, the mascots,
+   block-shaped cards. Pure CSS + the mascot SVGs; respects reduced motion. */
+:root{--glow-g:0 0 18px rgba(74,222,128,.35);--glow-v:0 0 22px rgba(139,92,246,.45);--red:#ef4444;--blue:#3b82f6}
+body{background:
+  radial-gradient(900px 500px at 15% -10%,rgba(139,92,246,.28),transparent 60%),
+  radial-gradient(800px 500px at 100% 10%,rgba(74,222,128,.14),transparent 60%),
+  linear-gradient(rgba(139,92,246,.06) 1px,transparent 1px) 0 0/44px 44px,
+  linear-gradient(90deg,rgba(139,92,246,.06) 1px,transparent 1px) 0 0/44px 44px,
+  var(--bg);background-attachment:fixed}
+.beta{background:linear-gradient(90deg,#facc15,#fde047);box-shadow:0 2px 0 rgba(0,0,0,.25)}
+nav{position:relative;z-index:2}
+.logo i{background:linear-gradient(135deg,#8b5cf6,#4f46e5);box-shadow:0 3px 0 #3b2a8a,var(--glow-v)}
+nav .links a{padding:6px 12px;border-radius:999px;transition:background .15s,color .15s}
+nav .links a:hover{background:rgba(139,92,246,.18);color:#fff}
+/* hero */
+.hero{position:relative}
+h1{background:linear-gradient(100deg,#c4b5fd 0%,#8b5cf6 40%,#4ade80 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(139,92,246,.35))}
+.hero-title{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}.hero-title h1{white-space:nowrap;font-size:clamp(46px,7.4vw,92px)}
+.hero-title img{width:clamp(56px,7vw,88px);height:auto;animation:bob 2.6s ease-in-out infinite;filter:drop-shadow(0 8px 16px rgba(79,70,229,.55))}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.tagline b{background:rgba(74,222,128,.14);padding:2px 10px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(74,222,128,.4)}
+.zig path{filter:drop-shadow(0 0 4px #4ade80)}
+.btn{border-radius:14px;transition:transform .12s,box-shadow .12s,filter .12s}
+.btn.go{box-shadow:0 5px 0 #23964c,var(--glow-g)}
+.btn.go:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.out{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.55)}
+.btn.out:hover{background:rgba(139,92,246,.2);transform:translateY(-2px)}
+.shot{transform:rotate(1.2deg);border:1px solid rgba(139,92,246,.6);box-shadow:0 0 0 4px rgba(139,92,246,.12),0 24px 60px rgba(0,0,0,.55),var(--glow-v);border-radius:16px}
+.shot:before,.shot:after{display:none}
+.shot .spark{position:absolute;width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 12px 4px rgba(74,222,128,.7);top:-5px;left:10%;animation:zap 4s linear infinite}
+@keyframes zap{0%{left:4%;top:-5px}25%{left:calc(100% - 9px);top:-5px}50%{left:calc(100% - 9px);top:calc(100% - 5px)}75%{left:4%;top:calc(100% - 5px)}100%{left:4%;top:-5px}}
+/* sections: electric wire between them */
+section{border-top:0;position:relative}
+section:before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(1080px,92%);height:2px;background:repeating-linear-gradient(90deg,rgba(74,222,128,.55) 0 10px,transparent 10px 18px);background-size:36px 2px;animation:wire 1.6s linear infinite;opacity:.7}
+@keyframes wire{to{background-position:36px 0}}
+h2{display:inline-block;position:relative}
+h2:after{content:"";display:block;height:6px;width:64px;margin-top:10px;border-radius:999px;background:linear-gradient(90deg,#8b5cf6,#4ade80);box-shadow:var(--glow-g)}
+/* block-shaped cards (a little notch on top, like a code block) */
+.note,.step,.rules div,.more li,.log li,details{border-radius:16px}
+.step,.rules div{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));border:1px solid var(--line);padding:14px 14px 18px;transition:transform .15s,box-shadow .15s,border-color .15s}
+.step:hover,.rules div:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.7);box-shadow:var(--glow-v)}
+.step:before,.rules div:before{content:"";position:absolute;top:-1px;left:22px;width:34px;height:8px;border-radius:0 0 8px 8px;background:var(--bg);border:1px solid var(--line);border-top:0}
+.rules div{border-top:3px solid var(--violet)}
+.rules div:nth-child(2){border-top-color:var(--wire)}.rules div:nth-child(3){border-top-color:#facc15}
+.step h3 span{box-shadow:0 0 12px rgba(250,204,21,.6)}
+.note{background:linear-gradient(160deg,rgba(139,92,246,.16),rgba(20,20,37,.9));border:1px solid rgba(139,92,246,.45);border-left:6px solid var(--violet);box-shadow:var(--glow-v)}
+.feature img,.step img,.then img{border-radius:14px;border-color:rgba(139,92,246,.35);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.feature h3{background:linear-gradient(90deg,#fff,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.more li{border:1px solid var(--line);margin:0 0 10px;padding:12px 14px;background:rgba(255,255,255,.025)}
+.log li{border:1px solid var(--line);margin-bottom:10px;padding:14px 16px;background:rgba(255,255,255,.025)}
+.log .v{display:inline-block;align-self:start;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.45);border-radius:10px;padding:2px 10px;text-shadow:0 0 8px rgba(74,222,128,.6)}
+details{border:1px solid var(--line);padding:12px 16px;margin-bottom:10px;background:rgba(255,255,255,.025)}
+details[open]{border-color:rgba(139,92,246,.6);box-shadow:var(--glow-v)}
+summary::marker{color:var(--wire)}
+/* meet the crew */
+.crew{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px}
+@media(max-width:860px){.crew{grid-template-columns:1fr}}
+.mate{position:relative;border-radius:22px;padding:22px 20px 20px;background:linear-gradient(180deg,var(--c1),rgba(16,16,28,.92) 70%);border:1px solid var(--c2);box-shadow:0 0 0 1px rgba(0,0,0,.2),0 0 26px var(--c3);text-align:center;transition:transform .2s}
+.mate:hover{transform:translateY(-6px) rotate(-.6deg)}
+.mate .pic{height:150px;display:grid;place-items:center}
+.mate .pic img{max-height:150px;width:auto;filter:drop-shadow(0 10px 14px rgba(0,0,0,.5))}
+.mate:hover .pic img{animation:bob 1.2s ease-in-out infinite}
+.mate h3{font-size:24px;margin:10px 0 2px}
+.mate .role{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:999px;background:var(--c2);color:#0b0b14;margin-bottom:8px}
+.mate p{margin:0;color:#cfcfe6;font-size:15px}
+.mate.spark{--c1:rgba(139,92,246,.3);--c2:#a78bfa;--c3:rgba(139,92,246,.35)}
+.mate.dj{--c1:rgba(239,68,68,.26);--c2:#f87171;--c3:rgba(239,68,68,.3)}
+.mate.graffy{--c1:rgba(34,197,94,.24);--c2:#4ade80;--c3:rgba(74,222,128,.28)}
+.mate .say{position:absolute;top:10px;left:50%;z-index:3;padding:8px 14px;border-radius:16px;background:#fff;color:#14142a;font-weight:800;font-size:15px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.35),0 0 0 3px var(--c2);opacity:0;transform:translate(-50%,10px) scale(.85);transition:opacity .18s,transform .22s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.mate .say:after{content:"";position:absolute;left:50%;bottom:-8px;margin-left:-8px;border:8px solid transparent;border-bottom:0;border-top-color:#fff}
+.mate:hover .say,.mate:focus-visible .say{opacity:1;transform:translate(-50%,-26px) scale(1)}
+.mate:focus-visible{outline:3px solid var(--c2);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
 <link rel="stylesheet" href="site/footer.css">
 </head>
 <body>
@@ -124,14 +199,14 @@ footer a{color:var(--muted)}
   <nav>
     <a class="logo" href="#"><i>G</i>G-Warp</a>
     <div class="links">
-      <a href="#about">About</a><a href="#try">Try it</a><a href="#stuff">What's in it</a><a href="#log">Devlog</a><a class="keep" href="docs/index.html">Docs</a>
+      <a href="#crew">Crew</a><a href="#about">About</a><a href="#try">Try it</a><a href="#stuff">What's in it</a><a href="#log">Devlog</a><a class="keep" href="docs/index.html">Docs</a>
     </div>
   </nav>
 
   <header class="hero">
     <div>
       <p class="tagline"><b>Free beta</b> · no account · made by Creapter</p>
-      <h1>G-Warp</h1>
+      <div class="hero-title"><h1>G-Warp</h1><img src="site/mascots/G-Spark.svg" width="120" height="110" alt="G-Spark, the G-Warp mascot, waving"></div>
       <svg class="zig" viewBox="0 0 220 16" aria-hidden="true"><path d="M2 8 L18 3 L30 13 L46 3 L58 13 L74 3 L86 13 L102 3 L114 13 L130 3 L142 13 L158 3 L170 13 L186 3 L198 13 L218 6"/></svg>
       <p class="lead">A block coding game maker where the blocks run on electricity. Same blocks you know from Scratch, its own look, and a few things Scratch doesn't have.</p>
       <div class="btns">
@@ -140,9 +215,21 @@ footer a{color:var(--muted)}
       </div>
       <p class="small">Opens .sb3 (Scratch, TurboWarp) and .pmp (PenguinMod) files. Made for computers, not phones.</p>
     </div>
-    <div class="shot"><img src="site/editor.jpg" width="1200" height="750" alt="The G-Warp editor: blocks on the left, a script in the middle, G-Spark on the stage on the right"></div>
+    <div class="shot"><span class="spark" aria-hidden="true"></span><img src="site/editor.jpg" width="1200" height="750" alt="The G-Warp editor: blocks on the left, a script in the middle, G-Spark on the stage on the right"></div>
   </header>
 </div>
+
+<section id="crew">
+  <div class="wrap">
+    <h2>Meet the crew</h2>
+    <p class="sub">Three helpers live inside G-Warp. Each one looks after a different part of your game.</p>
+    <div class="crew">
+      <div class="mate spark" tabindex="0"><span class="say" aria-hidden="true">Hi! Let's code something!</span><div class="pic"><img src="site/mascots/G-Spark.svg" width="120" height="110" loading="lazy" alt="G-Spark: a purple G with arms and legs"></div><h3>G-Spark</h3><span class="role">Your coding buddy</span><p>Lives on the stage, runs your first script and helps you build with blocks.</p></div>
+      <div class="mate dj" tabindex="0"><span class="say" aria-hidden="true">Yo! Want a fresh beat?</span><div class="pic"><img src="site/mascots/Grapher-the-DJ.svg" width="200" height="140" loading="lazy" alt="Grapher: a red G with a cap and headphones at a DJ deck"></div><h3>Grapher</h3><span class="role">The DJ</span><p>Runs the Song maker. Pick a style and a mood, and Grapher makes music for your game.</p></div>
+      <div class="mate graffy" tabindex="0"><span class="say" aria-hidden="true">Hello! Let's draw a costume!</span><div class="pic"><img src="site/mascots/Graffy.svg" width="140" height="130" loading="lazy" alt="Graffy: a green G with octopus tentacles"></div><h3>Graffy</h3><span class="role">The artist</span><p>Helps you draw and change costumes, from a simple shape to a whole character.</p></div>
+    </div>
+  </div>
+</section>
 
 <section id="about">
   <div class="wrap story">
