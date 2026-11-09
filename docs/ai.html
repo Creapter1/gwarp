@@ -25,7 +25,7 @@ footer{border-top:1px solid var(--line);border-bottom:0;color:var(--muted)}
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--wire);outline-offset:3px;border-radius:3px}
 @media(max-width:760px){.layout{grid-template-columns:1fr;padding:12px}aside{padding:14px}aside nav{columns:2}main{padding:16px}header{padding:12px}}
 </style>
-</head>
+<link rel="stylesheet" href="../site/footer.css"></head>
 <body>
 <header><a href="../index.html">⚡ G-Warp</a><div class="toplinks"><a href="../app.html">Open the app</a><a href="index.html">Documentation home</a><a href="tutorials/index.html">Tutorials</a></div></header>
 <div class="layout">
@@ -109,6 +109,15 @@ Tell me how to test it and what to check if the sprite does not move.</pre>
 <p><a href="index.html">← Documentation home</a> · <a href="../index.html">Back to website</a></p>
 </main>
 </div>
-<footer>G-Warp is an independent beta project. AI features and model compatibility may change; verify the current build before relying on them.</footer>
+<footer class="gwf" role="contentinfo"><div class="gwf-in">
+<div class="gwf-cols">
+<div><div class="gwf-brand"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="#facc15"/></svg>G-Warp</div><p style="margin:0">A free block-coding editor that runs Scratch projects, with a song maker, costumes, animation and AI helpers.</p></div>
+<nav aria-label="G-Warp"><h2>G-Warp</h2><ul><li><a href="../app.html">Open the editor</a></li><li><a href="../docs/index.html">Documentation</a></li><li><a href="../docs/start.html">Start here</a></li><li><a href="../docs/tutorials/index.html">Tutorials</a></li><li><a href="../docs/changelog.html">Changelog</a></li></ul></nav>
+<nav aria-label="Community"><h2>Community</h2><ul><li><a href="https://github.com/Creapter1/gwarp/issues/new">Report a bug</a></li><li><a href="https://github.com/Creapter1/gwarp">Source code</a></li><li><a href="../docs/team.html">Meet the AI team</a></li><li><a href="../docs/troubleshoot.html">Troubleshooting</a></li></ul></nav>
+<nav aria-label="Info"><h2>Info</h2><ul><li><a href="../docs/terms.html">Terms of Service</a></li><li><a href="../docs/safety.html">Safety + privacy</a></li><li><a href="../docs/parents.html">Parents &amp; teachers</a></li><li><a href="../docs/credits.html">Credits</a></li><li><a href="https://github.com/Creapter1/gwarp/blob/main/LICENSE">Licence (MIT)</a></li></ul></nav>
+<nav aria-label="Thanks to"><h2>Thanks to</h2><ul><li><a href="https://scratch.mit.edu/">Scratch</a></li><li><a href="https://turbowarp.org/">TurboWarp</a></li><li><a href="https://penguinmod.com/">PenguinMod</a></li></ul></nav>
+</div>
+<div class="gwf-low"><p>G-Warp is not affiliated with Scratch, the Scratch Team, the Scratch Foundation, TurboWarp or PenguinMod. Scratch is a project of the Scratch Foundation.</p><p>Made by Creapter · Beta · 2026</p></div>
+</div></footer>
 <script src="../gw-stats.js" defer></script>
 </body></html>
