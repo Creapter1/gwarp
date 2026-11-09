@@ -185,6 +185,10 @@ summary::marker{color:var(--wire)}
 .mate.spark{--c1:rgba(139,92,246,.3);--c2:#a78bfa;--c3:rgba(139,92,246,.35)}
 .mate.dj{--c1:rgba(239,68,68,.26);--c2:#f87171;--c3:rgba(239,68,68,.3)}
 .mate.graffy{--c1:rgba(34,197,94,.24);--c2:#4ade80;--c3:rgba(74,222,128,.28)}
+.mate .say{position:absolute;top:10px;left:50%;z-index:3;padding:8px 14px;border-radius:16px;background:#fff;color:#14142a;font-weight:800;font-size:15px;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.35),0 0 0 3px var(--c2);opacity:0;transform:translate(-50%,10px) scale(.85);transition:opacity .18s,transform .22s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.mate .say:after{content:"";position:absolute;left:50%;bottom:-8px;margin-left:-8px;border:8px solid transparent;border-bottom:0;border-top-color:#fff}
+.mate:hover .say,.mate:focus-visible .say{opacity:1;transform:translate(-50%,-26px) scale(1)}
+.mate:focus-visible{outline:3px solid var(--c2);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
 <link rel="stylesheet" href="site/footer.css">
@@ -220,9 +224,9 @@ summary::marker{color:var(--wire)}
     <h2>Meet the crew</h2>
     <p class="sub">Three helpers live inside G-Warp. Each one looks after a different part of your game.</p>
     <div class="crew">
-      <div class="mate spark"><div class="pic"><img src="site/mascots/G-Spark.svg" width="120" height="110" loading="lazy" alt="G-Spark: a purple G with arms and legs"></div><h3>G-Spark</h3><span class="role">Your coding buddy</span><p>Lives on the stage, runs your first script and helps you build with blocks.</p></div>
-      <div class="mate dj"><div class="pic"><img src="site/mascots/Grapher-the-DJ.svg" width="200" height="140" loading="lazy" alt="Grapher: a red G with a cap and headphones at a DJ deck"></div><h3>Grapher</h3><span class="role">The DJ</span><p>Runs the Song maker. Pick a style and a mood, and Grapher makes music for your game.</p></div>
-      <div class="mate graffy"><div class="pic"><img src="site/mascots/Graffy.svg" width="140" height="130" loading="lazy" alt="Graffy: a green G with octopus tentacles"></div><h3>Graffy</h3><span class="role">The artist</span><p>Helps you draw and change costumes, from a simple shape to a whole character.</p></div>
+      <div class="mate spark" tabindex="0"><span class="say" aria-hidden="true">Hi! Let's code something!</span><div class="pic"><img src="site/mascots/G-Spark.svg" width="120" height="110" loading="lazy" alt="G-Spark: a purple G with arms and legs"></div><h3>G-Spark</h3><span class="role">Your coding buddy</span><p>Lives on the stage, runs your first script and helps you build with blocks.</p></div>
+      <div class="mate dj" tabindex="0"><span class="say" aria-hidden="true">Yo! Want a fresh beat?</span><div class="pic"><img src="site/mascots/Grapher-the-DJ.svg" width="200" height="140" loading="lazy" alt="Grapher: a red G with a cap and headphones at a DJ deck"></div><h3>Grapher</h3><span class="role">The DJ</span><p>Runs the Song maker. Pick a style and a mood, and Grapher makes music for your game.</p></div>
+      <div class="mate graffy" tabindex="0"><span class="say" aria-hidden="true">Hello! Let's draw a costume!</span><div class="pic"><img src="site/mascots/Graffy.svg" width="140" height="130" loading="lazy" alt="Graffy: a green G with octopus tentacles"></div><h3>Graffy</h3><span class="role">The artist</span><p>Helps you draw and change costumes, from a simple shape to a whole character.</p></div>
     </div>
   </div>
 </section>
