@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://creapter1.github.io/gwarp/sitemap.xml
