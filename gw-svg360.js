@@ -13,7 +13,10 @@
    - Every layer stays its own group in the output (owner rule: each shape its own layer).
    The front/back of a drawing that was never drawn (a character's real back) can't come from math alone:
    that is the later local-AI step. Developer mode only until the owner approves it.
-   Kill switch: localStorage['gwarp-off-svg360'] = '1'.  API: window.GW_SVG360 { render, frames, layers, open }. */
+   1.1.0 (same day): "Play" shows the turn frames before making them; "How far" = all the way round, half turn, or a lean
+   (a lean gets an odd number of frames so the middle one is straight); "Add turn code" puts a My Block on the sprite,
+   "show <folder> at angle (angle)", plain Scratch blocks that pick the right frame for any angle; folder names never clash.
+   Kill switch: localStorage['gwarp-off-svg360'] = '1'.  API: window.GW_SVG360 { render, frames, angles, turnCode, layers, open }. */
 (function () {
   'use strict';
   try { if (localStorage.getItem('gwarp-off-svg360') === '1') return; } catch (e) {}
@@ -197,12 +200,14 @@
     var pad = 2 + 0.02 * Math.max(meta.all.x1 - meta.all.x0, meta.all.y1 - meta.all.y0);
     return write(svgText, meta, sol, centredBox(sol.cx, sol.cy, sol.bounds, pad));
   }
-  /* n frames turning all the way round one axis ('x' | 'y' | 'z'), same canvas for every frame */
-  function frames(svgText, o, axis, n) {
+  /* n frames turning round one axis ('x' | 'y' | 'z'), same canvas for every frame.
+     range: null = all the way round (360 / n apart); [from, to] = from..to degrees, first and last frame included */
+  function angles(n, range) { var a = []; for (var i = 0; i < n; i++) a.push(range ? range[0] + (range[1] - range[0]) * i / (n - 1) : 360 * i / n); return a; }
+  function frames(svgText, o, axis, n, range) {
     o = o || {}; n = clamp(Math.round(+n || 16), 2, 72); axis = String(axis || 'y').toLowerCase();
-    var meta = o.meta || prep(svgText), key = axis === 'x' ? 'rx' : axis === 'z' ? 'rz' : 'ry', views = [], all = null;
+    var meta = o.meta || prep(svgText), key = axis === 'x' ? 'rx' : axis === 'z' ? 'rz' : 'ry', views = [], all = null, A = angles(n, range);
     for (var i = 0; i < n; i++) {
-      var oi = {}; for (var k in o) oi[k] = o[k]; oi[key] = (+o[key] || 0) + 360 * i / n;
+      var oi = {}; for (var k in o) oi[k] = o[k]; oi[key] = (+o[key] || 0) + A[i];
       var sol = solve(meta, oi); views.push(sol);
       var bb = sol.bounds; all = all ? { x0: Math.min(all.x0, bb.x0), y0: Math.min(all.y0, bb.y0), x1: Math.max(all.x1, bb.x1), y1: Math.max(all.y1, bb.y1) } : { x0: bb.x0, y0: bb.y0, x1: bb.x1, y1: bb.y1 };
     }
@@ -248,7 +253,7 @@
   function el(tag, attrs, kids2) { var e = document.createElement(tag); if (attrs) for (var k in attrs) { if (k === 'text') e.textContent = attrs[k]; else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), attrs[k]); else e.setAttribute(k, attrs[k]); } (kids2 || []).forEach(function (c) { if (c) e.appendChild(c); }); return e; }
 
   var cur = null;    /* the open window */
-  function close() { if (!cur) return; try { cur.back.remove(); } catch (e) {} window.removeEventListener('keydown', cur.onKey, true); window.removeEventListener('keyup', cur.onKey, true); cur = null; }
+  function close() { if (!cur) return; try { cur.stop && cur.stop(); } catch (e) {} try { cur.back.remove(); } catch (e) {} window.removeEventListener('keydown', cur.onKey, true); window.removeEventListener('keyup', cur.onKey, true); cur = null; }
 
   function open(index) {
     ensureCss(); close();
@@ -263,8 +268,8 @@
     var err = el('div', { class: 'gw360-err' });
     function opts() { var L = st.layers.map(function (p) { return { z: p.z, t: p.t, hide: p.hide, tx: p.tx, ty: p.ty }; }); return { meta: meta, rx: st.rx, ry: st.ry, rz: st.rz, depth: st.depth, thickness: st.thickness, light: st.light / 100, back: st.back, layers: L }; }
     var raf = 0;
-    function draw() { raf = 0; try { var out = render(src, opts()); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(out); err.textContent = ''; } catch (e) { err.textContent = e.message || String(e); } }
-    function redraw() { if (!raf) raf = requestAnimationFrame(draw); }
+    function draw() { raf = 0; if (play) return; try { var out = render(src, opts()); img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(out); err.textContent = ''; } catch (e) { err.textContent = e.message || String(e); } }
+    function redraw() { if (play) { stopPlay(); return; } if (!raf) raf = requestAnimationFrame(draw); }   /* changing anything stops Play */
     var inputs = {};
     function slider(key, label, min, max, step) {
       var r = el('input', { type: 'range', min: min, max: max, step: step || 1, value: st[key], 'aria-label': label });
@@ -301,8 +306,24 @@
     back.addEventListener('change', function () { st.back = back.value; redraw(); });
     var axis = el('select', { 'aria-label': 'Turn around' }, [el('option', { value: 'y', text: 'Turn: Y (left / right)' }), el('option', { value: 'x', text: 'Turn: X (roll over)' }), el('option', { value: 'z', text: 'Turn: Z (spin flat)' })]);
     var count = el('select', { 'aria-label': 'Frames' }, [8, 12, 16, 24, 36].map(function (n) { var o = el('option', { value: n, text: n + ' frames' }); if (n === 16) o.selected = true; return o; }));
+    var RANGES = { full: null, half: [-90, 90], tilt: [-45, 45], small: [-20, 20] };
+    var range = el('select', { 'aria-label': 'How far' }, [['full', 'All the way round'], ['half', 'Half turn (-90 to 90)'], ['tilt', 'Lean (-45 to 45)'], ['small', 'Small lean (-20 to 20)']].map(function (x) { return el('option', { value: x[0], text: x[1] }); }));
+    var codeChk = el('input', { type: 'checkbox', id: 'gw360Code' }); codeChk.checked = true;
+    function howMany() { var n = +count.value; return RANGES[range.value] && n % 2 === 0 ? n + 1 : n; }   /* a lean gets an odd number of frames, so the middle one is straight */
+    var playBtn = el('button', { type: 'button', text: 'Play', title: 'Play the turn frames you are about to make' }), play = null;
+    function stopPlay() { if (!play) return; clearInterval(play.t); play = null; playBtn.textContent = 'Play'; redraw(); }
+    playBtn.addEventListener('click', function () {
+      if (play) return stopPlay();
+      try {
+        var list = frames(src, opts(), axis.value, howMany(), RANGES[range.value]).map(function (svg) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); }), k = 0, dir = 1, loop = !RANGES[range.value];
+        play = { t: setInterval(function () { img.src = list[k]; if (loop) k = (k + 1) % list.length; else { if (k + dir < 0 || k + dir >= list.length) dir = -dir; k += dir; } }, 1000 / 12) };
+        playBtn.textContent = 'Stop'; err.textContent = '';
+      } catch (e) { err.textContent = e.message || String(e); }
+    });
+    [axis, count, range].forEach(function (x) { x.addEventListener('change', stopPlay); });
     var addBtn = el('button', { class: 'go', type: 'button', text: 'Add as costume' }), framesBtn = el('button', { class: 'go2', type: 'button', text: 'Make turn frames' });
     var resetBtn = el('button', { type: 'button', text: 'Reset' }), closeBtn = el('button', { type: 'button', text: 'Close' });
+    closeBtn.addEventListener('click', stopPlay);
     function busy(on) { addBtn.disabled = framesBtn.disabled = on; }
     addBtn.addEventListener('click', function () {
       busy(true);
@@ -312,8 +333,14 @@
     framesBtn.addEventListener('click', function () {
       busy(true);
       try {
-        var ax = axis.value, n = +count.value, list = frames(src, opts(), ax, n), base = String(c.name).replace(/\/\//g, ' ') + ' 360 ' + ax.toUpperCase();
-        addCostumes(list.map(function (svg, i) { return { name: base + '//' + (i < 9 ? '0' : '') + (i + 1), svg: svg }; })).then(function (k) { busy(false); if (k) toast(k + ' turn frames added (folder "' + base + '")'); });
+        stopPlay();
+        var ax = axis.value, n = howMany(), rg = RANGES[range.value], list = frames(src, opts(), ax, n, rg), base = freeBase(s, String(c.name).replace(/\/\//g, ' ') + ' 360 ' + ax.toUpperCase()), who = engine().activeSpriteIndex;
+        addCostumes(list.map(function (svg, i) { return { name: base + '//' + (i < 9 ? '0' : '') + (i + 1), svg: svg }; })).then(function (k) {
+          if (!k) { busy(false); return; }
+          if (!codeChk.checked || k !== n) { busy(false); toast(k + ' turn frames added (folder "' + base + '")'); return; }
+          addTurnCode(who, base, n, rg).then(function (pc) { busy(false); toast(k + ' turn frames added (folder "' + base + '")' + (pc ? ' and the My Block "' + pc.replace('%s', '(angle)') + '"' : '')); },
+            function (e) { busy(false); toast(k + ' turn frames added; the turn code could not be added: ' + (e && e.message || e)); });
+        });
       } catch (e) { busy(false); err.textContent = e.message; }
     });
     resetBtn.addEventListener('click', function () { inputs.rx(0); inputs.ry(30); inputs.rz(0); inputs.depth(6); inputs.thickness(6); inputs.light(60); st.layers = meta.names.map(function () { return {}; }); layerRows(); redraw(); });
@@ -331,7 +358,9 @@
         el('div', { class: 'gw360-sec', text: 'Shape' }), depthRow, thickRow, slider('light', 'Light', 0, 100), back,
         el('div', { class: 'gw360-sec', text: 'Layers' }), layerBox,
         el('div', { class: 'gw360-sec', text: 'Make' }), el('div', { class: 'gw360-btns' }, [addBtn]),
-        el('div', { class: 'gw360-btns' }, [axis, count, framesBtn]),
+        el('div', { class: 'gw360-btns' }, [axis, count, range]),
+        el('div', { class: 'gw360-btns' }, [playBtn, framesBtn]),
+        el('div', { class: 'gw360-btns' }, [codeChk, el('label', { for: 'gw360Code', text: 'Add turn code (a My Block that picks the frame for an angle)' })]),
         el('div', { class: 'gw360-btns', style: 'margin-top:auto' }, [resetBtn, closeBtn])
       ])
     ]);
@@ -343,9 +372,43 @@
     };
     window.addEventListener('keydown', onKey, true); window.addEventListener('keyup', onKey, true);
     document.body.appendChild(backEl);
-    cur = { back: backEl, onKey: onKey, index: index };
+    cur = { back: backEl, onKey: onKey, index: index, stop: stopPlay };
     layerRows(); draw();
     return true;
+  }
+
+  /* the turn code: My Block "show <base> at angle (angle)" on the sprite. angle 0 = the first frame. */
+  function turnCode(base, n, range) {
+    var K = window.GW_SB3_BLOCKS; if (!K) throw new Error('needs the Big map tool (shared block builder)');
+    var lv = {}, loc = {}; ['360 angle', '360 frame'].forEach(function (nm) { var id = K.nid(); lv[id] = [nm, 0]; loc[nm] = [nm, id]; });
+    var B = new K.Blocks(function (nm) { return loc[nm]; }), comments = {}, V = function (x) { return ['var', x]; }, body, note;
+    var pc = 'show ' + base.replace(/%/g, ' ') + ' at angle %s';
+    if (!range) {
+      var step = 360 / n;
+      body = [['set', '360 frame', ['+', ['mod', ['round', ['/', ['arg', 'angle'], step]], n], 1]]];
+      note = 'SVG 360 turn code: shows the frame of "' + base + '" for any angle (0 = the first frame, 90 = a quarter turn, it goes round and round). '
+        + n + ' frames, ' + (Math.round(step * 100) / 100) + ' degrees apart. Use it in your own scripts, for example with a direction or a speed. Plain Scratch blocks.';
+    } else {
+      var a = range[0], b = range[1], st = (b - a) / (n - 1);
+      body = [['set', '360 angle', ['arg', 'angle']], ['if', ['<', V('360 angle'), a], [['set', '360 angle', a]]], ['if', ['>', V('360 angle'), b], [['set', '360 angle', b]]],
+        ['set', '360 frame', ['+', ['round', ['/', ['-', V('360 angle'), a], st]], 1]]];
+      note = 'SVG 360 turn code: shows the frame of "' + base + '" for an angle from ' + a + ' to ' + b + ' (0 = the middle, how you set it up). '
+        + 'Angles outside that stay on the first / last frame. Great for a plane leaning into a turn. Plain Scratch blocks.';
+    }
+    body.push(['ifelse', ['<', V('360 frame'), 10], [['costume', ['join', base + '//0', V('360 frame')], base + '//01']], [['costume', ['join', base + '//', V('360 frame')], base + '//01']]]);
+    B.define(pc, ['angle'], true, body, 40, 40, note, comments);
+    return { variables: lv, blocks: B.b, comments: comments, proccode: pc };
+  }
+  function addTurnCode(index, base, n, range) {
+    var api = window.GW_V1580_SB3, E = engine(), s = E.sprites && E.sprites[index];
+    if (!api || !api.addSprites || !s) return Promise.resolve(null);
+    var code = turnCode(base, n, range);
+    return api.addSprites({ targets: [{ isStage: true, name: 'Stage', variables: {}, blocks: {} }, { isStage: false, gwSprite: index, name: s.name, variables: code.variables, lists: {}, blocks: code.blocks, comments: code.comments, costumes: [], sounds: [] }] }, {})
+      .then(function () { return code.proccode; });
+  }
+  function freeBase(s, want) {     /* a folder name no costume uses yet, so every frame keeps its exact name */
+    var used = function (b) { return s.costumes.some(function (c) { return String(c.name).indexOf(b + '//') === 0; }); };
+    if (!used(want)) return want; for (var i = 2; i < 99; i++) if (!used(want + ' ' + i)) return want + ' ' + i; return want + ' ' + Date.now();
   }
 
   /* add costumes through the app's own upload path (same sizing, undo and list refresh as "Upload costume") */
@@ -409,5 +472,5 @@
   (function boot(n) { if (!entry() && n < 120) setTimeout(function () { boot(n + 1); }, 500); })(0);
   window.addEventListener('gwarp-devmode', function () { entry(); });
 
-  window.GW_SVG360 = { version: '1.0.0', render: render, frames: frames, layers: layers, open: open, close: close, _rotation: rotation, _solve: solve, _measure: measure };
+  window.GW_SVG360 = { version: '1.1.0', render: render, frames: frames, angles: angles, turnCode: turnCode, addTurnCode: addTurnCode, layers: layers, open: open, close: close, _rotation: rotation, _solve: solve, _measure: measure };
 })();

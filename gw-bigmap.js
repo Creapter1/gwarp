@@ -8,7 +8,10 @@
    global variables "cam x" / "cam y" (your own code moves the camera) and "world width". A picture wider than the stage
    is cut into stage-wide pieces (exact vector cuts), so a really big map works too. Nothing else in the project is touched.
    Developer mode only until the owner approves it. Kill switch: localStorage['gwarp-off-bigmap'] = '1'.
-   API: window.GW_BIGMAP { open, pieces, layerScripts, add }. */
+   1.1.0 (same day): the Stage sends "map: draw" every frame and everything on the map draws then, so the map and the
+   sprites always use the same camera. "Sprites on the map": the player (the camera follows it, try-out arrow keys) and
+   world objects (enemies, coins...) get world x / world y and plain Scratch code on the user's own sprites.
+   API: window.GW_BIGMAP { open, pieces, layerScripts, worldScripts, stageScripts, add }. */
 (function () {
   'use strict';
   try { if (localStorage.getItem('gwarp-off-bigmap') === '1') return; } catch (e) {}
@@ -95,6 +98,10 @@
     if (op === 'floor' || op === 'abs') { i = this.add('operator_mathop', p, null, { OPERATOR: [op, null] }); this.b[i].inputs = { NUM: this.num(e[1], i) }; return i; }
     if (op === '<' || op === '>') { i = this.add(op === '<' ? 'operator_lt' : 'operator_gt', p); this.b[i].inputs = { OPERAND1: this.text(e[1], i), OPERAND2: this.text(e[2], i) }; return i; }
     if (op === 'or' || op === 'and') { i = this.add('operator_' + op, p); this.b[i].inputs = { OPERAND1: [2, this.expr(e[1], i)], OPERAND2: [2, this.expr(e[2], i)] }; return i; }
+    if (op === '=') { i = this.add('operator_equals', p); this.b[i].inputs = { OPERAND1: this.text(e[1], i), OPERAND2: this.text(e[2], i) }; return i; }
+    if (op === 'round') { i = this.add('operator_round', p); this.b[i].inputs = { NUM: this.num(e[1], i) }; return i; }
+    if (op === 'join') { i = this.add('operator_join', p); this.b[i].inputs = { STRING1: this.text(e[1], i), STRING2: this.text(e[2], i) }; return i; }
+    if (op === 'arg') return this.add('argument_reporter_string_number', p, null, { VALUE: [e[1], null] });
     if (op === 'key') { i = this.add('sensing_keypressed', p); var m = this.add('sensing_keyoptions', i, null, { KEY_OPTION: [e[1], null] }, true); this.b[i].inputs = { KEY_OPTION: [1, m] }; return i; }
     throw new Error('expr ' + op);
   };
@@ -107,15 +114,30 @@
     if (op === 'goto') { i = this.add('motion_gotoxy', p); this.b[i].inputs = { X: this.num(s[1], i), Y: this.num(s[2], i) }; return i; }
     if (op === 'costume') { i = this.add('looks_switchcostumeto', p); m = this.add('looks_costume', i, null, { COSTUME: [s[2], null] }, true); this.b[i].inputs = { COSTUME: [3, this.expr(s[1], i), m] }; return i; }
     if (op === 'show' || op === 'hide') return this.add('looks_' + op, p);
+    if (op === 'broadcast') { i = this.add('event_broadcast', p); this.b[i].inputs = { BROADCAST_INPUT: [1, [11, s[1], bcid(s[1])]] }; return i; }
     if (op === 'clone') { i = this.add('control_create_clone_of', p); m = this.add('control_create_clone_of_menu', i, null, { CLONE_OPTION: ['_myself_', null] }, true); this.b[i].inputs = { CLONE_OPTION: [1, m] }; return i; }
     throw new Error('stmt ' + op);
   };
   Blocks.prototype.seq = function (list, p) { var first = null, prev = null, self = this; list.forEach(function (s) { var i = self.stmt(s, prev || p); if (prev) self.b[prev].next = i; else first = i; prev = i; }); return first; };
   Blocks.prototype.script = function (hat, list, x, y, note, comments) {
-    var h = this.add(hat, null, null, null, false, true); this.b[h].x = x; this.b[h].y = y; this.b[h].next = this.seq(list, h);
+    var hf = Array.isArray(hat) ? hat : [hat, null], h = this.add(hf[0], null, null, hf[1], false, true); this.b[h].x = x; this.b[h].y = y; this.b[h].next = this.seq(list, h);
     if (note) { var c = nid(); comments[c] = { blockId: h, x: x + 470, y: y, width: 330, height: 60 + 17 * Math.ceil(note.length / 44), minimized: false, text: note }; this.b[h].comment = c; }
     return h;
   };
+
+  /* a My Block: define <proccode> with number/text inputs (argNames), "run without screen refresh" = warp */
+  Blocks.prototype.define = function (proccode, argNames, warp, list, x, y, note, comments) {
+    var self = this, d = this.add('procedures_definition', null, null, null, false, true), pk = this.add('procedures_prototype', d, null, null, true), ids = argNames.map(function () { return nid(); }), ins = {};
+    argNames.forEach(function (nm, k) { ins[ids[k]] = [1, self.add('argument_reporter_string_number', pk, null, { VALUE: [nm, null] }, true)]; });
+    this.b[pk].inputs = ins;
+    this.b[pk].mutation = { tagName: 'mutation', children: [], proccode: proccode, argumentids: JSON.stringify(ids), argumentnames: JSON.stringify(argNames), argumentdefaults: JSON.stringify(argNames.map(function () { return ''; })), warp: warp ? 'true' : 'false' };
+    this.b[d].inputs = { custom_block: [1, pk] }; this.b[d].x = x; this.b[d].y = y; this.b[d].next = this.seq(list, d);
+    if (note) { var c = nid(); comments[c] = { blockId: d, x: x + 470, y: y, width: 330, height: 60 + 17 * Math.ceil(note.length / 44), minimized: false, text: note }; this.b[d].comment = c; }
+    return d;
+  };
+  var DRAW = 'map: draw';
+  function bcid(name) { return 'gwbc-' + String(name).replace(/[^a-z0-9]+/gi, '-'); }
+  function onDraw() { return ['event_whenbroadcastreceived', { BROADCAST_OPTION: [DRAW, bcid(DRAW)] }]; }
 
   /* the code of one layer.
      side : this sprite + 1 clone side by side (tile 0 / tile 1) always cover the stage; hidden when above / below the stage.
@@ -131,12 +153,13 @@
           ['mod', ['+', ['floor', ['/', V('scroll x'), TILE]], V('tile x')], P.cols]], 1], 'piece 1'],
         ['goto', ['-', ['*', V('tile x'), TILE], ['mod', V('scroll x'), TILE]], ['-', ['*', V('tile y'), CELL_H], ['mod', V('scroll y'), CELL_H]]]
       ];
-      B.script('event_whenflagclicked', [['show'], ['set', 'tile x', 1], ['set', 'tile y', 0], ['clone'], ['set', 'tile y', 1], ['clone'], ['set', 'tile x', 0], ['clone'], ['set', 'tile y', 0], ['forever', place]], 40, 40,
+      B.script('event_whenflagclicked', [['show'], ['set', 'tile x', 1], ['set', 'tile y', 0], ['clone'], ['set', 'tile y', 1], ['clone'], ['set', 'tile x', 0], ['clone'], ['set', 'tile y', 0]], 40, 40,
         'Giant map "' + L.name + '": ' + P.cols + ' x ' + P.rows + ' pieces of 480 x 360 (costumes "piece 1".., row by row from the top). '
         + 'This sprite and 3 clones make a 2 x 2 square (tile x / tile y) that always covers the stage. The map repeats for ever in X and Y. '
         + 'Camera 0, 0 = the middle of the bottom-left piece. Move the camera by changing "cam x" / "cam y" in your own code.', comments);
-      B.script('control_start_as_clone', [['forever', place]], 40, 520,
-        'scroll x / scroll y = how far the map has moved (wraps round the whole map). Each copy shows the piece under its corner of the square.', comments);
+      B.script(onDraw(), place, 40, 420,
+        'Runs every frame for this sprite and its clones ("map: draw" comes from the Stage after the camera moved). '
+        + 'scroll x / scroll y = how far the map has moved (wraps round the whole map). Each copy shows the piece under its corner of the square.', comments);
       return { blocks: B.b, comments: comments };
     }
     var n = P.cols, ph = P.h;
@@ -147,13 +170,53 @@
       ['goto', ['-', ['*', V('tile'), TILE], ['mod', V('scroll'), TILE]], V('ypos')],
       ['ifelse', ['or', ['<', ['+', V('ypos'), ph / 2], -180], ['>', ['-', V('ypos'), ph / 2], 180]], [['hide']], [['show']]]
     ];
-    B.script('event_whenflagclicked', [['set', 'tile', 1], ['clone'], ['set', 'tile', 0], ['forever', place2]], 40, 40,
+    B.script('event_whenflagclicked', [['set', 'tile', 1], ['clone'], ['set', 'tile', 0]], 40, 40,
       'Big map layer "' + L.name + '": follows the camera at ' + L.speed + ' x its speed (1 = moves with the world, 0 = stays still). '
       + 'This sprite and one clone sit side by side (tile 0 and tile 1), so the ' + n + '-piece picture covers the stage at any camera position '
       + 'and repeats for ever. Move the camera by changing "cam x" and "cam y" in your own code.', comments);
-    B.script('control_start_as_clone', [['forever', place2]], 40, 420,
-      'scroll = how far this layer has moved (wraps round the whole picture). The piece shown = the 480-wide piece under the camera. '
+    B.script(onDraw(), place2, 40, 360,
+      'Runs every frame for this sprite and its clone ("map: draw" comes from the Stage after the camera moved). '
+      + 'scroll = how far this layer has moved (wraps round the whole picture). The piece shown = the 480-wide piece under the camera. '
       + 'Hidden when fully above or below the stage.', comments);
+    return { blocks: B.b, comments: comments };
+  }
+  /* the Stage sends "map: draw" every frame. Sprites run their own code first (and the player moves the camera), then
+     everything on the map draws with the same camera, so the map and the sprites never slide against each other. */
+  function stageScripts(vars) {
+    var B = new Blocks(vars), comments = {};
+    B.script('event_whenflagclicked', [['forever', [['broadcast', DRAW]]]], 40, 40,
+      'BIG MAP: every frame this tells the map layers and the world sprites to draw ("map: draw"), after your sprites have moved '
+      + 'and the camera has followed. So everything uses the same camera and nothing slides. Keep this script.', comments);
+    return { blocks: B.b, comments: comments };
+  }
+  /* a sprite that lives in the world: "world x" / "world y" instead of x / y. role 'player' also moves the camera. */
+  function worldScripts(role, o, vars) {
+    var B = new Blocks(vars), comments = {}, V = function (x) { return ['var', x]; }, half = ['/', V('world width'), 2], m = Math.max(0, Math.round(o.margin || 0));
+    var wrapDx = ['-', ['mod', ['+', ['-', V('world x'), V('cam x')], half], V('world width')], half];
+    var start = [['set', 'world x', o.x], ['set', 'world y', o.y], ['set', 'hidden', 0]];
+    if (role === 'player') {
+      B.script('event_whenflagclicked', start.concat([['set', 'cam x', ['mod', V('world x'), V('world width')]], ['set', 'cam y', V('world y')], ['if', ['<', V('cam y'), 0], [['set', 'cam y', 0]]],
+        ['forever', [['set', 'world x', ['mod', V('world x'), V('world width')]],
+          ['change', 'cam x', ['*', wrapDx, o.follow]], ['set', 'cam x', ['mod', V('cam x'), V('world width')]],
+          ['change', 'cam y', ['*', ['-', V('world y'), V('cam y')], o.follow]], ['if', ['<', V('cam y'), 0], [['set', 'cam y', 0]]]]]]), 40, 40,
+        'PLAYER: the camera follows this sprite (' + (o.follow >= 1 ? 'locked' : 'smoothly, ' + o.follow + ' of the way each frame') + '). '
+        + 'Move it with "change world x / world y" (not x / y): the map draws it on the stage. The world wraps: world x goes from 0 to "world width". '
+        + 'The camera never goes below y 0 (the ground); delete that "if" if your world goes down.', comments);
+      if (o.keys) B.script('event_whenflagclicked', [['forever', [['if', ['key', 'right arrow'], [['change', 'world x', 6]]], ['if', ['key', 'left arrow'], [['change', 'world x', -6]]],
+        ['if', ['key', 'up arrow'], [['change', 'world y', 6]]], ['if', ['key', 'down arrow'], [['change', 'world y', -6]]]]]], 40, 560,
+        'TRY-OUT: the arrow keys move the player so you can test the map right away. Delete this script when you write your own movement '
+        + '(change world x / world y).', comments);
+    } else {
+      B.script('event_whenflagclicked', start, 40, 40,
+        'WORLD OBJECT: lives on the map at world x / world y (starts where it was when the map code was added). Move it with '
+        + '"change world x / world y". Clones keep their own world x / world y. To hide it, set "hidden" to 1 (the hide block alone '
+        + 'would be undone by the map). To chase the player, use the sensing block ([world x] of [your player]).', comments);
+    }
+    B.script(onDraw(), [['set', 'screen x', wrapDx], ['set', 'screen y', ['-', V('world y'), V('cam y')]],
+      ['ifelse', ['or', ['or', ['>', V('hidden'), 0], ['>', ['abs', V('screen x')], 240 + m]], ['>', ['abs', V('screen y')], 180 + m]],
+        [['hide']], [['goto', V('screen x'), V('screen y')], ['show']]]], 40, role === 'player' ? (o.keys ? 820 : 560) : 300,
+      'Runs every frame ("map: draw"): puts this sprite on the stage where its world spot is, seen from the camera. '
+      + 'Hidden when it is off the stage (' + m + ' = half its size, so it never gets stuck at the edge).', comments);
     return { blocks: B.b, comments: comments };
   }
   function cameraScripts(vars, W) {
@@ -173,10 +236,32 @@
 
   /* ---------- add to the project ---------- */
   function hex() { var s = ''; for (var i = 0; i < 32; i++) s += Math.floor(Math.random() * 16).toString(16); return s; }
-  function add(layers, W, withCamera) {
+  /* does this sprite (index) already have code that sends or answers "map: draw"? */
+  function hasMapDraw(owner) {
+    var ws = by('workspaceCanvas'); if (!ws || owner == null || owner < 0) return false;
+    return [].some.call(ws.querySelectorAll('.block-stack'), function (st) { return st.dataset.owner === String(owner) && [].some.call(st.querySelectorAll('select'), function (x) { return x.value === DRAW; }); });
+  }
+  function margin(s) {     /* how far past the stage edge the sprite's middle can go before it must hide (Scratch keeps 15 px of a sprite on the stage) */
+    try { var b = window.GW && GW.spriteBounds && GW.spriteBounds(s), w = b.right - b.left, h = b.top - b.bottom; if (isFinite(w) && isFinite(h) && w > 0 && h > 0) return Math.max(0, Math.ceil(Math.max(w, h) / 2) - Math.min(15, Math.floor(Math.min(w, h) / 2))); } catch (e) {}
+    return 40;
+  }
+  /* people: [{ index, role: 'player' | 'object', follow (0..1), keys }] - code added to the project's own sprites */
+  function add(layers, W, withCamera, people) {
     var api = window.GW_V1580_SB3; if (!api || !api.addSprites) return Promise.reject(new Error('This G-Warp version cannot add sprites yet.'));
-    var stageVars = {}, gv = {}; [['cam x', 0], ['cam y', 0], ['world width', W]].forEach(function (p) { var i = nid(); stageVars[i] = p; gv[p[0]] = [p[0], i]; });
-    var files = {}, targets = [{ isStage: true, name: 'Stage', variables: stageVars, lists: {}, blocks: {}, comments: {}, costumes: [], sounds: [] }];
+    layers = layers || []; people = people || [];
+    var E = window.Engine, stageVars = {}, gv = {}; [['cam x', 0], ['cam y', 0], ['world width', W]].forEach(function (p) { var i = nid(); stageVars[i] = p; gv[p[0]] = [p[0], i]; });
+    var proxy = -1; try { proxy = window.GW_STAGE_SELECT && GW_STAGE_SELECT.proxyIdx ? GW_STAGE_SELECT.proxyIdx() : -1; } catch (e) {}
+    var sc = hasMapDraw(proxy) ? { blocks: {}, comments: {} } : stageScripts(function (n) { return gv[n]; }), skipped = [];
+    var files = {}, bc = {}; bc[bcid(DRAW)] = DRAW;
+    var targets = [{ isStage: true, name: 'Stage', variables: stageVars, lists: {}, broadcasts: bc, blocks: sc.blocks, comments: sc.comments, costumes: [], sounds: [] }];
+    people.forEach(function (P0) {
+      var s = E.sprites[P0.index]; if (!s || s.isClone || s.stageProxy) return;
+      if (hasMapDraw(P0.index)) { skipped.push(s.name); return; }
+      var lv = {}, local = {};
+      ['world x', 'world y', 'hidden', 'screen x', 'screen y'].forEach(function (n) { var i = nid(); lv[i] = [n, 0]; local[n] = [n, i]; });
+      var code = worldScripts(P0.role, { x: Math.round(+s.x || 0), y: Math.round(+s.y || 0), margin: margin(s), follow: Math.max(0.01, Math.min(1, +P0.follow || 1)), keys: !!P0.keys }, function (n) { return local[n] || gv[n]; });
+      targets.push({ isStage: false, gwSprite: P0.index, name: s.name, variables: lv, lists: {}, blocks: code.blocks, comments: code.comments, costumes: [], sounds: [] });
+    });
     layers.forEach(function (L, li) {
       var P = L.pieces, lv = {}, local = {};
       (P.kind === 'giant' ? ['tile x', 'tile y', 'scroll x', 'scroll y'] : ['tile', 'scroll', 'ypos']).forEach(function (n) { var i = nid(); lv[i] = [n, 0]; local[n] = [n, i]; });
@@ -194,7 +279,8 @@
     }
     return api.addSprites({ targets: targets }, files).then(function (r) {
       (r && r.sprites || []).forEach(function (i) { var sp = window.Engine.sprites[i]; if (sp) sp.__gwBigmap = true; });
-      return r;
+      if (layers.length) try { var G = window.GW_VARS ? GW_VARS.globals() : window.Engine.variables; G['world width'] = W; } catch (e) {}   /* the newest map sets the world width */
+      r = r || {}; r.skipped = skipped; return r;
     });
   }
   /* Undo / redo: G-Warp's undo brings back the scripts and variables but not the list of sprites, so undoing "Add to project"
@@ -231,6 +317,7 @@
     + '.gwbm-view{padding:12px;display:flex;flex-direction:column;gap:8px}.gwbm-view canvas{width:480px;height:360px;border-radius:8px;border:1px solid #2a2f4d;cursor:grab;touch-action:none;background:#7dd3fc}'
     + '.gwbm-view canvas:active{cursor:grabbing}.gwbm-hint{color:#8e93b5;font-size:12px;max-width:480px}.gwbm-cam{color:#c9cce6;font-variant-numeric:tabular-nums}'
     + '.gwbm-side{border-left:1px solid #2a2450;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}'
+    + '.gwbm-people{display:flex;flex-direction:column;gap:4px}.gwbm-who{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'
     + '.gwbm-sec{color:#86efac;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}'
     + '.gwbm-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.gwbm-row label{color:#c9cce6}'
     + '.gwbm input[type=number]{width:62px;background:#0b0e1c;color:#fff;border:1px solid #2f3456;border-radius:6px;padding:2px 4px}'
@@ -265,7 +352,9 @@
     var SRC = sources(), byKey = {}; SRC.forEach(function (s) { byKey[s.key] = s; });
     var layers = [{ key: 'ex:Mountains', kind: 'side', speed: 0.2, y: 20, speedY: 0.25 }, { key: 'ex:Clouds', kind: 'side', speed: 0.4, y: 110, speedY: 0.5 }, { key: 'ex:City', kind: 'side', speed: 0.7, y: -36, speedY: 0.7 }, { key: 'ex:Ground', kind: 'side', speed: 1, y: -180, speedY: 1 }];
     if (first && byKey[first]) layers = [{ key: first, kind: bigEnough(byKey[first].svg) ? 'giant' : 'side', speed: 1, y: 0, speedY: 1 }];
-    var st = { camX: 0, camY: 0, W: 4800, camera: true, fly: false };
+    var st = { camX: 0, camY: 0, W: 4800, camera: true, fly: false, follow: 0.2, keys: true };
+    var PE = (window.Engine && Engine.sprites || []).map(function (sp, i) { return { index: i, sp: sp, role: '' }; })
+      .filter(function (o) { var sp = o.sp; return sp && !sp.isClone && !sp.stageProxy && !sp.__gwBigmap && !/^(Map: |Camera \(test\))/.test(sp.name || ''); });
     var cv = el('canvas', { width: 480, height: 360, 'aria-label': 'Map preview: drag to move the camera' }), g = cv.getContext('2d');
     var camLbl = el('span', { class: 'gwbm-cam' }), warn = el('div', { class: 'gwbm-warn' }), err = el('div', { class: 'gwbm-err' });
     var sky = null; try { var E = window.Engine, bd = E && E.backdrops && E.backdrops[E.activeBackdrop || 0]; if (bd && (bd.svgImage || bd.image)) { sky = new Image(); sky.src = bd.svgImage || bd.image; } } catch (e) {}
@@ -303,6 +392,12 @@
           var piece = mod(Math.floor(scroll / TILE) + t, P.cols); x = t * TILE - mod(scroll, TILE); im = L.imgs[piece];
           if (im && im.complete && im.naturalWidth) g.drawImage(im, 240 + x - P.pw / 2, 180 - ypos - P.ph / 2, P.pw, P.ph);
         }
+      });
+      PE.forEach(function (o) {     /* the world sprites at their start spot, seen from this camera */
+        if (!o.role) return; var x = mod((+o.sp.x || 0) - st.camX + st.W / 2, st.W) - st.W / 2, y = (+o.sp.y || 0) - st.camY;
+        if (Math.abs(x) > 260 || Math.abs(y) > 200) return;
+        g.beginPath(); g.arc(240 + x, 180 - y, 7, 0, 7); g.fillStyle = o.role === 'player' ? '#a78bfa' : '#facc15'; g.fill(); g.lineWidth = 2; g.strokeStyle = '#0b1020'; g.stroke();
+        g.font = '12px system-ui, sans-serif'; g.fillStyle = '#fff'; g.fillText(o.sp.name, 240 + x + 10, 180 - y + 4);
       });
       camLbl.textContent = 'camera  x ' + Math.round(st.camX) + '   y ' + Math.round(st.camY);
     }
@@ -358,17 +453,43 @@
     addLayerSel.addEventListener('change', function () { if (!addLayerSel.value) return; var gi = bigEnough(byKey[addLayerSel.value].svg), L = { key: addLayerSel.value, kind: gi ? 'giant' : 'side', speed: gi ? 1 : 0.5, y: 0, speedY: gi ? 1 : 0.5 }; prep(L); layers.push(L); addLayerSel.value = ''; rows(); check(); });
     var flyBtn = el('button', { type: 'button', text: 'Fly' }); flyBtn.addEventListener('click', function () { st.fly = !st.fly; flyBtn.textContent = st.fly ? 'Stop' : 'Fly'; });
     var resetBtn = el('button', { type: 'button', text: 'Camera to 0' }); resetBtn.addEventListener('click', function () { st.camX = 0; st.camY = 0; });
+    /* sprites in the world: the player (the camera follows it) and world objects (enemies, coins...) */
+    var peopleBox = el('div', { class: 'gwbm-people' });
+    var followSel = el('select', { 'aria-label': 'Camera follow' }, [['1', 'Camera: locked on the player'], ['0.2', 'Camera: smooth'], ['0.08', 'Camera: very smooth']].map(function (o) { var op = el('option', { value: o[0], text: o[1] }); if (+o[0] === st.follow) op.selected = true; return op; }));
+    followSel.addEventListener('change', function () { st.follow = +followSel.value; });
+    var keysChk = el('input', { type: 'checkbox', id: 'gwbmKeys' }); keysChk.checked = st.keys; keysChk.addEventListener('change', function () { st.keys = keysChk.checked; });
+    function hasPlayer() { return PE.some(function (o) { return o.role === 'player'; }); }
+    function people() {
+      peopleBox.innerHTML = '';
+      if (!PE.length) peopleBox.appendChild(el('div', { class: 'info', text: 'No sprites yet. Add your player or enemies first, then open Big map again.' }));
+      PE.forEach(function (o) {
+        var sel = el('select', { 'aria-label': o.sp.name + ' on the map' }, [['', 'Not on the map'], ['player', 'Player (camera follows)'], ['object', 'World object']].map(function (x) { var op = el('option', { value: x[0], text: x[1] }); if (x[0] === o.role) op.selected = true; return op; }));
+        sel.addEventListener('change', function () { if (sel.value === 'player') PE.forEach(function (q) { if (q.role === 'player') q.role = ''; }); o.role = sel.value; people(); });
+        peopleBox.appendChild(el('div', { class: 'gwbm-row' }, [el('span', { class: 'gwbm-who', text: o.sp.name, title: o.sp.name }), sel]));
+      });
+      var pl = hasPlayer();
+      followSel.disabled = keysChk.disabled = !pl;
+      camChk.disabled = pl; if (pl) { camChk.checked = false; st.camera = false; }
+      codeBtn.disabled = !PE.some(function (o) { return o.role; });
+    }
+    function chosen() { return PE.filter(function (o) { return o.role; }).map(function (o) { return { index: o.index, role: o.role, follow: st.follow, keys: st.keys }; }); }
     var addBtn = el('button', { type: 'button', class: 'go', text: 'Add to project' }), closeBtn = el('button', { type: 'button', text: 'Close' });
+    var codeBtn = el('button', { type: 'button', text: 'Add sprite code only', title: 'Only add the map code to the chosen sprites (for a map you added before)' });
     closeBtn.addEventListener('click', close);
-    addBtn.addEventListener('click', function () {
-      var use = layers.filter(function (L) { return L.pieces; }); err.textContent = '';
-      if (!use.length) { err.textContent = 'Add at least one layer with a picture.'; return; }
-      addBtn.disabled = true;
-      add(use.map(function (L) { return { name: L.name, speed: +L.speed || 0, y: +L.y || 0, speedY: +L.speedY || 0, pieces: L.pieces }; }), st.W, st.camera).then(function (r) {
-        addBtn.disabled = false; close();
-        toast('Added ' + use.length + ' map layer' + (use.length > 1 ? 's' : '') + (st.camera ? ' and a test camera (arrow keys)' : '') + '. Press Start to try it.');
-      }, function (e) { addBtn.disabled = false; err.textContent = 'Could not add the map: ' + (e && e.message || e); });
-    });
+    function run(use) {
+      var who = chosen(); err.textContent = '';
+      if (use && !use.length) { err.textContent = 'Add at least one layer with a picture.'; return; }
+      addBtn.disabled = codeBtn.disabled = true;
+      add((use || []).map(function (L) { return { name: L.name, speed: +L.speed || 0, y: +L.y || 0, speedY: +L.speedY || 0, pieces: L.pieces }; }), st.W, use ? st.camera && !hasPlayer() : false, who).then(function (r) {
+        close();
+        var bits = []; if (use) bits.push(use.length + ' map layer' + (use.length > 1 ? 's' : '')); if (who.length - (r.skipped || []).length > 0) bits.push('map code on ' + (who.length - r.skipped.length) + ' sprite' + (who.length - r.skipped.length > 1 ? 's' : ''));
+        if (use && st.camera && !hasPlayer()) bits.push('a test camera (arrow keys)');
+        var cam = hasPlayer() && (window.Engine.sprites || []).some(function (x) { return x.name === 'Camera (test)' && !x.isClone; });
+        toast('Added ' + bits.join(', ') + '.' + (r.skipped && r.skipped.length ? ' Already on the map: ' + r.skipped.join(', ') + '.' : '') + (cam ? ' Delete the "Camera (test)" sprite: the player moves the camera now.' : '') + ' Press Start to try it.');
+      }, function (e) { addBtn.disabled = codeBtn.disabled = false; err.textContent = 'Could not add the map: ' + (e && e.message || e); });
+    }
+    addBtn.addEventListener('click', function () { run(layers.filter(function (L) { return L.pieces; })); });
+    codeBtn.addEventListener('click', function () { run(null); });
     var box = el('div', { class: 'gwbm', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Big map' }, [
       el('h2', {}, [el('b', { text: 'MAP' }), document.createTextNode('Big map (parallax layers)'), el('small', { text: 'Developer preview' })]),
       el('div', { class: 'gwbm-view' }, [cv, el('div', { class: 'gwbm-row' }, [flyBtn, resetBtn, camLbl]),
@@ -378,8 +499,10 @@
         el('div', { class: 'gwbm-row' }, [el('label', { text: 'World width' }), widthIn, fixBtn]), warn,
         el('div', { class: 'gwbm-row' }, [camChk, el('label', { for: 'gwbmCam', text: 'Add a test camera (arrow keys)' })]),
         el('div', { class: 'gwbm-sec', text: 'Layers (back to front)' }), list, addLayerSel,
-        el('div', { class: 'gwbm-row', style: 'margin-top:auto' }, [addBtn, closeBtn]), err,
-        el('div', { class: 'gwbm-hint', text: 'Adds one sprite per layer ("Map: ...") with its code, plus the variables cam x, cam y and world width. Your own code moves the camera; nothing else in your project changes.' })
+        el('div', { class: 'gwbm-sec', text: 'Sprites on the map' }), peopleBox,
+        el('div', { class: 'gwbm-row' }, [followSel]), el('div', { class: 'gwbm-row' }, [keysChk, el('label', { for: 'gwbmKeys', text: 'Arrow keys move the player (try-out)' })]),
+        el('div', { class: 'gwbm-row', style: 'margin-top:auto' }, [addBtn, codeBtn, closeBtn]), err,
+        el('div', { class: 'gwbm-hint', text: 'Adds one sprite per layer ("Map: ...") with its code, plus the variables cam x, cam y and world width. Sprites you put on the map get world x / world y and code that draws them in the right place; the player moves the camera. Everything is plain Scratch blocks. Nothing else in your project changes.' })
       ])
     ]);
     var back = el('div', { class: 'gwbm-back' }, [box]);
@@ -388,7 +511,7 @@
     window.addEventListener('keydown', onKey, true); window.addEventListener('keyup', onKey, true);
     document.body.appendChild(back);
     cur = { back: back, onKey: onKey, raf: 0 };
-    rows(); check(); draw();
+    rows(); people(); check(); draw();
     return true;
   }
 
@@ -428,5 +551,6 @@
   (function boot(n) { if (!entry() && n < 120) setTimeout(function () { boot(n + 1); }, 500); })(0);
   window.addEventListener('gwarp-devmode', function () { entry(); });
 
-  window.GW_BIGMAP = { version: '1.0.0', open: open, close: close, pieces: pieces, layerScripts: layerScripts, add: add, examples: EXAMPLES, _aligned: aligned, _fixWidth: fixWidth };
+  window.GW_BIGMAP = { version: '1.1.0', open: open, close: close, pieces: pieces, layerScripts: layerScripts, worldScripts: worldScripts, stageScripts: stageScripts, add: add, examples: EXAMPLES, _aligned: aligned, _fixWidth: fixWidth, _hasMapDraw: hasMapDraw };
+  window.GW_SB3_BLOCKS = { Blocks: Blocks, nid: nid, hex: hex };   /* shared with SVG 360 (turn code) */
 })();

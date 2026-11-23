@@ -2449,7 +2449,7 @@ document.addEventListener('keydown',e=>{const t=e.target;if(!t||t.tagName!=='SEL
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.66.0</span>
+<span class="app-version">Beta v15.67.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4898,7 +4898,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.66.0',label:'Beta v15.66.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.67.0',label:'Beta v15.67.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -12971,8 +12971,12 @@ nodes.push(el);cur=b.next;}return nodes;};
     const warn = [], ctx = { unsupported: new Set(), procs: {}, count: {}, extOps: new Set() }, enc = new TextEncoder();
     const zipLike = { bytes: async n => { const v = files?.[n]; return v == null ? null : (typeof v === 'string' ? enc.encode(v) : v); },
                       text: async n => { const v = files?.[n]; return v == null ? null : (typeof v === 'string' ? v : new TextDecoder().decode(v)); } };
-    const targets = (pj?.targets || []), stage = targets.find(t => t.isStage), sprites = targets.filter(t => !t.isStage), made = [];
-    if (!sprites.length) return { sprites: made, unsupported: [], notes: ['nothing to add'] };
+    const targets = (pj?.targets || []), stage = targets.find(t => t.isStage), sprites = targets.filter(t => !t.isStage), made = [], touched = [];
+    const stageCode = !!(stage && Object.keys(stage.blocks || {}).length);
+    if (!sprites.length && !stageCode) return { sprites: made, touched, unsupported: [], notes: ['nothing to add'] };
+    // v15.67.0 (Claude): a target with gwSprite = an index adds its variables and scripts to that EXISTING sprite (nothing else changes);
+    // Stage blocks go on the hidden "Stage" helper sprite. Used by the Big map and SVG 360 tools.
+    targets.forEach(t => Object.values(t.blocks || {}).forEach(b => { if (b?.opcode === 'procedures_prototype' && b.mutation) ctx.procs[b.mutation.proccode] = { proccode: b.mutation.proccode, names: safeJSON(b.mutation.argumentnames, []), types: window.GW_V1580_MYBLOCKS.argTypes(b.mutation.proccode), warp: String(b.mutation.warp) === 'true' }; }));
     try { window.GW8?.pushHistory?.('before adding sprites'); } catch {}
     window.GW8 && (GW8.historyMute = true);
     try {
@@ -12982,7 +12986,36 @@ nodes.push(el);cur=b.next;}return nodes;};
       if (stage) Object.values(stage.variables || {}).forEach(addVar);
       if (!window.GW_VARS) sprites.forEach(t => Object.values(t.variables || {}).forEach(addVar));
       const ws = by('workspaceCanvas'), taken = new Set(Engine.sprites.map(x => x.name));
+      const place = (t, idx) => {
+        const conv = converter({ targets }, t, ctx), B = conv.B;
+        const tops = Object.entries(B).filter(([, b]) => b && typeof b === 'object' && !Array.isArray(b) && b.topLevel && !b.shadow);
+        const cms = Object.values(t.comments || {}).filter(c => c && typeof c.text === 'string');
+        const minX = Math.min(0, ...tops.map(([, b]) => Number(b.x) || 0), ...cms.map(c => Number(c.x) || 0)), minY = Math.min(0, ...tops.map(([, b]) => Number(b.y) || 0), ...cms.map(c => Number(c.y) || 0));
+        let top0 = 40;   /* below the scripts the sprite already has */
+        ws.querySelectorAll('.block-stack').forEach(st => { if (st.dataset.owner === String(idx)) top0 = Math.max(top0, (parseFloat(st.style.top) || 0) + Math.max(st.offsetHeight || 0, 40 * st.querySelectorAll('.block').length || 120) + 80); });
+        tops.forEach(([id, b]) => {
+          const blocks = conv.chain(id); if (!blocks.length) return;
+          const st = h('div', { class: 'block-stack' }); st.dataset.owner = String(idx);
+          st.style.left = Math.round((Number(b.x) || 0) - minX + 40) + 'px'; st.style.top = Math.round((Number(b.y) || 0) - minY + top0) + 'px';
+          blocks.forEach(x => st.appendChild(x)); ws.appendChild(st);
+        });
+        cms.forEach(cm => {
+          const st = h('div', { class: 'block-stack gw38-stack' }); st.dataset.owner = String(idx);
+          st.style.left = Math.round((Number(cm.x) || 0) - minX + 40) + 'px'; st.style.top = Math.max(0, Math.round((Number(cm.y) || 0) - minY + top0)) + 'px';
+          st.innerHTML = '<div class="gw38-comment"><div class="gw38-bar"><button type="button" class="gw38-fold" title="Fold / unfold">▾</button><span>Comment</span><button type="button" class="gw38-x" title="Delete comment" aria-label="Delete comment">×</button></div><textarea spellcheck="false" placeholder="Say what this script does…"></textarea></div>';
+          const c = st.firstElementChild; c.querySelector('textarea').textContent = cm.text; if (cm.minimized) c.dataset.folded = '1';
+          if (Number(cm.width) > 60) c.style.width = Math.round(Number(cm.width)) + 'px';
+          ws.appendChild(st);
+        });
+      };
       for (const t of sprites) {
+        const old = t.gwSprite != null ? Engine.sprites[t.gwSprite] : null;
+        if (old && !old.isClone) {
+          if (window.GW_VARS) { old.localVars = old.localVars || {}; old.localLists = old.localLists || {};
+            Object.values(t.variables || {}).forEach(([n, v]) => { if (!(n in old.localVars)) old.localVars[n] = v; });
+            Object.values(t.lists || {}).forEach(([n, v]) => { if (!(n in old.localLists)) old.localLists[n] = Array.isArray(v) ? v.slice() : []; }); }
+          place(t, t.gwSprite); touched.push(t.gwSprite); continue;
+        }
         let name = String(t.name || 'Sprite'); for (let k = 2; taken.has(name); k++) name = String(t.name || 'Sprite') + ' ' + k; taken.add(name);
         const s = createDefaultSprite(name, '#8A2BE2');
         Object.assign(s, { x: Number(t.x) || 0, y: Number(t.y) || 0, size: Number(t.size ?? 100), direction: Number(t.direction ?? 90), visible: t.visible !== false, rotationStyle: t.rotationStyle || 'all around', layer: Number(t.layerOrder) || 0, volume: Number(t.volume ?? 100), draggable: !!t.draggable });
@@ -12992,32 +13025,16 @@ nodes.push(el);cur=b.next;}return nodes;};
         s.activeCostume = Math.max(0, Math.min(s.costumes.length - 1, Number(t.currentCostume) || 0)); s.sounds = [];
         let idx = Engine.sprites.length; while (idx > 0 && Engine.sprites[idx - 1]?.isClone) idx--;   /* clones stay at the end; no other sprite's index moves */
         Engine.sprites.splice(idx, 0, s); made.push(idx);
-        const conv = converter({ targets }, t, ctx), B = conv.B;
-        const tops = Object.entries(B).filter(([, b]) => b && typeof b === 'object' && !Array.isArray(b) && b.topLevel && !b.shadow);
-        const cms = Object.values(t.comments || {}).filter(c => c && typeof c.text === 'string');
-        const minX = Math.min(0, ...tops.map(([, b]) => Number(b.x) || 0), ...cms.map(c => Number(c.x) || 0)), minY = Math.min(0, ...tops.map(([, b]) => Number(b.y) || 0), ...cms.map(c => Number(c.y) || 0));
-        tops.forEach(([id, b]) => {
-          const blocks = conv.chain(id); if (!blocks.length) return;
-          const st = h('div', { class: 'block-stack' }); st.dataset.owner = String(idx);
-          st.style.left = Math.round((Number(b.x) || 0) - minX + 40) + 'px'; st.style.top = Math.round((Number(b.y) || 0) - minY + 40) + 'px';
-          blocks.forEach(x => st.appendChild(x)); ws.appendChild(st);
-        });
-        cms.forEach(cm => {
-          const st = h('div', { class: 'block-stack gw38-stack' }); st.dataset.owner = String(idx);
-          st.style.left = Math.round((Number(cm.x) || 0) - minX + 40) + 'px'; st.style.top = Math.max(0, Math.round((Number(cm.y) || 0) - minY + 40)) + 'px';
-          st.innerHTML = '<div class="gw38-comment"><div class="gw38-bar"><button type="button" class="gw38-fold" title="Fold / unfold">▾</button><span>Comment</span><button type="button" class="gw38-x" title="Delete comment" aria-label="Delete comment">×</button></div><textarea spellcheck="false" placeholder="Say what this script does…"></textarea></div>';
-          const c = st.firstElementChild; c.querySelector('textarea').textContent = cm.text; if (cm.minimized) c.dataset.folded = '1';
-          if (Number(cm.width) > 60) c.style.width = Math.round(Number(cm.width)) + 'px';
-          ws.appendChild(st);
-        });
+        place(t, idx);
       }
+      if (stageCode) { const si = window.GW_STAGE_SELECT?.ensure ? GW_STAGE_SELECT.ensure() : -1; if (si >= 0) { place(stage, si); touched.push(si); } else warn.push('Stage scripts could not be added'); }
       try { GW.refreshBlockMenus?.(); } catch {}
       try { GW8.decorate(); GW8.indexCustomProcedures(); window.GW_V1571?.rehydrate?.(); } catch (e) { console.warn('[add sprites]', e); }
       try { renderSpritesGrid(); updatePropertyInputs(); } catch {}
       try { GW.refreshVariableMonitors?.(); } catch {}
       try { GW.showSpriteScripts?.(Engine.activeSpriteIndex); } catch {}
     } finally { window.GW8 && (GW8.historyMute = false); try { GW8.pushHistory('add sprites'); } catch {} }
-    return { sprites: made, unsupported: [...ctx.unsupported], notes: warn };
+    return { sprites: made, touched, unsupported: [...ctx.unsupported], notes: warn };
   }
   function showBusy(on) {
     let el = by('gw8ImportBusy');
@@ -22673,7 +22690,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' + 
     // save as soon as the paint editor says "Saved"
     const saved = by('gwCosSaved'); if (saved) new MutationObserver(() => { if (isStage()) { clearTimeout(outT); outT = setTimeout(() => mirrorOut(), 50); } }).observe(saved, { childList: true, characterData: true, subtree: true });
     setInterval(tick, 300); tick(); look();
-    window.GW_STAGE_SELECT = { select, isStage, sync: () => mirrorOut(true), proxyIdx };
+    window.GW_STAGE_SELECT = { select, isStage, sync: () => mirrorOut(true), proxyIdx, ensure: ensureProxy };
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => start()); else start();
 })();
