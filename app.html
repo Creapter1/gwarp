@@ -2449,7 +2449,7 @@ document.addEventListener('keydown',e=>{const t=e.target;if(!t||t.tagName!=='SEL
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.65.0</span>
+<span class="app-version">Beta v15.66.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4898,7 +4898,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.65.0',label:'Beta v15.65.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.66.0',label:'Beta v15.66.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -12963,6 +12963,62 @@ nodes.push(el);cur=b.next;}return nodes;};
       return null;
     } finally { window.GW8 && (GW8.historyMute = false); window.__gwImporting = false; try { autoExpandWorkspace(); } catch {} showBusy(false); }
   }
+  /* 23 Nov 2026 (Claude): add sprites to the OPEN project without replacing anything - a Scratch 3 target (sprite JSON) plus
+     its files, run through the same converters as opening an .sb3, so the blocks are exactly what an import would make.
+     Used by the Big map tool. pj = { targets: [stage?, sprite...] } - the stage's variables become global variables (existing
+     ones are kept); files = { 'md5.svg': svg text or bytes }. New sprites go at the end (no other sprite's index moves). One undo step. */
+  async function addSprites(pj, files) {
+    const warn = [], ctx = { unsupported: new Set(), procs: {}, count: {}, extOps: new Set() }, enc = new TextEncoder();
+    const zipLike = { bytes: async n => { const v = files?.[n]; return v == null ? null : (typeof v === 'string' ? enc.encode(v) : v); },
+                      text: async n => { const v = files?.[n]; return v == null ? null : (typeof v === 'string' ? v : new TextDecoder().decode(v)); } };
+    const targets = (pj?.targets || []), stage = targets.find(t => t.isStage), sprites = targets.filter(t => !t.isStage), made = [];
+    if (!sprites.length) return { sprites: made, unsupported: [], notes: ['nothing to add'] };
+    try { window.GW8?.pushHistory?.('before adding sprites'); } catch {}
+    window.GW8 && (GW8.historyMute = true);
+    try {
+      try { if (Engine.isRunning) by('stopBtn')?.click(); } catch {}
+      const GV = window.GW_VARS ? GW_VARS.globals() : Engine.variables;
+      const addVar = ([n, v]) => { if (!(n in GV)) { GV[n] = v; if (Engine.variableVisible) Engine.variableVisible[n] = false; } };
+      if (stage) Object.values(stage.variables || {}).forEach(addVar);
+      if (!window.GW_VARS) sprites.forEach(t => Object.values(t.variables || {}).forEach(addVar));
+      const ws = by('workspaceCanvas'), taken = new Set(Engine.sprites.map(x => x.name));
+      for (const t of sprites) {
+        let name = String(t.name || 'Sprite'); for (let k = 2; taken.has(name); k++) name = String(t.name || 'Sprite') + ' ' + k; taken.add(name);
+        const s = createDefaultSprite(name, '#8A2BE2');
+        Object.assign(s, { x: Number(t.x) || 0, y: Number(t.y) || 0, size: Number(t.size ?? 100), direction: Number(t.direction ?? 90), visible: t.visible !== false, rotationStyle: t.rotationStyle || 'all around', layer: Number(t.layerOrder) || 0, volume: Number(t.volume ?? 100), draggable: !!t.draggable });
+        const cs = (await Promise.all((t.costumes || []).map(c => costumeFrom(zipLike, c, warn)))).filter(Boolean);
+        if (cs.length) s.costumes = cs;
+        if (window.GW_VARS) { s.localVars = {}; s.localLists = {}; Object.values(t.variables || {}).forEach(([n, v]) => { s.localVars[n] = v; }); Object.values(t.lists || {}).forEach(([n, v]) => { s.localLists[n] = Array.isArray(v) ? v.slice() : []; }); }
+        s.activeCostume = Math.max(0, Math.min(s.costumes.length - 1, Number(t.currentCostume) || 0)); s.sounds = [];
+        let idx = Engine.sprites.length; while (idx > 0 && Engine.sprites[idx - 1]?.isClone) idx--;   /* clones stay at the end; no other sprite's index moves */
+        Engine.sprites.splice(idx, 0, s); made.push(idx);
+        const conv = converter({ targets }, t, ctx), B = conv.B;
+        const tops = Object.entries(B).filter(([, b]) => b && typeof b === 'object' && !Array.isArray(b) && b.topLevel && !b.shadow);
+        const cms = Object.values(t.comments || {}).filter(c => c && typeof c.text === 'string');
+        const minX = Math.min(0, ...tops.map(([, b]) => Number(b.x) || 0), ...cms.map(c => Number(c.x) || 0)), minY = Math.min(0, ...tops.map(([, b]) => Number(b.y) || 0), ...cms.map(c => Number(c.y) || 0));
+        tops.forEach(([id, b]) => {
+          const blocks = conv.chain(id); if (!blocks.length) return;
+          const st = h('div', { class: 'block-stack' }); st.dataset.owner = String(idx);
+          st.style.left = Math.round((Number(b.x) || 0) - minX + 40) + 'px'; st.style.top = Math.round((Number(b.y) || 0) - minY + 40) + 'px';
+          blocks.forEach(x => st.appendChild(x)); ws.appendChild(st);
+        });
+        cms.forEach(cm => {
+          const st = h('div', { class: 'block-stack gw38-stack' }); st.dataset.owner = String(idx);
+          st.style.left = Math.round((Number(cm.x) || 0) - minX + 40) + 'px'; st.style.top = Math.max(0, Math.round((Number(cm.y) || 0) - minY + 40)) + 'px';
+          st.innerHTML = '<div class="gw38-comment"><div class="gw38-bar"><button type="button" class="gw38-fold" title="Fold / unfold">▾</button><span>Comment</span><button type="button" class="gw38-x" title="Delete comment" aria-label="Delete comment">×</button></div><textarea spellcheck="false" placeholder="Say what this script does…"></textarea></div>';
+          const c = st.firstElementChild; c.querySelector('textarea').textContent = cm.text; if (cm.minimized) c.dataset.folded = '1';
+          if (Number(cm.width) > 60) c.style.width = Math.round(Number(cm.width)) + 'px';
+          ws.appendChild(st);
+        });
+      }
+      try { GW.refreshBlockMenus?.(); } catch {}
+      try { GW8.decorate(); GW8.indexCustomProcedures(); window.GW_V1571?.rehydrate?.(); } catch (e) { console.warn('[add sprites]', e); }
+      try { renderSpritesGrid(); updatePropertyInputs(); } catch {}
+      try { GW.refreshVariableMonitors?.(); } catch {}
+      try { GW.showSpriteScripts?.(Engine.activeSpriteIndex); } catch {}
+    } finally { window.GW8 && (GW8.historyMute = false); try { GW8.pushHistory('add sprites'); } catch {} }
+    return { sprites: made, unsupported: [...ctx.unsupported], notes: warn };
+  }
   function showBusy(on) {
     let el = by('gw8ImportBusy');
     if (on && !el) { el = h('div', { id: 'gw8ImportBusy', role: 'status' }, h('span', { class: 'gw8-g-dance', 'aria-hidden': 'true', text: 'G' }), h('b', { text: 'Opening Scratch project…' })); document.body.appendChild(el); }
@@ -12993,7 +13049,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     setTimeout(() => { if (ok) box.remove(); }, 6000);
   }
   if (window.GW8) GW8.importSB3 = importSB3;
-  window.GW_V1580_SB3 = { importSB3, unzip, CMD, isExtOp };
+  window.GW_V1580_SB3 = { importSB3, unzip, CMD, isExtOp, addSprites };
 })();
 
 </script>
@@ -29018,6 +29074,8 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
 })();
 </script><script src="gw-turbo.js"></script>
 <script src="gw-turbo-ui.js"></script>
+<script src="gw-svg360.js" onerror="this.remove()"></script><!-- Claude 23 Nov: SVG 360 (turn a vector costume in 3D), Developer mode until approved -->
+<script src="gw-bigmap.js" onerror="this.remove()"></script><!-- Claude 23 Nov: Big map (parallax layers / giant maps, plain Scratch code), Developer mode until approved -->
 <script id="gw-claude-typed-undo">/* Claude (22 Nov, fuzzer find): a value typed into a block lives only in the input's .value, but undo snapshots copy the
    code area's HTML - so the snapshot kept the OLD value, typing never made an undo step, and Undo+Redo lost what was typed.
    Now every snapshot first writes the typed values into the HTML, and finishing an edit (change / Enter / Tab / leaving the
