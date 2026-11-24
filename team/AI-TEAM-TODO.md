@@ -1,6 +1,6 @@
 # G-Warp AI team — ONE to-do list
 
-Owner: **Creapter1** · App: **Beta v15.60.0** (main).
+Owner: **Creapter1** · App: **Beta v15.60.0** (main) · release branch `release-v15.66.0` = v15.68+ (PR #20, not merged).
 Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEAM.txt`
 
 > ⛔ **RULE ZERO:** every AI works ONLY on the `ai-team` branch. Never push to `main`. Only the owner merges to main.
@@ -16,6 +16,16 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 5. Full rules: `team/ai-team/README.md`.
 
 ---
+
+## 0. Owner report 23 Nov 2026 (Claude Opus) - read first
+- [done] **Turbo Player removed** (the top-bar "30 FPS / 60 FPS" button and its second run engine `gw-turbo.js` / `gw-turbo-ui.js`, added in v15.61 on the release branch). Owner: not approved, not needed, it made projects lag or break. Scratch-style **Turbo Mode stays in More**.
+- [rule] No new top-bar buttons, no second run engine, nothing that changes how projects run, unless the owner approved it. Unapproved features = Developer mode only (owner rule, Nov 8). "Improve, not unimprove."
+- [open] Owner's simple test project (go to 0 0, forever move 10 steps) - owner sees: app looks broken, choppy or laggy, G-Spark vanishes at the right edge, code/buttons fail. Claude could not reproduce: G-Warp v15.68 matches the real Scratch engine (stops at x 285, steps every 33 ms). **Waiting for the owner's screen recording** (Win+Alt+R). Project file stays private (owner rule) and is deleted after the fix.
+- [open] Audit everything on `release-v15.66.0` (v15.61-v15.68) for other things that changed how the app works for everyone without the owner's OK; move them behind Developer mode or remove them.
+- [open] S4 smooth motion / interpolation (see section 1) - may be what "choppy" is on a high-refresh monitor (30 FPS steps on 144 Hz).
+- [later] Owner idea: Minimap - an option of the Big map tool or an extension (plain Scratch blocks), so users can add one if they want.
+- [later] Idea, owner must approve: Start runs projects on the real Scratch engine (scratch-vm + scratch-render, the same core TurboWarp uses), keeping G-Warp's own look and editor. Check its licence first.
+- [later] SVG 360: AI-drawn back sides (local AI); turn every costume of an animation at once.
 
 ## 1. Engine / performance
 - [open] Top priority: no bugs, no lag before "crazy stuff"
