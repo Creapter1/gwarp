@@ -5,7 +5,7 @@
    timers made with setTimeout, and anything marked fn.gwRunCritical = true are untouched. Turn off: window.GW_RUN_THROTTLE = false */
 (() => {
   const RUN_MS = 5000;
-  const running = () => window.GW_RUN_THROTTLE !== false && (window.GW_TURBO_RUNNING || (window.Engine && window.Engine.isRunning && !window.Engine.isPaused));
+  const running = () => window.GW_RUN_THROTTLE !== false && (window.Engine && window.Engine.isRunning && !window.Engine.isPaused);
   /* 22 Nov (Claude, speed while idle): the editor's own helpers (in app.html, polling every 0.3-1 s) used about half the CPU
      on a big project even when nobody touched anything. When there was no click, key or wheel for 2 s they now run at most
      every IDLE_MS; any input brings them back at once. Network helpers (LAN, AI, other files) and fast timers (< 300 ms,
@@ -25,7 +25,7 @@
     let last = 0, lastIdle = 0; const ui = (ms || 0) >= 300 && (ms || 0) <= 2000 && fromApp();
     return si(function () {
       const now = performance.now();
-      if (running()) { if (now - last < Math.max(window.GW_TURBO_RUNNING ? 30000 : RUN_MS, ms || 0)) return; last = now; }
+      if (running()) { if (now - last < Math.max(RUN_MS, ms || 0)) return; last = now; }
       else if (ui && idle()) { if (now - lastIdle < IDLE_MS) return; lastIdle = now; }
       return fn.apply(this, args);
     }, ms);

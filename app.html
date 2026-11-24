@@ -2452,7 +2452,7 @@ document.addEventListener('keydown',e=>{const t=e.target;if(!t||t.tagName!=='SEL
 <div class="header-left">
 <div aria-label="G Wrapper logo" class="app-logo">G</div>
 <span class="app-title">G Wrapper</span>
-<span class="app-version">Beta v15.68.0</span>
+<span class="app-version">Beta v15.69.0</span>
 </div>
 <div class="header-center">
 <div class="gw154-project-pill" id="gw154ProjectPill"><span class="gw154-project-icon"><i class="fa-solid fa-pen"></i></span><div id="gw154ProjectTitleSlot"><input id="projectTitle" type="text" value="Untitled G-Warp Game" placeholder="Project title" aria-label="Project title" autocomplete="off"></div></div>
@@ -4901,7 +4901,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.68.0',label:'Beta v15.68.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -29121,8 +29121,8 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
   window.GW_V1561_REPORT = { errors, render };
   attach();
 })();
-</script><script src="gw-turbo.js"></script>
-<script src="gw-turbo-ui.js"></script>
+</script>
+<!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->
 <script src="gw-svg360.js" onerror="this.remove()"></script><!-- Claude 23 Nov: SVG 360 (turn a vector costume in 3D), Developer mode until approved -->
 <script src="gw-bigmap.js" onerror="this.remove()"></script><!-- Claude 23 Nov: Big map (parallax layers / giant maps, plain Scratch code), Developer mode until approved -->
 <script id="gw-claude-typed-undo">/* Claude (22 Nov, fuzzer find): a value typed into a block lives only in the input's .value, but undo snapshots copy the
