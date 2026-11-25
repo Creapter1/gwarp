@@ -15,5 +15,6 @@ window.boot = async function (buf) {
   await vm.loadProject(buf); vm.start(); return true;
 };
 window.vars = () => { const st = vm.runtime.getTargetForStage(), o = {}; for (const k in st.variables) { const v = st.variables[k]; o[v.name] = v.value; } return o; };
+window.__ready = () => String(window.vars().ready) === '1';
 window.sprites = () => vm.runtime.targets.filter(t => t.isOriginal && !t.isStage).map(t => ({ name: t.sprite.name, x: t.x, y: t.y, direction: t.direction, size: t.size, costume: t.currentCostume + 1, visible: t.visible }));
 </script></body></html>

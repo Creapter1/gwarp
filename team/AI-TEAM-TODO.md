@@ -22,9 +22,9 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [rule] No new top-bar buttons, no second run engine, nothing that changes how projects run, unless the owner approved it. Unapproved features = Developer mode only (owner rule, Nov 8). "Improve, not unimprove."
 - [open] Owner's simple test project (go to 0 0, forever move 10 steps) - owner sees: app looks broken, choppy or laggy, G-Spark vanishes at the right edge, code/buttons fail. Claude could not reproduce: G-Warp v15.68 matches the real Scratch engine (stops at x 285, steps every 33 ms). **Waiting for the owner's screen recording** (Win+Alt+R). Project file stays private (owner rule) and is deleted after the fix.
 - [open] Audit everything on `release-v15.66.0` (v15.61-v15.68) for other things that changed how the app works for everyone without the owner's OK; move them behind Developer mode or remove them.
-- [done] S4 smooth motion (v15.70.0, Claude Fable, 25 Nov) - built and tested, OFF by default, More > Advanced settings. Patch + notes: `team/claude/v15.70.3/`. **Waiting for the owner: OK to add it to the release branch?**
+- [done] S4 smooth motion (v15.70.0, Claude Fable, 25 Nov) - built and tested, OFF by default, More > Advanced settings. Patch + notes: `team/claude/v15.70.4/`. **Waiting for the owner: OK to add it to the release branch?**
 - [done] Sprite x / y / size / direction boxes update live while a project runs (v15.70.0).
-- [note] Owner's test measured again on v15.70.0: 0 errors, steady frame rate. New projects run at 60 FPS, so move 10 steps = 600 px a second; the sprite stopping with 15 px showing at the edge is Scratch fencing. See `team/claude/v15.70.3/README.txt`.
+- [note] Owner's test measured again on v15.70.0: 0 errors, steady frame rate. New projects run at 60 FPS, so move 10 steps = 600 px a second; the sprite stopping with 15 px showing at the edge is Scratch fencing. See `team/claude/v15.70.4/README.txt`.
 - [later] Owner idea: Minimap - an option of the Big map tool or an extension (plain Scratch blocks), so users can add one if they want.
 - [later] Idea, owner must approve: Start runs projects on the real Scratch engine (scratch-vm + scratch-render, the same core TurboWarp uses), keeping G-Warp's own look and editor. Check its licence first.
 - [later] SVG 360: AI-drawn back sides (local AI); turn every costume of an animation at once.
@@ -45,11 +45,15 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [open] A10 letter inputs in number fields; E1.6 glide menus; E2.1 backdrop-and-wait; E2.4 TurboWarp extras; E2.9 PenguinMod core
 - [open] .pmp protobuf needs legal test file
 - [done] Known: set_effect menu dropped on export - APP-CHECK 25 Nov: fixed already. List number stored as text: same as Scratch for typed values (not a bug).
-- [done] v15.70.1 (Claude Fable, 25 Nov): graphic effects drawn with Scratch's formulas (colour, brightness exact; whirl, fisheye, pixelate, mosaic now drawn); Scratch size limits; tan 90 / sqrt rounding. 53-check parity test added (`team/claude/tests/test_4972_parity53.js`). See `team/claude/v15.70.3/README.txt`.
+- [done] v15.70.1 (Claude Fable, 25 Nov): graphic effects drawn with Scratch's formulas (colour, brightness exact; whirl, fisheye, pixelate, mosaic now drawn); Scratch size limits; tan 90 / sqrt rounding. 53-check parity test added (`team/claude/tests/test_4972_parity53.js`). See `team/claude/v15.70.4/README.txt`.
 - [done] v15.70.2 (Claude Fable, 25 Nov): Animation "Make skeleton for me" - bones built from the drawing (stickman test passes, Ready-made moves work). On the owner's PC as v15.69.0b.
 - [done] Fencing checked against the REAL Scratch engine (25 Nov): G-Warp is right. The test costume had no viewBox. Not a bug.
 - [done] Scratch referee (Claude Fable, 25 Nov): real scratch-vm runs the same .sb3 and `diff.js` lists every difference from G-Warp. `team/claude/tests/scratch-referee/`. 170 checks same as Scratch so far.
 - [done] v15.70.3 (Claude Fable, 25 Nov, round 2, all checked against real Scratch): loops that do not change the screen finish in one frame; reporter answers / typed text no longer read as variable names in .sb3 projects; hats start in Scratch's order; bounce + touching edge use the real outline; distance not rounded; point-in-direction text = 0; glide ends on target; thin pen lines crisp. 347 of 351 referee checks same as Scratch; pen/effects picture 99.8 % same. PC = v15.69.0c.
+- [done] v15.70.4 (Claude Fable, 25 Nov, extra batch vs real Scratch): wait blocks always yield (also wait 0); a new clone / broadcast script takes its first turn in the same pass; custom block inputs outside their block = 0. 419 of 427 referee checks same as Scratch. PC = v15.69.0d.
+- [open] MISSING SCRATCH BLOCK: hat "when [timer / loudness] > (10)" (event_whengreaterthan). Needs palette block, import, export, edge trigger. Scripts under it never start today.
+- [open] loudness reporter answers nothing (Scratch: -1 without a microphone).
+- [open] A custom block that calls itself without "run without screen refresh" should pause on each call like Scratch (G-Warp runs it straight through).
 - [open] OWNER DECISION: in projects made in G-Warp (not from .sb3), typed text that equals a variable's name still reads that variable. Scratch never does this. Keep it, or make it text everywhere?
 - [open] SPEED (round 3): plain loop speed is 13x behind real Scratch (409,000 vs 5,520,000 loops in 3 s).
 - [open] Corner bounce lands up to 2 px from Scratch's spot when the sprite is turned (Scratch's own hull rounding).

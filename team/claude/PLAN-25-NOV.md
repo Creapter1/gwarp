@@ -57,3 +57,7 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 - Known speed gap for R3: spin.sb3 "forever change n by 1" 3 s: G-Warp 409k loops vs Scratch 5.52M. The interpreter walks DOM blocks
   (runOne -> syncProxies -> executeBlock). Look at caching per block (parsed op + closures) before anything else. Re-run ALL diffs after.
 - Open owner decision logged in the to-do: typed text = variable name in native projects.
+
+## State after the extra batch (12:25)
+- rel = v15.70.4, PC = v15.69.0d. New: par4.sb3 (mkpar4.py, 66/72), ratio.sb3. diff.js/ref.js now play inputs once the project sets variable "ready" to 1.
+- Open parity items are in the to-do (timer hat, loudness, recursion yield). Good candidates for R6 if time allows.

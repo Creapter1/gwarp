@@ -1,5 +1,5 @@
 diff --git a/app.html b/app.html
-index 9a9e3b0..d63e35e 100644
+index 9a9e3b0..7d36624 100644
 --- a/app.html
 +++ b/app.html
 @@ -3939,7 +3939,8 @@ IMPORTANT:
@@ -21,7 +21,7 @@ index 9a9e3b0..d63e35e 100644
 -
                  if (Engine.isRunning && !Engine.isPaused) {
 -                    const gwT0 = performance.now(), gwN0 = Engine.threads.length; let gwPass = 0; do { gwPass++; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isTurbo && Engine.isRunning && !Engine.isPaused && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame */
-+                    const gwT0 = performance.now(); let gwN0 = Engine.threads.length, gwPass = 0; const gwSeq = window.GW_SEQ_LIKE_SCRATCH !== false, gwWork = Math.min(22, Math.max(4, ((window.GW_SETTINGS && window.GW_SETTINGS.stepMs && window.GW_SETTINGS.stepMs()) || 16.7) * 0.6)); GW.__redraw = false; do { gwPass++; GW.__act = 0; if (gwPass > 1) gwN0 = Engine.threads.length; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isRunning && !Engine.isPaused && ((Engine.isTurbo && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)) || (gwSeq && !GW.__redraw && GW.__act > 0 && gwPass < 200000 && performance.now() - gwT0 < gwWork))); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame. v15.70.3: like Scratch, more passes in the same frame while no block has changed the screen (switch off: window.GW_SEQ_LIKE_SCRATCH = false) */
++                    const gwT0 = performance.now(); let gwN0 = Engine.threads.length, gwPass = 0; const gwSeq = window.GW_SEQ_LIKE_SCRATCH !== false, gwWork = Math.min(22, Math.max(4, ((window.GW_SETTINGS && window.GW_SETTINGS.stepMs && window.GW_SETTINGS.stepMs()) || 16.7) * 0.6)); GW.__redraw = false; do { gwPass++; GW.__act = 0; if (gwPass > 1) gwN0 = Engine.threads.length; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < (gwS ? gwN : Engine.threads.length) && gwK < 20000; gwK++) { const gwI2 = gwS ? (gwS + gwK) % gwN : gwK, gwT = Engine.threads[gwI2]; if (gwT && !gwT.finished) { if (gwI2 >= gwN0) gwT.__gwSF = 1; gwT.step(); } /* v15.70.4 (measured against real Scratch): a script started during this pass (a new clone, a broadcast) takes its first turn in this same pass, before the script that started it goes round again */ if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwI2 + 1) % Math.max(1, Engine.threads.length); gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isRunning && !Engine.isPaused && ((Engine.isTurbo && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)) || (gwSeq && !GW.__redraw && GW.__act > 0 && gwPass < 200000 && performance.now() - gwT0 < gwWork))); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame. v15.70.3: like Scratch, more passes in the same frame while no block has changed the screen (switch off: window.GW_SEQ_LIKE_SCRATCH = false) */
                      /* v15.57.0 (Claude, Scratch parity + speed): like Scratch, scripts started DURING this frame (broadcast, clone) run in this
                         same frame, and a "broadcast and wait" whose receivers have all finished goes on in this frame too. Before, each
                         broadcast-and-wait "tick" loop cost ~3 frames: Clone Multiplayer ran 5-11 ticks/s in G-Warp vs 40-55 in Scratch. */
@@ -100,7 +100,7 @@ index 9a9e3b0..d63e35e 100644
          });
      </script>
 -<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
-+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.3',label:'Beta v15.70.3',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
++<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.4',label:'Beta v15.70.4',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
  <script id="gw-v7-reconciliation">
  (() => {
    /* G-Warp v7 reconciliation layer
@@ -123,8 +123,12 @@ index 9a9e3b0..d63e35e 100644
      const n=Number(s);return Number.isFinite(n)&&s!==''?n:raw;
    };
    GW8.evalCondForThread=function(thread,block){
-@@ -5664,7 +5668,7 @@ IMPORTANT:
-       case 'parameter':return GW9.scopedValue(thread,node.name||'arg1');
+@@ -5661,10 +5665,10 @@ IMPORTANT:
+     switch(node.type){
+       case 'literal':return node.value??'';
+       case 'get_var':return GW9.scopedValue(thread,node.name||'my variable');
+-      case 'parameter':return GW9.scopedValue(thread,node.name||'arg1');
++      case 'parameter':{const gwNm=node.name||'arg1';for(let i=(thread?.callStack?.length||0)-1;i>=0;i--){const f=thread.callStack[i];if(f?.type==='custom'&&Object.prototype.hasOwnProperty.call(f.locals||{},gwNm))return f.locals[gwNm];}return 0;} /* v15.70.4 (real Scratch): a block input used outside its own block is 0, and it never reads a variable with the same name */
        case 'x_position':return sprite?.x??0;case 'y_position':return sprite?.y??0;case 'direction':return sprite?.direction??90;
        case 'mouse_x':return Engine.mouse?.x??0;case 'mouse_y':return Engine.mouse?.y??0;case 'timer':return (performance.now()-(Engine.timerStarted||performance.now()))/1000;
 -      case 'answer':return Engine.answer??'';case 'volume_reporter':return sprite?.volume??100;case 'size_reporter':return sprite?.size??100;
@@ -187,7 +191,15 @@ index 9a9e3b0..d63e35e 100644
      if (this.behaviorRuntime) this.behaviorAttachment = this.behaviorAttachment || { attributes: {} };
      if (!this.__live) { this.__live = true; initFrames(this); }
      guardStart(this);
-@@ -12059,7 +12071,34 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11990,6 +12002,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+         if (e && e === RETRY()) { if (f.list) f.i = idx; else { f.cur = idx > 0 ? kids(f.c)[idx - 1] : null; f.i = Math.max(0, idx - 1); } return; } // v15.10.0: run this block again when its answer is ready
+         console.warn('[G-Warp runner]', b.dataset.type, e); try { window.GW_HEALTH?.blockError?.(this, b, e); } catch {}
+       }
++      if (b.dataset.type === 'wait') return; // v15.70.4 (measured against real Scratch): a wait block always gives the other scripts their turn, even "wait 0 seconds"
+       // v15.47.1: the clock is read only when a block made the script wait, or every 8 blocks for the frame-time check
+       if (this.waitUntil || this.waitCondition || this.waitBroadcast || this.motionTween) { now = performance.now(); if (waiting(this, now)) return; }
+       if (++ops > LIMIT_OPS) { if (!warpOn(this)) return; if ((ops & 255) === 0 && performance.now() - start > WARP_MS) { heavy(this, start); return; } } // 22 Nov (Claude): warp runs up to 500 ms like Scratch (it stopped after 5000 blocks, so 3D frames showed half-drawn)
+@@ -12059,7 +12072,34 @@ nodes.push(el);cur=b.next;}return nodes;};
      for (let y = bo + step / 2; y <= t; y += step) for (let x = l + step / 2; x <= r; x += step) if (GW.spriteHasPoint(a, x, y) && GW.spriteHasPoint(b, x, y)) return true;
      return false;
    };
@@ -223,7 +235,7 @@ index 9a9e3b0..d63e35e 100644
    GW.rootName = s => s?.rootName || s?.name;
    GW.hitTest = (a, b) => GW.spritesTouch(a, b);
    const G9 = window.GW9;
-@@ -12075,13 +12114,13 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12075,13 +12115,13 @@ nodes.push(el);cur=b.next;}return nodes;};
          case 'color_touching': return !!GW.colorTouchingColor?.(spr(th, owner), G9.evalNode(th, node.args?.[0], 'value', owner), G9.evalNode(th, node.args?.[1], 'value', owner));
          case 'op_lt': { const n = v => Number.isFinite(Number(v)) ? Number(v) : 0; return n(G9.evalNode(th, node.args?.[0], 'value', owner)) < n(G9.evalNode(th, node.args?.[1], 'value', owner)); }
          case 'op_contains': return String(G9.evalNode(th, node.args?.[0], 'value', owner)).toLowerCase().includes(String(G9.evalNode(th, node.args?.[1], 'value', owner)).toLowerCase());
@@ -239,7 +251,7 @@ index 9a9e3b0..d63e35e 100644
        }
        return base.apply(this, arguments);
      };
-@@ -12156,14 +12195,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12156,14 +12196,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        case 'set_rotation_style': s.rotationStyle = sel(b) || 'all around'; return true;
        case 'go_front_back': { if (s && s.isClone) s.__gwOwnLayer = true; const ls = Engine.sprites.map((x, i) => x.layer ?? i); s.layer = sel(b) === 'back' ? Math.min(...ls) - 1 : Math.max(...ls) + 1; return true; }
        case 'go_layers': { if (s && s.isClone) s.__gwOwnLayer = true; const order = GW.drawOrder(); const i = order.indexOf(s); const n = Math.round(num(b, 0)) * (sel(b) === 'backward' ? -1 : 1); const j = Math.max(0, Math.min(order.length - 1, i + n)); if (j === i) return true; order.splice(i, 1); order.splice(j, 0, s); order.forEach((x, k) => { x.layer = k; }); return true; }
@@ -263,7 +275,7 @@ index 9a9e3b0..d63e35e 100644
        }
        case 'say': { const secs = num(b, 1); if (secs > 0) { s.sayText = text(b, 0); s.sayUntil = performance.now() + secs * 1000; th.waitUntil = s.sayUntil; return true; } return false; }
        case 'create_clone': { const v = sel(b) || 'myself'; const src = (v === 'myself' || v === '_myself_') ? s : Engine.sprites.find(x => !x.isClone && x.name === v); if (src) GW.createClone(src); return true; }
-@@ -14787,7 +14827,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14787,7 +14828,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    });
    // colour / brightness: each costume is filtered once and reused, instead of filtering every drawing
    let curFilter = '';
@@ -309,7 +321,7 @@ index 9a9e3b0..d63e35e 100644
    let fcache = new WeakMap(), mip = new WeakMap();
    const resetDrawCaches = () => { fcache = new WeakMap(); mip = new WeakMap(); };
    document.addEventListener('click', e => { if (e.target.closest?.('#greenFlagBtn,#stopBtn')) resetDrawCaches(); }, true);
-@@ -14806,7 +14883,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14806,7 +14884,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      if (curFilter) {
        const key = curFilter; let m = fcache.get(cv); if (!m) { m = new Map(); fcache.set(cv, m); }
        let f = m.get(key);
@@ -318,7 +330,7 @@ index 9a9e3b0..d63e35e 100644
        cv = f;
      }
      curFilter = '';
-@@ -14906,12 +14983,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14906,12 +14984,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      move: (th, s, b) => { const n = nIn(b, 0), r = (90 - s.direction) * DEG; s.x += Math.cos(r) * n; s.y += Math.sin(r) * n; },
      turn_cw: (th, s, b) => { s.direction = wrapDir(s.direction + nIn(b, 0)); },
      turn_ccw: (th, s, b) => { s.direction = wrapDir(s.direction - nIn(b, 0)); },
@@ -333,7 +345,7 @@ index 9a9e3b0..d63e35e 100644
      next_costume: (th, s) => { const n = s.costumes?.length || 1; s.activeCostume = ((s.activeCostume || 0) + 1) % n; },
      switch_costume: (th, s, b) => { const i = pickIndex(s.costumes || [], s.activeCostume || 0, sels(b)[0], 'costume'); if (i >= 0) s.activeCostume = i; },
      set_backdrop: (th, s, b) => { const i = pickIndex(E.backdrops || [], E.activeBackdrop || 0, sels(b)[0], 'backdrop'); if (i >= 0) { E.activeBackdrop = i; try { GW.triggerBackdrop?.(E.backdrops[i].name); } catch {} } }
-@@ -14963,7 +15040,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14963,7 +15041,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        literal: (th, nd) => nd.value ?? '',
        get_var: (th, nd) => G9.scopedValue(th, nd.name || 'my variable'),
        x_position: (th, nd, ow) => spr(th, ow)?.x ?? 0, y_position: (th, nd, ow) => spr(th, ow)?.y ?? 0, direction: (th, nd, ow) => spr(th, ow)?.direction ?? 90,
@@ -342,7 +354,7 @@ index 9a9e3b0..d63e35e 100644
        mouse_down: () => !!E.mouse?.down,
        op_add: (th, nd, ow) => num(A(th, nd, ow, 0)) + num(A(th, nd, ow, 1)), op_sub: (th, nd, ow) => num(A(th, nd, ow, 0)) - num(A(th, nd, ow, 1)),
        op_mul: (th, nd, ow) => num(A(th, nd, ow, 0)) * num(A(th, nd, ow, 1)), op_div: (th, nd, ow) => num(A(th, nd, ow, 0)) / num(A(th, nd, ow, 1)),
-@@ -15023,6 +15100,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15023,6 +15101,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      infiniteClones: store.get('gwarp-infinite-clones') === 'on',
      showFps: store.get('gwarp-show-fps') === 'on',
      noFence: store.get('gwarp-no-fence') === 'on', // Scratch keeps sprites on the stage (fencing); TurboWarp can turn it off
@@ -350,7 +362,7 @@ index 9a9e3b0..d63e35e 100644
      noMiscLimits: store.get('gwarp-no-misc-limits') === 'on' // v15.13.0: TurboWarp “Remove miscellaneous limits”
    };
    const target = () => (S.projectFps != null ? S.projectFps : S.fps);
-@@ -15031,6 +15109,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15031,6 +15110,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      setFps(v) { S.fps = Math.max(0, Math.min(250, Math.round(Number(v) || 0))); store.set('gwarp-fps', String(S.fps)); refreshFpsLabels(); },
      setProjectFps(v) { S.projectFps = v == null ? null : Math.max(0, Math.min(250, Math.round(Number(v) || 0))); refreshFpsLabels(); },
      setInfiniteClones(on) { S.infiniteClones = !!on; store.set('gwarp-infinite-clones', on ? 'on' : null); E.cloneLimit = on ? Infinity : 300; },
@@ -358,7 +370,7 @@ index 9a9e3b0..d63e35e 100644
      setShowFps(on) { S.showFps = !!on; store.set('gwarp-show-fps', on ? 'on' : null); placeFps(); },
      setNoFence(on) { S.noFence = !!on; store.set('gwarp-no-fence', on ? 'on' : null); },
      setNoMiscLimits(on) { S.noMiscLimits = !!on; store.set('gwarp-no-misc-limits', on ? 'on' : null); }
-@@ -15070,17 +15149,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15070,17 +15150,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      const [showFps, showFpsRow] = check('gw9AdvShowFps', 'Show FPS on the stage', 'A small frames-per-second counter in the corner of the stage.', S.showFps);
      const [fenceOff, fenceRow] = check('gw9AdvFence', 'Remove fencing', 'Lets sprites go fully off the stage. Scratch keeps a little of every sprite on the stage; leave this off for Scratch projects.', S.noFence);
      const [hqOn, hqRow] = check('gw9AdvHQ', 'Max quality render (HQ)', 'Draws the stage at your screen’s full sharpness, up to 4× (1920 × 1440): sharp pen lines, vector costumes, text and bubbles — like TurboWarp’s “High quality pen”, for the whole stage. Best in Large or full screen. Big projects may run slower; turn it off if they lag. Also the HQ button above the stage.', !!window.GW_HQ?.isOn?.());
@@ -379,7 +391,7 @@ index 9a9e3b0..d63e35e 100644
        if (window.GW_WARP_GUARD && window.GW_WARP_GUARD.isOn() !== guard.checked) window.GW_WARP_GUARD.set(guard.checked);
        toast('Advanced settings saved');
      });
-@@ -15874,7 +15954,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15874,7 +15955,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        lookupOrCreateVariable(id, n) { return lookupVar(s, n, '') || (GV()[n] = 0, lookupVar(s, n, '')); }, lookupOrCreateList(id, n) { return lookupVar(s, n, 'list') || (GL()[n] = [], lookupVar(s, n, 'list')); },
        lookupBroadcastMsg: (id, n) => ({ id, name: n, value: n }),
        isTouchingSprite: n => GW.spritesNamed(String(n)).some(o => o !== s && GW.spritesTouch(s, o)), isTouchingPoint: (x, y) => !!GW.spriteHasPoint?.(s, x, y), isTouchingEdge: () => !!GW.touchingEdge?.(s),
@@ -388,7 +400,7 @@ index 9a9e3b0..d63e35e 100644
        getLayerOrder: () => (GW.drawOrder ? GW.drawOrder().indexOf(s) : E.sprites.indexOf(s)), goToFront() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.max(0, ...o.map(x => x.layer || 0)) + 1; }, goToBack() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.min(0, ...o.map(x => x.layer || 0)) - 1; },
        emitVisualChange() {}, updateAllDrawableProperties() {}, setCustomState(k, v) { (s.__custom || (s.__custom = {}))[k] = v; }, getCustomState: k => s.__custom?.[k],
        duplicate: () => Promise.resolve(targetFor(GW.createClone ? GW.createClone(s) : null)), makeClone: () => targetFor(GW.createClone ? GW.createClone(s) : null), dispose() { if (s.isClone) GW.deleteClone?.(s); }
-@@ -15934,7 +16014,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15934,7 +16015,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    const renderer = {
      canvas: null, get _gl() { return null; }, gl: null, _allDrawables: [], _drawList: [], dirty: false, _xLeft: -240, _xRight: 240, _yBottom: -180, _yTop: 180, _nativeSize: [480, 360],
      getNativeSize: () => [480, 360], setBackgroundColor(r, g, b) { GW.camera.bg = Color.rgbToHex({ r: r * 255, g: g * 255, b: b * 255 }); },
@@ -397,7 +409,7 @@ index 9a9e3b0..d63e35e 100644
      getCurrentSkinSize(id) { const s = E.sprites[id]; const c = s?.costumes?.[s.activeCostume]; const b = GW.costumeBox(c); return [b.w, b.h]; },
      getBounds(id) { const s = E.sprites[id]; if (!s) return null; const b = GW.spriteBounds(s); return { ...b, width: b.right - b.left, height: b.top - b.bottom }; },
      getBoundsForBubble(id) { return this.getBounds(id); }, getFencedPositionOfDrawable: (id, pos) => pos,
-@@ -15965,14 +16045,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15965,14 +16046,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      compilerOptions: { enabled: false, warpTimer: true }, isPackaged: false, extensionStorage: {}, renderer, storage: { assetHost: '', DataFormat: { PNG: 'png', SVG: 'svg', WAV: 'wav', MP3: 'mp3', JPG: 'jpg' }, AssetType: {} },
      get runtimeOptions() { return { maxClones: E.cloneLimit || 300, miscLimits: !GW.miscLimitsOff?.(), fencing: GW.__projectFence !== false }; },
      setRuntimeOptions(o) { if (o?.maxClones != null) E.cloneLimit = Number(o.maxClones) || 300; if (o?.fencing != null) GW.__projectFence = o.fencing ? undefined : false; if (o?.miscLimits != null) GW.__projectMiscLimits = o.miscLimits ? undefined : false; },
@@ -414,7 +426,7 @@ index 9a9e3b0..d63e35e 100644
      startHats: (op, fields, target) => startHats(op, fields, target), stopAll() { by('stopBtn')?.click(); }, greenFlag() { by('greenFlagBtn')?.click(); }, stopForTarget(t) { const s = t?.gwSprite; if (s) E.threads.forEach(th => { if (th.sprite === s) th.finished = true; }); },
      shouldExecuteStopClicked: true, _hats: {}, _primitives: {}, _flowing: {}, profiler: null, sequencer: { stepThreads() {}, timer: { timeElapsed: () => 0 } },
      _step() { this.emit('BEFORE_EXECUTE'); pollHats(); },
-@@ -15988,7 +16068,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15988,7 +16069,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    runtime.extensionManager = extensionManager;
    define(vm, {
      runtime, renderer, extensionManager, get editingTarget() { return runtime.getEditingTarget(); },
@@ -423,7 +435,7 @@ index 9a9e3b0..d63e35e 100644
      postIOData() {}, greenFlag: () => runtime.greenFlag(), stopAll: () => runtime.stopAll(), start() {}, toJSON: () => '{}', securityManager: {},
      getPlaygroundData: () => ({ targets: runtime.targets, threads: [] }), addSprite: () => Promise.reject(new Error('Adding sprites from extensions is not supported in G-Warp yet')),
      get runtimeOptions() { return runtime.runtimeOptions; }
-@@ -16363,7 +16443,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16363,7 +16444,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      css(st) { const rgb = Color.hsvToRgb({ h: st.color * 360 / 100, s: st.saturation / 100, v: st.brightness / 100 }); return `rgba(${rgb.r},${rgb.g},${rgb.b},${1 - st.transparency / 100})`; },
      clear() { const c = this.canvas(), g = this.ctx(); if (g) g.clearRect(0, 0, c.width, c.height); },
      line(color4f, d, x0, y0, x1, y1) { const g = this.ctx(); if (!g) return; const c = color4f ? `rgba(${color4f[0] * 255},${color4f[1] * 255},${color4f[2] * 255},${color4f[3]})` : '#0000ff'; this.seg(g, c, d || 1, x0, y0, x1, y1); },
@@ -432,7 +444,7 @@ index 9a9e3b0..d63e35e 100644
      follow(s) { const st = s.__pen; if (!st || !st.down) { if (st) { st.x = s.x; st.y = s.y; } return; } if (st.x === s.x && st.y === s.y) return; const g = this.ctx(); if (g) this.seg(g, this.css(st), st.size, st.x, st.y, s.x, s.y); st.x = s.x; st.y = s.y; },
      stamp(s) {
        const g = this.ctx(), c = s.costumes?.[s.activeCostume]; if (!g || !c?.canvas || !s.visible) return; GW.__penUsed = true; const cv = this.canvas(), kx = cv.width / 480;
-@@ -18029,6 +18109,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18029,6 +18110,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      });
      refreshAll(); toast(`Attached ${n} shape${n === 1 ? '' : 's'} to the nearest bones.`);
    }
@@ -482,7 +494,7 @@ index 9a9e3b0..d63e35e 100644
    function deleteBone() {
      const id = st.bone; if (!id) return toast('Pick a bone first.'); snap();
      const gone = new Set([id]); let grew = true; while (grew) { grew = false; st.anim.bones.forEach(b => { if (b.parent && gone.has(b.parent) && !gone.has(b.id)) { gone.add(b.id); grew = true; } }); }
-@@ -18201,7 +18324,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18201,7 +18325,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
          h('button', { type: 'button', class: 'gw18-x', 'aria-label': 'Close', html: '<i class="fa-solid fa-xmark"></i>', onclick: () => close() })),
        h('div', { class: 'gw18-body' },
          h('div', { class: 'gw18-tools' }, h('div', { class: 'gw18-small', text: 'Rig tools' }),
@@ -491,7 +503,7 @@ index 9a9e3b0..d63e35e 100644
            h('hr'), btn(ic('fa-wand-magic-sparkles', 'Attach automatically'), () => autoAttach(), { id: 'gw18Auto' }), btn(ic('fa-trash', 'Delete bone'), () => deleteBone(), { id: 'gw18DelBone' }),
            h('p', { id: 'gw18Tip', class: 'gw18-tip' })),
          h('div', { id: 'gw18View', class: 'gw18-view' }),
-@@ -25054,7 +25177,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -25054,7 +25178,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    const by = id => document.getElementById(id);
    const css = document.createElement('style'); css.id = 'gw4950css';
    css.textContent = `#gw154StageFrame [data-var-monitor],#gw154StageFrame [data-list-monitor]{z-index:6!important}
@@ -500,7 +512,7 @@ index 9a9e3b0..d63e35e 100644
  .gw4950-menu{position:fixed;z-index:10050;min-width:150px;padding:4px;border:1px solid #2b2f55;border-radius:10px;background:#14162a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
  .gw4950-menu button{display:flex;gap:8px;align-items:center;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#e5e7eb;font-size:12px;font-weight:700;text-align:left;cursor:pointer}
  .gw4950-menu button:hover,.gw4950-menu button:focus-visible{background:#26294a;outline:none}`;
-@@ -29123,6 +29246,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
+@@ -29123,6 +29247,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
  })();
  </script>
  <!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->

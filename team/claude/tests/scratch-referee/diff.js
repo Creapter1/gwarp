@@ -8,7 +8,10 @@ async function gwarp(app, sb3, ms) {
   p.on('pageerror', e => errs.push(e.message.slice(0, 200))); p.on('dialog', d => d.dismiss());
   await p.goto('file://' + app); await p.waitForTimeout(3500);
   await p.setInputFiles('#sb3ImportFile', sb3); await p.waitForTimeout(3000);
-  await p.click('#greenFlagBtn'); await p.waitForTimeout(ms);
+  await p.click('#greenFlagBtn');
+  await p.evaluate(() => { window.__ready = () => String(window.Engine.variables.ready) === '1'; });
+  const box = await p.locator('#stageCanvas').boundingBox(), mx = box.x + box.width * 340 / 480, my = box.y + box.height * 130 / 360;
+  await ref.inputs(p, ms, async down => down ? p.keyboard.down('Space') : p.keyboard.up('Space'), async down => { await p.mouse.move(mx, my); return down ? p.mouse.down() : p.mouse.up(); });
   const out = await p.evaluate(() => ({ vars: { ...window.Engine.variables },
     sprites: window.Engine.sprites.filter(s => !s.isClone && !s.isStage && !s.stageProxy).map(s => ({ name: s.name, x: s.x, y: s.y, direction: s.direction, size: s.size, costume: (s.activeCostume || 0) + 1, visible: s.visible !== false })) }));
   out.errs = errs; await b.close(); return out;

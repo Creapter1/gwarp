@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.3.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.4.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -59,3 +59,12 @@ Picture test pen.sb3 (pen lines, stamps, 7 effects): 0.21 % of pixels differ. Se
     Touching edge + extension getBounds use it too. Fencing keeps the costume box (that is what Scratch does).
 14. distance to not rounded; point in direction text = 0; glide ends on target; pen sizes 1 and 3 offset by 0.5.
 On the owner's PC as v15.69.0c (backup before-v15690c-app.html).
+
+---- v15.70.4 (25 Nov, extra Scratch-exact batch; referee now also plays: presses space and clicks the stage in both engines) ----
+par4.sb3 66/72 (left: timer hat missing, loudness, tick count, 1 px mouse = test harness sub-pixel). ratio.sb3: cnt/tick/cnt2 = 247/124/184 vs Scratch 245/123/184.
+15. A wait block always yields, also "wait 0" (runner: return after a 'wait' block). Before: ratio.sb3 gave 123/123/91.
+16. Threads started during a pass are stepped in that same pass (dynamic loop bound; __gwSF stops the same-frame section stepping them twice).
+17. 'parameter' reporter: only the custom block's own frames; 0 when not found (was '' and fell back to a variable of the same name).
+OPEN: event_whengreaterthan hat (timer / loudness) is not in G-Warp at all (no palette block, no import, no export);
+      sensing_loudness answers ''; non-warp recursive custom blocks do not yield per call like Scratch.
+On the owner's PC as v15.69.0d (backup before-v15690d-app.html).
