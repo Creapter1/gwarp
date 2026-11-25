@@ -80,3 +80,11 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
   From now on the patch is `git diff -- app.html gw-svg360.js gw-bigmap.js` and pc ships must compare/back up the .js files too.
 - Developer-mode features in headless: use /home/claude/gwt/shotdev.js (loads app.html?dev=1).
 - Open: Spark Studio Mood menu (preview is always major). Logged in the to-do.
+
+## State after the owner's 15:12 message (16:00)
+- NEW GOAL ORDER from the owner: beat Scratch at everything (speed, loading <= 10 s, a real steady 30 FPS), then TurboWarp, then PenguinMod.
+  Everything must work the same as Scratch; extensions the same as TurboWarp. R6's PenguinMod block check comes AFTER this.
+- rel = v15.70.8 (opening time: big.sb3 34 s -> 7.5 s). PC is STILL v15.69.0g: the PC went offline (bridge not connected) at ship time.
+  NEXT TIME THE PC ANSWERS: stage + compare its app.html with /mnt/user-data/outputs/pc/app.html (= g), then pc_build.py h, backup, note, commit.
+  Do NOT run pc_build.py before the PC is reachable (it would break the backup chain).
+- Tools: load.js (opening time), laps.js (import stages), prof_open.js (profile of opening), pace.js (step pacing), mkbig.py (big test project).

@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.7.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.8.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -112,3 +112,19 @@ The patch now covers THREE files: app.html, gw-svg360.js (1.2.0), gw-bigmap.js (
 OPEN: Spark Studio preview is always the major scale (MAJOR in two modules) even when the song's mood is minor - the biggest reason it sounds "kid".
    Next step: a Mood menu (major / minor / minor pentatonic / dorian) for the preview that also sets the Song maker's mood. Needs the owner's ear; build it side by side.
 pictures: svg360-stickman-before/after.png, bigmap-own-backdrop.png, spark-bass-ideas.png
+
+v15.70.8 (Claude Fable, 25 Nov 2026, owner: "10 s or less waiting / loading, 30 FPS must be a real 30") - NOT ON THE PC YET (PC was offline at ship time)
+MEASURED (tests/scratch-referee: mkbig.py 30 20 -> big.sb3 = 30 sprites, 600 scripts, 7,200 blocks, 150 variables; node load.js big.sb3):
+  open until the blocks show: 34.4 s -> 7.5 s     until the app is calm again: 63.9 s -> about 10 s     app start: 2 s (unchanged)
+  small project (par3, 268 blocks): 1 s, unchanged.   Pacing (node pace.js): plain loop 30.8 steps/s, 96% of steps on time.
+WHAT WAS SLOW (node laps.js / prof_open.js / lay.js):
+1. importSB3 "tidy" un-hid and measured the scripts of EVERY sprite: one huge first layout (11 s). Now other sprites' stacks are hidden from creation
+   and tidied the first time they are shown (GW.__tidyLater, called from GW.showSpriteScripts). Same tidy code; sprite 0 identical.
+2. Every reporter bubble with a menu (variables, lists) built ALL choices: 150 variables = 150 <option> in each of thousands of bubbles.
+   select() now keeps only the current choice + the widest choice when the list is longer than 24 (exact same width), and fills the rest on
+   pointerdown / keydown / focus. Kill switch: window.GW_LAZY_MENUS = false. Checked: width and value identical before / after filling.
+3. GW8.same() stringified two multi-MB snapshots on every history push: now compares the code-area text first (same answer).
+4. usedType() (extension dock, every 0.8 s) searched the whole code area once per extension block: now one Set per code-area change.
+STILL OPEN for "everything faster than Scratch": helpers that poll the page (~100 setIntervals) still cost CPU on big projects while editing;
+  the 4.6 s freeze during import itself (scripts 1 s, decorate 1.1 s, tidy 0.8 s, snapshot 0.5 s, file read) should become a progress bar or be chunked;
+  script speed pass 2 (see v15.70.5 notes). A real big project from the owner is needed to measure the true numbers.

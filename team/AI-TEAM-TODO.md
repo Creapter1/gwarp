@@ -30,6 +30,9 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [later] SVG 360: AI-drawn back sides (local AI); turn every costume of an animation at once.
 
 ## 1. Engine / performance
+- [open] OWNER GOAL 25 Nov (15:12): beat Scratch at everything first, then TurboWarp, then PenguinMod. Waiting / loading 10 s or less. 30 FPS must be a real 30 even on heavy projects. Everything works the same as Scratch; extensions work the same as TurboWarp
+- [done] Opening time (v15.70.8, Claude Fable, 25 Nov): 7,200-block / 30-sprite test project opens in 7.5 s (was 34 s), calm at ~10 s (was 64 s). Lazy tidy, lazy long menus, cheap history compare, cached used-types. Numbers + tools in team/claude/v15.70.8/README.txt. NOT on the owner's PC yet (PC offline) - ship as letter h
+- [open] (Claude Fable) Opening: the 4-5 s freeze while a big .sb3 is built should be chunked or show progress; ~100 polling helpers still cost CPU on big projects while editing. Need one of the owner's real big projects for true numbers
 - [open] Top priority: no bugs, no lag before "crazy stuff"
 - [done] S1 Code-area lag (glow filter on whole stack) - v15.70.0: box-shadow on the hat block instead
 - [open] S2 Power-line sparks cap ~15 fps while running
