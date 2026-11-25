@@ -36,10 +36,15 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [done] S3 Undo: skip pushHistory while running, push on Stop - APP-CHECK 25 Nov: already in v15.69.0
 - [done] S4 Smooth motion / interpolation - v15.70.0 (setInterpolation is real now)
 - [open] S5 Re-measure after S1-S4
+- [done] R3 speed pass 1 (Claude Fable, 25 Nov) - v15.70.5 / PC v15.69.0e: variables, lists and common reporters in one step. 3-5x faster than v15.70.4 on script work, same referee totals. Numbers in team/claude/v15.70.5/README.txt
+- [open] R3 speed pass 2 (Claude Fable): still 2-5x slower than Scratch on pure script work (TurboWarp is faster than Scratch). Per-type route for the remaining command blocks, pen/looks one-step paths, then closures per script (see README "STILL SLOWER")
+- [open] (Claude Fable) Scratch's timer only changes once per frame; G-Warp's timer is live. Not seen to break a project yet - check with the referee before touching
+- [open] (Claude Fable) "add to list" has no 200,000 item limit (Scratch stops adding at 200,000)
 - [open] Block compiler path + collision candidate + clone stress tests + benchmarks
 - [done] E1.9 .sb3 opens at 30 FPS unless project asks 60 - APP-CHECK 25 Nov: already in v15.69.0
 
 ## 2. Blocks & Scratch parity
+- [done] (Claude Fable, 25 Nov) set [v] to (reporter) keeps the answer as it is, like Scratch ("05" from join was turned into 5) - v15.70.5, join.sb3 19/19
 - [open] Parity fixtures / runner gaps (broadcasts, clones, custom blocks in runner)
 - [open] Job bank JOBS-BLOCKS (remaining)
 - [open] A10 letter inputs in number fields; E1.6 glide menus; E2.1 backdrop-and-wait; E2.4 TurboWarp extras; E2.9 PenguinMod core

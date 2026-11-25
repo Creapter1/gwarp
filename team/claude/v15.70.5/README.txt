@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.4.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.5.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -68,3 +68,21 @@ par4.sb3 66/72 (left: timer hat missing, loudness, tick count, 1 px mouse = test
 OPEN: event_whengreaterthan hat (timer / loudness) is not in G-Warp at all (no palette block, no import, no export);
       sensing_loudness answers ''; non-warp recursive custom blocks do not yield per call like Scratch.
 On the owner's PC as v15.69.0d (backup before-v15690d-app.html).
+
+v15.70.5 (Claude Fable, 25 Nov 2026, round 3 = speed) - on the owner's PC as v15.69.0e
+Results unchanged (all referee projects give the same totals as v15.70.4), except one Scratch fix (6).
+1. GW.__fastVar: "set / change [variable]" run in one step from runOne (before syncProxies). Falls back to the old path for anything unusual
+   (menu from a reporter, no menu, slot mismatch). Switch: window.GW_FAST_VARS = false before load.
+2. GW9.scopedValue / setScopedValue read the stores directly (custom-block locals -> sprite's own -> shared); the Proxy is no longer hit twice per read.
+3. GW.__fastList: list add / delete / insert / replace in one step (values worked out in slot order, still stored as text like before). Switch: window.GW_FAST_LISTS = false.
+4. fastFN gained timer, parameter, mouse_x, mouse_y, key_pressed, op_length, op_letter, op_mathop (same formulas as the older layers).
+5. Small: if/loop bodies cached per code-area change (bodyOf), resolveInput's slot lookup cached, breakpoint check only when a breakpoint exists,
+   cond()/slotNode use getAttribute, frame work time 75% of the step like Scratch (was 60%).
+6. Scratch fix: set [v] to (reporter) stores the answer as it is ("05" from join stays text; it was turned into the number 5). join.sb3 19/19.
+BENCH (tests/scratch-referee: mkbench.py -> bench.sb3, node bench.js bench.sb3 app.html), seconds, Scratch / v15.70.4 / v15.70.5:
+  count loop .04/.32/.08   maths .06/.77/.14   lists .03/.60/.13   if-compare .045/.57/.17   pen .02/.07/.07   text .02/.30/.08
+  plain loop turns in 2 s: 3.5M / 0.22M / 0.85M      300 clones frames in 3 s: 91 / 91 / 91
+STILL SLOWER than Scratch (2-5x) and so than TurboWarp's compiler. Next steps that would pay most (profile: prof2.js):
+  - every other command block still walks GW.extraBlock (6 layers) + executeBlock (9 wrappers), each reading b.dataset.type: use b.__gwT and a per-type route;
+  - pen blocks and looks blocks have no one-step path; non-warp loops pay one full step() call per turn (3 wrappers around step);
+  - a real compile step (blocks -> closures per script, rebuilt when GW.__wsEpoch changes) is the only way to pass TurboWarp. Not started.

@@ -61,3 +61,10 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 ## State after the extra batch (12:25)
 - rel = v15.70.4, PC = v15.69.0d. New: par4.sb3 (mkpar4.py, 66/72), ratio.sb3. diff.js/ref.js now play inputs once the project sets variable "ready" to 1.
 - Open parity items are in the to-do (timer hat, loudness, recursion yield). Good candidates for R6 if time allows.
+
+## State after round 3 (13:25)
+- rel = v15.70.5, PC = v15.69.0e (STATE.json letter e). Backup of rel before R3: /home/claude/gwt/app.v15.70.4.html.
+- Speed: fast paths GW.__fastVar / GW.__fastList (called from runOne), direct scopedValue, more fastFN reporters, bodyOf cache, 75% work time.
+  bench.sb3 (mkbench.py; node /home/claude/ref/bench.js bench.sb3 app.html): 3-5x faster than v15.70.4, still 2-5x slower than Scratch. NOT faster than TurboWarp - say so.
+- New referee projects: nat.sb3 (15/15), join.sb3 (19/19), c7.sb3 (plain loop profile). Add both to the diff list every round.
+- Next speed ideas are in team/claude/v15.70.5/README.txt ("STILL SLOWER").
