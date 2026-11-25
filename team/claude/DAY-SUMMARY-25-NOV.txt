@@ -1,0 +1,28 @@
+G-Warp - Claude Fable - 25 Nov 2026 - day summary (rounds 1-7)
+Latest tested build: v15.70.9 = team/claude/v15.70.9/app-v15.69.0-to-v15.70.9.patch (apply on release v15.69.0; covers app.html, gw-svg360.js, gw-bigmap.js).
+Owner's PC: v15.69.0g (= v15.70.7). v15.70.8 + v15.70.9 are NOT on the PC (PC offline from ~15:50). Next letter to ship: h.
+
+WHAT CHANGED TODAY
+ a v15.70.0-2  smooth motion (off by default), live sprite boxes, exact colour/whirl/fisheye/pixelate/mosaic effects, size limits, tan, auto skeleton
+ c v15.70.3    Scratch's frame rules (loops without drawing finish in one frame), hat order, bounce, touching edge, pen offset, glide end, text-is-not-a-variable in .sb3
+ d v15.70.4    wait always gives a turn, new scripts start in the same pass, block inputs outside their block = 0
+ e v15.70.5    speed pass 1 (variables, lists, common reporters in one step); set [v] to (join 0 5) keeps "05"
+ f v15.70.6    addons: go to definition, mouse position, variable manager; clone counter live while running
+ g v15.70.7    SVG 360 1.2.0, Big map 1.2.0, Spark Studio ideas (melody, bass, backing, drums)
+ - v15.70.8    opening time: 7,200-block project 34 s -> 7 s (calm 64 s -> 10 s)
+ - v15.70.9    full regression passed; power-lines no longer lays the page out every frame
+
+MEASURED
+ real Scratch engine (tests/scratch-referee): 58/60, 40/40, 72/72, 22/22, 15/15, 19/19, 157/159, 66/72 the same; pen picture 0.21% of pixels differ
+ speed vs Scratch (seconds): count .07/.04  maths .13/.05  lists .11/.03  if .18/.04  pen .11/.03  text .09/.02  plain loop 0.86 M vs 3.4 M turns in 2 s
+   (start of day: .32 .77 .81 .54 .08 .33, 0.19 M) -> 3-5x faster than this morning, still 2-4x slower than Scratch. TurboWarp is faster than Scratch.
+ 300 clones: 91 frames in 3 s, same as Scratch. Pacing: 31 steps/s, 94% on time on a plain loop.
+
+STILL OPEN (all in team/AI-TEAM-TODO.md)
+ speed: compile scripts to closures (the only way past Scratch and TurboWarp); pen / looks one-step paths
+ Scratch-exact: "when timer / loudness >" hat, loudness = -1, recursion yield, corner bounce 2 px, timer once per frame, 200,000 list limit
+ owner decisions: typed text = variable name in native projects; PR 20; which Spark Studio ideas sound wrong; Mood menu for Spark Studio
+ later by owner's order: PenguinMod core blocks (E2.9); custom stage size (E2.5, ~90 places)
+ needs the owner's own big project: true opening-time and FPS numbers; BUG-20261027 background music
+
+HOW TO GO BACK on the PC: copy backup\before-v15690<letter>-app.html over resources\app\app.html (for g also the two before-v15690g-gw-*.js files).
