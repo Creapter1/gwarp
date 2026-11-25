@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.2.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.3.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -44,3 +44,18 @@ APP-CHECK: "set_effect menu dropped on export" is already fixed in v15.69.0 (exp
 OWNER'S PC: the desktop app got the same changes as v15.69.0a then v15.69.0b (owner rule: same number, new letter on the PC).
    Backups: resources\app\backup\before-v15690a-app.html and before-v15690b-app.html.
 NOT on the release branch / PR 20 yet (owner tests on the PC first).
+
+---- v15.70.3 (25 Nov, round 2: checked against the REAL Scratch engine, team/claude/tests/scratch-referee/) ----
+Referee totals: par 58/60 (random glide), par2 40/40, probe 72/72, par3 157/159 (corner bounce < 2 px), mini 22/22.
+Picture test pen.sb3 (pen lines, stamps, 7 effects): 0.21 % of pixels differ. See pen-effects-scratch-vs-gwarp.png (Scratch | G-Warp | difference).
+10. Sequencer like Scratch: more passes inside one frame while no block has changed the screen (work time = 60 % of the frame,
+    max 22 ms). Visual blocks set GW.__redraw (motion/looks of a SHOWN sprite, show/hide, say, wait, backdrop, pen). Kill switch
+    window.GW_SEQ_LIKE_SCRATCH = false.  "repeat 100: change a by 1": was 100 frames, now 1.  spin.sb3 keeps 59 FPS in the editor.
+    SPEED NOTE for round 3: "forever: change n by 1" for 3 s = G-Warp 409,000 loops, Scratch 5,520,000 (Scratch is 13x faster here).
+11. Reporter answers are text, not variable names (GW.resolve, GW8.resolveInput); typed text too when GW.__sb3Project is true.
+    OWNER DECISION LEFT OPEN: native G-Warp projects still treat typed text that equals a variable name as that variable.
+12. Hats start front sprite first, Stage last (green flag, GW.broadcastThreads, GW.dispatchBroadcast) - hatOrder().
+13. Bounce = Scratch's algorithm with GW.tightBounds (convex hull of visible pixels, 1 unit cells for vector costumes).
+    Touching edge + extension getBounds use it too. Fencing keeps the costume box (that is what Scratch does).
+14. distance to not rounded; point in direction text = 0; glide ends on target; pen sizes 1 and 3 offset by 0.5.
+On the owner's PC as v15.69.0c (backup before-v15690c-app.html).

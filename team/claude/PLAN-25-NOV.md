@@ -35,7 +35,10 @@ Generators: mkpar.py, mkpar2.py, mkprobe.py (fixtures MUST have viewBox on SVG c
 
 ## Rounds (5 hours from 11:15)
 R1 11:15 DONE  real-Scratch referee built; 172 checks same as Scratch; fencing "bug" was a false alarm.
-R2 ~12:00  Scratch-exact batch 3 with the referee: motion (glide must END exactly on target, bounce, point towards, rotation styles),
+R2 DONE 11:35 (ran early, shipped as letter c, v15.70.3). If the 12:00 message fires again: do an EXTRA Scratch-exact batch instead
+           (sound blocks, key/click/backdrop hats, ask+answer, variable/list monitors, custom-block warp timing, clone layer order,
+           say/think bubbles in the picture test) and ship it as the next letter.
+   (old)   Scratch-exact batch 3 with the referee: motion (glide must END exactly on target, bounce, point towards, rotation styles),
            looks (layers, costumes), sensing (touching, distance), lists/strings edge cases, PEN + effects by comparing the two stage
            pictures pixel by pixel. Fix every real difference.  -> PC letter c
 R3 ~12:50  Better than TurboWarp 1 = speed. Benchmark projects (tight loops, 300 clones, list sort, pen fill, custom blocks no-refresh):
@@ -46,3 +49,11 @@ R5 ~14:30  G-Warp-only tools (owner): more for Spark Studio; SVG 360 and Big map
            samples that match what the user made, clear first step). Screenshot each before/after.  -> letter f
 R6 ~15:20  Better than PenguinMod: PenguinMod core blocks check (E2.9), then full regression of everything above, to-do clean-up.
 R7 ~16:10  Final report to the owner: what changed today, measured results, what is still open. Stop.
+
+
+## State after round 2 (11:35)
+- rel = v15.70.3, PC = v15.69.0c. Referee tools: /home/claude/ref (diff.js values, pic.js pictures) + /home/claude/gwt/sbgen.py (project builder),
+  generators mkpar3.py (157/159), mkpen.py (picture, 0.21 % diff), mkmini.py. picdiff.py pic -> pic_cmp.png.
+- Known speed gap for R3: spin.sb3 "forever change n by 1" 3 s: G-Warp 409k loops vs Scratch 5.52M. The interpreter walks DOM blocks
+  (runOne -> syncProxies -> executeBlock). Look at caching per block (parsed op + closures) before anything else. Re-run ALL diffs after.
+- Open owner decision logged in the to-do: typed text = variable name in native projects.

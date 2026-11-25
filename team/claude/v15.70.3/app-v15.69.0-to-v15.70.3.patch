@@ -1,5 +1,5 @@
 diff --git a/app.html b/app.html
-index 9a9e3b0..c41da80 100644
+index 9a9e3b0..d63e35e 100644
 --- a/app.html
 +++ b/app.html
 @@ -3939,7 +3939,8 @@ IMPORTANT:
@@ -12,7 +12,7 @@ index 9a9e3b0..c41da80 100644
                  const delta = now - Engine.lastFrameTime;
                  Engine.lastFrameTime = now;
                  Engine.actualFps = Math.round(1000 / (delta || 16));
-@@ -3947,9 +3948,6 @@ IMPORTANT:
+@@ -3947,11 +3948,8 @@ IMPORTANT:
                  const fpsCounter = document.getElementById('fpsCounter');
                  if (fpsCounter && now - (GW.__fpsT || 0) > 500 && !document.getElementById('extra-apps-dropdown')?.classList.contains('hidden')) { GW.__fpsT = now; if (fpsCounter.textContent !== String(Engine.actualFps)) fpsCounter.textContent = Engine.actualFps; }
  
@@ -20,8 +20,11 @@ index 9a9e3b0..c41da80 100644
 -                const gwOrder = GW.drawOrder ? GW.drawOrder() : Engine.sprites;
 -
                  if (Engine.isRunning && !Engine.isPaused) {
-                     const gwT0 = performance.now(), gwN0 = Engine.threads.length; let gwPass = 0; do { gwPass++; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isTurbo && Engine.isRunning && !Engine.isPaused && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame */
+-                    const gwT0 = performance.now(), gwN0 = Engine.threads.length; let gwPass = 0; do { gwPass++; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isTurbo && Engine.isRunning && !Engine.isPaused && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame */
++                    const gwT0 = performance.now(); let gwN0 = Engine.threads.length, gwPass = 0; const gwSeq = window.GW_SEQ_LIKE_SCRATCH !== false, gwWork = Math.min(22, Math.max(4, ((window.GW_SETTINGS && window.GW_SETTINGS.stepMs && window.GW_SETTINGS.stepMs()) || 16.7) * 0.6)); GW.__redraw = false; do { gwPass++; GW.__act = 0; if (gwPass > 1) gwN0 = Engine.threads.length; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isRunning && !Engine.isPaused && ((Engine.isTurbo && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)) || (gwSeq && !GW.__redraw && GW.__act > 0 && gwPass < 200000 && performance.now() - gwT0 < gwWork))); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame. v15.70.3: like Scratch, more passes in the same frame while no block has changed the screen (switch off: window.GW_SEQ_LIKE_SCRATCH = false) */
                      /* v15.57.0 (Claude, Scratch parity + speed): like Scratch, scripts started DURING this frame (broadcast, clone) run in this
+                        same frame, and a "broadcast and wait" whose receivers have all finished goes on in this frame too. Before, each
+                        broadcast-and-wait "tick" loop cost ~3 frames: Clone Multiplayer ran 5-11 ticks/s in G-Warp vs 40-55 in Scratch. */
 @@ -3967,6 +3965,12 @@ IMPORTANT:
                      Engine.threads = Engine.threads.filter(t => !t.finished);
                  }
@@ -55,7 +58,26 @@ index 9a9e3b0..c41da80 100644
                  case 'next_costume': this.sprite.activeCostume=(this.sprite.activeCostume+1)%this.sprite.costumes.length; break;
                  case 'switch_costume': {
                      const n=sel(); const i=this.sprite.costumes.findIndex(c=>c.name===n);
-@@ -4554,7 +4556,7 @@ IMPORTANT:
+@@ -4429,7 +4431,8 @@ IMPORTANT:
+ 
+         GW.resolve = function(v) {
+             const raw = String(v ?? '').trim();
+-            if (Object.prototype.hasOwnProperty.call(Engine.variables, raw)) return Engine.variables[raw];
++            /* v15.70.3 (found with the real Scratch engine): a reporter's ANSWER is text, never a variable name. Before, 'item 1 of list' = "a" gave the value of a variable called a. */
++            if (GW.__sb3Project !== true && !(GW.__lit && (GW.__lit.has(raw) || GW.__lit.has(String(v ?? '')))) && Object.prototype.hasOwnProperty.call(Engine.variables, raw)) return Engine.variables[raw];
+             const n = Number(raw);
+             return Number.isFinite(n) ? n : raw;
+         };
+@@ -4542,7 +4545,7 @@ IMPORTANT:
+                 case 'next_backdrop': Engine.activeBackdrop=(Engine.activeBackdrop+1)%Engine.backdrops.length;GW.triggerBackdrop(Engine.backdrops[Engine.activeBackdrop].name);return;
+                 case 'change_backdrop_color': Engine.backdrops[Engine.activeBackdrop].color=text(0)||'#fff';return;
+                 case 'touching_sprite': if(sel==='edge')return Math.abs(this.sprite.x)>220||Math.abs(this.sprite.y)>160; if(sel==='mouse-pointer')return Math.abs(this.sprite.x-Engine.mouse.x)<25&&Math.abs(this.sprite.y-Engine.mouse.y)<25; return false;
+-                case 'distance_to': return Math.round(Math.sqrt((this.sprite.x-Engine.mouse.x)**2+(this.sprite.y-Engine.mouse.y)**2));
++                case 'distance_to': return Math.sqrt((this.sprite.x-Engine.mouse.x)**2+(this.sprite.y-Engine.mouse.y)**2);
+                 case 'glide_xy': { const secs=Math.max(.01,n(0)); const sx=this.sprite.x,sy=this.sprite.y,tx=n(1),ty=n(2); this.motionTween={start:performance.now(),dur:secs*1000,sx,sy,tx,ty}; this.waitUntil=performance.now()+secs*1000; return; }
+                 case 'goto_random': this.sprite.x=Math.random()*440-220;this.sprite.y=Math.random()*320-160;return;
+                 case 'point_towards': { const dx=Engine.mouse.x-this.sprite.x,dy=Engine.mouse.y-this.sprite.y; this.sprite.direction=90-Math.atan2(dy,dx)*180/Math.PI;return; }
+@@ -4554,7 +4557,7 @@ IMPORTANT:
                  case 'clear_effects': this.sprite.ghost=0;return;
                  case 'costume_number': return this.sprite.activeCostume+1;
                  case 'costume_name': return this.sprite.costumes[this.sprite.activeCostume]?.name||'';
@@ -64,16 +86,25 @@ index 9a9e3b0..c41da80 100644
                  case 'set_volume': this.sprite.volume=Math.max(0,Math.min(100,n(0)));return;
                  case 'volume_reporter': return this.sprite.volume??100;
                  case 'op_mod': return Number(GW.resolve(ins[0]?.value))%Number(GW.resolve(ins[1]?.value)||1);
-@@ -4901,7 +4903,7 @@ IMPORTANT:
+@@ -4594,7 +4597,7 @@ IMPORTANT:
+             if(this.waitCondition){if(!this.waitCondition())return;this.waitCondition=null;}
+             if(this.waitBroadcast){if(!this.waitBroadcast())return;this.waitBroadcast=null;}
+             if(this.sprite.sayUntil&&performance.now()>=this.sprite.sayUntil){this.sprite.sayText='';this.sprite.sayUntil=0;}
+-            if(this.motionTween){const t=Math.min(1,(performance.now()-this.motionTween.start)/this.motionTween.dur);this.sprite.x=this.motionTween.sx+(this.motionTween.tx-this.motionTween.sx)*t;this.sprite.y=this.motionTween.sy+(this.motionTween.ty-this.motionTween.sy)*t;if(t>=1)this.motionTween=null;else return;}
++            if(this.motionTween){const t=Math.min(1,(performance.now()-this.motionTween.start)/this.motionTween.dur);this.sprite.x=this.motionTween.sx+(this.motionTween.tx-this.motionTween.sx)*t;this.sprite.y=this.motionTween.sy+(this.motionTween.ty-this.motionTween.sy)*t;if(t>=1){this.sprite.x=this.motionTween.tx;this.sprite.y=this.motionTween.ty;this.motionTween=null;}else return;}
+             if(this.callStack.length){const top=this.callStack[this.callStack.length-1];if(top.type==='repeatUntil'){if(top.condition()){this.callStack.pop();return;}if(top.pc<top.blocks.length){this.executeBlock(top.blocks[top.pc++]);return;}top.pc=0;return;}}
+             return v5StepBase.call(this);
+         };
+@@ -4901,7 +4904,7 @@ IMPORTANT:
              });
          });
      </script>
 -<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
-+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.2',label:'Beta v15.70.2',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
++<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.3',label:'Beta v15.70.3',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
  <script id="gw-v7-reconciliation">
  (() => {
    /* G-Warp v7 reconciliation layer
-@@ -5394,7 +5396,7 @@ IMPORTANT:
+@@ -5394,7 +5397,7 @@ IMPORTANT:
        case 'x_position':return sprite?.x??0; case 'y_position':return sprite?.y??0; case 'direction':return sprite?.direction??90;
        case 'mouse_x':return Engine?.mouse?.x??0; case 'mouse_y':return Engine?.mouse?.y??0; case 'mouse_down':return !!Engine?.mouse?.down;
        case 'timer':return (performance.now()-(Engine?.timerStarted||performance.now()))/1000; case 'answer':return Engine?.answer??'';
@@ -82,7 +113,17 @@ index 9a9e3b0..c41da80 100644
        case 'current_time':return new Date().toLocaleTimeString();
        case 'key_pressed':{const k=node.querySelector('select')?.value||'space';return !!Engine?.keysPressed?.[GW.keyNameToCode(k)];}
        case 'touching_edge':return Math.abs(sprite?.x||0)>220||Math.abs(sprite?.y||0)>160;
-@@ -5664,7 +5666,7 @@ IMPORTANT:
+@@ -5417,7 +5420,8 @@ IMPORTANT:
+     const raw=GW8.readSlot(block,index,fallback);
+     if(typeof raw==='boolean'||typeof raw==='number')return raw;
+     const s=String(raw??'').trim();
+-    if(Object.prototype.hasOwnProperty.call(Engine.variables||{},s))return Engine.variables[s];
++    const gwRep=!!block?.querySelector(`.gw-input-slot[data-slot-index="${index}"]`)?.dataset.reporter||!!(window.GW&&window.GW.__lit&&(window.GW.__lit.has(s)||window.GW.__lit.has(String(raw??'')))); /* v15.70.3: a reporter's answer is text, not a variable name */
++    if(!gwRep&&Object.prototype.hasOwnProperty.call(Engine.variables||{},s))return Engine.variables[s];
+     const n=Number(s);return Number.isFinite(n)&&s!==''?n:raw;
+   };
+   GW8.evalCondForThread=function(thread,block){
+@@ -5664,7 +5668,7 @@ IMPORTANT:
        case 'parameter':return GW9.scopedValue(thread,node.name||'arg1');
        case 'x_position':return sprite?.x??0;case 'y_position':return sprite?.y??0;case 'direction':return sprite?.direction??90;
        case 'mouse_x':return Engine.mouse?.x??0;case 'mouse_y':return Engine.mouse?.y??0;case 'timer':return (performance.now()-(Engine.timerStarted||performance.now()))/1000;
@@ -91,7 +132,98 @@ index 9a9e3b0..c41da80 100644
        case 'costume_number':return (sprite?.activeCostume??0)+1;case 'costume_name':return sprite?.costumes?.[sprite.activeCostume]?.name||'';case 'current_time':return new Date().toLocaleTimeString();
        case 'key_pressed':return !!Engine.keysPressed?.[(keyCodes()[node.key||'space']||'Space')];case 'mouse_down':return !!Engine.mouse?.down;
        case 'touching_pointer':return Math.hypot((sprite?.x||0)-(Engine.mouse?.x||0),(sprite?.y||0)-(Engine.mouse?.y||0))<25;
-@@ -12075,13 +12077,13 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -5698,7 +5702,7 @@ IMPORTANT:
+     const vis=[...(block?.querySelectorAll('.block-input')||[])].filter(i=>i.dataset.slotProxy!=='1'); const prox=[...(block?.querySelectorAll('.block-input[data-slot-proxy="1"]')||[])]; return vis[index]?.value ?? prox[index]?.value ?? fallback;
+   };
+   GW8.readSlot=GW9.readSlot;
+-  GW8.resolveInput=function(thread,block,index,fallback=''){const v=GW9.readSlot(block,index,fallback);if(typeof v==='number'||typeof v==='boolean')return v;const s=String(v??'').trim();const scoped=GW9.scopedValue(thread,s);if(s!==''&&scoped!=='')return scoped;const n=Number(s);return Number.isFinite(n)&&s!==''?n:v;};
++  GW8.resolveInput=function(thread,block,index,fallback=''){const v=GW9.readSlot(block,index,fallback);if(typeof v==='number'||typeof v==='boolean')return v;const s=String(v??'').trim();/* v15.70.3 (found with the real Scratch engine): when the slot holds a block, its ANSWER is plain text - never looked up as a variable name ('item 1 of list' = "a" gave the value of variable a) */const gwSl=block?.querySelector?.(`.gw-input-slot[data-slot-index="${index}"]`),gwHas=!!(gwSl&&GW9.slotNode(gwSl))||window.GW?.__sb3Project===true; /* and a project that came from a .sb3 never treats typed text as a variable name (Scratch has no such thing) */const scoped=gwHas?'':GW9.scopedValue(thread,s);if(s!==''&&scoped!=='')return scoped;const n=Number(s);return Number.isFinite(n)&&s!==''?n:v;};
+   GW8.evalReporter=function(node,ownerBlock){const nodeType=node?.dataset?.reporterType||ownerBlock?.dataset?.reporter;if(nodeType)return GW9.evalNode(ownerBlock?.__thread||null,{type:nodeType},'value',ownerBlock);return '';};
+   const baseDecorateV9 = GW8.decorate;
+   GW9.decorate = ()=>{ baseDecorateV9(); document.querySelectorAll('#workspaceCanvas .gw-input-slot').forEach(slot=>{if(!slot._gw9Bound){slot._gw9Bound=true;slot.ondblclick=e=>{e.stopPropagation();GW8.openExprMenu(slot);};}}); };
+@@ -11123,7 +11127,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+           const sp = spriteOf(thread, owner); if (!sp) return 0;
+           let tx = E.mouse?.x || 0, ty = E.mouse?.y || 0;
+           if (node.target && node.target !== 'mouse-pointer') { const t = (E.sprites || []).find(s => s !== sp && s.name === node.target); if (!t) return 0; tx = t.x; ty = t.y; }
+-          return Math.round(Math.hypot((sp.x || 0) - tx, (sp.y || 0) - ty));
++          return Math.hypot((sp.x || 0) - tx, (sp.y || 0) - ty); /* v15.70.3: not rounded, like Scratch */
+         }
+         case 'op_round': return Math.round(num(g.evalNode(thread, node.args?.[0], 'value', owner)));
+         case 'op_abs': return Math.abs(num(g.evalNode(thread, node.args?.[0], 'value', owner)));
+@@ -11937,7 +11941,8 @@ nodes.push(el);cur=b.next;}return nodes;};
+       case 'define_custom': return;
+     }
+     b.__thread = th;
+-    syncProxies(th, b);
++    { const ty = b.dataset.type; let vt = VISUAL.get(ty); if (vt === undefined) { vt = VIS_ALWAYS.test(ty) ? 2 : VIS_SHOWN.test(ty) ? 1 : 0; VISUAL.set(ty, vt); } if (vt && (vt === 2 || !th.sprite || th.sprite.visible !== false)) window.GW.__redraw = true; }
++    window.GW.__lit = null; syncProxies(th, b);
+     if (window.GW?.extraBlock && window.GW.extraBlock(th, b)) return;
+     th.executeBlock(b);
+   }
+@@ -11947,9 +11952,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+       const n = GW9.slotNode(slot);
+       if (!p || !n) continue;
+       let v = ''; try { v = GW9.evalNode(th, n, 'value', b); } catch (e) { if (e && e === RETRY()) throw e; }
+-      { const sv = String(v ?? ''); if (p.__gwv !== sv || p.value !== sv) { p.__gwv = sv; p.value = sv; } } /* Claude: skip the DOM write when nothing changed */ // v15.48.0: numbers exactly like Scratch (0.1 + 0.2 says 0.30000000000000004; they were rounded)
++      { const sv = String(v ?? ''); (window.GW.__lit || (window.GW.__lit = new Set())).add(sv); if (p.__gwv !== sv || p.value !== sv) { p.__gwv = sv; p.value = sv; } } /* Claude: skip the DOM write when nothing changed */ // v15.48.0: numbers exactly like Scratch (0.1 + 0.2 says 0.30000000000000004; they were rounded)
+     }
+   }
++  /* v15.70.3 (Claude, measured against the real Scratch engine): which blocks ask for a screen redraw. Scratch keeps running the scripts
++     inside one frame until a block changes what is on screen (or the frame's work time is used), so a loop that only does maths,
++     variables or lists finishes at once ("repeat 100: change a by 1" = 1 frame in Scratch; G-Warp took 100 frames).
++     A hidden sprite's motion / look blocks do not ask for a redraw, like Scratch. */
++  const VISUAL = new Map(), VIS_ALWAYS = /^(show|hide|wait|ask|stamp)$|^(say|think|set_backdrop|next_backdrop)|pen/i,
++    VIS_SHOWN = /^(move|turn_|goto|glide|point|change_x|set_x|change_y|set_y|bounce|set_rotation|change_size|set_size|next_costume|switch_costume|change_effect|set_effect|clear_effects|change_ghost|set_ghost|go_front|go_layers)/;
+   const waiting = (th, now) => now < (th.waitUntil || 0) || !!th.waitCondition || !!th.waitBroadcast || !!th.motionTween;
+   ScriptThread.prototype.step = function () {
+     if (this.finished || !Engine.isRunning || Engine.isPaused) return;
+@@ -11958,7 +11969,8 @@ nodes.push(el);cur=b.next;}return nodes;};
+     if (this.waitCondition) { let ok = false; try { ok = this.waitCondition(); } catch {} if (!ok) return; this.waitCondition = null; }
+     if (this.waitBroadcast) { let ok = false; try { ok = this.waitBroadcast(); } catch {} if (!ok) return; this.waitBroadcast = null; }
+     if (this.sprite?.sayUntil && now >= this.sprite.sayUntil) { this.sprite.sayText = ''; this.sprite.sayUntil = 0; }
+-    if (this.motionTween) { const m = this.motionTween, k = Math.min(1, (now - m.start) / m.dur); this.sprite.x = m.sx + (m.tx - m.sx) * k; this.sprite.y = m.sy + (m.ty - m.sy) * k; if (k >= 1) this.motionTween = null; else return; }
++    if (this.motionTween) { const m = this.motionTween, k = Math.min(1, (now - m.start) / m.dur); this.sprite.x = m.sx + (m.tx - m.sx) * k; this.sprite.y = m.sy + (m.ty - m.sy) * k; if (k >= 1) { this.sprite.x = m.tx; this.sprite.y = m.ty; this.motionTween = null; } /* v15.70.3: a glide ends exactly on its target, like Scratch */ else return; }
++    GW.__act = (GW.__act | 0) + 1; // v15.70.3: this script really ran in this pass (it was not waiting)
+     if (this.behaviorRuntime) this.behaviorAttachment = this.behaviorAttachment || { attributes: {} };
+     if (!this.__live) { this.__live = true; initFrames(this); }
+     guardStart(this);
+@@ -12059,7 +12071,34 @@ nodes.push(el);cur=b.next;}return nodes;};
+     for (let y = bo + step / 2; y <= t; y += step) for (let x = l + step / 2; x <= r; x += step) if (GW.spriteHasPoint(a, x, y) && GW.spriteHasPoint(b, x, y)) return true;
+     return false;
+   };
+-  GW.touchingEdge = s => { const b = GW.spriteBounds(s); return b.left < -240 || b.right > 240 || b.bottom < -180 || b.top > 180; };
++  /* v15.70.3 (Claude, checked against the real Scratch engine): Scratch uses the TIGHT outline of what is drawn (convex hull of the
++     costume's visible pixels) for "touching edge" and "if on edge, bounce"; the full costume box is only for fencing. */
++  const hullCache = new WeakMap();
++  function costumeHull(c) {
++    const cv = c && c.canvas; if (!cv || !cv.width || !cv.height) return null; let h = hullCache.get(cv); if (h && h.w === cv.width && h.h === cv.height) return h.pts;
++    let pts = null;
++    try { const k = Math.min(1, 512 / Math.max(cv.width, cv.height)), W = Math.max(1, Math.round(cv.width * k)), H = Math.max(1, Math.round(cv.height * k)), t = document.createElement('canvas'); t.width = W; t.height = H;
++      const x = t.getContext('2d', { willReadFrequently: true }); x.drawImage(cv, 0, 0, W, H); const d = x.getImageData(0, 0, W, H).data, b = GW.costumeBox(c), raw = [];
++      const vec = !!(c.svg || c.dataFormat === 'svg'), UW = Math.max(1, Math.round(b.w)), UH = Math.max(1, Math.round(b.h)), L = vec ? new Int32Array(UH).fill(-1) : null, Rr = vec ? new Int32Array(UH).fill(-1) : null;
++      for (let py = 0; py < H; py++) { let l = -1, r = -1; for (let px = 0; px < W; px++) if (d[(py * W + px) * 4 + 3] > 0) { if (l < 0) l = px; r = px; }
++        if (l < 0) continue;
++        if (vec) { const uy = Math.min(UH - 1, Math.floor(py * UH / H)), ul = Math.min(UW - 1, Math.floor(l * UW / W)), ur = Math.min(UW - 1, Math.floor(r * UW / W)); if (L[uy] < 0 || ul < L[uy]) L[uy] = ul; if (ur > Rr[uy]) Rr[uy] = ur; } // a vector costume is drawn at 1 pixel per step at size 100, like Scratch's skin
++        else { const v = b.y0 + (py + 0.5) / H * b.h; raw.push([b.x0 + (l + 0.5) / W * b.w, v]); if (r !== l) raw.push([b.x0 + (r + 0.5) / W * b.w, v]); } }
++      if (vec) for (let uy = 0; uy < UH; uy++) if (L[uy] >= 0) { const v = b.y0 + (uy + 0.5) / UH * b.h; raw.push([b.x0 + (L[uy] + 0.5) / UW * b.w, v]); if (Rr[uy] !== L[uy]) raw.push([b.x0 + (Rr[uy] + 0.5) / UW * b.w, v]); }
++      if (raw.length) { raw.sort((p, q) => p[0] - q[0] || p[1] - q[1]); const cr = (o, a2, b2) => (a2[0] - o[0]) * (b2[1] - o[1]) - (a2[1] - o[1]) * (b2[0] - o[0]), lo = [], up = [];
++        for (const p of raw) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
++        for (let i = raw.length - 1; i >= 0; i--) { const p = raw[i]; while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], p) <= 0) up.pop(); up.push(p); }
++        pts = lo.slice(0, -1).concat(up.slice(0, -1)); if (!pts.length) pts = raw.slice(0, 1); }
++    } catch { pts = null; }
++    hullCache.set(cv, { w: cv.width, h: cv.height, pts }); return pts;
++  }
++  GW.tightBounds = s => {
++    const c = s?.costumes?.[s.activeCostume], H = costumeHull(c); if (!H) return GW.spriteBounds(s);
++    const sc = (s.size || 100) / 100, a = angleOf(s), f = flipped(s) ? -1 : 1, cs = Math.cos(a), sn = Math.sin(a); let l = Infinity, r = -Infinity, bo = Infinity, t = -Infinity;
++    for (const p of H) { const u = p[0] * f * sc, v = p[1] * sc, X = s.x + u * cs - v * sn, Y = s.y - (u * sn + v * cs); if (X < l) l = X; if (X > r) r = X; if (Y < bo) bo = Y; if (Y > t) t = Y; }
++    return { left: l, right: r, bottom: bo, top: t };
++  };
++  GW.touchingEdge = s => { const b = GW.tightBounds(s); return b.left < -240 || b.right > 240 || b.bottom < -180 || b.top > 180; };
+   GW.rootName = s => s?.rootName || s?.name;
+   GW.hitTest = (a, b) => GW.spritesTouch(a, b);
+   const G9 = window.GW9;
+@@ -12075,13 +12114,13 @@ nodes.push(el);cur=b.next;}return nodes;};
          case 'color_touching': return !!GW.colorTouchingColor?.(spr(th, owner), G9.evalNode(th, node.args?.[0], 'value', owner), G9.evalNode(th, node.args?.[1], 'value', owner));
          case 'op_lt': { const n = v => Number.isFinite(Number(v)) ? Number(v) : 0; return n(G9.evalNode(th, node.args?.[0], 'value', owner)) < n(G9.evalNode(th, node.args?.[1], 'value', owner)); }
          case 'op_contains': return String(G9.evalNode(th, node.args?.[0], 'value', owner)).toLowerCase().includes(String(G9.evalNode(th, node.args?.[1], 'value', owner)).toLowerCase());
@@ -107,7 +239,31 @@ index 9a9e3b0..c41da80 100644
        }
        return base.apply(this, arguments);
      };
-@@ -14787,7 +14789,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -12156,14 +12195,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+       case 'set_rotation_style': s.rotationStyle = sel(b) || 'all around'; return true;
+       case 'go_front_back': { if (s && s.isClone) s.__gwOwnLayer = true; const ls = Engine.sprites.map((x, i) => x.layer ?? i); s.layer = sel(b) === 'back' ? Math.min(...ls) - 1 : Math.max(...ls) + 1; return true; }
+       case 'go_layers': { if (s && s.isClone) s.__gwOwnLayer = true; const order = GW.drawOrder(); const i = order.indexOf(s); const n = Math.round(num(b, 0)) * (sel(b) === 'backward' ? -1 : 1); const j = Math.max(0, Math.min(order.length - 1, i + n)); if (j === i) return true; order.splice(i, 1); order.splice(j, 0, s); order.forEach((x, k) => { x.layer = k; }); return true; }
+-      case 'bounce': {
+-        const bd = GW.spriteBounds(s); let rad = (90 - s.direction) * DEG, dx = Math.cos(rad), dy = Math.sin(rad), hit = false;
+-        if (bd.left < -240) { s.x += -240 - bd.left; if (dx < 0) dx = -dx; hit = true; }
+-        if (bd.right > 240) { s.x -= bd.right - 240; if (dx > 0) dx = -dx; hit = true; }
+-        if (bd.bottom < -180) { s.y += -180 - bd.bottom; if (dy < 0) dy = -dy; hit = true; }
+-        if (bd.top > 180) { s.y -= bd.top - 180; if (dy > 0) dy = -dy; hit = true; }
+-        if (hit) s.direction = Math.round((90 - Math.atan2(dy, dx) / DEG) * 1e6) / 1e6;
+-        return true;
++      case 'bounce': { // v15.70.3: Scratch's own steps - nearest edge only, tight outline, then pushed back inside the stage
++        const bd = (GW.tightBounds || GW.spriteBounds)(s), dL = Math.max(0, 240 + bd.left), dT = Math.max(0, 180 - bd.top), dR = Math.max(0, 240 - bd.right), dB = Math.max(0, 180 + bd.bottom);
++        let edge = '', min = Infinity; if (dL < min) { min = dL; edge = 'left'; } if (dT < min) { min = dT; edge = 'top'; } if (dR < min) { min = dR; edge = 'right'; } if (dB < min) { min = dB; edge = 'bottom'; }
++        if (min > 0) return true;
++        const rad = (90 - s.direction) * DEG; let dx = Math.cos(rad), dy = -Math.sin(rad);
++        if (edge === 'left') dx = Math.max(0.2, Math.abs(dx)); else if (edge === 'top') dy = Math.max(0.2, Math.abs(dy)); else if (edge === 'right') dx = -Math.max(0.2, Math.abs(dx)); else dy = -Math.max(0.2, Math.abs(dy));
++        let nd = Math.atan2(dy, dx) / DEG + 90; nd = ((nd + 180) % 360 + 360) % 360 - 180; if (nd === -180) nd = 180; s.direction = nd;
++        const b2 = (GW.tightBounds || GW.spriteBounds)(s); let ox = 0, oy = 0; if (b2.left < -240) ox += -240 - b2.left; if (b2.right > 240) ox += 240 - b2.right; if (b2.top > 180) oy += 180 - b2.top; if (b2.bottom < -180) oy += -180 - b2.bottom;
++        s.x += ox; s.y += oy; return true;
+       }
+       case 'say': { const secs = num(b, 1); if (secs > 0) { s.sayText = text(b, 0); s.sayUntil = performance.now() + secs * 1000; th.waitUntil = s.sayUntil; return true; } return false; }
+       case 'create_clone': { const v = sel(b) || 'myself'; const src = (v === 'myself' || v === '_myself_') ? s : Engine.sprites.find(x => !x.isClone && x.name === v); if (src) GW.createClone(src); return true; }
+@@ -14787,7 +14827,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    });
    // colour / brightness: each costume is filtered once and reused, instead of filtering every drawing
    let curFilter = '';
@@ -153,7 +309,7 @@ index 9a9e3b0..c41da80 100644
    let fcache = new WeakMap(), mip = new WeakMap();
    const resetDrawCaches = () => { fcache = new WeakMap(); mip = new WeakMap(); };
    document.addEventListener('click', e => { if (e.target.closest?.('#greenFlagBtn,#stopBtn')) resetDrawCaches(); }, true);
-@@ -14806,7 +14845,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14806,7 +14883,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      if (curFilter) {
        const key = curFilter; let m = fcache.get(cv); if (!m) { m = new Map(); fcache.set(cv, m); }
        let f = m.get(key);
@@ -162,7 +318,13 @@ index 9a9e3b0..c41da80 100644
        cv = f;
      }
      curFilter = '';
-@@ -14911,7 +14950,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14906,12 +14983,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+     move: (th, s, b) => { const n = nIn(b, 0), r = (90 - s.direction) * DEG; s.x += Math.cos(r) * n; s.y += Math.sin(r) * n; },
+     turn_cw: (th, s, b) => { s.direction = wrapDir(s.direction + nIn(b, 0)); },
+     turn_ccw: (th, s, b) => { s.direction = wrapDir(s.direction - nIn(b, 0)); },
+-    point_direction: (th, s, b) => { const raw = String(ownInputs(b)[0]?.value ?? '').trim(), v = Number(raw); if (raw !== '' && !Number.isFinite(v)) return; s.direction = wrapDir(nIn(b, 0)); }, /* v15.50.5: NaN / text keeps the direction (Scratch setDirection) */
++    point_direction: (th, s, b) => { const raw = String(ownInputs(b)[0]?.value ?? '').trim(), v = Number(raw); if (v === Infinity || v === -Infinity) return; s.direction = wrapDir(nIn(b, 0)); }, /* v15.70.3 (checked against real Scratch): text counts as 0, only Infinity keeps the direction */
+     goto_xy: (th, s, b) => { s.x = nIn(b, 0); s.y = nIn(b, 1); },
      change_x: (th, s, b) => { s.x += nIn(b, 0); }, set_x: (th, s, b) => { s.x = nIn(b, 0); },
      change_y: (th, s, b) => { s.y += nIn(b, 0); }, set_y: (th, s, b) => { s.y = nIn(b, 0); },
      show: (th, s) => { s.visible = true; }, hide: (th, s) => { s.visible = false; },
@@ -171,7 +333,7 @@ index 9a9e3b0..c41da80 100644
      next_costume: (th, s) => { const n = s.costumes?.length || 1; s.activeCostume = ((s.activeCostume || 0) + 1) % n; },
      switch_costume: (th, s, b) => { const i = pickIndex(s.costumes || [], s.activeCostume || 0, sels(b)[0], 'costume'); if (i >= 0) s.activeCostume = i; },
      set_backdrop: (th, s, b) => { const i = pickIndex(E.backdrops || [], E.activeBackdrop || 0, sels(b)[0], 'backdrop'); if (i >= 0) { E.activeBackdrop = i; try { GW.triggerBackdrop?.(E.backdrops[i].name); } catch {} } }
-@@ -14963,7 +15002,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14963,7 +15040,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        literal: (th, nd) => nd.value ?? '',
        get_var: (th, nd) => G9.scopedValue(th, nd.name || 'my variable'),
        x_position: (th, nd, ow) => spr(th, ow)?.x ?? 0, y_position: (th, nd, ow) => spr(th, ow)?.y ?? 0, direction: (th, nd, ow) => spr(th, ow)?.direction ?? 90,
@@ -180,7 +342,7 @@ index 9a9e3b0..c41da80 100644
        mouse_down: () => !!E.mouse?.down,
        op_add: (th, nd, ow) => num(A(th, nd, ow, 0)) + num(A(th, nd, ow, 1)), op_sub: (th, nd, ow) => num(A(th, nd, ow, 0)) - num(A(th, nd, ow, 1)),
        op_mul: (th, nd, ow) => num(A(th, nd, ow, 0)) * num(A(th, nd, ow, 1)), op_div: (th, nd, ow) => num(A(th, nd, ow, 0)) / num(A(th, nd, ow, 1)),
-@@ -15023,6 +15062,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15023,6 +15100,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      infiniteClones: store.get('gwarp-infinite-clones') === 'on',
      showFps: store.get('gwarp-show-fps') === 'on',
      noFence: store.get('gwarp-no-fence') === 'on', // Scratch keeps sprites on the stage (fencing); TurboWarp can turn it off
@@ -188,7 +350,7 @@ index 9a9e3b0..c41da80 100644
      noMiscLimits: store.get('gwarp-no-misc-limits') === 'on' // v15.13.0: TurboWarp “Remove miscellaneous limits”
    };
    const target = () => (S.projectFps != null ? S.projectFps : S.fps);
-@@ -15031,6 +15071,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15031,6 +15109,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      setFps(v) { S.fps = Math.max(0, Math.min(250, Math.round(Number(v) || 0))); store.set('gwarp-fps', String(S.fps)); refreshFpsLabels(); },
      setProjectFps(v) { S.projectFps = v == null ? null : Math.max(0, Math.min(250, Math.round(Number(v) || 0))); refreshFpsLabels(); },
      setInfiniteClones(on) { S.infiniteClones = !!on; store.set('gwarp-infinite-clones', on ? 'on' : null); E.cloneLimit = on ? Infinity : 300; },
@@ -196,7 +358,7 @@ index 9a9e3b0..c41da80 100644
      setShowFps(on) { S.showFps = !!on; store.set('gwarp-show-fps', on ? 'on' : null); placeFps(); },
      setNoFence(on) { S.noFence = !!on; store.set('gwarp-no-fence', on ? 'on' : null); },
      setNoMiscLimits(on) { S.noMiscLimits = !!on; store.set('gwarp-no-misc-limits', on ? 'on' : null); }
-@@ -15070,17 +15111,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15070,17 +15149,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      const [showFps, showFpsRow] = check('gw9AdvShowFps', 'Show FPS on the stage', 'A small frames-per-second counter in the corner of the stage.', S.showFps);
      const [fenceOff, fenceRow] = check('gw9AdvFence', 'Remove fencing', 'Lets sprites go fully off the stage. Scratch keeps a little of every sprite on the stage; leave this off for Scratch projects.', S.noFence);
      const [hqOn, hqRow] = check('gw9AdvHQ', 'Max quality render (HQ)', 'Draws the stage at your screen’s full sharpness, up to 4× (1920 × 1440): sharp pen lines, vector costumes, text and bubbles — like TurboWarp’s “High quality pen”, for the whole stage. Best in Large or full screen. Big projects may run slower; turn it off if they lag. Also the HQ button above the stage.', !!window.GW_HQ?.isOn?.());
@@ -217,7 +379,25 @@ index 9a9e3b0..c41da80 100644
        if (window.GW_WARP_GUARD && window.GW_WARP_GUARD.isOn() !== guard.checked) window.GW_WARP_GUARD.set(guard.checked);
        toast('Advanced settings saved');
      });
-@@ -15965,7 +16007,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15874,7 +15954,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+       lookupOrCreateVariable(id, n) { return lookupVar(s, n, '') || (GV()[n] = 0, lookupVar(s, n, '')); }, lookupOrCreateList(id, n) { return lookupVar(s, n, 'list') || (GL()[n] = [], lookupVar(s, n, 'list')); },
+       lookupBroadcastMsg: (id, n) => ({ id, name: n, value: n }),
+       isTouchingSprite: n => GW.spritesNamed(String(n)).some(o => o !== s && GW.spritesTouch(s, o)), isTouchingPoint: (x, y) => !!GW.spriteHasPoint?.(s, x, y), isTouchingEdge: () => !!GW.touchingEdge?.(s),
+-      getBounds: () => { const b = GW.spriteBounds(s); return { ...b, width: b.right - b.left, height: b.top - b.bottom }; },
++      getBounds: () => { const b = (GW.tightBounds || GW.spriteBounds)(s); return { ...b, width: b.right - b.left, height: b.top - b.bottom }; },
+       getLayerOrder: () => (GW.drawOrder ? GW.drawOrder().indexOf(s) : E.sprites.indexOf(s)), goToFront() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.max(0, ...o.map(x => x.layer || 0)) + 1; }, goToBack() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.min(0, ...o.map(x => x.layer || 0)) - 1; },
+       emitVisualChange() {}, updateAllDrawableProperties() {}, setCustomState(k, v) { (s.__custom || (s.__custom = {}))[k] = v; }, getCustomState: k => s.__custom?.[k],
+       duplicate: () => Promise.resolve(targetFor(GW.createClone ? GW.createClone(s) : null)), makeClone: () => targetFor(GW.createClone ? GW.createClone(s) : null), dispose() { if (s.isClone) GW.deleteClone?.(s); }
+@@ -15934,7 +16014,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+   const renderer = {
+     canvas: null, get _gl() { return null; }, gl: null, _allDrawables: [], _drawList: [], dirty: false, _xLeft: -240, _xRight: 240, _yBottom: -180, _yTop: 180, _nativeSize: [480, 360],
+     getNativeSize: () => [480, 360], setBackgroundColor(r, g, b) { GW.camera.bg = Color.rgbToHex({ r: r * 255, g: g * 255, b: b * 255 }); },
+-    requestRedraw() {}, draw() {}, resize() {}, setStageSize() {},
++    requestRedraw() { window.GW.__redraw = true; }, draw() {}, resize() {}, setStageSize() {},
+     getCurrentSkinSize(id) { const s = E.sprites[id]; const c = s?.costumes?.[s.activeCostume]; const b = GW.costumeBox(c); return [b.w, b.h]; },
+     getBounds(id) { const s = E.sprites[id]; if (!s) return null; const b = GW.spriteBounds(s); return { ...b, width: b.right - b.left, height: b.top - b.bottom }; },
+     getBoundsForBubble(id) { return this.getBounds(id); }, getFencedPositionOfDrawable: (id, pos) => pos,
+@@ -15965,14 +16045,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      compilerOptions: { enabled: false, warpTimer: true }, isPackaged: false, extensionStorage: {}, renderer, storage: { assetHost: '', DataFormat: { PNG: 'png', SVG: 'svg', WAV: 'wav', MP3: 'mp3', JPG: 'jpg' }, AssetType: {} },
      get runtimeOptions() { return { maxClones: E.cloneLimit || 300, miscLimits: !GW.miscLimitsOff?.(), fencing: GW.__projectFence !== false }; },
      setRuntimeOptions(o) { if (o?.maxClones != null) E.cloneLimit = Number(o.maxClones) || 300; if (o?.fencing != null) GW.__projectFence = o.fencing ? undefined : false; if (o?.miscLimits != null) GW.__projectMiscLimits = o.miscLimits ? undefined : false; },
@@ -226,7 +406,15 @@ index 9a9e3b0..c41da80 100644
      ioDevices: { mouse: mouseDev, keyboard: keyboardDev, clock: { projectTimer: { timeElapsed: () => performance.now() - (E.timerStarted || 0) } }, userData: { getUsername: () => '' }, cloud: { requestUpdateVariable(name, value) { try { window.GW_CLOUD?.queue?.(name, value); } catch {} } }, video: { enableVideo: () => Promise.resolve(null), disableVideo() {} } },
      audioEngine: { get audioContext() { return audioCtx(); }, get inputNode() { return audioCtx().destination; } },
      getTargetById: id => (id === 'gw-stage' ? stageTarget() : (E.sprites.find(s => s.__gwid === id) ? targetFor(E.sprites.find(s => s.__gwid === id)) : null)),
-@@ -15988,7 +16030,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+     getSpriteTargetByName: n => { const s = E.sprites.find(x => !x.isClone && !x.stageProxy && x.name === n); return s ? targetFor(s) : null; },
+     getTargetForStage: () => stageTarget(), getEditingTarget: () => targetOfSprite(E.sprites[E.activeSpriteIndex]), get _editingTarget() { return this.getEditingTarget(); },
+     getAllVarNamesOfType: t => Object.keys(t === 'list' ? GL() : GV()),
+-    requestRedraw() {}, requestTargetsUpdate() {}, requestBlocksUpdate() {}, requestToolboxExtensionsUpdate() { Library.refreshPalette(); }, emitProjectChanged() {}, updateCurrentMSecs() { this.currentMSecs = Date.now(); },
++    requestRedraw() { window.GW.__redraw = true; }, requestTargetsUpdate() {}, requestBlocksUpdate() {}, requestToolboxExtensionsUpdate() { Library.refreshPalette(); }, emitProjectChanged() {}, updateCurrentMSecs() { this.currentMSecs = Date.now(); },
+     startHats: (op, fields, target) => startHats(op, fields, target), stopAll() { by('stopBtn')?.click(); }, greenFlag() { by('greenFlagBtn')?.click(); }, stopForTarget(t) { const s = t?.gwSprite; if (s) E.threads.forEach(th => { if (th.sprite === s) th.finished = true; }); },
+     shouldExecuteStopClicked: true, _hats: {}, _primitives: {}, _flowing: {}, profiler: null, sequencer: { stepThreads() {}, timer: { timeElapsed: () => 0 } },
+     _step() { this.emit('BEFORE_EXECUTE'); pollHats(); },
+@@ -15988,7 +16068,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    runtime.extensionManager = extensionManager;
    define(vm, {
      runtime, renderer, extensionManager, get editingTarget() { return runtime.getEditingTarget(); },
@@ -235,7 +423,16 @@ index 9a9e3b0..c41da80 100644
      postIOData() {}, greenFlag: () => runtime.greenFlag(), stopAll: () => runtime.stopAll(), start() {}, toJSON: () => '{}', securityManager: {},
      getPlaygroundData: () => ({ targets: runtime.targets, threads: [] }), addSprite: () => Promise.reject(new Error('Adding sprites from extensions is not supported in G-Warp yet')),
      get runtimeOptions() { return runtime.runtimeOptions; }
-@@ -18029,6 +18071,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -16363,7 +16443,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+     css(st) { const rgb = Color.hsvToRgb({ h: st.color * 360 / 100, s: st.saturation / 100, v: st.brightness / 100 }); return `rgba(${rgb.r},${rgb.g},${rgb.b},${1 - st.transparency / 100})`; },
+     clear() { const c = this.canvas(), g = this.ctx(); if (g) g.clearRect(0, 0, c.width, c.height); },
+     line(color4f, d, x0, y0, x1, y1) { const g = this.ctx(); if (!g) return; const c = color4f ? `rgba(${color4f[0] * 255},${color4f[1] * 255},${color4f[2] * 255},${color4f[3]})` : '#0000ff'; this.seg(g, c, d || 1, x0, y0, x1, y1); },
+-    seg(g, css, size, x0, y0, x1, y1) { GW.__penUsed = true; const c = this.canvas(), kx = c.width / 480, ky = c.height / 360; g.save(); g.strokeStyle = css; g.fillStyle = css; g.lineCap = 'round'; g.lineWidth = Math.max(1, size) * kx; g.beginPath(); if (x0 === x1 && y0 === y1) { g.arc((240 + x0) * kx, (180 - y0) * ky, Math.max(0.5, size / 2) * kx, 0, Math.PI * 2); g.fill(); } else { g.moveTo((240 + x0) * kx, (180 - y0) * ky); g.lineTo((240 + x1) * kx, (180 - y1) * ky); g.stroke(); } g.restore(); },
++    seg(g, css, size, x0, y0, x1, y1) { GW.__penUsed = true; const c = this.canvas(), kx = c.width / 480, ky = c.height / 360; if (size === 1 || size === 3) { x0 += 0.5; y0 += 0.5; x1 += 0.5; y1 += 0.5; } /* v15.70.3: Scratch moves 1 and 3 wide pen lines half a step so they sit on whole pixels (crisp, not grey) */ g.save(); g.strokeStyle = css; g.fillStyle = css; g.lineCap = 'round'; g.lineWidth = Math.max(1, size) * kx; g.beginPath(); if (x0 === x1 && y0 === y1) { g.arc((240 + x0) * kx, (180 - y0) * ky, Math.max(0.5, size / 2) * kx, 0, Math.PI * 2); g.fill(); } else { g.moveTo((240 + x0) * kx, (180 - y0) * ky); g.lineTo((240 + x1) * kx, (180 - y1) * ky); g.stroke(); } g.restore(); },
+     follow(s) { const st = s.__pen; if (!st || !st.down) { if (st) { st.x = s.x; st.y = s.y; } return; } if (st.x === s.x && st.y === s.y) return; const g = this.ctx(); if (g) this.seg(g, this.css(st), st.size, st.x, st.y, s.x, s.y); st.x = s.x; st.y = s.y; },
+     stamp(s) {
+       const g = this.ctx(), c = s.costumes?.[s.activeCostume]; if (!g || !c?.canvas || !s.visible) return; GW.__penUsed = true; const cv = this.canvas(), kx = cv.width / 480;
+@@ -18029,6 +18109,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      });
      refreshAll(); toast(`Attached ${n} shape${n === 1 ? '' : 's'} to the nearest bones.`);
    }
@@ -285,7 +482,7 @@ index 9a9e3b0..c41da80 100644
    function deleteBone() {
      const id = st.bone; if (!id) return toast('Pick a bone first.'); snap();
      const gone = new Set([id]); let grew = true; while (grew) { grew = false; st.anim.bones.forEach(b => { if (b.parent && gone.has(b.parent) && !gone.has(b.id)) { gone.add(b.id); grew = true; } }); }
-@@ -18201,7 +18286,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18201,7 +18324,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
          h('button', { type: 'button', class: 'gw18-x', 'aria-label': 'Close', html: '<i class="fa-solid fa-xmark"></i>', onclick: () => close() })),
        h('div', { class: 'gw18-body' },
          h('div', { class: 'gw18-tools' }, h('div', { class: 'gw18-small', text: 'Rig tools' }),
@@ -294,7 +491,7 @@ index 9a9e3b0..c41da80 100644
            h('hr'), btn(ic('fa-wand-magic-sparkles', 'Attach automatically'), () => autoAttach(), { id: 'gw18Auto' }), btn(ic('fa-trash', 'Delete bone'), () => deleteBone(), { id: 'gw18DelBone' }),
            h('p', { id: 'gw18Tip', class: 'gw18-tip' })),
          h('div', { id: 'gw18View', class: 'gw18-view' }),
-@@ -25054,7 +25139,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -25054,7 +25177,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    const by = id => document.getElementById(id);
    const css = document.createElement('style'); css.id = 'gw4950css';
    css.textContent = `#gw154StageFrame [data-var-monitor],#gw154StageFrame [data-list-monitor]{z-index:6!important}
@@ -303,7 +500,7 @@ index 9a9e3b0..c41da80 100644
  .gw4950-menu{position:fixed;z-index:10050;min-width:150px;padding:4px;border:1px solid #2b2f55;border-radius:10px;background:#14162a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
  .gw4950-menu button{display:flex;gap:8px;align-items:center;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#e5e7eb;font-size:12px;font-weight:700;text-align:left;cursor:pointer}
  .gw4950-menu button:hover,.gw4950-menu button:focus-visible{background:#26294a;outline:none}`;
-@@ -29123,6 +29208,38 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
+@@ -29123,6 +29246,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
  })();
  </script>
  <!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->
@@ -332,6 +529,15 @@ index 9a9e3b0..c41da80 100644
 +  GW.clampSize = (s, v) => { v = Number(v) || 0; if (GW.miscLimitsOff && GW.miscLimitsOff()) return Math.max(0, v); if (s.isStage) return v;
 +    const c = s.costumes && s.costumes[s.activeCostume]; if (!c || !c.canvas) return Math.max(1, v); const b = GW.costumeBox(c), w = Math.max(1, b.w), h = Math.max(1, b.h);
 +    const lo = Math.min(1, Math.max(5 / w, 5 / h)) * 100, hi = Math.min(720 / w, 540 / h) * 100; return Math.max(lo, Math.min(hi, v)); };
++  /* v15.70.3 (measured against the real Scratch engine): when a hat starts scripts in several sprites (green flag, broadcast), Scratch
++     starts the FRONT sprite's scripts first, then the ones behind it, the Stage last. G-Warp started them in workspace order, so
++     "who set the variable last" could differ. The new scripts are put in Scratch's order; scripts of one sprite keep their order. */
++  const hatOrder = from => { const T = E.threads; if (!T || T.length - from < 2) return; const o = GW.drawOrder ? GW.drawOrder() : E.sprites, rank = new Map(); o.forEach((s, i) => rank.set(s, o.length - i));
++    const rk = t => { const s = t && t.sprite; return (!s || s.isStage || s.stageProxy || !rank.has(s)) ? 1e9 : rank.get(s); }, part = T.slice(from).map((t, i) => [t, i]).sort((a, b) => rk(a[0]) - rk(b[0]) || a[1] - b[1]).map(x => x[0]);
++    T.length = from; for (const t of part) T.push(t); };
++  try { const b0 = GW.broadcastThreads; if (typeof b0 === 'function' && !b0.__gwOrd) { GW.broadcastThreads = function () { const n = (E.threads || []).length, th = E.threads, r = b0.apply(this, arguments); try { if (E.threads === th) hatOrder(n); } catch {} return r; }; GW.broadcastThreads.__gwOrd = true; } } catch {}
++  try { const d0 = GW.dispatchBroadcast; if (typeof d0 === 'function' && !d0.__gwOrd) { GW.dispatchBroadcast = function () { const n = (E.threads || []).length, th = E.threads, r = d0.apply(this, arguments); try { if (E.threads === th) hatOrder(n); } catch {} return r; }; GW.dispatchBroadcast.__gwOrd = true; } } catch {}
++  try { const f0 = startGreenFlagExecution; if (typeof f0 === 'function' && !f0.__gwOrd) { startGreenFlagExecution = function () { const r = f0.apply(this, arguments); try { hatOrder(0); } catch {} return r; }; startGreenFlagExecution.__gwOrd = true; } } catch {}
 +  GW.smoothBefore = now => { if (!on()) { if (prev.size) prev = new Map(); return; } const m = new Map(); for (const s of E.sprites) m.set(s, snap(s)); prev = m; };
 +  GW.smoothAfter = (now, draw) => {
 +    if (E.isRunning && now - live > 100) { live = now; const a = document.activeElement, id = a && a.id; if (!/^prop(X|Y|Size|Direction)$/.test(id || '')) { try { window.updatePropertyInputs?.(); } catch {} } }
