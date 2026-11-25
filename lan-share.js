@@ -46,16 +46,22 @@
   // While hosting, keep the shared project in step with the host's edits so joiners get the latest version
   let hostTimer = null;
   async function refreshHostedProject() {
-    try { await api.setProject(await currentProjectJson()); } catch (e) { /* keep the last good copy */ }
+    try { const p = await currentProjectJson(); await api.setProject(window.GW_LIVE ? GW_LIVE.stamp(p) : p); } catch (e) { /* keep the last good copy */ }
   }
   function stopHostTimer() { if (hostTimer) clearInterval(hostTimer); hostTimer = null; }
 
   // Ghost mice: each joiner reports their name, sprite, view and pointer; the host draws them
   const myId = Math.random().toString(36).slice(2) + Date.now().toString(36);
-  // The name other players see. Settings can change it; otherwise the computer's user name is used,
-  // so a joiner reads "Host: Mario" instead of "Host: Guest-3f2a".
-  let myName = localStorage.getItem('gwLanName') || '';
-  if (!myName) window.gwApp?.userName?.().then(n => { if (!myName && n) myName = String(n).replace(/\s+/g, ' ').trim().slice(0, 40); }).catch(() => {});
+  // Never expose the computer account name. Use the same private alias as Settings and LAN profile.
+  function privateName() {
+    let name = String(window.GW_PRIVATE_NAME || '');
+    if (!/^Sparky\d{5}$/.test(name)) { try { name = localStorage.getItem('gwLanName') || ''; } catch {} }
+    if (!/^Sparky\d{5}$/.test(name)) name = `Sparky${Math.floor(10000 + Math.random() * 90000)}`;
+    window.GW_PRIVATE_NAME = name;
+    try { localStorage.setItem('gwLanName', name); } catch {}
+    return name;
+  }
+  let myName = privateName();
   const shownName = () => myName || ('Guest-' + myId.slice(0, 4));
   let myPointer = { x: 0.5, y: 0.5 };
   let joinedHost = null, presenceTimer = null, ghostLayer = null, ghostTimer = null;
@@ -128,21 +134,22 @@
 
   async function startHost() {
     let project;
-    try { project = await currentProjectJson(); } catch (e) { toast('Could not read the project to share.'); return; }
+    try { project = await currentProjectJson(); if (window.GW_LIVE) GW_LIVE.stamp(project); } catch (e) { toast('Could not read the project to share.'); return; }
     let info;
     try { info = await api.host(project, myName); } catch (e) { toast('Could not start hosting. Close other G-Warp hosts and try again.'); return; }
     stopHostTimer();
     hostTimer = setInterval(refreshHostedProject, 3000);
+    window.GW_LIVE?.start('host', 'self', 0); // 9 Nov: everyone who joins edits this project with you, live
     startGhostDisplay();
     showPanel(`
       <h3 style="margin:0 0 10px;font-size:17px">Hosting</h3>
       <p style="margin:0 0 6px">Project: <b>${esc(project.title || 'Untitled project')}</b></p>
       <p style="margin:0 0 12px">Host: <b>${esc(shownName())}</b></p>
-      <p style="margin:0 0 12px;opacity:.8">Others on this Wi-Fi see this project in their Join list. G-Warp ${esc(info.version)}. Joiners on an older version are asked to update first.</p>
+      <p style="margin:0 0 12px;opacity:.8">Others on this Wi-Fi see this project in their Join list. Everyone who joins edits it together with you, live, and you can chat in the box at the bottom left. G-Warp ${esc(info.version)}. Joiners on an older version are asked to update first.</p>
       <button id="lanStopBtn" ${btn}>Stop hosting</button>
       <button id="lanCloseBtn" ${btn}>Close</button>`, box => {
       box.querySelector('#lanCloseBtn').onclick = close;
-      box.querySelector('#lanStopBtn').onclick = async () => { stopHostTimer(); stopGhostDisplay(); await api.stop(); toast('Stopped hosting.'); close(); };
+      box.querySelector('#lanStopBtn').onclick = async () => { stopHostTimer(); stopGhostDisplay(); window.GW_LIVE?.stop(); await api.stop(); toast('Stopped hosting.'); close(); };
     });
   }
 
@@ -166,7 +173,10 @@
           const got = await api.fetchProject(h.host);
           if (!got.project) { msg.textContent = 'This project is not ready to share yet.'; return; }
           close();
-          GW.loadProject(projectFile(got.project));
+          window.GW_LIVE?.stop(true);
+          await GW.loadProject(projectFile(got.project));
+          await new Promise(r => setTimeout(r, 700)); // the project finishes building its scripts
+          if (window.GW_LIVE) GW_LIVE.start('join', h.host, GW_LIVE.adopt(got.project)); // 9 Nov: live, both ways
           startJoinPresence(h.host);
           startGhostDisplay();
           toast('Joined ' + (got.project.title || 'the project') + '.');
@@ -192,5 +202,5 @@
   window.GW = window.GW || {};
   GW.openLanShare = openMenu;      // Share button → the Join list
   GW.openLanShareHost = startHost; // File menu → Host this project on Wi-Fi…
-  GW.setLanName = n => { const v = String(n || '').replace(/\s+/g, ' ').trim().slice(0, 40); if (v) { myName = v; try { localStorage.setItem('gwLanName', v); } catch (e) {} } };
+  GW.setLanName = () => { myName = privateName(); };
 })();
