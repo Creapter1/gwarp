@@ -88,3 +88,8 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
   NEXT TIME THE PC ANSWERS: stage + compare its app.html with /mnt/user-data/outputs/pc/app.html (= g), then pc_build.py h, backup, note, commit.
   Do NOT run pc_build.py before the PC is reachable (it would break the backup chain).
 - Tools: load.js (opening time), laps.js (import stages), prof_open.js (profile of opening), pace.js (step pacing), mkbig.py (big test project).
+
+## State after round 6 (16:05)
+- rel = v15.70.9. PC STILL v15.69.0g (offline on 4 tries). Same shipping note as above: when the PC answers, compare, pc_build.py h, backup, note, commit (3 files: app.html + the two .js are unchanged since g).
+- Full regression passed on v15.70.9. E2.9 PenguinMod moved to later by the owner.
+- Biggest next step for "beat Scratch": compile scripts to closures (see team/claude/v15.70.9/README.txt NEXT).

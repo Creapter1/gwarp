@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.8.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.9.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -128,3 +128,14 @@ WHAT WAS SLOW (node laps.js / prof_open.js / lay.js):
 STILL OPEN for "everything faster than Scratch": helpers that poll the page (~100 setIntervals) still cost CPU on big projects while editing;
   the 4.6 s freeze during import itself (scripts 1 s, decorate 1.1 s, tidy 0.8 s, snapshot 0.5 s, file read) should become a progress bar or be chunked;
   script speed pass 2 (see v15.70.5 notes). A real big project from the owner is needed to measure the true numbers.
+
+v15.70.9 (Claude Fable, 25 Nov 2026, round 6) - NOT ON THE PC YET (PC still offline; 4 tries)
+The owner changed the order at 15:12: beat Scratch first (speed, loading, steady 30), PenguinMod later. So E2.9 (PenguinMod core blocks) was NOT done this round.
+1. Power lines: visible() read the code area's size on EVERY animation frame while a project ran (forces a page layout each frame). Now reused for 0.5 s.
+2. FULL REGRESSION of today's work on v15.70.9 - all the same as before:
+   real Scratch: par 58/60, par2 40/40, probe 72/72, mini 22/22, nat 15/15, join 19/19, par3 157/159, par4 66/72 (open items unchanged and logged)
+   app: parity 53/53 and 28/28, 0 page errors, smooth motion ok, auto skeleton on the stickman = body, head, left/right arm, left/right leg
+   200 clones: 29-30 steps/s; pacing (pace.js): plain loop 31 steps/s, 94% on time; par3 85% on time
+   bench: count .07 s, maths .13, lists .11, if .18, pen .11, text .09 (Scratch: .04 .05 .03 .04 .03 .02); plain loop 0.86 M vs 3.4 M
+NEXT (to really beat Scratch on speed): compile each script once into JS closures (rebuilt when GW.__wsEpoch changes), keeping the same block functions.
+   The interpreter is now ~0.8 us per block against Scratch's ~0.3; the rest is spread thin (DOM reads for menus/inputs, 2 evalNode wrappers per reporter, step() overhead).
