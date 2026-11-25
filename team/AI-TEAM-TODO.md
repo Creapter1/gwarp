@@ -90,7 +90,9 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [done] B4 Click a reporter → value bubble — **APP-CHECK 2026-11-05**
 - [open] B3 Stage monitors: modes + list import/export + drag (checkboxes done)
 - [open] B5–B12, C1–C14 UI helpers (backpack, sprite3, clean-up, etc.)
-- [open] E2.5 custom stage size settings (interpolation done in v15.70.0)
+- [open] E2.5 custom stage size settings (interpolation done in v15.70.0). Claude Fable 25 Nov: NOT cheap - 480x360 is hard-coded in ~90 places (mouse, fencing, pen, bounds, export); needs its own round and referee checks
+- [done] R4 TurboWarp-style addons (v15.70.6, Claude Fable, 25 Nov): Go to definition (on; right-click or middle-click a My Block), Mouse position (off), Variable manager (off), clone counter live again while running. More > App > Addons
+- [open] (Claude Fable) TurboWarp extras still missing: block switching (right-click swap to a sister block), find bar listing scripts/events in a drop-down, editor dark/colour themes for blocks, 'paste at mouse'. Owner picks
 - [open] Translations / ui-strings; themes; Behaviors → Extensions gallery
 
 ## 8. Extensions

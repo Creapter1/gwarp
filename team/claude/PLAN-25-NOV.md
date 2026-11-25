@@ -68,3 +68,9 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
   bench.sb3 (mkbench.py; node /home/claude/ref/bench.js bench.sb3 app.html): 3-5x faster than v15.70.4, still 2-5x slower than Scratch. NOT faster than TurboWarp - say so.
 - New referee projects: nat.sb3 (15/15), join.sb3 (19/19), c7.sb3 (plain loop profile). Add both to the diff list every round.
 - Next speed ideas are in team/claude/v15.70.5/README.txt ("STILL SLOWER").
+
+## State after round 4 (14:00)
+- rel = v15.70.6, PC = v15.69.0f. Addons added: gotodef (on), mousepos (off), varman (off). Clone counter live again.
+- IMPORTANT: gw-run-throttle.js slows every setInterval to 1 per 5 s while a project runs unless fn.gwRunCritical = true.
+  And app.html copies outside /home/claude/rel load WITHOUT the sibling .js files - benchmark and test only in /home/claude/rel.
+- E2.5 custom stage size skipped on purpose (480x360 in ~90 places). Logged.

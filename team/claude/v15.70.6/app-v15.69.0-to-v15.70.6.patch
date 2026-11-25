@@ -1,8 +1,31 @@
 diff --git a/app.html b/app.html
-index 9a9e3b0..4bc2337 100644
+index 9a9e3b0..de08ac9 100644
 --- a/app.html
 +++ b/app.html
-@@ -3939,7 +3939,8 @@ IMPORTANT:
+@@ -1836,6 +1836,22 @@ label.gw9-adv-row{justify-content:flex-start;cursor:pointer}
+ .gw10-clone-tag.gw10-clone-full{background:#b91c1c;color:#fff}
+ #greenFlagBtn.gw10-muted{position:relative}
+ #greenFlagBtn.gw10-muted::after{content:"\f6a9";font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;right:-6px;top:-8px;font-size:12px}
++.gw10-mouse-tag{right:auto;left:8px;top:auto;bottom:8px}
++.gw10-vm[hidden],.gw10-vm-btn[hidden]{display:none!important}
++.gw10-vm-btn{position:absolute;top:10px;right:12px;z-index:28;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:#0f172a;border:1px solid #475569;color:#e2e8f0;font-weight:800;font-size:12px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.4)}
++.gw10-vm-btn:hover{border-color:#8b5cf6;color:#fff}.gw10-vm-btn i{color:#fb923c}
++.gw10-vm{position:absolute;top:10px;right:12px;z-index:29;width:300px;max-width:calc(100% - 24px);max-height:calc(100% - 90px);display:flex;flex-direction:column;border-radius:14px;background:#0f172a;border:1px solid #475569;color:#e2e8f0;box-shadow:0 14px 34px rgba(0,0,0,.5)}
++.gw10-vm-head{display:flex;align-items:center;gap:8px;padding:9px 10px;border-bottom:1px solid #263047}.gw10-vm-head b{font-size:13px}
++.gw10-vm-head input{flex:1;min-width:0;background:#0b1020;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:12px;padding:4px 8px}
++.gw10-vm-head button{width:26px;height:26px;border-radius:8px;color:#cbd5e1}.gw10-vm-head button:hover{background:#1e293b;color:#fff}
++.gw10-vm-list-box{overflow:auto;padding:6px 10px 10px}
++.gw10-vm-scope{margin:8px 0 4px;font-weight:800;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#a78bfa}
++.gw10-vm-row{display:flex;align-items:center;gap:8px;padding:3px 0}.gw10-vm-row span{flex:0 0 42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:#fdba74}
++.gw10-vm-row input{flex:1;min-width:0;background:#0b1020;border:1px solid #334155;border-radius:7px;color:#f8fafc;font:12.5px ui-monospace,monospace;padding:3px 7px}
++.gw10-vm-row input:focus,.gw10-vm textarea:focus,.gw10-vm-head input:focus{outline:2px solid #8b5cf6;outline-offset:0}
++.gw10-vm-list{display:flex;align-items:center;gap:6px;width:100%;padding:4px 0;font-size:12.5px;color:#fca5a5;text-align:left}.gw10-vm-list span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gw10-vm-list b{font:700 11px ui-monospace,monospace;color:#94a3b8}
++.gw10-vm textarea{width:100%;background:#0b1020;border:1px solid #334155;border-radius:7px;color:#f8fafc;font:12px ui-monospace,monospace;padding:5px 7px;resize:vertical}
++.gw10-vm-empty{font-size:12px;color:#94a3b8;padding:8px 0}
+ .gw10-find{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:7px;padding:6px 8px 6px 11px;border-radius:999px;background:#0f172a;border:1px solid #475569;color:#cbd5e1;box-shadow:0 10px 28px rgba(0,0,0,.45)}
+ .gw10-find[hidden]{display:none}
+ .gw10-find input{width:220px;background:transparent;border:0;color:#f1f5f9;font-size:13px;outline:none}
+@@ -3939,7 +3955,8 @@ IMPORTANT:
  
              function renderLoop() {
                  const now = performance.now();
@@ -12,7 +35,7 @@ index 9a9e3b0..4bc2337 100644
                  const delta = now - Engine.lastFrameTime;
                  Engine.lastFrameTime = now;
                  Engine.actualFps = Math.round(1000 / (delta || 16));
-@@ -3947,11 +3948,8 @@ IMPORTANT:
+@@ -3947,11 +3964,8 @@ IMPORTANT:
                  const fpsCounter = document.getElementById('fpsCounter');
                  if (fpsCounter && now - (GW.__fpsT || 0) > 500 && !document.getElementById('extra-apps-dropdown')?.classList.contains('hidden')) { GW.__fpsT = now; if (fpsCounter.textContent !== String(Engine.actualFps)) fpsCounter.textContent = Engine.actualFps; }
  
@@ -25,7 +48,7 @@ index 9a9e3b0..4bc2337 100644
                      /* v15.57.0 (Claude, Scratch parity + speed): like Scratch, scripts started DURING this frame (broadcast, clone) run in this
                         same frame, and a "broadcast and wait" whose receivers have all finished goes on in this frame too. Before, each
                         broadcast-and-wait "tick" loop cost ~3 frames: Clone Multiplayer ran 5-11 ticks/s in G-Warp vs 40-55 in Scratch. */
-@@ -3967,6 +3965,12 @@ IMPORTANT:
+@@ -3967,6 +3981,12 @@ IMPORTANT:
                      Engine.threads = Engine.threads.filter(t => !t.finished);
                  }
  
@@ -38,7 +61,7 @@ index 9a9e3b0..4bc2337 100644
                  const gwCam = GW.cameraBegin ? GW.cameraBegin(ctx) : false;
                  gwOrder.forEach(sprite => {
                      if (sprite.visible && (!GW.onScreen || GW.onScreen(sprite))) {
-@@ -3986,8 +3990,6 @@ IMPORTANT:
+@@ -3986,8 +4006,6 @@ IMPORTANT:
                  });
                  if (gwCam) ctx.restore();
                  if (GW.drawBubbles) GW.drawBubbles(ctx);
@@ -47,7 +70,7 @@ index 9a9e3b0..4bc2337 100644
              }
  
              requestAnimationFrame(renderLoop);
-@@ -4308,8 +4310,8 @@ IMPORTANT:
+@@ -4308,8 +4326,8 @@ IMPORTANT:
                  case 'think': speak(`💭 ${ins[0]?.value||''}`, 0); break;
                  case 'show': this.sprite.visible=true; break;
                  case 'hide': this.sprite.visible=false; break;
@@ -58,7 +81,7 @@ index 9a9e3b0..4bc2337 100644
                  case 'next_costume': this.sprite.activeCostume=(this.sprite.activeCostume+1)%this.sprite.costumes.length; break;
                  case 'switch_costume': {
                      const n=sel(); const i=this.sprite.costumes.findIndex(c=>c.name===n);
-@@ -4429,7 +4431,8 @@ IMPORTANT:
+@@ -4429,7 +4447,8 @@ IMPORTANT:
  
          GW.resolve = function(v) {
              const raw = String(v ?? '').trim();
@@ -68,7 +91,7 @@ index 9a9e3b0..4bc2337 100644
              const n = Number(raw);
              return Number.isFinite(n) ? n : raw;
          };
-@@ -4542,7 +4545,7 @@ IMPORTANT:
+@@ -4542,7 +4561,7 @@ IMPORTANT:
                  case 'next_backdrop': Engine.activeBackdrop=(Engine.activeBackdrop+1)%Engine.backdrops.length;GW.triggerBackdrop(Engine.backdrops[Engine.activeBackdrop].name);return;
                  case 'change_backdrop_color': Engine.backdrops[Engine.activeBackdrop].color=text(0)||'#fff';return;
                  case 'touching_sprite': if(sel==='edge')return Math.abs(this.sprite.x)>220||Math.abs(this.sprite.y)>160; if(sel==='mouse-pointer')return Math.abs(this.sprite.x-Engine.mouse.x)<25&&Math.abs(this.sprite.y-Engine.mouse.y)<25; return false;
@@ -77,7 +100,7 @@ index 9a9e3b0..4bc2337 100644
                  case 'glide_xy': { const secs=Math.max(.01,n(0)); const sx=this.sprite.x,sy=this.sprite.y,tx=n(1),ty=n(2); this.motionTween={start:performance.now(),dur:secs*1000,sx,sy,tx,ty}; this.waitUntil=performance.now()+secs*1000; return; }
                  case 'goto_random': this.sprite.x=Math.random()*440-220;this.sprite.y=Math.random()*320-160;return;
                  case 'point_towards': { const dx=Engine.mouse.x-this.sprite.x,dy=Engine.mouse.y-this.sprite.y; this.sprite.direction=90-Math.atan2(dy,dx)*180/Math.PI;return; }
-@@ -4554,7 +4557,7 @@ IMPORTANT:
+@@ -4554,7 +4573,7 @@ IMPORTANT:
                  case 'clear_effects': this.sprite.ghost=0;return;
                  case 'costume_number': return this.sprite.activeCostume+1;
                  case 'costume_name': return this.sprite.costumes[this.sprite.activeCostume]?.name||'';
@@ -86,7 +109,7 @@ index 9a9e3b0..4bc2337 100644
                  case 'set_volume': this.sprite.volume=Math.max(0,Math.min(100,n(0)));return;
                  case 'volume_reporter': return this.sprite.volume??100;
                  case 'op_mod': return Number(GW.resolve(ins[0]?.value))%Number(GW.resolve(ins[1]?.value)||1);
-@@ -4594,7 +4597,7 @@ IMPORTANT:
+@@ -4594,7 +4613,7 @@ IMPORTANT:
              if(this.waitCondition){if(!this.waitCondition())return;this.waitCondition=null;}
              if(this.waitBroadcast){if(!this.waitBroadcast())return;this.waitBroadcast=null;}
              if(this.sprite.sayUntil&&performance.now()>=this.sprite.sayUntil){this.sprite.sayText='';this.sprite.sayUntil=0;}
@@ -95,16 +118,16 @@ index 9a9e3b0..4bc2337 100644
              if(this.callStack.length){const top=this.callStack[this.callStack.length-1];if(top.type==='repeatUntil'){if(top.condition()){this.callStack.pop();return;}if(top.pc<top.blocks.length){this.executeBlock(top.blocks[top.pc++]);return;}top.pc=0;return;}}
              return v5StepBase.call(this);
          };
-@@ -4901,7 +4904,7 @@ IMPORTANT:
+@@ -4901,7 +4920,7 @@ IMPORTANT:
              });
          });
      </script>
 -<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
-+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.5',label:'Beta v15.70.5',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
++<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.6',label:'Beta v15.70.6',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
  <script id="gw-v7-reconciliation">
  (() => {
    /* G-Warp v7 reconciliation layer
-@@ -5394,7 +5397,7 @@ IMPORTANT:
+@@ -5394,7 +5413,7 @@ IMPORTANT:
        case 'x_position':return sprite?.x??0; case 'y_position':return sprite?.y??0; case 'direction':return sprite?.direction??90;
        case 'mouse_x':return Engine?.mouse?.x??0; case 'mouse_y':return Engine?.mouse?.y??0; case 'mouse_down':return !!Engine?.mouse?.down;
        case 'timer':return (performance.now()-(Engine?.timerStarted||performance.now()))/1000; case 'answer':return Engine?.answer??'';
@@ -113,7 +136,7 @@ index 9a9e3b0..4bc2337 100644
        case 'current_time':return new Date().toLocaleTimeString();
        case 'key_pressed':{const k=node.querySelector('select')?.value||'space';return !!Engine?.keysPressed?.[GW.keyNameToCode(k)];}
        case 'touching_edge':return Math.abs(sprite?.x||0)>220||Math.abs(sprite?.y||0)>160;
-@@ -5417,7 +5420,8 @@ IMPORTANT:
+@@ -5417,7 +5436,8 @@ IMPORTANT:
      const raw=GW8.readSlot(block,index,fallback);
      if(typeof raw==='boolean'||typeof raw==='number')return raw;
      const s=String(raw??'').trim();
@@ -123,7 +146,7 @@ index 9a9e3b0..4bc2337 100644
      const n=Number(s);return Number.isFinite(n)&&s!==''?n:raw;
    };
    GW8.evalCondForThread=function(thread,block){
-@@ -5505,7 +5509,7 @@ IMPORTANT:
+@@ -5505,7 +5525,7 @@ IMPORTANT:
    GW8.redo=async()=>{const next=GW8.future.pop();if(!next)return;GW8.history.push(next);await GW8.restore(next.state);toast('Redo');};
  
    // ------------------------- Basic debugger / breakpoints -------------------------
@@ -132,7 +155,7 @@ index 9a9e3b0..4bc2337 100644
    GW8.debugPanel=function(){
      let ov=document.getElementById('gwDebugOverlay');
      if(!ov){ov=document.createElement('div');ov.id='gwDebugOverlay';ov.className='gw-ai-overlay';ov.innerHTML='<div class="gw-ai-window"><div class="gw-ai-window-head"><div><b class="text-amber-300">G-Warp Debugger</b><div class="text-[10px] text-slate-400">Breakpoints, threads and one-step execution</div></div><button id="gwDbgClose" class="px-2 py-1 bg-slate-700 rounded">Close</button></div><div class="gw-ai-window-body"><div class="flex gap-2"><button id="gwDbgPause" class="px-3 py-2 bg-amber-700 rounded text-xs font-bold">Pause</button><button id="gwDbgResume" class="px-3 py-2 bg-emerald-700 rounded text-xs font-bold">Resume</button><button id="gwDbgStep" class="px-3 py-2 bg-cyan-700 rounded text-xs font-bold">Step</button></div><pre id="gwDbgInfo" class="gw-ai-card whitespace-pre-wrap"></pre><div class="text-[10px] text-slate-500">Double-click a workspace block to toggle a breakpoint.</div></div></div>';document.body.appendChild(ov);ov.querySelector('#gwDbgClose').onclick=()=>ov.classList.remove('open');ov.querySelector('#gwDbgPause').onclick=()=>{Engine.isPaused=true;};ov.querySelector('#gwDbgResume').onclick=()=>{Engine.isPaused=false;Engine.threads.forEach(t=>t.pausedByBreakpoint=false);};ov.querySelector('#gwDbgStep').onclick=()=>{const t=GW8.debugPausedThread||Engine.threads[0];if(t){const was=Engine.isPaused;Engine.isPaused=false;t.step();Engine.isPaused=true;if(!was)Engine.isPaused=false;}};}
-@@ -5661,10 +5665,10 @@ IMPORTANT:
+@@ -5661,10 +5681,10 @@ IMPORTANT:
      switch(node.type){
        case 'literal':return node.value??'';
        case 'get_var':return GW9.scopedValue(thread,node.name||'my variable');
@@ -145,7 +168,7 @@ index 9a9e3b0..4bc2337 100644
        case 'costume_number':return (sprite?.activeCostume??0)+1;case 'costume_name':return sprite?.costumes?.[sprite.activeCostume]?.name||'';case 'current_time':return new Date().toLocaleTimeString();
        case 'key_pressed':return !!Engine.keysPressed?.[(keyCodes()[node.key||'space']||'Space')];case 'mouse_down':return !!Engine.mouse?.down;
        case 'touching_pointer':return Math.hypot((sprite?.x||0)-(Engine.mouse?.x||0),(sprite?.y||0)-(Engine.mouse?.y||0))<25;
-@@ -5698,7 +5702,7 @@ IMPORTANT:
+@@ -5698,7 +5718,7 @@ IMPORTANT:
      const vis=[...(block?.querySelectorAll('.block-input')||[])].filter(i=>i.dataset.slotProxy!=='1'); const prox=[...(block?.querySelectorAll('.block-input[data-slot-proxy="1"]')||[])]; return vis[index]?.value ?? prox[index]?.value ?? fallback;
    };
    GW8.readSlot=GW9.readSlot;
@@ -154,7 +177,7 @@ index 9a9e3b0..4bc2337 100644
    GW8.evalReporter=function(node,ownerBlock){const nodeType=node?.dataset?.reporterType||ownerBlock?.dataset?.reporter;if(nodeType)return GW9.evalNode(ownerBlock?.__thread||null,{type:nodeType},'value',ownerBlock);return '';};
    const baseDecorateV9 = GW8.decorate;
    GW9.decorate = ()=>{ baseDecorateV9(); document.querySelectorAll('#workspaceCanvas .gw-input-slot').forEach(slot=>{if(!slot._gw9Bound){slot._gw9Bound=true;slot.ondblclick=e=>{e.stopPropagation();GW8.openExprMenu(slot);};}}); };
-@@ -5720,7 +5724,7 @@ IMPORTANT:
+@@ -5720,7 +5740,7 @@ IMPORTANT:
      const type=block?.dataset?.type||'';
      if(type==='get_var'){const name=gwVarEls(block).sel?.value||'my variable';return GW9.scopedValue(this,name);}
      if(type==='set_var'||type==='change_var'){
@@ -163,7 +186,7 @@ index 9a9e3b0..4bc2337 100644
      }
      if(type==='point_direction'){ /* v15.50.4: point in direction (abc / empty) keeps the old direction, like Scratch */ const pin=[...block.querySelectorAll(':scope > .block-input')].filter(x=>x.dataset.slotProxy!=='1')[0]; const pv=GW8.resolveInput(this,block,0,pin?.value??''); if(String(pv).trim()===''||!Number.isFinite(Number(pv)))return; }
      if(type==='call_custom'){
-@@ -11123,7 +11127,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11123,7 +11143,7 @@ nodes.push(el);cur=b.next;}return nodes;};
            const sp = spriteOf(thread, owner); if (!sp) return 0;
            let tx = E.mouse?.x || 0, ty = E.mouse?.y || 0;
            if (node.target && node.target !== 'mouse-pointer') { const t = (E.sprites || []).find(s => s !== sp && s.name === node.target); if (!t) return 0; tx = t.x; ty = t.y; }
@@ -172,7 +195,7 @@ index 9a9e3b0..4bc2337 100644
          }
          case 'op_round': return Math.round(num(g.evalNode(thread, node.args?.[0], 'value', owner)));
          case 'op_abs': return Math.abs(num(g.evalNode(thread, node.args?.[0], 'value', owner)));
-@@ -11784,15 +11788,17 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11784,15 +11804,17 @@ nodes.push(el);cur=b.next;}return nodes;};
      if (!window.GW9?.slotNode) return n < 40 && setTimeout(() => cacheSlots(n + 1), 100);
      if (GW9.__cachedSlots) return; GW9.__cachedSlots = true;
      const base = GW9.slotNode, cache = new WeakMap();
@@ -194,7 +217,7 @@ index 9a9e3b0..4bc2337 100644
    const toast = m => { try { window.GW?.toast?.(m); } catch {} };
    const LIMIT_OPS = 5000, FRAME_MS = 10, WARP_MS = 500;
  
-@@ -11937,7 +11943,10 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11937,7 +11959,10 @@ nodes.push(el);cur=b.next;}return nodes;};
        case 'define_custom': return;
      }
      b.__thread = th;
@@ -206,7 +229,7 @@ index 9a9e3b0..4bc2337 100644
      if (window.GW?.extraBlock && window.GW.extraBlock(th, b)) return;
      th.executeBlock(b);
    }
-@@ -11947,9 +11956,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11947,9 +11972,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        const n = GW9.slotNode(slot);
        if (!p || !n) continue;
        let v = ''; try { v = GW9.evalNode(th, n, 'value', b); } catch (e) { if (e && e === RETRY()) throw e; }
@@ -223,7 +246,7 @@ index 9a9e3b0..4bc2337 100644
    const waiting = (th, now) => now < (th.waitUntil || 0) || !!th.waitCondition || !!th.waitBroadcast || !!th.motionTween;
    ScriptThread.prototype.step = function () {
      if (this.finished || !Engine.isRunning || Engine.isPaused) return;
-@@ -11958,10 +11973,12 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11958,10 +11989,12 @@ nodes.push(el);cur=b.next;}return nodes;};
      if (this.waitCondition) { let ok = false; try { ok = this.waitCondition(); } catch {} if (!ok) return; this.waitCondition = null; }
      if (this.waitBroadcast) { let ok = false; try { ok = this.waitBroadcast(); } catch {} if (!ok) return; this.waitBroadcast = null; }
      if (this.sprite?.sayUntil && now >= this.sprite.sayUntil) { this.sprite.sayText = ''; this.sprite.sayUntil = 0; }
@@ -237,7 +260,7 @@ index 9a9e3b0..4bc2337 100644
      const start = now; let ops = 0;
      while (true) {
        if (this.finished || !Engine.isRunning) return;
-@@ -11984,12 +12001,13 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11984,12 +12017,13 @@ nodes.push(el);cur=b.next;}return nodes;};
        }
        const [b, idx] = nx;
        if (f.list) f.i = idx + 1; else { f.cur = b; f.i = idx; }
@@ -252,7 +275,7 @@ index 9a9e3b0..4bc2337 100644
        // v15.47.1: the clock is read only when a block made the script wait, or every 8 blocks for the frame-time check
        if (this.waitUntil || this.waitCondition || this.waitBroadcast || this.motionTween) { now = performance.now(); if (waiting(this, now)) return; }
        if (++ops > LIMIT_OPS) { if (!warpOn(this)) return; if ((ops & 255) === 0 && performance.now() - start > WARP_MS) { heavy(this, start); return; } } // 22 Nov (Claude): warp runs up to 500 ms like Scratch (it stopped after 5000 blocks, so 3D frames showed half-drawn)
-@@ -12059,7 +12077,34 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12059,7 +12093,34 @@ nodes.push(el);cur=b.next;}return nodes;};
      for (let y = bo + step / 2; y <= t; y += step) for (let x = l + step / 2; x <= r; x += step) if (GW.spriteHasPoint(a, x, y) && GW.spriteHasPoint(b, x, y)) return true;
      return false;
    };
@@ -288,7 +311,7 @@ index 9a9e3b0..4bc2337 100644
    GW.rootName = s => s?.rootName || s?.name;
    GW.hitTest = (a, b) => GW.spritesTouch(a, b);
    const G9 = window.GW9;
-@@ -12075,13 +12120,13 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12075,13 +12136,13 @@ nodes.push(el);cur=b.next;}return nodes;};
          case 'color_touching': return !!GW.colorTouchingColor?.(spr(th, owner), G9.evalNode(th, node.args?.[0], 'value', owner), G9.evalNode(th, node.args?.[1], 'value', owner));
          case 'op_lt': { const n = v => Number.isFinite(Number(v)) ? Number(v) : 0; return n(G9.evalNode(th, node.args?.[0], 'value', owner)) < n(G9.evalNode(th, node.args?.[1], 'value', owner)); }
          case 'op_contains': return String(G9.evalNode(th, node.args?.[0], 'value', owner)).toLowerCase().includes(String(G9.evalNode(th, node.args?.[1], 'value', owner)).toLowerCase());
@@ -304,7 +327,7 @@ index 9a9e3b0..4bc2337 100644
        }
        return base.apply(this, arguments);
      };
-@@ -12156,14 +12201,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12156,14 +12217,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        case 'set_rotation_style': s.rotationStyle = sel(b) || 'all around'; return true;
        case 'go_front_back': { if (s && s.isClone) s.__gwOwnLayer = true; const ls = Engine.sprites.map((x, i) => x.layer ?? i); s.layer = sel(b) === 'back' ? Math.min(...ls) - 1 : Math.max(...ls) + 1; return true; }
        case 'go_layers': { if (s && s.isClone) s.__gwOwnLayer = true; const order = GW.drawOrder(); const i = order.indexOf(s); const n = Math.round(num(b, 0)) * (sel(b) === 'backward' ? -1 : 1); const j = Math.max(0, Math.min(order.length - 1, i + n)); if (j === i) return true; order.splice(i, 1); order.splice(j, 0, s); order.forEach((x, k) => { x.layer = k; }); return true; }
@@ -328,7 +351,7 @@ index 9a9e3b0..4bc2337 100644
        }
        case 'say': { const secs = num(b, 1); if (secs > 0) { s.sayText = text(b, 0); s.sayUntil = performance.now() + secs * 1000; th.waitUntil = s.sayUntil; return true; } return false; }
        case 'create_clone': { const v = sel(b) || 'myself'; const src = (v === 'myself' || v === '_myself_') ? s : Engine.sprites.find(x => !x.isClone && x.name === v); if (src) GW.createClone(src); return true; }
-@@ -14787,7 +14833,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14787,7 +14849,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    });
    // colour / brightness: each costume is filtered once and reused, instead of filtering every drawing
    let curFilter = '';
@@ -374,7 +397,7 @@ index 9a9e3b0..4bc2337 100644
    let fcache = new WeakMap(), mip = new WeakMap();
    const resetDrawCaches = () => { fcache = new WeakMap(); mip = new WeakMap(); };
    document.addEventListener('click', e => { if (e.target.closest?.('#greenFlagBtn,#stopBtn')) resetDrawCaches(); }, true);
-@@ -14806,7 +14889,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14806,7 +14905,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      if (curFilter) {
        const key = curFilter; let m = fcache.get(cv); if (!m) { m = new Map(); fcache.set(cv, m); }
        let f = m.get(key);
@@ -383,7 +406,7 @@ index 9a9e3b0..4bc2337 100644
        cv = f;
      }
      curFilter = '';
-@@ -14906,16 +14989,92 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14906,16 +15005,92 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      move: (th, s, b) => { const n = nIn(b, 0), r = (90 - s.direction) * DEG; s.x += Math.cos(r) * n; s.y += Math.sin(r) * n; },
      turn_cw: (th, s, b) => { s.direction = wrapDir(s.direction + nIn(b, 0)); },
      turn_ccw: (th, s, b) => { s.direction = wrapDir(s.direction - nIn(b, 0)); },
@@ -478,7 +501,7 @@ index 9a9e3b0..4bc2337 100644
    const mainExtra = GW.extraBlock;
    GW.extraBlock = function (th, b) {
      const s = th.sprite; if (!s) return mainExtra.apply(this, arguments);
-@@ -14963,7 +15122,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14963,7 +15138,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        literal: (th, nd) => nd.value ?? '',
        get_var: (th, nd) => G9.scopedValue(th, nd.name || 'my variable'),
        x_position: (th, nd, ow) => spr(th, ow)?.x ?? 0, y_position: (th, nd, ow) => spr(th, ow)?.y ?? 0, direction: (th, nd, ow) => spr(th, ow)?.direction ?? 90,
@@ -487,7 +510,7 @@ index 9a9e3b0..4bc2337 100644
        mouse_down: () => !!E.mouse?.down,
        op_add: (th, nd, ow) => num(A(th, nd, ow, 0)) + num(A(th, nd, ow, 1)), op_sub: (th, nd, ow) => num(A(th, nd, ow, 0)) - num(A(th, nd, ow, 1)),
        op_mul: (th, nd, ow) => num(A(th, nd, ow, 0)) * num(A(th, nd, ow, 1)), op_div: (th, nd, ow) => num(A(th, nd, ow, 0)) / num(A(th, nd, ow, 1)),
-@@ -14982,6 +15141,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14982,6 +15157,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        list_itemnum: (th, nd, ow) => { const a = E.lists?.[nd.name] || [], v = A(th, nd, ow, 0); return itemNum(a, v); }
      };
      G9.fastFN = FN; // v15.9.1: other layers add their reporters here
@@ -506,7 +529,7 @@ index 9a9e3b0..4bc2337 100644
      G9.evalNode = function (th, node, expected, owner) { if (!node) return expected === 'boolean' ? false : ''; const f = FN[node.type]; return f ? f(th, node, owner) : slow.apply(this, arguments); };
      G9.scratchCompare = cmp;
    })();
-@@ -15023,6 +15194,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15023,6 +15210,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      infiniteClones: store.get('gwarp-infinite-clones') === 'on',
      showFps: store.get('gwarp-show-fps') === 'on',
      noFence: store.get('gwarp-no-fence') === 'on', // Scratch keeps sprites on the stage (fencing); TurboWarp can turn it off
@@ -514,7 +537,7 @@ index 9a9e3b0..4bc2337 100644
      noMiscLimits: store.get('gwarp-no-misc-limits') === 'on' // v15.13.0: TurboWarp “Remove miscellaneous limits”
    };
    const target = () => (S.projectFps != null ? S.projectFps : S.fps);
-@@ -15031,6 +15203,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15031,6 +15219,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      setFps(v) { S.fps = Math.max(0, Math.min(250, Math.round(Number(v) || 0))); store.set('gwarp-fps', String(S.fps)); refreshFpsLabels(); },
      setProjectFps(v) { S.projectFps = v == null ? null : Math.max(0, Math.min(250, Math.round(Number(v) || 0))); refreshFpsLabels(); },
      setInfiniteClones(on) { S.infiniteClones = !!on; store.set('gwarp-infinite-clones', on ? 'on' : null); E.cloneLimit = on ? Infinity : 300; },
@@ -522,7 +545,7 @@ index 9a9e3b0..4bc2337 100644
      setShowFps(on) { S.showFps = !!on; store.set('gwarp-show-fps', on ? 'on' : null); placeFps(); },
      setNoFence(on) { S.noFence = !!on; store.set('gwarp-no-fence', on ? 'on' : null); },
      setNoMiscLimits(on) { S.noMiscLimits = !!on; store.set('gwarp-no-misc-limits', on ? 'on' : null); }
-@@ -15070,17 +15243,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15070,17 +15259,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      const [showFps, showFpsRow] = check('gw9AdvShowFps', 'Show FPS on the stage', 'A small frames-per-second counter in the corner of the stage.', S.showFps);
      const [fenceOff, fenceRow] = check('gw9AdvFence', 'Remove fencing', 'Lets sprites go fully off the stage. Scratch keeps a little of every sprite on the stage; leave this off for Scratch projects.', S.noFence);
      const [hqOn, hqRow] = check('gw9AdvHQ', 'Max quality render (HQ)', 'Draws the stage at your screen’s full sharpness, up to 4× (1920 × 1440): sharp pen lines, vector costumes, text and bubbles — like TurboWarp’s “High quality pen”, for the whole stage. Best in Large or full screen. Big projects may run slower; turn it off if they lag. Also the HQ button above the stage.', !!window.GW_HQ?.isOn?.());
@@ -543,7 +566,7 @@ index 9a9e3b0..4bc2337 100644
        if (window.GW_WARP_GUARD && window.GW_WARP_GUARD.isOn() !== guard.checked) window.GW_WARP_GUARD.set(guard.checked);
        toast('Advanced settings saved');
      });
-@@ -15874,7 +16048,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15874,7 +16064,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        lookupOrCreateVariable(id, n) { return lookupVar(s, n, '') || (GV()[n] = 0, lookupVar(s, n, '')); }, lookupOrCreateList(id, n) { return lookupVar(s, n, 'list') || (GL()[n] = [], lookupVar(s, n, 'list')); },
        lookupBroadcastMsg: (id, n) => ({ id, name: n, value: n }),
        isTouchingSprite: n => GW.spritesNamed(String(n)).some(o => o !== s && GW.spritesTouch(s, o)), isTouchingPoint: (x, y) => !!GW.spriteHasPoint?.(s, x, y), isTouchingEdge: () => !!GW.touchingEdge?.(s),
@@ -552,7 +575,7 @@ index 9a9e3b0..4bc2337 100644
        getLayerOrder: () => (GW.drawOrder ? GW.drawOrder().indexOf(s) : E.sprites.indexOf(s)), goToFront() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.max(0, ...o.map(x => x.layer || 0)) + 1; }, goToBack() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.min(0, ...o.map(x => x.layer || 0)) - 1; },
        emitVisualChange() {}, updateAllDrawableProperties() {}, setCustomState(k, v) { (s.__custom || (s.__custom = {}))[k] = v; }, getCustomState: k => s.__custom?.[k],
        duplicate: () => Promise.resolve(targetFor(GW.createClone ? GW.createClone(s) : null)), makeClone: () => targetFor(GW.createClone ? GW.createClone(s) : null), dispose() { if (s.isClone) GW.deleteClone?.(s); }
-@@ -15934,7 +16108,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15934,7 +16124,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    const renderer = {
      canvas: null, get _gl() { return null; }, gl: null, _allDrawables: [], _drawList: [], dirty: false, _xLeft: -240, _xRight: 240, _yBottom: -180, _yTop: 180, _nativeSize: [480, 360],
      getNativeSize: () => [480, 360], setBackgroundColor(r, g, b) { GW.camera.bg = Color.rgbToHex({ r: r * 255, g: g * 255, b: b * 255 }); },
@@ -561,7 +584,7 @@ index 9a9e3b0..4bc2337 100644
      getCurrentSkinSize(id) { const s = E.sprites[id]; const c = s?.costumes?.[s.activeCostume]; const b = GW.costumeBox(c); return [b.w, b.h]; },
      getBounds(id) { const s = E.sprites[id]; if (!s) return null; const b = GW.spriteBounds(s); return { ...b, width: b.right - b.left, height: b.top - b.bottom }; },
      getBoundsForBubble(id) { return this.getBounds(id); }, getFencedPositionOfDrawable: (id, pos) => pos,
-@@ -15965,14 +16139,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15965,14 +16155,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      compilerOptions: { enabled: false, warpTimer: true }, isPackaged: false, extensionStorage: {}, renderer, storage: { assetHost: '', DataFormat: { PNG: 'png', SVG: 'svg', WAV: 'wav', MP3: 'mp3', JPG: 'jpg' }, AssetType: {} },
      get runtimeOptions() { return { maxClones: E.cloneLimit || 300, miscLimits: !GW.miscLimitsOff?.(), fencing: GW.__projectFence !== false }; },
      setRuntimeOptions(o) { if (o?.maxClones != null) E.cloneLimit = Number(o.maxClones) || 300; if (o?.fencing != null) GW.__projectFence = o.fencing ? undefined : false; if (o?.miscLimits != null) GW.__projectMiscLimits = o.miscLimits ? undefined : false; },
@@ -578,7 +601,7 @@ index 9a9e3b0..4bc2337 100644
      startHats: (op, fields, target) => startHats(op, fields, target), stopAll() { by('stopBtn')?.click(); }, greenFlag() { by('greenFlagBtn')?.click(); }, stopForTarget(t) { const s = t?.gwSprite; if (s) E.threads.forEach(th => { if (th.sprite === s) th.finished = true; }); },
      shouldExecuteStopClicked: true, _hats: {}, _primitives: {}, _flowing: {}, profiler: null, sequencer: { stepThreads() {}, timer: { timeElapsed: () => 0 } },
      _step() { this.emit('BEFORE_EXECUTE'); pollHats(); },
-@@ -15988,7 +16162,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15988,7 +16178,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    runtime.extensionManager = extensionManager;
    define(vm, {
      runtime, renderer, extensionManager, get editingTarget() { return runtime.getEditingTarget(); },
@@ -587,7 +610,7 @@ index 9a9e3b0..4bc2337 100644
      postIOData() {}, greenFlag: () => runtime.greenFlag(), stopAll: () => runtime.stopAll(), start() {}, toJSON: () => '{}', securityManager: {},
      getPlaygroundData: () => ({ targets: runtime.targets, threads: [] }), addSprite: () => Promise.reject(new Error('Adding sprites from extensions is not supported in G-Warp yet')),
      get runtimeOptions() { return runtime.runtimeOptions; }
-@@ -16363,7 +16537,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16363,7 +16553,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      css(st) { const rgb = Color.hsvToRgb({ h: st.color * 360 / 100, s: st.saturation / 100, v: st.brightness / 100 }); return `rgba(${rgb.r},${rgb.g},${rgb.b},${1 - st.transparency / 100})`; },
      clear() { const c = this.canvas(), g = this.ctx(); if (g) g.clearRect(0, 0, c.width, c.height); },
      line(color4f, d, x0, y0, x1, y1) { const g = this.ctx(); if (!g) return; const c = color4f ? `rgba(${color4f[0] * 255},${color4f[1] * 255},${color4f[2] * 255},${color4f[3]})` : '#0000ff'; this.seg(g, c, d || 1, x0, y0, x1, y1); },
@@ -596,7 +619,7 @@ index 9a9e3b0..4bc2337 100644
      follow(s) { const st = s.__pen; if (!st || !st.down) { if (st) { st.x = s.x; st.y = s.y; } return; } if (st.x === s.x && st.y === s.y) return; const g = this.ctx(); if (g) this.seg(g, this.css(st), st.size, st.x, st.y, s.x, s.y); st.x = s.x; st.y = s.y; },
      stamp(s) {
        const g = this.ctx(), c = s.costumes?.[s.activeCostume]; if (!g || !c?.canvas || !s.visible) return; GW.__penUsed = true; const cv = this.canvas(), kx = cv.width / 480;
-@@ -18029,6 +18203,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18029,6 +18219,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      });
      refreshAll(); toast(`Attached ${n} shape${n === 1 ? '' : 's'} to the nearest bones.`);
    }
@@ -646,7 +669,7 @@ index 9a9e3b0..4bc2337 100644
    function deleteBone() {
      const id = st.bone; if (!id) return toast('Pick a bone first.'); snap();
      const gone = new Set([id]); let grew = true; while (grew) { grew = false; st.anim.bones.forEach(b => { if (b.parent && gone.has(b.parent) && !gone.has(b.id)) { gone.add(b.id); grew = true; } }); }
-@@ -18201,7 +18418,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18201,7 +18434,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
          h('button', { type: 'button', class: 'gw18-x', 'aria-label': 'Close', html: '<i class="fa-solid fa-xmark"></i>', onclick: () => close() })),
        h('div', { class: 'gw18-body' },
          h('div', { class: 'gw18-tools' }, h('div', { class: 'gw18-small', text: 'Rig tools' }),
@@ -655,7 +678,147 @@ index 9a9e3b0..4bc2337 100644
            h('hr'), btn(ic('fa-wand-magic-sparkles', 'Attach automatically'), () => autoAttach(), { id: 'gw18Auto' }), btn(ic('fa-trash', 'Delete bone'), () => deleteBone(), { id: 'gw18DelBone' }),
            h('p', { id: 'gw18Tip', class: 'gw18-tip' })),
          h('div', { id: 'gw18View', class: 'gw18-view' }),
-@@ -25054,7 +25271,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -20532,20 +20765,25 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+     { id: 'clones', name: 'Clone counter', text: 'Shows how many clones exist, next to the stage, while a project runs. Many clones can make a game slow.', def: true },
+     { id: 'mute', name: 'Mute and project volume', text: 'Ctrl+click (⌘+click on Mac) the green flag to mute or unmute the project. Set the volume below.', def: true },
+     { id: 'gamepad', name: 'Gamepad', text: 'Play with a game controller: left stick and d-pad = arrow keys, right stick = W A S D, A = space, B = X, X = Z, Y = C, Start = Enter.', def: false },
+-    { id: 'find', name: 'Find in scripts', text: 'Press Ctrl+F in the code area to find blocks by their words; Enter jumps to the next one.', def: true }
++    { id: 'find', name: 'Find in scripts', text: 'Press Ctrl+F in the code area to find blocks by their words; Enter jumps to the next one.', def: true },
++    // v15.70.6 (Claude): three more TurboWarp-style helpers
++    { id: 'gotodef', name: 'Go to definition', text: 'Right-click a My Block inside a script and pick “Go to definition” (or click it with the mouse wheel) to jump to the place where it is made.', def: true },
++    { id: 'mousepos', name: 'Mouse position', text: 'Shows the x and y of the mouse pointer in the corner of the stage while the pointer is over it.', def: false },
++    { id: 'varman', name: 'Variable manager', text: 'Adds a “Variables” button to the code area. It opens a list of every variable and list with its value right now. Search by name; type in a box to change a value.', def: false }
+   ];
+   const on = id => { const v = store.get('gwarp-addon-' + id); return v == null ? !!ADDONS.find(a => a.id === id)?.def : v === 'on'; };
+   const setOn = (id, v) => { store.set('gwarp-addon-' + id, v ? 'on' : 'off'); apply(); };
+ 
+   /* ---------- 1. clone counter ---------- */
+-  setInterval(() => {
++  const cloneTick = () => {
+     let tag = by('gw10CloneTag'); const show = on('clones') && E.isRunning;
+     const n = show ? E.sprites.filter(s => s.isClone).length : 0;
+     if (!show || !n) { if (tag && !tag.hidden) tag.hidden = true; return; }
+     if (!tag) { const host = by('gw154StageFrame') || by('stageCanvas')?.parentElement; if (!host) return; tag = h('div', { id: 'gw10CloneTag', class: 'gw10-clone-tag', 'aria-live': 'off', title: 'Clones right now (Addons: clone counter)' }); host.appendChild(tag); }
+     const lim = E.cloneLimit === Infinity ? '∞' : (E.cloneLimit || 300); const txt = `Clones: ${n} / ${lim}`;
+     if (tag.textContent !== txt) tag.textContent = txt; tag.hidden = false; tag.classList.toggle('gw10-clone-full', lim !== '∞' && n >= lim);
+-  }, 500);
++  };
++  cloneTick.gwRunCritical = true; setInterval(cloneTick, 500); // v15.70.6: counts live while the project runs (the run-time helper brake had slowed it to once every 5 s)
+ 
+   /* ---------- 2. mute + volume (every sound goes through one volume knob) ---------- */
+   let muted = false, volume = Math.max(0, Math.min(100, Number(store.get('gwarp-volume') ?? 100)));
+@@ -20611,8 +20849,109 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+   }, true);
+   window.GW_FIND = { open: findBar };
+ 
++  /* ---------- 5. go to definition (v15.70.6) ---------- */
++  let ctxBlock = null;
++  function goToDef(b) {
++    if (!b) return; const G8 = window.GW8;
++    const name = b.dataset.proc || ([...b.querySelectorAll('.block-input')].filter(x => x.dataset.slotProxy !== '1')[0]?.value || '').trim();
++    try { G8.indexCustomProcedures(); } catch {}
++    const own = b.closest('.block-stack')?.dataset.owner, all = (G8.customDefsAll?.[name] || []).map(d => d.definition).filter(Boolean);
++    if (!all.length) document.querySelectorAll('#workspaceCanvas > .block-stack > [data-type="define_custom"]').forEach(f => { if (f.dataset.proc === name) all.push(f); });
++    const def = all.find(f => f.closest('.block-stack')?.dataset.owner === own) || all[0] || G8.customDefs?.[name]?.definition;
++    if (!def || !def.isConnected) { toast('This block has no definition in the project.'); return; }
++    const idx = Number(def.closest('.block-stack')?.dataset.owner);
++    if (Number.isInteger(idx) && E.sprites[idx] && idx !== E.activeSpriteIndex) { E.activeSpriteIndex = idx; try { window.renderSpritesGrid?.(); window.updatePropertyInputs?.(); GW.showSpriteScripts?.(idx); } catch {} }
++    by('gwMainTabCode')?.click();
++    setTimeout(() => { def.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' }); def.classList.add('gw10-find-hit'); setTimeout(() => def.classList.remove('gw10-find-hit'), 1800); }, 60);
++  }
++  document.addEventListener('contextmenu', e => {
++    const b = e.target.closest?.('#workspaceCanvas .scratch-block') || null, ctx = by('blockContextMenu'); ctxBlock = b; if (!ctx) return;
++    let it = by('gw10CtxGoDef');
++    if (!it) { it = h('button', { id: 'gw10CtxGoDef', type: 'button', onclick: () => { ctx.style.display = 'none'; goToDef(ctxBlock); } }, h('i', { class: 'fa-solid fa-location-arrow text-fuchsia-400', 'aria-hidden': 'true' }), ' Go to definition'); ctx.insertBefore(it, ctx.firstChild); }
++    it.style.display = (b && on('gotodef') && b.dataset.type === 'call_custom') ? '' : 'none';
++  }, true);
++
++  // middle-click a My Block = go to its definition (the same shortcut TurboWarp uses)
++  const midCall = e => (e.button === 1 && on('gotodef')) ? e.target.closest?.('#workspaceCanvas .scratch-block[data-type="call_custom"]') : null;
++  document.addEventListener('mousedown', e => { if (midCall(e)) e.preventDefault(); }, true); // no auto-scroll cursor
++  document.addEventListener('auxclick', e => { const b = midCall(e); if (b) { e.preventDefault(); goToDef(b); } }, true);
++
++  /* ---------- 6. mouse position on the stage (v15.70.6) ---------- */
++  let overStage = false;
++  document.addEventListener('pointermove', e => { overStage = !!e.target.closest?.('#stageCanvas, #gw154StageFrame'); }, true);
++  const mouseTick = () => {
++    let tag = by('gw10MouseTag'); const show = on('mousepos') && overStage;
++    if (!show) { if (tag && !tag.hidden) tag.hidden = true; return; }
++    if (!tag) { const host = by('gw154StageFrame') || by('stageCanvas')?.parentElement; if (!host) return; tag = h('div', { id: 'gw10MouseTag', class: 'gw10-clone-tag gw10-mouse-tag', 'aria-live': 'off', title: 'Mouse position on the stage (Addons: mouse position)' }); host.appendChild(tag); }
++    const m = E.mouse || {}, txt = `x: ${Math.round(Number(m.x) || 0)}   y: ${Math.round(Number(m.y) || 0)}`;
++    if (tag.textContent !== txt) tag.textContent = txt; tag.hidden = false;
++  };
++  mouseTick.gwRunCritical = true; setInterval(mouseTick, 100);
++
++  /* ---------- 7. variable manager (v15.70.6) ---------- */
++  const VM = { open: false, q: '', sig: '', rows: [], openLists: new Set() };
++  const shared = k => { try { return (k === 'v' ? E.variables : E.lists).toJSON(); } catch { return {}; } };
++  const asShared = fn => { const prev = GW.__ctxSprite; GW.__ctxSprite = { localVars: null, localLists: null }; try { fn(); } finally { GW.__ctxSprite = prev; } }; // writes go to the shared store
++  function vmScopes() {
++    const out = [{ title: 'For all sprites', vars: shared('v'), lists: shared('l'), setVar: (n, v) => asShared(() => { E.variables[n] = v; }) }];
++    (E.sprites || []).forEach(sp => { if (sp.isClone) return; const v = sp.localVars || {}, l = sp.localLists || {}; if (Object.keys(v).length || Object.keys(l).length) out.push({ title: `${sp.name} only`, vars: v, lists: l, setVar: (n, val) => { v[n] = val; } }); });
++    return out;
++  }
++  function vmBuild() {
++    const box = by('gw10VarList'); if (!box) return; const q = VM.q, scopes = vmScopes(); VM.rows = []; box.textContent = '';
++    let any = false;
++    scopes.forEach((sc, si) => {
++      const vs = Object.keys(sc.vars).filter(n => n.toLowerCase().includes(q)), ls = Object.keys(sc.lists).filter(n => Array.isArray(sc.lists[n]) && n.toLowerCase().includes(q));
++      if (!vs.length && !ls.length) return; any = true;
++      box.appendChild(h('div', { class: 'gw10-vm-scope', text: sc.title }));
++      vs.forEach(n => {
++        const inp = h('input', { type: 'text', 'aria-label': `Value of ${n}`, spellcheck: 'false' }); inp.value = String(sc.vars[n] ?? '');
++        inp.addEventListener('change', () => { sc.setVar(n, inp.value); try { GW.refreshVariableMonitors?.(); } catch {} });
++        inp.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') inp.blur(); });
++        box.appendChild(h('label', { class: 'gw10-vm-row' }, h('span', { text: n, title: n }), inp));
++        VM.rows.push({ el: inp, get: scs => String(scs[si]?.vars[n] ?? '') });
++      });
++      ls.forEach(n => {
++        const key = si + '\u0001' + n, cnt = h('b', { text: '' }), ta = h('textarea', { rows: '5', 'aria-label': `Items of ${n}, one per line`, spellcheck: 'false' });
++        const arr = () => { const a = vmScopes()[si]?.lists[n]; return Array.isArray(a) ? a : []; };
++        const btn = h('button', { type: 'button', class: 'gw10-vm-list', title: 'Show or hide the items', onclick: () => { if (VM.openLists.has(key)) VM.openLists.delete(key); else VM.openLists.add(key); ta.hidden = !VM.openLists.has(key); if (!ta.hidden) ta.value = arr().slice(0, 500).join('\n'); } }, h('i', { class: 'fa-solid fa-list', 'aria-hidden': 'true' }), h('span', { text: ' ' + n, title: n }), cnt);
++        ta.hidden = !VM.openLists.has(key); if (!ta.hidden) ta.value = arr().slice(0, 500).join('\n');
++        ta.addEventListener('keydown', e => e.stopPropagation());
++        ta.addEventListener('change', () => { const a = arr(); if (a.length > 500) { toast('This list has more than 500 items; it can be looked at here but not changed.'); return; } const items = ta.value === '' ? [] : ta.value.split('\n'); a.length = 0; items.forEach(x => a.push(x)); try { GW.refreshListMonitors?.(); } catch {} });
++        box.appendChild(btn); box.appendChild(ta);
++        VM.rows.push({ el: cnt, get: scs => { const k = (Array.isArray(scs[si]?.lists[n]) ? scs[si].lists[n] : []).length; return `${k} item${k === 1 ? '' : 's'}`; }, text: true });
++        VM.rows.push({ el: ta, get: scs => (Array.isArray(scs[si]?.lists[n]) ? scs[si].lists[n] : []).slice(0, 500).join('\n'), skip: () => ta.hidden });
++      });
++    });
++    if (!any) box.appendChild(h('p', { class: 'gw10-vm-empty', text: q ? 'No variable or list with that name.' : 'This project has no variables or lists yet. Make one in Variables or Lists.' }));
++  }
++  const vmSig = scs => scs.map(sc => sc.title + ':' + Object.keys(sc.vars).join(',') + '|' + Object.keys(sc.lists).join(',')).join(';');
++  function vmTick() {
++    const btn = by('gw10VarBtn'), panel = by('gw10VarMan'), want = on('varman');
++    if (!want) { if (btn) btn.hidden = true; if (panel) panel.hidden = true; VM.open = false; return; }
++    const ws = by('workspaceCanvas')?.parentElement; if (!ws) return;
++    if (!btn) { ws.appendChild(h('button', { id: 'gw10VarBtn', type: 'button', class: 'gw10-vm-btn', title: 'Variable manager: every variable and list with its value right now (Addons)', onclick: () => { VM.open = true; vmTick(); } }, h('i', { class: 'fa-solid fa-table-list', 'aria-hidden': 'true' }), h('span', { text: ' Variables' }))); return; }
++    btn.hidden = VM.open;
++    if (!VM.open) { if (panel) panel.hidden = true; return; }
++    if (!panel) {
++      const search = h('input', { type: 'search', placeholder: 'Search by name…', 'aria-label': 'Search variables and lists by name' });
++      search.addEventListener('input', () => { VM.q = search.value.trim().toLowerCase(); vmBuild(); }); search.addEventListener('keydown', e => e.stopPropagation());
++      ws.appendChild(h('div', { id: 'gw10VarMan', class: 'gw10-vm', role: 'region', 'aria-label': 'Variable manager' },
++        h('div', { class: 'gw10-vm-head' }, h('b', { text: 'Variables' }), search, h('button', { type: 'button', 'aria-label': 'Close the variable manager', onclick: () => { VM.open = false; vmTick(); } }, h('i', { class: 'fa-solid fa-xmark', 'aria-hidden': 'true' }))),
++        h('div', { id: 'gw10VarList', class: 'gw10-vm-list-box' })));
++      VM.sig = ''; return;
++    }
++    panel.hidden = false;
++    const scs = vmScopes(), sig = vmSig(scs); if (sig !== VM.sig) { VM.sig = sig; vmBuild(); return; }
++    const act = document.activeElement;
++    VM.rows.forEach(r => { if (r.el === act || (r.skip && r.skip())) return; const v = r.get(scs); if (r.text) { if (r.el.textContent !== v) r.el.textContent = v; } else if (r.el.value !== v) r.el.value = v; });
++  }
++  vmTick.gwRunCritical = true; // stays live while a project runs (the values matter most then); it does nothing unless the panel is open
++  setInterval(vmTick, 300);
++  window.GW_VARMAN = { open() { VM.open = true; vmTick(); }, close() { VM.open = false; vmTick(); } };
++
+   /* ---------- the Addons dialog (More → App) ---------- */
+-  function apply() { if (!on('mute') && muted) setMuted(false); if (!on('clones')) { const t = by('gw10CloneTag'); if (t) t.hidden = true; } }
++  function apply() { try { vmTick(); } catch {} if (!on('mute') && muted) setMuted(false); if (!on('clones')) { const t = by('gw10CloneTag'); if (t) t.hidden = true; } }
+   function openAddons() {
+     const rows = ADDONS.map(a => { const c = h('input', { type: 'checkbox', id: 'gw10Addon-' + a.id }); c.checked = on(a.id); c.addEventListener('change', () => setOn(a.id, c.checked)); return h('label', { class: 'gw9-adv-row', for: 'gw10Addon-' + a.id }, c, h('span', {}, h('b', { text: a.name }), h('small', { text: a.text }))); });
+     const vol = h('input', { type: 'range', min: '0', max: '100', value: String(volume), id: 'gw10Volume', 'aria-label': 'Project volume' }); const vl = h('b', { text: `${volume}%` });
+@@ -25054,7 +25393,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    const by = id => document.getElementById(id);
    const css = document.createElement('style'); css.id = 'gw4950css';
    css.textContent = `#gw154StageFrame [data-var-monitor],#gw154StageFrame [data-list-monitor]{z-index:6!important}
@@ -664,7 +827,7 @@ index 9a9e3b0..4bc2337 100644
  .gw4950-menu{position:fixed;z-index:10050;min-width:150px;padding:4px;border:1px solid #2b2f55;border-radius:10px;background:#14162a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
  .gw4950-menu button{display:flex;gap:8px;align-items:center;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#e5e7eb;font-size:12px;font-weight:700;text-align:left;cursor:pointer}
  .gw4950-menu button:hover,.gw4950-menu button:focus-visible{background:#26294a;outline:none}`;
-@@ -29123,6 +29340,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
+@@ -29123,6 +29462,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
  })();
  </script>
  <!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->

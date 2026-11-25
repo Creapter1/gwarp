@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.5.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.6.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -86,3 +86,16 @@ STILL SLOWER than Scratch (2-5x) and so than TurboWarp's compiler. Next steps th
   - every other command block still walks GW.extraBlock (6 layers) + executeBlock (9 wrappers), each reading b.dataset.type: use b.__gwT and a per-type route;
   - pen blocks and looks blocks have no one-step path; non-warp loops pay one full step() call per turn (3 wrappers around step);
   - a real compile step (blocks -> closures per script, rebuilt when GW.__wsEpoch changes) is the only way to pass TurboWarp. Not started.
+
+v15.70.6 (Claude Fable, 25 Nov 2026, round 4 = editor helpers TurboWarp has) - on the owner's PC as v15.69.0f
+All in the Addons module (More > App > Addons...), same pattern as the v15.10.0 addons. Nothing about running projects changed.
+1. gotodef (default ON): block right-click menu gets "Go to definition" on call_custom blocks only; middle-click does the same (TurboWarp's shortcut).
+   Finds the define block by data-proc / name, prefers the same sprite, switches sprite if needed, scrolls and flashes it.
+2. mousepos (default OFF): "x: N  y: N" tag in the stage's bottom-left corner while the pointer is over the stage.
+3. varman (default OFF): "Variables" button top-right of the code area -> panel with every variable and list ("For all sprites", "<sprite> only"),
+   live values (300 ms), search, edit a value (stored as text), lists open as one item per line (edit up to 500 items). API: GW_VARMAN.open() / close().
+4. The clone counter, mouse tag and variable manager are marked gwRunCritical: gw-run-throttle.js slows every other setInterval to once per 5 s
+   while a project runs, which had made the clone counter useless. NOTE for other AIs: a helper that must stay live while running needs fn.gwRunCritical = true.
+5. Test trap found: copies of app.html outside the repo folder load without gw-run-throttle.js / gw-perf.js (relative script files). Always test in /home/claude/rel.
+NOT DONE: E2.5 custom stage size - 480x360 is hard-coded in ~90 places (mouse mapping, fencing, pen, bounds, export). Needs its own careful round.
+picture: variable-manager.png
