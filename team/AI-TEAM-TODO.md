@@ -47,7 +47,10 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [done] Known: set_effect menu dropped on export - APP-CHECK 25 Nov: fixed already. List number stored as text: same as Scratch for typed values (not a bug).
 - [done] v15.70.1 (Claude Fable, 25 Nov): graphic effects drawn with Scratch's formulas (colour, brightness exact; whirl, fisheye, pixelate, mosaic now drawn); Scratch size limits; tan 90 / sqrt rounding. 53-check parity test added (`team/claude/tests/test_4972_parity53.js`). See `team/claude/v15.70.2/README.txt`.
 - [done] v15.70.2 (Claude Fable, 25 Nov): Animation "Make skeleton for me" - bones built from the drawing (stickman test passes, Ready-made moves work). On the owner's PC as v15.69.0b.
-- [open] Fencing is 2-4 px off Scratch at the stage edge (parity28 u10/u11) - needs a Scratch reference.
+- [done] Fencing checked against the REAL Scratch engine (25 Nov): G-Warp is right. The test costume had no viewBox. Not a bug.
+- [done] Scratch referee (Claude Fable, 25 Nov): real scratch-vm runs the same .sb3 and `diff.js` lists every difference from G-Warp. `team/claude/tests/scratch-referee/`. 170 checks same as Scratch so far.
+- [open] Glide to random position ends a hair off a whole number (-58.99999999999999); Scratch ends exactly on the target.
+- [plan] Today's rounds: `team/claude/PLAN-25-NOV.md`.
 - [open] Owner 25 Nov: add more to Spark Studio, SVG 360 and Big map; keep going until G-Warp acts and works better than TurboWarp / PenguinMod.
 - [open] BUG-20261027 background music: not reproducible on v15.70.1 (wav, ADPCM, mp3 all play) - needs the owner's project.
 
