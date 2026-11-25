@@ -22,9 +22,9 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [rule] No new top-bar buttons, no second run engine, nothing that changes how projects run, unless the owner approved it. Unapproved features = Developer mode only (owner rule, Nov 8). "Improve, not unimprove."
 - [open] Owner's simple test project (go to 0 0, forever move 10 steps) - owner sees: app looks broken, choppy or laggy, G-Spark vanishes at the right edge, code/buttons fail. Claude could not reproduce: G-Warp v15.68 matches the real Scratch engine (stops at x 285, steps every 33 ms). **Waiting for the owner's screen recording** (Win+Alt+R). Project file stays private (owner rule) and is deleted after the fix.
 - [open] Audit everything on `release-v15.66.0` (v15.61-v15.68) for other things that changed how the app works for everyone without the owner's OK; move them behind Developer mode or remove them.
-- [done] S4 smooth motion (v15.70.0, Claude Fable, 25 Nov) - built and tested, OFF by default, More > Advanced settings. Patch + notes: `team/claude/v15.70.1/`. **Waiting for the owner: OK to add it to the release branch?**
+- [done] S4 smooth motion (v15.70.0, Claude Fable, 25 Nov) - built and tested, OFF by default, More > Advanced settings. Patch + notes: `team/claude/v15.70.2/`. **Waiting for the owner: OK to add it to the release branch?**
 - [done] Sprite x / y / size / direction boxes update live while a project runs (v15.70.0).
-- [note] Owner's test measured again on v15.70.0: 0 errors, steady frame rate. New projects run at 60 FPS, so move 10 steps = 600 px a second; the sprite stopping with 15 px showing at the edge is Scratch fencing. See `team/claude/v15.70.1/README.txt`.
+- [note] Owner's test measured again on v15.70.0: 0 errors, steady frame rate. New projects run at 60 FPS, so move 10 steps = 600 px a second; the sprite stopping with 15 px showing at the edge is Scratch fencing. See `team/claude/v15.70.2/README.txt`.
 - [later] Owner idea: Minimap - an option of the Big map tool or an extension (plain Scratch blocks), so users can add one if they want.
 - [later] Idea, owner must approve: Start runs projects on the real Scratch engine (scratch-vm + scratch-render, the same core TurboWarp uses), keeping G-Warp's own look and editor. Check its licence first.
 - [later] SVG 360: AI-drawn back sides (local AI); turn every costume of an animation at once.
@@ -45,7 +45,10 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [open] A10 letter inputs in number fields; E1.6 glide menus; E2.1 backdrop-and-wait; E2.4 TurboWarp extras; E2.9 PenguinMod core
 - [open] .pmp protobuf needs legal test file
 - [done] Known: set_effect menu dropped on export - APP-CHECK 25 Nov: fixed already. List number stored as text: same as Scratch for typed values (not a bug).
-- [done] v15.70.1 (Claude Fable, 25 Nov): graphic effects drawn with Scratch's formulas (colour, brightness exact; whirl, fisheye, pixelate, mosaic now drawn); Scratch size limits; tan 90 / sqrt rounding. 53-check parity test added (`team/claude/tests/test_4972_parity53.js`). See `team/claude/v15.70.1/README.txt`.
+- [done] v15.70.1 (Claude Fable, 25 Nov): graphic effects drawn with Scratch's formulas (colour, brightness exact; whirl, fisheye, pixelate, mosaic now drawn); Scratch size limits; tan 90 / sqrt rounding. 53-check parity test added (`team/claude/tests/test_4972_parity53.js`). See `team/claude/v15.70.2/README.txt`.
+- [done] v15.70.2 (Claude Fable, 25 Nov): Animation "Make skeleton for me" - bones built from the drawing (stickman test passes, Ready-made moves work). On the owner's PC as v15.69.0b.
+- [open] Fencing is 2-4 px off Scratch at the stage edge (parity28 u10/u11) - needs a Scratch reference.
+- [open] Owner 25 Nov: add more to Spark Studio, SVG 360 and Big map; keep going until G-Warp acts and works better than TurboWarp / PenguinMod.
 - [open] BUG-20261027 background music: not reproducible on v15.70.1 (wav, ADPCM, mp3 all play) - needs the owner's project.
 
 ## 3. G-Spark AI

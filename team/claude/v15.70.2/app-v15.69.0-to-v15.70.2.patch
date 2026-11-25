@@ -1,5 +1,5 @@
 diff --git a/app.html b/app.html
-index 9a9e3b0..d003c9b 100644
+index 9a9e3b0..c41da80 100644
 --- a/app.html
 +++ b/app.html
 @@ -3939,7 +3939,8 @@ IMPORTANT:
@@ -69,7 +69,7 @@ index 9a9e3b0..d003c9b 100644
          });
      </script>
 -<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
-+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.1',label:'Beta v15.70.1',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
++<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.2',label:'Beta v15.70.2',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
  <script id="gw-v7-reconciliation">
  (() => {
    /* G-Warp v7 reconciliation layer
@@ -235,7 +235,66 @@ index 9a9e3b0..d003c9b 100644
      postIOData() {}, greenFlag: () => runtime.greenFlag(), stopAll: () => runtime.stopAll(), start() {}, toJSON: () => '{}', securityManager: {},
      getPlaygroundData: () => ({ targets: runtime.targets, threads: [] }), addSprite: () => Promise.reject(new Error('Adding sprites from extensions is not supported in G-Warp yet')),
      get runtimeOptions() { return runtime.runtimeOptions; }
-@@ -25054,7 +25096,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -18029,6 +18071,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+     });
+     refreshAll(); toast(`Attached ${n} shape${n === 1 ? '' : 's'} to the nearest bones.`);
+   }
++  /* v15.70.2 (Claude, owner: "the first skeleton must fit what I drew, like a stickman"): one click builds the bones FROM the
++     drawing. The shape that touches the most other shapes is the body; every shape touching it gets its own bone, jointed
++     where it touches (head, left/right arm, left/right leg, then hand / foot / hat), and is attached to it. Names match
++     G-Spark's, so Ready-made moves (walk, wave, jump…) work at once. Undo brings the empty figure back. */
++  function autoSkeleton() {
++    const A = st.anim; if (!A || !st.view) return; if (A.bones.length) return toast('This figure already has bones. Delete them first (pick the main bone, then Delete bone) to make a new skeleton.');
++    applyPose(st.view, A, null, st.orig, st.parts);
++    const m = st.view.getScreenCTM().inverse(), P = (x, y) => { const q = new DOMPoint(x, y).matrixTransform(m); return { x: q.x, y: q.y }; };
++    const shapes = [];
++    st.parts.forEach(p => { const el = elAt(st.view, p); if (!el) return; const r = el.getBoundingClientRect(); if (!r.width && !r.height) return;
++      const a0 = P(r.left, r.top), a1 = P(r.right, r.bottom), x0 = Math.min(a0.x, a1.x), x1 = Math.max(a0.x, a1.x), y0 = Math.min(a0.y, a1.y), y1 = Math.max(a0.y, a1.y), w = x1 - x0, hh = y1 - y0, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
++      let A1 = null, B1 = null, rad = Math.min(w, hh) / 2, blob = false; const E = el.getScreenCTM(), T = (x, y) => { const q = new DOMPoint(x, y).matrixTransform(E); return P(q.x, q.y); };
++      try { if (el.tagName === 'line') { A1 = T(+el.getAttribute('x1') || 0, +el.getAttribute('y1') || 0); B1 = T(+el.getAttribute('x2') || 0, +el.getAttribute('y2') || 0); rad = Math.max(1, (parseFloat(getComputedStyle(el).strokeWidth) || 2) / 2); }
++        else if (el.getTotalLength && /^(path|polyline)$/.test(el.tagName)) { const L = el.getTotalLength(), q0 = el.getPointAtLength(0), q1 = el.getPointAtLength(L), t0 = T(q0.x, q0.y), t1 = T(q1.x, q1.y); if (Math.hypot(t1.x - t0.x, t1.y - t0.y) > 0.6 * Math.max(w, hh)) { A1 = t0; B1 = t1; rad = Math.max(1, Math.min(w, hh) / 4); } } } catch {}
++      if (!A1) { if (hh >= w * 1.6) { A1 = { x: cx, y: y0 + w / 2 }; B1 = { x: cx, y: y1 - w / 2 }; } else if (w >= hh * 1.6) { A1 = { x: x0 + hh / 2, y: cy }; B1 = { x: x1 - hh / 2, y: cy }; } else { A1 = { x: cx, y: cy }; B1 = { x: cx, y: cy }; blob = true; } }
++      shapes.push({ p, a: A1, b: B1, r: rad, blob, cx, cy, x0, x1, y0, y1, area: w * hh }); });
++    if (!shapes.length) return toast('Draw something first: this costume has no shapes.');
++    const near = (a, b, q) => { const vx = b.x - a.x, vy = b.y - a.y, L = vx * vx + vy * vy, t = L ? Math.max(0, Math.min(1, ((q.x - a.x) * vx + (q.y - a.y) * vy) / L)) : 0; return { x: a.x + t * vx, y: a.y + t * vy, t }; };
++    const dPS = (a, b, q) => { const n = near(a, b, q); return Math.hypot(n.x - q.x, n.y - q.y); };
++    const gap = (s, t) => Math.min(dPS(s.a, s.b, t.a), dPS(s.a, s.b, t.b), dPS(t.a, t.b, s.a), dPS(t.a, t.b, s.b), dPS(s.a, s.b, { x: (t.a.x + t.b.x) / 2, y: (t.a.y + t.b.y) / 2 }), dPS(t.a, t.b, { x: (s.a.x + s.b.x) / 2, y: (s.a.y + s.b.y) / 2 })) - s.r - t.r;
++    const X0 = Math.min(...shapes.map(s => s.x0)), X1 = Math.max(...shapes.map(s => s.x1)), Y0 = Math.min(...shapes.map(s => s.y0)), Y1 = Math.max(...shapes.map(s => s.y1)), tol = Math.max(2, Math.hypot(X1 - X0, Y1 - Y0) * 0.04), FX = (X0 + X1) / 2, FY2 = (Y0 + Y1) / 2;
++    const touch = (s, t) => s !== t && gap(s, t) <= tol; shapes.forEach(s => { s.deg = shapes.filter(t => touch(s, t)).length; s.far = Math.hypot(s.cx - FX, s.cy - FY2); });
++    const body = shapes.slice().sort((s, t) => (t.deg - s.deg) || (s.far - t.far) || (t.area - s.area))[0];
++    snap(); const W2 = new Map(), used = new Set(), uniq = n => { if (!used.has(n)) { used.add(n); return n; } let i = 2; while (used.has(n + ' ' + i)) i++; used.add(n + ' ' + i); return n + ' ' + i; }, r1 = v => Math.round(v * 10) / 10;
++    let lo, hi; if (body.blob) { lo = { x: body.cx, y: body.y1 }; hi = { x: body.cx, y: body.y0 }; } else if (body.a.y >= body.b.y) { lo = body.a; hi = body.b; } else { lo = body.b; hi = body.a; }
++    const mk = (name, parent, J, F, sh) => { const world = Math.atan2(F.y - J.y, F.x - J.x) / DEG, len = Math.max(4, Math.hypot(F.x - J.x, F.y - J.y)), b = { id: uid('b'), name: uniq(name), parent: parent ? parent.id : null, at: 'end', x: null, y: null, len: r1(len), angle: norm(world) };
++      if (!parent) { b.x = r1(J.x); b.y = r1(J.y); } else { const q = W2.get(parent.id), ds = Math.hypot(J.x - q.jx, J.y - q.jy), de = Math.hypot(J.x - q.ex, J.y - q.ey); b.at = ds < de ? 'start' : 'end'; const bx = b.at === 'start' ? q.jx : q.ex, by = b.at === 'start' ? q.jy : q.ey, dx = J.x - bx, dy = J.y - by, c = Math.cos(q.ang * DEG), sn = Math.sin(q.ang * DEG), ox = dx * c + dy * sn, oy = -dx * sn + dy * c; if (Math.hypot(ox, oy) > 0.5) b.off = { x: r1(ox), y: r1(oy) }; b.angle = norm(world - q.ang); }
++      A.bones.push(b); A.parts[sh.p] = b.id; W2.set(b.id, { jx: J.x, jy: J.y, ex: J.x + len * Math.cos(world * DEG), ey: J.y + len * Math.sin(world * DEG), ang: world }); sh.bone = b; return b; };
++    const root = mk('body', null, lo, hi, body), topY = Math.min(lo.y, hi.y); let heads = 0, count = { arm: 0, leg: 0 };
++    const queue = [body], seen = new Set([body]);
++    while (queue.length) { const par = queue.shift(), pq = W2.get(par.bone.id), pa = { x: pq.jx, y: pq.jy }, pb = { x: pq.ex, y: pq.ey };
++      shapes.filter(t => !seen.has(t) && touch(par, t)).sort((s, t) => s.cy - t.cy || s.cx - t.cx).forEach(t => { seen.add(t); let J, F;
++        if (t.blob) { const q = near(pa, pb, { x: t.cx, y: t.cy }), d = Math.hypot(q.x - t.cx, q.y - t.cy) || 1, ux = (q.x - t.cx) / d, uy = (q.y - t.cy) / d; J = { x: t.cx + ux * t.r, y: t.cy + uy * t.r }; F = { x: t.cx - ux * t.r, y: t.cy - uy * t.r }; }
++        else if (dPS(pa, pb, t.a) <= dPS(pa, pb, t.b)) { J = t.a; F = t.b; } else { J = t.b; F = t.a; }
++        let name = 'bone'; const pn = par.bone.name;
++        if (par === body) { const tt = near(lo, hi, J).t, side = F.x < (lo.x + hi.x) / 2 ? 'left' : 'right';
++          if (!heads && t.cy < topY + tol && tt > 0.7 && (t.blob || Math.abs(F.x - hi.x) < (X1 - X0) * 0.2)) { name = 'head'; heads++; } else if (tt >= 0.45) { name = side + ' arm'; count.arm++; } else { name = side + ' leg'; count.leg++; } }
++        else if (/arm/.test(pn)) name = (/left|right/.exec(pn) || ['left'])[0] + ' hand'; else if (/leg/.test(pn)) name = (/left|right/.exec(pn) || ['left'])[0] + ' foot'; else if (/head/.test(pn)) name = 'hat'; else if (/hand|foot/.test(pn)) name = pn.replace(/ \d+$/, '') + ' tip';
++        mk(name, par.bone, J, F, t); queue.push(t); }); }
++    const S = solve(A, null); shapes.filter(t => !t.bone).forEach(t => { let best = null, bd = Infinity; A.bones.forEach(b => { const q = S.get(b.id), d = dPS({ x: q.jx, y: q.jy }, { x: q.ex, y: q.ey }, { x: t.cx, y: t.cy }); if (d < bd) { bd = d; best = b.id; } }); if (best) A.parts[t.p] = best; });
++    st.bone = root.id; st.tool = 'select'; refreshAll();
++    toast(`Skeleton made from your drawing: ${A.bones.length} bone${A.bones.length === 1 ? '' : 's'} (${A.bones.slice(0, 6).map(b => b.name).join(', ')}${A.bones.length > 6 ? '…' : ''}). Press Animate and drag a red dot, or pick a Ready-made move.`);
++  }
+   function deleteBone() {
+     const id = st.bone; if (!id) return toast('Pick a bone first.'); snap();
+     const gone = new Set([id]); let grew = true; while (grew) { grew = false; st.anim.bones.forEach(b => { if (b.parent && gone.has(b.parent) && !gone.has(b.id)) { gone.add(b.id); grew = true; } }); }
+@@ -18201,7 +18286,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+         h('button', { type: 'button', class: 'gw18-x', 'aria-label': 'Close', html: '<i class="fa-solid fa-xmark"></i>', onclick: () => close() })),
+       h('div', { class: 'gw18-body' },
+         h('div', { class: 'gw18-tools' }, h('div', { class: 'gw18-small', text: 'Rig tools' }),
+-          btn(ic('fa-bone', 'Add bones'), () => { st.tool = 'bone'; refreshAll(); }, { 'data-tool': 'bone' }), btn('⊙ Centre', () => addCentre(), { title: 'Start here: put the CENTRE bone in the middle of the drawing, then drag from its dots to spread out bones (arms, legs, head…)' }), btn(ic('fa-paperclip', 'Attach shapes'), () => { st.tool = 'attach'; refreshAll(); }, { 'data-tool': 'attach' }), btn(ic('fa-arrow-pointer', 'Select'), () => { st.tool = 'select'; refreshAll(); }, { 'data-tool': 'select' }),
++          btn(ic('fa-wand-magic-sparkles', 'Make skeleton for me'), () => autoSkeleton(), { id: 'gw18AutoRig', class: 'gw18-btn gw18-primary', title: 'Builds the bones from your drawing in one click: the body, then a bone for every shape that touches it (head, arms, legs…), already attached and named' }), btn(ic('fa-bone', 'Add bones'), () => { st.tool = 'bone'; refreshAll(); }, { 'data-tool': 'bone' }), btn('⊙ Centre', () => addCentre(), { title: 'Start here: put the CENTRE bone in the middle of the drawing, then drag from its dots to spread out bones (arms, legs, head…)' }), btn(ic('fa-paperclip', 'Attach shapes'), () => { st.tool = 'attach'; refreshAll(); }, { 'data-tool': 'attach' }), btn(ic('fa-arrow-pointer', 'Select'), () => { st.tool = 'select'; refreshAll(); }, { 'data-tool': 'select' }),
+           h('hr'), btn(ic('fa-wand-magic-sparkles', 'Attach automatically'), () => autoAttach(), { id: 'gw18Auto' }), btn(ic('fa-trash', 'Delete bone'), () => deleteBone(), { id: 'gw18DelBone' }),
+           h('p', { id: 'gw18Tip', class: 'gw18-tip' })),
+         h('div', { id: 'gw18View', class: 'gw18-view' }),
+@@ -25054,7 +25139,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    const by = id => document.getElementById(id);
    const css = document.createElement('style'); css.id = 'gw4950css';
    css.textContent = `#gw154StageFrame [data-var-monitor],#gw154StageFrame [data-list-monitor]{z-index:6!important}
@@ -244,7 +303,7 @@ index 9a9e3b0..d003c9b 100644
  .gw4950-menu{position:fixed;z-index:10050;min-width:150px;padding:4px;border:1px solid #2b2f55;border-radius:10px;background:#14162a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
  .gw4950-menu button{display:flex;gap:8px;align-items:center;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#e5e7eb;font-size:12px;font-weight:700;text-align:left;cursor:pointer}
  .gw4950-menu button:hover,.gw4950-menu button:focus-visible{background:#26294a;outline:none}`;
-@@ -29123,6 +29165,38 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
+@@ -29123,6 +29208,38 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
  })();
  </script>
  <!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->

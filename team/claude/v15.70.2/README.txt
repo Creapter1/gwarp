@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.1.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.2.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -31,3 +31,16 @@ TEST: node team/claude/tests/test_4972_parity53.js <app.html>   -> 53 Scratch be
 BUG-20261027 background music: could NOT make it happen on v15.70.1. PCM wav, ADPCM wav and MP3 all play, also inside
    "forever: play sound until done". Needs the owner's project (or the name of the sound file type) to go further.
 APP-CHECK: "set_effect menu dropped on export" is already fixed in v15.69.0 (export keeps the EFFECT field).
+
+---- v15.70.2 (same day) ----
+8. Animation: "Make skeleton for me" (Rig tools, top button). Builds the bones FROM the drawing: body = the shape touching the
+   most shapes; each touching shape gets a bone jointed where it touches (head, left/right arm, left/right leg, hand, foot, hat),
+   already attached, G-Spark names so Ready-made moves work. Stickman test: 6 bones, 6/6 shapes, Walk = 8 frames.
+   Picture: auto-skeleton-stickman.png. Test project: team/claude/tests/stickman.sb3
+9. Second parity batch (parity28.sb3): costumes by number/name, direction wrap, custom blocks + recursion, broadcast and wait,
+   clones, repeat until, stop other scripts, timer: 26 of 28 pass.
+   OPEN: fencing. "go to x: 1000 y: -1000" with a 60 px costume gives 257 / -197; Scratch gives about 253-255. Needs a real
+   Scratch reference before changing (2-4 px).
+OWNER'S PC: the desktop app got the same changes as v15.69.0a then v15.69.0b (owner rule: same number, new letter on the PC).
+   Backups: resources\app\backup\before-v15690a-app.html and before-v15690b-app.html.
+NOT on the release branch / PR 20 yet (owner tests on the PC first).
