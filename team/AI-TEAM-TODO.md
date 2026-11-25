@@ -22,20 +22,22 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [rule] No new top-bar buttons, no second run engine, nothing that changes how projects run, unless the owner approved it. Unapproved features = Developer mode only (owner rule, Nov 8). "Improve, not unimprove."
 - [open] Owner's simple test project (go to 0 0, forever move 10 steps) - owner sees: app looks broken, choppy or laggy, G-Spark vanishes at the right edge, code/buttons fail. Claude could not reproduce: G-Warp v15.68 matches the real Scratch engine (stops at x 285, steps every 33 ms). **Waiting for the owner's screen recording** (Win+Alt+R). Project file stays private (owner rule) and is deleted after the fix.
 - [open] Audit everything on `release-v15.66.0` (v15.61-v15.68) for other things that changed how the app works for everyone without the owner's OK; move them behind Developer mode or remove them.
-- [open] S4 smooth motion / interpolation (see section 1) - may be what "choppy" is on a high-refresh monitor (30 FPS steps on 144 Hz).
+- [done] S4 smooth motion (v15.70.0, Claude Fable, 25 Nov) - built and tested, OFF by default, More > Advanced settings. Patch + notes: `team/claude/v15.70.0/`. **Waiting for the owner: OK to add it to the release branch?**
+- [done] Sprite x / y / size / direction boxes update live while a project runs (v15.70.0).
+- [note] Owner's test measured again on v15.70.0: 0 errors, steady frame rate. New projects run at 60 FPS, so move 10 steps = 600 px a second; the sprite stopping with 15 px showing at the edge is Scratch fencing. See `team/claude/v15.70.0/README.txt`.
 - [later] Owner idea: Minimap - an option of the Big map tool or an extension (plain Scratch blocks), so users can add one if they want.
 - [later] Idea, owner must approve: Start runs projects on the real Scratch engine (scratch-vm + scratch-render, the same core TurboWarp uses), keeping G-Warp's own look and editor. Check its licence first.
 - [later] SVG 360: AI-drawn back sides (local AI); turn every costume of an animation at once.
 
 ## 1. Engine / performance
 - [open] Top priority: no bugs, no lag before "crazy stuff"
-- [open] S1 Code-area lag (glow filter on whole stack)
+- [done] S1 Code-area lag (glow filter on whole stack) - v15.70.0: box-shadow on the hat block instead
 - [open] S2 Power-line sparks cap ~15 fps while running
-- [open] S3 Undo: skip pushHistory while running, push on Stop
-- [open] S4 Smooth motion / interpolation (setInterpolation is still a STUB in app — APP-CHECK)
+- [done] S3 Undo: skip pushHistory while running, push on Stop - APP-CHECK 25 Nov: already in v15.69.0
+- [done] S4 Smooth motion / interpolation - v15.70.0 (setInterpolation is real now)
 - [open] S5 Re-measure after S1-S4
 - [open] Block compiler path + collision candidate + clone stress tests + benchmarks
-- [open] E1.9 .sb3 opens at 30 FPS unless project asks 60
+- [done] E1.9 .sb3 opens at 30 FPS unless project asks 60 - APP-CHECK 25 Nov: already in v15.69.0
 
 ## 2. Blocks & Scratch parity
 - [open] Parity fixtures / runner gaps (broadcasts, clones, custom blocks in runner)
@@ -68,7 +70,7 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [done] B4 Click a reporter → value bubble — **APP-CHECK 2026-11-05**
 - [open] B3 Stage monitors: modes + list import/export + drag (checkboxes done)
 - [open] B5–B12, C1–C14 UI helpers (backpack, sprite3, clean-up, etc.)
-- [open] E2.5 interpolation + custom stage size settings (hooks partial; interpolation stub)
+- [open] E2.5 custom stage size settings (interpolation done in v15.70.0)
 - [open] Translations / ui-strings; themes; Behaviors → Extensions gallery
 
 ## 8. Extensions
