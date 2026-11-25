@@ -63,6 +63,9 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [open] SPEED (round 3): plain loop speed is 13x behind real Scratch (409,000 vs 5,520,000 loops in 3 s).
 - [open] Corner bounce lands up to 2 px from Scratch's spot when the sprite is turned (Scratch's own hull rounding).
 - [plan] Today's rounds: `team/claude/PLAN-25-NOV.md`.
+- [done] R5 (v15.70.7, Claude Fable, 25 Nov): SVG 360 1.2.0 opens on the user's drawing with guessed depths + part names + view buttons; Big map 1.2.0 starts from the user's own backdrop / wide costume; Spark Studio +5 melody hooks, bass + backing "Start from an idea", +4 drum beats. All added, nothing replaced
+- [open] (Claude Fable) Spark Studio preview always plays the major scale even for a minor-mood song (sounds "kid"). Add a Mood menu (major / minor / minor pentatonic / dorian), side by side with the old one, owner picks by ear
+- [open] (Claude Fable) The new Spark Studio patterns were written by rule, not listened to: owner to say which sound wrong
 - [open] Owner 25 Nov: add more to Spark Studio, SVG 360 and Big map; keep going until G-Warp acts and works better than TurboWarp / PenguinMod.
 - [open] BUG-20261027 background music: not reproducible on v15.70.1 (wav, ADPCM, mp3 all play) - needs the owner's project.
 

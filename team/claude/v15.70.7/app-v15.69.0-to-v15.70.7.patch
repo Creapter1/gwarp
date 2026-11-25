@@ -1,5 +1,5 @@
 diff --git a/app.html b/app.html
-index 9a9e3b0..de08ac9 100644
+index 9a9e3b0..5fad86b 100644
 --- a/app.html
 +++ b/app.html
 @@ -1836,6 +1836,22 @@ label.gw9-adv-row{justify-content:flex-start;cursor:pointer}
@@ -123,7 +123,7 @@ index 9a9e3b0..de08ac9 100644
          });
      </script>
 -<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
-+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.6',label:'Beta v15.70.6',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
++<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.7',label:'Beta v15.70.7',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
  <script id="gw-v7-reconciliation">
  (() => {
    /* G-Warp v7 reconciliation layer
@@ -827,7 +827,67 @@ index 9a9e3b0..de08ac9 100644
  .gw4950-menu{position:fixed;z-index:10050;min-width:150px;padding:4px;border:1px solid #2b2f55;border-radius:10px;background:#14162a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
  .gw4950-menu button{display:flex;gap:8px;align-items:center;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#e5e7eb;font-size:12px;font-weight:700;text-align:left;cursor:pointer}
  .gw4950-menu button:hover,.gw4950-menu button:focus-visible{background:#26294a;outline:none}`;
-@@ -29123,6 +29462,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
+@@ -25706,7 +26045,13 @@ body.gw-calm .gw-pl-w .core{animation:none}
+     wave: ['Wave', [[0, 2, 1], [1, 3, 1], [2, 4, 1], [3, 5, 1], [4, 4, 1], [5, 3, 1], [6, 2, 1], [7, 1, 1], [8, 2, 1], [9, 3, 1], [10, 4, 1], [11, 6, 1], [12, 5, 2], [14, 4, 2]]],
+     lullaby: ['Lullaby', [[0, 4, 3], [3, 2, 1], [4, 3, 2], [6, 2, 2], [8, 1, 3], [11, 0, 1], [12, 0, 4]]],
+     riff: ['Riff', [[0, 0, 1], [2, 0, 1], [3, 2, 1], [5, 3, 1], [6, 2, 2], [8, 0, 1], [10, 0, 1], [11, 5, 1], [13, 4, 1], [14, 2, 2]]],
+-    star: ['Falling star', [[0, 7, 2], [2, 6, 1], [3, 5, 1], [4, 4, 2], [6, 2, 1], [7, 3, 1], [8, 4, 3], [11, 2, 1], [12, 1, 1], [13, 0, 3]]]
++    star: ['Falling star', [[0, 7, 2], [2, 6, 1], [3, 5, 1], [4, 4, 2], [6, 2, 1], [7, 3, 1], [8, 4, 3], [11, 2, 1], [12, 1, 1], [13, 0, 3]]],
++    // v15.70.7 (Claude, owner: "teen / adult music, more melody"): five hooks with off-beat rhythm, the way pop, trap and synth tunes are written. Added, nothing replaced.
++    hook: ['Pop hook', [[0, 4, 1], [1, 4, 1], [3, 5, 1], [4, 4, 2], [6, 2, 2], [8, 4, 1], [9, 4, 1], [11, 5, 1], [12, 7, 2], [14, 4, 2]]],
++    dark: ['Dark bounce', [[0, 5, 1], [2, 5, 1], [3, 7, 1], [5, 6, 1], [6, 5, 2], [8, 5, 1], [10, 5, 1], [11, 4, 1], [13, 2, 1], [14, 5, 2]]],
++    synth: ['Synth lead', [[0, 5, 2], [2, 7, 1], [3, 6, 1], [4, 5, 2], [6, 4, 2], [8, 2, 2], [10, 4, 1], [11, 5, 1], [12, 6, 2], [14, 5, 2]]],
++    night: ['Late night', [[0, 2, 3], [3, 4, 1], [4, 5, 4], [8, 4, 3], [11, 2, 1], [12, 1, 4]]],
++    anthem: ['Anthem', [[0, 0, 2], [2, 4, 2], [4, 5, 3], [7, 4, 1], [8, 3, 2], [10, 4, 2], [12, 7, 4]]]
+   };
+   const by = id => document.getElementById(id);
+   const st = { notes: new Map(), hold: false, loop: true, bpm: 112, timer: 0, playing: false, active: -1 };
+@@ -27132,7 +27477,25 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+  const MEL={ins:null};
+  const BEATS={rock:[[0,0],[4,0],[8,0],[12,0],[2,1],[6,1],[10,1],[14,1],...[...Array(16).keys()].map(c=>[c,2])],
+   pop:[[0,0],[5,0],[8,0],[2,1],[6,1],[10,1],[14,1],...[0,2,4,6,8,10,12,14].map(c=>[c,2]),[7,4],[15,4]],
+-  hiphop:[[0,0],[3,0],[7,0],[8,0],[11,0],[4,1],[12,1],...[...Array(16).keys()].map(c=>[c,2]),[12,3]]};
++  hiphop:[[0,0],[3,0],[7,0],[8,0],[11,0],[4,1],[12,1],...[...Array(16).keys()].map(c=>[c,2]),[12,3]],
++  /* v15.70.7 (Claude): four more beats. Rows: 0 kick, 1 snare, 2 hi-hat, 3 clap, 4 open hat. */
++  trap:[[0,0],[5,0],[8,0],[11,0],[4,3],[12,3],[4,1],[12,1],...[...Array(16).keys()].map(c=>[c,2]),[7,4],[15,4]],
++  house:[...[0,2,4,6,8,10,12,14].map(c=>[c,0]),[2,3],[6,3],[10,3],[14,3],...[1,3,5,7,9,11,13,15].map(c=>[c,4])],
++  reggaeton:[[0,0],[4,0],[8,0],[12,0],[3,1],[6,1],[11,1],[14,1],...[0,2,4,6,8,10,12,14].map(c=>[c,2])],
++  boombap:[[0,0],[5,0],[8,0],[10,0],[4,1],[12,1],...[...Array(16).keys()].map(c=>[c,2]),[15,4]]};
++ /* v15.70.7 (Claude, owner: "more melody and bass"): Bass and Backing can start from an idea too (they opened as empty grids).
++    Steps are the scale notes 0-7 (Do..Do), so the Song maker still plays them in the song's own key and mood. */
++ const PART_IDEAS={bass:{drive:['Drive (rock)',[...Array(16).keys()].map(c=>[c,[[0,4,5,3][c>>2]]])],
++   bounce:['Octave bounce (dance)',[[0,0],[1,7],[2,0],[3,7],[4,0],[5,7],[6,0],[7,7],[8,3],[9,3],[10,3],[11,3],[12,4],[13,4],[14,4],[15,4]].map(([c,d])=>[c,[d]])],
++   hiphop:['Hip-hop (slow and heavy)',[[0,0],[3,0],[6,0],[8,5],[11,5],[14,4]].map(([c,d])=>[c,[d]])],
++   walk:['Walking',[[0,0],[2,2],[4,4],[6,5],[8,7],[10,5],[12,4],[14,2]].map(([c,d])=>[c,[d]])],
++   moody:['Moody',[[0,5],[3,5],[4,3],[7,3],[8,0],[11,0],[12,4],[15,4]].map(([c,d])=>[c,[d]])],
++   funk:['Funk',[[0,0],[1,0],[3,2],[4,0],[6,4],[7,5],[8,0],[9,0],[11,2],[12,3],[14,4],[15,2]].map(([c,d])=>[c,[d]])]},
++  backing:{four:['Four chords (pop)',[[0,[0,2,4]],[4,[1,4,6]],[8,[0,2,5]],[12,[0,3,5]]]],
++   moody:['Moody',[[0,[0,2,5]],[4,[0,3,5]],[8,[0,2,4]],[12,[1,4,6]]]],
++   stabs:['Off-beat stabs',[[1,[0,2,4]],[3,[0,2,4]],[5,[0,2,4]],[7,[0,2,4]],[9,[0,3,5]],[11,[0,3,5]],[13,[1,4,6]],[15,[1,4,6]]]],
++   pulse:['Pulse',[...Array(16).keys()].map(c=>[c,[[0,2,4],[1,4,6],[0,2,5],[0,3,5]][c>>2]])],
++   pad:['Slow pad',[[0,[0,2,4,7]],[8,[0,3,5]]]]}};
+  const IS=()=>window.GW_INSTRUMENT_STUDIO,SA=()=>window.GW_SONG_ARRANGER,CM=()=>window.GW_CREATE_MELODY;const st={hold:true};
+  const names=()=>{try{return (IS()?.instruments||[]).map(i=>i.name);}catch(e){return ['Piano'];}};
+  const cur=()=>{try{return IS()?.currentInstrument?.()||'Piano';}catch(e){return 'Piano';}};
+@@ -27166,7 +27529,8 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+   box.innerHTML=`<div class="gwcm-head"><div><div class="gwcm-title"><i class="fa-solid fa-${P.ic}" aria-hidden="true"></i> ${P.t}</div><div class="gwcm-sub">${k==='backing'?'Chords: up to 4 notes in one step.':k==='bass'?'One low note per step.':k==='drums'?'Tap the drum sounds. Or start from a beat.':'Short drum fills - they play where the Fills row is on in the Song maker.'}</div></div></div>
+    <div class="gwcm-gridwrap"><div class="gwcm-grid" id="gwspG-${k}" role="grid" aria-label="${P.t} grid"></div></div>
+    <div class="gwcm-row"><button type="button" class="gwcm-go" data-a="play"><i class="fa-solid fa-play" aria-hidden="true"></i> Play</button><button type="button" data-a="stop"><i class="fa-solid fa-stop" aria-hidden="true"></i> Stop</button>
+-    ${k==='drums'?'<select data-a="beat" title="Start from a beat"><option value="">Start from a beat…</option><option value="rock">Rock</option><option value="pop">Pop</option><option value="hiphop">Hip-hop</option></select>':''}
++    ${k==='drums'?'<select data-a="beat" title="Start from a beat"><option value="">Start from a beat…</option><option value="rock">Rock</option><option value="pop">Pop</option><option value="hiphop">Hip-hop</option><option value="trap">Trap</option><option value="house">House</option><option value="reggaeton">Reggaeton</option><option value="boombap">Boom bap</option></select>':''}
++    ${PART_IDEAS[k]?'<select data-a="idea" title="Start from an idea, then change any square"><option value="">Start from an idea…</option>'+Object.entries(PART_IDEAS[k]).map(([id,v])=>`<option value="${id}">${v[0]}</option>`).join('')+'</select>':''}
+     <button type="button" data-a="clear"><i class="fa-solid fa-broom" aria-hidden="true"></i> Clear</button><button type="button" class="gwcm-use" data-a="use"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Use in Song maker</button><button type="button" id="gwspOff-${k}" data-a="off" title="The Song maker makes this part up again"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Back to made-up</button></div>
+    <div class="gwcm-status" id="gwspS-${k}" role="status" aria-live="polite">Tap the squares.</div>`;
+   if(!P.drum)box.querySelector('.gwcm-head').after(instPicker(k,()=>P.ins,v=>{P.ins=v.length?v:[cur()];}));
+@@ -27174,6 +27538,7 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+    for(let c=0;c<COLS;c++){const b=document.createElement('button');b.type='button';b.className='gwcm-cell'+(c%8===0&&c?' bar':'')+(c%2===0?' beat':'');b.dataset.col=c;b.dataset.r=r;
+     b.onclick=()=>{const M=P.notes,ch=M.get(c)||[];if(ch.includes(r)){const x=ch.filter(y=>y!==r);x.length?M.set(c,x):M.delete(c);}else if(P.max===1){M.set(c,[r]);tap(k,r);}else if(ch.length>=P.max){say(k,'Up to '+P.max+' notes in one step.');return;}else{M.set(c,ch.concat(r).sort((a,b)=>a-b));tap(k,r);}draw(k);};g.appendChild(b);}}
+   box.addEventListener('click',e=>{const a=e.target.closest('[data-a]')?.dataset.a;if(a==='play')start(k);else if(a==='stop'){stopAll();say(k,'Stopped.');}else if(a==='clear'){P.notes.clear();draw(k);}else if(a==='use')use(k);else if(a==='off'){SA()?.setMyPart?.(k,null);draw(k);say(k,'The Song maker makes it up again.');}});
++  const is=box.querySelector('[data-a="idea"]');if(is)is.onchange=e=>{const v=PART_IDEAS[k]?.[e.target.value];if(!v)return;P.notes.clear();v[1].forEach(([c,d])=>P.notes.set(c,d.slice(0,P.max)));e.target.value='';draw(k);say(k,v[0]+' - change any square to make it yours.');if(play.k===k)start(k);};
+   const bs=box.querySelector('[data-a="beat"]');if(bs)bs.onchange=e=>{const v=BEATS[e.target.value];if(!v)return;P.notes.clear();v.forEach(([c,r])=>P.notes.set(c,[...new Set((P.notes.get(c)||[]).concat(r))]));e.target.value='';draw(k);};
+   setTimeout(()=>draw(k),0);return box;}
+  function voice(){const box=document.createElement('div');box.className='gwsp2';box.id='gwspVoice';box.style.setProperty('--pc','#f43f5e');
+@@ -29123,6 +29488,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
  })();
  </script>
  <!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->
@@ -875,3 +935,160 @@ index 9a9e3b0..de08ac9 100644
  <script src="gw-svg360.js" onerror="this.remove()"></script><!-- Claude 23 Nov: SVG 360 (turn a vector costume in 3D), Developer mode until approved -->
  <script src="gw-bigmap.js" onerror="this.remove()"></script><!-- Claude 23 Nov: Big map (parallax layers / giant maps, plain Scratch code), Developer mode until approved -->
  <script id="gw-claude-typed-undo">/* Claude (22 Nov, fuzzer find): a value typed into a block lives only in the input's .value, but undo snapshots copy the
+diff --git a/gw-bigmap.js b/gw-bigmap.js
+index 5b3b2c2..c31c4a6 100644
+--- a/gw-bigmap.js
++++ b/gw-bigmap.js
+@@ -318,6 +318,7 @@
+     + '.gwbm-view canvas:active{cursor:grabbing}.gwbm-hint{color:#8e93b5;font-size:12px;max-width:480px}.gwbm-cam{color:#c9cce6;font-variant-numeric:tabular-nums}'
+     + '.gwbm-side{border-left:1px solid #2a2450;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}'
+     + '.gwbm-people{display:flex;flex-direction:column;gap:4px}.gwbm-who{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'
++    + '.gwbm-steps{display:flex;flex-wrap:wrap;gap:6px}.gwbm-steps span{padding:3px 9px;border-radius:999px;background:#12261b;border:1px solid #1f6f3f;color:#d7f5e1;font-size:12px;white-space:pre}'
+     + '.gwbm-sec{color:#86efac;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}'
+     + '.gwbm-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.gwbm-row label{color:#c9cce6}'
+     + '.gwbm input[type=number]{width:62px;background:#0b0e1c;color:#fff;border:1px solid #2f3456;border-radius:6px;padding:2px 4px}'
+@@ -352,6 +353,24 @@
+     var SRC = sources(), byKey = {}; SRC.forEach(function (s) { byKey[s.key] = s; });
+     var layers = [{ key: 'ex:Mountains', kind: 'side', speed: 0.2, y: 20, speedY: 0.25 }, { key: 'ex:Clouds', kind: 'side', speed: 0.4, y: 110, speedY: 0.5 }, { key: 'ex:City', kind: 'side', speed: 0.7, y: -36, speedY: 0.7 }, { key: 'ex:Ground', kind: 'side', speed: 1, y: -180, speedY: 1 }];
+     if (first && byKey[first]) layers = [{ key: first, kind: bigEnough(byKey[first].svg) ? 'giant' : 'side', speed: 1, y: 0, speedY: 1 }];
++    /* 1.2.0 (Claude, 25 Nov, owner: "samples must match what the user made"): when the project already has its own pictures
++       (a drawn backdrop, a wide scenery costume) Big map starts with THOSE, back to front, instead of the example city. */
++    var mine = [];
++    if (!(first && byKey[first])) {
++      SRC.forEach(function (o) {
++        if (o.group === 'Examples' || mine.length >= 4) return;
++        var d; try { d = new DOMParser().parseFromString(o.svg, 'image/svg+xml').documentElement; } catch (e) { return; }
++        var vb = (d.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number), w = parseFloat(d.getAttribute('width')) || vb[2] || 0, h = parseFloat(d.getAttribute('height')) || vb[3] || 0;
++        var shapes = d.querySelectorAll('path,rect,circle,ellipse,polygon,polyline,line,text,image').length;
++        if (o.group === 'Backdrops' ? shapes >= 2 : (w >= 400 && shapes >= 1)) mine.push({ o: o, w: w, h: h });
++      });
++      if (mine.length) layers = mine.map(function (m, i) {
++        var sp = mine.length === 1 ? 1 : Math.round((0.2 + 0.8 * i / (mine.length - 1)) * 10) / 10, giant = bigEnough(m.o.svg);
++        return { key: m.o.key, kind: giant ? 'giant' : 'side', speed: sp, speedY: sp, y: (!giant && m.h && m.h < 300) ? Math.round(-180 + m.h / 2) : 0 };
++      });
++    }
++    var startNote = mine.length ? 'Started with your own picture' + (mine.length > 1 ? 's' : '') + ': ' + mine.map(function (m) { return m.o.name; }).join(', ') + '. The example pictures are in each layer\'s picture menu.'
++      : (first && byKey[first]) ? '' : 'These are example pictures. Draw a backdrop, or a scenery costume 400 or more wide, and Big map starts with your own.';
+     var st = { camX: 0, camY: 0, W: 4800, camera: true, fly: false, follow: 0.2, keys: true };
+     var PE = (window.Engine && Engine.sprites || []).map(function (sp, i) { return { index: i, sp: sp, role: '' }; })
+       .filter(function (o) { var sp = o.sp; return sp && !sp.isClone && !sp.stageProxy && !sp.__gwBigmap && !/^(Map: |Camera \(test\))/.test(sp.name || ''); });
+@@ -495,6 +514,8 @@
+       el('div', { class: 'gwbm-view' }, [cv, el('div', { class: 'gwbm-row' }, [flyBtn, resetBtn, camLbl]),
+         el('div', { class: 'gwbm-hint', text: 'Drag the picture to move the camera. Back layers move slower than front layers: that is the parallax. The world repeats: keep flying and you come back where you started.' })]),
+       el('div', { class: 'gwbm-side' }, [
++        el('div', { class: 'gwbm-steps' }, [el('span', { text: '1  Pick a picture for each layer' }), el('span', { text: '2  Drag the preview or press Fly' }), el('span', { text: '3  Add to project' })]),
++        startNote ? el('div', { class: 'gwbm-hint', id: 'gwbmStartNote', text: startNote }) : null,
+         el('div', { class: 'gwbm-sec', text: 'World' }),
+         el('div', { class: 'gwbm-row' }, [el('label', { text: 'World width' }), widthIn, fixBtn]), warn,
+         el('div', { class: 'gwbm-row' }, [camChk, el('label', { for: 'gwbmCam', text: 'Add a test camera (arrow keys)' })]),
+@@ -551,6 +572,6 @@
+   (function boot(n) { if (!entry() && n < 120) setTimeout(function () { boot(n + 1); }, 500); })(0);
+   window.addEventListener('gwarp-devmode', function () { entry(); });
+ 
+-  window.GW_BIGMAP = { version: '1.1.0', open: open, close: close, pieces: pieces, layerScripts: layerScripts, worldScripts: worldScripts, stageScripts: stageScripts, add: add, examples: EXAMPLES, _aligned: aligned, _fixWidth: fixWidth, _hasMapDraw: hasMapDraw };
++  window.GW_BIGMAP = { version: '1.2.0', open: open, close: close, pieces: pieces, layerScripts: layerScripts, worldScripts: worldScripts, stageScripts: stageScripts, add: add, examples: EXAMPLES, _aligned: aligned, _fixWidth: fixWidth, _hasMapDraw: hasMapDraw };
+   window.GW_SB3_BLOCKS = { Blocks: Blocks, nid: nid, hex: hex };   /* shared with SVG 360 (turn code) */
+ })();
+diff --git a/gw-svg360.js b/gw-svg360.js
+index e239e5b..51c3e79 100644
+--- a/gw-svg360.js
++++ b/gw-svg360.js
+@@ -214,6 +214,31 @@
+     var pad = 2 + 0.02 * Math.max(meta.all.x1 - meta.all.x0, meta.all.y1 - meta.all.y0), box = centredBox(views[0].cx, views[0].cy, all, pad);
+     return views.map(function (sol) { return write(svgText, meta, sol, box); });
+   }
++  /* 1.2.0 (Claude, 25 Nov, owner: "the default sample must match what the user made, like a stickman"):
++     guess depths and part names from the drawing itself. The body is the shape that touches the most other shapes. Parts that stick
++     out of it (head, arms, legs) stay in the body's plane, so they stay joined when the picture turns; parts that sit on the body
++     (a face, a logo, a belt) go in front if drawn after it, behind if drawn before it. */
++  function guess(meta, gap) {
++    var B = meta.boxes, n = B.length, i, j; gap = gap == null ? 6 : +gap;
++    var area = function (b) { return b ? Math.max(1, b.x1 - b.x0) * Math.max(1, b.y1 - b.y0) : 0; };
++    var touch = function (a, b) { return a && b && a.x0 - 2 <= b.x1 && b.x0 - 2 <= a.x1 && a.y0 - 2 <= b.y1 && b.y0 - 2 <= a.y1; };
++    var main = -1, best = -1;
++    for (i = 0; i < n; i++) { if (!B[i]) continue; var t = 0; for (j = 0; j < n; j++) if (j !== i && touch(B[i], B[j])) t++; var score = t * 1e9 + area(B[i]); if (score > best) { best = score; main = i; } }
++    var z = [], labels = [], used = {}, front = 0, backN = 0, M = B[main];
++    var name = function (base) { used[base] = (used[base] || 0) + 1; return used[base] > 1 ? base + ' ' + used[base] : base; };
++    for (i = 0; i < n; i++) {
++      var b = B[i]; if (!b || !M) { z.push(0); labels.push(''); continue; }
++      if (i === main) { z.push(0); labels.push(name('body')); continue; }
++      var ix = Math.max(0, Math.min(b.x1, M.x1) - Math.max(b.x0, M.x0)), iy = Math.max(0, Math.min(b.y1, M.y1) - Math.max(b.y0, M.y0)), ov = ix * iy / area(b);
++      var cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2, mx = (M.x0 + M.x1) / 2, mw = Math.max(1, M.x1 - M.x0, (meta.all.x1 - meta.all.x0) / 4), mh = Math.max(1, M.y1 - M.y0);
++      if (ov >= 0.6) { if (i > main) { front++; z.push(gap * front); labels.push(name('front detail')); } else { backN++; z.push(-gap * backN); labels.push(name('back part')); } continue; }
++      z.push((i - main) * 0.01);
++      if (cy < M.y0 + mh * 0.15 && Math.abs(cx - mx) < mw * 0.6) labels.push(name(b.y1 < M.y0 - mh * 0.5 ? 'hat' : 'head'));
++      else labels.push(name((cx < mx ? 'left ' : 'right ') + (b.y0 < M.y0 + mh * 0.6 ? 'arm' : 'leg')));
++    }
++    return { main: main, z: z, labels: labels };
++  }
++  function unnamed(meta) { return meta.names.every(function (nm) { return /^[a-zA-Z]+ \d+$/.test(nm); }); }   /* nobody named the layers: a plain drawing */
+   function layers(svgText) { var m = measure(svgText); return m.names.map(function (n, i) { return { name: n, visible: !!m.boxes[i] }; }); }
+ 
+   /* ---------- the window (Costumes tab: right-click a vector costume > SVG 360...) ---------- */
+@@ -233,6 +258,7 @@
+     + '.gw360-stage{height:340px;border-radius:10px;background:repeating-conic-gradient(#1a1f36 0 25%,#151a2e 0 50%) 0 0/24px 24px;border:1px solid #2a2f4d;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;overflow:hidden}'
+     + '.gw360-stage:active{cursor:grabbing}.gw360-stage img{width:86%;height:86%;object-fit:contain;pointer-events:none;user-select:none}'
+     + '.gw360-hint{color:#8e93b5;font-size:12px}'
++    + '.gw360-steps{display:flex;flex-wrap:wrap;gap:6px}.gw360-steps span{padding:3px 9px;border-radius:999px;background:#1d1838;border:1px solid #3b3270;color:#d7d9ee;font-size:12px;white-space:pre}.gw360 button.small{padding:3px 8px;font-size:12px}'
+     + '.gw360-side{border-left:1px solid #2a2450;padding:12px;display:flex;flex-direction:column;gap:8px}'
+     + '.gw360-row{display:grid;grid-template-columns:78px 1fr 46px;align-items:center;gap:6px}'
+     + '.gw360-row label{color:#c9cce6}.gw360-row input[type=range]{width:100%;accent-color:#8b5cf6}'
+@@ -264,6 +290,9 @@
+     var src = c.svg, meta;
+     try { meta = prep(src); } catch (e) { toast(e.message || 'This costume could not be turned.'); return false; }
+     var st = { rx: 0, ry: 30, rz: 0, depth: 6, thickness: 6, light: 60, back: 'darker', layers: meta.names.map(function () { return {}; }) };
++    var G = guess(meta, 6), plain = unnamed(meta) && meta.names.length > 1, shown = meta.names.map(function (nm, i) { return plain && G.labels[i] ? G.labels[i] : nm; });
++    function useGuess() { var g = guess(meta, st.depth); st.layers.forEach(function (p, i) { p.z = g.z[i]; }); }
++    if (plain) useGuess();
+     var img = el('img', { alt: 'SVG 360 preview' }), stage = el('div', { class: 'gw360-stage', title: 'Drag to turn it' }, [img]);
+     var err = el('div', { class: 'gw360-err' });
+     function opts() { var L = st.layers.map(function (p) { return { z: p.z, t: p.t, hide: p.hide, tx: p.tx, ty: p.ty }; }); return { meta: meta, rx: st.rx, ry: st.ry, rz: st.rz, depth: st.depth, thickness: st.thickness, light: st.light / 100, back: st.back, layers: L }; }
+@@ -296,7 +325,7 @@
+         tx.addEventListener('change', function () { p.tx = +tx.value || 0; redraw(); });
+         var ty = el('input', { type: 'number', step: 5, value: p.ty || 0, title: 'Tilt this layer on its own (Y)', 'aria-label': nm + ' tilt Y' });
+         ty.addEventListener('change', function () { p.ty = +ty.value || 0; redraw(); });
+-        layerBox.appendChild(el('div', { class: 'gw360-layer' }, [vis, el('span', { text: nm, title: nm }), z, t, tx, ty]));
++        layerBox.appendChild(el('div', { class: 'gw360-layer' }, [vis, el('span', { text: shown[i], title: shown[i] === nm ? nm : shown[i] + ' (' + nm + ')' }), z, t, tx, ty]));
+       });
+     }
+     var depthRow = slider('depth', 'Layer gap', 0, 60), thickRow = slider('thickness', 'Thickness', 0, 60);
+@@ -343,20 +372,28 @@
+         });
+       } catch (e) { busy(false); err.textContent = e.message; }
+     });
+-    resetBtn.addEventListener('click', function () { inputs.rx(0); inputs.ry(30); inputs.rz(0); inputs.depth(6); inputs.thickness(6); inputs.light(60); st.layers = meta.names.map(function () { return {}; }); layerRows(); redraw(); });
++    resetBtn.addEventListener('click', function () { inputs.rx(0); inputs.ry(30); inputs.rz(0); inputs.depth(6); inputs.thickness(6); inputs.light(60); st.layers = meta.names.map(function () { return {}; }); if (plain) useGuess(); layerRows(); redraw(); });
+     closeBtn.addEventListener('click', close);
+     /* drag the picture to turn it */
+     var drag = null;
+     stage.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, rx: st.rx, ry: st.ry }; try { stage.setPointerCapture(e.pointerId); } catch (x) {} });
+     stage.addEventListener('pointermove', function (e) { if (!drag) return; var wrap = function (v) { v = ((v + 180) % 360 + 360) % 360 - 180; return Math.round(v); }; inputs.ry(wrap(drag.ry + (e.clientX - drag.x) * 0.6)); inputs.rx(wrap(drag.rx - (e.clientY - drag.y) * 0.6)); });
+     stage.addEventListener('pointerup', function () { drag = null; }); stage.addEventListener('pointercancel', function () { drag = null; });
++    var views = el('div', { class: 'gw360-btns' }, [['Front', 0, 0], ['3/4', 0, 30], ['Side', 0, 80], ['Back', 0, 180], ['From above', 50, 0]].map(function (v) {
++      var b = el('button', { type: 'button', class: 'small', text: v[0], title: 'Look at it from here' }); b.addEventListener('click', function () { inputs.rx(v[1]); inputs.ry(v[2]); inputs.rz(0); }); return b; }));
++    var guessBtn = el('button', { type: 'button', class: 'small', text: 'Guess depths', title: 'Work out the depths from your drawing: parts that touch the body stay joined, things drawn on the body go in front' });
++    var evenBtn = el('button', { type: 'button', class: 'small', text: 'Even depths', title: 'Every layer one step in front of the one before it (a paper cut-out look)' });
++    guessBtn.addEventListener('click', function () { useGuess(); layerRows(); redraw(); });
++    evenBtn.addEventListener('click', function () { st.layers.forEach(function (p) { delete p.z; }); layerRows(); redraw(); });
++    var tip = meta.names.length < 2 ? 'This drawing is one single shape, so it turns like a flat card. Draw the parts as separate shapes to give it depth.'
++      : plain ? 'The depths were guessed from your drawing: parts that touch the body stay joined when it turns. Change any number under Layers.' : 'Each layer of your drawing stays its own layer.';
+     var box = el('div', { class: 'gw360', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'SVG 360' }, [
+       el('h2', {}, [el('b', { text: '3D' }), document.createTextNode('SVG 360 - ' + c.name), el('small', { text: 'Developer preview' })]),
+-      el('div', { class: 'gw360-view' }, [stage, el('div', { class: 'gw360-hint', text: 'Drag the picture to turn it. Each layer of your drawing stays its own layer.' }), err]),
++      el('div', { class: 'gw360-view' }, [stage, el('div', { class: 'gw360-steps' }, [el('span', { text: '1  Drag the picture or pick a view' }), el('span', { text: '2  Set depth and thickness' }), el('span', { text: '3  Add as costume or make turn frames' })]), el('div', { class: 'gw360-hint', text: tip }), err]),
+       el('div', { class: 'gw360-side' }, [
+-        el('div', { class: 'gw360-sec', text: 'Turn' }), slider('rx', 'X (tilt)', -180, 180), slider('ry', 'Y (turn)', -180, 180), slider('rz', 'Z (spin)', -180, 180),
++        el('div', { class: 'gw360-sec', text: 'Turn' }), views, slider('rx', 'X (tilt)', -180, 180), slider('ry', 'Y (turn)', -180, 180), slider('rz', 'Z (spin)', -180, 180),
+         el('div', { class: 'gw360-sec', text: 'Shape' }), depthRow, thickRow, slider('light', 'Light', 0, 100), back,
+-        el('div', { class: 'gw360-sec', text: 'Layers' }), layerBox,
++        el('div', { class: 'gw360-sec', text: 'Layers' }), layerBox, el('div', { class: 'gw360-btns' }, [guessBtn, evenBtn]),
+         el('div', { class: 'gw360-sec', text: 'Make' }), el('div', { class: 'gw360-btns' }, [addBtn]),
+         el('div', { class: 'gw360-btns' }, [axis, count, range]),
+         el('div', { class: 'gw360-btns' }, [playBtn, framesBtn]),
+@@ -472,5 +509,5 @@
+   (function boot(n) { if (!entry() && n < 120) setTimeout(function () { boot(n + 1); }, 500); })(0);
+   window.addEventListener('gwarp-devmode', function () { entry(); });
+ 
+-  window.GW_SVG360 = { version: '1.1.0', render: render, frames: frames, angles: angles, turnCode: turnCode, addTurnCode: addTurnCode, layers: layers, open: open, close: close, _rotation: rotation, _solve: solve, _measure: measure };
++  window.GW_SVG360 = { version: '1.2.0', guess: guess, render: render, frames: frames, angles: angles, turnCode: turnCode, addTurnCode: addTurnCode, layers: layers, open: open, close: close, _rotation: rotation, _solve: solve, _measure: measure };
+ })();

@@ -74,3 +74,9 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 - IMPORTANT: gw-run-throttle.js slows every setInterval to 1 per 5 s while a project runs unless fn.gwRunCritical = true.
   And app.html copies outside /home/claude/rel load WITHOUT the sibling .js files - benchmark and test only in /home/claude/rel.
 - E2.5 custom stage size skipped on purpose (480x360 in ~90 places). Logged.
+
+## State after round 5 (14:55)
+- rel = v15.70.7, PC = v15.69.0g. Round 5 changed THREE files: app.html, gw-svg360.js, gw-bigmap.js (PC backups before-v15690g-*).
+  From now on the patch is `git diff -- app.html gw-svg360.js gw-bigmap.js` and pc ships must compare/back up the .js files too.
+- Developer-mode features in headless: use /home/claude/gwt/shotdev.js (loads app.html?dev=1).
+- Open: Spark Studio Mood menu (preview is always major). Logged in the to-do.

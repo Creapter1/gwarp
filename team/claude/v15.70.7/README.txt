@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.6.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.7.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -99,3 +99,16 @@ All in the Addons module (More > App > Addons...), same pattern as the v15.10.0 
 5. Test trap found: copies of app.html outside the repo folder load without gw-run-throttle.js / gw-perf.js (relative script files). Always test in /home/claude/rel.
 NOT DONE: E2.5 custom stage size - 480x360 is hard-coded in ~90 places (mouse mapping, fencing, pen, bounds, export). Needs its own careful round.
 picture: variable-manager.png
+
+v15.70.7 (Claude Fable, 25 Nov 2026, round 5 = G-Warp-only tools) - on the owner's PC as v15.69.0g
+The patch now covers THREE files: app.html, gw-svg360.js (1.2.0), gw-bigmap.js (1.2.0).
+1. SVG 360: guess(meta, gap) - body = the shape touching most others; parts sticking out stay in the body plane (joined when turned),
+   parts sitting on the body go in front / behind by drawing order. Used as the DEFAULT only when no layer has a name (a plain drawing);
+   named layers (the mascot) keep the even spacing. Part names from position (head, left arm...). View presets, Guess / Even buttons, 3 steps, one-shape tip.
+2. Big map: starts from the project's own drawn backdrops (2+ shapes) and wide costumes (>= 400 wide), back to front, speeds 0.2..1; note says what was used. 3 steps.
+3. Spark Studio (Simple view): melody IDEAS +5 (hook, dark, synth, night, anthem); PART_IDEAS for bass (6) and backing (5) with a "Start from an idea" menu;
+   BEATS +4 (trap, house, reggaeton, boombap). Data only, scale steps 0-7, so the Song maker still plays them in its own key and mood.
+   NOT LISTENED TO (no ears here): the owner should say which sound wrong.
+OPEN: Spark Studio preview is always the major scale (MAJOR in two modules) even when the song's mood is minor - the biggest reason it sounds "kid".
+   Next step: a Mood menu (major / minor / minor pentatonic / dorian) for the preview that also sets the Song maker's mood. Needs the owner's ear; build it side by side.
+pictures: svg360-stickman-before/after.png, bigmap-own-backdrop.png, spark-bass-ideas.png
