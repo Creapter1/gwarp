@@ -37,3 +37,11 @@ Owner's game, 3D gameplay: script time per step Scratch 8.3 ms, TurboWarp 0.5 ms
 4. Old page-reading way removed when the referee is 100% and the table is won. One engine.
 
 Ship after each of these, with the table measured again in the note.
+
+## Added 26 Nov 09:02 (owner): use the hardware the way TurboWarp does, keep the app simple
+
+- Owner: turn scripts into real code like Turbo does (step 2), and use the graphics card and memory where they make it faster. Focus on this app and keep it simple; no new big features now.
+- Fact checked today: G-Warp draws the stage with the plain 2D canvas only (101 uses of the 2D canvas, no graphics-card drawing code at all). Scratch and TurboWarp draw the stage on the graphics card. So after scripts are fast, drawing is the next thing that holds G-Warp back (Pen row: TurboWarp 0.039 s, G-Warp 2.449 s; part of that is script time, part is drawing).
+- New step, right after step 2, before step 3: **GPU STAGE.** The stage (sprites, graphic effects, pen, clones, stamps) is drawn on the graphics card, costumes are kept ready in video memory. Same pictures as Scratch, pixel-checked against the referee. Own code. The 2D canvas stays as the fallback when the graphics card way is not available, and for everything that is not the stage (paint editor, Spark Studio, and so on).
+- Memory for speed is fine where it is measured to help: ready-made script functions kept in memory, costumes kept ready for drawing. Never the old kind of waste (copies of the whole page).
+- Order now: finish the 1b part in progress -> STEP 2 fast code -> GPU STAGE -> rest of 1b -> step 3 -> step 4.
