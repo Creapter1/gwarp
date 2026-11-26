@@ -1,5 +1,14 @@
---- /home/claude/rel/app.html	2026-11-26 13:07:33.032839838 +0000
-+++ app.html	2026-11-26 13:33:50.380933600 +0000
+--- team/claude/work/app.html	2026-11-26 08:30:45.362388961 -0500
++++ /home/claude/x2/app.html	2026-11-26 09:25:49.303297180 -0500
+@@ -4011,7 +4011,7 @@
+                 if (fpsCounter && now - (GW.__fpsT || 0) > 500 && !document.getElementById('extra-apps-dropdown')?.classList.contains('hidden')) { GW.__fpsT = now; if (fpsCounter.textContent !== String(Engine.actualFps)) fpsCounter.textContent = Engine.actualFps; }
+ 
+                 if (Engine.isRunning && !Engine.isPaused) {
+-                    const gwT0 = performance.now(); GW.__frameAt = gwT0; let gwN0 = Engine.threads.length, gwPass = 0; const gwSeq = window.GW_SEQ_LIKE_SCRATCH !== false, gwWork = Math.min(25, Math.max(4, ((window.GW_SETTINGS && window.GW_SETTINGS.stepMs && window.GW_SETTINGS.stepMs()) || 16.7) * 0.75)) /* v15.70.5: 75% of the frame, the same share Scratch gives its scripts (was 60%) */; GW.__redraw = false; do { gwPass++; GW.__act = 0; if (gwPass > 1) gwN0 = Engine.threads.length; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < (gwS ? gwN : Engine.threads.length) && gwK < 20000; gwK++) { const gwI2 = gwS ? (gwS + gwK) % gwN : gwK, gwT = Engine.threads[gwI2]; if (gwT && !gwT.finished) { if (gwI2 >= gwN0) gwT.__gwSF = 1; gwT.step(); } /* v15.70.4 (measured against real Scratch): a script started during this pass (a new clone, a broadcast) takes its first turn in this same pass, before the script that started it goes round again */ if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwI2 + 1) % Math.max(1, Engine.threads.length); gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isRunning && !Engine.isPaused && ((Engine.isTurbo && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)) || (gwSeq && !GW.__redraw && GW.__act > 0 && gwPass < 200000 && performance.now() - gwT0 < gwWork))); GW.__stepMs = performance.now() - gwT0; /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame. v15.70.3: like Scratch, more passes in the same frame while no block has changed the screen (switch off: window.GW_SEQ_LIKE_SCRATCH = false) */
++                    const gwT0 = performance.now(); GW.__frameAt = gwT0; let gwN0 = Engine.threads.length, gwPass = 0; const gwSeq = window.GW_SEQ_LIKE_SCRATCH !== false, gwWork = Math.min(25, Math.max(4, ((window.GW_SETTINGS && window.GW_SETTINGS.stepMs && window.GW_SETTINGS.stepMs()) || 16.7) * 0.75)) /* v15.70.5: 75% of the frame, the same share Scratch gives its scripts (was 60%) */; GW.__redraw = false; GW.__work = gwWork; do { gwPass++; GW.__actPrev = GW.__act; GW.__act = 0; if (gwPass > 1) gwN0 = Engine.threads.length; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < (gwS ? gwN : Engine.threads.length) && gwK < 20000; gwK++) { const gwI2 = gwS ? (gwS + gwK) % gwN : gwK, gwT = Engine.threads[gwI2]; if (gwT && !gwT.finished) { if (gwI2 >= gwN0) gwT.__gwSF = 1; gwT.step(); } /* v15.70.4 (measured against real Scratch): a script started during this pass (a new clone, a broadcast) takes its first turn in this same pass, before the script that started it goes round again */ if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwI2 + 1) % Math.max(1, Engine.threads.length); gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isRunning && !Engine.isPaused && ((Engine.isTurbo && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)) || (gwSeq && !GW.__redraw && GW.__act > 0 && gwPass < 200000 && performance.now() - gwT0 < gwWork))); GW.__stepMs = performance.now() - gwT0; /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame. v15.70.3: like Scratch, more passes in the same frame while no block has changed the screen (switch off: window.GW_SEQ_LIKE_SCRATCH = false) */
+                     /* v15.57.0 (Claude, Scratch parity + speed): like Scratch, scripts started DURING this frame (broadcast, clone) run in this
+                        same frame, and a "broadcast and wait" whose receivers have all finished goes on in this frame too. Before, each
+                        broadcast-and-wait "tick" loop cost ~3 frames: Clone Multiplayer ran 5-11 ticks/s in G-Warp vs 40-55 in Scratch. */
 @@ -12074,11 +12074,17 @@
      if (this.motionTween) { const m = this.motionTween, k = Math.min(1, (now - m.start) / m.dur); this.sprite.x = m.sx + (m.tx - m.sx) * k; this.sprite.y = m.sy + (m.ty - m.sy) * k; if (k >= 1) { this.sprite.x = m.tx; this.sprite.y = m.ty; this.motionTween = null; } /* v15.70.3: a glide ends exactly on its target, like Scratch */ else return; }
      GW.__act = (GW.__act | 0) + 1; // v15.70.3: this script really ran in this pass (it was not waiting)
@@ -20,6 +29,15 @@
        if (this.finished || !Engine.isRunning) return;
        if (this.__pep !== GW.__wsEpoch) { pruneRemoved(this); this.__pep = GW.__wsEpoch; } if (this.finished) return; // v15.47.1: frames pushed since the last check come from blocks that are in the code area
        const f = this.callStack[this.callStack.length - 1];
+@@ -12086,7 +12092,7 @@
+       const nx = next(f);
+       if (!nx) {
+         if (f.type === 'loop') {
+-          if (f.mode === 'repeat' && --f.left <= 0) { this.callStack.pop(); continue; }
++          if (f.mode === 'repeat' && --f.left <= 0) { this.callStack.pop(); if (window.GW_REPEAT_LAST_YIELD !== false && !warpOn(this)) return; continue; } // 26 Nov (Claude, measured against real Scratch): Scratch also gives the other scripts their turn after the LAST pass of a repeat
+           if (f.mode === 'until' && cond(this, f.owner)) { this.callStack.pop(); continue; }
+           if (f.mode === 'ext' && !(f.again && f.again(this))) { this.callStack.pop(); continue; } // v15.10.0: loop blocks from extensions
+           f.cur = null; f.i = 0;
 @@ -12112,6 +12118,7 @@
        if (ops > 50 && (ops & 7) === 0) { now = performance.now(); if (now - start > FRAME_MS && !warpOn(this)) return; }
      }
@@ -39,6 +57,15 @@
      }
      G9.evalNode = function (th, node, expected, owner) { if (!node) return expected === 'boolean' ? false : ''; const f = FN[node.type]; return f ? f(th, node, owner) : slow.apply(this, arguments); };
      G9.scratchCompare = cmp;
+@@ -15378,7 +15387,7 @@
+     const fps = target(); if (!fps) { next = now; return true; }
+     const iv = 1000 / fps;
+     if (now + 1 < next) return false;
+-    next = (now - next > iv * 3) ? now + iv : next + iv;
++    next = (now - next > iv * (window.GW_FRAME_CATCHUP || 0.5)) ? now + iv : next + iv; // 26 Nov (Claude): a late frame no longer makes the next frames come quick one after another (Scratch's frame clock does not catch up); was 3 frames
+     return true;
+   };
+   /* ---------- FPS counter on the stage ---------- */
 @@ -24565,9 +24574,24 @@
    }
  

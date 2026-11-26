@@ -24,9 +24,13 @@
   // run one block the old way. 1 = done, 0 = its answer is not ready yet (run it again after a pause)
   rt.run = (th, b) => { try { R.runOne(th, b); } catch (e) { if (e && e === R.RETRY()) return 0; console.warn('[G-Warp fast]', b.dataset.type, e); try { window.GW_HEALTH?.blockError?.(th, b, e); } catch (x) {} } return 1; };
   rt.waiting = th => R.waiting(th, performance.now());
-  rt.tick = th => { const o = rt.ops; if (o > R.LIMIT_OPS) { if (!R.warpOn(th)) return true; if ((o & 255) === 0 && performance.now() - rt.start > R.WARP_MS) { R.heavy(th, rt.start); return true; } } if ((o & 7) === 0 && performance.now() - rt.start > R.FRAME_MS && !R.warpOn(th)) return true; return false; };
+  rt.tick = th => { const o = rt.ops; if (o > R.LIMIT_OPS) { if (!R.warpOn(th)) return true; if ((o & 255) === 0 && performance.now() - rt.start > R.WARP_MS) { R.heavy(th, rt.start); return true; } } if ((o & 7) === 0 && !R.warpOn(th) && performance.now() - rt.start > R.FRAME_MS) return true; return false; }; // 26 Nov: warp is checked before the clock (the clock was read every 8 blocks inside warp)
   // end of a loop pass: true = pause now
-  rt.pass = th => { if (!R.warpOn(th)) return true; if (performance.now() - rt.start > R.WARP_MS) { R.heavy(th, rt.start); return true; } return false; };
+  /* 26 Nov (Claude, speed): when this is the only script that ran in the last pass and nothing asked for a redraw, the frame loop would
+     just start this same script again (Scratch's rule: keep running scripts until a redraw is asked or the frame time is used). So go on here,
+     without the trip through the frame loop. Checks the clock every 64 passes. Off: window.GW_FAST_SOLO = false */
+  rt.solo = 0;
+  rt.pass = th => { if (!R.warpOn(th)) { const G = window.GW; if (G.__redraw || G.__act > 1 || G.__actPrev > 1 || window.GW_FAST_SOLO === false || !G.__frameAt) return true; if ((++rt.solo & 63) === 0 && performance.now() - G.__frameAt > (G.__work || 12)) return true; return false; } if ((++rt.solo & 63) === 0 && performance.now() - rt.start > R.WARP_MS) { R.heavy(th, rt.start); return true; } return false; };
   // a condition: 1 true, 0 false, 2 not ready yet
   rt.cond = (th, b) => { b.__thread = th; try { return R.cond(th, b) ? 1 : 0; } catch (e) { if (e && e === R.RETRY()) return 2; return 0; } };
   // how often a repeat block runs; -1 = not ready yet
@@ -47,6 +51,11 @@
   rt.cv = (th, name, v, b) => { const G9 = window.GW9, G8 = window.GW8; let val = v; if (typeof v !== 'number' && typeof v !== 'boolean') { const st = String(v ?? '').trim(), n = Number(st); val = Number.isFinite(n) && st !== '' ? n : v; } th.__gwLast = b; G9.setScopedValue(th, name, G8.coerceNumber(G9.scopedValue(th, name)) + G8.coerceNumber(val)); GW.refreshVariableMonitors?.(); };
   // variable and list blocks with a typed value (or a value the old evaluator must work out): straight to the old fast path, which reads the
   // typed box at run time, so an edit while running is seen. 1 = done, 0 = not ready yet, 2 = an unusual block (the go-between takes it)
+  /* 26 Nov (Claude, speed): set / change variable with a TYPED number. The number is read once when the code is made and used as a constant.
+     Typing in the code area (input / change events) moves GW.__typeEp, and the made code then goes back to the normal path until it is made again. */
+  if (!window.__gwTypeEpOn) { window.__gwTypeEpOn = 1; window.GW.__typeEp = 0; ['input', 'change'].forEach(ev => addEventListener(ev, e => { if (e.target && e.target.closest && e.target.closest('#workspaceCanvas')) window.GW.__typeEp++; }, true)); }
+  rt.setN = (th, b, nm, str) => { th.__gwLast = b; window.GW9.setScopedValue(th, nm, str); GW.refreshVariableMonitors?.(); };
+  rt.chgN = (th, b, nm, n) => { th.__gwLast = b; const G9 = window.GW9; G9.setScopedValue(th, nm, window.GW8.coerceNumber(G9.scopedValue(th, nm)) + n); GW.refreshVariableMonitors?.(); };
   rt.fv = (th, b, t) => { b.__thread = th; try { return GW.__fastVar(th, b, t) ? 1 : 2; } catch (e) { if (e && e === R.RETRY()) return 0; console.warn('[G-Warp fast]', t, e); return 1; } };
   rt.fl = (th, b, t) => { b.__thread = th; try { return GW.__fastList(th, b, t) ? 1 : 2; } catch (e) { if (e && e === R.RETRY()) return 0; console.warn('[G-Warp fast]', t, e); return 1; } };
   const PURE = { literal: 1, get_var: 1, op_add: 1, op_sub: 1, op_mul: 1, op_div: 1, op_mod: 1, op_gt: 1, op_lt: 1, op_eq: 1, op_and: 1, op_or: 1, op_not: 1, op_join: 1, op_round: 1, list_item: 1, list_length: 1, op_mathop: 1, parameter: 1, op_length: 1, op_letter: 1 };
@@ -103,7 +112,7 @@
       switch (t) {
         case 'define_custom': return TICK;
         case 'forever': return `${TICK}for(;;){${body(R.thenBody(b))}\n${PASS}}`;
-        case 'repeat': return `let ${v};for(;;){${v}=rt.count(th,${ref(b)});if(${v}!==-1)break;yield;}${TICK}if(${v}>0)for(;;){${body(R.thenBody(b))}\nif(--${v}<=0)break;${PASS}}`;
+        case 'repeat': return `let ${v};for(;;){${v}=rt.count(th,${ref(b)});if(${v}!==-1)break;yield;}${TICK}if(${v}>0)for(;;){${body(R.thenBody(b))}\nif(--${v}<=0){if(window.GW_REPEAT_LAST_YIELD!==false){${PASS}}break;}${PASS}}`;
         case 'repeat_until': { const c = condSrc(b); return `let ${v};${COND(b, v, c)}${TICK}if(!${v})for(;;){${body(R.thenBody(b))}\n${COND(b, v, c)}if(${v})break;${PASS}}`; }
         case 'if': return `let ${v};${COND(b, v)}${TICK}if(${v}){${body(R.thenBody(b))}}`;
         case 'if_else': return `let ${v};${COND(b, v)}${TICK}if(${v}){${body(R.thenBody(b))}}else{${body(R.elseBody(b))}}`;
@@ -118,6 +127,17 @@
       if ((t === 'set_var' || t === 'change_var') && GW.__fastVar && GW.__menuValue) {       // the same "usual block" test as the old fast path
         const sel = b.querySelector('.block-select'), slotQ = b.querySelector('.gw-input-slot[data-slot-index="0"]'), slot = [...b.querySelectorAll('.gw-input-slot[data-slot-index="0"]')].find(el => el.closest('.scratch-block') === b) || null;
         if (sel && slot && slot === slotQ && !b.dataset.gw9MenuExpr) { const x = slotExpr(b, slot, false); if (x !== null) { stats.madeBlocks++; return `if(${OK}){const b=${e};b.__thread=th;rt.${t === 'set_var' ? 'sv' : 'cv'}(th,rt.nm(${ref(sel)}),${x},b);${TICK}}else${old}`; } }
+      }
+      if ((t === 'set_var' || t === 'change_var') && GW.__fastVar && window.GW_FAST_TYPED !== false) {
+        const sel = b.querySelector('.block-select'), slot = [...b.querySelectorAll('.gw-input-slot[data-slot-index="0"]')].find(el => el.closest('.scratch-block') === b) || null;
+        const inp = slot ? (!slot.getAttribute('data-expr') ? slot.querySelector('.block-input') : null) : ([...b.querySelectorAll('.block-input')].find(el => el.closest('.scratch-block') === b) || null);
+        if (sel && inp && slot === b.querySelector('.gw-input-slot[data-slot-index="0"]') && !b.dataset.gw9MenuExpr) {
+          const st = String(inp.value ?? '').trim(), n = Number(st), GV = window.Engine && window.Engine.variables;
+          if (st !== '' && Number.isFinite(n) && !(GV && Object.prototype.hasOwnProperty.call(GV, st))) {
+            stats.madeBlocks++; const TE = window.GW.__typeEp;
+            return `if(${OK}&&G.__typeEp===${TE}){rt.${t === 'set_var' ? 'setN' : 'chgN'}(th,${e},${S(rt.nm(sel))},${t === 'set_var' ? S(st) : n});${TICK}}else{let r;while((r=rt.fv(th,${e},${S(t)}))===0)yield;if(r===1){${TICK}}else${old}}`;
+          }
+        }
       }
       if ((t === 'set_var' || t === 'change_var') && GW.__fastVar) return `{let r;while((r=rt.fv(th,${e},${S(t)}))===0)yield;if(r===1){${TICK}}else${old}}`;
       if ((t === 'list_add' || t === 'list_replace' || t === 'list_delete' || t === 'list_insert') && GW.__fastList) return `{let r;while((r=rt.fl(th,${e},${S(t)}))===0)yield;if(r===1){${TICK}}else${old}}`;

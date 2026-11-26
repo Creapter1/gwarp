@@ -88,3 +88,10 @@ Values: variable 2.9 million; literal 1.3 million; + 448,000; * 424,000; < 417,0
 - The glow on the running block: go-between blocks still glow (old code), real-code blocks do not report yet.
 - "Run without screen refresh" guard, stop blocks inside My Blocks, extension loop blocks: use the old code paths; covered by referee par3 / par4 / stop.
 - Compiles from the page pieces, not from the Project Book yet. Step 3 needs the Book (blocks leave the page). Do it when families are moved.
+
+## 26 Nov 09:20-10:00, first session (lane A)
+
+- **par3 timing fault found and fixed.** Real Scratch gives the other scripts their turn after the LAST pass of a repeat too (10 passes = 10 frames = 0.33 s; G-Warp did 9 frames = 0.30 s, old way and fast code alike). Fixed in both (`GW_REPEAT_LAST_YIELD = false` = old). Also the frame clock caught up after a late frame with up to 3 quick frames in a row; now at most half a frame (`GW_FRAME_CATCHUP`). Result: the 10-pass test gives 0.330 to 0.337 s in G-Warp, 0.330 in Scratch (`run_q2.js`).
+- **Speed:** (a) a script that is the only one running and asked for no redraw keeps looping inside the made code instead of going back through the frame loop (`GW_FAST_SOLO`); (b) the clock is read every 64 loop passes, not every pass, and warp is checked before the clock in `rt.tick`; (c) set / change variable with a typed number: number and variable name are constants in the made code, dropped when anything is typed in the code area (`GW.__typeEp`, `GW_FAST_TYPED`). Plain counting loop in a warp My Block: about 80 ns per pass (was about 330).
+- bench40 (one run, noisy machine): count loop 2.04 -> 0.82 s, maths about 1.2 to 1.4, text 0.63 to 0.86. TurboWarp still far ahead.
+- Next: variable reads and writes without the name search (hasOwn + scopedValue are now the top of the profile), then lists, then pen / go to.
