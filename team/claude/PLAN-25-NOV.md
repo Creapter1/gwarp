@@ -113,3 +113,10 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
   Episode 1 ("Breaking G-Warp v15.69") NOT read yet. Next from that file: extension category two clicks, Extensions button covering categories, OR-tower undo.
 - New tests: t_paint.js, t_rename.js, mkvars.py (+load.js), ep.sb3 (19/19), stop.sb3 (17/17).
 - Owner 23:30: "kill Scratch: better, cooler, faster, smoother". Order stays: Scratch-exact + speed first. Next big job: compile scripts to closures.
+
+## State 26 Nov 00:55 - WEB EMERGENCY
+- Owner 23:51: the WEB version kills Chrome / the PC with his big game (all RAM). Reproduced on main (v15.69.0, /home/claude/web = git archive of main 5542304).
+- rel = v15.70.12 (memory fixes), PC = v15.69.0k (STATE letter k; next l). Web-ready files on ai-team: team/claude/v15.70.12/web-ready/.
+- WAITING FOR THE OWNER: "open the PR" -> create branch release-v15.70.12 from main with the 5 web-ready files and open a PR to main. Do NOT push outside ai-team before he says so.
+- Memory tools: mem.js (APP=... node mem.js project.sb3 [runSeconds] [taps]), leak.js.
+- Next: thin .block-select menus (design in team/claude/v15.70.12/README.txt), then compile scripts to closures.

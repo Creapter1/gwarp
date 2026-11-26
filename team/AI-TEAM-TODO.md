@@ -30,6 +30,8 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [later] SVG 360: AI-drawn back sides (local AI); turn every costume of an animation at once.
 
 ## 1. Engine / performance
+- [URGENT - OWNER] WEB EMERGENCY 26 Nov: the website (main, v15.69.0) uses 3.5 GB+ of RAM on a big project and kills Chrome. Fixed in v15.70.12 (about 1.2 GB, flat). The 5 files for main are in team/claude/v15.70.12/web-ready/. Only the owner puts them on main (Claude opens the PR when the owner says so)
+- [open] (Claude Fable) Memory, next cut: thin .block-select menus (175,000 options on the owner's project). Design notes in team/claude/v15.70.12/README.txt
 - [done] v15.70.10 (Claude Fable, 25 Nov night, PC letter i): measured with the owner's own 3D pen game vs real Scratch - story screens 18 -> 30 steps/s, gameplay 13 -> 24-26 (Scratch 30). C-block filter layers off while running, 4 freeze sources removed, menu value cache, cheaper pen + power lines. Details: team/claude/v15.70.10/README.txt
 - [open] (Claude Fable) 3D gameplay scripts still 15 ms a frame vs Scratch 6 ms: compile scripts to closures is the next big job
 - [open] OWNER DECISION (Claude Fable): the 1px C-block shadow is a CSS filter = one drawing layer per C-block, also when stopped (slow scrolling / dragging on big projects). Replace it with a box-shadow that looks almost the same? Side-by-side picture needed first

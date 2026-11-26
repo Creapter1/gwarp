@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.11.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.12.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -169,3 +169,17 @@ Code notes:
 - nInf (NaN -> 0, Infinity kept) for set/change x, y, go to, set/change size; fence(): huge / infinite positions fenced from the box measured at the centre.
 - log: Math.log(x) / Math.LN10 (Scratch's formula) in both evaluators.
 - Spark Studio 3: gw-spark3-work is moved to gw-spark3-last at start (studio opens empty); #sp3Last button + GW_SPARK3.lastSession() restore it.
+
+v15.70.12 (Claude Fable, 26 Nov 2026) - EMERGENCY memory fix. Owner's PC: v15.69.0k. WEB (main) STILL v15.69.0 - files ready in web-ready/.
+Owner's report: on the web a big project uses all the RAM and kills Chrome / the PC. Reproduced with the live main build (tests: mem.js).
+  tab memory after opening the owner's 5,500-block project: main 3,583 MB and 3.4 M page nodes -> v15.70.12 about 1,200 MB, flat while playing.
+  undo step: 80 MB -> 6 MB.
+Causes + fixes:
+1. GW8.snapshot stored s.ast = GW9.captureAST() (44 MB) in every undo step; nothing reads it. Removed.
+2. GW9.refreshAST() rebuilt that tree on every pointerup. window.GW_AST is now a lazy getter; refreshAST only drops the cache.
+3. Undo history limited by size: at most window.GW_UNDO_CHARS (default 60 million) characters of workspace text, never fewer than 2 steps.
+4. fillSel wrote data-gw9-opts with every name joined on every menu: now a short fingerprint for lists longer than 12.
+5. (from v15.70.8) reporter bubbles no longer carry the full variable list.
+NEXT for memory: the 800 set / change variable .block-select menus still hold all 194 options (175,000 <option>, each with hidden inner nodes).
+  A thin version (current + widest option, filled on pointerdown / when .options is read, value-setter hook, data-gw-thin marker for restored
+  or cloned blocks) is designed in PLAN but NOT built: many places read sel.options (rename, the searchable drop-down, import), so it needs its own careful round.

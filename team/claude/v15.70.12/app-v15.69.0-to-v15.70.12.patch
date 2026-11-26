@@ -1,5 +1,5 @@
 diff --git a/app.html b/app.html
-index 9a9e3b0..87fd2d7 100644
+index 9a9e3b0..2144835 100644
 --- a/app.html
 +++ b/app.html
 @@ -950,6 +950,12 @@ body{overflow-x:hidden!important;}
@@ -145,7 +145,7 @@ index 9a9e3b0..87fd2d7 100644
          });
      </script>
 -<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
-+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.11',label:'Beta v15.70.11',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
++<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.12',label:'Beta v15.70.12',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
  <script id="gw-v7-reconciliation">
  (() => {
    /* G-Warp v7 reconciliation layer
@@ -173,9 +173,10 @@ index 9a9e3b0..87fd2d7 100644
      return {title:document.getElementById('projectTitle')?.value||'',workspace:document.getElementById('workspaceCanvas')?.innerHTML||'',stacks:[...document.querySelectorAll('#workspaceCanvas > .block-stack')].map(s=>({left:s.style.left,top:s.style.top,owner:s.dataset.owner||''})),variables:JSON.parse(JSON.stringify(Engine.variables||{})),variableVisible:JSON.parse(JSON.stringify(Engine.variableVisible||{})),lists:JSON.parse(JSON.stringify(Engine.lists||{})),listVisible:JSON.parse(JSON.stringify(Engine.listVisible||{})),backdrops:JSON.parse(JSON.stringify(Engine.backdrops||[])),activeBackdrop:Engine.activeBackdrop||0};
    };
 -  GW8.same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
-+  GW8.same=(a,b)=>{/* v15.70.8 (speed, same answer): the code area text is compared first - when it differs the two can't be the same, and that is the usual case */if(a&&b&&typeof a.workspace==='string'&&typeof b.workspace==='string'&&(a.workspace!==b.workspace||a.title!==b.title))return false;return JSON.stringify(a)===JSON.stringify(b);};
-   GW8.pushHistory=function(reason){GW8.historyPending=false;if(GW8.historyMute)return;const snap=GW8.snapshot();const last=GW8.history[GW8.history.length-1];if(last&&GW8.same(last.state,snap))return;if(reason==='workspace mutation'&&last&&last.explicit&&Date.now()-last.at<900){last.state=snap;return;}/* 22 Nov (Claude): the redraw right after an action (rename, delete...) belongs to that action - one Ctrl+Z, not two */GW8.history.push({reason,state:snap,at:Date.now(),explicit:!GW8._sched});if(GW8.history.length>100)GW8.history.shift();GW8.future=[];};
+-  GW8.pushHistory=function(reason){GW8.historyPending=false;if(GW8.historyMute)return;const snap=GW8.snapshot();const last=GW8.history[GW8.history.length-1];if(last&&GW8.same(last.state,snap))return;if(reason==='workspace mutation'&&last&&last.explicit&&Date.now()-last.at<900){last.state=snap;return;}/* 22 Nov (Claude): the redraw right after an action (rename, delete...) belongs to that action - one Ctrl+Z, not two */GW8.history.push({reason,state:snap,at:Date.now(),explicit:!GW8._sched});if(GW8.history.length>100)GW8.history.shift();GW8.future=[];};
 -  GW8.scheduleHistory=function(reason){GW8.historyPending=true;clearTimeout(GW8.historyTimer);GW8.historyTimer=setTimeout(()=>{GW8._sched=true;try{GW8.pushHistory(reason);}finally{GW8._sched=false;}},300);};
++  GW8.same=(a,b)=>{/* v15.70.8 (speed, same answer): the code area text is compared first - when it differs the two can't be the same, and that is the usual case */if(a&&b&&typeof a.workspace==='string'&&typeof b.workspace==='string'&&(a.workspace!==b.workspace||a.title!==b.title))return false;return JSON.stringify(a)===JSON.stringify(b);};
++  GW8.pushHistory=function(reason){GW8.historyPending=false;if(GW8.historyMute)return;const snap=GW8.snapshot();const last=GW8.history[GW8.history.length-1];if(last&&GW8.same(last.state,snap))return;if(reason==='workspace mutation'&&last&&last.explicit&&Date.now()-last.at<900){last.state=snap;return;}/* 22 Nov (Claude): the redraw right after an action (rename, delete...) belongs to that action - one Ctrl+Z, not two */GW8.history.push({reason,state:snap,at:Date.now(),explicit:!GW8._sched});if(GW8.history.length>100)GW8.history.shift();/* v15.70.12 (EMERGENCY, memory): undo steps are also limited by SIZE - together at most about 60 million letters of code-area text (a small project keeps its 100 steps, a giant one keeps the last few instead of filling the RAM). At least 2 steps always stay. Change: window.GW_UNDO_CHARS */{const lim=Number(window.GW_UNDO_CHARS)||6e7;let tot=0;for(const h of GW8.history)tot+=(h.state&&typeof h.state.workspace==='string'?h.state.workspace.length:0);while(tot>lim&&GW8.history.length>2){const d=GW8.history.shift();tot-=(d.state&&typeof d.state.workspace==='string'?d.state.workspace.length:0);}}GW8.future=[];};
 +  /* v15.70.10 (Claude, steady 30 FPS): an undo snapshot copies every script (0.4 s on the owner's project). While a project RUNS and nobody
 +     touched the code area in the last 2 s, the snapshot waits for the project to stop (Ctrl+Z still takes it first, as before). An edit made while
 +     the project runs is saved at once like always. Off: window.GW_HISTORY_WAITS = false */
@@ -222,7 +223,25 @@ index 9a9e3b0..87fd2d7 100644
      }
      if(type==='point_direction'){ /* v15.50.4: point in direction (abc / empty) keeps the old direction, like Scratch */ const pin=[...block.querySelectorAll(':scope > .block-input')].filter(x=>x.dataset.slotProxy!=='1')[0]; const pv=GW8.resolveInput(this,block,0,pin?.value??''); if(String(pv).trim()===''||!Number.isFinite(Number(pv)))return; }
      if(type==='call_custom'){
-@@ -5836,7 +5866,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -5736,10 +5766,14 @@ IMPORTANT:
+   function nodeFromSlot(slot){const n=GW9.slotNode(slot);return n?JSON.parse(JSON.stringify(n)):null;}
+   function captureBlock(block){return {type:block.dataset.type||'',html:block.outerHTML,breakpoint:block.dataset.breakpoint==='true',slots:[...block.querySelectorAll(':scope > .gw-input-slot')].map(s=>({index:Number(s.dataset.slotIndex),kind:s.dataset.slotKind,expr:nodeFromSlot(s)})),body:[...block.querySelector(':scope > .block-c-body')?.children||[]].filter(x=>x.classList.contains('scratch-block')).map(captureBlock),elseBody:[...block.querySelector(':scope > .block-c-else')?.children||[]].filter(x=>x.classList.contains('scratch-block')).map(captureBlock)};}
+   GW9.captureAST=function(){return {schema:'gwarp-ast/v1',project:document.getElementById('projectTitle')?.value||'',sprites:Engine.sprites.filter(s=>!s.isClone).map((s,i)=>({index:i,name:s.name,x:s.x,y:s.y,size:s.size,direction:s.direction,visible:s.visible,activeCostume:s.activeCostume})),stacks:[...document.querySelectorAll('#workspaceCanvas > .block-stack')].map(s=>({left:s.style.left||'0px',top:s.style.top||'0px',owner:s.dataset.owner||'0',blocks:[...s.children].filter(x=>x.classList.contains('scratch-block')).map(captureBlock)})),variables:JSON.parse(JSON.stringify(Engine.variables||{})),lists:JSON.parse(JSON.stringify(Engine.lists||{})),backdrops:JSON.parse(JSON.stringify(Engine.backdrops||[])),activeBackdrop:Engine.activeBackdrop||0};};
+-  window.GW_AST=GW9.captureAST();
+-  GW9.refreshAST=()=>{window.GW_AST=GW9.captureAST();return window.GW_AST;};
++  /* v15.70.12 (Claude, EMERGENCY 25 Nov: the web version ate all the RAM on a big project and killed Chrome).
++     The whole-project tree (44 MB for the owner's 5,500-block game) was rebuilt on every mouse click and a copy was stored inside
++     EVERY undo step, although nothing ever reads those copies. Now the tree is built only when somebody asks for window.GW_AST,
++     and undo steps no longer carry it. */
++  { let astCache=null; try{Object.defineProperty(window,'GW_AST',{configurable:true,get(){return astCache||(astCache=GW9.captureAST());},set(v){astCache=v;}});}catch(e){window.GW_AST=null;}
++    GW9.refreshAST=()=>{astCache=null;}; }
+   GW9.downloadAST=()=>{const blob=new Blob([JSON.stringify(GW9.captureAST(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='G-Warp-project.ast.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('AST snapshot exported');};
+-  const oldSnap=GW8.snapshot;GW8.snapshot=function(){const s=oldSnap();s.spriteState=Engine.sprites.filter(x=>!x.isClone).map(x=>({name:x.name,x:x.x,y:x.y,size:x.size,direction:x.direction,visible:x.visible,activeCostume:x.activeCostume,volume:x.volume}));s.ast=GW9.captureAST();return s;};
++  const oldSnap=GW8.snapshot;GW8.snapshot=function(){const s=oldSnap();s.spriteState=Engine.sprites.filter(x=>!x.isClone).map(x=>({name:x.name,x:x.x,y:x.y,size:x.size,direction:x.direction,visible:x.visible,activeCostume:x.activeCostume,volume:x.volume}));/* v15.70.12: no s.ast (nothing reads it; it was 44 MB per undo step on a big project) */return s;};
+   const oldRestore=GW8.restore;GW8.restore=async function(snap){await oldRestore(snap);if(Array.isArray(snap.spriteState)){snap.spriteState.forEach(st=>{const sp=Engine.sprites.find(s=>s.name===st.name);if(sp){Object.assign(sp,st);}});if(typeof renderStage==='function')renderStage();if(typeof renderSpritesGrid==='function')renderSpritesGrid();if(typeof updatePropertyInputs==='function')updatePropertyInputs();}GW9.refreshAST();};
+ 
+   // ---------------------------------------------------------------------------
+@@ -5836,7 +5870,7 @@ nodes.push(el);cur=b.next;}return nodes;};
    // Add AST export + review controls without deleting prior buttons.
    function addV9Buttons(){const hc=document.getElementById('extra-menu-dev-targets')||document.querySelector('header > div:first-child');if(!hc)return; if(!document.getElementById('gwAstExportBtn')){const b=document.createElement('button');b.id='gwAstExportBtn';b.className='px-2.5 py-1.5 bg-emerald-900/70 hover:bg-emerald-800 border border-emerald-700 rounded-lg text-xs font-bold text-emerald-200';b.innerHTML='<i class="fa-solid fa-sitemap"></i> AST';b.title='Export typed project AST snapshot';b.onclick=GW9.downloadAST;hc.appendChild(b);} }
    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addV9Buttons);else addV9Buttons(); setTimeout(addV9Buttons,500);
@@ -231,7 +250,7 @@ index 9a9e3b0..87fd2d7 100644
  })();
  </script>
  <script id="gw-v10-ui">
-@@ -11123,7 +11153,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11123,7 +11157,7 @@ nodes.push(el);cur=b.next;}return nodes;};
            const sp = spriteOf(thread, owner); if (!sp) return 0;
            let tx = E.mouse?.x || 0, ty = E.mouse?.y || 0;
            if (node.target && node.target !== 'mouse-pointer') { const t = (E.sprites || []).find(s => s !== sp && s.name === node.target); if (!t) return 0; tx = t.x; ty = t.y; }
@@ -240,7 +259,7 @@ index 9a9e3b0..87fd2d7 100644
          }
          case 'op_round': return Math.round(num(g.evalNode(thread, node.args?.[0], 'value', owner)));
          case 'op_abs': return Math.abs(num(g.evalNode(thread, node.args?.[0], 'value', owner)));
-@@ -11151,11 +11181,24 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11151,11 +11185,24 @@ nodes.push(el);cur=b.next;}return nodes;};
    const KEYS = ['space', 'up arrow', 'down arrow', 'left arrow', 'right arrow'];
    function ownerSprite(root) { const i = root?.closest?.('.block-stack')?.dataset.owner; const E = Eng(); return E.sprites?.[i != null && i !== '' ? +i : E.activeSpriteIndex]; }
    const otherSprites = root => { const me = ownerSprite(root); return [...new Set((Eng().sprites || []).filter(s => !s.isClone && s !== me).map(s => s.name))]; };
@@ -267,7 +286,7 @@ index 9a9e3b0..87fd2d7 100644
      s.addEventListener('change', () => onChange(s.value));
      return s;
    }
-@@ -11784,15 +11827,17 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11784,15 +11831,17 @@ nodes.push(el);cur=b.next;}return nodes;};
      if (!window.GW9?.slotNode) return n < 40 && setTimeout(() => cacheSlots(n + 1), 100);
      if (GW9.__cachedSlots) return; GW9.__cachedSlots = true;
      const base = GW9.slotNode, cache = new WeakMap();
@@ -289,7 +308,7 @@ index 9a9e3b0..87fd2d7 100644
    const toast = m => { try { window.GW?.toast?.(m); } catch {} };
    const LIMIT_OPS = 5000, FRAME_MS = 10, WARP_MS = 500;
  
-@@ -11937,7 +11982,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11937,7 +11986,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        case 'define_custom': return;
      }
      b.__thread = th;
@@ -306,7 +325,7 @@ index 9a9e3b0..87fd2d7 100644
      if (window.GW?.extraBlock && window.GW.extraBlock(th, b)) return;
      th.executeBlock(b);
    }
-@@ -11947,9 +12000,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11947,9 +12004,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        const n = GW9.slotNode(slot);
        if (!p || !n) continue;
        let v = ''; try { v = GW9.evalNode(th, n, 'value', b); } catch (e) { if (e && e === RETRY()) throw e; }
@@ -323,7 +342,7 @@ index 9a9e3b0..87fd2d7 100644
    const waiting = (th, now) => now < (th.waitUntil || 0) || !!th.waitCondition || !!th.waitBroadcast || !!th.motionTween;
    ScriptThread.prototype.step = function () {
      if (this.finished || !Engine.isRunning || Engine.isPaused) return;
-@@ -11958,10 +12017,12 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11958,10 +12021,12 @@ nodes.push(el);cur=b.next;}return nodes;};
      if (this.waitCondition) { let ok = false; try { ok = this.waitCondition(); } catch {} if (!ok) return; this.waitCondition = null; }
      if (this.waitBroadcast) { let ok = false; try { ok = this.waitBroadcast(); } catch {} if (!ok) return; this.waitBroadcast = null; }
      if (this.sprite?.sayUntil && now >= this.sprite.sayUntil) { this.sprite.sayText = ''; this.sprite.sayUntil = 0; }
@@ -337,7 +356,7 @@ index 9a9e3b0..87fd2d7 100644
      const start = now; let ops = 0;
      while (true) {
        if (this.finished || !Engine.isRunning) return;
-@@ -11984,12 +12045,13 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11984,12 +12049,13 @@ nodes.push(el);cur=b.next;}return nodes;};
        }
        const [b, idx] = nx;
        if (f.list) f.i = idx + 1; else { f.cur = b; f.i = idx; }
@@ -352,7 +371,7 @@ index 9a9e3b0..87fd2d7 100644
        // v15.47.1: the clock is read only when a block made the script wait, or every 8 blocks for the frame-time check
        if (this.waitUntil || this.waitCondition || this.waitBroadcast || this.motionTween) { now = performance.now(); if (waiting(this, now)) return; }
        if (++ops > LIMIT_OPS) { if (!warpOn(this)) return; if ((ops & 255) === 0 && performance.now() - start > WARP_MS) { heavy(this, start); return; } } // 22 Nov (Claude): warp runs up to 500 ms like Scratch (it stopped after 5000 blocks, so 3D frames showed half-drawn)
-@@ -12059,7 +12121,34 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12059,7 +12125,34 @@ nodes.push(el);cur=b.next;}return nodes;};
      for (let y = bo + step / 2; y <= t; y += step) for (let x = l + step / 2; x <= r; x += step) if (GW.spriteHasPoint(a, x, y) && GW.spriteHasPoint(b, x, y)) return true;
      return false;
    };
@@ -388,7 +407,7 @@ index 9a9e3b0..87fd2d7 100644
    GW.rootName = s => s?.rootName || s?.name;
    GW.hitTest = (a, b) => GW.spritesTouch(a, b);
    const G9 = window.GW9;
-@@ -12075,13 +12164,13 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12075,13 +12168,13 @@ nodes.push(el);cur=b.next;}return nodes;};
          case 'color_touching': return !!GW.colorTouchingColor?.(spr(th, owner), G9.evalNode(th, node.args?.[0], 'value', owner), G9.evalNode(th, node.args?.[1], 'value', owner));
          case 'op_lt': { const n = v => Number.isFinite(Number(v)) ? Number(v) : 0; return n(G9.evalNode(th, node.args?.[0], 'value', owner)) < n(G9.evalNode(th, node.args?.[1], 'value', owner)); }
          case 'op_contains': return String(G9.evalNode(th, node.args?.[0], 'value', owner)).toLowerCase().includes(String(G9.evalNode(th, node.args?.[1], 'value', owner)).toLowerCase());
@@ -404,7 +423,7 @@ index 9a9e3b0..87fd2d7 100644
        }
        return base.apply(this, arguments);
      };
-@@ -12156,14 +12245,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12156,14 +12249,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        case 'set_rotation_style': s.rotationStyle = sel(b) || 'all around'; return true;
        case 'go_front_back': { if (s && s.isClone) s.__gwOwnLayer = true; const ls = Engine.sprites.map((x, i) => x.layer ?? i); s.layer = sel(b) === 'back' ? Math.min(...ls) - 1 : Math.max(...ls) + 1; return true; }
        case 'go_layers': { if (s && s.isClone) s.__gwOwnLayer = true; const order = GW.drawOrder(); const i = order.indexOf(s); const n = Math.round(num(b, 0)) * (sel(b) === 'backward' ? -1 : 1); const j = Math.max(0, Math.min(order.length - 1, i + n)); if (j === i) return true; order.splice(i, 1); order.splice(j, 0, s); order.forEach((x, k) => { x.layer = k; }); return true; }
@@ -428,7 +447,7 @@ index 9a9e3b0..87fd2d7 100644
        }
        case 'say': { const secs = num(b, 1); if (secs > 0) { s.sayText = text(b, 0); s.sayUntil = performance.now() + secs * 1000; th.waitUntil = s.sayUntil; return true; } return false; }
        case 'create_clone': { const v = sel(b) || 'myself'; const src = (v === 'myself' || v === '_myself_') ? s : Engine.sprites.find(x => !x.isClone && x.name === v); if (src) GW.createClone(src); return true; }
-@@ -12214,6 +12304,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12214,6 +12308,7 @@ nodes.push(el);cur=b.next;}return nodes;};
        st.classList.toggle('gw8-other-sprite', !mine);
      });
      shown = idx;
@@ -436,7 +455,7 @@ index 9a9e3b0..87fd2d7 100644
    };
    const tick = () => { if (Engine.activeSpriteIndex !== shown) GW.showSpriteScripts(Engine.activeSpriteIndex); const on = !!(Engine.isRunning && !Engine.isPaused && (Engine.threads || []).length); if (document.body && document.body.classList.contains('gw8-running') !== on) document.body.classList.toggle('gw8-running', on); };
    setInterval(tick, 150);
-@@ -12939,6 +13030,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12939,6 +13034,7 @@ nodes.push(el);cur=b.next;}return nodes;};
            const blocks = conv.chain(id); if (!blocks.length) return;
            const st = h('div', { class: 'block-stack' }); st.dataset.owner = String(idx);
            st.style.left = Math.round((Number(b.x) || 0) - minX + 40) + 'px'; st.style.top = Math.round((Number(b.y) || 0) - minY + 40) + 'px';
@@ -444,7 +463,7 @@ index 9a9e3b0..87fd2d7 100644
            blocks.forEach(x => st.appendChild(x)); ws.appendChild(st); placed.push(st);
          });
          // v15.50.9 (Claude): Scratch comments come in as G-Warp comments (notes on a block are placed where Scratch had them)
-@@ -12961,7 +13053,10 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12961,7 +13057,10 @@ nodes.push(el);cur=b.next;}return nodes;};
        // tidy: scripts of the same sprite never overlap
        const bySprite = {};
        placed.forEach(st => (bySprite[st.dataset.owner] = bySprite[st.dataset.owner] || []).push(st));
@@ -456,7 +475,7 @@ index 9a9e3b0..87fd2d7 100644
          list.forEach(st => st.classList.remove('gw8-other-sprite'));
          const boxes = [];
          const sorted = list.sort((a, b) => parseFloat(a.style.top) - parseFloat(b.style.top));
-@@ -12972,7 +13067,11 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12972,7 +13071,11 @@ nodes.push(el);cur=b.next;}return nodes;};
            for (let k = 0; k < 400; k++) { const hit = boxes.find(o => l < o.l + o.w + 20 && l + w + 20 > o.l && t < o.t + o.h + 20 && t + hh + 20 > o.t); if (!hit) break; t = hit.t + hit.h + 24; }
            st.style.top = t + 'px'; boxes.push({ l, t, w, h: hh });
          });
@@ -469,7 +488,7 @@ index 9a9e3b0..87fd2d7 100644
        lap('tidy');
        const title = by('projectTitle'); if (title) title.value = String(file.name).replace(/\.(sb3|json)$/i, '');
        Engine.activeSpriteIndex = 0;
-@@ -14682,7 +14781,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14682,7 +14785,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      const sig = glob.join('|') + '#' + loc.join('|') + '#' + E.activeSpriteIndex; if (sig === chipSig && sec.querySelector('.gw9-var-chips')) return; chipSig = sig;
      sec.querySelector('.gw9-var-chips')?.remove();
      const box = h('div', { class: 'gw9-var-chips' });
@@ -481,7 +500,7 @@ index 9a9e3b0..87fd2d7 100644
      glob.forEach(n => box.appendChild(chip(n, false)));
      if (loc.length) { box.appendChild(h('div', { class: 'gw9-var-sub', text: `${me?.name || 'This sprite'} only` })); loc.forEach(n => box.appendChild(chip(n, true))); }
      btn.after(box);
-@@ -14787,7 +14889,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14787,7 +14893,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    });
    // colour / brightness: each costume is filtered once and reused, instead of filtering every drawing
    let curFilter = '';
@@ -527,7 +546,7 @@ index 9a9e3b0..87fd2d7 100644
    let fcache = new WeakMap(), mip = new WeakMap();
    const resetDrawCaches = () => { fcache = new WeakMap(); mip = new WeakMap(); };
    document.addEventListener('click', e => { if (e.target.closest?.('#greenFlagBtn,#stopBtn')) resetDrawCaches(); }, true);
-@@ -14806,7 +14945,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14806,7 +14949,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      if (curFilter) {
        const key = curFilter; let m = fcache.get(cv); if (!m) { m = new Map(); fcache.set(cv, m); }
        let f = m.get(key);
@@ -536,7 +555,16 @@ index 9a9e3b0..87fd2d7 100644
        cv = f;
      }
      curFilter = '';
-@@ -14868,6 +15007,15 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14851,7 +14994,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+   const esc = v => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+   function fillSel(sel, names) {
+     let cur = sel.value; const list = [...names]; if (cur && !list.includes(cur) && list.length && sel.closest('#paletteBlocks, #paletteContainer')) cur = list[0]; /* 22 Nov (Claude): the palette never keeps a variable that is gone (after undo of a rename) */ if (cur && !list.includes(cur)) list.unshift(cur);
+-    const sig = list.join('\u0001'); if (sel.dataset.gw9Opts === sig) return;
++    let hsh = 0; const joined = list.join('\u0001'); for (let i = 0; i < joined.length; i++) hsh = (hsh * 31 + joined.charCodeAt(i)) | 0; const sig = list.length > 12 ? '#' + list.length + ':' + joined.length + ':' + hsh : joined; /* v15.70.12 (memory): long lists leave a short fingerprint on the menu, not all the names again (194 names on 800 menus = megabytes in the page and in every undo step) */ if (sel.dataset.gw9Opts === sig) return;
+     sel.innerHTML = list.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join(''); sel.dataset.gw9Opts = sig;
+     if (cur) sel.value = cur;
+   }
+@@ -14868,6 +15011,15 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    function fence(s) {
      if (!s || s.stageProxy || !GW.spriteBounds) return;
      if (s.__physX === s.x && s.__physY === s.y) return; // v15.9.1: placed by physics (TurboWarp's Box2D doesn't fence)
@@ -552,7 +580,7 @@ index 9a9e3b0..87fd2d7 100644
      const b = GW.spriteBounds(s), w = b.right - b.left, hh = b.top - b.bottom; if (!Number.isFinite(w) || !Number.isFinite(hh)) return;
      const inset = Math.min(15, Math.floor(Math.min(w, hh) / 2)), sx = 240 - inset, sy = 180 - inset;
      if (b.right < -sx) s.x = Math.ceil(s.x - (sx + b.right)); else if (b.left > sx) s.x = Math.floor(s.x + (sx - b.left));
-@@ -14897,6 +15045,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14897,6 +15049,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    // Scratch rules: direction stays between -179 and 180; positions are fenced right after a move
    const wrapDir = d => { d = Number(d) || 0; return ((d + 179) % 360 + 360) % 360 - 179; };
    const nIn = (b, i) => { const x = Number(ownInputs(b)[i]?.value); return Number.isFinite(x) ? x : 0; };
@@ -560,7 +588,7 @@ index 9a9e3b0..87fd2d7 100644
    // layer order without scanning every sprite on each "go to front/back" (hundreds of clones did that every frame)
    let LAY = null; const layersInit = () => { if (LAY && LAY.count === E.sprites.length) return LAY; let lo = 0, hi = 0; E.sprites.forEach((x, i) => { const l = x.layer ?? i; if (l < lo) lo = l; if (l > hi) hi = l; }); LAY = { lo: Math.min(lo, LAY?.lo ?? lo), hi: Math.max(hi, LAY?.hi ?? hi), count: E.sprites.length }; return LAY; };
    GW.resetLayerCounters = () => { LAY = null; };
-@@ -14906,16 +15055,105 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14906,16 +15059,105 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      move: (th, s, b) => { const n = nIn(b, 0), r = (90 - s.direction) * DEG; s.x += Math.cos(r) * n; s.y += Math.sin(r) * n; },
      turn_cw: (th, s, b) => { s.direction = wrapDir(s.direction + nIn(b, 0)); },
      turn_ccw: (th, s, b) => { s.direction = wrapDir(s.direction - nIn(b, 0)); },
@@ -671,7 +699,7 @@ index 9a9e3b0..87fd2d7 100644
    const mainExtra = GW.extraBlock;
    GW.extraBlock = function (th, b) {
      const s = th.sprite; if (!s) return mainExtra.apply(this, arguments);
-@@ -14963,7 +15201,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14963,7 +15205,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        literal: (th, nd) => nd.value ?? '',
        get_var: (th, nd) => G9.scopedValue(th, nd.name || 'my variable'),
        x_position: (th, nd, ow) => spr(th, ow)?.x ?? 0, y_position: (th, nd, ow) => spr(th, ow)?.y ?? 0, direction: (th, nd, ow) => spr(th, ow)?.direction ?? 90,
@@ -680,7 +708,7 @@ index 9a9e3b0..87fd2d7 100644
        mouse_down: () => !!E.mouse?.down,
        op_add: (th, nd, ow) => num(A(th, nd, ow, 0)) + num(A(th, nd, ow, 1)), op_sub: (th, nd, ow) => num(A(th, nd, ow, 0)) - num(A(th, nd, ow, 1)),
        op_mul: (th, nd, ow) => num(A(th, nd, ow, 0)) * num(A(th, nd, ow, 1)), op_div: (th, nd, ow) => num(A(th, nd, ow, 0)) / num(A(th, nd, ow, 1)),
-@@ -14982,6 +15220,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14982,6 +15224,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        list_itemnum: (th, nd, ow) => { const a = E.lists?.[nd.name] || [], v = A(th, nd, ow, 0); return itemNum(a, v); }
      };
      G9.fastFN = FN; // v15.9.1: other layers add their reporters here
@@ -699,7 +727,7 @@ index 9a9e3b0..87fd2d7 100644
      G9.evalNode = function (th, node, expected, owner) { if (!node) return expected === 'boolean' ? false : ''; const f = FN[node.type]; return f ? f(th, node, owner) : slow.apply(this, arguments); };
      G9.scratchCompare = cmp;
    })();
-@@ -15023,6 +15273,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15023,6 +15277,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      infiniteClones: store.get('gwarp-infinite-clones') === 'on',
      showFps: store.get('gwarp-show-fps') === 'on',
      noFence: store.get('gwarp-no-fence') === 'on', // Scratch keeps sprites on the stage (fencing); TurboWarp can turn it off
@@ -707,7 +735,7 @@ index 9a9e3b0..87fd2d7 100644
      noMiscLimits: store.get('gwarp-no-misc-limits') === 'on' // v15.13.0: TurboWarp “Remove miscellaneous limits”
    };
    const target = () => (S.projectFps != null ? S.projectFps : S.fps);
-@@ -15031,6 +15282,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15031,6 +15286,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      setFps(v) { S.fps = Math.max(0, Math.min(250, Math.round(Number(v) || 0))); store.set('gwarp-fps', String(S.fps)); refreshFpsLabels(); },
      setProjectFps(v) { S.projectFps = v == null ? null : Math.max(0, Math.min(250, Math.round(Number(v) || 0))); refreshFpsLabels(); },
      setInfiniteClones(on) { S.infiniteClones = !!on; store.set('gwarp-infinite-clones', on ? 'on' : null); E.cloneLimit = on ? Infinity : 300; },
@@ -715,7 +743,7 @@ index 9a9e3b0..87fd2d7 100644
      setShowFps(on) { S.showFps = !!on; store.set('gwarp-show-fps', on ? 'on' : null); placeFps(); },
      setNoFence(on) { S.noFence = !!on; store.set('gwarp-no-fence', on ? 'on' : null); },
      setNoMiscLimits(on) { S.noMiscLimits = !!on; store.set('gwarp-no-misc-limits', on ? 'on' : null); }
-@@ -15070,17 +15322,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15070,17 +15326,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      const [showFps, showFpsRow] = check('gw9AdvShowFps', 'Show FPS on the stage', 'A small frames-per-second counter in the corner of the stage.', S.showFps);
      const [fenceOff, fenceRow] = check('gw9AdvFence', 'Remove fencing', 'Lets sprites go fully off the stage. Scratch keeps a little of every sprite on the stage; leave this off for Scratch projects.', S.noFence);
      const [hqOn, hqRow] = check('gw9AdvHQ', 'Max quality render (HQ)', 'Draws the stage at your screen’s full sharpness, up to 4× (1920 × 1440): sharp pen lines, vector costumes, text and bubbles — like TurboWarp’s “High quality pen”, for the whole stage. Best in Large or full screen. Big projects may run slower; turn it off if they lag. Also the HQ button above the stage.', !!window.GW_HQ?.isOn?.());
@@ -736,7 +764,7 @@ index 9a9e3b0..87fd2d7 100644
        if (window.GW_WARP_GUARD && window.GW_WARP_GUARD.isOn() !== guard.checked) window.GW_WARP_GUARD.set(guard.checked);
        toast('Advanced settings saved');
      });
-@@ -15874,7 +16127,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15874,7 +16131,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        lookupOrCreateVariable(id, n) { return lookupVar(s, n, '') || (GV()[n] = 0, lookupVar(s, n, '')); }, lookupOrCreateList(id, n) { return lookupVar(s, n, 'list') || (GL()[n] = [], lookupVar(s, n, 'list')); },
        lookupBroadcastMsg: (id, n) => ({ id, name: n, value: n }),
        isTouchingSprite: n => GW.spritesNamed(String(n)).some(o => o !== s && GW.spritesTouch(s, o)), isTouchingPoint: (x, y) => !!GW.spriteHasPoint?.(s, x, y), isTouchingEdge: () => !!GW.touchingEdge?.(s),
@@ -745,7 +773,7 @@ index 9a9e3b0..87fd2d7 100644
        getLayerOrder: () => (GW.drawOrder ? GW.drawOrder().indexOf(s) : E.sprites.indexOf(s)), goToFront() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.max(0, ...o.map(x => x.layer || 0)) + 1; }, goToBack() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.min(0, ...o.map(x => x.layer || 0)) - 1; },
        emitVisualChange() {}, updateAllDrawableProperties() {}, setCustomState(k, v) { (s.__custom || (s.__custom = {}))[k] = v; }, getCustomState: k => s.__custom?.[k],
        duplicate: () => Promise.resolve(targetFor(GW.createClone ? GW.createClone(s) : null)), makeClone: () => targetFor(GW.createClone ? GW.createClone(s) : null), dispose() { if (s.isClone) GW.deleteClone?.(s); }
-@@ -15934,7 +16187,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15934,7 +16191,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    const renderer = {
      canvas: null, get _gl() { return null; }, gl: null, _allDrawables: [], _drawList: [], dirty: false, _xLeft: -240, _xRight: 240, _yBottom: -180, _yTop: 180, _nativeSize: [480, 360],
      getNativeSize: () => [480, 360], setBackgroundColor(r, g, b) { GW.camera.bg = Color.rgbToHex({ r: r * 255, g: g * 255, b: b * 255 }); },
@@ -754,7 +782,7 @@ index 9a9e3b0..87fd2d7 100644
      getCurrentSkinSize(id) { const s = E.sprites[id]; const c = s?.costumes?.[s.activeCostume]; const b = GW.costumeBox(c); return [b.w, b.h]; },
      getBounds(id) { const s = E.sprites[id]; if (!s) return null; const b = GW.spriteBounds(s); return { ...b, width: b.right - b.left, height: b.top - b.bottom }; },
      getBoundsForBubble(id) { return this.getBounds(id); }, getFencedPositionOfDrawable: (id, pos) => pos,
-@@ -15965,14 +16218,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15965,14 +16222,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      compilerOptions: { enabled: false, warpTimer: true }, isPackaged: false, extensionStorage: {}, renderer, storage: { assetHost: '', DataFormat: { PNG: 'png', SVG: 'svg', WAV: 'wav', MP3: 'mp3', JPG: 'jpg' }, AssetType: {} },
      get runtimeOptions() { return { maxClones: E.cloneLimit || 300, miscLimits: !GW.miscLimitsOff?.(), fencing: GW.__projectFence !== false }; },
      setRuntimeOptions(o) { if (o?.maxClones != null) E.cloneLimit = Number(o.maxClones) || 300; if (o?.fencing != null) GW.__projectFence = o.fencing ? undefined : false; if (o?.miscLimits != null) GW.__projectMiscLimits = o.miscLimits ? undefined : false; },
@@ -771,7 +799,7 @@ index 9a9e3b0..87fd2d7 100644
      startHats: (op, fields, target) => startHats(op, fields, target), stopAll() { by('stopBtn')?.click(); }, greenFlag() { by('greenFlagBtn')?.click(); }, stopForTarget(t) { const s = t?.gwSprite; if (s) E.threads.forEach(th => { if (th.sprite === s) th.finished = true; }); },
      shouldExecuteStopClicked: true, _hats: {}, _primitives: {}, _flowing: {}, profiler: null, sequencer: { stepThreads() {}, timer: { timeElapsed: () => 0 } },
      _step() { this.emit('BEFORE_EXECUTE'); pollHats(); },
-@@ -15988,7 +16241,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15988,7 +16245,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    runtime.extensionManager = extensionManager;
    define(vm, {
      runtime, renderer, extensionManager, get editingTarget() { return runtime.getEditingTarget(); },
@@ -780,7 +808,7 @@ index 9a9e3b0..87fd2d7 100644
      postIOData() {}, greenFlag: () => runtime.greenFlag(), stopAll: () => runtime.stopAll(), start() {}, toJSON: () => '{}', securityManager: {},
      getPlaygroundData: () => ({ targets: runtime.targets, threads: [] }), addSprite: () => Promise.reject(new Error('Adding sprites from extensions is not supported in G-Warp yet')),
      get runtimeOptions() { return runtime.runtimeOptions; }
-@@ -16157,19 +16410,24 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16157,19 +16414,24 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  
    /* ================= 7. running extension blocks ================= */
    const own = (b, sel) => [...b.querySelectorAll(sel)].filter(x => x.closest('.scratch-block') === b);
@@ -815,7 +843,7 @@ index 9a9e3b0..87fd2d7 100644
      const defs = def?.arguments || {};
      Object.keys(defs).forEach(k => { if (!(k in args)) args[k] = defs[k]?.defaultValue ?? ''; });
      Object.keys(defs).forEach(k => { const t = kind(defs[k]?.type); if (t === 'boolean' && typeof args[k] !== 'boolean') args[k] = Cast.toBoolean(args[k] === '' ? false : args[k]); });
-@@ -16363,7 +16621,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16363,7 +16625,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      css(st) { const rgb = Color.hsvToRgb({ h: st.color * 360 / 100, s: st.saturation / 100, v: st.brightness / 100 }); return `rgba(${rgb.r},${rgb.g},${rgb.b},${1 - st.transparency / 100})`; },
      clear() { const c = this.canvas(), g = this.ctx(); if (g) g.clearRect(0, 0, c.width, c.height); },
      line(color4f, d, x0, y0, x1, y1) { const g = this.ctx(); if (!g) return; const c = color4f ? `rgba(${color4f[0] * 255},${color4f[1] * 255},${color4f[2] * 255},${color4f[3]})` : '#0000ff'; this.seg(g, c, d || 1, x0, y0, x1, y1); },
@@ -824,7 +852,7 @@ index 9a9e3b0..87fd2d7 100644
      follow(s) { const st = s.__pen; if (!st || !st.down) { if (st) { st.x = s.x; st.y = s.y; } return; } if (st.x === s.x && st.y === s.y) return; const g = this.ctx(); if (g) this.seg(g, this.css(st), st.size, st.x, st.y, s.x, s.y); st.x = s.x; st.y = s.y; },
      stamp(s) {
        const g = this.ctx(), c = s.costumes?.[s.activeCostume]; if (!g || !c?.canvas || !s.visible) return; GW.__penUsed = true; const cv = this.canvas(), kx = cv.width / 480;
-@@ -16842,7 +17100,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16842,7 +17104,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      if (by('gw10FileSection')) return true;
      // v15.25.0: New project = keep a restore point of what you have, then start fresh (G-Spark, empty code)
      async function newProject() {
@@ -833,7 +861,7 @@ index 9a9e3b0..87fd2d7 100644
        if (!ok) return;
        try { const R = window.GW_FILES?.Restore; if (R?.point) await R.point('Before “New project”', true); } catch (e) { console.warn('[new project] restore point', e); }
        try { sessionStorage.setItem('gwarp-new-project', '1'); } catch {}
-@@ -16864,10 +17122,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16864,10 +17126,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      ['sb3ExportBtn', 'sb3ImportBtn', 'saveProjectBtn', 'loadProjectBtn'].forEach(id => by(id)?.classList.add('gw10-hidden-old'));
      updateNote(); return true;
    }
@@ -846,7 +874,7 @@ index 9a9e3b0..87fd2d7 100644
      if (k === 's') { e.preventDefault(); save(e.shiftKey); }
      else if (k === 'o' && !e.shiftKey) { e.preventDefault(); openFromComputer(); }
    }, true);
-@@ -17261,7 +17521,17 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -17261,7 +17525,17 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      // v15.48.0: a costume made in G-Warp's editor remembers where it sat in the drawing area; use that (it can grow to fit the drawing)
      const t = c?.dataFormat === 'svg' && typeof c.svg === 'string' && c.svg.slice(0, 400);
      if (t && t.includes('data-gw-editor="1"')) { const g = n => { const x = new RegExp('data-gw-' + n + '="([-0-9.e+]+)"').exec(t); return x ? +x[1] : NaN; }; const k = g('k'), ox = g('ox'), oy = g('oy'); if (k > 0 && Number.isFinite(ox) && Number.isFinite(oy)) return { w, h, k, ox, oy }; }
@@ -865,7 +893,7 @@ index 9a9e3b0..87fd2d7 100644
    }
    function parse(text) { try { const d = new DOMParser().parseFromString(String(text || ''), 'image/svg+xml'); const r = d.documentElement; return r && r.localName === 'svg' && !d.getElementsByTagName('parsererror').length ? (window.GW_SAFE ? GW_SAFE.clean(r) : r) : null; } catch { return null; } }
    const ser = n => new XMLSerializer().serializeToString(n);
-@@ -17400,10 +17670,21 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -17400,10 +17674,21 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    const costume = () => { const s = E?.sprites?.[E.activeSpriteIndex]; return s?.costumes?.[s.activeCostume] || null; };
    function saveBitmap(silent) {
      const src = by('gwBitmapCanvasV15'), c = costume(), mapFor = window.GW_VECTOR_EDITOR?.mapFor; if (!src || !c || !mapFor) return false;
@@ -890,7 +918,7 @@ index 9a9e3b0..87fd2d7 100644
      try { window.renderSpritesGrid?.(); window.GW?.refreshStage?.(); window.GW_V1570_STUDIO?.renderCostumeList?.(true); } catch {}
      if (!silent) try { window.GW?.toast?.('Costume saved (bitmap)'); } catch {}
      return true;
-@@ -18029,6 +18310,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18029,6 +18314,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      });
      refreshAll(); toast(`Attached ${n} shape${n === 1 ? '' : 's'} to the nearest bones.`);
    }
@@ -940,7 +968,7 @@ index 9a9e3b0..87fd2d7 100644
    function deleteBone() {
      const id = st.bone; if (!id) return toast('Pick a bone first.'); snap();
      const gone = new Set([id]); let grew = true; while (grew) { grew = false; st.anim.bones.forEach(b => { if (b.parent && gone.has(b.parent) && !gone.has(b.id)) { gone.add(b.id); grew = true; } }); }
-@@ -18201,7 +18525,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18201,7 +18529,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
          h('button', { type: 'button', class: 'gw18-x', 'aria-label': 'Close', html: '<i class="fa-solid fa-xmark"></i>', onclick: () => close() })),
        h('div', { class: 'gw18-body' },
          h('div', { class: 'gw18-tools' }, h('div', { class: 'gw18-small', text: 'Rig tools' }),
@@ -949,7 +977,7 @@ index 9a9e3b0..87fd2d7 100644
            h('hr'), btn(ic('fa-wand-magic-sparkles', 'Attach automatically'), () => autoAttach(), { id: 'gw18Auto' }), btn(ic('fa-trash', 'Delete bone'), () => deleteBone(), { id: 'gw18DelBone' }),
            h('p', { id: 'gw18Tip', class: 'gw18-tip' })),
          h('div', { id: 'gw18View', class: 'gw18-view' }),
-@@ -20532,20 +20856,25 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -20532,20 +20860,25 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      { id: 'clones', name: 'Clone counter', text: 'Shows how many clones exist, next to the stage, while a project runs. Many clones can make a game slow.', def: true },
      { id: 'mute', name: 'Mute and project volume', text: 'Ctrl+click (⌘+click on Mac) the green flag to mute or unmute the project. Set the volume below.', def: true },
      { id: 'gamepad', name: 'Gamepad', text: 'Play with a game controller: left stick and d-pad = arrow keys, right stick = W A S D, A = space, B = X, X = Z, Y = C, Start = Enter.', def: false },
@@ -978,7 +1006,7 @@ index 9a9e3b0..87fd2d7 100644
  
    /* ---------- 2. mute + volume (every sound goes through one volume knob) ---------- */
    let muted = false, volume = Math.max(0, Math.min(100, Number(store.get('gwarp-volume') ?? 100)));
-@@ -20611,8 +20940,109 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -20611,8 +20944,109 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
    }, true);
    window.GW_FIND = { open: findBar };
  
@@ -1089,7 +1117,7 @@ index 9a9e3b0..87fd2d7 100644
    function openAddons() {
      const rows = ADDONS.map(a => { const c = h('input', { type: 'checkbox', id: 'gw10Addon-' + a.id }); c.checked = on(a.id); c.addEventListener('change', () => setOn(a.id, c.checked)); return h('label', { class: 'gw9-adv-row', for: 'gw10Addon-' + a.id }, c, h('span', {}, h('b', { text: a.name }), h('small', { text: a.text }))); });
      const vol = h('input', { type: 'range', min: '0', max: '100', value: String(volume), id: 'gw10Volume', 'aria-label': 'Project volume' }); const vl = h('b', { text: `${volume}%` });
-@@ -23954,6 +24384,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -23954,6 +24388,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    let toHat = new Map();      // hat/define block -> pole record
    const heat = new WeakMap(); // block -> last fire time (kept across re-layouts)
    function fired(b) {
@@ -1097,7 +1125,7 @@ index 9a9e3b0..87fd2d7 100644
      const now = performance.now(); heat.set(b, now); PL.stats.fires++;
      const ws = fromBlock.get(b); if (!ws) return;
      for (const w of ws) { w.hotAt = now; if (now - (w.sparkAt || 0) > 260) { w.sparkAt = now; spark(w, now); } if (w.to) { const p = toHat.get(w.to); if (p) p.hotAt = now; } }
-@@ -24077,17 +24508,22 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -24077,17 +24512,22 @@ body.gw-calm .gw-pl-w .core{animation:none}
        try { const pt = s.w.core.getPointAtLength(s.len * f); s.c.setAttribute('cx', pt.x.toFixed(1)); s.c.setAttribute('cy', pt.y.toFixed(1)); } catch {}
      }
    }
@@ -1122,7 +1150,7 @@ index 9a9e3b0..87fd2d7 100644
    // the very first scripts after Start: mark them as fired once the wires exist
    document.addEventListener('click', ev => { if (!ev.target.closest?.('#greenFlagBtn')) return; setTimeout(() => { if (!PL.live) return; const th = E()?.threads || []; th.forEach(t => { const hat = t?.blocks?.[0]?.parentElement?.firstElementChild; if (hat && toHat.has(hat)) hatFired(hat); }); }, 140); }, true);
  
-@@ -25054,7 +25490,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -25054,7 +25494,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    const by = id => document.getElementById(id);
    const css = document.createElement('style'); css.id = 'gw4950css';
    css.textContent = `#gw154StageFrame [data-var-monitor],#gw154StageFrame [data-list-monitor]{z-index:6!important}
@@ -1131,7 +1159,7 @@ index 9a9e3b0..87fd2d7 100644
  .gw4950-menu{position:fixed;z-index:10050;min-width:150px;padding:4px;border:1px solid #2b2f55;border-radius:10px;background:#14162a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
  .gw4950-menu button{display:flex;gap:8px;align-items:center;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#e5e7eb;font-size:12px;font-weight:700;text-align:left;cursor:pointer}
  .gw4950-menu button:hover,.gw4950-menu button:focus-visible{background:#26294a;outline:none}`;
-@@ -25706,7 +26142,13 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -25706,7 +26146,13 @@ body.gw-calm .gw-pl-w .core{animation:none}
      wave: ['Wave', [[0, 2, 1], [1, 3, 1], [2, 4, 1], [3, 5, 1], [4, 4, 1], [5, 3, 1], [6, 2, 1], [7, 1, 1], [8, 2, 1], [9, 3, 1], [10, 4, 1], [11, 6, 1], [12, 5, 2], [14, 4, 2]]],
      lullaby: ['Lullaby', [[0, 4, 3], [3, 2, 1], [4, 3, 2], [6, 2, 2], [8, 1, 3], [11, 0, 1], [12, 0, 4]]],
      riff: ['Riff', [[0, 0, 1], [2, 0, 1], [3, 2, 1], [5, 3, 1], [6, 2, 2], [8, 0, 1], [10, 0, 1], [11, 5, 1], [13, 4, 1], [14, 2, 2]]],
@@ -1146,7 +1174,7 @@ index 9a9e3b0..87fd2d7 100644
    };
    const by = id => document.getElementById(id);
    const st = { notes: new Map(), hold: false, loop: true, bpm: 112, timer: 0, playing: false, active: -1 };
-@@ -26090,14 +26532,14 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
+@@ -26090,14 +26536,14 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
      m.append(
        h('div', { class: 'gw16-sec', text: 'File' }),
        fileItem('fa-file-circle-plus', 'New project', '', () => { const b = by('gw10New'); b ? b.click() : location.reload(); }),
@@ -1163,7 +1191,7 @@ index 9a9e3b0..87fd2d7 100644
        h('hr'),
        fileItem('fa-power-off', 'Quit G-Warp', '', () => window.gwApp?.quit?.()));
      document.body.appendChild(m); openMenus.push(m);
-@@ -26368,11 +26810,16 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
+@@ -26368,11 +26814,16 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
    /* 22 Nov (Claude, speed): the fingerprint copies every script; it took up to 1 s every 1.5 s on big projects.
       Now it is only taken after a click, a key, a change in the code area or a file action (or every 20 s). */
    let touched = true, lastFull = 0;
@@ -1182,7 +1210,7 @@ index 9a9e3b0..87fd2d7 100644
      const s = signature(); if (!baseSig) { baseSig = s; return; }
      const dirty = s !== baseSig;
      if (dirty !== wasDirty) { wasDirty = dirty; try { window.gwApp?.setDirty?.(dirty); } catch {} }
-@@ -27132,7 +27579,25 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -27132,7 +27583,25 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
   const MEL={ins:null};
   const BEATS={rock:[[0,0],[4,0],[8,0],[12,0],[2,1],[6,1],[10,1],[14,1],...[...Array(16).keys()].map(c=>[c,2])],
    pop:[[0,0],[5,0],[8,0],[2,1],[6,1],[10,1],[14,1],...[0,2,4,6,8,10,12,14].map(c=>[c,2]),[7,4],[15,4]],
@@ -1209,7 +1237,7 @@ index 9a9e3b0..87fd2d7 100644
   const IS=()=>window.GW_INSTRUMENT_STUDIO,SA=()=>window.GW_SONG_ARRANGER,CM=()=>window.GW_CREATE_MELODY;const st={hold:true};
   const names=()=>{try{return (IS()?.instruments||[]).map(i=>i.name);}catch(e){return ['Piano'];}};
   const cur=()=>{try{return IS()?.currentInstrument?.()||'Piano';}catch(e){return 'Piano';}};
-@@ -27166,7 +27631,8 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -27166,7 +27635,8 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
    box.innerHTML=`<div class="gwcm-head"><div><div class="gwcm-title"><i class="fa-solid fa-${P.ic}" aria-hidden="true"></i> ${P.t}</div><div class="gwcm-sub">${k==='backing'?'Chords: up to 4 notes in one step.':k==='bass'?'One low note per step.':k==='drums'?'Tap the drum sounds. Or start from a beat.':'Short drum fills - they play where the Fills row is on in the Song maker.'}</div></div></div>
     <div class="gwcm-gridwrap"><div class="gwcm-grid" id="gwspG-${k}" role="grid" aria-label="${P.t} grid"></div></div>
     <div class="gwcm-row"><button type="button" class="gwcm-go" data-a="play"><i class="fa-solid fa-play" aria-hidden="true"></i> Play</button><button type="button" data-a="stop"><i class="fa-solid fa-stop" aria-hidden="true"></i> Stop</button>
@@ -1219,7 +1247,7 @@ index 9a9e3b0..87fd2d7 100644
      <button type="button" data-a="clear"><i class="fa-solid fa-broom" aria-hidden="true"></i> Clear</button><button type="button" class="gwcm-use" data-a="use"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Use in Song maker</button><button type="button" id="gwspOff-${k}" data-a="off" title="The Song maker makes this part up again"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Back to made-up</button></div>
     <div class="gwcm-status" id="gwspS-${k}" role="status" aria-live="polite">Tap the squares.</div>`;
    if(!P.drum)box.querySelector('.gwcm-head').after(instPicker(k,()=>P.ins,v=>{P.ins=v.length?v:[cur()];}));
-@@ -27174,6 +27640,7 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -27174,6 +27644,7 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
     for(let c=0;c<COLS;c++){const b=document.createElement('button');b.type='button';b.className='gwcm-cell'+(c%8===0&&c?' bar':'')+(c%2===0?' beat':'');b.dataset.col=c;b.dataset.r=r;
      b.onclick=()=>{const M=P.notes,ch=M.get(c)||[];if(ch.includes(r)){const x=ch.filter(y=>y!==r);x.length?M.set(c,x):M.delete(c);}else if(P.max===1){M.set(c,[r]);tap(k,r);}else if(ch.length>=P.max){say(k,'Up to '+P.max+' notes in one step.');return;}else{M.set(c,ch.concat(r).sort((a,b)=>a-b));tap(k,r);}draw(k);};g.appendChild(b);}}
    box.addEventListener('click',e=>{const a=e.target.closest('[data-a]')?.dataset.a;if(a==='play')start(k);else if(a==='stop'){stopAll();say(k,'Stopped.');}else if(a==='clear'){P.notes.clear();draw(k);}else if(a==='use')use(k);else if(a==='off'){SA()?.setMyPart?.(k,null);draw(k);say(k,'The Song maker makes it up again.');}});
@@ -1227,7 +1255,7 @@ index 9a9e3b0..87fd2d7 100644
    const bs=box.querySelector('[data-a="beat"]');if(bs)bs.onchange=e=>{const v=BEATS[e.target.value];if(!v)return;P.notes.clear();v.forEach(([c,r])=>P.notes.set(c,[...new Set((P.notes.get(c)||[]).concat(r))]));e.target.value='';draw(k);};
    setTimeout(()=>draw(k),0);return box;}
   function voice(){const box=document.createElement('div');box.className='gwsp2';box.id='gwspVoice';box.style.setProperty('--pc','#f43f5e');
-@@ -27275,7 +27742,14 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+@@ -27275,7 +27746,14 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
      closing G-Warp or a crash doesn't lose it. "Use in Song maker" is still what puts it into the project. */
   const SAVEK='gw-spark3-work';
   const work=()=>JSON.stringify({v:1,bars:st.bars,kit:st.kit,bpm:st.bpm,T:Object.fromEntries(TR.map(t=>[t.id,{notes:st.T[t.id].notes,vol:st.T[t.id].vol,ins:st.T[t.id].ins}]))});
@@ -1243,7 +1271,7 @@ index 9a9e3b0..87fd2d7 100644
   let lastWork=work();setInterval(()=>{const w=work();if(w!==lastWork){lastWork=w;try{localStorage.setItem(SAVEK,w);}catch(e){}}},2000);
   const TD=id=>TR.find(t=>t.id===id),steps=()=>st.bars*16,cw=()=>Math.round(18*st.zoom),RH=t=>t.drum?30:15;
   const key=()=>{try{return SA()?.keyInfo?.()||{root:0,scale:[0,2,4,5,7,9,11],name:'C major',bpm:120};}catch(e){return {root:0,scale:[0,2,4,5,7,9,11],name:'C major',bpm:120};}};
-@@ -27424,6 +27898,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+@@ -27424,6 +27902,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
    const R=document.createElement('section');R.id='gwSpark3';R.tabIndex=0;R.setAttribute('aria-label','Spark Studio');
    R.innerHTML=`<div class="sp3-top"><div class="sp3-title"><i class="fa-solid fa-bolt"></i> Spark Studio</div><span class="sp3-key" id="sp3Key"></span><span class="sp3-sp"></span>
     <button type="button" id="sp3From" title="Load your parts (or the song's own tune) from the Song maker"><i class="fa-solid fa-file-import"></i> From Song maker</button>
@@ -1251,7 +1279,7 @@ index 9a9e3b0..87fd2d7 100644
     <button type="button" class="use" id="sp3UseAll" title="Every track with notes goes into the Song maker. Empty tracks stay the Song maker's own."><i class="fa-solid fa-wand-magic-sparkles"></i> Use all in Song maker</button>
     <button type="button" id="sp3Old" title="Show the classic Spark Studio too (Developer mode)"><i class="fa-solid fa-clock-rotate-left"></i> Classic studio</button></div>
    <div class="sp3-bar"><span class="sp3-grp"><button type="button" class="go" id="sp3Play" title="Play (Space)"><i class="fa-solid fa-play"></i> Play</button><button type="button" id="sp3Stop" title="Stop"><i class="fa-solid fa-stop"></i></button><button type="button" id="sp3Loop" title="Loop"><i class="fa-solid fa-repeat"></i></button><button type="button" id="sp3Metro" aria-pressed="false" title="Metronome (a click on every beat)"><i class="fa-solid fa-stopwatch"></i></button></span>
-@@ -27450,7 +27925,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+@@ -27450,7 +27929,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
     else if(q('#sp3Undo'))undo();else if(q('#sp3OctDn'))transpose(-12);else if(q('#sp3SemiDn'))transpose(-1);else if(q('#sp3SemiUp'))transpose(1);else if(q('#sp3OctUp'))transpose(12);else if(q('#sp3Fill'))fillBars();else if(q('#sp3Metro')){st.metro=!st.metro;by('sp3Metro').setAttribute('aria-pressed',String(st.metro));say(st.metro?'Metronome on.':'Metronome off.');}else if(q('#sp3Redo'))redo();else if(q('#sp3ZoomIn')){st.zoom=Math.min(2.5,st.zoom*1.25);draw();}else if(q('#sp3ZoomOut')){st.zoom=Math.max(0.4,st.zoom/1.25);draw();}
     else if(b=q('[data-m]')){const T=st.T[b.dataset.m];T.mute=!T.mute;mix();syncUI();draw();}else if(b=q('[data-s]')){const T=st.T[b.dataset.s];T.solo=!T.solo;mix();syncUI();}
     else if(q('#sp3VM')){V.mute=!V.mute;mix();syncUI();draw();}else if(q('#sp3VS')){V.solo=!V.solo;mix();syncUI();}
@@ -1260,7 +1288,7 @@ index 9a9e3b0..87fd2d7 100644
     else if(q('#sp3Rec'))record();else if(q('#sp3VSave'))saveVoice();
     else if(q('#sp3Old')){document.body.classList.toggle('gwsp3-old');syncUI();}
     else if(q('[data-clear]')){if(st.T[st.sel].notes.length){push();st.T[st.sel].notes=[];draw();say(TD(st.sel).name+' cleared (Undo brings it back).');}}
-@@ -27485,7 +27960,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+@@ -27485,7 +27964,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
    try{new ResizeObserver(()=>draw()).observe(R);}catch(e){}
    syncUI();setTimeout(()=>{selTrack('melody');draw();},50);}
   setInterval(()=>{build();const R=by('gwSpark3');if(R&&R.offsetParent&&!st.play){const k=by('sp3Key');if(k){const t='Key: '+key().name+' · '+bpm()+' BPM'+(st.bpm?' (own speed)':' (from the Song maker)');if(k.textContent!==t){k.textContent=t;draw();}}}},1000);
@@ -1269,7 +1297,7 @@ index 9a9e3b0..87fd2d7 100644
  })();</script>
  <style id="gw-claude-spark-tab-css">
  #gwSparkHost{display:flex;flex-direction:column;gap:14px;padding:4px}
-@@ -27749,7 +28224,9 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+@@ -27749,7 +28228,9 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
   const NAME={'Pen':'Pen','Music':'Music','Text to Speech':'TTS','Translate':'Translate','Makey Makey':'Makey','Camera Controls':'Camera','Box2D Physics':'Box2D','Animation':'Animation','HTTP':'HTTP'};
   const MINE=['Camera','Box2D','Animation','HTTP']; /* 9 Nov (owner): Pen, Music and Text to Speech cards add Scratch's full versions now (the old G-Warp Pen / Music / TTS blocks still run in old projects) */
   const GROUPS={Camera:{title:'Camera Controls',icon:'fa-video',color:'#0ea5e9',re:/^cam_/},Box2D:{title:'Box2D Physics',icon:'fa-cubes',color:'#f97316',re:/^phys_/}};
@@ -1280,7 +1308,7 @@ index 9a9e3b0..87fd2d7 100644
   function groups(){const dock=by('dynamicAiExtensionDock'),src=by('sec-gw9-ext');if(!dock||!src)return;const pen=[...dock.children].find(x=>/G-Warp Pen/.test(x.textContent));
    for(const [k,G] of Object.entries(GROUPS)){let sec=by('gwx-'+k);const tpl=[...src.querySelectorAll(':scope > .scratch-block')].filter(b=>G.re.test(b.dataset.type||''));
     const want=on().includes(k)||tpl.some(b=>usedType(b.dataset.type));
-@@ -29123,6 +29600,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
+@@ -29123,6 +29604,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
  })();
  </script>
  <!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->
