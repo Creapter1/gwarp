@@ -1,0 +1,11 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox','--use-angle=swiftshader']});const p=await b.newPage({viewport:{width:1920,height:1000}});p.on('dialog',d=>d.dismiss());
+ await p.goto('file://'+(process.env.APP||'/home/claude/rel/app.html'));await p.waitForTimeout(2500);await p.setInputFiles('#sb3ImportFile','/home/claude/priv/gh.sb3');
+ await p.waitForFunction(()=>window.GW&&GW.__sb3Project===true&&document.querySelectorAll('#workspaceCanvas .scratch-block').length>0,null,{timeout:240000});await p.waitForTimeout(6000);
+ const r=await p.evaluate(()=>{const R=e=>{const r=e.getBoundingClientRect();return [Math.round(r.left),Math.round(r.top),Math.round(r.width),Math.round(r.height)]};const ws=document.getElementById('workspaceCanvas');const out={ws:R(ws),wsParent:R(ws.parentElement),wsParentCls:ws.parentElement.id+'.'+ws.parentElement.className};
+  const big=[...document.querySelectorAll('#workspaceCanvas .scratch-block.block-c-shape')].filter(x=>x.offsetParent).sort((a,b)=>b.getBoundingClientRect().height-a.getBoundingClientRect().height)[0];big.scrollIntoView({block:'start'});
+  out.big=R(big);out.type=big.dataset.type;out.kids=[...big.children].map(c=>c.className.slice(0,40)+' '+R(c).join(','));out.stack=R(big.closest('.block-stack'));
+  const br=big.getBoundingClientRect();const probe=(x,y)=>{const e=document.elementFromPoint(x,y);return e?(e.id||'')+'.'+String(e.className).slice(0,50)+' <'+(e.closest('.scratch-block')?.dataset.type||'none')+'>':'null'};
+  const y=Math.max(200,Math.min(700,br.top+300));out.probes={rightOfBig:probe(br.right+40,y),insideRightHalf:probe(br.left+br.width*0.8,y),inside60:probe(br.left+br.width*0.6,y),leftArm:probe(br.left+5,y),leftOfBig:probe(br.left-40,y)};
+  out.widest=[...big.querySelectorAll('.scratch-block')].map(x=>x.getBoundingClientRect()).reduce((m,r)=>Math.max(m,r.right),0);return out});
+ console.log(JSON.stringify(r,null,1));await p.screenshot({path:'vid/hit.png'});await b.close()})();

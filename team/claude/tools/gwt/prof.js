@@ -1,0 +1,13 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+const sb3=process.argv[2]||'/home/claude/gwt/move.sb3',run=process.argv[3]!=='idle';
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});
+const p=await b.newPage({viewport:{width:1440,height:900}});
+await p.goto('file:///home/claude/rel/app.html');await p.waitForTimeout(3500);
+await p.setInputFiles('#sb3ImportFile',sb3);await p.waitForTimeout(3000);
+if(run)await p.click('#greenFlagBtn');await p.waitForTimeout(1500);
+const c=await p.context().newCDPSession(p);await c.send('Profiler.enable');await c.send('Profiler.setSamplingInterval',{interval:500});await c.send('Profiler.start');
+await p.waitForTimeout(5000);const {profile}=await c.send('Profiler.stop');
+const self={};const dt=profile.timeDeltas,ids=profile.samples;const byId={};profile.nodes.forEach(n=>byId[n.id]=n);
+let tot=0;ids.forEach((id,i)=>{const n=byId[id],k=n.callFrame.functionName+' @'+(n.callFrame.url.split('/').pop()||'')+':'+n.callFrame.lineNumber;self[k]=(self[k]||0)+dt[i];tot+=dt[i]});
+const top=Object.entries(self).sort((a,b)=>b[1]-a[1]).slice(0,22).map(([k,v])=>(v/tot*100).toFixed(1)+'% '+k);
+console.log(top.join('\n'));await b.close()})();

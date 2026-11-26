@@ -1,0 +1,23 @@
+// node t_paint.js -> Breaking G-Warp ep. 1+2 paint bugs: bitmap costumes grow, a new painted sprite is not a dot, backdrops are not zoomed in
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});const p=await b.newPage({viewport:{width:1500,height:900}});p.on('dialog',d=>d.dismiss());const errs=[];p.on('pageerror',e=>errs.push(e.message.slice(0,120)));
+await p.goto('file://'+(process.env.APP||'/home/claude/rel/app.html'));await p.waitForTimeout(4000);await p.click('#gwMainTabCostumes');await p.waitForTimeout(1200);
+const out={};
+// 1. G-Spark's costume in bitmap mode: paint a rectangle in the empty top-left corner (outside the costume's box)
+out.grow=await p.evaluate(async()=>{const ce=GW_V15_COSTUME_EDITOR,s=Engine.sprites[Engine.activeSpriteIndex],c=s.costumes[s.activeCostume];const before={w:c.canvas.width/c.res,h:c.canvas.height/c.res,rc:{...c.rc}};
+ ce.setMode('bitmap');await new Promise(r=>setTimeout(r,600));ce.loadBitmap&&ce.loadBitmap();const cv=document.getElementById('gwBitmapCanvasV15'),g=cv.getContext('2d');g.fillStyle='#ff0000';g.fillRect(4,4,40,30);ce.saveBitmap(true);
+ const c2=s.costumes[s.activeCostume];const box=GW.costumeBox(c2);const d=c2.canvas.getContext('2d').getImageData(0,0,c2.canvas.width,c2.canvas.height).data;let red=0;for(let i=0;i<d.length;i+=4)if(d[i]>200&&d[i+1]<60&&d[i+2]<60&&d[i+3]>200)red++;
+ // where did the old picture's centre go on the stage? (box.x0 is relative to the rotation centre)
+ return {before:[Math.round(before.w),Math.round(before.h)],after:[Math.round(c2.canvas.width/c2.res),Math.round(c2.canvas.height/c2.res)],redPixels:red>0,oldRightEdge:Math.round(before.w-before.rc.x),newRightEdge:Math.round(box.x0+box.w),oldBottom:Math.round(before.h-before.rc.y),newBottom:Math.round(box.y0+box.h)}});
+// 2. a brand-new painted sprite (2 x 2 costume): paint a rectangle across the middle
+out.newSprite=await p.evaluate(async()=>{const ce=GW_V15_COSTUME_EDITOR;const cv0=document.createElement('canvas');cv0.width=2;cv0.height=2;Engine.sprites.push({name:'Painted',x:0,y:0,size:100,direction:90,visible:true,costumes:[{name:'costume1',canvas:cv0,res:1,rc:{x:1,y:1},natural:true,dataFormat:'png'}],activeCostume:0,sounds:[],localVars:{},localLists:{}});
+ Engine.activeSpriteIndex=Engine.sprites.findIndex(s=>s.name==='Painted');try{renderSpritesGrid()}catch(e){}ce.setMode('bitmap');await new Promise(r=>setTimeout(r,600));ce.loadBitmap&&ce.loadBitmap();const cv=document.getElementById('gwBitmapCanvasV15'),g=cv.getContext('2d');g.clearRect(0,0,512,384);g.fillStyle='#0000ff';g.fillRect(106,142,300,100);ce.saveBitmap(true);
+ const s=Engine.sprites[Engine.activeSpriteIndex],c=s.costumes[0],box=GW.costumeBox(c);return {stageSize:[Math.round(box.w),Math.round(box.h)],res:c.res}});
+// 3. backdrop: marks 10% in from the corners of the drawing area must land 10% in on the stage
+out.backdrop=await p.evaluate(async()=>{const i=Engine.sprites.findIndex(s=>s.stageProxy);if(i<0)return 'no stage helper';Engine.activeSpriteIndex=i;return 'selected'});
+await p.evaluate(()=>{const st=document.querySelector('#gw154BackdropCard, [data-stage-select], #stageSelectBox');if(st)st.click()});await p.waitForTimeout(1500);
+out.backdrop=await p.evaluate(async()=>{const ce=GW_V15_COSTUME_EDITOR,s=Engine.sprites[Engine.activeSpriteIndex];if(!s||!s.stageProxy)return 'stage not selected: '+(s&&s.name);const c=s.costumes[s.activeCostume];const m=ce.mapFor?ce.mapFor(c):GW_VECTOR_EDITOR.mapFor(c);
+ ce.setMode('bitmap');await new Promise(r=>setTimeout(r,600));ce.loadBitmap&&ce.loadBitmap();const cv=document.getElementById('gwBitmapCanvasV15'),g=cv.getContext('2d');g.fillStyle='#00aa00';[[51,38],[461,38],[51,346],[461,346]].forEach(([x,y])=>g.fillRect(x-4,y-4,8,8));ce.saveBitmap(true);
+ const c2=s.costumes[s.activeCostume],box=GW.costumeBox(c2);const d=c2.canvas.getContext('2d').getImageData(0,0,c2.canvas.width,c2.canvas.height).data;let x0=1e9,x1=-1,y0=1e9,y1=-1;for(let y=0;y<c2.canvas.height;y++)for(let x=0;x<c2.canvas.width;x++){const k=(y*c2.canvas.width+x)*4;if(d[k+1]>150&&d[k]<60&&d[k+3]>200){x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y)}}
+ const toStage=px=>240+box.x0+px/c2.res, toStageY=py=>180+box.y0+py/c2.res; return {map:[+m.k.toFixed(3),m.ox,m.oy],stageBox:[Math.round(box.w),Math.round(box.h)],marksLeftPct:Math.round(toStage(x0)/480*100),marksRightPct:Math.round(toStage(x1)/480*100),marksTopPct:Math.round(toStageY(y0)/360*100),marksBottomPct:Math.round(toStageY(y1)/360*100)}});
+console.log(JSON.stringify(out,null,0),errs.slice(0,3));await b.close()})();

@@ -1,0 +1,14 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+const app=process.argv[2]||'/home/claude/rel/app.html';
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});
+const p=await b.newPage({viewport:{width:1440,height:900}});const errs=[];p.on('pageerror',e=>errs.push(e.message.slice(0,200)));p.on('dialog',d=>d.dismiss());
+await p.goto('file://'+app);await p.waitForTimeout(3500);
+await p.setInputFiles('#sb3ImportFile','/home/claude/gwt/move.sb3');await p.waitForTimeout(3000);
+await p.evaluate(()=>{window.__f=[];let l=performance.now();(function t(){const n=performance.now();__f.push(n-l);l=n;requestAnimationFrame(t)})();
+ window.__lt=[];new PerformanceObserver(L=>L.getEntries().forEach(e=>__lt.push(e.duration|0))).observe({entryTypes:['longtask']});window.__x=[];setInterval(()=>{const s=Engine.sprites.find(s=>!s.isStage&&!s.isClone);__x.push([performance.now()|0,s&&s.x])},100)});
+const idle=await p.evaluate(async()=>{await new Promise(r=>setTimeout(r,2000));const f=__f.splice(0);return{fps:(f.length/2)|0,worst:Math.max(...f)|0}});
+await p.click('#greenFlagBtn');await p.waitForTimeout(5000);
+const r=await p.evaluate(()=>{const f=__f.splice(0).sort((a,b)=>a-b);return{fps:(f.length/5)|0,p50:f[f.length>>1]|0,p99:f[(f.length*.99)|0]|0,worst:f[f.length-1]|0,long:__lt.length,longMax:Math.max(0,...__lt),x:__x.slice(-30).map(a=>a[1]),run:Engine.isRunning,threads:Engine.threads.length,efps:Engine.actualFps,sprites:Engine.sprites.map(s=>[s.name,s.x,s.y,s.visible])}});
+await p.screenshot({path:'run.png'});
+const t=await p.evaluate(async()=>{const a=performance.now();document.getElementById('stopBtn').click();await new Promise(r=>setTimeout(r,50));return{ms:(performance.now()-a)|0,run:Engine.isRunning}});
+console.log(JSON.stringify({idle,r,stop:t,errs:[...new Set(errs)].slice(0,5)}));await b.close()})();

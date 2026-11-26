@@ -1,0 +1,92 @@
+# PROGRESS - G-Warp autopilot (Claude)
+
+This is the one file to read first. It says where the work is, how to set up, the rules, and what to do next.
+Every run updates it before it ends. Times are US Eastern.
+
+## 1. State right now
+
+- Last update: 26 Nov 2026, 01:05, by the first session (the one that talked with the owner).
+- App on the owner's PC: **v15.69.0l** (= build v15.70.13). Next PC letter: **m**.
+- Working build: `team/claude/work/` = **v15.70.13 + gw-book.js** (step 1a in progress, not on the PC yet).
+- Website (main): still v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
+- Plan: `team/claude/TURBO-STYLE-PLAN.md`. Current step: **1a (Project Book, built and proven)**.
+
+### Step 1a status
+
+- Done: `gw-book.js` (reader page -> Book, writer Book -> page pieces, `GW_BOOK.check()`, quiet check in Developer mode), loaded by app.html.
+- Round trip OK on: par, par2, par3, par4, probe, mini, nat, join, stop, ep, pen, snd, bench3, wide, c7, big (7,200 blocks), the owner's game (2,152 blocks: Book 462 KB, page 3,939 KB, read 49 ms, write 529 ms).
+- Still to do for 1a: finish `t_book2.js` (every palette block kind, edits, undo, self-test), run the full test list (section 5), PC build m, note, then step 1b.
+
+## 2. Next actions, in order
+
+1. Finish step 1a (above). Put it on the PC as letter m. Write `CLAUDE-CHANGES-v15.69.0m.md` on the PC and `team/claude/v15.70.14/README.txt` in the repo.
+2. Measure TurboWarp against G-Warp (section 6) and write the first table into `team/claude/VS-TURBOWARP.md`.
+3. Step 1b: undo / redo, save, export, AI report, Find read the Book; opening a Scratch file fills the Book first.
+4. Step 2: scripts become fast code (family by family, old way as safety net, removed at the end).
+5. Step 3: only the open sprite's blocks on the page. Step 4: only the scripts near the view.
+6. Paused, do when a step is finished and time allows: UI overlap / hidden parts check (owner asked 26 Nov 00:18, then said skip for now).
+7. When every step is done and G-Warp wins every row of VS-TURBOWARP.md: final app on the PC, final report with before / after, turn the scheduled task off.
+
+## 3. Setup for a fresh session (about 5 minutes)
+
+```
+# repo (needs push rights on the ai-team branch; ask for it with the add-repo tool, access "push")
+git clone https://github.com/Creapter1/gwarp /home/claude/gwarp && cd /home/claude/gwarp && git checkout ai-team
+# working tree = main (v15.69.0, commit 5542304) + the working files
+git fetch origin main && git worktree add /home/claude/rel FETCH_HEAD
+cp team/claude/work/* /home/claude/rel/
+# tools
+mkdir -p /home/claude/gwt /home/claude/ref /home/claude/priv
+cp -r team/claude/tools/gwt/. /home/claude/gwt/ && cp -r team/claude/tools/ref/. /home/claude/ref/
+cd /home/claude/ref && npm ci          # the real Scratch engine, used as referee
+```
+
+- Tests use Playwright with Chrome (`/opt/npm-tools/node_modules/playwright`, `/usr/bin/google-chrome`, flags `--no-sandbox --use-angle=swiftshader`). If they are missing: `npm i playwright` and fix the paths at the top of the test files.
+- ALWAYS test the app from `/home/claude/rel/` (it needs its sibling .js files next to app.html).
+- The owner's game is PRIVATE. Get it from his PC with the device tools: `C:\Users\mario\OneDrive\Documents\ai all worcks\G-Warp Desktop\G-Spark-Glitch-Hunt.sb3`, copy it to `/home/claude/priv/gh.sb3`. Never commit it, never upload it anywhere.
+- End of every run: copy `/home/claude/rel/{app.html,gw-*.js that changed}` to `team/claude/work/`, new tools to `team/claude/tools/`, update this file, commit, push to `ai-team`.
+
+## 4. Rules (the owner's, all still in force)
+
+- NEVER push to main or any release branch. Only the `ai-team` branch. Only the owner moves work to main.
+- PC: same update number 15.69.0, only the letter changes (`python3 /home/claude/gwt/pc_build.py <letter>`, see its header). Before EVERY write: stage the PC's current files, copy them to his `backup\before-v15690<letter>-<file>` first, then write. Never delete his files; old things go to `backup`. Never touch his other files.
+  - App folder: `C:\Users\mario\OneDrive\Documents\ai all worcks\G-Warp Desktop\app\G-Warp-win32-x64\resources\app\` (app.html + gw-*.js). A NEW sibling file (like gw-book.js) must be written there too.
+  - `pc_build.py` copies `/mnt/user-data/outputs/pc/app.html` as the backup, so first stage the PC's app.html and put it at that path.
+- A step is done ONLY when: the full app with every feature is on his PC, AND it passed the test list (section 5) on many kinds of projects. Write down which projects passed. Never say done on a guess.
+- Autopilot: no questions between steps. If something needs his OK or cannot be undone: skip it, add it to `team/claude/NEEDS-OWNER-OK.md`, keep working on the rest.
+- If a step breaks something: the PC keeps the old version. Do not ship.
+- A project must act exactly like Scratch. Extensions work like TurboWarp's. G-Warp's own look never changes. Every feature stays (Spark Studio, SVG 360, Big map, addons, AI tools, LAN, paint editor).
+- One engine at the end. No second run button. During step 2 the old way may stay as a safety net; it is removed when step 2 is done.
+- No code copied from TurboWarp or Scratch. TurboWarp is used only as a closed box to measure against. G-Warp's inside is written from TURBO-STYLE-PLAN.md.
+- Anything that changes how the app works that the owner did not ask for: OFF by default or Developer mode only. No emojis in the app (real icons). Do not build games or example projects; improve the app.
+- Notes for the owner: short, plain words, simple English. Test before claiming. Work token-efficiently.
+- Commits end with these two lines:
+  `Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>` and the `Claude-Session:` line of the session that makes the commit.
+
+## 5. Test list (run all before a PC build)
+
+In `/home/claude/gwt` (each prints its own result line):
+- `node t_par.js` (53 checks), `node t_par2.js` (28), `node t_thin.js` (14, needs the owner's game), `node t_snap.js` (7), `node t_grab.js`, `node t_undo.js` (needs the game)
+- Project Book: `node t_book.js - par.sb3 par2.sb3 par3.sb3 par4.sb3 probe.sb3 mini.sb3 nat.sb3 join.sb3 stop.sb3 ep.sb3 pen.sb3 snd.sb3 bench3.sb3 wide.sb3 c7.sb3 big.sb3`, then with `/home/claude/priv/gh.sb3`; `node t_book2.js`
+- Real Scratch referee, in `/home/claude/ref`: `node diff.js /home/claude/gwt/<name>.sb3 6000` for par (58/60, the 2 are a random glide), par2 40/40, probe 72/72, mini 22/22, nat 15/15, join 19/19, stop 17/17, ep 19/19; `par3` with 14000 ms (157/159); `par4` 6000 (59/72 on this machine, was 66/72 on a quiet one: compare with the build before, it must not get worse)
+- The owner's game: `node play.js /home/claude/priv/gh.sb3 "" 8 9000 shot.png "<js>"` must reach 3D gameplay (variable `state` = "play"), no page errors. Memory: `node mem.js /home/claude/priv/gh.sb3`. Drag: `node t_dragms.js`.
+- Speed: `cd /home/claude/ref && node bench.js` and `TAPS=8 node fps.js /home/claude/priv/gh.sb3 12000`.
+- Project zoo for the "done" rule: small (mini, nat, c7), normal (par*, probe, pen, snd), huge (big.sb3 7,200 blocks, vars2500.sb3), every block kind (t_book2 builds one from the whole palette), the owner's game. Add real Scratch projects when the owner gives some.
+
+## 6. G-Warp against TurboWarp (to do)
+
+Same projects, same machine: load time, FPS / script time, memory, editor lag on huge projects (drag a big stack, scroll).
+TurboWarp is open source: its engine can be installed from GitHub for speed runs, and a built copy of its editor can be cloned for load / memory / editor runs. Use it as a closed box only. Results go to `team/claude/VS-TURBOWARP.md`, one table, with the date and the build letters.
+
+Known numbers so far (G-Warp only, owner's game): website v15.69.0 3,583 MB; build k about 1,200 MB; build l 766 MB. Real Scratch script time in 3D gameplay 6 to 7 ms per step, G-Warp about 15 ms.
+
+## 7. Lock (so two runs never work at the same time)
+
+- File `team/claude/RUN-LOCK.md`. A run that starts reads it from GitHub first.
+- If it says `status: working` and its time is less than 2 hours 45 minutes old: stop at once, change nothing.
+- Otherwise write `status: working`, the time and the session link, commit and push, then work.
+- At the end of the run (or when stopping for any reason): set `status: free` with the time, commit and push.
+
+## 8. Run log (newest first)
+
+- 26 Nov 01:05, first session: v15.70.13 shipped to the PC as l. Plan written and approved. Step 1a started: gw-book.js built, round trip OK on 17 projects.

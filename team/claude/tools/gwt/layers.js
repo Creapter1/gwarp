@@ -1,0 +1,10 @@
+// node layers.js project.sb3 ["js after flag"] -> how many compositor layers the page has while running, and why
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox','--use-angle=swiftshader']});const p=await b.newPage({viewport:{width:1440,height:900}});p.on('dialog',d=>d.dismiss());
+await p.goto('file:///home/claude/rel/app.html');await p.waitForTimeout(3500);if(process.argv[2]!=='-'){await p.setInputFiles('#sb3ImportFile',process.argv[2]);
+await p.waitForFunction(()=>window.GW&&GW.__sb3Project===true&&document.querySelectorAll('#workspaceCanvas .scratch-block').length>0,null,{timeout:180000});await p.waitForTimeout(7000);}
+if(process.env.RUN!=='0'){await p.click('#greenFlagBtn');await p.waitForTimeout(2500);}if(process.argv[3])await p.evaluate(process.argv[3]);await p.waitForTimeout(800);
+const c=await p.context().newCDPSession(p);let layers=[];c.on('LayerTree.layerTreeDidChange',e=>{if(e.layers)layers=e.layers});await c.send('DOM.enable');await c.send('LayerTree.enable');await p.waitForTimeout(1500);
+const why={},who={};let n=0;for(const L of layers.slice(0,700)){n++;try{const r=await c.send('LayerTree.compositingReasons',{layerId:L.layerId});const k=(r.compositingReasonIds||r.compositingReasons||[]).join('+')||'none';why[k]=(why[k]||0)+1;
+ if(L.backendNodeId&&Object.keys(who).length<400){try{const d=await c.send('DOM.describeNode',{backendNodeId:L.backendNodeId});const a=d.node.attributes||[];const cls=a[a.indexOf('class')+1]&&a.indexOf('class')>=0?a[a.indexOf('class')+1].split(' ').slice(0,2).join('.'):'';const id=a.indexOf('id')>=0?'#'+a[a.indexOf('id')+1]:'';const w=k+' <'+d.node.nodeName.toLowerCase()+id.replace(/\d+/g,'N')+(cls?'.'+cls:'')+'>';who[w]=(who[w]||0)+1}catch(e){}}}catch(e){}}
+console.log('layers',layers.length);console.log(Object.entries(who).sort((a,b)=>b[1]-a[1]).slice(0,18).map(x=>String(x[1]).padStart(5)+'  '+x[0]).join('\n'));await b.close()})();

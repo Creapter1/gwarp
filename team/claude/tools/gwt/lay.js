@@ -1,0 +1,11 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});const p=await b.newPage({viewport:{width:1440,height:900}});p.on('dialog',d=>d.dismiss());
+await p.goto('file:///home/claude/rel/app.html');await p.waitForTimeout(3500);await p.setInputFiles('#sb3ImportFile',process.argv[2]);
+await p.waitForFunction(()=>window.GW&&GW.__sb3Project===true&&document.querySelectorAll('#workspaceCanvas .scratch-block').length>0,null,{timeout:180000});await p.waitForTimeout(40000);
+console.log(JSON.stringify(await p.evaluate(()=>{const ws=document.getElementById('workspaceCanvas'),st=[...ws.querySelectorAll(':scope > .block-stack')];const T=f=>{const t=performance.now();f();return Math.round(performance.now()-t)};
+const hidden=st.filter(s=>s.classList.contains('gw8-other-sprite')).length;
+const a=T(()=>{st[0].style.left=(parseFloat(st[0].style.left)+1)+'px';void st[0].offsetWidth});
+const b2=T(()=>{st.forEach(s=>s.classList.remove('gw8-other-sprite'));void st[0].offsetWidth});
+const c=T(()=>{st[5].style.left=(parseFloat(st[5].style.left)+1)+'px';void st[5].offsetWidth});
+const d=T(()=>{st.forEach(s=>void s.offsetWidth)});
+return {stacks:st.length,hidden,one_visible_relayout:a,show_all_and_layout:b2,all_visible_relayout_after_small_change:c,read_all:d,cs:getComputedStyle(st[0]).display+' '+getComputedStyle(st[0]).position+' contain:'+getComputedStyle(st[0]).contain}})));await b.close()})();

@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><body><canvas id="c" width="480" height="360"></canvas>
+<script src="node_modules/scratch-storage/dist/web/scratch-storage.js"></script>
+<script src="node_modules/scratch-svg-renderer/dist/web/scratch-svg-renderer.js"></script>
+<script src="node_modules/scratch-render/dist/web/scratch-render.js"></script>
+<script src="node_modules/scratch-vm/dist/web/scratch-vm.js"></script>
+<script>
+// Reference runner: the real Scratch engine (scratch-vm + scratch-render), used only to compare results with G-Warp.
+window.boot = async function (buf) {
+  const pick = g => (g && (g.default || g.ScratchStorage || g.VirtualMachine || g.RenderWebGL)) || g;
+  const vm = new (pick(window.VirtualMachine))(); window.vm = vm;
+  vm.attachRenderer(new (pick(window.ScratchRender))(document.getElementById('c')));
+  vm.attachStorage(new (pick(window.ScratchStorage))());
+  vm.attachV2BitmapAdapter(new window.ScratchSVGRenderer.BitmapAdapter());
+  vm.setCompatibilityMode(true);
+  await vm.loadProject(buf); vm.start(); return true;
+};
+window.vars = () => { const st = vm.runtime.getTargetForStage(), o = {}; for (const k in st.variables) { const v = st.variables[k]; o[v.name] = v.value; } return o; };
+window.__ready = () => String(window.vars().ready) === '1';
+window.sprites = () => vm.runtime.targets.filter(t => t.isOriginal && !t.isStage).map(t => ({ name: t.sprite.name, x: t.x, y: t.y, direction: t.direction, size: t.size, costume: t.currentCostume + 1, visible: t.visible }));
+</script></body></html>

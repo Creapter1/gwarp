@@ -1,0 +1,10 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox','--autoplay-policy=no-user-gesture-required']});
+const p=await b.newPage({viewport:{width:1440,height:900}});const errs=[];p.on('pageerror',e=>errs.push(e.message.slice(0,200)));p.on('console',m=>{if(/sound|audio|decode/i.test(m.text()))errs.push('C:'+m.text().slice(0,200))});
+await p.addInitScript(()=>{window.__s=[];const o=AudioBufferSourceNode.prototype.start;AudioBufferSourceNode.prototype.start=function(){__s.push(['buf',this.buffer&&+this.buffer.duration.toFixed(2),this.loop]);return o.apply(this,arguments)};const pl=HTMLMediaElement.prototype.play;HTMLMediaElement.prototype.play=function(){__s.push(['el',(this.src||'').slice(0,30)]);return pl.apply(this,arguments)}});
+await p.goto('file://'+(process.argv[2]||'/home/claude/rel/app.html'));await p.waitForTimeout(3500);
+await p.setInputFiles('#sb3ImportFile','/home/claude/gwt/snd.sb3');await p.waitForTimeout(3000);
+const info=await p.evaluate(()=>{const s=Engine.sprites.find(s=>s.name==='Sprite1');return (s.sounds||[]).map(x=>[x.name,x.dataFormat||x.format,typeof x.data,String(x.data||x.url||x.src||'').slice(0,40),Object.keys(x).join(',')])});
+await p.click('#greenFlagBtn');await p.waitForTimeout(4000);
+const r=await p.evaluate(()=>({starts:__s.slice(),threads:Engine.threads.length}));
+console.log(JSON.stringify({info,r,errs:[...new Set(errs)].slice(0,6)}));await b.close()})();
