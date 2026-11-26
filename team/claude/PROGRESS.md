@@ -6,8 +6,8 @@ Every run updates it before it ends. Times are US Eastern.
 ## 1. State right now
 
 - Last update: 26 Nov 2026, 09:06 (14:06 UTC), by the scheduled run of 07:18.
-- App on the owner's PC: **v15.69.0o** (= build v15.70.16). Next PC letter: **p**.
-- Working build: `team/claude/work/` = **v15.70.16** (same as the PC).
+- App on the owner's PC: **v15.69.0p** (= build v15.70.17: step 2 fast code ON, gw-fast.js). Next PC letter: **q**.
+- Working build: `team/claude/work/` = **v15.70.17** (same as the PC).
 - Website (main): still v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
 - Plan: `team/claude/TURBO-STYLE-PLAN.md`.
   - **Step 1 is done as far as its "done when" list goes** (round trip the same; undo, redo, save, reopen the same; an undo step is about 5 KB): 1a build m, 1b part a build n, 1b part b build o (`team/claude/v15.70.16/README.txt`).
@@ -110,6 +110,8 @@ Known numbers so far (G-Warp only, owner's game): website v15.69.0 3,583 MB; bui
 - At the end of the run (or when stopping for any reason): set `status: free` with the time, commit and push.
 
 ## 8. Run log (newest first)
+
+- 26 Nov 10:35, first session (lane A): STEP 2 FIRST PART SHIPPED. Build p on the PC (v15.70.17): fast code ON by default (`GW_FAST_ON=false` = old way). par3 timing fault fixed (repeat yields after its last pass like Scratch; frame clock no catch-up bursts), lone-script looping, typed constants, variables written straight to their store. bench40: count 0.17-0.32, maths 0.65-0.77, if 0.62-0.67, text 0.23-0.32 (faster than Scratch), lists 2.1-2.3, pen 2.1-2.7. Game 24.8 steps/s. Referee all same as before, par3 11/11. Next: lists, pen / go to, then values of go-between blocks (see experiments/step2/README.md 'Next').
 
 - 26 Nov 09:10, scheduled run (07:18): STEP 1b part b DONE. Build o on the PC (v15.70.16: save, AST mirror, block counter read the Book; saved game file 47 MB -> 31 MB). New tests t_save.js (19 projects OK) and t_save2.js. Full test list OK. STEP 2 started as an experiment (experiments/step2): same answers as the old way on the referee projects except one timing check of par3 (2 of 11 runs), bench40 1.3 to 2.5 times faster on 4 of 6 rows, game 23 to 28 steps per second (shipped 17 to 20). Next: step 2, action 4a.
 - 26 Nov 06:10, scheduled run (04:18): STEP 1b part a DONE. Build n on the PC (v15.70.15: undo / redo keep the Book). New test t_undob.js, 19 projects OK, full test list OK. Found for part b: saving writes an 18 MB `ast` nobody reads. Next: 1b part b (start with the save / reopen test).

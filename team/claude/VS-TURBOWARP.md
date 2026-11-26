@@ -96,3 +96,16 @@ Bigger test (`tools/gwt/bench40.sb3`, the one of OWNER-PRIORITY.md; seconds, low
 | Text | 2.536 | 0.029 | 2.071 | 0.853 | TurboWarp |
 
 The experiment is 1.3 to 2.5 times faster than build o on four rows and the same on pen. TurboWarp is still 15 to 370 times faster on every row.
+
+## Table 2 - 26 Nov 2026 10:30, G-Warp build p (v15.70.17, fast code on). bench40, seconds (2 runs for G-Warp)
+
+| Test | Scratch | TurboWarp | G-Warp build n | G-Warp build p |
+|---|---|---|---|---|
+| Count loop | 1.033 | 0.005 | 2.376 | 0.17 to 0.32 |
+| Maths | 1.783 | 0.105 | 3.824 | 0.65 to 0.77 |
+| Lists | 1.101 | 0.035 | 3.767 | 2.06 to 2.26 |
+| If / compare | 1.659 | 0.010 | 5.768 | 0.62 to 0.67 |
+| Pen | 0.422 | 0.039 | 2.449 | 2.12 to 2.73 |
+| Text | 2.536 | 0.029 | 1.969 | 0.23 to 0.32 |
+
+G-Warp now beats real Scratch on 4 rows. TurboWarp still wins every row. Owner's game: 24.8 steps/s (Scratch 29.3), script 11.9 ms per step (Scratch 10.2).
