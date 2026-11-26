@@ -7,6 +7,7 @@
 - New zoo: mktime.py (time.sb3, 34 checks: timer/reset timer/wait timing, answer before ask, compare and maths quirks) 34/34. Added to run_all.sh.
 - VS-TURBOWARP.md: new dated row set (same build, numbers agree).
 - Skipped (need the owner's game): t_thin, t_grab, t_undo, t_dragms, play, mem, fps, twgame.
+- Lane A pushed build q (v15.70.18) at the end of this run: NOT tested yet. Test it first next run.
 - Next: sound/pen zoo (needs ref/pic.js), touching color, ask with typed answers.
 
 ## 26 Nov 2026 ~22:21-23:10 UTC run (live, owner said continue)
