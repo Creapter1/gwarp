@@ -1,6 +1,6 @@
-v15.70.13 - WORK IN PROGRESS (Claude Fable, 26 Nov 2026, 00:45). NOT on the owner's PC, NOT web-ready.
-The owner stopped this round to change direction (see team/claude/TURBO-STYLE-PLAN.md). The tested release is still v15.70.12 (PC = v15.69.0k).
-Patch: app-v15.69.0-to-v15.70.13-wip.patch (over main v15.69.0: app.html, gw-svg360.js, gw-bigmap.js, gw-run-throttle.js, gw-perf.js).
+v15.70.13 (Claude Fable, 26 Nov 2026). ON THE OWNER'S PC as v15.69.0l (01:00, backups before-v15690l-app.html + before-v15690l-gw-run-throttle.js).
+Patch: app-v15.69.0-to-v15.70.13.patch (over main v15.69.0: app.html, gw-svg360.js, gw-bigmap.js, gw-run-throttle.js, gw-perf.js).
+The web-ready files for main are still the v15.70.12 ones (team/claude/v15.70.12/web-ready/); the owner has not asked for a PR.
 
 WHAT IS IN IT (on top of v15.70.12)
 1. THIN MENUS (memory). A variable / list menu with more than 24 names holds only its own name + the widest name (same block width).
@@ -20,6 +20,7 @@ WHAT IS IN IT (on top of v15.70.12)
       move). Cannot be seen on the dark code area (40 of 2,880,000 pixels differ by more than 8 levels). Back: body class gw-c-shadow.
    Measured (t_dragms.js, long freezes): pick-up 762 -> 146 ms, each move ~60 ms -> none over 50 ms, after drop 771 -> 121 ms.
 
-TESTED: t_par 53/53, t_par2 28/28, t_thin 14/14, t_grab, t_undo, drag measurements, 0 page errors.
-NOT DONE YET: Scratch-referee runs (par / probe / stop / ep), a full play-through of the owner's game, the UI overlap check the owner asked for,
-PC build "l". Do these before shipping.
+TESTED: t_par 53/53, t_par2 28/28, t_thin 14/14, t_snap 7/7 (palette to area, snap under / inside a C block / above, pull out, delete on the
+palette; same with the old drag code), t_grab, t_undo, 0 page errors. Scratch referee: par 58/60, par2 40/40, probe 72/72, mini 22/22, nat 15/15,
+join 19/19, stop 17/17, ep 19/19, par3 and par4 the same counts as v15.70.12 on the same machine. Owner's game played to 3D gameplay, no errors.
+NOT DONE: the UI overlap check (owner: skip for now).

@@ -127,3 +127,9 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 - OWNER'S DECISION (00:34-00:42): keep G-Warp's own code and look, but make the inside work the way TurboWarp does - OUR OWN build, no copied
   code, NOT a rebuild on TurboWarp. Order: plan in plain words first (team/claude/TURBO-STYLE-PLAN.md), SHOW HIM, then build step 1 (project as data).
 - Paused: UI overlap check (he asked 00:18), PC build l, PR for the web emergency (he has not said "open the PR").
+
+## State 26 Nov 01:00 - GO from the owner
+- PC = v15.69.0l (= v15.70.13). STATE letter l, next m. rel = v15.70.13. Backup /home/claude/gwt/app.v15.70.13-wip.html (same as rel).
+- Owner: order OK; old engine may stay as safety net in step 2, removed at the end. UI overlap check: skip for now. START STEP 1 (Project Book).
+- "Done" rule: a step is done only when the full app is on his PC AND it passed the project zoo (small, huge, normal, every block kind, his game):
+  load, edit, save, export, run like Scratch. Write down which projects passed.

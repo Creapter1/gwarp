@@ -10,6 +10,8 @@ Claude Fable, 26 Nov 2026. Owner's decision (26 Nov, 00:34 to 00:42): keep G-War
 - One engine. The old way of running stays only as a safety net while a step is new, and is removed when the tests are 100%.
 - Every step ships on its own, has an off switch, and is checked against real Scratch before it is turned on for everyone.
 - Owner's handover rule (26 Nov, 00:44): no rebuild from scratch. The inside changes step by step. After EVERY step the owner gets the full working app with everything in it (Spark Studio, SVG 360, Big map, addons, his look). It is tested on his game before it is handed over. If something breaks, the old version stays (backup before every write, as always).
+- Owner's "done" rule (26 Nov, 00:49 and 00:51): the goal is the app, not one game. A step is NOT done until (1) the full app with every feature is on his PC, and (2) it was tested on many kinds of projects: small, huge, normal Scratch projects, projects that use every block kind, and his game. Each must load, edit, save, export and run the way Scratch does. The list of test projects and what each one proved is written in the step's notes, so "done" always means "these projects passed", never a guess.
+- Owner's answers (00:46): the order is OK. The old way of running may stay as a safety net during step 2 and must be removed at the end, so G-Warp ends with one engine.
 
 ## Part A. How TurboWarp does it (what I found)
 
@@ -95,11 +97,6 @@ This comes before "only the open sprite", because today the engine reads the pag
 - The Scratch referee (real Scratch engine, same project, compare every result): the test sets already in the repo.
 - The app tests (53 + 28 checks), the speed bench, the memory test, and the owner's game played to gameplay.
 - A step is OFF by default (Developer mode) until all of that passes, then ON with an off switch for one release, then the switch is removed.
-
-## What I need from the owner before building
-
-1. Is the order right: Book, then fast code, then only the open sprite, then only what is near the view?
-2. The old way of running stays as a safety net during step 2 and is removed at the end of it. Is that OK with the "one engine" rule?
 
 ## Where the ideas come from
 

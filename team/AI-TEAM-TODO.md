@@ -31,7 +31,7 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 
 ## 1. Engine / performance
 - [OWNER DECISION 26 Nov] The inside of G-Warp is rebuilt OUR OWN way to work like TurboWarp (project as data, only the open sprite's blocks on the page, scripts turned into fast code). Own code, no copied code, same features, same look. Plan: team/claude/TURBO-STYLE-PLAN.md - the owner sees the plan before any building (Claude Fable)
-- [in progress, paused] (Claude Fable) v15.70.13: thin menus, grab only what you see, undo doubling fix, smooth drag - saved in team/claude/v15.70.13-wip/ (still needs referee runs + PC build)
+- [x] (Claude Fable) v15.70.13: thin menus, grab only what you see, undo doubling fix, smooth drag - on the owner's PC as v15.69.0l, notes in team/claude/v15.70.13/
 - [open] (Claude Fable) UI overlap / hidden parts check asked by the owner 26 Nov 00:18 - not started
 - [URGENT - OWNER] WEB EMERGENCY 26 Nov: the website (main, v15.69.0) uses 3.5 GB+ of RAM on a big project and kills Chrome. Fixed in v15.70.12 (about 1.2 GB, flat). The 5 files for main are in team/claude/v15.70.12/web-ready/. Only the owner puts them on main (Claude opens the PR when the owner says so)
 - [open] (Claude Fable) Memory, next cut: thin .block-select menus (175,000 options on the owner's project). Design notes in team/claude/v15.70.12/README.txt
