@@ -5,29 +5,35 @@ Every run updates it before it ends. Times are US Eastern.
 
 ## 1. State right now
 
-- Last update: 26 Nov 2026, 06:10 (11:10 UTC), by the scheduled run of 04:18.
-- App on the owner's PC: **v15.69.0n** (= build v15.70.15). Next PC letter: **o**.
-- Working build: `team/claude/work/` = **v15.70.15** (same as the PC).
+- Last update: 26 Nov 2026, 09:05 (14:05 UTC), by the scheduled run of 07:18.
+- App on the owner's PC: **v15.69.0o** (= build v15.70.16). Next PC letter: **p**.
+- Working build: `team/claude/work/` = **v15.70.16** (same as the PC).
 - Website (main): still v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
-- Plan: `team/claude/TURBO-STYLE-PLAN.md`. **Step 1a is DONE** (on the PC, proven on 19 projects, see `team/claude/v15.70.14/README.txt`). Current step: **1b**. Part a of 1b (undo keeps the Book) is DONE and on the PC, see `team/claude/v15.70.15/README.txt`.
-- Scheduled task "G-Warp autopilot (every 3 hours)" was created 26 Nov 01:18 (first run about 04:18). It is bound to the owner's computer.
+- Plan: `team/claude/TURBO-STYLE-PLAN.md`.
+  - **Step 1 is done as far as its "done when" list goes** (round trip the same; undo, redo, save, reopen the same; an undo step is about 5 KB): 1a build m, 1b part a build n, 1b part b build o (`team/claude/v15.70.16/README.txt`).
+  - Left over from 1b and moved to the start of step 3, where they are needed: Find and the AI report read the Book; opening a Scratch file fills the Book first; a faster writer.
+  - **Step 2 has started as an experiment** (not in the app, not on the PC): `team/claude/experiments/step2/` (read its README.md first). It gives the same answers as the old way on all 10 referee projects and the owner's game runs at 23 to 28 steps per second with it (shipped build: 17 to 20, real Scratch: 29).
+- Scheduled task "G-Warp autopilot (every 3 hours)" is bound to the owner's computer.
 
 ## 2. Next actions, in order
 
 **READ `team/claude/OWNER-PRIORITY.md` FIRST (owner, 26 Nov 08:55): speed against TurboWarp is the only thing that matters to him now. Finish the 1b part in progress, ship it, then go straight to STEP 2 (fast code). The rest of step 1b waits until before step 3.**
 
-1. (done) Step 1a on the PC as letter m.
-2. (done, first table) `team/claude/VS-TURBOWARP.md`: script speed and the owner's game measured on Scratch, TurboWarp and G-Warp. TurboWarp wins every speed row (0.5 ms script time on the game, G-Warp 16 ms). Editor rows for TurboWarp are NOT measured (see NEEDS-OWNER-OK.md). Run the table again after every step.
-3. Step 1b, in small parts, each one tested and shipped:
-   a. (DONE, PC build n) Undo / redo keep the Book. Owner's game: 5 KB per undo step (was 3,900 KB), one Undo 0.13 to 0.3 s (was 1.4 to 2 s). Old way still there behind `GW_UNDO_BOOK = false`; remove that switch one release later.
-   b. NEXT. Save, `window.GW_AST`, the AI report, Find and the block counter read the Book. What this run found:
-      - `GW9.captureAST()` (app.html, near "Versioned AST mirror") keeps `html: block.outerHTML` for every block, nested. On the owner's game: 18 MB, 166 ms to build + 172 ms to turn into text. Both save functions (`GW.saveProject`, two places, search `ast:`) write it into every saved file. Nothing in the app reads `ast` back on load (load uses `stacks[].html`).
-      - Safe order: (1) FIRST write a save / reopen test (`t_save.js`: save, load the saved file, `GW_BOOK.plain` before and after must be equal, on the whole zoo + the game). (2) Then make captureAST build from `GW_BOOK.get()` without the nested html (keep the same field names: type, breakpoint, slots, body, elseBody). (3) Then save writes the Book form next to `stacks` and load prefers it. Keep `stacks[].html` in the file for one release so an older G-Warp can still open new files.
-      - Find: search `gw10-find-hit` (about line 21000). Block counter: search `Blocks: ${blocks}` (it counts page pieces every 0.6 s while running; `GW_BOOK.get().blocks` is the same number on the game, 2,152).
-   c. Opening a Scratch file fills the Book first and builds the page from it (also removes the 49 empty script boxes the import leaves on the owner's game; today undo keeps them as they are).
-   d. Speed up the writer. Today: bring back all 58 scripts of the game 1.1 to 1.7 s, all 601 scripts of big.sb3 2.1 s (step 3 needs under 0.3 s per sprite): most of the time is drawing what sits in the slots (`GW9.setSlotNode`). Also the reader: every undo step reads the whole page (about 60 to 150 ms on the game); a per-script cache would make it near 0, but typed values change without a page event, so be careful.
-4. Step 2: scripts become fast code (family by family, old way as safety net, removed at the end).
-5. Step 3: only the open sprite's blocks on the page. Step 4: only the scripts near the view.
+1. (done) Step 1a, build m. 2. (done, first table) VS-TURBOWARP.md. 3a. (done) Undo keeps the Book, build n. 3b. (done) Save, AST mirror and block counter read the Book, build o.
+4. **NEXT: Step 2, scripts become fast code.** Set up the experiment as `experiments/step2/README.md` says (2 minutes), then:
+   a. Go on with its "Next, in this order" list (variables without the name search, My Block inputs as locals, list blocks, go to x y, pen, values of go-between blocks, fold the 3 step wrappers into the driver). After every family: `sh /home/claude/gwt/F3.sh` (referee with fast code OFF and ON, t_par, game speed, bench). Every referee number must stay the same as the old way.
+   a2. Measure with the bigger test the owner's priority note names: `tools/gwt/bench40.sb3`, `tools/tw/twbench.js`, 3 runs each, middle value, and put the table in the ship note. The target is in OWNER-PRIORITY.md (every row at or under TurboWarp's time).
+   a3. par3 with fast code ON: 2 of 11 runs gave 156/159 (`q02: Scratch true, G-Warp false`), the others 157. Run par3 ten times the OLD way too. If only fast code does it, find it before anything ships (look at what q02 tests in `mkpar3.py`).
+   b. Close the "known gaps" of the README (edit while running, breakpoints, glow). Only then may it go into the app, OFF by default (Developer mode switch), with the full test list of section 5, and to the PC.
+   c. Then ON by default with an off switch for one release, then remove the old way (one engine).
+   d. Small speed fix found on the way, ready in the experiment's patch (the `geo` / `pointAt` part): the Power lines sparks asked the browser for the wire length and point on every frame (9% of all work while the owner's game ran). Same look. It must pass the full test list and a look at the sparks (screenshot of the code area while the game runs) before it goes to the PC; ship it with the next PC build. Off switch: `window.GW_PL_GEO = false`.
+   e. Seen in the same profile, not started: `querySelectorAll` takes 6% while the game runs (Power lines `layout2`, and `refresh` near line 27320). Find out who asks and cache it.
+5. Step 3: only the open sprite's blocks on the page. First its left-overs from 1b:
+   - Find (`gw10-find-hit`, about line 21000) and the AI report (`scriptsText`, about line 21380) read the Book. Both also match the text of round blocks inside slots, so write a parity test first (same hits as today on the zoo).
+   - Opening a Scratch file fills the Book first (the importer builds page pieces today, about line 13017). The "49 empty script boxes" of the owner's game were a mistake: they are 49 comment boxes.
+   - Faster writer: bring back all 58 scripts of the game 0.7 s, big.sb3 1.0 s (step 3 needs under 0.3 s per sprite). 60% of it is `GW9.setSlotNode` drawing what sits in the slots (1,585 slots, 946 different).
+   - Remove `stacks[].html` from saved files one release after build o (the Book is in the file now), and the switches `GW_UNDO_BOOK`, `GW_SAVE_BOOK`.
+   Then step 4: only the scripts near the view.
 6. Paused, do when a step is finished and time allows: UI overlap / hidden parts check (owner asked 26 Nov 00:18, then said skip for now).
 7. When every step is done and G-Warp wins every row of VS-TURBOWARP.md: final app on the PC, final report with before / after, turn the scheduled task off.
 
@@ -49,6 +55,8 @@ cd /home/claude/ref && npm ci          # the real Scratch engine, used as refere
 - ALWAYS test the app from `/home/claude/rel/` (it needs its sibling .js files next to app.html).
 - The owner's game is PRIVATE. Get it from his PC with the device tools: `C:\Users\mario\OneDrive\Documents\ai all worcks\G-Warp Desktop\G-Spark-Glitch-Hunt.sb3`, copy it to `/home/claude/priv/gh.sb3`. Never commit it, never upload it anywhere.
 - The scheduled run has no add-repo tool: the repo is already cloned at `/home/claude/gwarp` and pushing to `ai-team` works. The PC folder is not connected at start: call `device_request_folder_access` for `C:\Users\mario\OneDrive\Documents\ai all worcks\G-Warp Desktop` once (it was granted at once on 26 Nov).
+- `t_par2.js` needs `par2.json` (now in tools/gwt). `bench.js` needs the project: `node bench.js /home/claude/gwt/bench.sb3 [app.html]`. Lines of app.html are very long: search with `sh /home/claude/gwt/g.sh '<regex>'` (shows 120 letters around each hit).
+- The machine's speed moves a lot between runs (the same build gave 17 to 20 steps per second on the game). Measure old and new in the SAME run, twice, and write ranges.
 - A shell command is cut after 10 minutes. Run long test sets in the background (`nohup sh all.sh > all.log &`) and read the log. `t_undob.js` takes about 40 s per project. To compare with the build before: `git worktree add /home/claude/base origin/main && cp team/claude/work/* /home/claude/base/` BEFORE changing work/, then pass `/home/claude/base/app.html` to diff.js / fps.js.
 - End of every run: copy `/home/claude/rel/{app.html,gw-*.js that changed}` to `team/claude/work/`, new tools to `team/claude/tools/`, update this file, commit, push to `ai-team`.
 
@@ -71,8 +79,10 @@ cd /home/claude/ref && npm ci          # the real Scratch engine, used as refere
 
 ## 5. Test list (run all before a PC build)
 
+Quick way: in `/home/claude/gwt` run `nohup sh A.sh > A.log &` and `nohup sh B.sh > B.log &` together (app tests, Book, save; undo on the zoo: about 15 minutes), then `nohup sh C.sh > C.log &` alone (referee, game, memory, speed: about 12 minutes; it compares with `/home/claude/base`).
 In `/home/claude/gwt` (each prints its own result line):
 - `node t_par.js` (53 checks), `node t_par2.js` (28), `node t_thin.js` (14, needs the owner's game), `node t_snap.js` (7), `node t_grab.js`, `node t_undo.js` (needs the game)
+- Save / reopen: `node t_save.js PALETTE mini.sb3 ... big.sb3 vars2500.sb3 /home/claude/priv/gh.sb3` (`sh save_all.sh` runs the whole zoo; every line must say OK), and `node t_save2.js par3.sb3 par4.sb3 /home/claude/priv/gh.sb3` (old, damaged and unsafe files)
 - Undo keeps the Book: `node t_undob.js PALETTE mini.sb3 par.sb3 ... big.sb3 vars2500.sb3 /home/claude/priv/gh.sb3` (one project per call is safest; every line must say OK; `OLD=1` runs the old way for comparing)
 - Project Book: `node t_book.js - par.sb3 par2.sb3 par3.sb3 par4.sb3 probe.sb3 mini.sb3 nat.sb3 join.sb3 stop.sb3 ep.sb3 pen.sb3 snd.sb3 bench3.sb3 wide.sb3 c7.sb3 big.sb3`, then with `/home/claude/priv/gh.sb3`; `node t_book2.js`
 - Real Scratch referee, in `/home/claude/ref`: `node diff.js /home/claude/gwt/<name>.sb3 6000` for par (58/60, the 2 are a random glide), par2 40/40, probe 72/72, mini 22/22, nat 15/15, join 19/19, stop 17/17, ep 19/19; `par3` with 14000 ms (157/159); `par4` 6000 (59/72 on this machine, was 66/72 on a quiet one: compare with the build before, it must not get worse)
@@ -98,6 +108,7 @@ Known numbers so far (G-Warp only, owner's game): website v15.69.0 3,583 MB; bui
 
 ## 8. Run log (newest first)
 
+- 26 Nov 09:10, scheduled run (07:18): STEP 1b part b DONE. Build o on the PC (v15.70.16: save, AST mirror, block counter read the Book; saved game file 47 MB -> 31 MB). New tests t_save.js (19 projects OK) and t_save2.js. Full test list OK. STEP 2 started as an experiment (experiments/step2): same answers as the old way on 10 referee projects, game 23 to 28 steps per second (shipped 17 to 20). Next: step 2, action 4a.
 - 26 Nov 06:10, scheduled run (04:18): STEP 1b part a DONE. Build n on the PC (v15.70.15: undo / redo keep the Book). New test t_undob.js, 19 projects OK, full test list OK. Found for part b: saving writes an 18 MB `ast` nobody reads. Next: 1b part b (start with the save / reopen test).
 - 26 Nov 02:15, first session: first G-Warp / TurboWarp / Scratch table written (VS-TURBOWARP.md). Next: step 1b part a (undo keeps the Book).
 - 26 Nov 01:50, first session: STEP 1a DONE. Build m on the PC (v15.70.14: gw-book.js). Scheduled task created. Next: TurboWarp table, step 1b.

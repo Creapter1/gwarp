@@ -1,0 +1,4 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox','--use-angle=swiftshader']});const p=await b.newPage();p.on('dialog',d=>d.dismiss());p.on('pageerror',e=>console.log('pageerror',e.message.slice(0,200)));p.on('console',m=>{if(/fast/i.test(m.text()))console.log('  page:',m.text().slice(0,300))});
+ await p.goto('file://'+(process.argv[3]||'/home/claude/x2/app-fast.html'));await p.waitForTimeout(3000);await p.setInputFiles('#sb3ImportFile',process.argv[2]);await p.waitForTimeout(+process.argv[5]||3000);await p.click('#greenFlagBtn');await p.waitForTimeout(+process.argv[4]||4000);
+ console.log(JSON.stringify(await p.evaluate(()=>({stats:window.GW_FAST&&GW_FAST.stats,threads:(Engine.threads||[]).length,gen:(Engine.threads||[]).filter(t=>t.__gen).length}))));await b.close()})();

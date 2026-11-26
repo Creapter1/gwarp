@@ -1,0 +1,86 @@
+--- /home/claude/rel/app.html	2026-11-26 13:07:33.032839838 +0000
++++ app.html	2026-11-26 13:33:50.380933600 +0000
+@@ -12074,11 +12074,17 @@
+     if (this.motionTween) { const m = this.motionTween, k = Math.min(1, (now - m.start) / m.dur); this.sprite.x = m.sx + (m.tx - m.sx) * k; this.sprite.y = m.sy + (m.ty - m.sy) * k; if (k >= 1) { this.sprite.x = m.tx; this.sprite.y = m.ty; this.motionTween = null; } /* v15.70.3: a glide ends exactly on its target, like Scratch */ else return; }
+     GW.__act = (GW.__act | 0) + 1; // v15.70.3: this script really ran in this pass (it was not waiting)
+     if (this.behaviorRuntime) this.behaviorAttachment = this.behaviorAttachment || { attributes: {} };
+-    if (!this.__live) { this.__live = true; initFrames(this); }
++    if (!this.__live) { this.__live = true; if (!(window.GW_FAST && window.GW_FAST.start(this))) initFrames(this); }
+     guardStart(this);
+     if (GW8.__bpEp !== GW.__wsEpoch) { GW8.__bpEp = GW.__wsEpoch; GW8.__bpAny = document.querySelector('#workspaceCanvas [data-breakpoint="true"]') ? 1 : 0; } // v15.70.5 (speed): breakpoints are only looked for when the code has one
+-    const start = now; let ops = 0;
++    const start = now;
++    if (this.__gen) return window.GW_FAST.drive(this, start);
++    return this.__gwLoop(start, now, -1);
++  };
++  ScriptThread.prototype.__gwLoop = function (start, now, floor) {
++    let ops = 0;
+     while (true) {
++      if (floor >= 0 && this.callStack.length <= floor) return 0;
+       if (this.finished || !Engine.isRunning) return;
+       if (this.__pep !== GW.__wsEpoch) { pruneRemoved(this); this.__pep = GW.__wsEpoch; } if (this.finished) return; // v15.47.1: frames pushed since the last check come from blocks that are in the code area
+       const f = this.callStack[this.callStack.length - 1];
+@@ -12112,6 +12118,7 @@
+       if (ops > 50 && (ops & 7) === 0) { now = performance.now(); if (now - start > FRAME_MS && !warpOn(this)) return; }
+     }
+   };
++  GW.__runner = { runOne, cond, kids, thenBody, elseBody, callCustom, warpOn, heavy, RETRY, waiting, LIMIT_OPS, FRAME_MS, WARP_MS };
+   window.GW_V1580_RUNNER = { version: '15.8.0', live: true };
+ })();
+ 
+@@ -15313,7 +15320,9 @@
+       FN.key_pressed = (th, nd) => window.GW.isKeyDown(nd.key || 'space');
+       FN.op_length = (th, nd) => String(G9.evalNode(th, nd.args?.[0])).length;
+       FN.op_letter = (th, nd) => { const i = (nf(G9.evalNode(th, nd.args?.[0])) || 0) - 1, st = String(G9.evalNode(th, nd.args?.[1])); return i < 0 || i >= st.length ? '' : st.charAt(i); };
+-      FN.op_mathop = (th, nd, ow) => { const v = Number(G9.evalNode(th, nd.args?.[0], 'value', ow)) || 0, op = nd.op, f = (hasO.call(MOP, op) ? MOP[op] : ({})[op]) || MID; if (op === 'tan') { const t = ((v % 360) + 360) % 360; if (t === 90) return Infinity; if (t === 270) return -Infinity; } const r = f(v); return (Number.isFinite(r) && (op === 'sin' || op === 'cos' || op === 'tan')) ? Math.round(r * 1e10) / 1e10 : r; };
++      const mathop = (x, op) => { const v = Number(x) || 0, f = (hasO.call(MOP, op) ? MOP[op] : ({})[op]) || MID; if (op === 'tan') { const t = ((v % 360) + 360) % 360; if (t === 90) return Infinity; if (t === 270) return -Infinity; } const r = f(v); return (Number.isFinite(r) && (op === 'sin' || op === 'cos' || op === 'tan')) ? Math.round(r * 1e10) / 1e10 : r; };
++      FN.op_mathop = (th, nd, ow) => mathop(G9.evalNode(th, nd.args?.[0], 'value', ow), nd.op);
++      G9.fastK = { num, cmp, listIndex, mathop, nf }; G9.fastFN0 = Object.assign({}, FN); // step 2: the made code uses these very same helpers; a reporter another layer replaced later is not made into code
+     }
+     G9.evalNode = function (th, node, expected, owner) { if (!node) return expected === 'boolean' ? false : ''; const f = FN[node.type]; return f ? f(th, node, owner) : slow.apply(this, arguments); };
+     G9.scratchCompare = cmp;
+@@ -24565,9 +24574,24 @@
+   }
+ 
+   /* ---------- sparks running along a wire ---------- */
++  /* Claude, speed (measured in the owner's game: 9% of all work while it ran): asking the browser "how long is this wire" and "where is the
++     point at this length" made it work out the page again every time. A wire's length and a row of points along it are now asked once per
++     wire shape and reused; a spark moves between those points (they are 6 px apart, so it runs on the same line). */
++  const geoByD = new Map();
++  function geo(w) {
++    const d = w.core.getAttribute('d') || ''; let g = geoByD.get(d); if (g) return g;
++    let len = 0; try { len = w.core.getTotalLength(); } catch {}
++    g = { len, n: 0, pts: null }; if (geoByD.size > 600) geoByD.clear(); geoByD.set(d, g); return g;
++  }
++  function pointAt(w, dist) {
++    const g = geo(w); if (!g.len) return null;
++    if (!g.pts) { const n = Math.max(2, Math.min(240, Math.ceil(g.len / 6))), a = new Float32Array((n + 1) * 2); for (let i = 0; i <= n; i++) { const p = w.core.getPointAtLength(g.len * i / n); a[i * 2] = p.x; a[i * 2 + 1] = p.y; } g.pts = a; g.n = n; }
++    const f = Math.max(0, Math.min(1, dist / g.len)) * g.n, i = Math.min(g.n - 1, Math.floor(f)), k = f - i, a = g.pts;
++    return { x: a[i * 2] + (a[i * 2 + 2] - a[i * 2]) * k, y: a[i * 2 + 1] + (a[i * 2 + 3] - a[i * 2 + 1]) * k };
++  }
+   function spark(w, now) {
+     if (reduce.matches || !w.core || PL.sparks.length > 40) return;
+-    let len = 0; try { len = w.core.getTotalLength(); } catch {} if (!len) return;
++    const len = geo(w).len; if (!len) return;
+     const c = mk('circle', { class: 'gw-pl-spark gw-pl-' + w.kind, r: 3.4, cx: -99, cy: -99 }, sparkG);
+     PL.sparks.push({ c, w, len, t0: now, dur: Math.min(700, 240 + len * 0.9) });
+   }
+@@ -24588,7 +24612,7 @@
+     for (let i = PL.sparks.length - 1; i >= 0; i--) {
+       const s = PL.sparks[i], f = (now - s.t0) / s.dur;
+       if (f >= 1 || !s.w.core.isConnected) { s.c.remove(); PL.sparks.splice(i, 1); continue; }
+-      try { const pt = s.w.core.getPointAtLength(s.len * f); s.c.setAttribute('cx', pt.x.toFixed(1)); s.c.setAttribute('cy', pt.y.toFixed(1)); } catch {}
++      try { const pt = window.GW_PL_GEO === false ? s.w.core.getPointAtLength(s.len * f) : pointAt(s.w, s.len * f); if (pt) { s.c.setAttribute('cx', pt.x.toFixed(1)); s.c.setAttribute('cy', pt.y.toFixed(1)); } } catch {}
+     }
+   }
+   let visAt = -1e9, visIs = false; // v15.70.9 (Claude, steady frames): asked every frame, this made the browser lay the page out every frame while a project ran; the answer is now reused for half a second
+@@ -29730,7 +29754,8 @@
+ </script>
+ <script src="gw-svg360.js" onerror="this.remove()"></script><!-- Claude 23 Nov: SVG 360 (turn a vector costume in 3D), Developer mode until approved -->
+ <script src="gw-bigmap.js" onerror="this.remove()"></script><!-- Claude 23 Nov: Big map (parallax layers / giant maps, plain Scratch code), Developer mode until approved -->
+-<script src="gw-book.js" onerror="this.remove()"></script><!-- Claude 26 Nov: the Project Book (the scripts as plain data). Step 1a of team/claude/TURBO-STYLE-PLAN.md: nothing depends on it yet -->
++<script src="gw-book.js" onerror="this.remove()"></script>
++<script src="gw-fast.js" onerror="this.remove()"></script><!-- Claude 26 Nov: the Project Book (the scripts as plain data). Step 1a of team/claude/TURBO-STYLE-PLAN.md: nothing depends on it yet -->
+ <script id="gw-claude-typed-undo">/* Claude (22 Nov, fuzzer find): a value typed into a block lives only in the input's .value, but undo snapshots copy the
+    code area's HTML - so the snapshot kept the OLD value, typing never made an undo step, and Undo+Redo lost what was typed.
+    Now every snapshot first writes the typed values into the HTML, and finishing an edit (change / Enter / Tab / leaving the

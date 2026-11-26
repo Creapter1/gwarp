@@ -54,3 +54,32 @@ Build n changes only Undo / Redo (plan step 1b, part a). Script speed is not tou
 
 The machine was slower in this run than in Table 1 (Scratch itself went from 8.3 to 10.4 ms per step), so 19 against 21 steps per second is the machine, not the build: m and n were measured one after the other and are the same.
 TurboWarp's editor (undo time, memory, drag lag) is still not measured: see NEEDS-OWNER-OK.md, line 0.
+
+## Update - 26 Nov 2026, 08:30, G-Warp build o (v15.70.16) and the step 2 experiment
+
+Build o changes only Save (plan step 1b, part b). Script speed is not touched. TurboWarp was not run again in this run: its rows are the ones of Table 1.
+
+| Measure (owner's game, G-Warp only) | Build n | Build o |
+|---|---|---|
+| Saved project file | 47.3 MB | 30.8 MB |
+| Making the save data | about 0.42 s | about 0.25 s |
+| Steps per second in 3D gameplay, same run (real Scratch: 28.6) | 18.2 | 18.9 |
+| Tab memory with the game open | 698 MB | 698 MB |
+
+Step 2 experiment (scripts as fast code, first third, NOT in the app yet; details in `experiments/step2/README.md`). Same machine, same run, several runs each; the machine's speed moves, so ranges:
+
+| Test | Scratch | TurboWarp (Table 1) | G-Warp build o | G-Warp experiment | Winner |
+|---|---|---|---|---|---|
+| Count loop (s) | 0.036 to 0.056 | 0.001 | 0.115 | 0.06 to 0.09 | TurboWarp |
+| Maths (s) | 0.049 to 0.08 | 0.004 | 0.179 | 0.07 to 0.08 | TurboWarp |
+| Lists (s) | 0.024 to 0.028 | 0.004 | 0.122 | 0.11 to 0.13 | TurboWarp |
+| If / compare (s) | 0.037 to 0.051 | 0.003 | 0.195 | 0.06 to 0.07 | TurboWarp |
+| Pen (s) | 0.017 to 0.026 | 0.014 | 0.077 | 0.06 to 0.08 | TurboWarp |
+| Text (s) | 0.012 to 0.014 | 0.003 | 0.087 | 0.035 to 0.05 | TurboWarp |
+| Plain loop turns in 2 s | 3.3 to 3.9 million | 18.4 million | 0.86 million | 0.6 to 1.1 million | TurboWarp |
+| Owner's game, steps per second | 27.9 to 29.6 | 29.8 | 17.3 to 20.3 | 22.7 to 28.2 | TurboWarp |
+| Owner's game, script time per step | 9.6 to 11.2 ms | 0.5 ms | 18.3 to 19.9 ms | 11.6 to 15.4 ms | TurboWarp |
+
+G-Warp still loses every speed row, also with the experiment. The experiment gives the same answers as the old way on all 10 referee projects
+(one of five runs of par3 gave 156 of 159 where the others gave 157; not explained yet).
+Editor rows for TurboWarp (load, memory, drag lag) are still not measured: NEEDS-OWNER-OK.md, line 0.
