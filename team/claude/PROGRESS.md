@@ -17,6 +17,8 @@ Every run updates it before it ends. Times are US Eastern.
 
 ## 2. Next actions, in order
 
+**THREE LANES since 26 Nov 09:16 (team/claude/lanes/LANES.md): you are lane A. At the start of every run also read lanes/gpu/PROGRESS.md (plug in a READY version) and lanes/tests/BUGS.md (fix bugs first).**
+
 **READ `team/claude/OWNER-PRIORITY.md` FIRST (owner, 26 Nov 08:55): speed against TurboWarp is the only thing that matters to him now. Finish the 1b part in progress, ship it, then go straight to STEP 2 (fast code). The rest of step 1b waits until before step 3.**
 
 1. (done) Step 1a, build m. 2. (done, first table) VS-TURBOWARP.md. 3a. (done) Undo keeps the Book, build n. 3b. (done) Save, AST mirror and block counter read the Book, build o.
