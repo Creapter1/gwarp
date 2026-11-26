@@ -1,0 +1,10 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox','--use-angle=swiftshader']});
+ const f=process.argv[2];const p=await b.newPage({viewport:{width:1600,height:950}});p.on('dialog',d=>d.dismiss());
+ await p.goto('file:///home/claude/rel/app.html');await p.waitForTimeout(3000);await p.setInputFiles('#sb3ImportFile',f);await p.waitForFunction(()=>window.GW&&GW.__sb3Project===true&&document.querySelectorAll('#workspaceCanvas .scratch-block').length>0,null,{timeout:240000});await p.waitForTimeout(7000);
+ console.log(JSON.stringify(await p.evaluate(()=>{const d=GW_PROJECT_DATA(),B=GW_BOOK,o={};const med=fn=>{const a=[];for(let i=0;i<3;i++){const t=performance.now();fn();a.push(Math.round(performance.now()-t))}return a.join('/')};
+  o.html=med(()=>{d.stacks.forEach(s=>{const st=document.createElement('div');st.innerHTML=GW_SAFE.html(s.html)})});
+  o.book=med(()=>{const pk=JSON.parse(JSON.stringify(d.book));d.stacks.forEach((s,i)=>{const st=document.createElement('div');B.unpack(pk,i,st)})});
+  const real=GW9.setSlotNode;let n=0,t=0;const keys=new Set();GW9.setSlotNode=(a,e)=>{n++;keys.add(JSON.stringify(e));const t0=performance.now();real(a,e);t+=performance.now()-t0};
+  {const pk=JSON.parse(JSON.stringify(d.book));d.stacks.forEach((s,i)=>{const st=document.createElement('div');B.unpack(pk,i,st)})}GW9.setSlotNode=real;o.slots=n;o.slotMs=Math.round(t);o.uniqueExpr=keys.size;
+  o.pack=med(()=>B.pack());return o})));await b.close()})();

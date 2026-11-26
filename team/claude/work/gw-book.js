@@ -232,7 +232,50 @@
   /* how many letters the given steps keep in memory together (a text shared by many steps counts once) */
   const stepChars = steps => { const seen = new Set(); let n = 0; for (const st of steps) if (st && st.items) for (const s of st.items) if (!seen.has(s)) { seen.add(s); n += s.length; } return n; };
 
-  window.GW_BOOK = { version: 2, read, write, check, get, plain, idOf, same, last: null, touch: () => { dirty = true; }, snap, unsnap, stepHtml, sameStep, stepChars, itemOf, kindText: k => K.list[k] };
+  /* ---------- step 1b part b (26 Nov): Save and the AST mirror read the Book ----------
+     pack()    the scripts of the code area for a saved file: one row of block trees per script, in page order (the same order as the
+               file's `stacks`), with its own small table of block forms. A box that is not a plain script (comment, empty box) is null:
+               the file's page text is used for it, as before.
+     unpack()  build script i of a saved pack into an empty script box. Every block form goes through the app's safety filter first.
+     ast()     the AST mirror (type, breakpoint, slots, body, elseBody) made from a pack, without a page copy of every block. */
+  function pack(root) {
+    const ws = root || document.getElementById('workspaceCanvas'), kinds = [], map = new Map(), scripts = [];
+    const re = x => { let k = map.get(x.k); if (k === undefined) { k = kinds.length; kinds.push(K.list[x.k]); map.set(x.k, k); } const y = { k }; if (x.f) y.f = x.f; if (x.s) y.s = x.s; if (x.m) y.m = x.m.map(r => r.map(re)); return y; };
+    if (ws) for (let st = ws.firstElementChild; st; st = st.nextElementSibling) if (st.classList.contains('block-stack')) scripts.push(plainScript(st) ? blocksIn(st).map(b => re(treeOf(b))) : null);
+    return { v: 1, kinds, scripts };
+  }
+  const packTpl = new WeakMap();
+  function unpack(pk, i, stack) {
+    const row = pk && pk.v === 1 && Array.isArray(pk.kinds) && Array.isArray(pk.scripts) ? pk.scripts[i] : null;
+    if (!Array.isArray(row) || !row.length || !window.GW_SAFE) return false;
+    let tpls = packTpl.get(pk); if (!tpls) packTpl.set(pk, tpls = []);
+    const set = window.GW9 && window.GW9.setSlotNode;
+    const build = x => {
+      let tpl = tpls[x.k];
+      if (!tpl) { const text = pk.kinds[x.k]; if (typeof text !== 'string') throw new Error('no block form ' + x.k); tpl = document.createElement('template'); tpl.innerHTML = window.GW_SAFE.html(text); const first = tpl.content.firstElementChild; if (!first || !isBlock(first) || tpl.content.childElementCount !== 1) throw new Error('bad block form ' + x.k); tpls[x.k] = tpl; }
+      const b = tpl.content.firstElementChild.cloneNode(true); let fi = 0, si = 0, mi = 0; const slots = [];
+      walkOwn(b, { field: el => setField(el, x.f ? String(x.f[fi++] ?? '') : ''), slot: el => { const e = x.s ? x.s[si++] : null; if (e && typeof e === 'object') slots.push([el, e]); }, mouth: el => { const r = x.m ? x.m[mi++] : null; if (Array.isArray(r)) for (const c of r) el.appendChild(build(c)); } });
+      for (const [el, e] of slots) { if (set) set(el, e); else { el.setAttribute('data-expr', JSON.stringify(e)); el.classList.add('has-expr'); } }
+      return b;
+    };
+    try { const box = document.createDocumentFragment(); for (const x of row) box.appendChild(build(x)); stack.appendChild(box); window.GW_SAFE.clean(stack); return true; }
+    catch (e) { stack.textContent = ''; console.warn('[Project Book] a saved script could not be built from the Book, its page text is used', e); return false; }
+  }
+  const kindInfo = new Map();
+  const infoOf = text => { let i = kindInfo.get(text); if (!i) { const t = document.createElement('template'); t.innerHTML = text; const b = t.content.firstElementChild, slots = [], mouths = [], no = () => {}; walkOwn(b, { field: no, slot: el => slots.push([Number(el.dataset.slotIndex), el.dataset.slotKind]), mouth: el => mouths.push(el.classList.contains('block-c-else')) }); i = { t: b.dataset.type || '', bp: b.dataset.breakpoint === 'true', slots, mouths }; kindInfo.set(text, i); } return i; };
+  function ast(pk, i) {
+    const row = pk && pk.scripts[i]; if (!row) return null;
+    const one = x => { const inf = infoOf(pk.kinds[x.k]), o = { type: inf.t, breakpoint: inf.bp, slots: inf.slots.map((s, j) => ({ index: s[0], kind: s[1], expr: x.s && x.s[j] ? JSON.parse(JSON.stringify(x.s[j])) : null })), body: [], elseBody: [] }; let body = 0;
+      if (x.m) x.m.forEach((r, j) => { const kids = (r || []).map(one); if (inf.mouths[j]) o.elseBody = o.elseBody.concat(kids); else if (!body++) o.body = kids; else (o.more || (o.more = [])).push(kids); });
+      return o; };
+    return row.map(one);
+  }
+  const saveOn = () => { try { return window.GW_SAVE_BOOK !== false && localStorage.getItem('gwarp-save-book') !== 'off'; } catch (e) { return window.GW_SAVE_BOOK !== false; } };
+  /* how many blocks the project has, without counting page pieces again and again (the counter under the stage asks every 0.6 s while running) */
+  let cnt = -1, cntEp = -2;
+  const count = () => { const ep = window.GW && window.GW.__wsEpoch; if (ep === undefined) return document.querySelectorAll('#workspaceCanvas .scratch-block').length; if (cnt < 0 || ep !== cntEp) { const ws = document.getElementById('workspaceCanvas'); cnt = ws ? ws.getElementsByClassName('scratch-block').length : 0; cntEp = ep; } return cnt; };
+
+  window.GW_BOOK = { version: 3, pack, unpack, ast, saveOn, count, lastLoad: null, read, write, check, get, plain, idOf, same, last: null, touch: () => { dirty = true; }, snap, unsnap, stepHtml, sameStep, stepChars, itemOf, kindText: k => K.list[k] };
 
   /* Developer mode only: a quiet check a few seconds after a project is opened or the code changed a lot, in the browser's free time.
      The result is kept in GW_BOOK.last. Only a failure is shown (console + one small message), so step 1a can be watched on real projects. */

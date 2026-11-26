@@ -4287,12 +4287,17 @@ IMPORTANT:
                     }
                     const wc = document.getElementById('workspaceCanvas');
                     wc.innerHTML = '<div id="snapPreviewLine"></div>';
-                    (data.stacks || []).forEach(s => {
+                    /* v15.70.16 (plan step 1b b): a file saved with the Project Book builds its scripts from the Book; a script the Book does not hold, or an older file, uses the saved page text as before */
+                    const gwBk = (window.GW_BOOK && GW_BOOK.unpack && GW_BOOK.saveOn() && data.book && data.book.v === 1 && Array.isArray(data.book.scripts) && data.book.scripts.length === (data.stacks || []).length) ? data.book : null;
+                    const gwFrom = {book:0, page:0};
+                    (data.stacks || []).forEach((s, gwI) => {
                         const stack = document.createElement('div');
                         stack.className='block-stack'; stack.style.left=s.left||'50px'; stack.style.top=s.top||'50px';
-                        stack.innerHTML=window.GW_SAFE?GW_SAFE.html(s.html):'';
+                        if (gwBk && GW_BOOK.unpack(gwBk, gwI, stack)) gwFrom.book++; else { gwFrom.page++;
+                        stack.innerHTML=window.GW_SAFE?GW_SAFE.html(s.html):''; }
                         wc.appendChild(stack);
                     });
+                    if (window.GW_BOOK) GW_BOOK.lastLoad = gwFrom;
                     renderSpritesGrid(); updatePropertyInputs(); GW.refreshVariableMonitors();
                     GW.toast('Project imported');
                 } catch (e) { console.error(e); GW.toast('Could not import project'); }
@@ -4966,7 +4971,7 @@ IMPORTANT:
             });
         });
     </script>
-<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.15',label:'Beta v15.70.15',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.16',label:'Beta v15.70.16',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
 <script id="gw-v7-reconciliation">
 (() => {
   /* G-Warp v7 reconciliation layer
@@ -5808,8 +5813,9 @@ IMPORTANT:
   // 3) Versioned AST mirror + stronger undo snapshots.
   // ---------------------------------------------------------------------------
   function nodeFromSlot(slot){const n=GW9.slotNode(slot);return n?JSON.parse(JSON.stringify(n)):null;}
-  function captureBlock(block){return {type:block.dataset.type||'',html:block.outerHTML,breakpoint:block.dataset.breakpoint==='true',slots:[...block.querySelectorAll(':scope > .gw-input-slot')].map(s=>({index:Number(s.dataset.slotIndex),kind:s.dataset.slotKind,expr:nodeFromSlot(s)})),body:[...block.querySelector(':scope > .block-c-body')?.children||[]].filter(x=>x.classList.contains('scratch-block')).map(captureBlock),elseBody:[...block.querySelector(':scope > .block-c-else')?.children||[]].filter(x=>x.classList.contains('scratch-block')).map(captureBlock)};}
-  GW9.captureAST=function(){return {schema:'gwarp-ast/v1',project:document.getElementById('projectTitle')?.value||'',sprites:Engine.sprites.filter(s=>!s.isClone).map((s,i)=>({index:i,name:s.name,x:s.x,y:s.y,size:s.size,direction:s.direction,visible:s.visible,activeCostume:s.activeCostume})),stacks:[...document.querySelectorAll('#workspaceCanvas > .block-stack')].map(s=>({left:s.style.left||'0px',top:s.style.top||'0px',owner:s.dataset.owner||'0',blocks:[...s.children].filter(x=>x.classList.contains('scratch-block')).map(captureBlock)})),variables:JSON.parse(JSON.stringify(Engine.variables||{})),lists:JSON.parse(JSON.stringify(Engine.lists||{})),backdrops:JSON.parse(JSON.stringify(Engine.backdrops||[])),activeBackdrop:Engine.activeBackdrop||0};};
+  /* v15.70.16 (plan step 1b b): the AST mirror is made from the Project Book and no longer keeps a page copy of every block, nested (it was 18 MB of a saved file on a big project, and nothing reads it). Old way: window.GW_SAVE_BOOK = false */
+  function captureBlock(block){const old=!(window.GW_BOOK&&GW_BOOK.saveOn&&GW_BOOK.saveOn());return {type:block.dataset.type||'',...(old?{html:block.outerHTML}:{}),breakpoint:block.dataset.breakpoint==='true',slots:[...block.querySelectorAll(':scope > .gw-input-slot')].map(s=>({index:Number(s.dataset.slotIndex),kind:s.dataset.slotKind,expr:nodeFromSlot(s)})),body:[...block.querySelector(':scope > .block-c-body')?.children||[]].filter(x=>x.classList.contains('scratch-block')).map(captureBlock),elseBody:[...block.querySelector(':scope > .block-c-else')?.children||[]].filter(x=>x.classList.contains('scratch-block')).map(captureBlock)};}
+  GW9.captureAST=function(pk){const B=window.GW_BOOK,useBook=!!(B&&B.pack&&B.saveOn());if(useBook&&!pk){try{pk=B.pack();}catch(e){pk=null;}}if(!useBook)pk=null;return {schema:'gwarp-ast/v1',project:document.getElementById('projectTitle')?.value||'',sprites:Engine.sprites.filter(s=>!s.isClone).map((s,i)=>({index:i,name:s.name,x:s.x,y:s.y,size:s.size,direction:s.direction,visible:s.visible,activeCostume:s.activeCostume})),stacks:[...document.querySelectorAll('#workspaceCanvas > .block-stack')].map((s,i)=>({left:s.style.left||'0px',top:s.style.top||'0px',owner:s.dataset.owner||'0',blocks:(pk&&pk.scripts[i]&&B.ast(pk,i))||[...s.children].filter(x=>x.classList.contains('scratch-block')).map(captureBlock)})),variables:JSON.parse(JSON.stringify(Engine.variables||{})),lists:JSON.parse(JSON.stringify(Engine.lists||{})),backdrops:JSON.parse(JSON.stringify(Engine.backdrops||[])),activeBackdrop:Engine.activeBackdrop||0};};
   /* v15.70.12 (Claude, EMERGENCY 25 Nov: the web version ate all the RAM on a big project and killed Chrome).
      The whole-project tree (44 MB for the owner's 5,500-block game) was rebuilt on every mouse click and a copy was stored inside
      EVERY undo step, although nothing ever reads those copies. Now the tree is built only when somebody asks for window.GW_AST,
@@ -13299,6 +13305,7 @@ nodes.push(el);cur=b.next;}return nodes;};
     const title = by('projectTitle')?.value || 'Untitled G-Warp Game';
     const tm = (() => { try { return JSON.parse(JSON.stringify(window.GW12?.ensureTilemap?.() || Engine.tilemap || null)); } catch { return null; } })();
     const bs = Engine.behaviorSystem ? { definitions: Engine.behaviorSystem.definitions || {}, sceneAttachments: Engine.behaviorSystem.sceneAttachments || [] } : null;
+    const BK = (() => { try { return window.GW_BOOK?.saveOn?.() ? GW_BOOK.pack() : undefined; } catch (e) { console.warn('[Project Book] save', e); return undefined; } })();
     return {
       version: 12, format: 'gwarp-json-v15.8', gwarp: BUILD().version, title,
       variables: window.GW_VARS ? GW_VARS.globals() : Engine.variables, variableVisible: Engine.variableVisible, lists: window.GW_VARS ? GW_VARS.globalLists() : Engine.lists, listVisible: Engine.listVisible, backdrops: Engine.backdrops, activeBackdrop: Engine.activeBackdrop,
@@ -13311,7 +13318,7 @@ nodes.push(el);cur=b.next;}return nodes;};
         gwAnimations: s.gwAnimations?.length ? JSON.parse(JSON.stringify(s.gwAnimations)) : undefined, gwTileSprite: s.gwTileSprite ? { ...s.gwTileSprite } : undefined // v15.49.0 Tiles tab; v15.16.2: Animation (preview)
       })),
       stacks: [...document.querySelectorAll('#workspaceCanvas > .block-stack')].map(st => ({ left: st.style.left, top: st.style.top, owner: st.dataset.owner || '0', html: st.innerHTML })),
-      ast: (() => { try { return window.GW9?.captureAST?.(); } catch { return null; } })(), soundLab: window.GW_SOUND_LAB?.state || null,
+      book: BK, ast: (() => { try { return window.GW9?.captureAST?.(BK); } catch { return null; } })(), soundLab: window.GW_SOUND_LAB?.state || null, // v15.70.16: `book` = the scripts as Project Book data (load prefers it); `stacks[].html` stays one release so an older G-Warp can open the file
       tilemap: tm, behaviorSystem: bs, extensionsAgreed: [...agreed],
       projectExt: window.GW?.__projectExt || null, projectRuntime: { notScratch: !!window.GW?.__notScratch, fence: window.GW?.__projectFence ?? null, sb3: !!window.GW?.__sb3Project, cloneLimit: Number.isFinite(Engine.cloneLimit) ? Engine.cloneLimit : (Engine.cloneLimit === Infinity ? 1e308 : null), fps: window.GW_SETTINGS?.get?.().projectFps ?? null, miscLimits: window.GW?.__projectMiscLimits ?? null, hq: window.GW?.__projectHQ ?? null }, // v15.10.0
       metadata: { engine: 'G-Warp ' + BUILD().label, saved: new Date().toISOString() }
@@ -26690,7 +26697,7 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
     tag.style.display = running ? 'inline-flex' : 'none';
     if (!running) return;
     const clones = (window.Engine?.sprites || []).filter(s => s && s.isClone).length;
-    const blocks = document.querySelectorAll('#workspaceCanvas .scratch-block').length;
+    const blocks = window.GW_BOOK?.count ? GW_BOOK.count() : document.querySelectorAll('#workspaceCanvas .scratch-block').length; // v15.70.16: counted again only after the code area changed
     tag.textContent = `Clones: ${clones} · Blocks: ${blocks}`;
   }, 600);
 

@@ -1,0 +1,10 @@
+const { chromium } = require('/opt/npm-tools/node_modules/playwright');
+(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox','--use-angle=swiftshader']});
+ const f=process.argv[2];const p=await b.newPage({viewport:{width:1600,height:950}});p.on('dialog',d=>d.dismiss());if(process.env.BOOK==='0')await p.addInitScript(()=>{window.GW_SAVE_BOOK=false});
+ await p.goto('file:///home/claude/rel/app.html');await p.waitForTimeout(3000);await p.setInputFiles('#sb3ImportFile',f);await p.waitForFunction(()=>window.GW&&GW.__sb3Project===true&&document.querySelectorAll('#workspaceCanvas .scratch-block').length>0,null,{timeout:240000});await p.waitForTimeout(7000);
+ const c=await p.context().newCDPSession(p);await c.send('Profiler.enable');await c.send('Profiler.setSamplingInterval',{interval:1000});
+ await p.evaluate(()=>{window.__f=new File([JSON.stringify(GW_PROJECT_DATA())],'t.gwarp.json')});
+ await c.send('Profiler.start');const ms=await p.evaluate(async()=>{const t=performance.now();await GW.loadProject(window.__f);return Math.round(performance.now()-t)});
+ const {profile}=await c.send('Profiler.stop');const self=new Map(),dt=profile.timeDeltas,byId=new Map(profile.nodes.map(n=>[n.id,n]));
+ profile.samples.forEach((id,i)=>{const n=byId.get(id),k=n.callFrame.functionName+' @'+n.callFrame.lineNumber+':'+n.callFrame.columnNumber+' '+n.callFrame.url.slice(-14);self.set(k,(self.get(k)||0)+dt[i]/1000)});
+ console.log('load ms',ms);[...self].sort((a,b)=>b[1]-a[1]).slice(0,22).forEach(([k,v])=>console.log(Math.round(v),k));await b.close()})();
