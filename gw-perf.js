@@ -341,14 +341,30 @@
       if (!e.target || e.target.id !== 'propName') return;
       const s = active();
       if (!s) return;
+      { const o = e.target.__gwOrig; if (!o || o.s !== s) e.target.__gwOrig = { s, name: s.name }; } // the name before this round of typing
       const v = e.target.value.trim();
-      const dup = (W.Engine.sprites || []).some((o) => o !== s && !o.isClone && o.name === v);
+      const dup = (W.Engine.sprites || []).some((o) => o !== s && !o.isClone && String(o.name || '').trim() === v);
       if (v && !dup) return;
+      /* v15.70.11 (Claude, Breaking G-Warp ep. 2): while you TYPE, an empty or already-used name is simply not written to the project yet.
+         It used to put the old name back into the box on every key press, so select-all + delete + "Bob" gave "G-SparkBob" (and typing
+         "Bob" next to a sprite called Bob left "Bo"). The check with the message now happens when you press Enter or leave the box. */
       e.stopImmediatePropagation();
-      e.target.value = s.name || '';
-      if (dup) toast('There is already a sprite called “' + v + '”.');
       mark('sprite-name-guard');
     }, true);
+    const commitName = (e) => {
+      if (!e.target || e.target.id !== 'propName') return;
+      const s = active(); if (!s) return;
+      const v = e.target.value.trim();
+      const dup = (W.Engine.sprites || []).some((o) => o !== s && !o.isClone && String(o.name || '').trim() === v);
+      if (!v || dup) { const o = e.target.__gwOrig; if (o && o.s === s && o.name && s.name !== o.name) { s.name = o.name; try { W.renderSpritesGrid && W.renderSpritesGrid(); } catch (err) {} } // back to the name it had before you started typing (not a half-typed "Bo")
+        e.target.value = s.name || ''; if (dup) toast('There is already a sprite called “' + v + '”.'); return; }
+      e.target.__gwOrig = { s, name: v };
+      if (e.target.value !== v) e.target.value = v;                       // no invisible spaces at the ends ("Twin" and "Twin   " looked the same)
+      if (s.name !== v) { s.name = v; try { W.renderSpritesGrid && W.renderSpritesGrid(); } catch (err) {} }
+    };
+    D.addEventListener('focusin', (e) => { if (e.target && e.target.id === 'propName') { const s = active(); if (s) e.target.__gwOrig = { s, name: s.name }; } }, true);
+    D.addEventListener('change', commitName, true);
+    D.addEventListener('focusout', commitName, true);
     mark('sprite-name-guard-ready');
     return true;
   }
