@@ -28,7 +28,8 @@
   const idOf = el => { let i = ids.get(el); if (!i) { i = 'b' + (nextId++).toString(36); ids.set(el, i); } return i; };
   const isBlock = el => el.nodeType === 1 && el.classList.contains('scratch-block');
   const blocksIn = c => { const out = []; for (let x = c.firstElementChild; x; x = x.nextElementSibling) if (isBlock(x)) out.push(x); return out; };
-  const clsOf = el => { let s = ''; for (const c of el.classList) if (!LIVE_CLASS.has(c)) s += (s ? ' ' : '') + c; return s; };
+  let sortCls = false; // undo steps: the same block with its class names in another order is still the same block
+  const clsOf = el => { if (sortCls && el.classList.length > 1) { const a = []; for (const c of el.classList) if (!LIVE_CLASS.has(c)) a.push(c); return a.sort().join(' '); } let s = ''; for (const c of el.classList) if (!LIVE_CLASS.has(c)) s += (s ? ' ' : '') + c; return s; };
 
   /* one walk shared by the reader and the writer, so both always meet the holes in the same order.
      visit.field(el)  an own input / select / textarea        visit.slot(el)  an own slot        visit.mouth(el)  a mouth of a C block
@@ -172,7 +173,66 @@
   ['input', 'change'].forEach(t => addEventListener(t, e => { if (e.target && e.target.closest && e.target.closest('#workspaceCanvas')) dirty = true; }, true));
   const get = () => { const ep = window.GW && window.GW.__wsEpoch; if (!cur || dirty || ep !== curEp || ep === undefined) { cur = read(); curEp = ep; dirty = false; } return cur; };
 
-  window.GW_BOOK = { version: 1, read, write, check, get, plain, idOf, same, last: null, touch: () => { dirty = true; } };
+  /* ---------- step 1b part a (26 Nov): Undo / Redo keep the Book, not the page text ----------
+     An undo step is a list with one small text per script, in page order. A script that did not change between two steps is the SAME text
+     in both (kept once in memory), so a step costs only the scripts that changed. Putting a step back rebuilds only the scripts that differ.
+     Anything in the code area that is not a plain script (a comment, an empty box, a legacy slot) is kept as its own page text, as before. */
+  const K = { list: [], ix: new Map(), tpl: [] };            // every block form seen in this session, stored once
+  let pool = new Map();                                        // the texts of the newest step, so the next step can share them
+  const treeOf = b => {
+    const x = { k: 0 }, text = [], f = [], s = [], mouths = [];
+    sortCls = true; try { walkOwn(b, { field: el => f.push(fieldValue(el)), slot: el => { let e = null; const raw = el.getAttribute('data-expr'); if (raw) { try { e = JSON.parse(raw); } catch (err) { e = { type: 'literal', value: raw }; } } s.push(e); }, mouth: el => mouths.push(el) }, text); } finally { sortCls = false; }
+    const key = text.join(''); let k = K.ix.get(key); if (k === undefined) { k = K.list.length; const own = [], no = () => {}; walkOwn(b, { field: no, slot: no, mouth: no }, own); K.list.push(own.join('')); /* built again exactly as first seen */ K.ix.set(key, k); } x.k = k;
+    if (f.length) x.f = f; if (s.length) x.s = s; if (mouths.length) x.m = mouths.map(m => blocksIn(m).map(treeOf));
+    return x;
+  };
+  const plainScript = st => { if (!st.classList.contains('block-stack') || st.id) return false; let n = 0; for (let c = st.firstElementChild; c; c = c.nextElementSibling) { if (!isBlock(c)) return false; n++; } return n > 0 && !st.querySelector('.has-report'); };
+  const itemOf = el => {
+    if (!plainScript(el)) return 'R' + el.outerHTML;
+    const o = { o: el.dataset.owner ?? null, y: el.style.cssText.replace(/\s*z-index:[^;]*;?/g, '').trim() /* z-index = which script is on top after a drag, not part of the project */, b: blocksIn(el).map(treeOf) }, c = clsOf(el), d = {}; let any = 0;
+    if (c !== 'block-stack') o.c = c;
+    for (const a of el.attributes) if (a.name.startsWith('data-') && a.name !== 'data-owner' && !LIVE_ATTR.has(a.name)) { d[a.name] = a.value; any = 1; }
+    if (any) o.d = d;
+    return 'S' + JSON.stringify(o);
+  };
+  const buildTree = x => {
+    let tpl = K.tpl[x.k]; if (!tpl) { tpl = K.tpl[x.k] = document.createElement('template'); tpl.innerHTML = K.list[x.k]; }
+    const b = tpl.content.firstElementChild.cloneNode(true); let fi = 0, si = 0, mi = 0; const slots = [];
+    walkOwn(b, { field: el => setField(el, x.f ? x.f[fi++] ?? '' : ''), slot: el => { const e = x.s ? x.s[si++] : null; if (e) slots.push([el, e]); }, mouth: el => { const row = x.m ? x.m[mi++] : null; if (row) for (const c of row) el.appendChild(buildTree(c)); } });
+    const set = window.GW9 && window.GW9.setSlotNode;
+    for (const [el, e] of slots) { if (set) set(el, e); else { el.setAttribute('data-expr', JSON.stringify(e)); el.classList.add('has-expr'); } }
+    return b;
+  };
+  const buildItem = s => {
+    if (s[0] === 'R') { const t = document.createElement('template'); t.innerHTML = s.slice(1); return t.content.firstElementChild; }
+    const o = JSON.parse(s.slice(1)), st = document.createElement('div'); st.className = o.c || 'block-stack'; if (o.o !== null) st.dataset.owner = o.o;
+    if (o.d) for (const k in o.d) st.setAttribute(k, o.d[k]); if (o.y) st.style.cssText = o.y;
+    for (const x of o.b) st.appendChild(buildTree(x));
+    return st;
+  };
+  /* the code area as an undo step */
+  function snap(root) {
+    const ws = root || document.getElementById('workspaceCanvas'), items = [], next = new Map(); let fresh = 0;
+    if (ws) for (let el = ws.firstElementChild; el; el = el.nextElementSibling) { let s = itemOf(el); const old = pool.get(s); if (old !== undefined) s = old; else if (!next.has(s)) fresh += s.length; else s = next.get(s); next.set(s, s); items.push(s); }
+    pool = next;
+    return { items, fresh, toJSON() { return 0; } };
+  }
+  /* put an undo step back: scripts that are already the same stay as they are, only the others are built */
+  function unsnap(step, root, all) {
+    const ws = root || document.getElementById('workspaceCanvas'), have = new Map(); let built = 0;
+    if (!all) for (let el = ws.firstElementChild; el; el = el.nextElementSibling) { const s = itemOf(el); const q = have.get(s); if (q) q.push(el); else have.set(s, [el]); }
+    const want = step.items.map(s => { const q = have.get(s); if (q && q.length) return q.shift(); built++; return buildItem(s); }), keep = new Set(want);
+    for (const el of [...ws.children]) if (!keep.has(el)) el.remove();
+    for (let i = 0; i < want.length; i++) if (ws.children[i] !== want[i]) ws.insertBefore(want[i], ws.children[i] || null);
+    const next = new Map(); for (const s of step.items) next.set(s, s); pool = next; dirty = true;
+    return built;
+  }
+  const stepHtml = step => { const box = document.createElement('div'); for (const s of step.items) box.appendChild(buildItem(s)); return box.innerHTML; };
+  const sameStep = (a, b) => { if (a.items.length !== b.items.length) return false; for (let i = 0; i < a.items.length; i++) if (a.items[i] !== b.items[i]) return false; return true; };
+  /* how many letters the given steps keep in memory together (a text shared by many steps counts once) */
+  const stepChars = steps => { const seen = new Set(); let n = 0; for (const st of steps) if (st && st.items) for (const s of st.items) if (!seen.has(s)) { seen.add(s); n += s.length; } return n; };
+
+  window.GW_BOOK = { version: 2, read, write, check, get, plain, idOf, same, last: null, touch: () => { dirty = true; }, snap, unsnap, stepHtml, sameStep, stepChars, itemOf, kindText: k => K.list[k] };
 
   /* Developer mode only: a quiet check a few seconds after a project is opened or the code changed a lot, in the browser's free time.
      The result is kept in GW_BOOK.last. Only a failure is shown (console + one small message), so step 1a can be watched on real projects. */
