@@ -189,3 +189,16 @@ Same build, numbers inside the earlier ranges. TurboWarp still wins every row. O
 | Clone frames in 3 s | 91 | 84 | 87 | Scratch |
 
 Same build, numbers inside earlier ranges. TurboWarp wins every speed row. A run under load (tests in parallel) gave G-Warp pen 0.147 and loops 0.36 million: discard. Owner's game rows not measured.
+
+## Table 3 - 26 Nov 2026 19:40, G-Warp build q (v15.70.18). bench40, seconds, 2 runs
+
+| Test | Scratch | TurboWarp | G-Warp build p | G-Warp build q |
+|---|---|---|---|---|
+| Count loop | 1.033 | 0.005 | 0.17 to 0.32 | 0.13 to 0.24 |
+| Maths | 1.783 | 0.105 | 0.65 to 0.77 | 0.33 to 0.36 |
+| Lists | 1.101 | 0.035 | 2.06 to 2.26 | 0.65 to 0.72 |
+| If / compare | 1.659 | 0.010 | 0.62 to 0.67 | 0.26 to 0.27 |
+| Pen | 0.422 | 0.039 | 2.12 to 2.73 | 1.63 to 1.78 |
+| Text | 2.536 | 0.029 | 0.23 to 0.32 | 0.12 |
+
+Game: G-Warp 27.0 steps/s, 9.2 ms script per step; Scratch 29.8, 10.5 ms. TurboWarp still wins every row.

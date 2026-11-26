@@ -6,8 +6,8 @@ Every run updates it before it ends. Times are US Eastern.
 ## 1. State right now
 
 - Last update: 26 Nov 2026, 09:06 (14:06 UTC), by the scheduled run of 07:18.
-- App on the owner's PC: **v15.69.0p** (= build v15.70.17: step 2 fast code ON, gw-fast.js). Next PC letter: **q**.
-- Working build: `team/claude/work/` = **v15.70.17** (same as the PC).
+- App on the owner's PC: **v15.69.0q** (= build v15.70.18). Next PC letter: **r**.
+- Working build: `team/claude/work/` = **v15.70.18** (same as the PC).
 - Website (main): still v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
 - Plan: `team/claude/TURBO-STYLE-PLAN.md`.
   - **Step 1 is done as far as its "done when" list goes** (round trip the same; undo, redo, save, reopen the same; an undo step is about 5 KB): 1a build m, 1b part a build n, 1b part b build o (`team/claude/v15.70.16/README.txt`).
@@ -110,6 +110,8 @@ Known numbers so far (G-Warp only, owner's game): website v15.69.0 3,583 MB; bui
 - At the end of the run (or when stopping for any reason): set `status: free` with the time, commit and push.
 
 ## 8. Run log (newest first)
+
+- 26 Nov 19:40, first session (lane A): build q on the PC (v15.70.18). Made code for set/change/list blocks with reporters, variable holders looked up once per start / after each pause (VREF, rt.vh), direct sin/cos/abs/floor/ceiling/sqrt, go-between inputs worked out by made code (rt.pre + shadow value on filled-slot boxes), pen lines batched (Pen.flush, GW_PEN_BATCH). bench40: count 0.13-0.24, maths 0.33-0.36, lists 0.65-0.72, if 0.26-0.27, text 0.12, pen 1.6-1.8 (pen time is now the 2D canvas drawing itself -> lane B's GPU stage). Game 27 steps/s, 9.2 ms script. Referee + app tests all same. Next: plain loop C7 (repeat until with timer), lists inside expressions (list_item for sprite-local lists), compare/join paths, then other block families.
 
 - 26 Nov 10:35, first session (lane A): STEP 2 FIRST PART SHIPPED. Build p on the PC (v15.70.17): fast code ON by default (`GW_FAST_ON=false` = old way). par3 timing fault fixed (repeat yields after its last pass like Scratch; frame clock no catch-up bursts), lone-script looping, typed constants, variables written straight to their store. bench40: count 0.17-0.32, maths 0.65-0.77, if 0.62-0.67, text 0.23-0.32 (faster than Scratch), lists 2.1-2.3, pen 2.1-2.7. Game 24.8 steps/s. Referee all same as before, par3 11/11. Next: lists, pen / go to, then values of go-between blocks (see experiments/step2/README.md 'Next').
 
