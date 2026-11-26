@@ -14,6 +14,8 @@ Every run updates it before it ends. Times are US Eastern.
 
 ## 2. Next actions, in order
 
+**READ `team/claude/OWNER-PRIORITY.md` FIRST (owner, 26 Nov 08:55): speed against TurboWarp is the only thing that matters to him now. Finish the 1b part in progress, ship it, then go straight to STEP 2 (fast code). The rest of step 1b waits until before step 3.**
+
 1. (done) Step 1a on the PC as letter m.
 2. (done, first table) `team/claude/VS-TURBOWARP.md`: script speed and the owner's game measured on Scratch, TurboWarp and G-Warp. TurboWarp wins every speed row (0.5 ms script time on the game, G-Warp 16 ms). Editor rows for TurboWarp are NOT measured (see NEEDS-OWNER-OK.md). Run the table again after every step.
 3. Step 1b, in small parts, each one tested and shipped:
