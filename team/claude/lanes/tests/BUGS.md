@@ -24,3 +24,8 @@ Recheck: bugs 1, 2 (quirk.sb3 44/46) and 4 (order.sb3 75/76) still there, same l
 
 5. **Unknown "math of" function gives the input number instead of 0.** Steps: `cd tools/gwt && python3 <repo>/team/claude/lanes/tests/mkmotion.py` (or use `lanes/tests/motion.sb3`); `cd /home/claude/ref && node diff.js <path>/motion.sb3 6000`. Line m12 is `([round v] of (direction))` - an `operator_mathop` with OPERATOR field "round", which is not in Scratch's list. Scratch: 0. G-Warp: -37.947... (the direction, unchanged). Scratch returns 0 for any unknown mathop name (can happen in hand-edited or other-tool .sb3 files). The other 40 motion/looks checks (fencing, direction wrap, size limits, costume number wrap/round, left-right style, glide 0 s, touching while hidden, distance, "of" block) all match.
 6. (Flaky, not a bug yet) t_snap.js crashed once while A/B/C ran together; alone it gave 7/7. Watch it.
+
+## 2026-11-26 ~19:15 UTC run, build p again
+
+Recheck: bugs 1, 2 (quirk 44/46), 4 (order 75/76), 5 (motion 40/41) still there. t_snap 7/7 this time (bug 6 did not show).
+New zoo project ctrl.sb3 (mkctrl.py: repeat 2.5 / 2.4 / "abc" / -3, repeat until, wait until true, case-blind equals, list index words last/0/out of range/1.7, insert/replace/delete edge cases, stop this script): 37/37, no new bug.
