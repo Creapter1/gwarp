@@ -8,7 +8,7 @@ Every run updates it before it ends. Times are US Eastern.
 - Last update: 26 Nov 2026, 09:06 (14:06 UTC), by the scheduled run of 07:18.
 - App on the owner's PC: **v15.69.0q** (= build v15.70.18). Next PC letter: **r**.
 - Working build: `team/claude/work/` = **v15.70.18** (same as the PC).
-- Website (main): still v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
+- Website (main): **v15.70.18** since 26 Nov 18:55 (PR #21, owner's request). Was v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
 - Plan: `team/claude/TURBO-STYLE-PLAN.md`.
   - **Step 1 is done as far as its "done when" list goes** (round trip the same; undo, redo, save, reopen the same; an undo step is about 5 KB): 1a build m, 1b part a build n, 1b part b build o (`team/claude/v15.70.16/README.txt`).
   - Left over from 1b and moved to the start of step 3, where they are needed: Find and the AI report read the Book; opening a Scratch file fills the Book first; a faster writer.
