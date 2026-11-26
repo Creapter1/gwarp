@@ -9,6 +9,7 @@ Claude Fable, 26 Nov 2026. Owner's decision (26 Nov, 00:34 to 00:42): keep G-War
 - The look stays exactly the same. A person using G-Warp should not be able to see any of these steps, only feel them.
 - One engine. The old way of running stays only as a safety net while a step is new, and is removed when the tests are 100%.
 - Every step ships on its own, has an off switch, and is checked against real Scratch before it is turned on for everyone.
+- Owner's handover rule (26 Nov, 00:44): no rebuild from scratch. The inside changes step by step. After EVERY step the owner gets the full working app with everything in it (Spark Studio, SVG 360, Big map, addons, his look). It is tested on his game before it is handed over. If something breaks, the old version stays (backup before every write, as always).
 
 ## Part A. How TurboWarp does it (what I found)
 
