@@ -29,3 +29,8 @@ Recheck: bugs 1, 2 (quirk.sb3 44/46) and 4 (order.sb3 75/76) still there, same l
 
 Recheck: bugs 1, 2 (quirk 44/46), 4 (order 75/76), 5 (motion 40/41) still there. t_snap 7/7 this time (bug 6 did not show).
 New zoo project ctrl.sb3 (mkctrl.py: repeat 2.5 / 2.4 / "abc" / -3, repeat until, wait until true, case-blind equals, list index words last/0/out of range/1.7, insert/replace/delete edge cases, stop this script): 37/37, no new bug.
+
+## 2026-11-26 ~21:15 UTC run, build p again
+
+7. **Empty boolean argument of a custom block reads "false" instead of "".** Steps: `cp lanes/tests/mkproc.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkproc.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/proc.sb3 6000`. Block `bt %b` is called with its boolean slot empty, then sets `bj` to `join (b) ""`. Scratch: "" (the argument default, argumentdefaults is ""). G-Warp: "false". Lines bj and p12. `if <b>` still takes the else branch in both (p11 = F, matches). Same on build o (base). Other 32 checks match: recursion (fact 5 = 120, fact "abc"), warp recursive fib 10 = 55, warp repeat 1000, number args add as numbers, missing args, bool arg outside definition, call to an unknown proc, two args with the same name, stop this script inside a proc.
+Recheck this run: bugs 1, 2, 4, 5 still there (no new build). Bug 6 showed again: t_snap.js crashed while A/B/C ran together, alone 7/7. big.sb3 load 65.6 s under load, 14.5 s alone.

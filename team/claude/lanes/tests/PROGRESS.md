@@ -1,5 +1,15 @@
 # Lane C (tests and measuring) progress
 
+## 26 Nov 2026 ~21:11-21:45 UTC run
+- Build tested: p (v15.70.17) again (no new build in work/). Base: build o (1dac028).
+- Test list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7 alone (crashed in the parallel run, bug 6), t_book2 10/10, t_book 17/17 OK, t_save zoo all OK (big.sb3 load 14.5 s alone, 65.6 s under load), t_undob zoo all OK (big first undo 3.3 s) plus proc/ctrl/motion/order/quirk all OK in t_save and t_undob.
+- Referee: par 58/60, par2 40/40, probe 72/72, mini 22/22, nat 15/15, join 19/19, stop 17/17, ep 19/19, par3 157/159, par4 59/72 (base 58/72).
+- New zoo project: proc.sb3 (mkproc.py, 34 custom block checks: recursion, warp, args): 32/34, bug 7 in BUGS.md (also on build o).
+- VS-TURBOWARP.md: new dated row set (same build, numbers agree).
+- Skipped (need the owner's game): t_thin, t_grab, t_undo, t_dragms, play, mem, fps, twgame.
+- Next: run_all.sh; zoo for layers with many sprites, sound/pen edge cases, broadcast-and-wait timing.
+
+
 ## 26 Nov 2026 ~19:12-19:45 UTC run
 - Build tested: p (v15.70.17) again (no new build in work/). Base: build o (1dac028).
 - Test list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book 17/17 OK, t_save zoo all OK (big.sb3 load 26.1 s), t_undob zoo all OK (big first undo 3.3 s).
