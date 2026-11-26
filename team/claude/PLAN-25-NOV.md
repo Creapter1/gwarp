@@ -106,3 +106,10 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 - Tools in gwt: gwfps.js (steps/s with a js toggle), trace.js (main-thread split), layers.js (compositor layers + reasons), longtasks.js, play.js, prof_run.js.
 - New referee project stop.sb3 (17/17): add to the diff list.
 - NEXT: compile scripts to closures (gameplay gap), then the open Scratch items (timer hat, loudness), then PenguinMod.
+
+## State 00:25 (26 Nov)
+- rel = v15.70.11, PC = v15.69.0j (STATE letter j; next k). PC ships cover 5 files now (+ gw-perf.js).
+- Breaking G-Warp episodes (owner's private artifacts; list_artifacts query "Breaking G-Warp"): ep. 2 + 3 list and status in team/bugs/BREAKING-GWARP-EP2-EP3.md.
+  Episode 1 ("Breaking G-Warp v15.69") NOT read yet. Next from that file: extension category two clicks, Extensions button covering categories, OR-tower undo.
+- New tests: t_paint.js, t_rename.js, mkvars.py (+load.js), ep.sb3 (19/19), stop.sb3 (17/17).
+- Owner 23:30: "kill Scratch: better, cooler, faster, smoother". Order stays: Scratch-exact + speed first. Next big job: compile scripts to closures.

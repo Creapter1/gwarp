@@ -52,6 +52,8 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [done] E1.9 .sb3 opens at 30 FPS unless project asks 60 - APP-CHECK 25 Nov: already in v15.69.0
 
 ## 2. Blocks & Scratch parity
+- [done] (Claude Fable, 25 Nov late) Breaking G-Warp ep. 2 + 3: 16 bugs fixed in v15.70.11 (crash with 2,500 variables, zoomed backdrops, bitmap costumes that could not grow, painted sprite = dot, rename glue, double Ctrl+S, log, Infinity size / position, Spark Studio opening with old music...). Full list + what is still OPEN: team/bugs/BREAKING-GWARP-EP2-EP3.md
+- [open] (Claude Fable) Breaking G-Warp: the OPEN rows in team/bugs/BREAKING-GWARP-EP2-EP3.md, and episode 1's list still has to be read
 - [done] (Claude Fable, 25 Nov night) "stop [this script]" inside a My Block ends only that My Block, like Scratch (it killed the whole script; found with the owner's game) - v15.70.10, stop.sb3 17/17
 - [done] (Claude Fable, 25 Nov) set [v] to (reporter) keeps the answer as it is, like Scratch ("05" from join was turned into 5) - v15.70.5, join.sb3 19/19
 - [open] Parity fixtures / runner gaps (broadcasts, clones, custom blocks in runner)

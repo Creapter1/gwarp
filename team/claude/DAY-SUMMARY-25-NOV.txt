@@ -1,6 +1,6 @@
 G-Warp - Claude Fable - 25 Nov 2026 - day summary (rounds 1-7)
-Latest tested build: v15.70.10 = team/claude/v15.70.10/app-v15.69.0-to-v15.70.10.patch (apply on release v15.69.0; covers app.html, gw-svg360.js, gw-bigmap.js, gw-run-throttle.js).
-Owner's PC: v15.69.0i (= v15.70.10), shipped 23:20 with backups before-v15690i-app.html + before-v15690i-gw-run-throttle.js. Next letter: j.
+Latest tested build: v15.70.11 = team/claude/v15.70.11/app-v15.69.0-to-v15.70.11.patch (apply on release v15.69.0; covers app.html, gw-svg360.js, gw-bigmap.js, gw-run-throttle.js, gw-perf.js).
+Owner's PC: v15.69.0j (= v15.70.11), shipped 00:25 with backups before-v15690j-app.html + before-v15690j-gw-perf.js. Next letter: k.
 
 WHAT CHANGED TODAY
  a v15.70.0-2  smooth motion (off by default), live sprite boxes, exact colour/whirl/fisheye/pixelate/mosaic effects, size limits, tan, auto skeleton

@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.10.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.11.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -157,3 +157,15 @@ RESULT (steps/s, Scratch = 30.4): story screens 17.7 -> 30.1; 3D gameplay 13 -> 
 5. Stage size note hidden while running (it covered the project's bottom-right corner on hover).
 STILL OPEN: 3D gameplay scripts 15 ms vs Scratch 6 ms -> compile scripts to closures. Start-of-run hitch: refreshAST on the flag click (0.25 s) + one big repaint.
    Helpers over 30 ms on a big project (GW_HELPER_LOG): app.html ~22811 refreshMenus (54 ms), ~28657, ~28540, ~9731 (33 ms each), ~27980.
+
+v15.70.11 (Claude Fable, 25 Nov 2026 late night) - on the owner's PC as v15.69.0j. Patch covers 5 files (+ gw-perf.js).
+The owner's "Breaking G-Warp" episodes 2 + 3: full list with status in team/bugs/BREAKING-GWARP-EP2-EP3.md (16 fixed, the rest open).
+Code notes:
+- renderVarChips: clones one lean template (menu emptied) instead of the template with every variable in its menu (O(n^2) -> O(n)).
+- mapFor (paint editor): remembered mapping for grown bitmaps (c.__gwBmp), empty costumes (<= 4 units) at k = 1, Stage backdrops use the whole 512x384 area.
+- saveBitmap: saved box = old box + painted pixels outside it; rc shifts so the sprite stays put.
+- gw-perf.js fixNames: no value rewrite on 'input'; validation on change / focusout; original name restored on refusal; trim.
+- old Ctrl+S (GW.saveProject .gwarp.json) steps aside when window.GW_FILE_SHORTCUTS is set by the File menu module.
+- nInf (NaN -> 0, Infinity kept) for set/change x, y, go to, set/change size; fence(): huge / infinite positions fenced from the box measured at the centre.
+- log: Math.log(x) / Math.LN10 (Scratch's formula) in both evaluators.
+- Spark Studio 3: gw-spark3-work is moved to gw-spark3-last at start (studio opens empty); #sp3Last button + GW_SPARK3.lastSession() restore it.

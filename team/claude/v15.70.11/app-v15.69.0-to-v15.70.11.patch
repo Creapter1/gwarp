@@ -1,5 +1,5 @@
 diff --git a/app.html b/app.html
-index 9a9e3b0..0f9c999 100644
+index 9a9e3b0..87fd2d7 100644
 --- a/app.html
 +++ b/app.html
 @@ -950,6 +950,12 @@ body{overflow-x:hidden!important;}
@@ -83,6 +83,15 @@ index 9a9e3b0..0f9c999 100644
              }
  
              requestAnimationFrame(renderLoop);
+@@ -4256,7 +4280,7 @@ IMPORTANT:
+         });
+         window.addEventListener('keyup', e => { Engine.keysPressed[e.code] = false; });
+         window.addEventListener('blur', () => { Engine.keysPressed = {}; Engine.mouse.down = false; });
+-        window.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='s') { e.preventDefault(); GW.saveProject(); } });
++        window.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='s') { e.preventDefault(); if (window.GW_FILE_SHORTCUTS) return; /* v15.70.11 (Breaking G-Warp ep. 2): Ctrl+S saved TWO files (this old .gwarp.json save + the File menu's .sb3). The File menu's shortcut is the only one now */ GW.saveProject(); } });
+ 
+         // Pointer sensing coordinates and mouse state.
+         const stageForMouse = document.getElementById('stageCanvas');
 @@ -4308,8 +4332,8 @@ IMPORTANT:
                  case 'think': speak(`💭 ${ins[0]?.value||''}`, 0); break;
                  case 'show': this.sprite.visible=true; break;
@@ -136,7 +145,7 @@ index 9a9e3b0..0f9c999 100644
          });
      </script>
 -<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
-+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.10',label:'Beta v15.70.10',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
++<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.11',label:'Beta v15.70.11',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
  <script id="gw-v7-reconciliation">
  (() => {
    /* G-Warp v7 reconciliation layer
@@ -384,7 +393,7 @@ index 9a9e3b0..0f9c999 100644
          case 'op_lt': { const n = v => Number.isFinite(Number(v)) ? Number(v) : 0; return n(G9.evalNode(th, node.args?.[0], 'value', owner)) < n(G9.evalNode(th, node.args?.[1], 'value', owner)); }
          case 'op_contains': return String(G9.evalNode(th, node.args?.[0], 'value', owner)).toLowerCase().includes(String(G9.evalNode(th, node.args?.[1], 'value', owner)).toLowerCase());
 -        case 'op_mathop': { const v = Number(G9.evalNode(th, node.args?.[0], 'value', owner)) || 0; const f = { abs: Math.abs, floor: Math.floor, ceiling: Math.ceil, sqrt: Math.sqrt, sin: x => Math.sin(x * DEG), cos: x => Math.cos(x * DEG), tan: x => Math.tan(x * DEG), asin: x => Math.asin(x) / DEG, acos: x => Math.acos(x) / DEG, atan: x => Math.atan(x) / DEG, ln: Math.log, log: Math.log10, 'e ^': Math.exp, '10 ^': x => Math.pow(10, x) }[node.op] || (x => x); const r = f(v); return Number.isFinite(r) ? Math.round(r * 1e10) / 1e10 : r; } /* v15.50.4: NaN / Infinity like Scratch (sqrt of -1 = NaN, ln 0 = -Infinity) */
-+        case 'op_mathop': { const v = Number(G9.evalNode(th, node.args?.[0], 'value', owner)) || 0; const f = { abs: Math.abs, floor: Math.floor, ceiling: Math.ceil, sqrt: Math.sqrt, sin: x => Math.sin(x * DEG), cos: x => Math.cos(x * DEG), tan: x => Math.tan(x * DEG), asin: x => Math.asin(x) / DEG, acos: x => Math.acos(x) / DEG, atan: x => Math.atan(x) / DEG, ln: Math.log, log: Math.log10, 'e ^': Math.exp, '10 ^': x => Math.pow(10, x) }[node.op] || (x => x); if (node.op === 'tan') { const t = ((v % 360) + 360) % 360; if (t === 90) return Infinity; if (t === 270) return -Infinity; } const r = f(v); return (Number.isFinite(r) && /^(sin|cos|tan)$/.test(node.op)) ? Math.round(r * 1e10) / 1e10 : r; } /* v15.70.1: only sin/cos/tan are rounded (sqrt of 2 = 1.4142135623730951), tan 90 = Infinity; v15.50.4: NaN / Infinity like Scratch (sqrt of -1 = NaN, ln 0 = -Infinity) */
++        case 'op_mathop': { const v = Number(G9.evalNode(th, node.args?.[0], 'value', owner)) || 0; const f = { abs: Math.abs, floor: Math.floor, ceiling: Math.ceil, sqrt: Math.sqrt, sin: x => Math.sin(x * DEG), cos: x => Math.cos(x * DEG), tan: x => Math.tan(x * DEG), asin: x => Math.asin(x) / DEG, acos: x => Math.acos(x) / DEG, atan: x => Math.atan(x) / DEG, ln: Math.log, log: x => Math.log(x) / Math.LN10 /* v15.70.11 (Breaking G-Warp ep. 3): Scratch's own formula - log of 1000 is 2.9999999999999996 there, not 3 */, 'e ^': Math.exp, '10 ^': x => Math.pow(10, x) }[node.op] || (x => x); if (node.op === 'tan') { const t = ((v % 360) + 360) % 360; if (t === 90) return Infinity; if (t === 270) return -Infinity; } const r = f(v); return (Number.isFinite(r) && /^(sin|cos|tan)$/.test(node.op)) ? Math.round(r * 1e10) / 1e10 : r; } /* v15.70.1: only sin/cos/tan are rounded (sqrt of 2 = 1.4142135623730951), tan 90 = Infinity; v15.50.4: NaN / Infinity like Scratch (sqrt of -1 = NaN, ln 0 = -Infinity) */
          case 'list_contents': { const a = Engine.lists?.[node.name] || []; return a.every(x => String(x).length === 1) ? a.join('') : a.join(' '); }
          case 'current_part': { const d = new Date(); return ({ YEAR: d.getFullYear(), MONTH: d.getMonth() + 1, DATE: d.getDate(), DAYOFWEEK: d.getDay() + 1, HOUR: d.getHours(), MINUTE: d.getMinutes(), SECOND: d.getSeconds() })[node.part] ?? 0; }
          case 'days_since_2000': return (Date.now() - Date.UTC(2000, 0, 1)) / 86400000;
@@ -460,7 +469,19 @@ index 9a9e3b0..0f9c999 100644
        lap('tidy');
        const title = by('projectTitle'); if (title) title.value = String(file.name).replace(/\.(sb3|json)$/i, '');
        Engine.activeSpriteIndex = 0;
-@@ -14787,7 +14886,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14682,7 +14781,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+     const sig = glob.join('|') + '#' + loc.join('|') + '#' + E.activeSpriteIndex; if (sig === chipSig && sec.querySelector('.gw9-var-chips')) return; chipSig = sig;
+     sec.querySelector('.gw9-var-chips')?.remove();
+     const box = h('div', { class: 'gw9-var-chips' });
+-    const chip = (n, local) => { const c = tpl.cloneNode(true); c.classList.add('gw9-var-chip'); c.classList.remove('bg-fuchsia-600'); c.classList.add('bg-variables'); c.dataset.gwSlotsReady = '1'; [...c.childNodes].forEach(x => { if (x.nodeType === 3) x.textContent = ''; }); const s = c.querySelector('.block-select'); if (s) { s.innerHTML = ''; s.appendChild(h('option', { value: n, text: n })); s.value = n; } if (local) c.title = `${n} (for ${me?.name} only)`; return c; };
++    /* v15.70.11 (Claude, Breaking G-Warp ep. 2 "2,500 variables crash the tab"): the pattern block carries a menu with EVERY variable, and it was
++       copied once per variable (2,500 x 2,500 = 6 million menu lines). One copy with an empty menu is made first and that one is copied. Same result. */
++    const lean = tpl.cloneNode(false); [...tpl.childNodes].forEach(x => { const y = x.cloneNode(false); if (x.nodeType === 1 && !x.classList.contains('block-select')) { const z = x.cloneNode(true); z.querySelectorAll?.('.block-select').forEach(q => { q.innerHTML = ''; }); lean.appendChild(z); } else lean.appendChild(y); });
++    const chip = (n, local) => { const c = lean.cloneNode(true); c.classList.add('gw9-var-chip'); c.classList.remove('bg-fuchsia-600'); c.classList.add('bg-variables'); c.dataset.gwSlotsReady = '1'; [...c.childNodes].forEach(x => { if (x.nodeType === 3) x.textContent = ''; }); const s = c.querySelector('.block-select'); if (s) { s.innerHTML = ''; s.appendChild(h('option', { value: n, text: n })); s.value = n; } if (local) c.title = `${n} (for ${me?.name} only)`; return c; };
+     glob.forEach(n => box.appendChild(chip(n, false)));
+     if (loc.length) { box.appendChild(h('div', { class: 'gw9-var-sub', text: `${me?.name || 'This sprite'} only` })); loc.forEach(n => box.appendChild(chip(n, true))); }
+     btn.after(box);
+@@ -14787,7 +14889,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    });
    // colour / brightness: each costume is filtered once and reused, instead of filtering every drawing
    let curFilter = '';
@@ -506,7 +527,7 @@ index 9a9e3b0..0f9c999 100644
    let fcache = new WeakMap(), mip = new WeakMap();
    const resetDrawCaches = () => { fcache = new WeakMap(); mip = new WeakMap(); };
    document.addEventListener('click', e => { if (e.target.closest?.('#greenFlagBtn,#stopBtn')) resetDrawCaches(); }, true);
-@@ -14806,7 +14942,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14806,7 +14945,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      if (curFilter) {
        const key = curFilter; let m = fcache.get(cv); if (!m) { m = new Map(); fcache.set(cv, m); }
        let f = m.get(key);
@@ -515,18 +536,45 @@ index 9a9e3b0..0f9c999 100644
        cv = f;
      }
      curFilter = '';
-@@ -14906,16 +15042,105 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14868,6 +15007,15 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+   function fence(s) {
+     if (!s || s.stageProxy || !GW.spriteBounds) return;
+     if (s.__physX === s.x && s.__physY === s.y) return; // v15.9.1: placed by physics (TurboWarp's Box2D doesn't fence)
++    /* v15.70.11 (Breaking G-Warp ep. 2, checked with real Scratch): a position like 1e308 or Infinity lost the sprite's size in the sum and the
++       sprite landed in the centre (Scratch: at the edge). Such positions are fenced from the sprite's box measured at the centre. */
++    if (Number.isNaN(s.x)) s.x = 0; if (Number.isNaN(s.y)) s.y = 0;
++    if (!(Math.abs(s.x) < 1e9) || !(Math.abs(s.y) < 1e9)) { const x = s.x, y = s.y; s.x = 0; s.y = 0; let b0; try { b0 = GW.spriteBounds(s); } finally { s.x = x; s.y = y; }
++      const w0 = b0.right - b0.left, h0 = b0.top - b0.bottom; if (!Number.isFinite(w0) || !Number.isFinite(h0)) { s.x = Math.max(-240, Math.min(240, x)); s.y = Math.max(-180, Math.min(180, y)); return; }
++      const ins = Math.min(15, Math.floor(Math.min(w0, h0) / 2)), fx = 240 - ins, fy = 180 - ins;
++      if (x + b0.right < -fx) s.x = Math.ceil(-fx - b0.right); else if (x + b0.left > fx) s.x = Math.floor(fx - b0.left);
++      if (y + b0.top < -fy) s.y = Math.ceil(-fy - b0.top); else if (y + b0.bottom > fy) s.y = Math.floor(fy - b0.bottom);
++      return; }
+     const b = GW.spriteBounds(s), w = b.right - b.left, hh = b.top - b.bottom; if (!Number.isFinite(w) || !Number.isFinite(hh)) return;
+     const inset = Math.min(15, Math.floor(Math.min(w, hh) / 2)), sx = 240 - inset, sy = 180 - inset;
+     if (b.right < -sx) s.x = Math.ceil(s.x - (sx + b.right)); else if (b.left > sx) s.x = Math.floor(s.x + (sx - b.left));
+@@ -14897,6 +15045,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+   // Scratch rules: direction stays between -179 and 180; positions are fenced right after a move
+   const wrapDir = d => { d = Number(d) || 0; return ((d + 179) % 360 + 360) % 360 - 179; };
+   const nIn = (b, i) => { const x = Number(ownInputs(b)[i]?.value); return Number.isFinite(x) ? x : 0; };
++  const nInf = (b, i) => { const x = Number(ownInputs(b)[i]?.value); return Number.isNaN(x) ? 0 : x; }; // v15.70.11 (Breaking G-Warp ep. 2, checked with real Scratch): Infinity stays Infinity for positions and size (it was turned into 0)
+   // layer order without scanning every sprite on each "go to front/back" (hundreds of clones did that every frame)
+   let LAY = null; const layersInit = () => { if (LAY && LAY.count === E.sprites.length) return LAY; let lo = 0, hi = 0; E.sprites.forEach((x, i) => { const l = x.layer ?? i; if (l < lo) lo = l; if (l > hi) hi = l; }); LAY = { lo: Math.min(lo, LAY?.lo ?? lo), hi: Math.max(hi, LAY?.hi ?? hi), count: E.sprites.length }; return LAY; };
+   GW.resetLayerCounters = () => { LAY = null; };
+@@ -14906,16 +15055,105 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      move: (th, s, b) => { const n = nIn(b, 0), r = (90 - s.direction) * DEG; s.x += Math.cos(r) * n; s.y += Math.sin(r) * n; },
      turn_cw: (th, s, b) => { s.direction = wrapDir(s.direction + nIn(b, 0)); },
      turn_ccw: (th, s, b) => { s.direction = wrapDir(s.direction - nIn(b, 0)); },
 -    point_direction: (th, s, b) => { const raw = String(ownInputs(b)[0]?.value ?? '').trim(), v = Number(raw); if (raw !== '' && !Number.isFinite(v)) return; s.direction = wrapDir(nIn(b, 0)); }, /* v15.50.5: NaN / text keeps the direction (Scratch setDirection) */
+-    goto_xy: (th, s, b) => { s.x = nIn(b, 0); s.y = nIn(b, 1); },
+-    change_x: (th, s, b) => { s.x += nIn(b, 0); }, set_x: (th, s, b) => { s.x = nIn(b, 0); },
+-    change_y: (th, s, b) => { s.y += nIn(b, 0); }, set_y: (th, s, b) => { s.y = nIn(b, 0); },
 +    point_direction: (th, s, b) => { const raw = String(ownInputs(b)[0]?.value ?? '').trim(), v = Number(raw); if (v === Infinity || v === -Infinity) return; s.direction = wrapDir(nIn(b, 0)); }, /* v15.70.3 (checked against real Scratch): text counts as 0, only Infinity keeps the direction */
-     goto_xy: (th, s, b) => { s.x = nIn(b, 0); s.y = nIn(b, 1); },
-     change_x: (th, s, b) => { s.x += nIn(b, 0); }, set_x: (th, s, b) => { s.x = nIn(b, 0); },
-     change_y: (th, s, b) => { s.y += nIn(b, 0); }, set_y: (th, s, b) => { s.y = nIn(b, 0); },
++    goto_xy: (th, s, b) => { s.x = nInf(b, 0); s.y = nInf(b, 1); },
++    change_x: (th, s, b) => { s.x += nInf(b, 0); }, set_x: (th, s, b) => { s.x = nInf(b, 0); },
++    change_y: (th, s, b) => { s.y += nInf(b, 0); }, set_y: (th, s, b) => { s.y = nInf(b, 0); },
      show: (th, s) => { s.visible = true; }, hide: (th, s) => { s.visible = false; },
 -    change_size: (th, s, b) => { s.size = Math.max(1, (Number(s.size) || 100) + nIn(b, 0)); }, set_size: (th, s, b) => { s.size = Math.max(1, nIn(b, 0)); },
-+    change_size: (th, s, b) => { const v = (Number(s.size) || 100) + nIn(b, 0); s.size = GW.clampSize ? GW.clampSize(s, v) : Math.max(1, v); }, set_size: (th, s, b) => { const v = nIn(b, 0); s.size = GW.clampSize ? GW.clampSize(s, v) : Math.max(1, v); },
++    change_size: (th, s, b) => { const v = (Number(s.size) || 100) + nInf(b, 0); s.size = GW.clampSize ? GW.clampSize(s, v) : Math.max(1, v); }, set_size: (th, s, b) => { const v = nInf(b, 0); s.size = GW.clampSize ? GW.clampSize(s, v) : Math.max(1, v); },
      next_costume: (th, s) => { const n = s.costumes?.length || 1; s.activeCostume = ((s.activeCostume || 0) + 1) % n; },
      switch_costume: (th, s, b) => { const i = pickIndex(s.costumes || [], s.activeCostume || 0, sels(b)[0], 'costume'); if (i >= 0) s.activeCostume = i; },
      set_backdrop: (th, s, b) => { const i = pickIndex(E.backdrops || [], E.activeBackdrop || 0, sels(b)[0], 'backdrop'); if (i >= 0) { E.activeBackdrop = i; try { GW.triggerBackdrop?.(E.backdrops[i].name); } catch {} } }
@@ -623,7 +671,7 @@ index 9a9e3b0..0f9c999 100644
    const mainExtra = GW.extraBlock;
    GW.extraBlock = function (th, b) {
      const s = th.sprite; if (!s) return mainExtra.apply(this, arguments);
-@@ -14963,7 +15188,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14963,7 +15201,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        literal: (th, nd) => nd.value ?? '',
        get_var: (th, nd) => G9.scopedValue(th, nd.name || 'my variable'),
        x_position: (th, nd, ow) => spr(th, ow)?.x ?? 0, y_position: (th, nd, ow) => spr(th, ow)?.y ?? 0, direction: (th, nd, ow) => spr(th, ow)?.direction ?? 90,
@@ -632,14 +680,14 @@ index 9a9e3b0..0f9c999 100644
        mouse_down: () => !!E.mouse?.down,
        op_add: (th, nd, ow) => num(A(th, nd, ow, 0)) + num(A(th, nd, ow, 1)), op_sub: (th, nd, ow) => num(A(th, nd, ow, 0)) - num(A(th, nd, ow, 1)),
        op_mul: (th, nd, ow) => num(A(th, nd, ow, 0)) * num(A(th, nd, ow, 1)), op_div: (th, nd, ow) => num(A(th, nd, ow, 0)) / num(A(th, nd, ow, 1)),
-@@ -14982,6 +15207,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14982,6 +15220,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        list_itemnum: (th, nd, ow) => { const a = E.lists?.[nd.name] || [], v = A(th, nd, ow, 0); return itemNum(a, v); }
      };
      G9.fastFN = FN; // v15.9.1: other layers add their reporters here
 +    /* v15.70.5 (Claude, speed): more everyday reporters are answered in one step. The formulas are the same ones the older layers used
 +       (timer, block inputs, mouse, key pressed, length, letter, the maths functions) - they just don't travel through 4 layers first. */
 +    { const DG = Math.PI / 180, MID = x => x, hasO = Object.prototype.hasOwnProperty, nf = v => (Number.isFinite(Number(v)) ? Number(v) : 0);
-+      const MOP = { abs: Math.abs, floor: Math.floor, ceiling: Math.ceil, sqrt: Math.sqrt, sin: x => Math.sin(x * DG), cos: x => Math.cos(x * DG), tan: x => Math.tan(x * DG), asin: x => Math.asin(x) / DG, acos: x => Math.acos(x) / DG, atan: x => Math.atan(x) / DG, ln: Math.log, log: Math.log10, 'e ^': Math.exp, '10 ^': x => Math.pow(10, x) };
++      const MOP = { abs: Math.abs, floor: Math.floor, ceiling: Math.ceil, sqrt: Math.sqrt, sin: x => Math.sin(x * DG), cos: x => Math.cos(x * DG), tan: x => Math.tan(x * DG), asin: x => Math.asin(x) / DG, acos: x => Math.acos(x) / DG, atan: x => Math.atan(x) / DG, ln: Math.log, log: x => Math.log(x) / Math.LN10 /* v15.70.11 (Breaking G-Warp ep. 3): Scratch's own formula - log of 1000 is 2.9999999999999996 there, not 3 */, 'e ^': Math.exp, '10 ^': x => Math.pow(10, x) };
 +      FN.timer = () => (performance.now() - (E.timerStarted || performance.now())) / 1000;
 +      FN.parameter = (th, nd) => { const nm = nd.name || 'arg1', cs = th && th.callStack; if (cs) for (let i = cs.length - 1; i >= 0; i--) { const f = cs[i]; if (f && f.type === 'custom' && f.locals && hasO.call(f.locals, nm)) return f.locals[nm]; } return 0; };
 +      FN.mouse_x = () => E.mouse?.x ?? 0; FN.mouse_y = () => E.mouse?.y ?? 0;
@@ -651,7 +699,7 @@ index 9a9e3b0..0f9c999 100644
      G9.evalNode = function (th, node, expected, owner) { if (!node) return expected === 'boolean' ? false : ''; const f = FN[node.type]; return f ? f(th, node, owner) : slow.apply(this, arguments); };
      G9.scratchCompare = cmp;
    })();
-@@ -15023,6 +15260,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15023,6 +15273,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      infiniteClones: store.get('gwarp-infinite-clones') === 'on',
      showFps: store.get('gwarp-show-fps') === 'on',
      noFence: store.get('gwarp-no-fence') === 'on', // Scratch keeps sprites on the stage (fencing); TurboWarp can turn it off
@@ -659,7 +707,7 @@ index 9a9e3b0..0f9c999 100644
      noMiscLimits: store.get('gwarp-no-misc-limits') === 'on' // v15.13.0: TurboWarp “Remove miscellaneous limits”
    };
    const target = () => (S.projectFps != null ? S.projectFps : S.fps);
-@@ -15031,6 +15269,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15031,6 +15282,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      setFps(v) { S.fps = Math.max(0, Math.min(250, Math.round(Number(v) || 0))); store.set('gwarp-fps', String(S.fps)); refreshFpsLabels(); },
      setProjectFps(v) { S.projectFps = v == null ? null : Math.max(0, Math.min(250, Math.round(Number(v) || 0))); refreshFpsLabels(); },
      setInfiniteClones(on) { S.infiniteClones = !!on; store.set('gwarp-infinite-clones', on ? 'on' : null); E.cloneLimit = on ? Infinity : 300; },
@@ -667,7 +715,7 @@ index 9a9e3b0..0f9c999 100644
      setShowFps(on) { S.showFps = !!on; store.set('gwarp-show-fps', on ? 'on' : null); placeFps(); },
      setNoFence(on) { S.noFence = !!on; store.set('gwarp-no-fence', on ? 'on' : null); },
      setNoMiscLimits(on) { S.noMiscLimits = !!on; store.set('gwarp-no-misc-limits', on ? 'on' : null); }
-@@ -15070,17 +15309,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15070,17 +15322,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      const [showFps, showFpsRow] = check('gw9AdvShowFps', 'Show FPS on the stage', 'A small frames-per-second counter in the corner of the stage.', S.showFps);
      const [fenceOff, fenceRow] = check('gw9AdvFence', 'Remove fencing', 'Lets sprites go fully off the stage. Scratch keeps a little of every sprite on the stage; leave this off for Scratch projects.', S.noFence);
      const [hqOn, hqRow] = check('gw9AdvHQ', 'Max quality render (HQ)', 'Draws the stage at your screen’s full sharpness, up to 4× (1920 × 1440): sharp pen lines, vector costumes, text and bubbles — like TurboWarp’s “High quality pen”, for the whole stage. Best in Large or full screen. Big projects may run slower; turn it off if they lag. Also the HQ button above the stage.', !!window.GW_HQ?.isOn?.());
@@ -688,7 +736,7 @@ index 9a9e3b0..0f9c999 100644
        if (window.GW_WARP_GUARD && window.GW_WARP_GUARD.isOn() !== guard.checked) window.GW_WARP_GUARD.set(guard.checked);
        toast('Advanced settings saved');
      });
-@@ -15874,7 +16114,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15874,7 +16127,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        lookupOrCreateVariable(id, n) { return lookupVar(s, n, '') || (GV()[n] = 0, lookupVar(s, n, '')); }, lookupOrCreateList(id, n) { return lookupVar(s, n, 'list') || (GL()[n] = [], lookupVar(s, n, 'list')); },
        lookupBroadcastMsg: (id, n) => ({ id, name: n, value: n }),
        isTouchingSprite: n => GW.spritesNamed(String(n)).some(o => o !== s && GW.spritesTouch(s, o)), isTouchingPoint: (x, y) => !!GW.spriteHasPoint?.(s, x, y), isTouchingEdge: () => !!GW.touchingEdge?.(s),
@@ -697,7 +745,7 @@ index 9a9e3b0..0f9c999 100644
        getLayerOrder: () => (GW.drawOrder ? GW.drawOrder().indexOf(s) : E.sprites.indexOf(s)), goToFront() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.max(0, ...o.map(x => x.layer || 0)) + 1; }, goToBack() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.min(0, ...o.map(x => x.layer || 0)) - 1; },
        emitVisualChange() {}, updateAllDrawableProperties() {}, setCustomState(k, v) { (s.__custom || (s.__custom = {}))[k] = v; }, getCustomState: k => s.__custom?.[k],
        duplicate: () => Promise.resolve(targetFor(GW.createClone ? GW.createClone(s) : null)), makeClone: () => targetFor(GW.createClone ? GW.createClone(s) : null), dispose() { if (s.isClone) GW.deleteClone?.(s); }
-@@ -15934,7 +16174,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15934,7 +16187,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    const renderer = {
      canvas: null, get _gl() { return null; }, gl: null, _allDrawables: [], _drawList: [], dirty: false, _xLeft: -240, _xRight: 240, _yBottom: -180, _yTop: 180, _nativeSize: [480, 360],
      getNativeSize: () => [480, 360], setBackgroundColor(r, g, b) { GW.camera.bg = Color.rgbToHex({ r: r * 255, g: g * 255, b: b * 255 }); },
@@ -706,7 +754,7 @@ index 9a9e3b0..0f9c999 100644
      getCurrentSkinSize(id) { const s = E.sprites[id]; const c = s?.costumes?.[s.activeCostume]; const b = GW.costumeBox(c); return [b.w, b.h]; },
      getBounds(id) { const s = E.sprites[id]; if (!s) return null; const b = GW.spriteBounds(s); return { ...b, width: b.right - b.left, height: b.top - b.bottom }; },
      getBoundsForBubble(id) { return this.getBounds(id); }, getFencedPositionOfDrawable: (id, pos) => pos,
-@@ -15965,14 +16205,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15965,14 +16218,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      compilerOptions: { enabled: false, warpTimer: true }, isPackaged: false, extensionStorage: {}, renderer, storage: { assetHost: '', DataFormat: { PNG: 'png', SVG: 'svg', WAV: 'wav', MP3: 'mp3', JPG: 'jpg' }, AssetType: {} },
      get runtimeOptions() { return { maxClones: E.cloneLimit || 300, miscLimits: !GW.miscLimitsOff?.(), fencing: GW.__projectFence !== false }; },
      setRuntimeOptions(o) { if (o?.maxClones != null) E.cloneLimit = Number(o.maxClones) || 300; if (o?.fencing != null) GW.__projectFence = o.fencing ? undefined : false; if (o?.miscLimits != null) GW.__projectMiscLimits = o.miscLimits ? undefined : false; },
@@ -723,7 +771,7 @@ index 9a9e3b0..0f9c999 100644
      startHats: (op, fields, target) => startHats(op, fields, target), stopAll() { by('stopBtn')?.click(); }, greenFlag() { by('greenFlagBtn')?.click(); }, stopForTarget(t) { const s = t?.gwSprite; if (s) E.threads.forEach(th => { if (th.sprite === s) th.finished = true; }); },
      shouldExecuteStopClicked: true, _hats: {}, _primitives: {}, _flowing: {}, profiler: null, sequencer: { stepThreads() {}, timer: { timeElapsed: () => 0 } },
      _step() { this.emit('BEFORE_EXECUTE'); pollHats(); },
-@@ -15988,7 +16228,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15988,7 +16241,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    runtime.extensionManager = extensionManager;
    define(vm, {
      runtime, renderer, extensionManager, get editingTarget() { return runtime.getEditingTarget(); },
@@ -732,7 +780,7 @@ index 9a9e3b0..0f9c999 100644
      postIOData() {}, greenFlag: () => runtime.greenFlag(), stopAll: () => runtime.stopAll(), start() {}, toJSON: () => '{}', securityManager: {},
      getPlaygroundData: () => ({ targets: runtime.targets, threads: [] }), addSprite: () => Promise.reject(new Error('Adding sprites from extensions is not supported in G-Warp yet')),
      get runtimeOptions() { return runtime.runtimeOptions; }
-@@ -16157,19 +16397,24 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16157,19 +16410,24 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  
    /* ================= 7. running extension blocks ================= */
    const own = (b, sel) => [...b.querySelectorAll(sel)].filter(x => x.closest('.scratch-block') === b);
@@ -767,7 +815,7 @@ index 9a9e3b0..0f9c999 100644
      const defs = def?.arguments || {};
      Object.keys(defs).forEach(k => { if (!(k in args)) args[k] = defs[k]?.defaultValue ?? ''; });
      Object.keys(defs).forEach(k => { const t = kind(defs[k]?.type); if (t === 'boolean' && typeof args[k] !== 'boolean') args[k] = Cast.toBoolean(args[k] === '' ? false : args[k]); });
-@@ -16363,7 +16608,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16363,7 +16621,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      css(st) { const rgb = Color.hsvToRgb({ h: st.color * 360 / 100, s: st.saturation / 100, v: st.brightness / 100 }); return `rgba(${rgb.r},${rgb.g},${rgb.b},${1 - st.transparency / 100})`; },
      clear() { const c = this.canvas(), g = this.ctx(); if (g) g.clearRect(0, 0, c.width, c.height); },
      line(color4f, d, x0, y0, x1, y1) { const g = this.ctx(); if (!g) return; const c = color4f ? `rgba(${color4f[0] * 255},${color4f[1] * 255},${color4f[2] * 255},${color4f[3]})` : '#0000ff'; this.seg(g, c, d || 1, x0, y0, x1, y1); },
@@ -776,7 +824,73 @@ index 9a9e3b0..0f9c999 100644
      follow(s) { const st = s.__pen; if (!st || !st.down) { if (st) { st.x = s.x; st.y = s.y; } return; } if (st.x === s.x && st.y === s.y) return; const g = this.ctx(); if (g) this.seg(g, this.css(st), st.size, st.x, st.y, s.x, s.y); st.x = s.x; st.y = s.y; },
      stamp(s) {
        const g = this.ctx(), c = s.costumes?.[s.activeCostume]; if (!g || !c?.canvas || !s.visible) return; GW.__penUsed = true; const cv = this.canvas(), kx = cv.width / 480;
-@@ -18029,6 +18274,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -16842,7 +17100,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+     if (by('gw10FileSection')) return true;
+     // v15.25.0: New project = keep a restore point of what you have, then start fresh (G-Spark, empty code)
+     async function newProject() {
+-      const ok = window.GW_CONFIRM ? await window.GW_CONFIRM('Start a new project?', 'What you have now is kept as a restore point (More → More file options → Restore a previous version). Use Save first if you want it as a file.', 'New project', 'Cancel') : window.confirm('Start a new project?');
++      const ok = window.GW_CONFIRM ? await window.GW_CONFIRM('Start a new project?', 'What you have now is kept as a restore point (G menu at the top left → Restore a previous version). Use Save first if you want it as a file.', 'New project', 'Cancel') : window.confirm('Start a new project?');
+       if (!ok) return;
+       try { const R = window.GW_FILES?.Restore; if (R?.point) await R.point('Before “New project”', true); } catch (e) { console.warn('[new project] restore point', e); }
+       try { sessionStorage.setItem('gwarp-new-project', '1'); } catch {}
+@@ -16864,10 +17122,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+     ['sb3ExportBtn', 'sb3ImportBtn', 'saveProjectBtn', 'loadProjectBtn'].forEach(id => by(id)?.classList.add('gw10-hidden-old'));
+     updateNote(); return true;
+   }
++  window.GW_FILE_SHORTCUTS = true; // the old Ctrl+S (which saved a second file) steps aside
+   function updateNote() { const n = by('gw10FileNote'); if (n) n.textContent = FILE.name ? `Open file: ${FILE.name}${FILE.handle ? '' : ' (Save makes a new download)'}` : 'Not saved to a file yet'; }
+   addEventListener('keydown', e => {
+     if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
+     const k = e.key.toLowerCase();
++    window.GW_FILE_SHORTCUTS = true;
+     if (k === 's') { e.preventDefault(); save(e.shiftKey); }
+     else if (k === 'o' && !e.shiftKey) { e.preventDefault(); openFromComputer(); }
+   }, true);
+@@ -17261,7 +17521,17 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+     // v15.48.0: a costume made in G-Warp's editor remembers where it sat in the drawing area; use that (it can grow to fit the drawing)
+     const t = c?.dataFormat === 'svg' && typeof c.svg === 'string' && c.svg.slice(0, 400);
+     if (t && t.includes('data-gw-editor="1"')) { const g = n => { const x = new RegExp('data-gw-' + n + '="([-0-9.e+]+)"').exec(t); return x ? +x[1] : NaN; }; const k = g('k'), ox = g('ox'), oy = g('oy'); if (k > 0 && Number.isFinite(ox) && Number.isFinite(oy)) return { w, h, k, ox, oy }; }
+-    const k = Math.min(AREA.w / w, AREA.h / h); return { w, h, k, ox: AREA.x + (AREA.w - w * k) / 2, oy: AREA.y + (AREA.h - h * k) / 2 };
++    /* v15.70.11 (Claude, Breaking G-Warp ep. 1 + 2):
++       - a bitmap costume that was painted bigger remembers where it sits in the drawing area (like vector costumes do), so it can GROW;
++       - a brand-new painted sprite starts as a 2 x 2 dot: it was stretched over the whole drawing area, so everything painted on it came out
++         as 1 pixel on the stage. An empty costume now sits in the drawing area at stage scale (1 square = 1 stage pixel);
++       - a BACKDROP fills the whole 512 x 384 drawing area (same 4:3 shape as the stage). It used to sit in the middle 75%, with nothing showing
++         where it ended, so anything painted near the edges never reached the stage ("backdrops look zoomed in"). */
++    const bm = c && c.__gwBmp, cvs = c && c.canvas;
++    if (bm && cvs && c.dataFormat !== 'svg' && bm.W === cvs.width && bm.H === cvs.height && bm.k > 0) return { w, h, k: bm.k, ox: bm.ox, oy: bm.oy };
++    let A = AREA; try { const sp = window.Engine?.sprites?.[window.Engine.activeSpriteIndex]; if (sp && sp.stageProxy && (sp.costumes || []).includes(c)) A = { x: 0, y: 0, w: 512, h: 384 }; } catch {}
++    if (w <= 4 && h <= 4 && A === AREA) return { w, h, k: 1, ox: AREA.x + (AREA.w - w) / 2, oy: AREA.y + (AREA.h - h) / 2 };
++    const k = Math.min(A.w / w, A.h / h); return { w, h, k, ox: A.x + (A.w - w * k) / 2, oy: A.y + (A.h - h * k) / 2 };
+   }
+   function parse(text) { try { const d = new DOMParser().parseFromString(String(text || ''), 'image/svg+xml'); const r = d.documentElement; return r && r.localName === 'svg' && !d.getElementsByTagName('parsererror').length ? (window.GW_SAFE ? GW_SAFE.clean(r) : r) : null; } catch { return null; } }
+   const ser = n => new XMLSerializer().serializeToString(n);
+@@ -17400,10 +17670,21 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+   const costume = () => { const s = E?.sprites?.[E.activeSpriteIndex]; return s?.costumes?.[s.activeCostume] || null; };
+   function saveBitmap(silent) {
+     const src = by('gwBitmapCanvasV15'), c = costume(), mapFor = window.GW_VECTOR_EDITOR?.mapFor; if (!src || !c || !mapFor) return false;
+-    const m = mapFor(c), W = Math.max(1, Math.round(m.w * m.k)), H = Math.max(1, Math.round(m.h * m.k));
+-    const tmp = document.createElement('canvas'); tmp.width = W; tmp.height = H; tmp.getContext('2d').drawImage(src, m.ox, m.oy, m.w * m.k, m.h * m.k, 0, 0, W, H);
++    const m = mapFor(c);
++    /* v15.70.11 (Claude, Breaking G-Warp ep. 2 "bitmap costumes cannot grow"): the saved picture is the costume's old box PLUS everything that
++       was painted outside it (it used to be cut off at the old box). The rotation centre moves with it, so the sprite does not jump on the stage. */
++    let bx0 = m.ox, by0 = m.oy, bx1 = m.ox + m.w * m.k, by1 = m.oy + m.h * m.k;
++    try { const d = src.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, src.width, src.height).data, SW = src.width, SH = src.height; let x0 = SW, y0 = SH, x1 = -1, y1 = -1;
++      for (let y = 0; y < SH; y++) { const row = y * SW * 4; for (let x = 0; x < SW; x++) if (d[row + x * 4 + 3] > 8) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
++      if (x1 >= 0) { bx0 = Math.max(0, Math.min(bx0, x0)); by0 = Math.max(0, Math.min(by0, y0)); bx1 = Math.min(SW, Math.max(bx1, x1 + 1)); by1 = Math.min(SH, Math.max(by1, y1 + 1)); } } catch {}
++    const grew = bx0 < m.ox - 0.01 || by0 < m.oy - 0.01 || bx1 > m.ox + m.w * m.k + 0.01 || by1 > m.oy + m.h * m.k + 0.01;
++    if (grew) { bx0 = Math.floor(bx0); by0 = Math.floor(by0); bx1 = Math.ceil(bx1); by1 = Math.ceil(by1); } else { bx0 = m.ox; by0 = m.oy; bx1 = m.ox + m.w * m.k; by1 = m.oy + m.h * m.k; }
++    const W = Math.max(1, Math.round(bx1 - bx0)), H = Math.max(1, Math.round(by1 - by0));
++    const tmp = document.createElement('canvas'); tmp.width = W; tmp.height = H; tmp.getContext('2d').drawImage(src, bx0, by0, bx1 - bx0, by1 - by0, 0, 0, W, H);
+     const cv = c.canvas || (c.canvas = document.createElement('canvas')); cv.width = W; cv.height = H; cv.getContext('2d').drawImage(tmp, 0, 0);
+-    c.res = W / m.w; c.natural = true; c.rc = c.rc || { x: m.w / 2, y: m.h / 2 }; c.dataFormat = 'png'; delete c.svg; c.__gwHQ = null;
++    const rcOld = c.rc || { x: m.w / 2, y: m.h / 2 };
++    c.res = grew ? m.k : W / m.w; c.natural = true; c.rc = grew ? { x: rcOld.x + (m.ox - bx0) / m.k, y: rcOld.y + (m.oy - by0) / m.k } : rcOld; c.dataFormat = 'png'; delete c.svg; c.__gwHQ = null;
++    if (grew || c.__gwBmp) c.__gwBmp = { k: grew ? m.k : c.res, ox: bx0, oy: by0, W, H };
+     try { window.renderSpritesGrid?.(); window.GW?.refreshStage?.(); window.GW_V1570_STUDIO?.renderCostumeList?.(true); } catch {}
+     if (!silent) try { window.GW?.toast?.('Costume saved (bitmap)'); } catch {}
+     return true;
+@@ -18029,6 +18310,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      });
      refreshAll(); toast(`Attached ${n} shape${n === 1 ? '' : 's'} to the nearest bones.`);
    }
@@ -826,7 +940,7 @@ index 9a9e3b0..0f9c999 100644
    function deleteBone() {
      const id = st.bone; if (!id) return toast('Pick a bone first.'); snap();
      const gone = new Set([id]); let grew = true; while (grew) { grew = false; st.anim.bones.forEach(b => { if (b.parent && gone.has(b.parent) && !gone.has(b.id)) { gone.add(b.id); grew = true; } }); }
-@@ -18201,7 +18489,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18201,7 +18525,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
          h('button', { type: 'button', class: 'gw18-x', 'aria-label': 'Close', html: '<i class="fa-solid fa-xmark"></i>', onclick: () => close() })),
        h('div', { class: 'gw18-body' },
          h('div', { class: 'gw18-tools' }, h('div', { class: 'gw18-small', text: 'Rig tools' }),
@@ -835,7 +949,7 @@ index 9a9e3b0..0f9c999 100644
            h('hr'), btn(ic('fa-wand-magic-sparkles', 'Attach automatically'), () => autoAttach(), { id: 'gw18Auto' }), btn(ic('fa-trash', 'Delete bone'), () => deleteBone(), { id: 'gw18DelBone' }),
            h('p', { id: 'gw18Tip', class: 'gw18-tip' })),
          h('div', { id: 'gw18View', class: 'gw18-view' }),
-@@ -20532,20 +20820,25 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -20532,20 +20856,25 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      { id: 'clones', name: 'Clone counter', text: 'Shows how many clones exist, next to the stage, while a project runs. Many clones can make a game slow.', def: true },
      { id: 'mute', name: 'Mute and project volume', text: 'Ctrl+click (⌘+click on Mac) the green flag to mute or unmute the project. Set the volume below.', def: true },
      { id: 'gamepad', name: 'Gamepad', text: 'Play with a game controller: left stick and d-pad = arrow keys, right stick = W A S D, A = space, B = X, X = Z, Y = C, Start = Enter.', def: false },
@@ -864,7 +978,7 @@ index 9a9e3b0..0f9c999 100644
  
    /* ---------- 2. mute + volume (every sound goes through one volume knob) ---------- */
    let muted = false, volume = Math.max(0, Math.min(100, Number(store.get('gwarp-volume') ?? 100)));
-@@ -20611,8 +20904,109 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -20611,8 +20940,109 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
    }, true);
    window.GW_FIND = { open: findBar };
  
@@ -975,7 +1089,7 @@ index 9a9e3b0..0f9c999 100644
    function openAddons() {
      const rows = ADDONS.map(a => { const c = h('input', { type: 'checkbox', id: 'gw10Addon-' + a.id }); c.checked = on(a.id); c.addEventListener('change', () => setOn(a.id, c.checked)); return h('label', { class: 'gw9-adv-row', for: 'gw10Addon-' + a.id }, c, h('span', {}, h('b', { text: a.name }), h('small', { text: a.text }))); });
      const vol = h('input', { type: 'range', min: '0', max: '100', value: String(volume), id: 'gw10Volume', 'aria-label': 'Project volume' }); const vl = h('b', { text: `${volume}%` });
-@@ -23954,6 +24348,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -23954,6 +24384,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    let toHat = new Map();      // hat/define block -> pole record
    const heat = new WeakMap(); // block -> last fire time (kept across re-layouts)
    function fired(b) {
@@ -983,7 +1097,7 @@ index 9a9e3b0..0f9c999 100644
      const now = performance.now(); heat.set(b, now); PL.stats.fires++;
      const ws = fromBlock.get(b); if (!ws) return;
      for (const w of ws) { w.hotAt = now; if (now - (w.sparkAt || 0) > 260) { w.sparkAt = now; spark(w, now); } if (w.to) { const p = toHat.get(w.to); if (p) p.hotAt = now; } }
-@@ -24077,17 +24472,22 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -24077,17 +24508,22 @@ body.gw-calm .gw-pl-w .core{animation:none}
        try { const pt = s.w.core.getPointAtLength(s.len * f); s.c.setAttribute('cx', pt.x.toFixed(1)); s.c.setAttribute('cy', pt.y.toFixed(1)); } catch {}
      }
    }
@@ -1008,7 +1122,7 @@ index 9a9e3b0..0f9c999 100644
    // the very first scripts after Start: mark them as fired once the wires exist
    document.addEventListener('click', ev => { if (!ev.target.closest?.('#greenFlagBtn')) return; setTimeout(() => { if (!PL.live) return; const th = E()?.threads || []; th.forEach(t => { const hat = t?.blocks?.[0]?.parentElement?.firstElementChild; if (hat && toHat.has(hat)) hatFired(hat); }); }, 140); }, true);
  
-@@ -25054,7 +25454,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -25054,7 +25490,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    const by = id => document.getElementById(id);
    const css = document.createElement('style'); css.id = 'gw4950css';
    css.textContent = `#gw154StageFrame [data-var-monitor],#gw154StageFrame [data-list-monitor]{z-index:6!important}
@@ -1017,7 +1131,7 @@ index 9a9e3b0..0f9c999 100644
  .gw4950-menu{position:fixed;z-index:10050;min-width:150px;padding:4px;border:1px solid #2b2f55;border-radius:10px;background:#14162a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
  .gw4950-menu button{display:flex;gap:8px;align-items:center;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#e5e7eb;font-size:12px;font-weight:700;text-align:left;cursor:pointer}
  .gw4950-menu button:hover,.gw4950-menu button:focus-visible{background:#26294a;outline:none}`;
-@@ -25706,7 +26106,13 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -25706,7 +26142,13 @@ body.gw-calm .gw-pl-w .core{animation:none}
      wave: ['Wave', [[0, 2, 1], [1, 3, 1], [2, 4, 1], [3, 5, 1], [4, 4, 1], [5, 3, 1], [6, 2, 1], [7, 1, 1], [8, 2, 1], [9, 3, 1], [10, 4, 1], [11, 6, 1], [12, 5, 2], [14, 4, 2]]],
      lullaby: ['Lullaby', [[0, 4, 3], [3, 2, 1], [4, 3, 2], [6, 2, 2], [8, 1, 3], [11, 0, 1], [12, 0, 4]]],
      riff: ['Riff', [[0, 0, 1], [2, 0, 1], [3, 2, 1], [5, 3, 1], [6, 2, 2], [8, 0, 1], [10, 0, 1], [11, 5, 1], [13, 4, 1], [14, 2, 2]]],
@@ -1032,7 +1146,24 @@ index 9a9e3b0..0f9c999 100644
    };
    const by = id => document.getElementById(id);
    const st = { notes: new Map(), hold: false, loop: true, bpm: 112, timer: 0, playing: false, active: -1 };
-@@ -26368,11 +26774,16 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
+@@ -26090,14 +26532,14 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
+     m.append(
+       h('div', { class: 'gw16-sec', text: 'File' }),
+       fileItem('fa-file-circle-plus', 'New project', '', () => { const b = by('gw10New'); b ? b.click() : location.reload(); }),
+-      fileItem('fa-window-restore', 'New window', '', () => window.gwApp?.newWindow?.()),
++      fileItem('fa-window-restore', 'New window', '', () => { if (window.gwApp?.newWindow) window.gwApp.newWindow(); else window.GW?.toast?.('“New window” works in the G-Warp desktop app. In a browser, open G-Warp in a new tab.'); }), // v15.70.11 (Breaking G-Warp ep. 3): it did nothing and said nothing in a browser
+       fileItem('fa-folder-open', 'Load from your computer…', 'Ctrl+O', () => { const b = by('gw10Open'); b ? b.click() : (window.GW_FILES?.openFromComputer?.() || by('loadProjectBtn')?.click()); }),
+       fileItem('fa-floppy-disk', 'Save', 'Ctrl+S', () => { const b = by('gw10Save'); b ? b.click() : window.GW?.saveProject?.(); }),
+       fileItem('fa-file-arrow-down', 'Save as…', 'Ctrl+Shift+S', () => { const b = by('gw10SaveAs'); b ? b.click() : window.GW_FILES?.save?.(true); }),
+       fileItem('fa-clock-rotate-left', 'Restore a previous version…', '', () => { const b = by('gw10Restore'); b ? b.click() : window.GW_FILES?.openRestore?.(); }),
+       h('hr'),
+       h('div', { class: 'gw16-sec', text: 'Play together' }),
+-      fileItem('fa-wifi', 'Host this project on Wi-Fi…', '', () => window.GW?.openLanShareHost?.()),
++      fileItem('fa-wifi', 'Host this project on Wi-Fi…', '', () => { if (window.GW?.openLanShareHost) window.GW.openLanShareHost(); else window.GW?.toast?.('Hosting on Wi-Fi works in the G-Warp desktop app only.'); }),
+       h('hr'),
+       fileItem('fa-power-off', 'Quit G-Warp', '', () => window.gwApp?.quit?.()));
+     document.body.appendChild(m); openMenus.push(m);
+@@ -26368,11 +26810,16 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
    /* 22 Nov (Claude, speed): the fingerprint copies every script; it took up to 1 s every 1.5 s on big projects.
       Now it is only taken after a click, a key, a change in the code area or a file action (or every 20 s). */
    let touched = true, lastFull = 0;
@@ -1051,7 +1182,7 @@ index 9a9e3b0..0f9c999 100644
      const s = signature(); if (!baseSig) { baseSig = s; return; }
      const dirty = s !== baseSig;
      if (dirty !== wasDirty) { wasDirty = dirty; try { window.gwApp?.setDirty?.(dirty); } catch {} }
-@@ -27132,7 +27543,25 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -27132,7 +27579,25 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
   const MEL={ins:null};
   const BEATS={rock:[[0,0],[4,0],[8,0],[12,0],[2,1],[6,1],[10,1],[14,1],...[...Array(16).keys()].map(c=>[c,2])],
    pop:[[0,0],[5,0],[8,0],[2,1],[6,1],[10,1],[14,1],...[0,2,4,6,8,10,12,14].map(c=>[c,2]),[7,4],[15,4]],
@@ -1078,7 +1209,7 @@ index 9a9e3b0..0f9c999 100644
   const IS=()=>window.GW_INSTRUMENT_STUDIO,SA=()=>window.GW_SONG_ARRANGER,CM=()=>window.GW_CREATE_MELODY;const st={hold:true};
   const names=()=>{try{return (IS()?.instruments||[]).map(i=>i.name);}catch(e){return ['Piano'];}};
   const cur=()=>{try{return IS()?.currentInstrument?.()||'Piano';}catch(e){return 'Piano';}};
-@@ -27166,7 +27595,8 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -27166,7 +27631,8 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
    box.innerHTML=`<div class="gwcm-head"><div><div class="gwcm-title"><i class="fa-solid fa-${P.ic}" aria-hidden="true"></i> ${P.t}</div><div class="gwcm-sub">${k==='backing'?'Chords: up to 4 notes in one step.':k==='bass'?'One low note per step.':k==='drums'?'Tap the drum sounds. Or start from a beat.':'Short drum fills - they play where the Fills row is on in the Song maker.'}</div></div></div>
     <div class="gwcm-gridwrap"><div class="gwcm-grid" id="gwspG-${k}" role="grid" aria-label="${P.t} grid"></div></div>
     <div class="gwcm-row"><button type="button" class="gwcm-go" data-a="play"><i class="fa-solid fa-play" aria-hidden="true"></i> Play</button><button type="button" data-a="stop"><i class="fa-solid fa-stop" aria-hidden="true"></i> Stop</button>
@@ -1088,7 +1219,7 @@ index 9a9e3b0..0f9c999 100644
      <button type="button" data-a="clear"><i class="fa-solid fa-broom" aria-hidden="true"></i> Clear</button><button type="button" class="gwcm-use" data-a="use"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Use in Song maker</button><button type="button" id="gwspOff-${k}" data-a="off" title="The Song maker makes this part up again"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Back to made-up</button></div>
     <div class="gwcm-status" id="gwspS-${k}" role="status" aria-live="polite">Tap the squares.</div>`;
    if(!P.drum)box.querySelector('.gwcm-head').after(instPicker(k,()=>P.ins,v=>{P.ins=v.length?v:[cur()];}));
-@@ -27174,6 +27604,7 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -27174,6 +27640,7 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
     for(let c=0;c<COLS;c++){const b=document.createElement('button');b.type='button';b.className='gwcm-cell'+(c%8===0&&c?' bar':'')+(c%2===0?' beat':'');b.dataset.col=c;b.dataset.r=r;
      b.onclick=()=>{const M=P.notes,ch=M.get(c)||[];if(ch.includes(r)){const x=ch.filter(y=>y!==r);x.length?M.set(c,x):M.delete(c);}else if(P.max===1){M.set(c,[r]);tap(k,r);}else if(ch.length>=P.max){say(k,'Up to '+P.max+' notes in one step.');return;}else{M.set(c,ch.concat(r).sort((a,b)=>a-b));tap(k,r);}draw(k);};g.appendChild(b);}}
    box.addEventListener('click',e=>{const a=e.target.closest('[data-a]')?.dataset.a;if(a==='play')start(k);else if(a==='stop'){stopAll();say(k,'Stopped.');}else if(a==='clear'){P.notes.clear();draw(k);}else if(a==='use')use(k);else if(a==='off'){SA()?.setMyPart?.(k,null);draw(k);say(k,'The Song maker makes it up again.');}});
@@ -1096,7 +1227,49 @@ index 9a9e3b0..0f9c999 100644
    const bs=box.querySelector('[data-a="beat"]');if(bs)bs.onchange=e=>{const v=BEATS[e.target.value];if(!v)return;P.notes.clear();v.forEach(([c,r])=>P.notes.set(c,[...new Set((P.notes.get(c)||[]).concat(r))]));e.target.value='';draw(k);};
    setTimeout(()=>draw(k),0);return box;}
   function voice(){const box=document.createElement('div');box.className='gwsp2';box.id='gwspVoice';box.style.setProperty('--pc','#f43f5e');
-@@ -27749,7 +28180,9 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+@@ -27275,7 +27742,14 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+     closing G-Warp or a crash doesn't lose it. "Use in Song maker" is still what puts it into the project. */
+  const SAVEK='gw-spark3-work';
+  const work=()=>JSON.stringify({v:1,bars:st.bars,kit:st.kit,bpm:st.bpm,T:Object.fromEntries(TR.map(t=>[t.id,{notes:st.T[t.id].notes,vol:st.T[t.id].vol,ins:st.T[t.id].ins}]))});
+- try{const o=JSON.parse(localStorage.getItem(SAVEK)||'null');if(o&&o.v===1){st.bars=[2,4,8,16].includes(o.bars)?o.bars:2;st.kit=o.kit||'pop';st.bpm=o.bpm||null;TR.forEach(t=>{const w=o.T&&o.T[t.id];if(w){if(Array.isArray(w.notes))st.T[t.id].notes=w.notes.filter(x=>x&&Number.isFinite(x.s));if(Number.isFinite(w.vol))st.T[t.id].vol=w.vol;if(Array.isArray(w.ins)&&w.ins.length)st.T[t.id].ins=w.ins.slice(0,3);}});}}catch(e){}
++ /* v15.70.11 (Claude, owner 25 Nov: "when the app opens Spark Studio remembers the old music - not good at all"): the studio now opens EMPTY.
++    The work of the session before is not thrown away (a crash must not lose it): it is kept aside and the "Last session" button in the
++    top bar brings it back when you ask for it. */
++ const LASTK='gw-spark3-last';
++ const hasNotes=raw=>{try{const o=JSON.parse(raw||'null');return !!(o&&o.v===1&&o.T&&Object.values(o.T).some(w=>w&&Array.isArray(w.notes)&&w.notes.length));}catch(e){return false;}};
++ const applyWork=raw=>{try{const o=JSON.parse(raw||'null');if(o&&o.v===1){st.bars=[2,4,8,16].includes(o.bars)?o.bars:2;st.kit=o.kit||'pop';st.bpm=o.bpm||null;TR.forEach(t=>{const w=o.T&&o.T[t.id];if(w){if(Array.isArray(w.notes))st.T[t.id].notes=w.notes.filter(x=>x&&Number.isFinite(x.s));if(Number.isFinite(w.vol))st.T[t.id].vol=w.vol;if(Array.isArray(w.ins)&&w.ins.length)st.T[t.id].ins=w.ins.slice(0,3);}});return true;}}catch(e){}return false;};
++ try{const old=localStorage.getItem(SAVEK);if(hasNotes(old))localStorage.setItem(LASTK,old);localStorage.removeItem(SAVEK);}catch(e){}
++ const lastSession=()=>{let raw=null;try{raw=localStorage.getItem(LASTK);}catch(e){}if(!hasNotes(raw))return false;const ok=applyWork(raw);try{draw();}catch(e){}return ok;};
+  let lastWork=work();setInterval(()=>{const w=work();if(w!==lastWork){lastWork=w;try{localStorage.setItem(SAVEK,w);}catch(e){}}},2000);
+  const TD=id=>TR.find(t=>t.id===id),steps=()=>st.bars*16,cw=()=>Math.round(18*st.zoom),RH=t=>t.drum?30:15;
+  const key=()=>{try{return SA()?.keyInfo?.()||{root:0,scale:[0,2,4,5,7,9,11],name:'C major',bpm:120};}catch(e){return {root:0,scale:[0,2,4,5,7,9,11],name:'C major',bpm:120};}};
+@@ -27424,6 +27898,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+   const R=document.createElement('section');R.id='gwSpark3';R.tabIndex=0;R.setAttribute('aria-label','Spark Studio');
+   R.innerHTML=`<div class="sp3-top"><div class="sp3-title"><i class="fa-solid fa-bolt"></i> Spark Studio</div><span class="sp3-key" id="sp3Key"></span><span class="sp3-sp"></span>
+    <button type="button" id="sp3From" title="Load your parts (or the song's own tune) from the Song maker"><i class="fa-solid fa-file-import"></i> From Song maker</button>
++   <button type="button" id="sp3Last" title="Bring back the music you were making the last time G-Warp was open" ${(()=>{try{return hasNotes(localStorage.getItem(LASTK))?'':'hidden';}catch(e){return 'hidden';}})()}><i class="fa-solid fa-clock-rotate-left"></i> Last session</button>
+    <button type="button" class="use" id="sp3UseAll" title="Every track with notes goes into the Song maker. Empty tracks stay the Song maker's own."><i class="fa-solid fa-wand-magic-sparkles"></i> Use all in Song maker</button>
+    <button type="button" id="sp3Old" title="Show the classic Spark Studio too (Developer mode)"><i class="fa-solid fa-clock-rotate-left"></i> Classic studio</button></div>
+   <div class="sp3-bar"><span class="sp3-grp"><button type="button" class="go" id="sp3Play" title="Play (Space)"><i class="fa-solid fa-play"></i> Play</button><button type="button" id="sp3Stop" title="Stop"><i class="fa-solid fa-stop"></i></button><button type="button" id="sp3Loop" title="Loop"><i class="fa-solid fa-repeat"></i></button><button type="button" id="sp3Metro" aria-pressed="false" title="Metronome (a click on every beat)"><i class="fa-solid fa-stopwatch"></i></button></span>
+@@ -27450,7 +27925,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+    else if(q('#sp3Undo'))undo();else if(q('#sp3OctDn'))transpose(-12);else if(q('#sp3SemiDn'))transpose(-1);else if(q('#sp3SemiUp'))transpose(1);else if(q('#sp3OctUp'))transpose(12);else if(q('#sp3Fill'))fillBars();else if(q('#sp3Metro')){st.metro=!st.metro;by('sp3Metro').setAttribute('aria-pressed',String(st.metro));say(st.metro?'Metronome on.':'Metronome off.');}else if(q('#sp3Redo'))redo();else if(q('#sp3ZoomIn')){st.zoom=Math.min(2.5,st.zoom*1.25);draw();}else if(q('#sp3ZoomOut')){st.zoom=Math.max(0.4,st.zoom/1.25);draw();}
+    else if(b=q('[data-m]')){const T=st.T[b.dataset.m];T.mute=!T.mute;mix();syncUI();draw();}else if(b=q('[data-s]')){const T=st.T[b.dataset.s];T.solo=!T.solo;mix();syncUI();}
+    else if(q('#sp3VM')){V.mute=!V.mute;mix();syncUI();draw();}else if(q('#sp3VS')){V.solo=!V.solo;mix();syncUI();}
+-   else if(b=q('[data-use]'))useTrack(b.dataset.use);else if(q('#sp3UseAll'))useAll();else if(q('#sp3From'))fromSong();
++   else if(b=q('[data-use]'))useTrack(b.dataset.use);else if(q('#sp3UseAll'))useAll();else if(q('#sp3From'))fromSong();else if(q('#sp3Last')){if(lastSession()){try{window.GW?.toast?.('Your music from last time is back.');}catch(e){}}}
+    else if(q('#sp3Rec'))record();else if(q('#sp3VSave'))saveVoice();
+    else if(q('#sp3Old')){document.body.classList.toggle('gwsp3-old');syncUI();}
+    else if(q('[data-clear]')){if(st.T[st.sel].notes.length){push();st.T[st.sel].notes=[];draw();say(TD(st.sel).name+' cleared (Undo brings it back).');}}
+@@ -27485,7 +27960,7 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+   try{new ResizeObserver(()=>draw()).observe(R);}catch(e){}
+   syncUI();setTimeout(()=>{selTrack('melody');draw();},50);}
+  setInterval(()=>{build();const R=by('gwSpark3');if(R&&R.offsetParent&&!st.play){const k=by('sp3Key');if(k){const t='Key: '+key().name+' · '+bpm()+' BPM'+(st.bpm?' (own speed)':' (from the Song maker)');if(k.textContent!==t){k.textContent=t;draw();}}}},1000);
+- window.GW_SPARK3={state:st,tracks:TR,play,stop,undo,redo,useTrack,useAll,fromSong,select:selTrack,draw,voice:V};
++ window.GW_SPARK3={state:st,tracks:TR,play,stop,undo,redo,useTrack,useAll,fromSong,select:selTrack,draw,voice:V,lastSession};
+ })();</script>
+ <style id="gw-claude-spark-tab-css">
+ #gwSparkHost{display:flex;flex-direction:column;gap:14px;padding:4px}
+@@ -27749,7 +28224,9 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
   const NAME={'Pen':'Pen','Music':'Music','Text to Speech':'TTS','Translate':'Translate','Makey Makey':'Makey','Camera Controls':'Camera','Box2D Physics':'Box2D','Animation':'Animation','HTTP':'HTTP'};
   const MINE=['Camera','Box2D','Animation','HTTP']; /* 9 Nov (owner): Pen, Music and Text to Speech cards add Scratch's full versions now (the old G-Warp Pen / Music / TTS blocks still run in old projects) */
   const GROUPS={Camera:{title:'Camera Controls',icon:'fa-video',color:'#0ea5e9',re:/^cam_/},Box2D:{title:'Box2D Physics',icon:'fa-cubes',color:'#f97316',re:/^phys_/}};
@@ -1107,7 +1280,7 @@ index 9a9e3b0..0f9c999 100644
   function groups(){const dock=by('dynamicAiExtensionDock'),src=by('sec-gw9-ext');if(!dock||!src)return;const pen=[...dock.children].find(x=>/G-Warp Pen/.test(x.textContent));
    for(const [k,G] of Object.entries(GROUPS)){let sec=by('gwx-'+k);const tpl=[...src.querySelectorAll(':scope > .scratch-block')].filter(b=>G.re.test(b.dataset.type||''));
     const want=on().includes(k)||tpl.some(b=>usedType(b.dataset.type));
-@@ -29123,6 +29556,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
+@@ -29123,6 +29600,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
  })();
  </script>
  <!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->
@@ -1209,6 +1382,44 @@ index 5b3b2c2..c31c4a6 100644
 +  window.GW_BIGMAP = { version: '1.2.0', open: open, close: close, pieces: pieces, layerScripts: layerScripts, worldScripts: worldScripts, stageScripts: stageScripts, add: add, examples: EXAMPLES, _aligned: aligned, _fixWidth: fixWidth, _hasMapDraw: hasMapDraw };
    window.GW_SB3_BLOCKS = { Blocks: Blocks, nid: nid, hex: hex };   /* shared with SVG 360 (turn code) */
  })();
+diff --git a/gw-perf.js b/gw-perf.js
+index 2acec9a..a343515 100644
+--- a/gw-perf.js
++++ b/gw-perf.js
+@@ -341,14 +341,30 @@
+       if (!e.target || e.target.id !== 'propName') return;
+       const s = active();
+       if (!s) return;
++      { const o = e.target.__gwOrig; if (!o || o.s !== s) e.target.__gwOrig = { s, name: s.name }; } // the name before this round of typing
+       const v = e.target.value.trim();
+-      const dup = (W.Engine.sprites || []).some((o) => o !== s && !o.isClone && o.name === v);
++      const dup = (W.Engine.sprites || []).some((o) => o !== s && !o.isClone && String(o.name || '').trim() === v);
+       if (v && !dup) return;
++      /* v15.70.11 (Claude, Breaking G-Warp ep. 2): while you TYPE, an empty or already-used name is simply not written to the project yet.
++         It used to put the old name back into the box on every key press, so select-all + delete + "Bob" gave "G-SparkBob" (and typing
++         "Bob" next to a sprite called Bob left "Bo"). The check with the message now happens when you press Enter or leave the box. */
+       e.stopImmediatePropagation();
+-      e.target.value = s.name || '';
+-      if (dup) toast('There is already a sprite called “' + v + '”.');
+       mark('sprite-name-guard');
+     }, true);
++    const commitName = (e) => {
++      if (!e.target || e.target.id !== 'propName') return;
++      const s = active(); if (!s) return;
++      const v = e.target.value.trim();
++      const dup = (W.Engine.sprites || []).some((o) => o !== s && !o.isClone && String(o.name || '').trim() === v);
++      if (!v || dup) { const o = e.target.__gwOrig; if (o && o.s === s && o.name && s.name !== o.name) { s.name = o.name; try { W.renderSpritesGrid && W.renderSpritesGrid(); } catch (err) {} } // back to the name it had before you started typing (not a half-typed "Bo")
++        e.target.value = s.name || ''; if (dup) toast('There is already a sprite called “' + v + '”.'); return; }
++      e.target.__gwOrig = { s, name: v };
++      if (e.target.value !== v) e.target.value = v;                       // no invisible spaces at the ends ("Twin" and "Twin   " looked the same)
++      if (s.name !== v) { s.name = v; try { W.renderSpritesGrid && W.renderSpritesGrid(); } catch (err) {} }
++    };
++    D.addEventListener('focusin', (e) => { if (e.target && e.target.id === 'propName') { const s = active(); if (s) e.target.__gwOrig = { s, name: s.name }; } }, true);
++    D.addEventListener('change', commitName, true);
++    D.addEventListener('focusout', commitName, true);
+     mark('sprite-name-guard-ready');
+     return true;
+   }
 diff --git a/gw-run-throttle.js b/gw-run-throttle.js
 index 7f0d5fc..06990f6 100644
 --- a/gw-run-throttle.js
