@@ -120,3 +120,10 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 - WAITING FOR THE OWNER: "open the PR" -> create branch release-v15.70.12 from main with the 5 web-ready files and open a PR to main. Do NOT push outside ai-team before he says so.
 - Memory tools: mem.js (APP=... node mem.js project.sb3 [runSeconds] [taps]), leak.js.
 - Next: thin .block-select menus (design in team/claude/v15.70.12/README.txt), then compile scripts to closures.
+
+## State 26 Nov 00:45 - OWNER CHANGED DIRECTION (STOP + SAVE)
+- rel = v15.70.13 WORK IN PROGRESS (thin menus, grab only what you see, undo no longer doubles defines, smooth drag). Saved:
+  team/claude/v15.70.13-wip/ (patch + README with what is tested / not). Backup: /home/claude/gwt/app.v15.70.13-wip.html. PC still v15.69.0k.
+- OWNER'S DECISION (00:34-00:42): keep G-Warp's own code and look, but make the inside work the way TurboWarp does - OUR OWN build, no copied
+  code, NOT a rebuild on TurboWarp. Order: plan in plain words first (team/claude/TURBO-STYLE-PLAN.md), SHOW HIM, then build step 1 (project as data).
+- Paused: UI overlap check (he asked 00:18), PC build l, PR for the web emergency (he has not said "open the PR").
