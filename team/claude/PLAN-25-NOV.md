@@ -93,3 +93,7 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 - rel = v15.70.9. PC STILL v15.69.0g (offline on 4 tries). Same shipping note as above: when the PC answers, compare, pc_build.py h, backup, note, commit (3 files: app.html + the two .js are unchanged since g).
 - Full regression passed on v15.70.9. E2.9 PenguinMod moved to later by the owner.
 - Biggest next step for "beat Scratch": compile scripts to closures (see team/claude/v15.70.9/README.txt NEXT).
+
+## Round 7 (16:12): final report sent. PC still offline -> letter h NOT shipped. Schedule finished; no more rounds unless the owner asks.
+
+## 22:20 owner said CONTINUE: PC back online, v15.70.9 shipped as v15.69.0h (STATE letter h). Next letter i. Next job: speed (compile scripts to closures).
