@@ -202,3 +202,17 @@ Same build, numbers inside earlier ranges. TurboWarp wins every speed row. A run
 | Text | 2.536 | 0.029 | 0.23 to 0.32 | 0.12 |
 
 Game: G-Warp 27.0 steps/s, 9.2 ms script per step; Scratch 29.8, 10.5 ms. TurboWarp still wins every row.
+### 2026-11-26 ~23:50 UTC, build p again (bench.sb3, quiet machine after tests; two runs of tw/twbench.js, all three engines in the same run)
+
+| Test | Scratch | TurboWarp | G-Warp build p | Winner |
+|---|---|---|---|---|
+| Count loop | 0.041 to 0.043 | 0.001 | 0.020 to 0.027 | TurboWarp |
+| Maths | 0.056 to 0.059 | 0.004 to 0.005 | 0.045 to 0.064 | TurboWarp |
+| Lists | 0.026 to 0.030 | 0.003 to 0.008 | 0.081 to 0.083 | TurboWarp |
+| If / compare | 0.042 to 0.049 | 0.001 to 0.002 | 0.019 to 0.022 | TurboWarp |
+| Pen | 0.019 | 0.009 | 0.046 to 0.047 | TurboWarp |
+| Text | 0.014 | 0.003 | 0.013 to 0.018 | TurboWarp |
+| Plain loop turns in 2 s | 3.7 to 3.8 million | 15.5 to 16.7 million | 1.55 to 1.70 million | TurboWarp |
+| Clone frames in 3 s | 91 | 90 to 91 | 90 | tie |
+
+Same build, numbers inside earlier ranges (this machine was a bit faster). TurboWarp wins every speed row; G-Warp is still slower than Scratch on lists, pen and plain loops. Owner's game rows not measured.

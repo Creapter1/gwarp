@@ -1,5 +1,14 @@
 # Lane C (tests and measuring) progress
 
+## 26 Nov 2026 ~23:11-23:55 UTC run
+- Build tested: p (v15.70.17) again (no new build in work/).
+- run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book 26 OK, t_save 26 OK (big load OK), t_undob 25/25 OK (big first undo 2.7 s).
+- Referee: same as last run (par 58/60, par2 40/40, probe 72/72, mini 22/22, nat 15/15, join 19/19, stop 17/17, ep 19/19, par3 157/159, par4 59/72, quirk 44/46, order 75/76, motion 40/41, ctrl 37/37, proc 32/34, vol 38/39, deep 19/19, lay 14/15). No new bugs.
+- New zoo: mktime.py (time.sb3, 34 checks: timer/reset timer/wait timing, answer before ask, compare and maths quirks) 34/34. Added to run_all.sh.
+- VS-TURBOWARP.md: new dated row set (same build, numbers agree).
+- Skipped (need the owner's game): t_thin, t_grab, t_undo, t_dragms, play, mem, fps, twgame.
+- Next: sound/pen zoo (needs ref/pic.js), touching color, ask with typed answers.
+
 ## 26 Nov 2026 ~22:21-23:10 UTC run (live, owner said continue)
 - Build tested: p (v15.70.17) again (no new build in work/). Base: build o (1dac028).
 - New: run_all.sh (whole list, one test at a time, builds the lane C zoo, SKIPs game tests). First full run: all.log below.
