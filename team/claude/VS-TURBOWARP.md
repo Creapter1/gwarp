@@ -125,3 +125,20 @@ Scratch and G-Warp: `ref/bench.js`, 2 runs + the run inside `tw/twbench.js`; Tur
 | Clone frames in 3 s | 91 | 87 to 92 | 90 | tie |
 
 G-Warp is 2 to 7 times slower than Scratch and loses every row to TurboWarp. Owner's game rows not measured (game not available to lane C).
+
+### 26 Nov 2026 ~15:40 UTC, lane C, G-Warp build p (v15.70.17), bench.sb3, seconds (lower is better)
+
+Scratch and G-Warp: `ref/bench.js`, 2 quiet runs + 2 runs inside `tw/twbench.js`; TurboWarp: `twbench.js`, 2 runs. The twbench runs ran while other tests used the machine, so they are slower (mostly the clone row).
+
+| Test | Scratch | TurboWarp | G-Warp build p | Winner |
+|---|---|---|---|---|
+| Count loop | 0.041 to 0.18 | 0.000 to 0.001 | 0.025 to 0.035 | TurboWarp |
+| Maths | 0.058 to 0.24 | 0.008 to 0.009 | 0.05 to 0.127 | TurboWarp |
+| Lists | 0.033 to 0.117 | 0.007 to 0.012 | 0.091 to 0.148 | TurboWarp |
+| If / compare | 0.046 to 0.116 | 0.001 to 0.003 | 0.017 to 0.040 | TurboWarp |
+| Pen | 0.020 to 0.029 | 0.014 to 0.020 | 0.048 to 0.092 | TurboWarp |
+| Text | 0.014 to 0.025 | 0.006 to 0.010 | 0.020 to 0.049 | TurboWarp |
+| Plain loop turns in 2 s | 1.8 to 3.2 million | 8.8 to 10.4 million | 0.66 to 1.38 million | TurboWarp |
+| Clone frames in 3 s | 86 to 91 | 44 to 50 (busy machine) | 66 to 85 | Scratch |
+
+Build p now beats real Scratch on count loop and if/compare, about even on maths; still slower than Scratch on lists, pen, text and plain loops. TurboWarp wins every speed row. Owner's game rows not measured (game not available to lane C).
