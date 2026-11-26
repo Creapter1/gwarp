@@ -39,3 +39,18 @@ Way forward: measure TurboWarp Desktop on the owner's PC next to G-Warp (needs h
 - G-Warp loses every script-speed row today, by 10 to 100 times on plain loops. This is exactly what step 2 of the plan (scripts become fast code) is for. Nothing before step 2 can close it.
 - The fair goal for step 2: match TurboWarp's rows on this table, then keep the lead G-Warp can have that TurboWarp does not (live editing while running).
 - The "open" and "memory" rows compare a player with a full editor. They become fair once the editor rows are measured.
+
+## Update - 26 Nov 2026, 06:00, G-Warp build n (v15.70.15)
+
+Build n changes only Undo / Redo (plan step 1b, part a). Script speed is not touched, so the TurboWarp rows were not run again this time. G-Warp still loses every speed row of Table 1.
+
+| Measure (owner's game, G-Warp only) | Build m | Build n |
+|---|---|---|
+| Steps per second in 3D gameplay, same run, same machine (real Scratch: 29) | 19.2 | 19.3 |
+| Script time per step (real Scratch: 10.4 ms in this run) | 16.9 ms | 17.5 ms |
+| Tab memory with the game open | 766 MB | 698 MB |
+| Text kept per undo step | 3,902 KB | about 5 KB |
+| One Undo | 1.4 to 2.0 s | 0.13 to 0.3 s |
+
+The machine was slower in this run than in Table 1 (Scratch itself went from 8.3 to 10.4 ms per step), so 19 against 21 steps per second is the machine, not the build: m and n were measured one after the other and are the same.
+TurboWarp's editor (undo time, memory, drag lag) is still not measured: see NEEDS-OWNER-OK.md, line 0.
