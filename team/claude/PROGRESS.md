@@ -5,14 +5,14 @@ Every run updates it before it ends. Times are US Eastern.
 
 ## 1. State right now
 
-- Last update: 26 Nov 2026, 09:05 (14:05 UTC), by the scheduled run of 07:18.
+- Last update: 26 Nov 2026, 09:06 (14:06 UTC), by the scheduled run of 07:18.
 - App on the owner's PC: **v15.69.0o** (= build v15.70.16). Next PC letter: **p**.
 - Working build: `team/claude/work/` = **v15.70.16** (same as the PC).
 - Website (main): still v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
 - Plan: `team/claude/TURBO-STYLE-PLAN.md`.
   - **Step 1 is done as far as its "done when" list goes** (round trip the same; undo, redo, save, reopen the same; an undo step is about 5 KB): 1a build m, 1b part a build n, 1b part b build o (`team/claude/v15.70.16/README.txt`).
   - Left over from 1b and moved to the start of step 3, where they are needed: Find and the AI report read the Book; opening a Scratch file fills the Book first; a faster writer.
-  - **Step 2 has started as an experiment** (not in the app, not on the PC): `team/claude/experiments/step2/` (read its README.md first). It gives the same answers as the old way on all 10 referee projects and the owner's game runs at 23 to 28 steps per second with it (shipped build: 17 to 20, real Scratch: 29).
+  - **Step 2 has started as an experiment** (not in the app, not on the PC): `team/claude/experiments/step2/` (read its README.md first). It gives the same answers as the old way on the 10 referee projects except one timing check of par3 that fails in 2 of 11 runs (action 4 a3), and the owner's game runs at 23 to 28 steps per second with it (shipped build: 17 to 20, real Scratch: 29).
 - Scheduled task "G-Warp autopilot (every 3 hours)" is bound to the owner's computer.
 
 ## 2. Next actions, in order
@@ -23,7 +23,7 @@ Every run updates it before it ends. Times are US Eastern.
 4. **NEXT: Step 2, scripts become fast code.** Set up the experiment as `experiments/step2/README.md` says (2 minutes), then:
    a. Go on with its "Next, in this order" list (variables without the name search, My Block inputs as locals, list blocks, go to x y, pen, values of go-between blocks, fold the 3 step wrappers into the driver). After every family: `sh /home/claude/gwt/F3.sh` (referee with fast code OFF and ON, t_par, game speed, bench). Every referee number must stay the same as the old way.
    a2. Measure with the bigger test the owner's priority note names: `tools/gwt/bench40.sb3`, `tools/tw/twbench.js`, 3 runs each, middle value, and put the table in the ship note. The target is in OWNER-PRIORITY.md (every row at or under TurboWarp's time).
-   a3. par3 with fast code ON: 2 of 11 runs gave 156/159 (`q02: Scratch true, G-Warp false`), the others 157. Run par3 ten times the OLD way too. If only fast code does it, find it before anything ships (look at what q02 tests in `mkpar3.py`).
+   a3. FIRST THING: par3 with fast code ON gave 156/159 in 2 of 11 runs (`q02: Scratch true, G-Warp false`), the old way 157 in 10 of 10 runs. So fast code has a timing fault. q02 is: reset timer, repeat 10 [move 0 steps], then timer > 0.2 must be true (10 loop passes = 10 frames). Sometimes the 10 passes take under 0.2 s with fast code: some passes do not wait for the next frame. Look at how the frame loop decides to step the scripts again inside one frame (`GW.__redraw`, `GW.__act`, gw-run-throttle.js) and what the made code does differently at the end of a loop pass. Nothing of step 2 ships before this is found and par3 gives 157 in 10 of 10.
    b. Close the "known gaps" of the README (edit while running, breakpoints, glow). Only then may it go into the app, OFF by default (Developer mode switch), with the full test list of section 5, and to the PC.
    c. Then ON by default with an off switch for one release, then remove the old way (one engine).
    d. Small speed fix found on the way, ready in the experiment's patch (the `geo` / `pointAt` part): the Power lines sparks asked the browser for the wire length and point on every frame (9% of all work while the owner's game ran). Same look. It must pass the full test list and a look at the sparks (screenshot of the code area while the game runs) before it goes to the PC; ship it with the next PC build. Off switch: `window.GW_PL_GEO = false`.
@@ -108,7 +108,7 @@ Known numbers so far (G-Warp only, owner's game): website v15.69.0 3,583 MB; bui
 
 ## 8. Run log (newest first)
 
-- 26 Nov 09:10, scheduled run (07:18): STEP 1b part b DONE. Build o on the PC (v15.70.16: save, AST mirror, block counter read the Book; saved game file 47 MB -> 31 MB). New tests t_save.js (19 projects OK) and t_save2.js. Full test list OK. STEP 2 started as an experiment (experiments/step2): same answers as the old way on 10 referee projects, game 23 to 28 steps per second (shipped 17 to 20). Next: step 2, action 4a.
+- 26 Nov 09:10, scheduled run (07:18): STEP 1b part b DONE. Build o on the PC (v15.70.16: save, AST mirror, block counter read the Book; saved game file 47 MB -> 31 MB). New tests t_save.js (19 projects OK) and t_save2.js. Full test list OK. STEP 2 started as an experiment (experiments/step2): same answers as the old way on the referee projects except one timing check of par3 (2 of 11 runs), bench40 1.3 to 2.5 times faster on 4 of 6 rows, game 23 to 28 steps per second (shipped 17 to 20). Next: step 2, action 4a.
 - 26 Nov 06:10, scheduled run (04:18): STEP 1b part a DONE. Build n on the PC (v15.70.15: undo / redo keep the Book). New test t_undob.js, 19 projects OK, full test list OK. Found for part b: saving writes an 18 MB `ast` nobody reads. Next: 1b part b (start with the save / reopen test).
 - 26 Nov 02:15, first session: first G-Warp / TurboWarp / Scratch table written (VS-TURBOWARP.md). Next: step 1b part a (undo keeps the Book).
 - 26 Nov 01:50, first session: STEP 1a DONE. Build m on the PC (v15.70.14: gw-book.js). Scheduled task created. Next: TurboWarp table, step 1b.

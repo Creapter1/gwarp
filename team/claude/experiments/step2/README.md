@@ -33,7 +33,7 @@ Run all checks: `sh /home/claude/gwt/F2.sh` (referee on 10 projects, t_par, game
 
 | Check | Build o (old way) | Fast code ON |
 |---|---|---|
-| Referee: mini 22/22, par 58/60, par2 40/40, probe 72/72, nat 15/15, join 19/19, stop 17/17, ep 19/19, par3 157/159, par4 59/72 | same | **same on all 10** (see the note on par3) |
+| Referee: mini 22/22, par 58/60, par2 40/40, probe 72/72, nat 15/15, join 19/19, stop 17/17, ep 19/19, par3 157/159, par4 59/72 | same | same on 9; par3 fails one timing check in 2 of 11 runs (note below) |
 | Same referee projects with the hooks in but fast code OFF (stop, par, par3, par4) and t_par | same | same |
 | t_par 53/53, t_par2 28/28 | pass | pass |
 | Owner's game, steps per second in 3D gameplay, 5 runs (Scratch 28 to 30) | 17.3 to 20.3 | **22.7 to 28.2** |
@@ -42,11 +42,28 @@ Run all checks: `sh /home/claude/gwt/F2.sh` (referee on 10 projects, t_par, game
 | Plain loop turns in 2 s (Scratch 3.3 to 4 million) | 0.86 million | 0.6 to 1.1 million |
 
 Still slower than Scratch on the bench rows and far from TurboWarp. This is the first third of step 2.
-Note on par3: with fast code ON it gave 157/159 in 9 runs and 156/159 in 2 runs (`q02: Scratch true, G-Warp false`). The old way was run
-4 times in this run (always 157), which is too few to say it never does it. Before anything ships, run par3 ten times each way and find it.
+Note on par3: with fast code ON it gave 157/159 in 9 runs and 156/159 in 2 runs (`q02: Scratch true, G-Warp false`). The old way gave 157 in
+10 of 10 runs. So fast code has a timing fault: q02 = reset timer, repeat 10 [move 0 steps], timer > 0.2. Sometimes the 10 passes take under
+0.2 s. This must be found first (PROGRESS.md, action 4 a3). Nothing of step 2 ships before par3 gives 157 in 10 of 10.
 
 The patch also holds one fix that is not step 2: the Power lines sparks (`geo` / `pointAt`, see PROGRESS.md action 4d). In the game's profile
 `getTotalLength` + `getPointAtLength` went from 0.63 s to 0.01 s of 8 s. It is active in both `app.html` and `app-fast.html` of the experiment.
+
+Bigger test (`tools/gwt/bench40.sb3`, the one of OWNER-PRIORITY.md; seconds, lower is better; G-Warp columns measured 26 Nov 09:00 one after the other with `ref/bench.js`, one run each; Scratch and TurboWarp columns are the ones of OWNER-PRIORITY.md):
+
+| Test | Scratch | TurboWarp | G-Warp build o | G-Warp experiment | Winner |
+|---|---|---|---|---|---|
+| Count loop | 1.033 | 0.005 | 2.529 | 1.874 | TurboWarp |
+| Maths | 1.783 | 0.105 | 3.940 | 1.639 | TurboWarp |
+| Lists | 1.101 | 0.035 | 4.099 | 3.014 | TurboWarp |
+| If / compare | 1.659 | 0.010 | 5.288 | 2.075 | TurboWarp |
+| Pen | 0.422 | 0.039 | 2.278 | 2.340 | TurboWarp |
+| Text | 2.536 | 0.029 | 2.071 | 0.853 | TurboWarp |
+
+The experiment is 1.3 to 2.5 times faster than build o on four rows and the same on pen. TurboWarp is still 15 to 370 times faster on every row.
+
+Why the count loop is still slow: "change n by 1" has a TYPED value, so it still reads the typed box on the page on every pass (`GW.__fastVar`).
+Next: typed values become constants in the made code, dropped when the user types (a counter that goes up on every `input` / `change` event in the code area; typing does not move `GW.__wsEpoch`).
 
 ## What the owner's game runs most (12 s of gameplay, counted)
 

@@ -80,6 +80,19 @@ Step 2 experiment (scripts as fast code, first third, NOT in the app yet; detail
 | Owner's game, steps per second | 27.9 to 29.6 | 29.8 | 17.3 to 20.3 | 22.7 to 28.2 | TurboWarp |
 | Owner's game, script time per step | 9.6 to 11.2 ms | 0.5 ms | 18.3 to 19.9 ms | 11.6 to 15.4 ms | TurboWarp |
 
-G-Warp still loses every speed row, also with the experiment. The experiment gives the same answers as the old way on all 10 referee projects
-(one of five runs of par3 gave 156 of 159 where the others gave 157; not explained yet).
+G-Warp still loses every speed row, also with the experiment. The experiment gives the same answers as the old way on 9 of the 10 referee projects.
+On par3 one timing check fails in 2 of 11 runs (the old way: 0 of 10). That fault must be found before the experiment goes into the app.
 Editor rows for TurboWarp (load, memory, drag lag) are still not measured: NEEDS-OWNER-OK.md, line 0.
+
+Bigger test (`tools/gwt/bench40.sb3`, the one of OWNER-PRIORITY.md; seconds, lower is better; G-Warp columns measured 26 Nov 09:00 one after the other with `ref/bench.js`, one run each; Scratch and TurboWarp columns are the ones of OWNER-PRIORITY.md):
+
+| Test | Scratch | TurboWarp | G-Warp build o | G-Warp experiment | Winner |
+|---|---|---|---|---|---|
+| Count loop | 1.033 | 0.005 | 2.529 | 1.874 | TurboWarp |
+| Maths | 1.783 | 0.105 | 3.940 | 1.639 | TurboWarp |
+| Lists | 1.101 | 0.035 | 4.099 | 3.014 | TurboWarp |
+| If / compare | 1.659 | 0.010 | 5.288 | 2.075 | TurboWarp |
+| Pen | 0.422 | 0.039 | 2.278 | 2.340 | TurboWarp |
+| Text | 2.536 | 0.029 | 2.071 | 0.853 | TurboWarp |
+
+The experiment is 1.3 to 2.5 times faster than build o on four rows and the same on pen. TurboWarp is still 15 to 370 times faster on every row.
