@@ -1,4 +1,4 @@
-/* G-Warp GPU stage (lane B), version 0.1.0 — own code.
+/* G-Warp GPU stage (lane B), version 0.1.1 — own code.
    Draws backdrop colour/image, pen layer, and sprites (costume, rotation centre, rotation style,
    size, ghost, colour, brightness, whirl, fisheye, pixelate, mosaic) with WebGL, in the order given.
    Costume pictures are uploaded once and kept in video memory (WeakMap per canvas).
@@ -74,18 +74,21 @@ void main(){
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       e.w = src.width; e.h = src.height; return e.t;
     }
-    let view = null;
+    let view = null, lastFx = null, lastA = null, lastT = null;
+    gl.uniform1f(U.uUseFill, 0);
     function quad(m, alpha, fx, pixUnits) {
       if (view) m = mul(view, m);
       gl.uniformMatrix3fv(U.uM, false, [m[0], m[1], 0, m[2], m[3], 0, m[4], m[5], 1]);
-      gl.uniform1f(U.uAlpha, alpha); gl.uniform1f(U.uUseFill, 0);
+      if (alpha !== lastA) { gl.uniform1f(U.uAlpha, alpha); lastA = alpha; }
       const f = fx || {}, col = Math.round(num(f.color)), br = Math.round(num(f.brightness)), wh = Math.round(num(f.whirl)), fe = Math.round(num(f.fisheye)), px = Math.round(num(f.pixelate)), mo = Math.round(num(f.mosaic));
+      const p = px ? Math.abs(px) / 10 : 0, key = col + ',' + br + ',' + wh + ',' + fe + ',' + mo + ',' + (p ? pixUnits[0] + ',' + pixUnits[1] + ',' + p : 0);
+      if (key !== lastFx) { lastFx = key;
       gl.uniform1f(U.uColor, (((col % 200) + 200) % 200) / 200);
       gl.uniform1f(U.uBright, Math.max(-100, Math.min(100, br)) / 100);
       gl.uniform1f(U.uWhirl, wh ? -wh * DEG : 0);
       gl.uniform1f(U.uFish, fe ? Math.max(0, (fe + 100) / 100) : 0);
       gl.uniform1f(U.uMos, mo ? Math.max(1, Math.min(512, Math.round((Math.abs(mo) + 10) / 10))) : 0);
-      const p = px ? Math.abs(px) / 10 : 0; gl.uniform2f(U.uPix, p ? pixUnits[0] / p : 0, p ? pixUnits[1] / p : 0);
+      gl.uniform2f(U.uPix, p ? pixUnits[0] / p : 0, p ? pixUnits[1] / p : 0); }
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
     const api = {
@@ -96,13 +99,13 @@ void main(){
         gl.viewport(0, 0, canvas.width, canvas.height);
         let bg = colorCache.get(f.bg || '#fff'); if (!bg) { bg = parseColor(f.bg); colorCache.set(f.bg || '#fff', bg); }
         gl.clearColor(bg[0] * bg[3], bg[1] * bg[3], bg[2] * bg[3], bg[3]); gl.clear(gl.COLOR_BUFFER_BIT);
-        view = f.view || null;
+        view = f.view || null; lastT = null;
         if (f.bgImage) { const b = f.bgBox || { x0: 0, y0: 0, w: 480, h: 360 }; gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texFor(f.bgImage)); quad([b.w, 0, 0, b.h, b.x0, b.y0], 1, null); }
         if (f.pen) { gl.bindTexture(gl.TEXTURE_2D, texFor(f.pen, f.penDirty !== false)); quad([480, 0, 0, 360, 0, 0], 1, null); }
         for (const s of f.sprites || []) {
           if (!s.canvas || s.visible === false) continue;
           const a = Math.max(0, 1 - num(s.ghost) / 100); if (a <= 0) continue;
-          gl.bindTexture(gl.TEXTURE_2D, texFor(s.canvas));
+          const t = texFor(s.canvas); if (t !== lastT) { gl.bindTexture(gl.TEXTURE_2D, t); lastT = t; }
           const b = s.box || { w: 80, h: 80 };
           quad(spriteMatrix(s), a, s.effects, [b.w, b.h]);
         }
@@ -127,5 +130,5 @@ void main(){
     }
     return { bg: (bd && bd.color) || '#fff', sprites, pen };
   }
-  root.GWGpuStage = { version: '0.1.0', create, frameFromEngine, spriteMatrix };
+  root.GWGpuStage = { version: '0.1.1', create, frameFromEngine, spriteMatrix };
 })(typeof window !== 'undefined' ? window : globalThis);
