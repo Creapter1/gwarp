@@ -5,23 +5,22 @@ Every run updates it before it ends. Times are US Eastern.
 
 ## 1. State right now
 
-- Last update: 26 Nov 2026, 01:05, by the first session (the one that talked with the owner).
-- App on the owner's PC: **v15.69.0l** (= build v15.70.13). Next PC letter: **m**.
-- Working build: `team/claude/work/` = **v15.70.13 + gw-book.js** (step 1a in progress, not on the PC yet).
+- Last update: 26 Nov 2026, 01:50, by the first session (the one that talked with the owner).
+- App on the owner's PC: **v15.69.0m** (= build v15.70.14). Next PC letter: **n**.
+- Working build: `team/claude/work/` = **v15.70.14** (same as the PC).
 - Website (main): still v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
-- Plan: `team/claude/TURBO-STYLE-PLAN.md`. Current step: **1a (Project Book, built and proven)**.
-
-### Step 1a status
-
-- Done: `gw-book.js` (reader page -> Book, writer Book -> page pieces, `GW_BOOK.check()`, quiet check in Developer mode), loaded by app.html.
-- Round trip OK on: par, par2, par3, par4, probe, mini, nat, join, stop, ep, pen, snd, bench3, wide, c7, big (7,200 blocks), the owner's game (2,152 blocks: Book 462 KB, page 3,939 KB, read 49 ms, write 529 ms).
-- Still to do for 1a: finish `t_book2.js` (every palette block kind, edits, undo, self-test), run the full test list (section 5), PC build m, note, then step 1b.
+- Plan: `team/claude/TURBO-STYLE-PLAN.md`. **Step 1a is DONE** (on the PC, proven on 19 projects, see `team/claude/v15.70.14/README.txt`). Current step: **1b**.
+- Scheduled task "G-Warp autopilot (every 3 hours)" was created 26 Nov 01:18 (first run about 04:18). It is bound to the owner's computer.
 
 ## 2. Next actions, in order
 
-1. Finish step 1a (above). Put it on the PC as letter m. Write `CLAUDE-CHANGES-v15.69.0m.md` on the PC and `team/claude/v15.70.14/README.txt` in the repo.
-2. Measure TurboWarp against G-Warp (section 6) and write the first table into `team/claude/VS-TURBOWARP.md`.
-3. Step 1b: undo / redo, save, export, AI report, Find read the Book; opening a Scratch file fills the Book first.
+1. (done) Step 1a on the PC as letter m.
+2. Measure TurboWarp against G-Warp (section 6) and write the first table into `team/claude/VS-TURBOWARP.md`. Not started.
+3. Step 1b, in small parts, each one tested and shipped:
+   a. Undo / redo keep the Book (or only the changed scripts of it), not the whole page text. The Book writer rebuilds the page on undo. Keep the old way behind a switch until the tests pass. Check: undo memory per step on the owner's game (today about 6 MB), every undo test in t_par / t_par2 / t_undo / t_thin.
+   b. `window.GW_AST`, the AI report, Find and the block counter read the Book.
+   c. Opening a Scratch file fills the Book first and builds the page from it (also removes the 49 empty script boxes the import leaves on the owner's game).
+   d. Speed up the writer (0.5 s for 2,152 blocks today; step 3 needs under 0.3 s): most of the time is drawing what sits in the slots.
 4. Step 2: scripts become fast code (family by family, old way as safety net, removed at the end).
 5. Step 3: only the open sprite's blocks on the page. Step 4: only the scripts near the view.
 6. Paused, do when a step is finished and time allows: UI overlap / hidden parts check (owner asked 26 Nov 00:18, then said skip for now).
@@ -89,4 +88,5 @@ Known numbers so far (G-Warp only, owner's game): website v15.69.0 3,583 MB; bui
 
 ## 8. Run log (newest first)
 
+- 26 Nov 01:50, first session: STEP 1a DONE. Build m on the PC (v15.70.14: gw-book.js). Scheduled task created. Next: TurboWarp table, step 1b.
 - 26 Nov 01:05, first session: v15.70.13 shipped to the PC as l. Plan written and approved. Step 1a started: gw-book.js built, round trip OK on 17 projects.

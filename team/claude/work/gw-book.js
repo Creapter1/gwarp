@@ -23,7 +23,7 @@
   // page details that are only "how it looks right now", never part of the project
   const LIVE_CLASS = new Set(['gw8-live', 'gw8-running-block', 'gw-dragging', 'ghost-delete', 'gw10-find-hit', 'gw8-bp-hit', 'gw-remote-drag', 'gw-remote-locked', 'gw8-other-sprite', 'gw-glow', 'has-expr']);
   const LIVE_ATTR = new Set(['data-gw9-opts', 'data-gw-thin', 'data-dragging', 'data-expr', 'data-reporter', 'value', 'data-gwz']);
-  const DERIVED = el => { const c = el.classList; return c.contains('gw-expr-chip') || c.contains('gw-slot-placeholder'); }; // drawn from the slot's data note
+  const DERIVED = el => el.classList.contains('gw-expr-chip'); // the picture of what sits in a slot: always drawn again from the slot's data note
   const ids = new WeakMap(); let nextId = 1;
   const idOf = el => { let i = ids.get(el); if (!i) { i = 'b' + (nextId++).toString(36); ids.set(el, i); } return i; };
   const isBlock = el => el.nodeType === 1 && el.classList.contains('scratch-block');
@@ -33,8 +33,9 @@
   /* one walk shared by the reader and the writer, so both always meet the holes in the same order.
      visit.field(el)  an own input / select / textarea        visit.slot(el)  an own slot        visit.mouth(el)  a mouth of a C block
      text: when given, the block's own page form is written into it (the "kind") */
+  // a style is always written the way the browser itself spells it ("display: none;"), so the same block always gives the same kind
   function walkOwn(block, visit, text) {
-    const open = el => { if (!text) return; let s = '<' + el.localName; for (const a of el.attributes) { if (a.name === 'class') { const c = clsOf(el); if (c) s += ' class="' + escA(c) + '"'; } else if (!LIVE_ATTR.has(a.name)) s += ' ' + a.name + '="' + escA(a.value) + '"'; } text.push(s + '>'); };
+    const open = el => { if (!text) return; let s = '<' + el.localName; for (const a of el.attributes) { if (a.name === 'class') { const c = clsOf(el); if (c) s += ' class="' + escA(c) + '"'; } else if (a.name === 'style') { const c = el.style.cssText; if (c) s += ' style="' + escA(c) + '"'; } else if (a.name === 'style') { const c = block.style.cssText; if (c) s += ' style="' + escA(c) + '"'; } else if (!LIVE_ATTR.has(a.name)) s += ' ' + a.name + '="' + escA(a.value) + '"'; } text.push(s + '>'); };
     const close = el => { if (text && !VOID[el.localName]) text.push('</' + el.localName + '>'); };
     const go = el => {
       for (let c = el.firstChild; c; c = c.nextSibling) {
@@ -54,7 +55,10 @@
     go(block);
     if (text) text.push('</' + block.localName + '>');
   }
-  const fieldValue = el => el.type === 'checkbox' || el.type === 'radio' ? (el.checked ? '1' : '') : String(el.value ?? '');
+  /* a filled slot keeps a hidden helper box (data-slot-proxy). While a project runs it holds the slot's last worked-out answer:
+     that is run-time state, never part of the project, so the Book always reads it as empty. */
+  const liveProxy = el => el.hasAttribute('data-slot-proxy') && !!el.parentNode && el.parentNode.nodeType === 1 && el.parentNode.hasAttribute('data-expr');
+  const fieldValue = el => liveProxy(el) ? '' : el.type === 'checkbox' || el.type === 'radio' ? (el.checked ? '1' : '') : String(el.value ?? '');
   const setField = (el, v) => {
     if (el.localName === 'select') { el.textContent = ''; const o = document.createElement('option'); o.value = v; o.textContent = v; o.setAttribute('selected', ''); el.appendChild(o); el.value = v; return; }
     if (el.type === 'checkbox' || el.type === 'radio') { el.checked = !!v; return; }
@@ -130,7 +134,7 @@
     if (a.nodeType !== 1) return;
     if (a.localName !== b.localName) { out.push(path + ': <' + a.localName + '> vs <' + b.localName + '>'); return; }
     const here = path + '/' + a.localName + (a.dataset && a.dataset.type ? '[' + a.dataset.type + ']' : a.classList[0] ? '.' + a.classList[0] : '');
-    const attrs = el => { const m = {}; for (const at of el.attributes) { if (at.name === 'class') { const c = [...el.classList].filter(x => !LIVE_CLASS.has(x) || x === 'has-expr').sort().join(' '); if (c) m.class = c; } else if (at.name === 'style') { const s = at.value.replace(/\s+/g, '').replace(/;$/, ''); if (s) m.style = s; } else if (at.name === 'data-expr' || !LIVE_ATTR.has(at.name)) m[at.name] = at.value; } return m; };
+    const attrs = el => { const m = {}; for (const at of el.attributes) { if (at.name === 'class') { const c = [...el.classList].filter(x => !LIVE_CLASS.has(x) || x === 'has-expr').sort().join(' '); if (c) m.class = c; } else if (at.name === 'style') { const s = at.value.replace(/\s+/g, '').replace(/z-index:[^;]*;?/g, '').replace(/;$/, ''); if (s) m.style = s; } /* z-index is only "which script is on top after a drag" */ else if (at.name === 'data-expr' || !LIVE_ATTR.has(at.name)) m[at.name] = at.value; } return m; };
     const A = attrs(a), B = attrs(b);
     for (const k of new Set([...Object.keys(A), ...Object.keys(B)])) if (A[k] !== B[k]) { out.push(here + ': ' + k + ' = "' + String(A[k]).slice(0, 60) + '" vs "' + String(B[k]).slice(0, 60) + '"'); if (out.length >= 12) return; }
     const tag = a.localName;
@@ -150,7 +154,8 @@
     const mute = window.GW8 && 'historyMute' in window.GW8 ? window.GW8.historyMute : undefined;
     const book = read(), t1 = performance.now();
     const box = document.createElement('div'); write(book, box); const t2 = performance.now();
-    const diffs = []; const real = [...ws.children].filter(s => s.classList.contains('block-stack') && blocksIn(s).length), made = [...box.children];
+    const diffs = []; const onPage = [...ws.children].filter(s => s.classList.contains('block-stack') && blocksIn(s).length), made = [...box.children];
+    const real = []; for (const ow of Object.keys(book.sprites)) for (const s of onPage) if ((s.dataset.owner ?? '0') === ow) real.push(s); // the Book keeps each sprite's scripts together; on the page they can be mixed
     if (real.length !== made.length) diffs.push('scripts: ' + real.length + ' on the page, ' + made.length + ' rebuilt');
     let scriptsSame = 0;
     for (let i = 0; i < Math.min(real.length, made.length); i++) { const before = diffs.length; if (diffs.length < 12) same(real[i], made[i], 'script ' + (i + 1), diffs); if (diffs.length === before) scriptsSame++; }
@@ -172,11 +177,12 @@
   /* Developer mode only: a quiet check a few seconds after a project is opened or the code changed a lot, in the browser's free time.
      The result is kept in GW_BOOK.last. Only a failure is shown (console + one small message), so step 1a can be watched on real projects. */
   const devOn = () => { try { const v = localStorage.getItem('gwarp-dev-mode'); const desk = !!(window.gwarpDesktop || window.electronAPI || /electron/i.test(navigator.userAgent)); return desk ? v !== 'off' : /[?&]dev=1\b/.test(location.search) && v !== 'off'; } catch (e) { return false; } };
-  let seenBlocks = -1, timer = 0;
+  let seenBlocks = -1, timer = 0, lastRun = 0, lastTouch = 0;
+  ['pointerdown', 'pointermove', 'keydown', 'wheel'].forEach(t => addEventListener(t, () => { lastTouch = performance.now(); }, { capture: true, passive: true }));
   const auto = () => {
     timer = 0; if (!devOn() || (window.Engine && window.Engine.isRunning) || window.GW_DRAG_AT > 0) return;
     const ws = document.getElementById('workspaceCanvas'); if (!ws) return; const n = ws.getElementsByClassName('scratch-block').length;
-    if (n === seenBlocks || !n) return; seenBlocks = n;
+    const now = performance.now(); if (n === seenBlocks || !n || now - lastTouch < 5000 || (lastRun && now - lastRun < 300000)) return; seenBlocks = n; lastRun = now; // at most once in 5 minutes, and never while the user is busy (0.6 s on a 2,000-block project)
     const run = () => { try { const r = check({ quiet: 1 }); window.GW_BOOK.last = r; if (!r.ok) { console.warn('[Project Book] round trip is NOT the same', r); try { window.GW && window.GW.toast && window.GW.toast('Project Book check (Developer mode): ' + r.diffs.length + ' difference' + (r.diffs.length === 1 ? '' : 's') + '. Tell Claude: "book check failed".'); } catch (e) {} } } catch (e) { window.GW_BOOK.last = { ok: false, error: String(e && e.message || e) }; console.warn('[Project Book] check failed to run', e); } };
     (window.requestIdleCallback || (f => setTimeout(f, 50)))(run, { timeout: 4000 });
   };

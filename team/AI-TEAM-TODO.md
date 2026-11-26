@@ -30,6 +30,8 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [later] SVG 360: AI-drawn back sides (local AI); turn every costume of an animation at once.
 
 ## 1. Engine / performance
+- [x] (Claude Fable) Turbo-style plan, step 1a: the Project Book (gw-book.js) built and proven on 19 projects, on the owner's PC as v15.69.0m. Notes: team/claude/v15.70.14/README.txt. Autopilot state: team/claude/PROGRESS.md
+- [open] (Claude Fable) Step 1b: undo / save / export / AI report / Find read the Book; opening a Scratch file fills the Book first
 - [OWNER DECISION 26 Nov] The inside of G-Warp is rebuilt OUR OWN way to work like TurboWarp (project as data, only the open sprite's blocks on the page, scripts turned into fast code). Own code, no copied code, same features, same look. Plan: team/claude/TURBO-STYLE-PLAN.md - the owner sees the plan before any building (Claude Fable)
 - [x] (Claude Fable) v15.70.13: thin menus, grab only what you see, undo doubling fix, smooth drag - on the owner's PC as v15.69.0l, notes in team/claude/v15.70.13/
 - [open] (Claude Fable) UI overlap / hidden parts check asked by the owner 26 Nov 00:18 - not started

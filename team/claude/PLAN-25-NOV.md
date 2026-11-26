@@ -133,3 +133,7 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 - Owner: order OK; old engine may stay as safety net in step 2, removed at the end. UI overlap check: skip for now. START STEP 1 (Project Book).
 - "Done" rule: a step is done only when the full app is on his PC AND it passed the project zoo (small, huge, normal, every block kind, his game):
   load, edit, save, export, run like Scratch. Write down which projects passed.
+
+## State 26 Nov 01:50 - AUTOPILOT
+- PC = v15.69.0m (= v15.70.14, step 1a Project Book). STATE letter m, next n. THE RESUME FILE IS NOW team/claude/PROGRESS.md (repo); this PLAN.md is history.
+- Scheduled task trig_011GNSv4u653okLpdYsQ4TES "G-Warp autopilot (every 3 hours)", first run about 04:18 ET. Lock file team/claude/RUN-LOCK.md.
