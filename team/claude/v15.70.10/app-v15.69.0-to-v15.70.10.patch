@@ -1,8 +1,21 @@
 diff --git a/app.html b/app.html
-index 9a9e3b0..4ac13d9 100644
+index 9a9e3b0..0f9c999 100644
 --- a/app.html
 +++ b/app.html
-@@ -1836,6 +1836,22 @@ label.gw9-adv-row{justify-content:flex-start;cursor:pointer}
+@@ -950,6 +950,12 @@ body{overflow-x:hidden!important;}
+ .scratch-block.gw-boolean-block{border-radius:3px!important;clip-path:polygon(7% 0,93% 0,100% 50%,93% 100%,7% 100%,0 50%);padding-left:14px!important;padding-right:14px!important;min-height:27px}
+ .scratch-block.gw-boolean-block:before,.scratch-block.gw-boolean-block:after{display:none!important}
+ .scratch-block.block-c-shape{position:relative;filter:drop-shadow(0 1px 1px rgba(0,0,0,.22));margin-top:4px;margin-bottom:8px}
++/* v15.70.10 (Claude, steady 30 FPS, measured on the owner's own project): this 1px shadow is a filter, and every filter is its own drawing layer.
++   A project with 600 C-blocks had 1,047 layers and the browser spent 30 ms of every frame sorting them (18 steps a second instead of 30).
++   While a project RUNS the shadow is switched off (the live electricity stays); it is back the moment the project stops. */
++body.gw8-running .scratch-block.block-c-shape{filter:none}
++/* the stage size note (shown when the mouse is over the stage) must not cover the project's picture while it runs */
++body.gw8-running #gw154StageOverlayTip{opacity:0!important}
+ .scratch-block.block-c-shape:before,.scratch-block.block-c-shape:after{content:"";position:absolute;left:18px;width:24px;height:5px;background:var(--gw-block-connector-color,var(--control-color));pointer-events:none;z-index:5;box-sizing:border-box}
+ .scratch-block.block-c-shape:before{top:-4px;border-radius:4px 4px 0 0;border-top:1px solid rgba(255,255,255,.18)}
+ .scratch-block.block-c-shape:after{bottom:-4px;border-radius:0 0 4px 4px;border-bottom:1px solid rgba(0,0,0,.24)}
+@@ -1836,6 +1842,22 @@ label.gw9-adv-row{justify-content:flex-start;cursor:pointer}
  .gw10-clone-tag.gw10-clone-full{background:#b91c1c;color:#fff}
  #greenFlagBtn.gw10-muted{position:relative}
  #greenFlagBtn.gw10-muted::after{content:"\f6a9";font-family:"Font Awesome 6 Free";font-weight:900;position:absolute;right:-6px;top:-8px;font-size:12px}
@@ -25,7 +38,7 @@ index 9a9e3b0..4ac13d9 100644
  .gw10-find{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:7px;padding:6px 8px 6px 11px;border-radius:999px;background:#0f172a;border:1px solid #475569;color:#cbd5e1;box-shadow:0 10px 28px rgba(0,0,0,.45)}
  .gw10-find[hidden]{display:none}
  .gw10-find input{width:220px;background:transparent;border:0;color:#f1f5f9;font-size:13px;outline:none}
-@@ -3939,7 +3955,8 @@ IMPORTANT:
+@@ -3939,7 +3961,8 @@ IMPORTANT:
  
              function renderLoop() {
                  const now = performance.now();
@@ -35,7 +48,7 @@ index 9a9e3b0..4ac13d9 100644
                  const delta = now - Engine.lastFrameTime;
                  Engine.lastFrameTime = now;
                  Engine.actualFps = Math.round(1000 / (delta || 16));
-@@ -3947,11 +3964,8 @@ IMPORTANT:
+@@ -3947,11 +3970,8 @@ IMPORTANT:
                  const fpsCounter = document.getElementById('fpsCounter');
                  if (fpsCounter && now - (GW.__fpsT || 0) > 500 && !document.getElementById('extra-apps-dropdown')?.classList.contains('hidden')) { GW.__fpsT = now; if (fpsCounter.textContent !== String(Engine.actualFps)) fpsCounter.textContent = Engine.actualFps; }
  
@@ -44,11 +57,11 @@ index 9a9e3b0..4ac13d9 100644
 -
                  if (Engine.isRunning && !Engine.isPaused) {
 -                    const gwT0 = performance.now(), gwN0 = Engine.threads.length; let gwPass = 0; do { gwPass++; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < gwN && gwK < 20000; gwK++) { const gwT = Engine.threads[(gwS + gwK) % gwN]; if (gwT && !gwT.finished) gwT.step(); if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwS + gwK + 1) % gwN; gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isTurbo && Engine.isRunning && !Engine.isPaused && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame */
-+                    const gwT0 = performance.now(); let gwN0 = Engine.threads.length, gwPass = 0; const gwSeq = window.GW_SEQ_LIKE_SCRATCH !== false, gwWork = Math.min(25, Math.max(4, ((window.GW_SETTINGS && window.GW_SETTINGS.stepMs && window.GW_SETTINGS.stepMs()) || 16.7) * 0.75)) /* v15.70.5: 75% of the frame, the same share Scratch gives its scripts (was 60%) */; GW.__redraw = false; do { gwPass++; GW.__act = 0; if (gwPass > 1) gwN0 = Engine.threads.length; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < (gwS ? gwN : Engine.threads.length) && gwK < 20000; gwK++) { const gwI2 = gwS ? (gwS + gwK) % gwN : gwK, gwT = Engine.threads[gwI2]; if (gwT && !gwT.finished) { if (gwI2 >= gwN0) gwT.__gwSF = 1; gwT.step(); } /* v15.70.4 (measured against real Scratch): a script started during this pass (a new clone, a broadcast) takes its first turn in this same pass, before the script that started it goes round again */ if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwI2 + 1) % Math.max(1, Engine.threads.length); gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isRunning && !Engine.isPaused && ((Engine.isTurbo && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)) || (gwSeq && !GW.__redraw && GW.__act > 0 && gwPass < 200000 && performance.now() - gwT0 < gwWork))); /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame. v15.70.3: like Scratch, more passes in the same frame while no block has changed the screen (switch off: window.GW_SEQ_LIKE_SCRATCH = false) */
++                    const gwT0 = performance.now(); GW.__frameAt = gwT0; let gwN0 = Engine.threads.length, gwPass = 0; const gwSeq = window.GW_SEQ_LIKE_SCRATCH !== false, gwWork = Math.min(25, Math.max(4, ((window.GW_SETTINGS && window.GW_SETTINGS.stepMs && window.GW_SETTINGS.stepMs()) || 16.7) * 0.75)) /* v15.70.5: 75% of the frame, the same share Scratch gives its scripts (was 60%) */; GW.__redraw = false; do { gwPass++; GW.__act = 0; if (gwPass > 1) gwN0 = Engine.threads.length; { const gwN = Engine.threads.length, gwS = (Engine.__gwRR || 0) % Math.max(1, gwN); let gwDone = true; for (let gwK = 0; gwK < (gwS ? gwN : Engine.threads.length) && gwK < 20000; gwK++) { const gwI2 = gwS ? (gwS + gwK) % gwN : gwK, gwT = Engine.threads[gwI2]; if (gwT && !gwT.finished) { if (gwI2 >= gwN0) gwT.__gwSF = 1; gwT.step(); } /* v15.70.4 (measured against real Scratch): a script started during this pass (a new clone, a broadcast) takes its first turn in this same pass, before the script that started it goes round again */ if ((gwK & 31) === 31 && performance.now() - gwT0 > 250) { Engine.__gwRR = (gwI2 + 1) % Math.max(1, Engine.threads.length); gwDone = false; break; } } if (gwDone) Engine.__gwRR = 0; if (!gwDone) break; } /* v15.46.0: frame time budget (Chaos Tester) */ } while (Engine.isRunning && !Engine.isPaused && ((Engine.isTurbo && gwPass < 500 && performance.now() - gwT0 < 12 && Engine.threads.some(t => t && !t.finished)) || (gwSeq && !GW.__redraw && GW.__act > 0 && gwPass < 200000 && performance.now() - gwT0 < gwWork))); GW.__stepMs = performance.now() - gwT0; /* v15.17.4: Turbo mode runs scripts for up to ~12 ms per frame. v15.70.3: like Scratch, more passes in the same frame while no block has changed the screen (switch off: window.GW_SEQ_LIKE_SCRATCH = false) */
                      /* v15.57.0 (Claude, Scratch parity + speed): like Scratch, scripts started DURING this frame (broadcast, clone) run in this
                         same frame, and a "broadcast and wait" whose receivers have all finished goes on in this frame too. Before, each
                         broadcast-and-wait "tick" loop cost ~3 frames: Clone Multiplayer ran 5-11 ticks/s in G-Warp vs 40-55 in Scratch. */
-@@ -3967,6 +3981,12 @@ IMPORTANT:
+@@ -3967,6 +3987,12 @@ IMPORTANT:
                      Engine.threads = Engine.threads.filter(t => !t.finished);
                  }
  
@@ -61,7 +74,7 @@ index 9a9e3b0..4ac13d9 100644
                  const gwCam = GW.cameraBegin ? GW.cameraBegin(ctx) : false;
                  gwOrder.forEach(sprite => {
                      if (sprite.visible && (!GW.onScreen || GW.onScreen(sprite))) {
-@@ -3986,8 +4006,6 @@ IMPORTANT:
+@@ -3986,8 +4012,6 @@ IMPORTANT:
                  });
                  if (gwCam) ctx.restore();
                  if (GW.drawBubbles) GW.drawBubbles(ctx);
@@ -70,7 +83,7 @@ index 9a9e3b0..4ac13d9 100644
              }
  
              requestAnimationFrame(renderLoop);
-@@ -4308,8 +4326,8 @@ IMPORTANT:
+@@ -4308,8 +4332,8 @@ IMPORTANT:
                  case 'think': speak(`💭 ${ins[0]?.value||''}`, 0); break;
                  case 'show': this.sprite.visible=true; break;
                  case 'hide': this.sprite.visible=false; break;
@@ -81,7 +94,7 @@ index 9a9e3b0..4ac13d9 100644
                  case 'next_costume': this.sprite.activeCostume=(this.sprite.activeCostume+1)%this.sprite.costumes.length; break;
                  case 'switch_costume': {
                      const n=sel(); const i=this.sprite.costumes.findIndex(c=>c.name===n);
-@@ -4429,7 +4447,8 @@ IMPORTANT:
+@@ -4429,7 +4453,8 @@ IMPORTANT:
  
          GW.resolve = function(v) {
              const raw = String(v ?? '').trim();
@@ -91,7 +104,7 @@ index 9a9e3b0..4ac13d9 100644
              const n = Number(raw);
              return Number.isFinite(n) ? n : raw;
          };
-@@ -4542,7 +4561,7 @@ IMPORTANT:
+@@ -4542,7 +4567,7 @@ IMPORTANT:
                  case 'next_backdrop': Engine.activeBackdrop=(Engine.activeBackdrop+1)%Engine.backdrops.length;GW.triggerBackdrop(Engine.backdrops[Engine.activeBackdrop].name);return;
                  case 'change_backdrop_color': Engine.backdrops[Engine.activeBackdrop].color=text(0)||'#fff';return;
                  case 'touching_sprite': if(sel==='edge')return Math.abs(this.sprite.x)>220||Math.abs(this.sprite.y)>160; if(sel==='mouse-pointer')return Math.abs(this.sprite.x-Engine.mouse.x)<25&&Math.abs(this.sprite.y-Engine.mouse.y)<25; return false;
@@ -100,7 +113,7 @@ index 9a9e3b0..4ac13d9 100644
                  case 'glide_xy': { const secs=Math.max(.01,n(0)); const sx=this.sprite.x,sy=this.sprite.y,tx=n(1),ty=n(2); this.motionTween={start:performance.now(),dur:secs*1000,sx,sy,tx,ty}; this.waitUntil=performance.now()+secs*1000; return; }
                  case 'goto_random': this.sprite.x=Math.random()*440-220;this.sprite.y=Math.random()*320-160;return;
                  case 'point_towards': { const dx=Engine.mouse.x-this.sprite.x,dy=Engine.mouse.y-this.sprite.y; this.sprite.direction=90-Math.atan2(dy,dx)*180/Math.PI;return; }
-@@ -4554,7 +4573,7 @@ IMPORTANT:
+@@ -4554,7 +4579,7 @@ IMPORTANT:
                  case 'clear_effects': this.sprite.ghost=0;return;
                  case 'costume_number': return this.sprite.activeCostume+1;
                  case 'costume_name': return this.sprite.costumes[this.sprite.activeCostume]?.name||'';
@@ -109,7 +122,7 @@ index 9a9e3b0..4ac13d9 100644
                  case 'set_volume': this.sprite.volume=Math.max(0,Math.min(100,n(0)));return;
                  case 'volume_reporter': return this.sprite.volume??100;
                  case 'op_mod': return Number(GW.resolve(ins[0]?.value))%Number(GW.resolve(ins[1]?.value)||1);
-@@ -4594,7 +4613,7 @@ IMPORTANT:
+@@ -4594,7 +4619,7 @@ IMPORTANT:
              if(this.waitCondition){if(!this.waitCondition())return;this.waitCondition=null;}
              if(this.waitBroadcast){if(!this.waitBroadcast())return;this.waitBroadcast=null;}
              if(this.sprite.sayUntil&&performance.now()>=this.sprite.sayUntil){this.sprite.sayText='';this.sprite.sayUntil=0;}
@@ -118,16 +131,16 @@ index 9a9e3b0..4ac13d9 100644
              if(this.callStack.length){const top=this.callStack[this.callStack.length-1];if(top.type==='repeatUntil'){if(top.condition()){this.callStack.pop();return;}if(top.pc<top.blocks.length){this.executeBlock(top.blocks[top.pc++]);return;}top.pc=0;return;}}
              return v5StepBase.call(this);
          };
-@@ -4901,7 +4920,7 @@ IMPORTANT:
+@@ -4901,7 +4926,7 @@ IMPORTANT:
              });
          });
      </script>
 -<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.69.0',label:'Beta v15.69.0',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
-+<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.9',label:'Beta v15.70.9',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
++<script id="gw-v1554-global-alias">window.GW_BUILD={version:'15.70.10',label:'Beta v15.70.10',title:'G-Warp Beta'};window.GW_UNIQUE_NAME=function(list,name){const used=new Set((list||[]).map(x=>x&&x.name));if(!used.has(name))return name;const base=String(name).replace(/\s+\d+$/,'');let i=2;while(used.has(base+' '+i))i++;return base+' '+i;};/* v15.5.4: expose script-scope Engine/GW on window so existing window.Engine?./window.GW?. call sites work */try{if(typeof Engine!=="undefined")window.Engine=Engine;if(typeof GW!=="undefined")window.GW=GW;}catch(e){console.warn("alias",e)}</script>
  <script id="gw-v7-reconciliation">
  (() => {
    /* G-Warp v7 reconciliation layer
-@@ -5394,7 +5413,7 @@ IMPORTANT:
+@@ -5394,7 +5419,7 @@ IMPORTANT:
        case 'x_position':return sprite?.x??0; case 'y_position':return sprite?.y??0; case 'direction':return sprite?.direction??90;
        case 'mouse_x':return Engine?.mouse?.x??0; case 'mouse_y':return Engine?.mouse?.y??0; case 'mouse_down':return !!Engine?.mouse?.down;
        case 'timer':return (performance.now()-(Engine?.timerStarted||performance.now()))/1000; case 'answer':return Engine?.answer??'';
@@ -136,7 +149,7 @@ index 9a9e3b0..4ac13d9 100644
        case 'current_time':return new Date().toLocaleTimeString();
        case 'key_pressed':{const k=node.querySelector('select')?.value||'space';return !!Engine?.keysPressed?.[GW.keyNameToCode(k)];}
        case 'touching_edge':return Math.abs(sprite?.x||0)>220||Math.abs(sprite?.y||0)>160;
-@@ -5417,7 +5436,8 @@ IMPORTANT:
+@@ -5417,7 +5442,8 @@ IMPORTANT:
      const raw=GW8.readSlot(block,index,fallback);
      if(typeof raw==='boolean'||typeof raw==='number')return raw;
      const s=String(raw??'').trim();
@@ -146,16 +159,21 @@ index 9a9e3b0..4ac13d9 100644
      const n=Number(s);return Number.isFinite(n)&&s!==''?n:raw;
    };
    GW8.evalCondForThread=function(thread,block){
-@@ -5497,7 +5517,7 @@ IMPORTANT:
+@@ -5497,15 +5523,19 @@ IMPORTANT:
    GW8.snapshot=function(){
      return {title:document.getElementById('projectTitle')?.value||'',workspace:document.getElementById('workspaceCanvas')?.innerHTML||'',stacks:[...document.querySelectorAll('#workspaceCanvas > .block-stack')].map(s=>({left:s.style.left,top:s.style.top,owner:s.dataset.owner||''})),variables:JSON.parse(JSON.stringify(Engine.variables||{})),variableVisible:JSON.parse(JSON.stringify(Engine.variableVisible||{})),lists:JSON.parse(JSON.stringify(Engine.lists||{})),listVisible:JSON.parse(JSON.stringify(Engine.listVisible||{})),backdrops:JSON.parse(JSON.stringify(Engine.backdrops||[])),activeBackdrop:Engine.activeBackdrop||0};
    };
 -  GW8.same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 +  GW8.same=(a,b)=>{/* v15.70.8 (speed, same answer): the code area text is compared first - when it differs the two can't be the same, and that is the usual case */if(a&&b&&typeof a.workspace==='string'&&typeof b.workspace==='string'&&(a.workspace!==b.workspace||a.title!==b.title))return false;return JSON.stringify(a)===JSON.stringify(b);};
    GW8.pushHistory=function(reason){GW8.historyPending=false;if(GW8.historyMute)return;const snap=GW8.snapshot();const last=GW8.history[GW8.history.length-1];if(last&&GW8.same(last.state,snap))return;if(reason==='workspace mutation'&&last&&last.explicit&&Date.now()-last.at<900){last.state=snap;return;}/* 22 Nov (Claude): the redraw right after an action (rename, delete...) belongs to that action - one Ctrl+Z, not two */GW8.history.push({reason,state:snap,at:Date.now(),explicit:!GW8._sched});if(GW8.history.length>100)GW8.history.shift();GW8.future=[];};
-   GW8.scheduleHistory=function(reason){GW8.historyPending=true;clearTimeout(GW8.historyTimer);GW8.historyTimer=setTimeout(()=>{GW8._sched=true;try{GW8.pushHistory(reason);}finally{GW8._sched=false;}},300);};
+-  GW8.scheduleHistory=function(reason){GW8.historyPending=true;clearTimeout(GW8.historyTimer);GW8.historyTimer=setTimeout(()=>{GW8._sched=true;try{GW8.pushHistory(reason);}finally{GW8._sched=false;}},300);};
++  /* v15.70.10 (Claude, steady 30 FPS): an undo snapshot copies every script (0.4 s on the owner's project). While a project RUNS and nobody
++     touched the code area in the last 2 s, the snapshot waits for the project to stop (Ctrl+Z still takes it first, as before). An edit made while
++     the project runs is saved at once like always. Off: window.GW_HISTORY_WAITS = false */
++  try{['pointerdown','keydown','drop','input','change'].forEach(t=>document.addEventListener(t,e=>{const x=e.target;if(x&&x.closest&&x.closest('#workspace, #paletteContainer'))GW8.__editAt=performance.now();},true));}catch(e){}
++  GW8.scheduleHistory=function(reason){GW8.historyPending=true;clearTimeout(GW8.historyTimer);const fire=()=>{if(window.GW_HISTORY_WAITS!==false&&Engine.isRunning&&!Engine.isPaused&&performance.now()-(GW8.__editAt||-1e9)>2000){GW8.historyTimer=setTimeout(fire,500);return;}GW8._sched=true;try{GW8.pushHistory(reason);}finally{GW8._sched=false;}};GW8.historyTimer=setTimeout(fire,300);};
    GW8.restore=async function(snap){GW8.historyMute=true;try{{const _pt=document.getElementById('projectTitle');if(_pt)_pt.value=snap.title||'';}Engine.variables=snap.variables||{};Engine.variableVisible=snap.variableVisible||{};Engine.lists=snap.lists||{};Engine.listVisible=snap.listVisible||{};Engine.backdrops=snap.backdrops||[{name:'stage1',color:'#fff'}];Engine.activeBackdrop=snap.activeBackdrop||0;const wc=document.getElementById('workspaceCanvas');wc.innerHTML=snap.workspace||'<div id="snapPreviewLine"></div>';[...wc.querySelectorAll('.block-stack')].forEach((st,i)=>{st.style.left=snap.stacks?.[i]?.left||st.style.left;st.style.top=snap.stacks?.[i]?.top||st.style.top;if(snap.stacks?.[i]?.owner!==undefined)st.dataset.owner=snap.stacks[i].owner;});GW.refreshBlockMenus?.();GW.refreshVariableMonitors?.();GW.refreshListMonitors?.();GW8.decorate();GW8.indexCustomProcedures();}finally{GW8.historyMute=false;}/* the MutationObserver reports this restore's DOM writes after it returns: mute history for a moment so they do not clear Redo */clearTimeout(GW8.historyTimer);GW8.historyMute=true;setTimeout(()=>{GW8.historyMute=false;},400);};
-@@ -5505,7 +5525,7 @@ IMPORTANT:
+   GW8.undo=async()=>{if(GW8.history.length<=1)return;const cur=GW8.history.pop();GW8.future.push(cur);const prev=GW8.history[GW8.history.length-1];if(prev)await GW8.restore(prev.state);toast('Undo');};
    GW8.redo=async()=>{const next=GW8.future.pop();if(!next)return;GW8.history.push(next);await GW8.restore(next.state);toast('Redo');};
  
    // ------------------------- Basic debugger / breakpoints -------------------------
@@ -164,7 +182,7 @@ index 9a9e3b0..4ac13d9 100644
    GW8.debugPanel=function(){
      let ov=document.getElementById('gwDebugOverlay');
      if(!ov){ov=document.createElement('div');ov.id='gwDebugOverlay';ov.className='gw-ai-overlay';ov.innerHTML='<div class="gw-ai-window"><div class="gw-ai-window-head"><div><b class="text-amber-300">G-Warp Debugger</b><div class="text-[10px] text-slate-400">Breakpoints, threads and one-step execution</div></div><button id="gwDbgClose" class="px-2 py-1 bg-slate-700 rounded">Close</button></div><div class="gw-ai-window-body"><div class="flex gap-2"><button id="gwDbgPause" class="px-3 py-2 bg-amber-700 rounded text-xs font-bold">Pause</button><button id="gwDbgResume" class="px-3 py-2 bg-emerald-700 rounded text-xs font-bold">Resume</button><button id="gwDbgStep" class="px-3 py-2 bg-cyan-700 rounded text-xs font-bold">Step</button></div><pre id="gwDbgInfo" class="gw-ai-card whitespace-pre-wrap"></pre><div class="text-[10px] text-slate-500">Double-click a workspace block to toggle a breakpoint.</div></div></div>';document.body.appendChild(ov);ov.querySelector('#gwDbgClose').onclick=()=>ov.classList.remove('open');ov.querySelector('#gwDbgPause').onclick=()=>{Engine.isPaused=true;};ov.querySelector('#gwDbgResume').onclick=()=>{Engine.isPaused=false;Engine.threads.forEach(t=>t.pausedByBreakpoint=false);};ov.querySelector('#gwDbgStep').onclick=()=>{const t=GW8.debugPausedThread||Engine.threads[0];if(t){const was=Engine.isPaused;Engine.isPaused=false;t.step();Engine.isPaused=true;if(!was)Engine.isPaused=false;}};}
-@@ -5661,10 +5681,10 @@ IMPORTANT:
+@@ -5661,10 +5691,10 @@ IMPORTANT:
      switch(node.type){
        case 'literal':return node.value??'';
        case 'get_var':return GW9.scopedValue(thread,node.name||'my variable');
@@ -177,7 +195,7 @@ index 9a9e3b0..4ac13d9 100644
        case 'costume_number':return (sprite?.activeCostume??0)+1;case 'costume_name':return sprite?.costumes?.[sprite.activeCostume]?.name||'';case 'current_time':return new Date().toLocaleTimeString();
        case 'key_pressed':return !!Engine.keysPressed?.[(keyCodes()[node.key||'space']||'Space')];case 'mouse_down':return !!Engine.mouse?.down;
        case 'touching_pointer':return Math.hypot((sprite?.x||0)-(Engine.mouse?.x||0),(sprite?.y||0)-(Engine.mouse?.y||0))<25;
-@@ -5698,7 +5718,7 @@ IMPORTANT:
+@@ -5698,7 +5728,7 @@ IMPORTANT:
      const vis=[...(block?.querySelectorAll('.block-input')||[])].filter(i=>i.dataset.slotProxy!=='1'); const prox=[...(block?.querySelectorAll('.block-input[data-slot-proxy="1"]')||[])]; return vis[index]?.value ?? prox[index]?.value ?? fallback;
    };
    GW8.readSlot=GW9.readSlot;
@@ -186,7 +204,7 @@ index 9a9e3b0..4ac13d9 100644
    GW8.evalReporter=function(node,ownerBlock){const nodeType=node?.dataset?.reporterType||ownerBlock?.dataset?.reporter;if(nodeType)return GW9.evalNode(ownerBlock?.__thread||null,{type:nodeType},'value',ownerBlock);return '';};
    const baseDecorateV9 = GW8.decorate;
    GW9.decorate = ()=>{ baseDecorateV9(); document.querySelectorAll('#workspaceCanvas .gw-input-slot').forEach(slot=>{if(!slot._gw9Bound){slot._gw9Bound=true;slot.ondblclick=e=>{e.stopPropagation();GW8.openExprMenu(slot);};}}); };
-@@ -5720,7 +5740,7 @@ IMPORTANT:
+@@ -5720,7 +5750,7 @@ IMPORTANT:
      const type=block?.dataset?.type||'';
      if(type==='get_var'){const name=gwVarEls(block).sel?.value||'my variable';return GW9.scopedValue(this,name);}
      if(type==='set_var'||type==='change_var'){
@@ -195,7 +213,16 @@ index 9a9e3b0..4ac13d9 100644
      }
      if(type==='point_direction'){ /* v15.50.4: point in direction (abc / empty) keeps the old direction, like Scratch */ const pin=[...block.querySelectorAll(':scope > .block-input')].filter(x=>x.dataset.slotProxy!=='1')[0]; const pv=GW8.resolveInput(this,block,0,pin?.value??''); if(String(pv).trim()===''||!Number.isFinite(Number(pv)))return; }
      if(type==='call_custom'){
-@@ -11123,7 +11143,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -5836,7 +5866,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+   // Add AST export + review controls without deleting prior buttons.
+   function addV9Buttons(){const hc=document.getElementById('extra-menu-dev-targets')||document.querySelector('header > div:first-child');if(!hc)return; if(!document.getElementById('gwAstExportBtn')){const b=document.createElement('button');b.id='gwAstExportBtn';b.className='px-2.5 py-1.5 bg-emerald-900/70 hover:bg-emerald-800 border border-emerald-700 rounded-lg text-xs font-bold text-emerald-200';b.innerHTML='<i class="fa-solid fa-sitemap"></i> AST';b.title='Export typed project AST snapshot';b.onclick=GW9.downloadAST;hc.appendChild(b);} }
+   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addV9Buttons);else addV9Buttons(); setTimeout(addV9Buttons,500);
+-  document.addEventListener('pointerup',()=>setTimeout(()=>{GW9.refreshAST();},0),true);
++  document.addEventListener('pointerup',e=>{/* v15.70.10 (Claude): a click ON THE STAGE is the player playing, not an edit. Rebuilding the whole project tree on every such click froze the owner's project 0.3 s per click */if(e&&e.target&&e.target.closest&&e.target.closest('#gw154StageFrame, #stageCanvas'))return;setTimeout(()=>{GW9.refreshAST();},0);},true);
+ })();
+ </script>
+ <script id="gw-v10-ui">
+@@ -11123,7 +11153,7 @@ nodes.push(el);cur=b.next;}return nodes;};
            const sp = spriteOf(thread, owner); if (!sp) return 0;
            let tx = E.mouse?.x || 0, ty = E.mouse?.y || 0;
            if (node.target && node.target !== 'mouse-pointer') { const t = (E.sprites || []).find(s => s !== sp && s.name === node.target); if (!t) return 0; tx = t.x; ty = t.y; }
@@ -204,7 +231,7 @@ index 9a9e3b0..4ac13d9 100644
          }
          case 'op_round': return Math.round(num(g.evalNode(thread, node.args?.[0], 'value', owner)));
          case 'op_abs': return Math.abs(num(g.evalNode(thread, node.args?.[0], 'value', owner)));
-@@ -11151,11 +11171,24 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11151,11 +11181,24 @@ nodes.push(el);cur=b.next;}return nodes;};
    const KEYS = ['space', 'up arrow', 'down arrow', 'left arrow', 'right arrow'];
    function ownerSprite(root) { const i = root?.closest?.('.block-stack')?.dataset.owner; const E = Eng(); return E.sprites?.[i != null && i !== '' ? +i : E.activeSpriteIndex]; }
    const otherSprites = root => { const me = ownerSprite(root); return [...new Set((Eng().sprites || []).filter(s => !s.isClone && s !== me).map(s => s.name))]; };
@@ -231,7 +258,7 @@ index 9a9e3b0..4ac13d9 100644
      s.addEventListener('change', () => onChange(s.value));
      return s;
    }
-@@ -11784,15 +11817,17 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11784,15 +11827,17 @@ nodes.push(el);cur=b.next;}return nodes;};
      if (!window.GW9?.slotNode) return n < 40 && setTimeout(() => cacheSlots(n + 1), 100);
      if (GW9.__cachedSlots) return; GW9.__cachedSlots = true;
      const base = GW9.slotNode, cache = new WeakMap();
@@ -253,11 +280,16 @@ index 9a9e3b0..4ac13d9 100644
    const toast = m => { try { window.GW?.toast?.(m); } catch {} };
    const LIMIT_OPS = 5000, FRAME_MS = 10, WARP_MS = 500;
  
-@@ -11937,7 +11972,10 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11937,7 +11982,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        case 'define_custom': return;
      }
      b.__thread = th;
 -    syncProxies(th, b);
++    /* v15.70.10 (Claude, found with the owner's own game + the real Scratch engine): "stop [this script]" inside a My Block ends only that
++       My Block and the script goes on after the call, like "return". G-Warp ended the whole script (the game's main loop died). */
++    if (t === 'stop') { const cs = th.callStack; let k = cs.length - 1; while (k >= 0 && cs[k].type !== 'custom') k--;
++      if (k >= 0) { const sl = [...b.querySelectorAll('.block-select')].find(x => x.closest('.scratch-block') === b), what = sl ? sl.value : 'all';
++        if (what !== 'all' && what !== 'other scripts in sprite') { cs.length = k; return; } } }
 +    if ((t === 'change_var' || t === 'set_var') && window.GW.__fastVar && window.GW.__fastVar(th, b, t)) return; // v15.70.5 (speed)
 +    if ((t === 'list_add' || t === 'list_replace' || t === 'list_delete' || t === 'list_insert') && window.GW.__fastList && window.GW.__fastList(th, b, t)) return;
 +    { const ty = t; let vt = VISUAL.get(ty); if (vt === undefined) { vt = VIS_ALWAYS.test(ty) ? 2 : VIS_SHOWN.test(ty) ? 1 : 0; VISUAL.set(ty, vt); } if (vt && (vt === 2 || !th.sprite || th.sprite.visible !== false)) window.GW.__redraw = true; }
@@ -265,7 +297,7 @@ index 9a9e3b0..4ac13d9 100644
      if (window.GW?.extraBlock && window.GW.extraBlock(th, b)) return;
      th.executeBlock(b);
    }
-@@ -11947,9 +11985,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11947,9 +12000,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        const n = GW9.slotNode(slot);
        if (!p || !n) continue;
        let v = ''; try { v = GW9.evalNode(th, n, 'value', b); } catch (e) { if (e && e === RETRY()) throw e; }
@@ -282,7 +314,7 @@ index 9a9e3b0..4ac13d9 100644
    const waiting = (th, now) => now < (th.waitUntil || 0) || !!th.waitCondition || !!th.waitBroadcast || !!th.motionTween;
    ScriptThread.prototype.step = function () {
      if (this.finished || !Engine.isRunning || Engine.isPaused) return;
-@@ -11958,10 +12002,12 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11958,10 +12017,12 @@ nodes.push(el);cur=b.next;}return nodes;};
      if (this.waitCondition) { let ok = false; try { ok = this.waitCondition(); } catch {} if (!ok) return; this.waitCondition = null; }
      if (this.waitBroadcast) { let ok = false; try { ok = this.waitBroadcast(); } catch {} if (!ok) return; this.waitBroadcast = null; }
      if (this.sprite?.sayUntil && now >= this.sprite.sayUntil) { this.sprite.sayText = ''; this.sprite.sayUntil = 0; }
@@ -296,7 +328,7 @@ index 9a9e3b0..4ac13d9 100644
      const start = now; let ops = 0;
      while (true) {
        if (this.finished || !Engine.isRunning) return;
-@@ -11984,12 +12030,13 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -11984,12 +12045,13 @@ nodes.push(el);cur=b.next;}return nodes;};
        }
        const [b, idx] = nx;
        if (f.list) f.i = idx + 1; else { f.cur = b; f.i = idx; }
@@ -311,7 +343,7 @@ index 9a9e3b0..4ac13d9 100644
        // v15.47.1: the clock is read only when a block made the script wait, or every 8 blocks for the frame-time check
        if (this.waitUntil || this.waitCondition || this.waitBroadcast || this.motionTween) { now = performance.now(); if (waiting(this, now)) return; }
        if (++ops > LIMIT_OPS) { if (!warpOn(this)) return; if ((ops & 255) === 0 && performance.now() - start > WARP_MS) { heavy(this, start); return; } } // 22 Nov (Claude): warp runs up to 500 ms like Scratch (it stopped after 5000 blocks, so 3D frames showed half-drawn)
-@@ -12059,7 +12106,34 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12059,7 +12121,34 @@ nodes.push(el);cur=b.next;}return nodes;};
      for (let y = bo + step / 2; y <= t; y += step) for (let x = l + step / 2; x <= r; x += step) if (GW.spriteHasPoint(a, x, y) && GW.spriteHasPoint(b, x, y)) return true;
      return false;
    };
@@ -347,7 +379,7 @@ index 9a9e3b0..4ac13d9 100644
    GW.rootName = s => s?.rootName || s?.name;
    GW.hitTest = (a, b) => GW.spritesTouch(a, b);
    const G9 = window.GW9;
-@@ -12075,13 +12149,13 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12075,13 +12164,13 @@ nodes.push(el);cur=b.next;}return nodes;};
          case 'color_touching': return !!GW.colorTouchingColor?.(spr(th, owner), G9.evalNode(th, node.args?.[0], 'value', owner), G9.evalNode(th, node.args?.[1], 'value', owner));
          case 'op_lt': { const n = v => Number.isFinite(Number(v)) ? Number(v) : 0; return n(G9.evalNode(th, node.args?.[0], 'value', owner)) < n(G9.evalNode(th, node.args?.[1], 'value', owner)); }
          case 'op_contains': return String(G9.evalNode(th, node.args?.[0], 'value', owner)).toLowerCase().includes(String(G9.evalNode(th, node.args?.[1], 'value', owner)).toLowerCase());
@@ -363,7 +395,7 @@ index 9a9e3b0..4ac13d9 100644
        }
        return base.apply(this, arguments);
      };
-@@ -12156,14 +12230,15 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12156,14 +12245,15 @@ nodes.push(el);cur=b.next;}return nodes;};
        case 'set_rotation_style': s.rotationStyle = sel(b) || 'all around'; return true;
        case 'go_front_back': { if (s && s.isClone) s.__gwOwnLayer = true; const ls = Engine.sprites.map((x, i) => x.layer ?? i); s.layer = sel(b) === 'back' ? Math.min(...ls) - 1 : Math.max(...ls) + 1; return true; }
        case 'go_layers': { if (s && s.isClone) s.__gwOwnLayer = true; const order = GW.drawOrder(); const i = order.indexOf(s); const n = Math.round(num(b, 0)) * (sel(b) === 'backward' ? -1 : 1); const j = Math.max(0, Math.min(order.length - 1, i + n)); if (j === i) return true; order.splice(i, 1); order.splice(j, 0, s); order.forEach((x, k) => { x.layer = k; }); return true; }
@@ -387,7 +419,7 @@ index 9a9e3b0..4ac13d9 100644
        }
        case 'say': { const secs = num(b, 1); if (secs > 0) { s.sayText = text(b, 0); s.sayUntil = performance.now() + secs * 1000; th.waitUntil = s.sayUntil; return true; } return false; }
        case 'create_clone': { const v = sel(b) || 'myself'; const src = (v === 'myself' || v === '_myself_') ? s : Engine.sprites.find(x => !x.isClone && x.name === v); if (src) GW.createClone(src); return true; }
-@@ -12214,6 +12289,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12214,6 +12304,7 @@ nodes.push(el);cur=b.next;}return nodes;};
        st.classList.toggle('gw8-other-sprite', !mine);
      });
      shown = idx;
@@ -395,7 +427,7 @@ index 9a9e3b0..4ac13d9 100644
    };
    const tick = () => { if (Engine.activeSpriteIndex !== shown) GW.showSpriteScripts(Engine.activeSpriteIndex); const on = !!(Engine.isRunning && !Engine.isPaused && (Engine.threads || []).length); if (document.body && document.body.classList.contains('gw8-running') !== on) document.body.classList.toggle('gw8-running', on); };
    setInterval(tick, 150);
-@@ -12939,6 +13015,7 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12939,6 +13030,7 @@ nodes.push(el);cur=b.next;}return nodes;};
            const blocks = conv.chain(id); if (!blocks.length) return;
            const st = h('div', { class: 'block-stack' }); st.dataset.owner = String(idx);
            st.style.left = Math.round((Number(b.x) || 0) - minX + 40) + 'px'; st.style.top = Math.round((Number(b.y) || 0) - minY + 40) + 'px';
@@ -403,7 +435,7 @@ index 9a9e3b0..4ac13d9 100644
            blocks.forEach(x => st.appendChild(x)); ws.appendChild(st); placed.push(st);
          });
          // v15.50.9 (Claude): Scratch comments come in as G-Warp comments (notes on a block are placed where Scratch had them)
-@@ -12961,7 +13038,10 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12961,7 +13053,10 @@ nodes.push(el);cur=b.next;}return nodes;};
        // tidy: scripts of the same sprite never overlap
        const bySprite = {};
        placed.forEach(st => (bySprite[st.dataset.owner] = bySprite[st.dataset.owner] || []).push(st));
@@ -415,7 +447,7 @@ index 9a9e3b0..4ac13d9 100644
          list.forEach(st => st.classList.remove('gw8-other-sprite'));
          const boxes = [];
          const sorted = list.sort((a, b) => parseFloat(a.style.top) - parseFloat(b.style.top));
-@@ -12972,7 +13052,11 @@ nodes.push(el);cur=b.next;}return nodes;};
+@@ -12972,7 +13067,11 @@ nodes.push(el);cur=b.next;}return nodes;};
            for (let k = 0; k < 400; k++) { const hit = boxes.find(o => l < o.l + o.w + 20 && l + w + 20 > o.l && t < o.t + o.h + 20 && t + hh + 20 > o.t); if (!hit) break; t = hit.t + hit.h + 24; }
            st.style.top = t + 'px'; boxes.push({ l, t, w, h: hh });
          });
@@ -428,7 +460,7 @@ index 9a9e3b0..4ac13d9 100644
        lap('tidy');
        const title = by('projectTitle'); if (title) title.value = String(file.name).replace(/\.(sb3|json)$/i, '');
        Engine.activeSpriteIndex = 0;
-@@ -14787,7 +14871,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14787,7 +14886,44 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    });
    // colour / brightness: each costume is filtered once and reused, instead of filtering every drawing
    let curFilter = '';
@@ -474,7 +506,7 @@ index 9a9e3b0..4ac13d9 100644
    let fcache = new WeakMap(), mip = new WeakMap();
    const resetDrawCaches = () => { fcache = new WeakMap(); mip = new WeakMap(); };
    document.addEventListener('click', e => { if (e.target.closest?.('#greenFlagBtn,#stopBtn')) resetDrawCaches(); }, true);
-@@ -14806,7 +14927,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14806,7 +14942,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      if (curFilter) {
        const key = curFilter; let m = fcache.get(cv); if (!m) { m = new Map(); fcache.set(cv, m); }
        let f = m.get(key);
@@ -483,7 +515,7 @@ index 9a9e3b0..4ac13d9 100644
        cv = f;
      }
      curFilter = '';
-@@ -14906,16 +15027,92 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14906,16 +15042,105 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      move: (th, s, b) => { const n = nIn(b, 0), r = (90 - s.direction) * DEG; s.x += Math.cos(r) * n; s.y += Math.sin(r) * n; },
      turn_cw: (th, s, b) => { s.direction = wrapDir(s.direction + nIn(b, 0)); },
      turn_ccw: (th, s, b) => { s.direction = wrapDir(s.direction - nIn(b, 0)); },
@@ -518,8 +550,20 @@ index 9a9e3b0..4ac13d9 100644
 +      const sp = ctxSprite(), l = sp ? sp.localVars : null; if (l && hasOwn(l, name)) l[name] = val; else GV[name] = val;
 +      return false;
 +    };
++    /* v15.70.10 (Claude, speed, measured in the owner's 3D game): asking a menu "what is picked?" makes the browser walk through all its choices
++       (194 variables = 194 steps, on every set / change block). The answer is now remembered and forgotten the moment the menu changes:
++       the user picks something (change / input), code sets .value, or the code area changes (then the block's whole note is rebuilt). */
++    const selGet = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value');
++    const menuValue = GW.__menuValue = sel => {
++      let v = sel.__gwNm; if (v !== undefined) return v;
++      if (!sel.__gwNmHook) { sel.__gwNmHook = 1; const drop = () => { sel.__gwNm = undefined; };
++        sel.addEventListener('change', drop, true); sel.addEventListener('input', drop, true);
++        try { Object.defineProperty(sel, 'value', { configurable: true, get() { return selGet.get.call(this); }, set(x) { this.__gwNm = undefined; selGet.set.call(this, x); } }); } catch (e) { return selGet.get.call(sel); } }
++      return (sel.__gwNm = selGet.get.call(sel));
++    };
 +    const parts = b => {
 +      const ep = GW.__wsEpoch; let c = b.__gwFV; if (c && c.ep === ep) return c;
++      { const s0 = b.querySelector('.block-select'); if (s0) s0.__gwNm = undefined; }
 +      const slot = [...b.querySelectorAll('.gw-input-slot[data-slot-index="0"]')].find(el => el.closest('.scratch-block') === b) || null;
 +      c = b.__gwFV = { ep, sel: b.querySelector('.block-select'), slot, slotQ: b.querySelector('.gw-input-slot[data-slot-index="0"]'), kind: slot ? (slot.dataset.slotKind || 'value') : 'value', p: slot ? slot.querySelector('.block-input') : null,
 +        inp: [...b.querySelectorAll('.block-input')].filter(el => el.closest('.scratch-block') === b)[0] || null,
@@ -529,7 +573,7 @@ index 9a9e3b0..4ac13d9 100644
 +    GW.__fastVar = function (th, b, t) {
 +      const c = parts(b); if (c.slot !== c.slotQ || c.mx || !c.sel) return false; // anything unusual: the normal path
 +      const node = c.slot ? G9.slotNode(c.slot) : null;
-+      const name = c.sel.value || 'my variable';
++      const name = (window.GW_MENU_CACHE === false ? c.sel.value : menuValue(c.sel)) || 'my variable';
 +      let v = node ? G9.evalNode(th, node, c.kind, b) : (c.slot && c.p) ? c.p.value : c.inp ? c.inp.value : ((c.raw ? c.raw.value : undefined) ?? 0), val = v;
 +      if (typeof v !== 'number' && typeof v !== 'boolean') {
 +        const st = String(v ?? '').trim(); let done = false;
@@ -556,6 +600,7 @@ index 9a9e3b0..4ac13d9 100644
 +      if (!c || c.ep !== ep) {
 +        const ins = [...b.querySelectorAll('.block-input')], cmd = GW.ownParts(b).cmd, at = cmd.map(([, p]) => (p ? ins.indexOf(p) : -2));
 +        c = b.__gwFL = { ep, sel: b.querySelector('.block-select'), ins, cmd, at, vals: new Array(ins.length), bad: !!b.dataset.gw9MenuExpr || at.includes(-1) };
++        if (c.sel) c.sel.__gwNm = undefined;
 +      }
 +      if (c.bad) return false;
 +      const ins = c.ins, vals = c.vals, cmd = c.cmd; for (let i = 0; i < vals.length; i++) vals[i] = undefined;
@@ -565,7 +610,7 @@ index 9a9e3b0..4ac13d9 100644
 +        vals[c.at[k]] = String(v ?? '');
 +      }
 +      const text = i => (vals[i] !== undefined ? vals[i] : String((ins[i] ? ins[i].value : undefined) ?? ''));
-+      const a = GW.list(c.sel ? c.sel.value || '' : '');
++      const a = GW.list(c.sel ? ((window.GW_MENU_CACHE === false || !GW.__menuValue) ? c.sel.value : GW.__menuValue(c.sel)) || '' : '');
 +      th.__gwLast = b;
 +      if (t === 'list_add') a.push(text(0));
 +      else if (t === 'list_replace') { const i = GW.toListIndex(text(0), a.length, false); if (i) a[i - 1] = text(1); }
@@ -578,7 +623,7 @@ index 9a9e3b0..4ac13d9 100644
    const mainExtra = GW.extraBlock;
    GW.extraBlock = function (th, b) {
      const s = th.sprite; if (!s) return mainExtra.apply(this, arguments);
-@@ -14963,7 +15160,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14963,7 +15188,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        literal: (th, nd) => nd.value ?? '',
        get_var: (th, nd) => G9.scopedValue(th, nd.name || 'my variable'),
        x_position: (th, nd, ow) => spr(th, ow)?.x ?? 0, y_position: (th, nd, ow) => spr(th, ow)?.y ?? 0, direction: (th, nd, ow) => spr(th, ow)?.direction ?? 90,
@@ -587,7 +632,7 @@ index 9a9e3b0..4ac13d9 100644
        mouse_down: () => !!E.mouse?.down,
        op_add: (th, nd, ow) => num(A(th, nd, ow, 0)) + num(A(th, nd, ow, 1)), op_sub: (th, nd, ow) => num(A(th, nd, ow, 0)) - num(A(th, nd, ow, 1)),
        op_mul: (th, nd, ow) => num(A(th, nd, ow, 0)) * num(A(th, nd, ow, 1)), op_div: (th, nd, ow) => num(A(th, nd, ow, 0)) / num(A(th, nd, ow, 1)),
-@@ -14982,6 +15179,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -14982,6 +15207,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        list_itemnum: (th, nd, ow) => { const a = E.lists?.[nd.name] || [], v = A(th, nd, ow, 0); return itemNum(a, v); }
      };
      G9.fastFN = FN; // v15.9.1: other layers add their reporters here
@@ -606,7 +651,7 @@ index 9a9e3b0..4ac13d9 100644
      G9.evalNode = function (th, node, expected, owner) { if (!node) return expected === 'boolean' ? false : ''; const f = FN[node.type]; return f ? f(th, node, owner) : slow.apply(this, arguments); };
      G9.scratchCompare = cmp;
    })();
-@@ -15023,6 +15232,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15023,6 +15260,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      infiniteClones: store.get('gwarp-infinite-clones') === 'on',
      showFps: store.get('gwarp-show-fps') === 'on',
      noFence: store.get('gwarp-no-fence') === 'on', // Scratch keeps sprites on the stage (fencing); TurboWarp can turn it off
@@ -614,7 +659,7 @@ index 9a9e3b0..4ac13d9 100644
      noMiscLimits: store.get('gwarp-no-misc-limits') === 'on' // v15.13.0: TurboWarp “Remove miscellaneous limits”
    };
    const target = () => (S.projectFps != null ? S.projectFps : S.fps);
-@@ -15031,6 +15241,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15031,6 +15269,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      setFps(v) { S.fps = Math.max(0, Math.min(250, Math.round(Number(v) || 0))); store.set('gwarp-fps', String(S.fps)); refreshFpsLabels(); },
      setProjectFps(v) { S.projectFps = v == null ? null : Math.max(0, Math.min(250, Math.round(Number(v) || 0))); refreshFpsLabels(); },
      setInfiniteClones(on) { S.infiniteClones = !!on; store.set('gwarp-infinite-clones', on ? 'on' : null); E.cloneLimit = on ? Infinity : 300; },
@@ -622,7 +667,7 @@ index 9a9e3b0..4ac13d9 100644
      setShowFps(on) { S.showFps = !!on; store.set('gwarp-show-fps', on ? 'on' : null); placeFps(); },
      setNoFence(on) { S.noFence = !!on; store.set('gwarp-no-fence', on ? 'on' : null); },
      setNoMiscLimits(on) { S.noMiscLimits = !!on; store.set('gwarp-no-misc-limits', on ? 'on' : null); }
-@@ -15070,17 +15281,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15070,17 +15309,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      const [showFps, showFpsRow] = check('gw9AdvShowFps', 'Show FPS on the stage', 'A small frames-per-second counter in the corner of the stage.', S.showFps);
      const [fenceOff, fenceRow] = check('gw9AdvFence', 'Remove fencing', 'Lets sprites go fully off the stage. Scratch keeps a little of every sprite on the stage; leave this off for Scratch projects.', S.noFence);
      const [hqOn, hqRow] = check('gw9AdvHQ', 'Max quality render (HQ)', 'Draws the stage at your screen’s full sharpness, up to 4× (1920 × 1440): sharp pen lines, vector costumes, text and bubbles — like TurboWarp’s “High quality pen”, for the whole stage. Best in Large or full screen. Big projects may run slower; turn it off if they lag. Also the HQ button above the stage.', !!window.GW_HQ?.isOn?.());
@@ -643,7 +688,7 @@ index 9a9e3b0..4ac13d9 100644
        if (window.GW_WARP_GUARD && window.GW_WARP_GUARD.isOn() !== guard.checked) window.GW_WARP_GUARD.set(guard.checked);
        toast('Advanced settings saved');
      });
-@@ -15874,7 +16086,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15874,7 +16114,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
        lookupOrCreateVariable(id, n) { return lookupVar(s, n, '') || (GV()[n] = 0, lookupVar(s, n, '')); }, lookupOrCreateList(id, n) { return lookupVar(s, n, 'list') || (GL()[n] = [], lookupVar(s, n, 'list')); },
        lookupBroadcastMsg: (id, n) => ({ id, name: n, value: n }),
        isTouchingSprite: n => GW.spritesNamed(String(n)).some(o => o !== s && GW.spritesTouch(s, o)), isTouchingPoint: (x, y) => !!GW.spriteHasPoint?.(s, x, y), isTouchingEdge: () => !!GW.touchingEdge?.(s),
@@ -652,7 +697,7 @@ index 9a9e3b0..4ac13d9 100644
        getLayerOrder: () => (GW.drawOrder ? GW.drawOrder().indexOf(s) : E.sprites.indexOf(s)), goToFront() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.max(0, ...o.map(x => x.layer || 0)) + 1; }, goToBack() { const o = GW.drawOrder ? GW.drawOrder() : E.sprites; s.layer = Math.min(0, ...o.map(x => x.layer || 0)) - 1; },
        emitVisualChange() {}, updateAllDrawableProperties() {}, setCustomState(k, v) { (s.__custom || (s.__custom = {}))[k] = v; }, getCustomState: k => s.__custom?.[k],
        duplicate: () => Promise.resolve(targetFor(GW.createClone ? GW.createClone(s) : null)), makeClone: () => targetFor(GW.createClone ? GW.createClone(s) : null), dispose() { if (s.isClone) GW.deleteClone?.(s); }
-@@ -15934,7 +16146,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15934,7 +16174,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    const renderer = {
      canvas: null, get _gl() { return null; }, gl: null, _allDrawables: [], _drawList: [], dirty: false, _xLeft: -240, _xRight: 240, _yBottom: -180, _yTop: 180, _nativeSize: [480, 360],
      getNativeSize: () => [480, 360], setBackgroundColor(r, g, b) { GW.camera.bg = Color.rgbToHex({ r: r * 255, g: g * 255, b: b * 255 }); },
@@ -661,7 +706,7 @@ index 9a9e3b0..4ac13d9 100644
      getCurrentSkinSize(id) { const s = E.sprites[id]; const c = s?.costumes?.[s.activeCostume]; const b = GW.costumeBox(c); return [b.w, b.h]; },
      getBounds(id) { const s = E.sprites[id]; if (!s) return null; const b = GW.spriteBounds(s); return { ...b, width: b.right - b.left, height: b.top - b.bottom }; },
      getBoundsForBubble(id) { return this.getBounds(id); }, getFencedPositionOfDrawable: (id, pos) => pos,
-@@ -15965,14 +16177,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15965,14 +16205,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      compilerOptions: { enabled: false, warpTimer: true }, isPackaged: false, extensionStorage: {}, renderer, storage: { assetHost: '', DataFormat: { PNG: 'png', SVG: 'svg', WAV: 'wav', MP3: 'mp3', JPG: 'jpg' }, AssetType: {} },
      get runtimeOptions() { return { maxClones: E.cloneLimit || 300, miscLimits: !GW.miscLimitsOff?.(), fencing: GW.__projectFence !== false }; },
      setRuntimeOptions(o) { if (o?.maxClones != null) E.cloneLimit = Number(o.maxClones) || 300; if (o?.fencing != null) GW.__projectFence = o.fencing ? undefined : false; if (o?.miscLimits != null) GW.__projectMiscLimits = o.miscLimits ? undefined : false; },
@@ -678,7 +723,7 @@ index 9a9e3b0..4ac13d9 100644
      startHats: (op, fields, target) => startHats(op, fields, target), stopAll() { by('stopBtn')?.click(); }, greenFlag() { by('greenFlagBtn')?.click(); }, stopForTarget(t) { const s = t?.gwSprite; if (s) E.threads.forEach(th => { if (th.sprite === s) th.finished = true; }); },
      shouldExecuteStopClicked: true, _hats: {}, _primitives: {}, _flowing: {}, profiler: null, sequencer: { stepThreads() {}, timer: { timeElapsed: () => 0 } },
      _step() { this.emit('BEFORE_EXECUTE'); pollHats(); },
-@@ -15988,7 +16200,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -15988,7 +16228,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    runtime.extensionManager = extensionManager;
    define(vm, {
      runtime, renderer, extensionManager, get editingTarget() { return runtime.getEditingTarget(); },
@@ -687,7 +732,42 @@ index 9a9e3b0..4ac13d9 100644
      postIOData() {}, greenFlag: () => runtime.greenFlag(), stopAll: () => runtime.stopAll(), start() {}, toJSON: () => '{}', securityManager: {},
      getPlaygroundData: () => ({ targets: runtime.targets, threads: [] }), addSprite: () => Promise.reject(new Error('Adding sprites from extensions is not supported in G-Warp yet')),
      get runtimeOptions() { return runtime.runtimeOptions; }
-@@ -16363,7 +16575,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+@@ -16157,19 +16397,24 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
+ 
+   /* ================= 7. running extension blocks ================= */
+   const own = (b, sel) => [...b.querySelectorAll(sel)].filter(x => x.closest('.scratch-block') === b);
+-  const extOf = b => b?.dataset?.extId || null;
++  /* v15.70.10 (Claude, speed, measured in the owner's 3D pen game): which extension a block belongs to, and where its inputs are, is looked
++     up once per block (until the code area changes). It was a search of the block's insides on every single run (pen draws thousands of
++     lines a frame). The values themselves are still read fresh every time. */
++  const extOf = b => { if (!b) return null; const v = b.__gwXid; return v !== undefined ? v : (b.__gwXid = (b.dataset && b.dataset.extId) || null); };
++  const argEls = b => { const ep = window.GW?.__wsEpoch; let c = b.__gwXA; if (c && c.ep === ep && ep != null) return c;
++    c = b.__gwXA = { ep, raw: null, fields: {}, a: own(b, '[data-ext-arg]').map(el => ({ el, name: el.dataset.extArg, slot: el.classList.contains('gw-input-slot'), sel: el.tagName === 'SELECT' })), s: own(b, '.gw-input-slot[data-ext-arg-name]').map(sl => ({ sl, name: sl.dataset.extArgName })) }; return c; };
+   function argValues(th, b, def) {
+-    const args = {};
+-    let fields = {}; try { fields = JSON.parse(b.dataset.extFields || '{}'); } catch {}
+-    Object.assign(args, fields);
+-    own(b, '[data-ext-arg]').forEach(el => {
+-      const name = el.dataset.extArg; if (!name) return;
+-      if (el.classList.contains('gw-input-slot')) { const n = window.GW9?.slotNode?.(el); let v = ''; if (n) { v = window.GW9.evalNode(th, n, 'value', b); } args[name] = v ?? ''; }
+-      else if (el.tagName === 'SELECT') args[name] = el.value;
++    const args = {}, C = argEls(b), raw = b.dataset.extFields || '{}';
++    if (raw !== C.raw) { C.raw = raw; try { C.fields = JSON.parse(raw); } catch { C.fields = {}; } }
++    Object.assign(args, C.fields);
++    for (const it of C.a) {
++      const name = it.name, el = it.el; if (!name) continue;
++      if (it.slot) { const n = window.GW9?.slotNode?.(el); let v = ''; if (n) { v = window.GW9.evalNode(th, n, 'value', b); } args[name] = v ?? ''; }
++      else if (it.sel) args[name] = el.value;
+       else args[name] = el.value ?? '';
+-    });
++    }
+     // inputs turned into reporter slots by the editor keep the name on the slot
+-    own(b, '.gw-input-slot[data-ext-arg-name]').forEach(sl => { const n = window.GW9?.slotNode?.(sl); if (n) args[sl.dataset.extArgName] = window.GW9.evalNode(th, n, 'value', b); });
++    for (const it of C.s) { const n = window.GW9?.slotNode?.(it.sl); if (n) args[it.name] = window.GW9.evalNode(th, n, 'value', b); }
+     const defs = def?.arguments || {};
+     Object.keys(defs).forEach(k => { if (!(k in args)) args[k] = defs[k]?.defaultValue ?? ''; });
+     Object.keys(defs).forEach(k => { const t = kind(defs[k]?.type); if (t === 'boolean' && typeof args[k] !== 'boolean') args[k] = Cast.toBoolean(args[k] === '' ? false : args[k]); });
+@@ -16363,7 +16608,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
      css(st) { const rgb = Color.hsvToRgb({ h: st.color * 360 / 100, s: st.saturation / 100, v: st.brightness / 100 }); return `rgba(${rgb.r},${rgb.g},${rgb.b},${1 - st.transparency / 100})`; },
      clear() { const c = this.canvas(), g = this.ctx(); if (g) g.clearRect(0, 0, c.width, c.height); },
      line(color4f, d, x0, y0, x1, y1) { const g = this.ctx(); if (!g) return; const c = color4f ? `rgba(${color4f[0] * 255},${color4f[1] * 255},${color4f[2] * 255},${color4f[3]})` : '#0000ff'; this.seg(g, c, d || 1, x0, y0, x1, y1); },
@@ -696,7 +776,7 @@ index 9a9e3b0..4ac13d9 100644
      follow(s) { const st = s.__pen; if (!st || !st.down) { if (st) { st.x = s.x; st.y = s.y; } return; } if (st.x === s.x && st.y === s.y) return; const g = this.ctx(); if (g) this.seg(g, this.css(st), st.size, st.x, st.y, s.x, s.y); st.x = s.x; st.y = s.y; },
      stamp(s) {
        const g = this.ctx(), c = s.costumes?.[s.activeCostume]; if (!g || !c?.canvas || !s.visible) return; GW.__penUsed = true; const cv = this.canvas(), kx = cv.width / 480;
-@@ -18029,6 +18241,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18029,6 +18274,49 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      });
      refreshAll(); toast(`Attached ${n} shape${n === 1 ? '' : 's'} to the nearest bones.`);
    }
@@ -746,7 +826,7 @@ index 9a9e3b0..4ac13d9 100644
    function deleteBone() {
      const id = st.bone; if (!id) return toast('Pick a bone first.'); snap();
      const gone = new Set([id]); let grew = true; while (grew) { grew = false; st.anim.bones.forEach(b => { if (b.parent && gone.has(b.parent) && !gone.has(b.id)) { gone.add(b.id); grew = true; } }); }
-@@ -18201,7 +18456,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -18201,7 +18489,7 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
          h('button', { type: 'button', class: 'gw18-x', 'aria-label': 'Close', html: '<i class="fa-solid fa-xmark"></i>', onclick: () => close() })),
        h('div', { class: 'gw18-body' },
          h('div', { class: 'gw18-tools' }, h('div', { class: 'gw18-small', text: 'Rig tools' }),
@@ -755,7 +835,7 @@ index 9a9e3b0..4ac13d9 100644
            h('hr'), btn(ic('fa-wand-magic-sparkles', 'Attach automatically'), () => autoAttach(), { id: 'gw18Auto' }), btn(ic('fa-trash', 'Delete bone'), () => deleteBone(), { id: 'gw18DelBone' }),
            h('p', { id: 'gw18Tip', class: 'gw18-tip' })),
          h('div', { id: 'gw18View', class: 'gw18-view' }),
-@@ -20532,20 +20787,25 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -20532,20 +20820,25 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
      { id: 'clones', name: 'Clone counter', text: 'Shows how many clones exist, next to the stage, while a project runs. Many clones can make a game slow.', def: true },
      { id: 'mute', name: 'Mute and project volume', text: 'Ctrl+click (⌘+click on Mac) the green flag to mute or unmute the project. Set the volume below.', def: true },
      { id: 'gamepad', name: 'Gamepad', text: 'Play with a game controller: left stick and d-pad = arrow keys, right stick = W A S D, A = space, B = X, X = Z, Y = C, Start = Enter.', def: false },
@@ -784,7 +864,7 @@ index 9a9e3b0..4ac13d9 100644
  
    /* ---------- 2. mute + volume (every sound goes through one volume knob) ---------- */
    let muted = false, volume = Math.max(0, Math.min(100, Number(store.get('gwarp-volume') ?? 100)));
-@@ -20611,8 +20871,109 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
+@@ -20611,8 +20904,109 @@ window.GW_FEATURE_OFF = k => { try { return localStorage.getItem('gwarp-off-' +
    }, true);
    window.GW_FIND = { open: findBar };
  
@@ -895,7 +975,15 @@ index 9a9e3b0..4ac13d9 100644
    function openAddons() {
      const rows = ADDONS.map(a => { const c = h('input', { type: 'checkbox', id: 'gw10Addon-' + a.id }); c.checked = on(a.id); c.addEventListener('change', () => setOn(a.id, c.checked)); return h('label', { class: 'gw9-adv-row', for: 'gw10Addon-' + a.id }, c, h('span', {}, h('b', { text: a.name }), h('small', { text: a.text }))); });
      const vol = h('input', { type: 'range', min: '0', max: '100', value: String(volume), id: 'gw10Volume', 'aria-label': 'Project volume' }); const vl = h('b', { text: `${volume}%` });
-@@ -24077,7 +24438,8 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -23954,6 +24348,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+   let toHat = new Map();      // hat/define block -> pole record
+   const heat = new WeakMap(); // block -> last fire time (kept across re-layouts)
+   function fired(b) {
++    const fa = window.GW?.__frameAt; if (fa && b.__gwPLf === fa) return; b.__gwPLf = fa; // v15.70.10: a block that runs 1,000 times in one frame lights its wire once, not 1,000 times
+     const now = performance.now(); heat.set(b, now); PL.stats.fires++;
+     const ws = fromBlock.get(b); if (!ws) return;
+     for (const w of ws) { w.hotAt = now; if (now - (w.sparkAt || 0) > 260) { w.sparkAt = now; spark(w, now); } if (w.to) { const p = toHat.get(w.to); if (p) p.hotAt = now; } }
+@@ -24077,17 +24472,22 @@ body.gw-calm .gw-pl-w .core{animation:none}
        try { const pt = s.w.core.getPointAtLength(s.len * f); s.c.setAttribute('cx', pt.x.toFixed(1)); s.c.setAttribute('cy', pt.y.toFixed(1)); } catch {}
      }
    }
@@ -905,7 +993,22 @@ index 9a9e3b0..4ac13d9 100644
    function loop(now) {
      requestAnimationFrame(loop);
      const e = E(), live = PL.on && !!e?.isRunning && visible();
-@@ -25054,7 +25416,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
+     if (!live) { if (PL.live || PL.wires.length || PL.poles.length) hide(); return; }
+     if (!PL.live) { PL.live = true; seen = new WeakSet(); (e.threads || []).forEach(t => seen.add(t)); by('workspace')?.classList.add('gw-pl-on'); last = 0; sig = ''; }
++    /* v15.70.10 (Claude, steady 30 FPS, measured in the owner's 3D game): when the project's scripts need most of the frame (over 10 ms),
++       the wires and sparks are refreshed 4 times a second instead of 60, and the wires are re-measured every 5 s instead of every half second. With a light project nothing changes. */
++    const busy = (window.GW?.__stepMs || 0) > 10; if (busy && now - lastBusy < 250) return; lastBusy = now;
+     const ep = window.GW?.__wsEpoch, z = window.GW_WSZOOM?.() || 1;
+-    if (now - last > 500 || ((ep !== lastEpoch || z !== lastZoom) && now - last > 120)) layout(now);
++    if (now - last > (busy ? 5000 : 500) || ((ep !== lastEpoch || z !== lastZoom) && now - last > 120)) layout(now);
+     scanThreads();
+     tick(now, false);
+   }
++  let lastBusy = 0;
+   // the very first scripts after Start: mark them as fired once the wires exist
+   document.addEventListener('click', ev => { if (!ev.target.closest?.('#greenFlagBtn')) return; setTimeout(() => { if (!PL.live) return; const th = E()?.threads || []; th.forEach(t => { const hat = t?.blocks?.[0]?.parentElement?.firstElementChild; if (hat && toHat.has(hat)) hatFired(hat); }); }, 140); }, true);
+ 
+@@ -25054,7 +25454,7 @@ body.gw-calm .gw-pl-w .core{animation:none}
    const by = id => document.getElementById(id);
    const css = document.createElement('style'); css.id = 'gw4950css';
    css.textContent = `#gw154StageFrame [data-var-monitor],#gw154StageFrame [data-list-monitor]{z-index:6!important}
@@ -914,7 +1017,7 @@ index 9a9e3b0..4ac13d9 100644
  .gw4950-menu{position:fixed;z-index:10050;min-width:150px;padding:4px;border:1px solid #2b2f55;border-radius:10px;background:#14162a;box-shadow:0 10px 30px rgba(0,0,0,.45)}
  .gw4950-menu button{display:flex;gap:8px;align-items:center;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:#e5e7eb;font-size:12px;font-weight:700;text-align:left;cursor:pointer}
  .gw4950-menu button:hover,.gw4950-menu button:focus-visible{background:#26294a;outline:none}`;
-@@ -25706,7 +26068,13 @@ body.gw-calm .gw-pl-w .core{animation:none}
+@@ -25706,7 +26106,13 @@ body.gw-calm .gw-pl-w .core{animation:none}
      wave: ['Wave', [[0, 2, 1], [1, 3, 1], [2, 4, 1], [3, 5, 1], [4, 4, 1], [5, 3, 1], [6, 2, 1], [7, 1, 1], [8, 2, 1], [9, 3, 1], [10, 4, 1], [11, 6, 1], [12, 5, 2], [14, 4, 2]]],
      lullaby: ['Lullaby', [[0, 4, 3], [3, 2, 1], [4, 3, 2], [6, 2, 2], [8, 1, 3], [11, 0, 1], [12, 0, 4]]],
      riff: ['Riff', [[0, 0, 1], [2, 0, 1], [3, 2, 1], [5, 3, 1], [6, 2, 2], [8, 0, 1], [10, 0, 1], [11, 5, 1], [13, 4, 1], [14, 2, 2]]],
@@ -929,7 +1032,26 @@ index 9a9e3b0..4ac13d9 100644
    };
    const by = id => document.getElementById(id);
    const st = { notes: new Map(), hold: false, loop: true, bpm: 112, timer: 0, playing: false, active: -1 };
-@@ -27132,7 +27500,25 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -26368,11 +26774,16 @@ body.gw8-running #workspaceCanvas .scratch-block.block-c-shape[data-gw-ai] > .bl
+   /* 22 Nov (Claude, speed): the fingerprint copies every script; it took up to 1 s every 1.5 s on big projects.
+      Now it is only taken after a click, a key, a change in the code area or a file action (or every 20 s). */
+   let touched = true, lastFull = 0;
+-  ['pointerup', 'keyup', 'input', 'change', 'drop'].forEach(t => addEventListener(t, () => { touched = true; }, true));
++  /* v15.70.10 (Claude, steady 30 FPS): playing a running project (keys, clicks on the stage) is not editing it. Before, every key press
++     while playing asked for the fingerprint again: a 180 ms freeze every 5 s on the owner's own project. Edits made while it runs still count. */
++  const editing = e => { const en = E(); if (!(en && en.isRunning)) return true; const t = e.target; return !!(t && t.closest && t.closest('#workspace, #paletteContainer, input, textarea, select, [contenteditable]')); };
++  let touchedRun = false;
++  ['pointerup', 'keyup', 'input', 'change', 'drop'].forEach(t => addEventListener(t, e => { if (editing(e)) { touched = true; if (E()?.isRunning) touchedRun = true; } }, true));
+   try { const wsx = by('workspaceCanvas'); if (wsx) new MutationObserver(() => { touched = true; }).observe(wsx, { childList: true, subtree: true }); } catch {}
+   setInterval(() => {
++    if (baseSig && E()?.isRunning && !touchedRun && performance.now() - lastFull < 60000) return; // while it runs: only after an edit made during the run
+     if (baseSig && !touched && performance.now() - lastFull < 20000) return;
+-    touched = false; lastFull = performance.now();
++    touched = false; touchedRun = false; lastFull = performance.now();
+     const s = signature(); if (!baseSig) { baseSig = s; return; }
+     const dirty = s !== baseSig;
+     if (dirty !== wasDirty) { wasDirty = dirty; try { window.gwApp?.setDirty?.(dirty); } catch {} }
+@@ -27132,7 +27543,25 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
   const MEL={ins:null};
   const BEATS={rock:[[0,0],[4,0],[8,0],[12,0],[2,1],[6,1],[10,1],[14,1],...[...Array(16).keys()].map(c=>[c,2])],
    pop:[[0,0],[5,0],[8,0],[2,1],[6,1],[10,1],[14,1],...[0,2,4,6,8,10,12,14].map(c=>[c,2]),[7,4],[15,4]],
@@ -956,7 +1078,7 @@ index 9a9e3b0..4ac13d9 100644
   const IS=()=>window.GW_INSTRUMENT_STUDIO,SA=()=>window.GW_SONG_ARRANGER,CM=()=>window.GW_CREATE_MELODY;const st={hold:true};
   const names=()=>{try{return (IS()?.instruments||[]).map(i=>i.name);}catch(e){return ['Piano'];}};
   const cur=()=>{try{return IS()?.currentInstrument?.()||'Piano';}catch(e){return 'Piano';}};
-@@ -27166,7 +27552,8 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -27166,7 +27595,8 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
    box.innerHTML=`<div class="gwcm-head"><div><div class="gwcm-title"><i class="fa-solid fa-${P.ic}" aria-hidden="true"></i> ${P.t}</div><div class="gwcm-sub">${k==='backing'?'Chords: up to 4 notes in one step.':k==='bass'?'One low note per step.':k==='drums'?'Tap the drum sounds. Or start from a beat.':'Short drum fills - they play where the Fills row is on in the Song maker.'}</div></div></div>
     <div class="gwcm-gridwrap"><div class="gwcm-grid" id="gwspG-${k}" role="grid" aria-label="${P.t} grid"></div></div>
     <div class="gwcm-row"><button type="button" class="gwcm-go" data-a="play"><i class="fa-solid fa-play" aria-hidden="true"></i> Play</button><button type="button" data-a="stop"><i class="fa-solid fa-stop" aria-hidden="true"></i> Stop</button>
@@ -966,7 +1088,7 @@ index 9a9e3b0..4ac13d9 100644
      <button type="button" data-a="clear"><i class="fa-solid fa-broom" aria-hidden="true"></i> Clear</button><button type="button" class="gwcm-use" data-a="use"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Use in Song maker</button><button type="button" id="gwspOff-${k}" data-a="off" title="The Song maker makes this part up again"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Back to made-up</button></div>
     <div class="gwcm-status" id="gwspS-${k}" role="status" aria-live="polite">Tap the squares.</div>`;
    if(!P.drum)box.querySelector('.gwcm-head').after(instPicker(k,()=>P.ins,v=>{P.ins=v.length?v:[cur()];}));
-@@ -27174,6 +27561,7 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
+@@ -27174,6 +27604,7 @@ let t=0;document.addEventListener('scroll',e=>{if(e.target&&e.target.id==='gwCos
     for(let c=0;c<COLS;c++){const b=document.createElement('button');b.type='button';b.className='gwcm-cell'+(c%8===0&&c?' bar':'')+(c%2===0?' beat':'');b.dataset.col=c;b.dataset.r=r;
      b.onclick=()=>{const M=P.notes,ch=M.get(c)||[];if(ch.includes(r)){const x=ch.filter(y=>y!==r);x.length?M.set(c,x):M.delete(c);}else if(P.max===1){M.set(c,[r]);tap(k,r);}else if(ch.length>=P.max){say(k,'Up to '+P.max+' notes in one step.');return;}else{M.set(c,ch.concat(r).sort((a,b)=>a-b));tap(k,r);}draw(k);};g.appendChild(b);}}
    box.addEventListener('click',e=>{const a=e.target.closest('[data-a]')?.dataset.a;if(a==='play')start(k);else if(a==='stop'){stopAll();say(k,'Stopped.');}else if(a==='clear'){P.notes.clear();draw(k);}else if(a==='use')use(k);else if(a==='off'){SA()?.setMyPart?.(k,null);draw(k);say(k,'The Song maker makes it up again.');}});
@@ -974,7 +1096,7 @@ index 9a9e3b0..4ac13d9 100644
    const bs=box.querySelector('[data-a="beat"]');if(bs)bs.onchange=e=>{const v=BEATS[e.target.value];if(!v)return;P.notes.clear();v.forEach(([c,r])=>P.notes.set(c,[...new Set((P.notes.get(c)||[]).concat(r))]));e.target.value='';draw(k);};
    setTimeout(()=>draw(k),0);return box;}
   function voice(){const box=document.createElement('div');box.className='gwsp2';box.id='gwspVoice';box.style.setProperty('--pc','#f43f5e');
-@@ -27749,7 +28137,9 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
+@@ -27749,7 +28180,9 @@ body.gwsp-adv #gwCreateMelody,body.gwsp-adv #gwspAll,body.gwsp-adv .gwsp2{displa
   const NAME={'Pen':'Pen','Music':'Music','Text to Speech':'TTS','Translate':'Translate','Makey Makey':'Makey','Camera Controls':'Camera','Box2D Physics':'Box2D','Animation':'Animation','HTTP':'HTTP'};
   const MINE=['Camera','Box2D','Animation','HTTP']; /* 9 Nov (owner): Pen, Music and Text to Speech cards add Scratch's full versions now (the old G-Warp Pen / Music / TTS blocks still run in old projects) */
   const GROUPS={Camera:{title:'Camera Controls',icon:'fa-video',color:'#0ea5e9',re:/^cam_/},Box2D:{title:'Box2D Physics',icon:'fa-cubes',color:'#f97316',re:/^phys_/}};
@@ -985,7 +1107,7 @@ index 9a9e3b0..4ac13d9 100644
   function groups(){const dock=by('dynamicAiExtensionDock'),src=by('sec-gw9-ext');if(!dock||!src)return;const pen=[...dock.children].find(x=>/G-Warp Pen/.test(x.textContent));
    for(const [k,G] of Object.entries(GROUPS)){let sec=by('gwx-'+k);const tpl=[...src.querySelectorAll(':scope > .scratch-block')].filter(b=>G.re.test(b.dataset.type||''));
     const want=on().includes(k)||tpl.some(b=>usedType(b.dataset.type));
-@@ -29123,6 +29513,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
+@@ -29123,6 +29556,47 @@ body.gwc-stage-sel #sec-motion > *:not(.gw9-cat-title):not(:first-child):not(#gw
  })();
  </script>
  <!-- 23 Nov (Claude, owner): the Turbo Player (top-bar 30/60 FPS button, a second run engine) was removed - not approved, it made projects lag or break. Turbo Mode stays in More (Scratch-style). -->
@@ -1087,6 +1209,43 @@ index 5b3b2c2..c31c4a6 100644
 +  window.GW_BIGMAP = { version: '1.2.0', open: open, close: close, pieces: pieces, layerScripts: layerScripts, worldScripts: worldScripts, stageScripts: stageScripts, add: add, examples: EXAMPLES, _aligned: aligned, _fixWidth: fixWidth, _hasMapDraw: hasMapDraw };
    window.GW_SB3_BLOCKS = { Blocks: Blocks, nid: nid, hex: hex };   /* shared with SVG 360 (turn code) */
  })();
+diff --git a/gw-run-throttle.js b/gw-run-throttle.js
+index 7f0d5fc..06990f6 100644
+--- a/gw-run-throttle.js
++++ b/gw-run-throttle.js
+@@ -20,12 +20,20 @@
+   const idle = () => window.GW_IDLE_THROTTLE !== false && performance.now() - lastInput > 2000;
+   const fromApp = () => { try { const st = String(new Error().stack || '').split('\n').slice(2).find(l => !/gw-run-throttle/.test(l)) || ''; return /app\.html|gw-perf\.js/.test(st); } catch (e) { return false; } };
+   const si = window.setInterval.bind(window);
++  /* v15.70.10 (Claude, steady 30 FPS, measured on the owner's own project): while a project runs every helper waited the same 5 s, so
++     they all woke in the same moment: a 180 ms freeze every 5 seconds. Now the helpers share a small allowance (BUDGET ms of work per
++     WINDOW ms); a helper that finds the allowance used up simply tries again at its next turn, so they come one after another.
++     To see which helpers are slow: window.GW_HELPER_LOG = []  (it then collects [ms, where it was made] for every helper over 8 ms). */
++  const WINDOW = 250, BUDGET = 5; let winAt = 0, used = 0;
++  const room = now => { if (now - winAt > WINDOW) { winAt = now; used = 0; } return used < BUDGET; };
++  const timed = (fn, self, args, where) => { const t = performance.now(); try { return fn.apply(self, args); } finally { const d = performance.now() - t; used += d; const L = window.GW_HELPER_LOG; if (d > 8 && Array.isArray(L) && L.length < 500) L.push([Math.round(d), where]); } };
++  const madeAt = () => { try { return (String(new Error().stack || '').split('\n').slice(2).find(l => !/gw-run-throttle/.test(l)) || '').trim().replace(/^at /, '').replace(/.*\//, '').slice(0, 60); } catch (e) { return ''; } };
+   window.setInterval = function (fn, ms, ...args) {
+     if (typeof fn !== 'function' || fn.gwRunCritical) return si(fn, ms, ...args);
+-    let last = 0, lastIdle = 0; const ui = (ms || 0) >= 300 && (ms || 0) <= 2000 && fromApp();
++    let last = 0, lastIdle = 0; const ui = (ms || 0) >= 300 && (ms || 0) <= 2000 && fromApp(), where = madeAt();
+     return si(function () {
+       const now = performance.now();
+-      if (running()) { if (now - last < Math.max(RUN_MS, ms || 0)) return; last = now; }
++      if (running()) { if (now - last < Math.max(RUN_MS, ms || 0)) return; if (!room(now)) return; last = now; return timed(fn, this, args, where); }
+       else if (ui && idle()) { if (now - lastIdle < IDLE_MS) return; lastIdle = now; }
+       return fn.apply(this, args);
+     }, ms);
+@@ -39,7 +47,8 @@
+         if (!running() || obs.__gwCrit) return cb.call(this, recs, obs);
+         queued.push(...recs); if (queued.length > 2000) queued = queued.slice(-2000);
+         if (pending) return;
+-        pending = setTimeout(() => { pending = null; const r = queued; queued = []; try { cb.call(obs, r, obs); } catch (e) { console.warn(e); } }, RUN_MS);
++        const fire = () => { if (running() && !room(performance.now())) { pending = setTimeout(fire, 120); return; } pending = null; const r = queued; queued = []; try { timed(cb, obs, [r, obs], 'observer'); } catch (e) { console.warn(e); } };
++        pending = setTimeout(fire, RUN_MS);
+       });
+     }
+     observe(target, opts) {               // libraries (JSZip, promises polyfills) use a detached node as a fast timer: never delay those
 diff --git a/gw-svg360.js b/gw-svg360.js
 index e239e5b..51c3e79 100644
 --- a/gw-svg360.js

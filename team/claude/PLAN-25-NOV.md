@@ -97,3 +97,12 @@ R7 ~16:10  Final report to the owner: what changed today, measured results, what
 ## Round 7 (16:12): final report sent. PC still offline -> letter h NOT shipped. Schedule finished; no more rounds unless the owner asks.
 
 ## 22:20 owner said CONTINUE: PC back online, v15.70.9 shipped as v15.69.0h (STATE letter h). Next letter i. Next job: speed (compile scripts to closures).
+
+## State 23:20 (after the owner's CONTINUE)
+- rel = v15.70.10, PC = v15.69.0i (STATE letter i; next j). PC ships now cover 4 files: app.html, gw-svg360.js, gw-bigmap.js, gw-run-throttle.js.
+- The owner's own big project is at /home/claude/priv/gh.sb3 (staged from his G-Warp Desktop folder). PRIVATE: never commit it, never copy it elsewhere.
+  Real benchmark: cd /home/claude/ref && TAPS=8 node fps.js /home/claude/priv/gh.sb3 12000  (TAPS=1 = story screen, TAPS=8 = 3D gameplay).
+  Now: story 30.1 vs 30.4; gameplay 24-26 vs 30.4; script 15 ms vs 6 ms.
+- Tools in gwt: gwfps.js (steps/s with a js toggle), trace.js (main-thread split), layers.js (compositor layers + reasons), longtasks.js, play.js, prof_run.js.
+- New referee project stop.sb3 (17/17): add to the diff list.
+- NEXT: compile scripts to closures (gameplay gap), then the open Scratch items (timer hat, loudness), then PenguinMod.

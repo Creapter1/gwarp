@@ -1,5 +1,5 @@
 v15.70.1 (Claude Fable, 25 Nov 2026) - built on release-v15.66.0 (v15.69.0). NOT on main, NOT yet on the release branch.
-File: app-v15.69.0-to-v15.70.9.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
+File: app-v15.69.0-to-v15.70.10.patch  (apply on the release branch: git apply <file>; undo: git apply -R <file>)
 
 WHAT CHANGED (app.html only, 4 small edits + 1 new module "gw-v1570-smooth")
 1. S4 Smooth motion (TurboWarp "interpolation"). Drawing only: scripts step exactly as before; on screen frames between
@@ -139,3 +139,21 @@ The owner changed the order at 15:12: beat Scratch first (speed, loading, steady
    bench: count .07 s, maths .13, lists .11, if .18, pen .11, text .09 (Scratch: .04 .05 .03 .04 .03 .02); plain loop 0.86 M vs 3.4 M
 NEXT (to really beat Scratch on speed): compile each script once into JS closures (rebuilt when GW.__wsEpoch changes), keeping the same block functions.
    The interpreter is now ~0.8 us per block against Scratch's ~0.3; the rest is spread thin (DOM reads for menus/inputs, 2 evalNode wrappers per reporter, step() overhead).
+
+v15.70.10 (Claude Fable, 25 Nov 2026 night) - on the owner's PC as v15.69.0i. Patch now covers 4 files (+ gw-run-throttle.js).
+Tested with one of the owner's OWN big projects (private, NOT in this repo: 5,529 blocks, 456 costumes, 194 variables, pen 3D raycaster, all My Blocks warp)
+side by side with real Scratch (tests/scratch-referee/fps.js: same fake player, steps per second + script ms per step).
+RESULT (steps/s, Scratch = 30.4): story screens 17.7 -> 30.1; 3D gameplay 13 -> 24-26. Script time in gameplay 27 ms -> 15 ms per step (Scratch 6-7 ms).
+1. SCRATCH BUG: "stop [this script]" inside a My Block ended the whole thread. Now it pops the call stack to the innermost 'custom' frame (runOne). stop.sb3 17/17.
+2. LAYERS: .scratch-block.block-c-shape{filter:drop-shadow} made every C-block a compositing layer (1,047 layers, Layerize 30 ms per frame; tools: layers.js, trace.js).
+   body.gw8-running .scratch-block.block-c-shape{filter:none}. The editor when stopped still has the layers: a non-filter shadow would fix scrolling/dragging too (look change -> owner decides).
+3. FREEZES while running (longtasks.js): unsaved-check fingerprint on every key press (now only edits count); GW9.refreshAST on every pointerup, also on stage
+   clicks (now skipped for clicks on the stage); undo snapshot scheduled by machine mutations (GW8.scheduleHistory now waits for Stop unless the code
+   area was touched in the last 2 s; undo still flushes first); ~100 helpers waking together every 5 s (gw-run-throttle.js: shared 5 ms per 250 ms allowance;
+   window.GW_HELPER_LOG = [] lists slow helpers with where they were made).
+4. SPEED: GW.__menuValue(select) caches a block menu's value (select.value is O(options): 194 variables!), invalidated by change/input events, by a value
+   setter hook on that element, and by the block cache rebuild on GW.__wsEpoch. Used by __fastVar and __fastList. Kill switch window.GW_MENU_CACHE = false.
+   Extension blocks (pen): argEls(b) caches the input elements per block; extOf cached. Power lines: 4 Hz under load (GW.__stepMs > 10), one "fired" per block per frame.
+5. Stage size note hidden while running (it covered the project's bottom-right corner on hover).
+STILL OPEN: 3D gameplay scripts 15 ms vs Scratch 6 ms -> compile scripts to closures. Start-of-run hitch: refreshAST on the flag click (0.25 s) + one big repaint.
+   Helpers over 30 ms on a big project (GW_HELPER_LOG): app.html ~22811 refreshMenus (54 ms), ~28657, ~28540, ~9731 (33 ms each), ~27980.

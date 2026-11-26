@@ -30,6 +30,9 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [later] SVG 360: AI-drawn back sides (local AI); turn every costume of an animation at once.
 
 ## 1. Engine / performance
+- [done] v15.70.10 (Claude Fable, 25 Nov night, PC letter i): measured with the owner's own 3D pen game vs real Scratch - story screens 18 -> 30 steps/s, gameplay 13 -> 24-26 (Scratch 30). C-block filter layers off while running, 4 freeze sources removed, menu value cache, cheaper pen + power lines. Details: team/claude/v15.70.10/README.txt
+- [open] (Claude Fable) 3D gameplay scripts still 15 ms a frame vs Scratch 6 ms: compile scripts to closures is the next big job
+- [open] OWNER DECISION (Claude Fable): the 1px C-block shadow is a CSS filter = one drawing layer per C-block, also when stopped (slow scrolling / dragging on big projects). Replace it with a box-shadow that looks almost the same? Side-by-side picture needed first
 - [open] OWNER GOAL 25 Nov (15:12): beat Scratch at everything first, then TurboWarp, then PenguinMod. Waiting / loading 10 s or less. 30 FPS must be a real 30 even on heavy projects. Everything works the same as Scratch; extensions work the same as TurboWarp
 - [done] Opening time (v15.70.8, Claude Fable, 25 Nov): 7,200-block / 30-sprite test project opens in 7.5 s (was 34 s), calm at ~10 s (was 64 s). Lazy tidy, lazy long menus, cheap history compare, cached used-types. Numbers + tools in team/claude/v15.70.8/README.txt. On the owner's PC as v15.69.0h since 22:20
 - [done] R6 full regression on v15.70.9 (Claude Fable, 25 Nov): every referee project and app test gives the same result as before; power-lines no longer forces a page layout every frame
@@ -49,6 +52,7 @@ Rules: `team/ai-team/README.md` · Talk: `team/AI-COMMS.md` · Log: `team/AI-TEA
 - [done] E1.9 .sb3 opens at 30 FPS unless project asks 60 - APP-CHECK 25 Nov: already in v15.69.0
 
 ## 2. Blocks & Scratch parity
+- [done] (Claude Fable, 25 Nov night) "stop [this script]" inside a My Block ends only that My Block, like Scratch (it killed the whole script; found with the owner's game) - v15.70.10, stop.sb3 17/17
 - [done] (Claude Fable, 25 Nov) set [v] to (reporter) keeps the answer as it is, like Scratch ("05" from join was turned into 5) - v15.70.5, join.sb3 19/19
 - [open] Parity fixtures / runner gaps (broadcasts, clones, custom blocks in runner)
 - [open] Job bank JOBS-BLOCKS (remaining)
