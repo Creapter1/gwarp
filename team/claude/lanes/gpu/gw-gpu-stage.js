@@ -1,4 +1,4 @@
-/* G-Warp GPU stage (lane B), version 0.1.1 — own code.
+/* G-Warp GPU stage (lane B), version 0.1.2 — own code.
    Draws backdrop colour/image, pen layer, and sprites (costume, rotation centre, rotation style,
    size, ghost, colour, brightness, whirl, fisheye, pixelate, mosaic) with WebGL, in the order given.
    Costume pictures are uploaded once and kept in video memory (WeakMap per canvas).
@@ -32,7 +32,13 @@ void main(){
   rgb=hsv2rgb(fract(h+uColor),s,v);}
  rgb=clamp(rgb+uBright,0.0,1.0);
  float a=c.a*uAlpha;gl_FragColor=vec4(rgb*a,a);}`;
+  // Batch program: sprites with no effects that share one costume go out in one draw call.
+  const VSB = `attribute vec2 aXY,aUv;attribute float aA;varying vec2 vUv;varying float vA;
+void main(){vUv=aUv;vA=aA;gl_Position=vec4(aXY.x/240.0-1.0,1.0-aXY.y/180.0,0.0,1.0);}`;
+  const FSB = `precision highp float;varying vec2 vUv;varying float vA;uniform sampler2D uT;
+void main(){vec4 c=texture2D(uT,vUv);if(c.a<=0.0)discard;gl_FragColor=c*vA;}`;
   const DEG = Math.PI / 180;
+  const plain = f => !f || !(Math.round(num(f.color)) || Math.round(num(f.brightness)) || Math.round(num(f.whirl)) || Math.round(num(f.fisheye)) || Math.round(num(f.pixelate)) || Math.round(num(f.mosaic)));
   const num = v => Number(v) || 0;
   function parseColor(css) {
     const c = document.createElement('canvas').getContext('2d'); c.fillStyle = '#fff'; c.fillStyle = css || '#fff';
@@ -57,6 +63,10 @@ void main(){
     const sh = (t, src) => { const s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
     const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(pr);
     if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
+    const pb = gl.createProgram(); gl.attachShader(pb, sh(gl.VERTEX_SHADER, VSB)); gl.attachShader(pb, sh(gl.FRAGMENT_SHADER, FSB)); gl.linkProgram(pb);
+    const bA = { xy: gl.getAttribLocation(pb, 'aXY'), uv: gl.getAttribLocation(pb, 'aUv'), a: gl.getAttribLocation(pb, 'aA') };
+    const bbuf = gl.createBuffer(); let bdata = new Float32Array(6 * 5 * 64), bn = 0;
+    gl.useProgram(pb); gl.uniform1i(gl.getUniformLocation(pb, 'uT'), 0);
     gl.useProgram(pr);
     const U = {}; ['uM', 'uT', 'uAlpha', 'uColor', 'uBright', 'uWhirl', 'uFish', 'uMos', 'uPix', 'uFill', 'uUseFill'].forEach(n => U[n] = gl.getUniformLocation(pr, n));
     const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]), gl.STATIC_DRAW);
@@ -75,6 +85,24 @@ void main(){
       e.w = src.width; e.h = src.height; return e.t;
     }
     let view = null, lastFx = null, lastA = null, lastT = null;
+    const CORN = [0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1];
+    function batchAdd(m, a) {
+      if (view) m = mul(view, m);
+      if ((bn + 6) * 5 > bdata.length) { const d = new Float32Array(bdata.length * 2); d.set(bdata); bdata = d; }
+      for (let i = 0; i < 12; i += 2) { const u = CORN[i], v = CORN[i + 1], k = bn * 5;
+        bdata[k] = m[0] * u + m[2] * v + m[4]; bdata[k + 1] = m[1] * u + m[3] * v + m[5]; bdata[k + 2] = u; bdata[k + 3] = v; bdata[k + 4] = a; bn++; }
+    }
+    function flush() {
+      if (!bn) return;
+      gl.useProgram(pb); gl.bindBuffer(gl.ARRAY_BUFFER, bbuf); gl.bufferData(gl.ARRAY_BUFFER, bdata.subarray(0, bn * 5), gl.STREAM_DRAW);
+      gl.disableVertexAttribArray(aP);
+      gl.enableVertexAttribArray(bA.xy); gl.vertexAttribPointer(bA.xy, 2, gl.FLOAT, false, 20, 0);
+      gl.enableVertexAttribArray(bA.uv); gl.vertexAttribPointer(bA.uv, 2, gl.FLOAT, false, 20, 8);
+      gl.enableVertexAttribArray(bA.a); gl.vertexAttribPointer(bA.a, 1, gl.FLOAT, false, 20, 16);
+      gl.drawArrays(gl.TRIANGLES, 0, bn); bn = 0;
+      gl.disableVertexAttribArray(bA.xy); gl.disableVertexAttribArray(bA.uv); gl.disableVertexAttribArray(bA.a);
+      gl.useProgram(pr); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.enableVertexAttribArray(aP); gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+    }
     gl.uniform1f(U.uUseFill, 0);
     function quad(m, alpha, fx, pixUnits) {
       if (view) m = mul(view, m);
@@ -105,11 +133,12 @@ void main(){
         for (const s of f.sprites || []) {
           if (!s.canvas || s.visible === false) continue;
           const a = Math.max(0, 1 - num(s.ghost) / 100); if (a <= 0) continue;
-          const t = texFor(s.canvas); if (t !== lastT) { gl.bindTexture(gl.TEXTURE_2D, t); lastT = t; }
+          const t = texFor(s.canvas); if (t !== lastT) { flush(); gl.bindTexture(gl.TEXTURE_2D, t); lastT = t; }
           const b = s.box || { w: 80, h: 80 };
-          quad(spriteMatrix(s), a, s.effects, [b.w, b.h]);
+          if (plain(s.effects)) batchAdd(spriteMatrix(s), a);
+          else { flush(); quad(spriteMatrix(s), a, s.effects, [b.w, b.h]); }
         }
-        view = null;
+        flush(); view = null;
       },
       readPixels() {
         const w = canvas.width, h = canvas.height, d = new Uint8Array(w * h * 4); gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, d);
@@ -130,5 +159,5 @@ void main(){
     }
     return { bg: (bd && bd.color) || '#fff', sprites, pen };
   }
-  root.GWGpuStage = { version: '0.1.1', create, frameFromEngine, spriteMatrix };
+  root.GWGpuStage = { version: '0.1.2', create, frameFromEngine, spriteMatrix };
 })(typeof window !== 'undefined' ? window : globalThis);
