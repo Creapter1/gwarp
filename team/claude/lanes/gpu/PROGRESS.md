@@ -18,6 +18,9 @@ Batching: sprites with no effects that share a costume go out in one draw call (
 ## Run 5 (26 Nov 20:41 UTC)
 Re-ran pixel test on v0.1.2: 16/16 PASS. Lane C's tests folder has .sb3 projects but no image runner yet, so the Scratch-referee pixel check (Next 1) is still blocked; no code change this run.
 
+## Run 6 (26 Nov 22:42 UTC)
+Re-ran pixel test on v0.1.2: 16/16 PASS. Lane C still has no image runner (only .sb3 files), so Next 1 stays blocked; no code change.
+
 ## How it would plug in (not READY yet)
 WebGL and 2D cannot share one canvas: put a GL canvas under #stageCanvas, same size; each frame `gpu.draw(GWGpuStage.frameFromEngine(GW, Engine, penCanvas))` (+ `view` from the camera), and the 2D canvas only draws bubbles. `penDirty:false` when the pen did not change saves the upload.
 
