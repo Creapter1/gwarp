@@ -28,6 +28,7 @@ Every run updates it before it ends. Times are US Eastern.
    c. Then ON by default with an off switch for one release, then remove the old way (one engine).
    d. Small speed fix found on the way, ready in the experiment's patch (the `geo` / `pointAt` part): the Power lines sparks asked the browser for the wire length and point on every frame (9% of all work while the owner's game ran). Same look. It must pass the full test list and a look at the sparks (screenshot of the code area while the game runs) before it goes to the PC; ship it with the next PC build. Off switch: `window.GW_PL_GEO = false`.
    e. Seen in the same profile, not started: `querySelectorAll` takes 6% while the game runs (Power lines `layout2`, and `refresh` near line 27320). Find out who asks and cache it.
+4x. After step 2 and before step 3 (owner, 26 Nov 09:02, OWNER-PRIORITY.md): **GPU stage** (the stage drawn on the graphics card, 2D canvas as fallback, pixel-checked against the referee).
 5. Step 3: only the open sprite's blocks on the page. First its left-overs from 1b:
    - Find (`gw10-find-hit`, about line 21000) and the AI report (`scriptsText`, about line 21380) read the Book. Both also match the text of round blocks inside slots, so write a parity test first (same hits as today on the zoo).
    - Opening a Scratch file fills the Book first (the importer builds page pieces today, about line 13017). The "49 empty script boxes" of the owner's game were a mistake: they are 49 comment boxes.
