@@ -318,6 +318,7 @@
     + '.gwbm-view canvas:active{cursor:grabbing}.gwbm-hint{color:#8e93b5;font-size:12px;max-width:480px}.gwbm-cam{color:#c9cce6;font-variant-numeric:tabular-nums}'
     + '.gwbm-side{border-left:1px solid #2a2450;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}'
     + '.gwbm-people{display:flex;flex-direction:column;gap:4px}.gwbm-who{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'
+    + '.gwbm-steps{display:flex;flex-wrap:wrap;gap:6px}.gwbm-steps span{padding:3px 9px;border-radius:999px;background:#12261b;border:1px solid #1f6f3f;color:#d7f5e1;font-size:12px;white-space:pre}'
     + '.gwbm-sec{color:#86efac;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-top:2px}'
     + '.gwbm-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.gwbm-row label{color:#c9cce6}'
     + '.gwbm input[type=number]{width:62px;background:#0b0e1c;color:#fff;border:1px solid #2f3456;border-radius:6px;padding:2px 4px}'
@@ -352,6 +353,24 @@
     var SRC = sources(), byKey = {}; SRC.forEach(function (s) { byKey[s.key] = s; });
     var layers = [{ key: 'ex:Mountains', kind: 'side', speed: 0.2, y: 20, speedY: 0.25 }, { key: 'ex:Clouds', kind: 'side', speed: 0.4, y: 110, speedY: 0.5 }, { key: 'ex:City', kind: 'side', speed: 0.7, y: -36, speedY: 0.7 }, { key: 'ex:Ground', kind: 'side', speed: 1, y: -180, speedY: 1 }];
     if (first && byKey[first]) layers = [{ key: first, kind: bigEnough(byKey[first].svg) ? 'giant' : 'side', speed: 1, y: 0, speedY: 1 }];
+    /* 1.2.0 (Claude, 25 Nov, owner: "samples must match what the user made"): when the project already has its own pictures
+       (a drawn backdrop, a wide scenery costume) Big map starts with THOSE, back to front, instead of the example city. */
+    var mine = [];
+    if (!(first && byKey[first])) {
+      SRC.forEach(function (o) {
+        if (o.group === 'Examples' || mine.length >= 4) return;
+        var d; try { d = new DOMParser().parseFromString(o.svg, 'image/svg+xml').documentElement; } catch (e) { return; }
+        var vb = (d.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number), w = parseFloat(d.getAttribute('width')) || vb[2] || 0, h = parseFloat(d.getAttribute('height')) || vb[3] || 0;
+        var shapes = d.querySelectorAll('path,rect,circle,ellipse,polygon,polyline,line,text,image').length;
+        if (o.group === 'Backdrops' ? shapes >= 2 : (w >= 400 && shapes >= 1)) mine.push({ o: o, w: w, h: h });
+      });
+      if (mine.length) layers = mine.map(function (m, i) {
+        var sp = mine.length === 1 ? 1 : Math.round((0.2 + 0.8 * i / (mine.length - 1)) * 10) / 10, giant = bigEnough(m.o.svg);
+        return { key: m.o.key, kind: giant ? 'giant' : 'side', speed: sp, speedY: sp, y: (!giant && m.h && m.h < 300) ? Math.round(-180 + m.h / 2) : 0 };
+      });
+    }
+    var startNote = mine.length ? 'Started with your own picture' + (mine.length > 1 ? 's' : '') + ': ' + mine.map(function (m) { return m.o.name; }).join(', ') + '. The example pictures are in each layer\'s picture menu.'
+      : (first && byKey[first]) ? '' : 'These are example pictures. Draw a backdrop, or a scenery costume 400 or more wide, and Big map starts with your own.';
     var st = { camX: 0, camY: 0, W: 4800, camera: true, fly: false, follow: 0.2, keys: true };
     var PE = (window.Engine && Engine.sprites || []).map(function (sp, i) { return { index: i, sp: sp, role: '' }; })
       .filter(function (o) { var sp = o.sp; return sp && !sp.isClone && !sp.stageProxy && !sp.__gwBigmap && !/^(Map: |Camera \(test\))/.test(sp.name || ''); });
@@ -495,6 +514,8 @@
       el('div', { class: 'gwbm-view' }, [cv, el('div', { class: 'gwbm-row' }, [flyBtn, resetBtn, camLbl]),
         el('div', { class: 'gwbm-hint', text: 'Drag the picture to move the camera. Back layers move slower than front layers: that is the parallax. The world repeats: keep flying and you come back where you started.' })]),
       el('div', { class: 'gwbm-side' }, [
+        el('div', { class: 'gwbm-steps' }, [el('span', { text: '1  Pick a picture for each layer' }), el('span', { text: '2  Drag the preview or press Fly' }), el('span', { text: '3  Add to project' })]),
+        startNote ? el('div', { class: 'gwbm-hint', id: 'gwbmStartNote', text: startNote }) : null,
         el('div', { class: 'gwbm-sec', text: 'World' }),
         el('div', { class: 'gwbm-row' }, [el('label', { text: 'World width' }), widthIn, fixBtn]), warn,
         el('div', { class: 'gwbm-row' }, [camChk, el('label', { for: 'gwbmCam', text: 'Add a test camera (arrow keys)' })]),
@@ -551,6 +572,6 @@
   (function boot(n) { if (!entry() && n < 120) setTimeout(function () { boot(n + 1); }, 500); })(0);
   window.addEventListener('gwarp-devmode', function () { entry(); });
 
-  window.GW_BIGMAP = { version: '1.1.0', open: open, close: close, pieces: pieces, layerScripts: layerScripts, worldScripts: worldScripts, stageScripts: stageScripts, add: add, examples: EXAMPLES, _aligned: aligned, _fixWidth: fixWidth, _hasMapDraw: hasMapDraw };
+  window.GW_BIGMAP = { version: '1.2.0', open: open, close: close, pieces: pieces, layerScripts: layerScripts, worldScripts: worldScripts, stageScripts: stageScripts, add: add, examples: EXAMPLES, _aligned: aligned, _fixWidth: fixWidth, _hasMapDraw: hasMapDraw };
   window.GW_SB3_BLOCKS = { Blocks: Blocks, nid: nid, hex: hex };   /* shared with SVG 360 (turn code) */
 })();

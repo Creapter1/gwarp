@@ -214,6 +214,31 @@
     var pad = 2 + 0.02 * Math.max(meta.all.x1 - meta.all.x0, meta.all.y1 - meta.all.y0), box = centredBox(views[0].cx, views[0].cy, all, pad);
     return views.map(function (sol) { return write(svgText, meta, sol, box); });
   }
+  /* 1.2.0 (Claude, 25 Nov, owner: "the default sample must match what the user made, like a stickman"):
+     guess depths and part names from the drawing itself. The body is the shape that touches the most other shapes. Parts that stick
+     out of it (head, arms, legs) stay in the body's plane, so they stay joined when the picture turns; parts that sit on the body
+     (a face, a logo, a belt) go in front if drawn after it, behind if drawn before it. */
+  function guess(meta, gap) {
+    var B = meta.boxes, n = B.length, i, j; gap = gap == null ? 6 : +gap;
+    var area = function (b) { return b ? Math.max(1, b.x1 - b.x0) * Math.max(1, b.y1 - b.y0) : 0; };
+    var touch = function (a, b) { return a && b && a.x0 - 2 <= b.x1 && b.x0 - 2 <= a.x1 && a.y0 - 2 <= b.y1 && b.y0 - 2 <= a.y1; };
+    var main = -1, best = -1;
+    for (i = 0; i < n; i++) { if (!B[i]) continue; var t = 0; for (j = 0; j < n; j++) if (j !== i && touch(B[i], B[j])) t++; var score = t * 1e9 + area(B[i]); if (score > best) { best = score; main = i; } }
+    var z = [], labels = [], used = {}, front = 0, backN = 0, M = B[main];
+    var name = function (base) { used[base] = (used[base] || 0) + 1; return used[base] > 1 ? base + ' ' + used[base] : base; };
+    for (i = 0; i < n; i++) {
+      var b = B[i]; if (!b || !M) { z.push(0); labels.push(''); continue; }
+      if (i === main) { z.push(0); labels.push(name('body')); continue; }
+      var ix = Math.max(0, Math.min(b.x1, M.x1) - Math.max(b.x0, M.x0)), iy = Math.max(0, Math.min(b.y1, M.y1) - Math.max(b.y0, M.y0)), ov = ix * iy / area(b);
+      var cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2, mx = (M.x0 + M.x1) / 2, mw = Math.max(1, M.x1 - M.x0, (meta.all.x1 - meta.all.x0) / 4), mh = Math.max(1, M.y1 - M.y0);
+      if (ov >= 0.6) { if (i > main) { front++; z.push(gap * front); labels.push(name('front detail')); } else { backN++; z.push(-gap * backN); labels.push(name('back part')); } continue; }
+      z.push((i - main) * 0.01);
+      if (cy < M.y0 + mh * 0.15 && Math.abs(cx - mx) < mw * 0.6) labels.push(name(b.y1 < M.y0 - mh * 0.5 ? 'hat' : 'head'));
+      else labels.push(name((cx < mx ? 'left ' : 'right ') + (b.y0 < M.y0 + mh * 0.6 ? 'arm' : 'leg')));
+    }
+    return { main: main, z: z, labels: labels };
+  }
+  function unnamed(meta) { return meta.names.every(function (nm) { return /^[a-zA-Z]+ \d+$/.test(nm); }); }   /* nobody named the layers: a plain drawing */
   function layers(svgText) { var m = measure(svgText); return m.names.map(function (n, i) { return { name: n, visible: !!m.boxes[i] }; }); }
 
   /* ---------- the window (Costumes tab: right-click a vector costume > SVG 360...) ---------- */
@@ -233,6 +258,7 @@
     + '.gw360-stage{height:340px;border-radius:10px;background:repeating-conic-gradient(#1a1f36 0 25%,#151a2e 0 50%) 0 0/24px 24px;border:1px solid #2a2f4d;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;overflow:hidden}'
     + '.gw360-stage:active{cursor:grabbing}.gw360-stage img{width:86%;height:86%;object-fit:contain;pointer-events:none;user-select:none}'
     + '.gw360-hint{color:#8e93b5;font-size:12px}'
+    + '.gw360-steps{display:flex;flex-wrap:wrap;gap:6px}.gw360-steps span{padding:3px 9px;border-radius:999px;background:#1d1838;border:1px solid #3b3270;color:#d7d9ee;font-size:12px;white-space:pre}.gw360 button.small{padding:3px 8px;font-size:12px}'
     + '.gw360-side{border-left:1px solid #2a2450;padding:12px;display:flex;flex-direction:column;gap:8px}'
     + '.gw360-row{display:grid;grid-template-columns:78px 1fr 46px;align-items:center;gap:6px}'
     + '.gw360-row label{color:#c9cce6}.gw360-row input[type=range]{width:100%;accent-color:#8b5cf6}'
@@ -264,6 +290,9 @@
     var src = c.svg, meta;
     try { meta = prep(src); } catch (e) { toast(e.message || 'This costume could not be turned.'); return false; }
     var st = { rx: 0, ry: 30, rz: 0, depth: 6, thickness: 6, light: 60, back: 'darker', layers: meta.names.map(function () { return {}; }) };
+    var G = guess(meta, 6), plain = unnamed(meta) && meta.names.length > 1, shown = meta.names.map(function (nm, i) { return plain && G.labels[i] ? G.labels[i] : nm; });
+    function useGuess() { var g = guess(meta, st.depth); st.layers.forEach(function (p, i) { p.z = g.z[i]; }); }
+    if (plain) useGuess();
     var img = el('img', { alt: 'SVG 360 preview' }), stage = el('div', { class: 'gw360-stage', title: 'Drag to turn it' }, [img]);
     var err = el('div', { class: 'gw360-err' });
     function opts() { var L = st.layers.map(function (p) { return { z: p.z, t: p.t, hide: p.hide, tx: p.tx, ty: p.ty }; }); return { meta: meta, rx: st.rx, ry: st.ry, rz: st.rz, depth: st.depth, thickness: st.thickness, light: st.light / 100, back: st.back, layers: L }; }
@@ -296,7 +325,7 @@
         tx.addEventListener('change', function () { p.tx = +tx.value || 0; redraw(); });
         var ty = el('input', { type: 'number', step: 5, value: p.ty || 0, title: 'Tilt this layer on its own (Y)', 'aria-label': nm + ' tilt Y' });
         ty.addEventListener('change', function () { p.ty = +ty.value || 0; redraw(); });
-        layerBox.appendChild(el('div', { class: 'gw360-layer' }, [vis, el('span', { text: nm, title: nm }), z, t, tx, ty]));
+        layerBox.appendChild(el('div', { class: 'gw360-layer' }, [vis, el('span', { text: shown[i], title: shown[i] === nm ? nm : shown[i] + ' (' + nm + ')' }), z, t, tx, ty]));
       });
     }
     var depthRow = slider('depth', 'Layer gap', 0, 60), thickRow = slider('thickness', 'Thickness', 0, 60);
@@ -343,20 +372,28 @@
         });
       } catch (e) { busy(false); err.textContent = e.message; }
     });
-    resetBtn.addEventListener('click', function () { inputs.rx(0); inputs.ry(30); inputs.rz(0); inputs.depth(6); inputs.thickness(6); inputs.light(60); st.layers = meta.names.map(function () { return {}; }); layerRows(); redraw(); });
+    resetBtn.addEventListener('click', function () { inputs.rx(0); inputs.ry(30); inputs.rz(0); inputs.depth(6); inputs.thickness(6); inputs.light(60); st.layers = meta.names.map(function () { return {}; }); if (plain) useGuess(); layerRows(); redraw(); });
     closeBtn.addEventListener('click', close);
     /* drag the picture to turn it */
     var drag = null;
     stage.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, rx: st.rx, ry: st.ry }; try { stage.setPointerCapture(e.pointerId); } catch (x) {} });
     stage.addEventListener('pointermove', function (e) { if (!drag) return; var wrap = function (v) { v = ((v + 180) % 360 + 360) % 360 - 180; return Math.round(v); }; inputs.ry(wrap(drag.ry + (e.clientX - drag.x) * 0.6)); inputs.rx(wrap(drag.rx - (e.clientY - drag.y) * 0.6)); });
     stage.addEventListener('pointerup', function () { drag = null; }); stage.addEventListener('pointercancel', function () { drag = null; });
+    var views = el('div', { class: 'gw360-btns' }, [['Front', 0, 0], ['3/4', 0, 30], ['Side', 0, 80], ['Back', 0, 180], ['From above', 50, 0]].map(function (v) {
+      var b = el('button', { type: 'button', class: 'small', text: v[0], title: 'Look at it from here' }); b.addEventListener('click', function () { inputs.rx(v[1]); inputs.ry(v[2]); inputs.rz(0); }); return b; }));
+    var guessBtn = el('button', { type: 'button', class: 'small', text: 'Guess depths', title: 'Work out the depths from your drawing: parts that touch the body stay joined, things drawn on the body go in front' });
+    var evenBtn = el('button', { type: 'button', class: 'small', text: 'Even depths', title: 'Every layer one step in front of the one before it (a paper cut-out look)' });
+    guessBtn.addEventListener('click', function () { useGuess(); layerRows(); redraw(); });
+    evenBtn.addEventListener('click', function () { st.layers.forEach(function (p) { delete p.z; }); layerRows(); redraw(); });
+    var tip = meta.names.length < 2 ? 'This drawing is one single shape, so it turns like a flat card. Draw the parts as separate shapes to give it depth.'
+      : plain ? 'The depths were guessed from your drawing: parts that touch the body stay joined when it turns. Change any number under Layers.' : 'Each layer of your drawing stays its own layer.';
     var box = el('div', { class: 'gw360', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'SVG 360' }, [
       el('h2', {}, [el('b', { text: '3D' }), document.createTextNode('SVG 360 - ' + c.name), el('small', { text: 'Developer preview' })]),
-      el('div', { class: 'gw360-view' }, [stage, el('div', { class: 'gw360-hint', text: 'Drag the picture to turn it. Each layer of your drawing stays its own layer.' }), err]),
+      el('div', { class: 'gw360-view' }, [stage, el('div', { class: 'gw360-steps' }, [el('span', { text: '1  Drag the picture or pick a view' }), el('span', { text: '2  Set depth and thickness' }), el('span', { text: '3  Add as costume or make turn frames' })]), el('div', { class: 'gw360-hint', text: tip }), err]),
       el('div', { class: 'gw360-side' }, [
-        el('div', { class: 'gw360-sec', text: 'Turn' }), slider('rx', 'X (tilt)', -180, 180), slider('ry', 'Y (turn)', -180, 180), slider('rz', 'Z (spin)', -180, 180),
+        el('div', { class: 'gw360-sec', text: 'Turn' }), views, slider('rx', 'X (tilt)', -180, 180), slider('ry', 'Y (turn)', -180, 180), slider('rz', 'Z (spin)', -180, 180),
         el('div', { class: 'gw360-sec', text: 'Shape' }), depthRow, thickRow, slider('light', 'Light', 0, 100), back,
-        el('div', { class: 'gw360-sec', text: 'Layers' }), layerBox,
+        el('div', { class: 'gw360-sec', text: 'Layers' }), layerBox, el('div', { class: 'gw360-btns' }, [guessBtn, evenBtn]),
         el('div', { class: 'gw360-sec', text: 'Make' }), el('div', { class: 'gw360-btns' }, [addBtn]),
         el('div', { class: 'gw360-btns' }, [axis, count, range]),
         el('div', { class: 'gw360-btns' }, [playBtn, framesBtn]),
@@ -472,5 +509,5 @@
   (function boot(n) { if (!entry() && n < 120) setTimeout(function () { boot(n + 1); }, 500); })(0);
   window.addEventListener('gwarp-devmode', function () { entry(); });
 
-  window.GW_SVG360 = { version: '1.1.0', render: render, frames: frames, angles: angles, turnCode: turnCode, addTurnCode: addTurnCode, layers: layers, open: open, close: close, _rotation: rotation, _solve: solve, _measure: measure };
+  window.GW_SVG360 = { version: '1.2.0', guess: guess, render: render, frames: frames, angles: angles, turnCode: turnCode, addTurnCode: addTurnCode, layers: layers, open: open, close: close, _rotation: rotation, _solve: solve, _measure: measure };
 })();
