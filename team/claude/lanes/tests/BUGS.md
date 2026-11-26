@@ -17,3 +17,10 @@ Recheck on build p: bugs 1 and 2 above are still there (quirk.sb3 44/46, same tw
    - G-Warp: `... P8clone1 P0clone1 S-t5 P4clone1 P10c ... P0c P8clone2 P0clone2 P4clone2 P11c`
    - So: (a) P4's clone script runs one frame late / after P0's (wrong clone order), and (b) P11's `when I receive c` runs last instead of first after the double broadcast (in Scratch the second broadcast restarts the hats in place, keeping sprite layer order).
    - Same result on build o (not new in p). Same every run (not random).
+
+## 2026-11-26 ~17:15 UTC run, build p again (no new build since last run)
+
+Recheck: bugs 1, 2 (quirk.sb3 44/46) and 4 (order.sb3 75/76) still there, same lines.
+
+5. **Unknown "math of" function gives the input number instead of 0.** Steps: `cd tools/gwt && python3 <repo>/team/claude/lanes/tests/mkmotion.py` (or use `lanes/tests/motion.sb3`); `cd /home/claude/ref && node diff.js <path>/motion.sb3 6000`. Line m12 is `([round v] of (direction))` - an `operator_mathop` with OPERATOR field "round", which is not in Scratch's list. Scratch: 0. G-Warp: -37.947... (the direction, unchanged). Scratch returns 0 for any unknown mathop name (can happen in hand-edited or other-tool .sb3 files). The other 40 motion/looks checks (fencing, direction wrap, size limits, costume number wrap/round, left-right style, glide 0 s, touching while hidden, distance, "of" block) all match.
+6. (Flaky, not a bug yet) t_snap.js crashed once while A/B/C ran together; alone it gave 7/7. Watch it.
