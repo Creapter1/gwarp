@@ -1,0 +1,3 @@
+// node pack.js project.sb3 out.html  -> the project packaged with TurboWarp's own official packager (its engine, default settings). Closed box, for measuring only.
+const fs=require('fs');const Packager=require('@turbowarp/packager');
+(async()=>{const data=fs.readFileSync(process.argv[2]);const loaded=await Packager.loadProject(data);const p=new Packager.Packager();p.project=loaded;p.options.autoplay=false;const r=await p.package();fs.writeFileSync(process.argv[3],r.data);console.log('packed',process.argv[3],Math.round(r.data.length/1024)+' KB')})().catch(e=>{console.error('PACK FAILED',e&&e.message||e);process.exit(1)});

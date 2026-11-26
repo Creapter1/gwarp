@@ -5,7 +5,7 @@ Every run updates it before it ends. Times are US Eastern.
 
 ## 1. State right now
 
-- Last update: 26 Nov 2026, 01:50, by the first session (the one that talked with the owner).
+- Last update: 26 Nov 2026, 02:15, by the first session (the one that talked with the owner).
 - App on the owner's PC: **v15.69.0m** (= build v15.70.14). Next PC letter: **n**.
 - Working build: `team/claude/work/` = **v15.70.14** (same as the PC).
 - Website (main): still v15.69.0, with the memory problem. Web-ready fix: `team/claude/v15.70.12/web-ready/`. Needs the owner (see NEEDS-OWNER-OK.md).
@@ -15,7 +15,7 @@ Every run updates it before it ends. Times are US Eastern.
 ## 2. Next actions, in order
 
 1. (done) Step 1a on the PC as letter m.
-2. Measure TurboWarp against G-Warp (section 6) and write the first table into `team/claude/VS-TURBOWARP.md`. Not started.
+2. (done, first table) `team/claude/VS-TURBOWARP.md`: script speed and the owner's game measured on Scratch, TurboWarp and G-Warp. TurboWarp wins every speed row (0.5 ms script time on the game, G-Warp 16 ms). Editor rows for TurboWarp are NOT measured (see NEEDS-OWNER-OK.md). Run the table again after every step.
 3. Step 1b, in small parts, each one tested and shipped:
    a. Undo / redo keep the Book (or only the changed scripts of it), not the whole page text. The Book writer rebuilds the page on undo. Keep the old way behind a switch until the tests pass. Check: undo memory per step on the owner's game (today about 6 MB), every undo test in t_par / t_par2 / t_undo / t_thin.
    b. `window.GW_AST`, the AI report, Find and the block counter read the Book.
@@ -77,6 +77,8 @@ In `/home/claude/gwt` (each prints its own result line):
 Same projects, same machine: load time, FPS / script time, memory, editor lag on huge projects (drag a big stack, scroll).
 TurboWarp is open source: its engine can be installed from GitHub for speed runs, and a built copy of its editor can be cloned for load / memory / editor runs. Use it as a closed box only. Results go to `team/claude/VS-TURBOWARP.md`, one table, with the date and the build letters.
 
+How to run it: `cd team/claude/tools/tw && npm i`, then `node twbench.js /home/claude/gwt/bench.sb3 30000` and `node twgame.js /home/claude/priv/gh.sb3 8 10000` (the files expect to live in `/home/claude/tw/pk/`; copy them there). G-Warp + Scratch on the game: `cd /home/claude/ref && TAPS=8 node fps.js /home/claude/priv/gh.sb3 10000`. Do NOT try to build TurboWarp's editor in the workspace (it was refused once); the editor rows need the owner.
+
 Known numbers so far (G-Warp only, owner's game): website v15.69.0 3,583 MB; build k about 1,200 MB; build l 766 MB. Real Scratch script time in 3D gameplay 6 to 7 ms per step, G-Warp about 15 ms.
 
 ## 7. Lock (so two runs never work at the same time)
@@ -88,5 +90,6 @@ Known numbers so far (G-Warp only, owner's game): website v15.69.0 3,583 MB; bui
 
 ## 8. Run log (newest first)
 
+- 26 Nov 02:15, first session: first G-Warp / TurboWarp / Scratch table written (VS-TURBOWARP.md). Next: step 1b part a (undo keeps the Book).
 - 26 Nov 01:50, first session: STEP 1a DONE. Build m on the PC (v15.70.14: gw-book.js). Scheduled task created. Next: TurboWarp table, step 1b.
 - 26 Nov 01:05, first session: v15.70.13 shipped to the PC as l. Plan written and approved. Step 1a started: gw-book.js built, round trip OK on 17 projects.

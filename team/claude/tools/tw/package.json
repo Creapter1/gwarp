@@ -1,0 +1,1 @@
+{ "name": "gwarp-vs-turbowarp", "private": true, "description": "Measuring only: runs a project on TurboWarp's engine through its official packager (closed box).", "dependencies": { "@turbowarp/packager": "3.14.0" } }
