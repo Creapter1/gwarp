@@ -1,5 +1,14 @@
 # Lane C (tests and measuring) progress
 
+## 27 Nov 2026 ~13:12-13:50 UTC run
+- Build tested: q (v15.70.18) again (no new build in work/).
+- run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book all OK, t_save all OK, t_undob all OK (big first undo 2.4 s). No FAIL lines.
+- Referee: same as last run (par 58/60, par3 157/159, par4 59/72, quirk 44/46, order 75/76, motion 40/41, proc 32/34, vol 38/39, touch 27/29, yield 27/29, waitu 34/35, lay8 37/38, all others full).
+- New zoo: mkof.py (of.sb3: "of" block on stage/sprites/local vars/missing names, costumes named like numbers, backdrop next/previous) 33/35. Bug 17: switch costume to a number result picks by name. o12 = old bug 9. Added to run_all.sh.
+- VS-TURBOWARP.md: new dated table (build q). TurboWarp wins every row.
+- Skipped (need the owner's game): t_thin, t_grab, t_undo, t_dragms, play, mem, fps, twgame.
+- Next: sound/pen zoo, ask with typed answers, backdrop switch by number result.
+
 ## 27 Nov 2026 ~11:11-11:55 UTC run
 - Build tested: q (v15.70.18) again (no new build in work/).
 - run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book all OK, t_save all OK, t_undob all OK. No FAIL lines.

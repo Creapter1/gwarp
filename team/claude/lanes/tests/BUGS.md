@@ -56,3 +56,9 @@ Steps for all three: `cp lanes/tests/mkyield.py /home/claude/gwt/ && cd /home/cl
 ## 2026-11-27 ~11:15 UTC run, build q again
 
 15. **`wait until` checks its condition late, like bug 14.** Steps: `cp lanes/tests/mkwaitu.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkwaitu.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/waitu.sb3 6000`. Sprite B: `wait until (g > 1); add (join b g)`; sprite A does `repeat 3 {change g by 1; add (join a g)}`. Scratch: `... a2 b2 a3 a-end` (B wakes on the first turn after g becomes 2). G-Warp: `... a2 a3 a-end b3` (B wakes one round late). Result 34/35; the rest matches: wait until already-true goes on without a frame, broadcast and wait waits for every receiver (also one with wait 0.1), broadcasting the same message twice in a row runs the receiver once.
+
+## 2026-11-27 ~13:15 UTC run, build q again
+
+Steps for both: `cp lanes/tests/mkof.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkof.py` (of.sb3); `cd /home/claude/ref && node diff.js /home/claude/gwt/of.sb3 6000`. Result 33/35.
+16. (same as bug 9, seen again here as line o12: `[volume] of (Stage)` gives 0, Scratch 100.)
+17. **`switch costume to ((1)+(1))` picks the costume NAMED "2" instead of costume number 2.** Sprite A costumes: `c1, 3, x, 2`. Scratch: a number result is an index, so costume 2 = "3". G-Warp: "2" (looked up by name first). A typed text "2" in the slot is right in both (o15). Same rule probably matters for backdrops.
