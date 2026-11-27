@@ -1,3 +1,31 @@
+# OWNER PRIORITY UPDATE (27 Nov 2026, 07:57) - read this first, then the 26 Nov part below
+
+The owner, in his words (short): **the ONLINE version comes first**, because that is what most people use. Desktop can wait: there it is easy (later: unpack a project into temporary files on disk like Unity / Unreal and read them as needed). Online, people must be able to make crazy, big, heavy projects; a game that runs fine on Scratch online must run at least as well in G-Warp online. **G-Warp is now fully Claude Opus's job** (every running lane is Opus): no other AI works on it for now, the goal is the app running 100%, and the owner wants work that gets MERGED, not side features that never are.
+
+Full lists: `team/claude/SPEED-AND-FIX-PLAN-2026-11-27.md` (crashes, fixes, speed steps R1-R9, big projects, fair test).
+
+## DO
+1. Work on the **website build** first (creapter1.github.io/gwarp/app.html): test there, in Chrome and Edge, on an ordinary laptop budget.
+2. Order: crashes (P0) → wrong results / Scratch parity (P1) → speed (R1-R9, with the running fast-code lanes) → things that confuse players (P2).
+3. Prove every change with the fair test: Turbo OFF (checked), 30 FPS like Scratch, warm-up + 3 runs, median; re-run `VS-TURBOWARP.md` after each speed step.
+4. Keep the parity gate at 100%: `bench/exam.sb3` (53 checks), `bench/game.sb3` (7), `bench/marathon.sb3` (10 min flat), Stop under 100 ms, save/reopen identical.
+5. Big projects online: unpack pictures and sounds into the browser's own private disk (Origin Private File System), load them only when needed, keep a memory budget, save changed files only. This is the web version of the desktop "temporary files" idea.
+6. Small steps, one at a time, each shipped as a build the owner can merge (ai-team branch → owner merges to main). Log every step in AI-TEAM.txt.
+7. Own code only; TurboWarp and Scratch are closed boxes to measure against.
+8. Keep every feature and G-Warp's look; keep the UI responsive while a project runs.
+
+## DON'T
+1. No new features, buttons, panels or "cool extras" until the crash list and the speed steps are done. No new top-bar buttons, no second engine, nothing that changes how projects run unless the owner says yes.
+2. No "pass" from Turbo ON, 60 FPS, a single run, a tiny test, or a test only the agent ran without the numbers written down.
+3. Don't change any block's result (that fails the parity gate even if it is faster).
+4. Don't load a whole big project into memory, and don't build one giant zip in memory to save.
+5. Don't work on desktop-only ideas now (the temporary-file engine comes after online).
+6. Don't copy TurboWarp or Scratch code. Don't push to main. Don't delete the owner's files; back up before changing anything on his PC.
+7. Don't edit the same part of app.html as another lane at the same time: take the lane lock first (lanes/LANES.md).
+8. Don't leave work unmerged for long: finish, measure, hand the owner a build.
+
+---
+
 # OWNER PRIORITY (26 Nov 2026, 08:55) - read before "Next actions"
 
 The owner, in his words: what he needs is the app RUNNING better than TurboWarp, nothing else matters. Beat Turbo's numbers, or at least the same time in everything.
