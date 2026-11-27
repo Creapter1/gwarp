@@ -1,5 +1,14 @@
 # Lane C (tests and measuring) progress
 
+## 27 Nov 2026 ~09:12-10:10 UTC run
+- Build tested: q (v15.70.18) again (no new build in work/).
+- run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 OK, t_book all OK, t_save all OK, t_undob all OK.
+- Referee: same as last run (par 58/60, par3 157/159, par4 59/72, quirk 44/46, order 75/76, motion 40/41, proc 32/34, vol 38/39, touch 27/29, lay8 37/38, all others full).
+- New zoo: mkyield.py (yield.sb3: how repeat / repeat until / forever / wait 0 / stop script take turns between sprites) 27/29. Bugs 12-14 in BUGS.md: repeat (-1) ends the script, repeat (2.5) does not yield, repeat until runs one extra round. Added to run_all.sh.
+- VS-TURBOWARP.md: new dated table (build q). TurboWarp wins every row.
+- Skipped (need the owner's game): t_thin, t_grab, t_undo, t_dragms, play, mem, fps, twgame.
+- Next: sound/pen zoo, ask with typed answers, check if wait-until has the same late check as repeat until.
+
 ## 27 Nov 2026 ~07:11-07:55 UTC run
 - Build tested: q (v15.70.18) again (no new build in work/).
 - run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book all OK, t_save all OK, t_undob all OK. No FAIL lines.

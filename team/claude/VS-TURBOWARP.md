@@ -276,3 +276,18 @@ Same build as the last rows, numbers agree. TurboWarp wins every speed row; G-Wa
 | Clone frames in 3 s | 90 to 91 | 85 to 88 | 83 to 86 | Scratch |
 
 Same build, numbers agree with the last rows. TurboWarp wins every speed row. Owner's game rows not measured.
+
+### 27 Nov 2026 ~10:05 UTC, lane C, build q again (bench.sb3, twbench.js twice + bench.js once, same machine)
+
+| Test | Scratch | TurboWarp | G-Warp q | Best |
+|---|---|---|---|---|
+| Count loop | 0.039 to 0.043 | 0.001 to 0.002 | 0.010 to 0.016 | TurboWarp |
+| Maths | 0.048 to 0.057 | 0.005 | 0.023 to 0.024 | TurboWarp |
+| Lists | 0.022 to 0.025 | 0.002 | 0.025 to 0.032 | TurboWarp |
+| If / compare | 0.035 to 0.038 | 0.001 to 0.002 | 0.010 to 0.018 | TurboWarp |
+| Pen | 0.014 to 0.017 | 0.010 to 0.011 | 0.029 to 0.041 | TurboWarp |
+| Text | 0.011 to 0.012 | 0.001 to 0.002 | 0.009 to 0.013 | TurboWarp |
+| Plain loop turns in 2 s | 4.8 to 5.1 million | 19.5 to 20.0 million | 2.39 to 2.51 million | TurboWarp |
+| Clone frames in 3 s | 91 | 90 to 91 | 90 | Scratch/TurboWarp |
+
+Machine was quicker than last run (all three faster). Same order as before: TurboWarp wins every speed row; G-Warp beats Scratch on count/maths/if, loses on pen and plain loops. Owner's game rows not measured.
