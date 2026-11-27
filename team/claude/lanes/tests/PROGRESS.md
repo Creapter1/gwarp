@@ -1,5 +1,14 @@
 # Lane C (tests and measuring) progress
 
+## 27 Nov 2026 ~03:11-03:55 UTC run
+- Build tested: q (v15.70.18) again (no new build in work/).
+- run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book 29 OK, t_save all OK, t_undob all OK (big first undo 3.0 s, deep ~1.5 s each, note 10). No FAIL lines.
+- Referee: same as last run (par 58/60, par2 40/40, probe 72/72, mini 22/22, nat 15/15, join 19/19, stop 17/17, ep 19/19, par3 157/159, par4 59/72, quirk 44/46, order 75/76, motion 40/41, ctrl 37/37, proc 32/34, vol 38/39, time 34/34, text 36/36, deep 19/19, lay1-15 38/38 except lay8 37/38).
+- New zoo: mktouch.py (touch.sb3: touching sprite/edge/color, color touching color, distance, hidden/ghost) 27/29: bug 11 (distance to a missing sprite = 0, Scratch 10000); t15 (mouse distance) is a referee timing difference, not counted. Added to run_all.sh.
+- VS-TURBOWARP.md: new dated table (build q, slower machine). TurboWarp wins every row.
+- Skipped (need the owner's game): t_thin, t_grab, t_undo, t_dragms, play, mem, fps, twgame.
+- Next: sound/pen zoo (needs ref/pic.js), ask with typed answers.
+
 ## 27 Nov 2026 ~01:12-02:10 UTC run
 - Build tested: q (v15.70.18, commit 61162a7). Base for compare: build p (12b770e).
 - run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book 27 OK, t_save 27 OK, t_undob 26 OK (big first undo 3.0 s). No FAIL lines.
