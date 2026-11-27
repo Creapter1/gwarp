@@ -30,6 +30,9 @@ Re-ran pixel test on v0.1.2: 16/16 PASS. Lane C still has only .sb3 files, no im
 ## Run 9 (27 Nov 04:42 UTC)
 Re-ran pixel test on v0.1.2: 16/16 PASS. Lane C still has no image runner, so Next 1 stays blocked; no code change.
 
+## Run 10 (27 Nov 06:42 UTC)
+Re-ran pixel test on v0.1.2: 16/16 PASS. Lane C still has no image runner, so Next 1 stays blocked; no code change.
+
 ## How it would plug in (not READY yet)
 WebGL and 2D cannot share one canvas: put a GL canvas under #stageCanvas, same size; each frame `gpu.draw(GWGpuStage.frameFromEngine(GW, Engine, penCanvas))` (+ `view` from the camera), and the 2D canvas only draws bubbles. `penDirty:false` when the pen did not change saves the upload.
 
