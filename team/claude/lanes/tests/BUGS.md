@@ -62,3 +62,7 @@ Steps for all three: `cp lanes/tests/mkyield.py /home/claude/gwt/ && cd /home/cl
 Steps for both: `cp lanes/tests/mkof.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkof.py` (of.sb3); `cd /home/claude/ref && node diff.js /home/claude/gwt/of.sb3 6000`. Result 33/35.
 16. (same as bug 9, seen again here as line o12: `[volume] of (Stage)` gives 0, Scratch 100.)
 17. **`switch costume to ((1)+(1))` picks the costume NAMED "2" instead of costume number 2.** Sprite A costumes: `c1, 3, x, 2`. Scratch: a number result is an index, so costume 2 = "3". G-Warp: "2" (looked up by name first). A typed text "2" in the slot is right in both (o15). Same rule probably matters for backdrops.
+
+## 2026-11-27 ~19:30 UTC run, build q again
+
+18. **`switch backdrop to ((1)+(1))` picks the backdrop NAMED "2" instead of backdrop number 2 (same as bug 17, for backdrops).** Steps: `cp lanes/tests/mkbd.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkbd.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/bd.sb3 6000`. Stage backdrops: `b1, 3, x, 2`. Scratch d1 = "3", G-Warp d1 = "2". Result 20/21; the rest matches (wrap of 5/0/-1/7, 1.6 rounding, text "2" and " 3 ", missing name, next/previous wrap, empty text).
