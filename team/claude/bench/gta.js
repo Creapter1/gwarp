@@ -1,0 +1,15 @@
+// GTA ONLINE, Turbo OFF, 30 FPS: project frames per second + ms of work per frame, idle and holding W, 3 runs each engine
+const H=require('/tmp/ep2/h.js');const {chromium}=require('playwright');const fs=require('fs');const P='/tmp/ep4/gta.sb3';
+const sampler=`window.__m=(dur)=>new Promise(res=>{let ticks=0,ms=0,raf=0,last=window.GW&&GW.__frameAt;const t0=performance.now();const k=()=>{raf++;if(window.GW&&GW.__frameAt!==last){last=GW.__frameAt;ticks++;ms+=GW.__stepMs||0;}if(performance.now()-t0<dur)requestAnimationFrame(k);else res({tps:+(ticks/(dur/1000)).toFixed(1),msPerTick:+(ms/Math.max(1,ticks)).toFixed(1),screenFps:+(raf/(dur/1000)).toFixed(1)})};requestAnimationFrame(k);});`;
+async function gw(app){H.APP=app;const t=await H.start('/tmp/ep4/run/gta');const p=t.p;await p.waitForTimeout(2000);await p.mouse.click(700,500);await t.openProject(P);await p.waitForTimeout(4000);
+ const cfg=await p.evaluate(()=>({turbo:!!Engine.isTurbo,fps:Math.round(1000/GW_SETTINGS.stepMs())}));await p.evaluate(sampler);
+ const st=await (await p.$('#stageCanvas')).boundingBox();await p.click('#greenFlagBtn');await p.waitForTimeout(5000);await p.mouse.click(st.x+st.width/2,st.y+st.height/2);
+ const idle=await p.evaluate(()=>__m(8000));await p.keyboard.down('w');const walk=await p.evaluate(()=>__m(8000));await p.keyboard.up('w');
+ const shot='/tmp/ep4/run/gta_'+app.split('/')[3]+'.png';await p.screenshot({path:shot});const errs=t.log.filter(l=>l.kind==='ERROR').length;await t.end();return {cfg,idle,walk,errs};}
+async function sc(){const b=await chromium.launch({args:['--use-gl=swiftshader','--enable-webgl','--ignore-gpu-blocklist']});const p=await b.newPage({viewport:{width:480,height:360}});
+ await p.goto('file:///tmp/ref/index.html');await p.waitForTimeout(500);await p.evaluate(async bytes=>window.ref(bytes),[...fs.readFileSync(P)]);await p.evaluate(()=>{VM.setTurboMode(false);VM.setCompatibilityMode(true)});
+ await p.evaluate(()=>{const rt=VM.runtime,o=rt._step.bind(rt);window.__n=0;window.__ms=0;rt._step=function(){const a=performance.now();o();__ms+=performance.now()-a;__n++;};window.__m=d=>new Promise(r=>{const n=__n,ms=__ms;setTimeout(()=>r({tps:+((__n-n)/(d/1000)).toFixed(1),msPerTick:+((__ms-ms)/Math.max(1,__n-n)).toFixed(1)}),d)});});
+ await p.evaluate(()=>VM.greenFlag());await p.waitForTimeout(5000);const idle=await p.evaluate(()=>__m(8000));
+ await p.evaluate(()=>VM.postIOData('keyboard',{key:'w',isDown:true}));const walk=await p.evaluate(()=>__m(8000));await p.screenshot({path:'/tmp/ep4/run/gta_scratch.png'});await b.close();return {cfg:await p.evaluate(()=>({turbo:VM.runtime.turboMode,fps:VM.runtime.compatibilityMode?30:60})),idle,walk};}
+(async()=>{const R={};for(let r=0;r<3;r++){for(const [k,app] of [['G-Warp v15.70.18','/home/claude/gwarp-t4/app.html'],['G-Warp v15.69.0','/home/claude/gwarp-test/app.html']])(R[k]=R[k]||[]).push(await gw(app).catch(e=>({err:e.message.slice(0,120)})));(R['real Scratch 3']=R['real Scratch 3']||[]).push(await sc().catch(e=>({err:e.message.slice(0,120)})));}
+fs.writeFileSync('/tmp/ep4/gta.json',JSON.stringify(R,null,1));for(const k in R)console.log(k,JSON.stringify(R[k]));})();
