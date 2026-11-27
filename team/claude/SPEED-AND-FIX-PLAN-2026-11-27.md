@@ -66,3 +66,12 @@ Do one step at a time. After each step: fair test + parity gate (section 4). Kee
 2. P0 item 1, then P1 items 3, 7, 4-5, then R1.
 3. R2 → R3 → R4 (operators/data first) → R5 → R6/R7 → R8 → R9, re-measuring after each.
 4. P2 items when a step needs a rest.
+
+## 6. Big projects: 2 GB today, 10 GB goal (owner, 27 Nov)
+Owner: people rarely go past 2 GB, but G-Warp should run **at least 10 GB** fast. Almost all of a big project is pictures and sounds, so the rule is **never hold the whole project in memory**.
+- **Limits to design around:** a browser tab gets only a few GB of JavaScript memory, so the **web version** stays at about 1-2 GB. The **desktop app** can go far past that if files are read from disk when needed. A zip over 4 GB needs ZIP64, which Scratch and TurboWarp can't open, so above that G-Warp saves its own format (a project folder or a ZIP64 .sb3 with a warning) and keeps "export as .sb3" for projects that fit.
+- **B1. Read the .sb3 without unpacking it all:** read the zip's table of contents first, then pull single files out when they are needed (desktop: main process streams from disk).
+- **B2. Lazy pictures and sounds:** decode a costume the first time it is shown, a sound the first time it plays; keep them in a cache with a memory budget (e.g. 1.5 GB, setting) and drop the least-recently used ones, GPU textures included.
+- **B3. Blocks stay small:** the project-as-data "Book" (step 1) holds the scripts; only the open sprite's blocks are on the page (already the owner's 26 Nov decision).
+- **B4. Saving:** write changed files only, streaming to disk, never one giant in-memory zip.
+- **B5. Test files:** generate 2 GB, 5 GB and 10 GB projects (mostly big costumes and long sounds) with a script; measure open time, memory, FPS, save time and Stop. Goal: opens in under 10 s, memory under the budget, normal FPS.
