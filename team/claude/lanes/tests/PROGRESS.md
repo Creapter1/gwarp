@@ -1,5 +1,14 @@
 # Lane C (tests and measuring) progress
 
+## 27 Nov 2026 ~01:12-02:10 UTC run
+- Build tested: q (v15.70.18, commit 61162a7). Base for compare: build p (12b770e).
+- run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book 27 OK, t_save 27 OK, t_undob 26 OK (big first undo 3.0 s). No FAIL lines.
+- Referee: same as build p (par 58/60, par2 40/40, probe 72/72, mini 22/22, nat 15/15, join 19/19, stop 17/17, ep 19/19, par3 157/159, par4 59/72, quirk 44/46, order 75/76, motion 40/41, ctrl 37/37, proc 32/34, vol 38/39, time 34/34, deep 19/19, lay1-15 all 38/38 except lay8 37/38). No new bugs.
+- New zoo: mktext.py (text.sb3: letter of / length / contains / join quirks, and the "of" sensing block on another sprite and the stage) 36/36. Added to run_all.sh.
+- VS-TURBOWARP.md: new dated table for build q. Lists, pen and text faster than build p; TurboWarp still wins every row.
+- Skipped (need the owner's game): t_thin, t_grab, t_undo, t_dragms, play, mem, fps, twgame.
+- Next: sound/pen zoo (needs ref/pic.js), touching color, ask with typed answers.
+
 ## 26 Nov 2026 ~23:11-23:55 UTC run
 - Build tested: p (v15.70.17) again (no new build in work/).
 - run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book 26 OK, t_save 26 OK (big load OK), t_undob 25/25 OK (big first undo 2.7 s).
