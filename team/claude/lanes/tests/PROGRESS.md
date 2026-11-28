@@ -1,5 +1,14 @@
 # Lane C (tests and measuring) progress
 
+## 27-28 Nov 2026 ~23:12-00:20 UTC run
+- Build tested: q (v15.70.18) again (no new build in work/).
+- run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book all OK, t_save all OK, t_undob all OK (big first undo 2.6 s). No real FAIL lines.
+- Referee: same as last run (par 58/60, par3 157/159, par4 59/72, quirk 44/46, order 75/76, motion 40/41, proc 32/34, vol 38/39, touch 27/29, of 33/35, bd 20/21, yield 27/29, waitu 34/35, lay8 37/38, all others full).
+- New zoo: mkcmp.py (cmp.sb3: = < > with case, spaces, numeric strings, empty, Infinity, NaN, -0, hex, 1e3) 26/26, no new bug. Added to run_all.sh.
+- VS-TURBOWARP.md: new dated table (build q). TurboWarp wins every row.
+- Skipped (need the owner's game): t_thin, t_grab, t_undo, t_dragms, play, mem, fps, twgame.
+- Next: pen colour via touching color, sound wait timing, a diff.js option to feed ask answers.
+
 ## 27 Nov 2026 ~21:12-21:55 UTC run
 - Build tested: q (v15.70.18) again (no new build in work/).
 - run_all.sh whole list: t_par 0 fails /53, t_par2 0/28, t_snap 7/7, t_book2 10/10, t_book all OK, t_save all OK, t_undob all OK (big first undo 2.8 s). No FAIL lines.
