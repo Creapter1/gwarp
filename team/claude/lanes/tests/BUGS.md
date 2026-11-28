@@ -70,3 +70,7 @@ Steps for both: `cp lanes/tests/mkof.py /home/claude/gwt/ && cd /home/claude/gwt
 ## 2026-11-28 ~01:20 UTC run, build q again
 
 19. **`item (LAST) of list` (capital letters) gives the last item; Scratch gives empty.** Steps: `cp lanes/tests/mkidx.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkidx.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/idx.sb3 6000`. List `a b c d e`. Scratch i07 = "|" (only lowercase `last` is the special word), G-Warp "e|". Result 30/31; the rest matches (change by on text/empty/0.1+0.2/1e2/true/" 3 ", index 1.5/2.9/0/-1/len+1/" 2 "/x, insert at len+1 and len+3, replace past end, delete last/0/1.7/all).
+
+## 2026-11-28 ~03:30 UTC run, build q again
+
+20. **`([round] of (2.5))` (a maths-function block with an operator name Scratch's menu does not have) gives 2.5; Scratch gives 0.** Small: only damaged or hand-made projects have this. Steps: `cp lanes/tests/mkfmt.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkfmt.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/fmt.sb3 6000`. Line f16. Result 33/35 (g01 is the same thing inside list contents); all number-to-text cases match (0.1+0.2, 1/3, 1e21, 1e20, 1e-7, -0, NaN, +-Infinity, mod with negatives, sqrt -1, real round -2.5/2.5, 0x10+1, ln 0, floor -0.5).
