@@ -74,3 +74,7 @@ Steps for both: `cp lanes/tests/mkof.py /home/claude/gwt/ && cd /home/claude/gwt
 ## 2026-11-28 ~03:30 UTC run, build q again
 
 20. **`([round] of (2.5))` (a maths-function block with an operator name Scratch's menu does not have) gives 2.5; Scratch gives 0.** Small: only damaged or hand-made projects have this. Steps: `cp lanes/tests/mkfmt.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkfmt.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/fmt.sb3 6000`. Line f16. Result 33/35 (g01 is the same thing inside list contents); all number-to-text cases match (0.1+0.2, 1/3, 1e21, 1e20, 1e-7, -0, NaN, +-Infinity, mod with negatives, sqrt -1, real round -2.5/2.5, 0x10+1, ln 0, floor -0.5).
+
+## 2026-11-28 ~05:20 UTC run, build q again
+
+21. **A text value in a true/false slot is always true: "false", "FALSE", "False", "0" and "" count as true (Scratch: false).** Affects `if`, `not`, `and`, `or`, `repeat until` (repeat until <(v)> with v = "false" stops at once: Scratch loops 5 times, G-Warp 0). Only reachable with a round reporter dropped into a boolean slot (hacked/hand-made projects, some extension projects); the Scratch editor does not allow it. Also on build o. Steps: `cp lanes/tests/mkbool.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkbool.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/bool.sb3 6000`. Result 47/66; the 19 misses are the 4 kinds above for values b02-b06 (false, FALSE, False, 0, "") plus c/r01/v from the repeat until. "true", "1", "0.0", "-0", " ", "no", "00", "0e0", "NaN" all match.
