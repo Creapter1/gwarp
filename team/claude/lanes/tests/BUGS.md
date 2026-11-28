@@ -82,3 +82,7 @@ Steps for both: `cp lanes/tests/mkof.py /home/claude/gwt/ && cd /home/claude/gwt
 ## 2026-11-28 ~09:40 UTC run, build q again
 
 22. **Broadcast names made with spaces around them still reach the receiver: `broadcast (join "" " go")` and `broadcast (join "go" " ")` start `when I receive [go]`.** Scratch: no receiver (names match without caring about capitals, but spaces count). Steps: `cp lanes/tests/mkbcast.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkbcast.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/bcast.sb3 6000`. Result 13/15: o_log has extra `b-GO a-go a-go2` after s9 and after s10 (o_len 36, Scratch 30). Capitals, "two words", number names (1, 1.5*2=3) and unknown names all act like Scratch.
+
+## 2026-11-28 ~11:30 UTC run, build q again
+
+23. **`change [v] by ("Infinity")` and changes on a variable holding "Infinity" or "1e400" give a plain number instead of Infinity.** Scratch reads the text "Infinity", "-Infinity" and "1e400" as Infinity when it adds; G-Warp reads them as 0. Seen: set v to 0, change by "Infinity": Scratch Infinity, G-Warp 0 (same for "-Infinity"); set v to "Infinity", change by -1: Scratch Infinity, G-Warp -1; set v to "1e400", change by 0: Scratch Infinity, G-Warp 0. Knock-on: comparing two of them gives the wrong answer. Steps: `cp lanes/tests/mkchg.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkchg.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/chg.sb3 6000 /home/claude/rel/app.html`. Result 19/24 (the referee prints Infinity as null).
