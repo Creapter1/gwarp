@@ -66,3 +66,7 @@ Steps for both: `cp lanes/tests/mkof.py /home/claude/gwt/ && cd /home/claude/gwt
 ## 2026-11-27 ~19:30 UTC run, build q again
 
 18. **`switch backdrop to ((1)+(1))` picks the backdrop NAMED "2" instead of backdrop number 2 (same as bug 17, for backdrops).** Steps: `cp lanes/tests/mkbd.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkbd.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/bd.sb3 6000`. Stage backdrops: `b1, 3, x, 2`. Scratch d1 = "3", G-Warp d1 = "2". Result 20/21; the rest matches (wrap of 5/0/-1/7, 1.6 rounding, text "2" and " 3 ", missing name, next/previous wrap, empty text).
+
+## 2026-11-28 ~01:20 UTC run, build q again
+
+19. **`item (LAST) of list` (capital letters) gives the last item; Scratch gives empty.** Steps: `cp lanes/tests/mkidx.py /home/claude/gwt/ && cd /home/claude/gwt && python3 mkidx.py`; `cd /home/claude/ref && node diff.js /home/claude/gwt/idx.sb3 6000`. List `a b c d e`. Scratch i07 = "|" (only lowercase `last` is the special word), G-Warp "e|". Result 30/31; the rest matches (change by on text/empty/0.1+0.2/1e2/true/" 3 ", index 1.5/2.9/0/-1/len+1/" 2 "/x, insert at len+1 and len+3, replace past end, delete last/0/1.7/all).
