@@ -12,7 +12,7 @@ echo "== t_book"; node t_book.js - $(for p in $Z; do printf "%s.sb3 " $p; done) 
 echo "== t_save"; node t_save.js PALETTE $(for p in $Z; do printf "%s.sb3 " $p; done) 2>&1 | grep -E "^(OK|FAIL|BAD)" | cut -c1-120
 echo "== t_undob"; for p in $Z; do node t_undob.js $p.sb3 2>&1 | grep -E "^(OK|FAIL|BAD)" | cut -c1-120; done
 echo "== referee"; cd /home/claude/ref
-for p in par:6000 par2:6000 probe:6000 mini:6000 nat:6000 join:6000 stop:6000 ep:6000 par3:14000 par4:6000 quirk:6000 order:6000 motion:6000 ctrl:6000 proc:6000 vol:6000 time:6000 text:6000 touch:6000 math:6000 of:6000 fence:6000 sndv:6000 bd:6000 clvar:6000 cmp:6000 idx:6000 fmt:6000 bool:6000 cost:6000 bcast:6000 chg:6000 list2:8000 yield:5000 waitu:6000 deep:15000 $(for i in $(seq 1 15); do printf "lay$i:5000 "; done); do
+for p in par:6000 par2:6000 probe:6000 mini:6000 nat:6000 join:6000 stop:6000 ep:6000 par3:14000 par4:6000 quirk:6000 order:6000 motion:6000 ctrl:6000 proc:6000 vol:6000 time:6000 text:6000 touch:6000 math:6000 of:6000 fence:6000 sndv:6000 bd:6000 clvar:6000 cmp:6000 idx:6000 fmt:6000 bool:6000 cost:6000 bcast:6000 chg:6000 rand:8000 list2:8000 yield:5000 waitu:6000 deep:15000 $(for i in $(seq 1 15); do printf "lay$i:5000 "; done); do
   n=${p%:*}; printf "%-7s " $n; node diff.js $G/$n.sb3 ${p#*:} $APP 2>&1 | grep -v '^$' | head -4 | tr '\n' ' ' | cut -c1-220; echo; done
 [ -f $GH ] && { cd $G; echo "== play"; node play.js $GH "" 8 9000 $G/shot.png "JSON.stringify({state:Engine.variables.state})" 2>&1 | tail -2 | cut -c1-200; } || echo "== play SKIP"
 echo ALL-DONE
